@@ -1,0 +1,52 @@
+{{ define "main" }}
+
+<div class="thank-you-page">
+    <div class="container">
+        <div class="thank-you-content">
+            <!-- Thank You Mascot (light/dark mode) -->
+            <div class="thank-you-logo">
+                <picture>
+                    <source srcset="{{ relURL "images/thankyou-mascot_dark.png" }}" media="(prefers-color-scheme: dark)">
+                    <img src="{{ relURL "images/thankyou-mascot_light.png" }}" alt="Thank you from the I2P Team" height="200" class="theme-mascot">
+                </picture>
+            </div>
+
+            <h1>{{ .Title }}</h1>
+
+            <!-- Download Status -->
+            <div id="download-status" class="download-status">
+                <div class="status-icon">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <p class="status-message" id="status-message">
+                    <strong>Starting your download...</strong>
+                </p>
+            </div>
+
+            {{ .Content }}
+
+            <div class="thank-you-footer">
+                <p>
+                    <a href="{{ relLangURL "coming-soon/" }}">Getting Started Guide</a>
+                    <span>•</span>
+                    <a href="{{ relLangURL "contact/#forums" }}">Get Support</a>
+                    <span>•</span>
+                    <a href="{{ relLangURL "downloads/" }}">Back to Downloads</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FundraiseUp Donation Form (opens after download) -->
+<a href="#FUNFTLUKCSN" id="donation-trigger" style="display: none"></a>
+
+{{ end }}
+
+{{ define "scripts" }}
+<!-- Load donation page JavaScript -->
+{{ $downloadDonate := resources.Get "js/download-donate.js" | minify }}
+<script src="{{ $downloadDonate.RelPermalink }}"></script>
+{{ end }}

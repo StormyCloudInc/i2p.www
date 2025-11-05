@@ -1,0 +1,62 @@
+---
+title: "Service Directory"
+number: "102"
+author: "zzz"
+created: "2009-01-01"
+lastupdated: "2009-01-06"
+status: "Rejected"
+thread: "http://zzz.i2p/topics/180"
+supercededby: "122"
+API_Translate: true
+---
+
+## Overview
+
+This proposal is for a protocol apps could use to register and look up services
+in a directory.
+
+
+## Motivation
+
+The most straightforward way to support onioncat is with a service directory.
+
+This is similar to a proposal Sponge had a while back on IRC. I don't think he
+wrote it up, but his idea was to put it in the netDb. I'm not in favor of that,
+but the discussion of the best method of accessing the directory (netDb lookups,
+DNS-over-i2p, HTTP, hosts.txt, etc.) I will leave for another day.
+
+I could probably hack this up pretty quickly using HTTP and the collection of
+perl scripts I use for the add key form.
+
+
+## Specification
+
+Here's how an app would interface with the directory:
+
+REGISTER
+  - DestKey
+  - List of Protocol/Service pairs:
+
+    - Protocol (optional, default: HTTP)
+    - Service (optional, default: website)
+    - ID (optional, default: none)
+
+  - Hostname (optional)
+  - Expiration (default: 1 day? 0 for delete)
+  - Sig (using privkey for dest)
+
+  Returns: success or failure
+
+  Updates allowed
+
+LOOKUP
+  - Hash or key (optional). ONE of:
+
+    - 80-bit partial hash
+    - 256-bit full hash
+    - full destkey
+
+  - Protocol/service pair (optional)
+
+  Returns: success, failure, or (for 80-bit) collision.
+  If success, returns signed descriptor above.

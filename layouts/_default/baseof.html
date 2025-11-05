@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang | default "en" }}" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>{{ block "title" . }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+
+    <meta name="description" content="{{ .Description | default .Site.Params.description }}">
+    <meta name="keywords" content="{{ .Keywords | default .Site.Params.keywords }}">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="{{ .Title }} | {{ .Site.Title }}">
+    <meta property="og:description" content="{{ .Description | default .Site.Params.description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ .Permalink }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/i2plogo.png">
+
+    <!-- Styles -->
+    {{ $styles := resources.Get "css/main.css" }}
+    {{ if $styles }}
+        {{ $styles = $styles | resources.Minify }}
+        <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+    {{ end }}
+
+    <!-- Mailing List Widget Styles -->
+    <link rel="stylesheet" href="https://feedback.stormycloud.org/widgets/styles.css">
+
+    <!-- Theme Script (prevent flash) -->
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <!-- Fundraise Up: the new standard for online giving -->
+    <script>(function(w,d,s,n,a){if(!w[n]){var l='call,catch,on,once,set,then,track,openCheckout'
+    .split(','),i,o=function(n){return'function'==typeof n?o.l.push([arguments])&&o
+    :function(){return o.l.push([n,arguments])&&o}},t=d.getElementsByTagName(s)[0],
+    j=d.createElement(s);j.async=!0;j.src='https://cdn.fundraiseup.com/widget/'+a+'';
+    t.parentNode.insertBefore(j,t);o.s=Date.now();o.v=5;o.h=w.location.href;o.l=[];
+    for(i=0;i<8;i++)o[l[i]]=o(l[i]);w[n]=o}
+    })(window,document,'script','FundraiseUp','AAYKECHT');</script>
+    <!-- End Fundraise Up -->
+
+    {{ block "head" . }}{{ end }}
+</head>
+<body>
+    {{ partial "header.html" . }}
+
+    <main id="main-content">
+        {{ block "main" . }}{{ end }}
+    </main>
+
+    {{ partial "footer.html" . }}
+
+    <!-- Scripts -->
+    {{ $scripts := resources.Get "js/main.js" }}
+    {{ if $scripts }}
+        {{ $scripts = $scripts | resources.Minify }}
+        <script src="{{ $scripts.RelPermalink }}"></script>
+    {{ end }}
+
+    <!-- Mailing List Widget Script -->
+    <script src="https://feedback.stormycloud.org/widgets/mailing-list.js"></script>
+
+    <!-- Feature Request Widget Script -->
+    <script src="https://feedback.stormycloud.org/widgets/features.js"></script>
+
+    {{ block "scripts" . }}{{ end }}
+</body>
+</html>

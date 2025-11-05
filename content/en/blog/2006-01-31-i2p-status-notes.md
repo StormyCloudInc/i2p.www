@@ -1,0 +1,59 @@
+---
+title: "I2P Status Notes for 2006-01-31"
+date: 2006-01-31
+author: "jr"
+description: "Network reliability challenges, upcoming 0.6.1.10 release with new tunnel creation crypto, and backwards incompatibility changes"
+categories: ["status"]
+API_Translate: true
+---
+
+Hi y'all, tuesday rolls around once again,
+
+* Index
+1) Net status
+2) 0.6.1.10 status
+3) ???
+
+* 1) Net status
+
+Over the last week, I've been trying out a few different tweaks to
+increase the reliability of tunnel creation on the live net, but
+there hasn't yet been a breakthrough.  There have been some
+substantial changes in CVS though, but they aren't what I'd term...
+stable.  So, generally, I'd recommend people either use the most
+recent release (0.6.1.9, tagged in CVS as i2p_0_6_1_9), or no more
+than 1 hop tunnels with the latest builds.  On the other hand...
+
+* 2) 0.6.1.10 status
+
+Rather than battle indefinitely with minor tweaks, I've been working
+on my local test network to migrate into the new tunnel creation
+crypto and process [1].  This should address a large portion of the
+tunnel creation failure rate, after which we can tune it further, if
+necessary.
+
+[1] http://dev.i2p.net/cgi-bin/cvsweb.cgi/i2p/router/doc/
+                               tunnel-alt-creation.html?rev=HEAD
+
+One unfortunate side effect is that 0.6.1.10 will not be backwards
+compatible.  We haven't had a backwards incompatible release in a
+long time, but in the early days we did it a bunch so it shouldn't
+be too much of a problem.  Basically, after it works great on my
+local test network, we'll roll it out in parallel to a few brave
+souls for early testing, then when its ready for release, we'll just
+switch the seed references to the seeds for the new network and push
+'er out.
+
+I don't have an ETA on the 0.6.1.10 release, but its looking pretty
+good at the moment (most tunnel lengths are working out, but there
+are a few branches I haven't stressed yet).  More news when there's
+more news, of course.
+
+* 3) ???
+
+Thats about all I have to mention at the moment, though I know there
+are things others are hacking on and there are a few tricks up my
+sleeves for later, but we'll find out more when the time is right.
+Anyway, see y'all in a few minutes!
+
+=jr

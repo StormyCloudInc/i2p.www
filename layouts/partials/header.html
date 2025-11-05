@@ -1,0 +1,85 @@
+<header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="{{ "/" | relLangURL }}" class="logo-link">
+                    <img src="/images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="/images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            <!-- Mobile menu toggle -->
+            <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger"></span>
+            </button>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="{{ relLangURL "/about/" }}" class="{{ if eq .Section "about" }}active{{ end }}">About</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ relLangURL "/about/" }}">Overview</a></li>
+                            <li><a href="{{ relLangURL "/papers/" }}">Research Papers</a></li>
+                            <li><a href="{{ relLangURL "/about/media/" }}">Press</a></li>
+                            <li><a href="{{ relLangURL "/contact/" }}">Contact Us</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{{ relLangURL "/docs/" }}" class="{{ if eq .Section "docs" }}active{{ end }}">Docs</a></li>
+                    <li><a href="{{ relLangURL "/downloads/" }}" class="{{ if eq .Section "downloads" }}active{{ end }}">Downloads</a></li>
+                    <li><a href="{{ relLangURL "/blog/" }}" class="{{ if eq .Section "blog" }}active{{ end }}">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="{{ relLangURL "/get-involved/" }}" class="{{ if eq .Section "get-involved" }}active{{ end }}">Get Involved</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ relLangURL "/get-involved/" }}">Overview</a></li>
+                            <li><a href="{{ relLangURL "/feedback/" }}">Feature Suggestions</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    <!-- Language Selector -->
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            <span class="current-lang">{{ .Site.Language.Lang }}</span>
+                        </button>
+                        <div class="language-dropdown">
+                            {{ $page := . }}
+                            {{ $translations := $page.AllTranslations }}
+                            {{ range .Site.Languages }}
+                                {{ $lang := . }}
+                                {{ $matches := where $translations "Lang" $lang.Lang }}
+                                {{ if gt (len $matches) 0 }}
+                                    {{ $target := index $matches 0 }}
+                                    <a href="{{ $target.RelPermalink }}" class="lang-option{{ if eq $lang.Lang $page.Site.Language.Lang }} active{{ end }}">{{ $lang.LanguageName }}</a>
+                                {{ else }}
+                                    <a href="{{ printf "/%s/" $lang.Lang }}" class="lang-option{{ if eq $lang.Lang $page.Site.Language.Lang }} active{{ end }}">{{ $lang.LanguageName }}</a>
+                                {{ end }}
+                            {{ end }}
+                        </div>
+                    </div>
+
+                    <!-- Theme toggle -->
+                    <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2"/>
+                            <path d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+
+                    <!-- Donate Button -->
+                    <a href="#XTLSAXYD" style="display: none"></a>
+
+                    <!-- CTA Button -->
+                    <a href="{{ relLangURL "/downloads/" }}" class="btn btn-primary">Get I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>

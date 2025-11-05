@@ -1,0 +1,480 @@
+{{ define "main" }}
+
+<div class="proposals-list-page">
+    <div class="container">
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1>I2P Proposals</h1>
+            <p class="page-subtitle">Enhancement Proposals and Specifications for the I2P Network</p>
+        </header>
+
+        <!-- Status Legend -->
+        <div class="status-legend">
+            <h3>Proposal Status</h3>
+            <div class="status-legend-grid">
+                <div class="legend-item">
+                    <span class="legend-badge status-open">Open</span>
+                    <span class="legend-text">Under discussion</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-badge status-accepted">Accepted</span>
+                    <span class="legend-text">Ready to implement</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-badge status-finished">Finished</span>
+                    <span class="legend-text">Accepted & implemented</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-badge status-closed">Closed</span>
+                    <span class="legend-text">Merged into spec</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-badge status-rejected">Rejected</span>
+                    <span class="legend-text">Not being implemented</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-badge status-draft">Draft</span>
+                    <span class="legend-text">Incomplete proposal</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-badge status-meta">Meta</span>
+                    <span class="legend-text">About the proposal process</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="proposals-controls">
+            <div class="filter-group">
+                <label for="status-filter">Filter by status:</label>
+                <select id="status-filter" class="status-filter">
+                    <option value="">All Statuses</option>
+                    <option value="open">Open</option>
+                    <option value="accepted">Accepted</option>
+                    <option value="finished">Finished</option>
+                    <option value="closed">Closed</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="draft">Draft</option>
+                    <option value="meta">Meta</option>
+                    <option value="informational">Informational</option>
+                    <option value="needs-revision">Needs Revision</option>
+                    <option value="dead">Dead</option>
+                    <option value="needs-research">Needs Research</option>
+                    <option value="reserve">Reserve</option>
+                </select>
+            </div>
+            <div class="search-group">
+                <input type="text" id="proposal-search" class="proposal-search" placeholder="Search proposals...">
+            </div>
+        </div>
+
+        <!-- Proposals Table -->
+        <div class="proposals-table-wrapper">
+            <table class="proposals-table">
+                <thead>
+                    <tr>
+                        <th class="col-number">#</th>
+                        <th class="col-title">Title</th>
+                        <th class="col-author">Author</th>
+                        <th class="col-status">Status</th>
+                        <th class="col-created">Created</th>
+                        <th class="col-updated">Updated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ range .Pages }}
+                    <tr class="proposal-row" data-status="{{ lower .Params.status }}" data-number="{{ .Params.number }}">
+                        <td class="col-number">
+                            <a href="{{ .RelPermalink }}" class="proposal-link-number">{{ .Params.number }}</a>
+                        </td>
+                        <td class="col-title">
+                            <a href="{{ .RelPermalink }}" class="proposal-link-title">{{ .Title }}</a>
+                        </td>
+                        <td class="col-author">
+                            {{ .Params.author | default "Unknown" }}
+                        </td>
+                        <td class="col-status">
+                            <span class="proposal-badge status-{{ lower .Params.status }}">{{ .Params.status }}</span>
+                        </td>
+                        <td class="col-created">
+                            {{ .Params.created | default "-" }}
+                        </td>
+                        <td class="col-updated">
+                            {{ .Params.lastupdated | default "-" }}
+                        </td>
+                    </tr>
+                    {{ end }}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="no-results" style="display: none;">
+            <p>No proposals match your filter. Try adjusting your search or filter options.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+.proposals-list-page {
+    min-height: 100vh;
+    padding: var(--spacing-2xl) 0;
+}
+
+/* Page Header */
+.page-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-text);
+}
+
+.page-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+/* Status Legend */
+.status-legend {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.status-legend h3 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    font-size: 1rem;
+    color: var(--color-text);
+}
+
+.status-legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.legend-badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+.legend-text {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+/* Status Badges (reused from single page) */
+.status-open,
+.status-accepted {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-open,
+.dark .status-accepted {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-finished,
+.status-closed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-finished,
+.dark .status-closed {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.dark .status-rejected {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.status-draft,
+.status-needs-revision,
+.status-dead,
+.status-needs-research {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-draft,
+.dark .status-needs-revision,
+.dark .status-dead,
+.dark .status-needs-research {
+    background: #78350f;
+    color: #fde047;
+}
+
+.status-meta,
+.status-informational,
+.status-reserve {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+.dark .status-meta,
+.dark .status-informational,
+.dark .status-reserve {
+    background: #581c87;
+    color: #e879f9;
+}
+
+/* Controls */
+.proposals-controls {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    align-items: center;
+}
+
+.filter-group,
+.search-group {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.filter-group label {
+    font-weight: 500;
+    color: var(--color-text);
+    white-space: nowrap;
+}
+
+.status-filter,
+.proposal-search {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-size: 0.9375rem;
+}
+
+.status-filter:focus,
+.proposal-search:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+}
+
+.proposal-search {
+    flex: 1;
+    max-width: 300px;
+}
+
+/* Table */
+.proposals-table-wrapper {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow-x: auto;
+}
+
+.proposals-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-bg);
+}
+
+.proposals-table thead {
+    background: var(--color-bg-secondary);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.proposals-table th {
+    padding: var(--spacing-md);
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.proposals-table tbody tr {
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color var(--transition-fast);
+}
+
+.proposals-table tbody tr:hover {
+    background: var(--color-bg-secondary);
+}
+
+.proposals-table td {
+    padding: var(--spacing-md);
+    color: var(--color-text);
+}
+
+/* Table Column Sizing */
+.col-number {
+    width: 80px;
+    font-weight: 600;
+}
+
+.col-title {
+    width: 40%;
+}
+
+.col-author {
+    width: 150px;
+}
+
+.col-status {
+    width: 120px;
+}
+
+.col-created,
+.col-updated {
+    width: 120px;
+    font-size: 0.875rem;
+}
+
+/* Links */
+.proposal-link-number,
+.proposal-link-title {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.proposal-link-number:hover,
+.proposal-link-title:hover {
+    color: var(--color-primary-dark, #1535a8);
+    text-decoration: underline;
+}
+
+.dark .proposal-link-number:hover,
+.dark .proposal-link-title:hover {
+    color: #93c5fd;
+}
+
+/* Proposal Badge */
+.proposal-badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    color: var(--color-text-muted);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .proposals-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .col-author {
+        display: none;
+    }
+
+    .col-created {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .status-legend-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .col-status {
+        display: none;
+    }
+
+    .col-updated {
+        display: none;
+    }
+
+    .proposals-table th,
+    .proposals-table td {
+        padding: var(--spacing-sm);
+        font-size: 0.75rem;
+    }
+
+    .col-number {
+        width: 60px;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const statusFilter = document.getElementById('status-filter');
+    const searchInput = document.getElementById('proposal-search');
+    const rows = document.querySelectorAll('.proposal-row');
+    const noResults = document.getElementById('no-results');
+
+    function filterProposals() {
+        const selectedStatus = statusFilter.value.toLowerCase();
+        const searchTerm = searchInput.value.toLowerCase();
+        let visibleCount = 0;
+
+        rows.forEach(row => {
+            const rowStatus = row.dataset.status;
+            const rowNumber = row.dataset.number;
+            const titleCell = row.querySelector('.proposal-link-title').textContent.toLowerCase();
+            const authorCell = row.querySelector('.col-author').textContent.toLowerCase();
+
+            const statusMatch = !selectedStatus || rowStatus === selectedStatus;
+            const searchMatch = !searchTerm || titleCell.includes(searchTerm) ||
+                              rowNumber.includes(searchTerm) ||
+                              authorCell.includes(searchTerm);
+
+            if (statusMatch && searchMatch) {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    statusFilter.addEventListener('change', filterProposals);
+    searchInput.addEventListener('input', filterProposals);
+});
+</script>
+
+{{ end }}
