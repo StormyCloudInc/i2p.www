@@ -28,6 +28,11 @@ log_error() {
     echo -e "${RED}[ERROR]${NC} $*"
 }
 
+# Portable realpath relative function (Alpine doesn't support --relative-to)
+relpath() {
+    python3 -c "import os.path; print(os.path.relpath('$1', '$2'))"
+}
+
 # Check required environment variables
 if [ -z "${OPENAI_API_KEY:-}" ]; then
     log_error "OPENAI_API_KEY environment variable is required"
@@ -84,7 +89,7 @@ fi
 
 log_info "Files to process:"
 for file in "${FILES_TO_TRANSLATE[@]}"; do
-    echo "  - $(realpath --relative-to="$REPO_ROOT" "$file")"
+    echo "  - $(relpath "$file" "$REPO_ROOT")"
 done
 
 # Process each target language
@@ -101,8 +106,8 @@ for TARGET_LANG in $TARGET_LANGUAGES; do
         if [ ! -f "$FILE_PATH" ]; then
             continue
         fi
-        
-        REL_PATH=$(realpath --relative-to="$REPO_ROOT" "$FILE_PATH")
+
+        REL_PATH=$(relpath "$FILE_PATH" "$REPO_ROOT")
         log_info "  Translating: $REL_PATH"
         
         # Translate file using realtime API
@@ -128,7 +133,7 @@ for TARGET_LANG in $TARGET_LANGUAGES; do
         
         if [ $TRANSLATE_EXIT -eq 0 ] && [ $SKIPPED -eq 0 ]; then
             # Check if translated file actually exists
-            REL_PATH_FOR_TRANS=$(realpath --relative-to="$REPO_ROOT" "$FILE_PATH")
+            REL_PATH_FOR_TRANS=$(relpath "$FILE_PATH" "$REPO_ROOT")
             TRANSLATED_PATH=$(echo "$REL_PATH_FOR_TRANS" | sed "s|^content/en/|content/$TARGET_LANG/|")
             if [ -f "$REPO_ROOT/$TRANSLATED_PATH" ]; then
                 # Track successfully translated file
@@ -182,7 +187,7 @@ if [ ${#FAILED_LANGUAGES[@]} -eq 0 ]; then
     for TARGET_LANG in $TARGET_LANGUAGES; do
         for FILE_PATH in "${FILES_TO_TRANSLATE[@]}"; do
             if [ -f "$FILE_PATH" ]; then
-                REL_PATH=$(realpath --relative-to="$REPO_ROOT" "$FILE_PATH")
+                REL_PATH=$(relpath "$FILE_PATH" "$REPO_ROOT")
                 TRANSLATED_PATH=$(echo "$REL_PATH" | sed "s|^content/en/|content/$TARGET_LANG/|")
                 if [ -f "$TRANSLATED_PATH" ]; then
                     git add "$TRANSLATED_PATH"
