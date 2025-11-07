@@ -7,7 +7,7 @@ description: "StormyCloud is officially joining forces with I2P in a more signif
 draft: false
 ---
 
-We're excited to share some news: StormyCloud is officially joining forces with I2P in a more significant way.
+We're excited to share some important news: StormyCloud is officially joining forces with I2P in a more significant way.
 
 For years, StormyCloud has been a critical part of I2P's infrastructure, providing hosting and support that keeps the network running. Now we're formalizing that partnership and expanding what we can do together.
 
