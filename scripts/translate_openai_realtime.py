@@ -140,15 +140,21 @@ Text to translate:
 Provide ONLY the translation, nothing else:"""
 
         try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
+            # GPT-5 only supports default temperature (1), other models support 0.2
+            api_params = {
+                "model": self.model,
+                "messages": [
                     {"role": "system", "content": SYSTEM_PROMPT},
                     {"role": "user", "content": user_prompt}
-                ],
-                temperature=0.2,
-                top_p=0.9
-            )
+                ]
+            }
+
+            # Only add temperature/top_p for non-GPT-5 models
+            if not self.model.startswith("gpt-5"):
+                api_params["temperature"] = 0.2
+                api_params["top_p"] = 0.9
+
+            response = self.client.chat.completions.create(**api_params)
 
             translated = response.choices[0].message.content.strip()
             
