@@ -127,11 +127,11 @@ for TARGET_LANG in $TARGET_LANGUAGES; do
 
         # Test if Python can import required modules
         log_info "  Testing Python environment..."
-        python3 -c "import sys; print(f'Python: {sys.version}', file=sys.stderr)" 2>&1 | while IFS= read -r line; do
+        python3 --version 2>&1 | while IFS= read -r line; do
             log_info "    $line"
         done
 
-        python3 -c "from openai import OpenAI; print('OpenAI module OK', file=sys.stderr)" 2>&1 | while IFS= read -r line; do
+        python3 -c "from openai import OpenAI; print('OpenAI module: OK')" 2>&1 | while IFS= read -r line; do
             log_info "    $line"
         done
 
