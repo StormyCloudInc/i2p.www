@@ -1,4 +1,5 @@
 stages:
+  - translate
   - build
   - deploy
   - secret-detection
@@ -6,6 +7,23 @@ stages:
 variables:
   SECRET_DETECTION_ENABLED: 'true'
   HUGO_VERSION: '0.147.8'
+
+translate:
+  stage: translate
+  image: python:3.11-alpine
+  before_script:
+    - apk add --no-cache git openssh-client bash coreutils
+    - pip install --no-cache-dir openai
+    - git config --global user.name "GitLab CI"
+    - git config --global user.email "ci@i2p.www"
+  script:
+    - bash scripts/ci_translate.sh
+  only:
+    changes:
+      - content/en/**/*.md
+    refs:
+      - main
+  timeout: 1h 30m
 
 build:
   stage: build

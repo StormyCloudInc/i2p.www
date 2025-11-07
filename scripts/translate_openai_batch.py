@@ -26,6 +26,7 @@ Environment:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
@@ -42,6 +43,10 @@ except ImportError:
     sys.exit(1)
 
 BATCH_STATE_FILE = Path(__file__).resolve().parent / "batch_state.json"
+TRANSLATION_HASHES_FILE = Path(__file__).resolve().parent / "translation_hashes.json"
+
+# Target languages for translation (can be modified as needed)
+TARGET_LANGUAGES = ["zh", "es", "ko"]
 
 # Front matter keys that should NOT be translated
 NO_TRANSLATE_KEYS = {
@@ -175,6 +180,102 @@ def save_batch_state(batches: Dict[str, BatchJobState]) -> None:
         data["batches"][batch_id] = batch_dict
 
     BATCH_STATE_FILE.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
+def calculate_file_hash(file_path: Path) -> str:
+    """Calculate SHA256 hash of file content."""
+    content = file_path.read_text(encoding="utf-8")
+    return hashlib.sha256(content.encode("utf-8")).hexdigest()
+
+
+def load_translation_hashes() -> Dict[str, str]:
+    """Load translation hashes from JSON file."""
+    if not TRANSLATION_HASHES_FILE.exists():
+        return {}
+    
+    try:
+        data = json.loads(TRANSLATION_HASHES_FILE.read_text(encoding="utf-8"))
+        return data.get("hashes", {})
+    except (json.JSONDecodeError, FileNotFoundError):
+        return {}
+
+
+def save_translation_hashes(hashes: Dict[str, str]) -> None:
+    """Save translation hashes to JSON file."""
+    data = {"hashes": hashes}
+    TRANSLATION_HASHES_FILE.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
+def get_files_to_translate(files: List[Path], base_dir: Optional[Path] = None) -> List[Path]:
+    """Compare file hashes and return list of files that need translation.
+    
+    Args:
+        files: List of file paths to check
+        base_dir: Base directory for relative paths in hash file (default: current working directory)
+    
+    Returns:
+        List of files that are new or have changed (hash differs)
+    """
+    stored_hashes = load_translation_hashes()
+    files_to_translate = []
+    
+    if base_dir is None:
+        base_dir = Path.cwd()
+    
+    for file_path in files:
+        if not file_path.exists():
+            continue
+        
+        # Calculate relative path from base_dir for consistency
+        try:
+            rel_path = file_path.relative_to(base_dir)
+        except ValueError:
+            # If file is not under base_dir, use absolute path
+            rel_path = file_path
+        
+        rel_path_str = str(rel_path).replace("\\", "/")  # Normalize path separators
+        
+        current_hash = calculate_file_hash(file_path)
+        stored_hash = stored_hashes.get(rel_path_str)
+        
+        if stored_hash is None:
+            # New file
+            files_to_translate.append(file_path)
+        elif stored_hash != current_hash:
+            # File has changed
+            files_to_translate.append(file_path)
+    
+    return files_to_translate
+
+
+def update_translation_hashes(files: List[Path], base_dir: Optional[Path] = None) -> None:
+    """Update translation hashes for successfully translated files.
+    
+    Args:
+        files: List of file paths to update hashes for
+        base_dir: Base directory for relative paths in hash file (default: current working directory)
+    """
+    stored_hashes = load_translation_hashes()
+    
+    if base_dir is None:
+        base_dir = Path.cwd()
+    
+    for file_path in files:
+        if not file_path.exists():
+            continue
+        
+        # Calculate relative path from base_dir for consistency
+        try:
+            rel_path = file_path.relative_to(base_dir)
+        except ValueError:
+            # If file is not under base_dir, use absolute path
+            rel_path = file_path
+        
+        rel_path_str = str(rel_path).replace("\\", "/")  # Normalize path separators
+        current_hash = calculate_file_hash(file_path)
+        stored_hashes[rel_path_str] = current_hash
+    
+    save_translation_hashes(stored_hashes)
 
 
 def split_front_matter(text: str) -> tuple[List[FrontMatterEntry], str]:
