@@ -117,6 +117,24 @@ for TARGET_LANG in $TARGET_LANGUAGES; do
         # Hash checking ensures we only translate if content actually changed
         # Capture both stdout and stderr for debugging
         log_info "  Running translation command..."
+        log_info "  Command: python3 $PYTHON_SCRIPT --source \"$FILE_PATH\" --target-lang \"$TARGET_LANG\" --model gpt-4o-mini --overwrite --check-hashes --output-root \"$REPO_ROOT\" --quiet"
+
+        # Test if Python script exists and is readable
+        if [ ! -f "$PYTHON_SCRIPT" ]; then
+            log_error "  Python script not found: $PYTHON_SCRIPT"
+            exit 1
+        fi
+
+        # Test if Python can import required modules
+        log_info "  Testing Python environment..."
+        python3 -c "import sys; print(f'Python: {sys.version}', file=sys.stderr)" 2>&1 | while IFS= read -r line; do
+            log_info "    $line"
+        done
+
+        python3 -c "from openai import OpenAI; print('OpenAI module OK', file=sys.stderr)" 2>&1 | while IFS= read -r line; do
+            log_info "    $line"
+        done
+
         TRANSLATE_OUTPUT=$(python3 "$PYTHON_SCRIPT" \
             --source "$FILE_PATH" \
             --target-lang "$TARGET_LANG" \
@@ -136,6 +154,8 @@ for TARGET_LANG in $TARGET_LANGUAGES; do
             echo "$TRANSLATE_OUTPUT" | while IFS= read -r line; do
                 log_info "    $line"
             done
+        else
+            log_warn "  No output from translation command!"
         fi
         
         # Check if output indicates file was skipped (no error, but no translation needed)

@@ -524,27 +524,37 @@ def translate_file(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Translate Hugo markdown using OpenAI API (realtime)")
-    
-    # File selection
-    file_group = parser.add_mutually_exclusive_group(required=True)
-    file_group.add_argument("--source", help="Source markdown file path (for single file)")
-    file_group.add_argument("--source-dir", help="Source directory (for multiple files)")
-    
-    parser.add_argument("--pattern", help="File pattern for source-dir (e.g., '2025-*.md')")
-    parser.add_argument("--target-lang", required=True, help="Target language code (e.g., de, ko, es)")
-    parser.add_argument("--source-lang", default="en", help="Source language code (default: en)")
-    parser.add_argument("--model", default="gpt-4o-mini", help="OpenAI model (default: gpt-4o-mini)")
-    parser.add_argument("--output-root", help="Output root directory (default: auto-detect)")
-    parser.add_argument("--dry-run", action="store_true", help="Preview without writing files")
-    parser.add_argument("--overwrite", action="store_true", help="Overwrite existing translated files")
-    parser.add_argument("--check-hashes", action="store_true", default=True, help="Only translate files that changed (default: True)")
-    parser.add_argument("--no-check-hashes", dest="check_hashes", action="store_false", help="Translate all files regardless of hash")
-    parser.add_argument("--quiet", action="store_true", help="Reduce output verbosity")
-    parser.add_argument("--update-hashes", action="store_true", default=True, help="Update translation hashes after successful translation (default: True)")
-    parser.add_argument("--no-update-hashes", dest="update_hashes", action="store_false", help="Don't update translation hashes")
+    print("DEBUG: Script starting", file=sys.stderr)
 
-    args = parser.parse_args()
+    try:
+        parser = argparse.ArgumentParser(description="Translate Hugo markdown using OpenAI API (realtime)")
+
+        # File selection
+        file_group = parser.add_mutually_exclusive_group(required=True)
+        file_group.add_argument("--source", help="Source markdown file path (for single file)")
+        file_group.add_argument("--source-dir", help="Source directory (for multiple files)")
+
+        parser.add_argument("--pattern", help="File pattern for source-dir (e.g., '2025-*.md')")
+        parser.add_argument("--target-lang", required=True, help="Target language code (e.g., de, ko, es)")
+        parser.add_argument("--source-lang", default="en", help="Source language code (default: en)")
+        parser.add_argument("--model", default="gpt-4o-mini", help="OpenAI model (default: gpt-4o-mini)")
+        parser.add_argument("--output-root", help="Output root directory (default: auto-detect)")
+        parser.add_argument("--dry-run", action="store_true", help="Preview without writing files")
+        parser.add_argument("--overwrite", action="store_true", help="Overwrite existing translated files")
+        parser.add_argument("--check-hashes", action="store_true", default=True, help="Only translate files that changed (default: True)")
+        parser.add_argument("--no-check-hashes", dest="check_hashes", action="store_false", help="Translate all files regardless of hash")
+        parser.add_argument("--quiet", action="store_true", help="Reduce output verbosity")
+        parser.add_argument("--update-hashes", action="store_true", default=True, help="Update translation hashes after successful translation (default: True)")
+        parser.add_argument("--no-update-hashes", dest="update_hashes", action="store_false", help="Don't update translation hashes")
+
+        print("DEBUG: Parsing arguments", file=sys.stderr)
+        args = parser.parse_args()
+        print(f"DEBUG: Args parsed successfully: source={args.source}, target_lang={args.target_lang}", file=sys.stderr)
+    except Exception as exc:
+        print(f"FATAL ERROR during argument parsing: {exc}", file=sys.stderr)
+        import traceback
+        traceback.print_exc(file=sys.stderr)
+        return 1
 
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
@@ -690,5 +700,11 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except Exception as exc:
+        print(f"FATAL UNCAUGHT EXCEPTION: {exc}", file=sys.stderr)
+        import traceback
+        traceback.print_exc(file=sys.stderr)
+        sys.exit(1)
 
