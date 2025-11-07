@@ -1,10 +1,9 @@
 ---
-title: "StormyCloud Joins the I2P Family"
+title: "StormyCloud Joins the I2P Family-5"
 date: 2025-11-01
 author: idk
 categories: ["news"]
 description: "StormyCloud is officially joining forces with I2P in a more significant way, with Lance James and idk joining StormyCloud's Board of Directors."
-API: True
 ---
 
 We're excited to share important news: StormyCloud is officially joining forces with I2P in a significant way.
