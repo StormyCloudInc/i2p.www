@@ -504,6 +504,10 @@ def translate_file(
         if TRANSLATION_LOG.exists():
             try:
                 log_data = json.loads(TRANSLATION_LOG.read_text(encoding="utf-8"))
+                # Ensure log_data is a list, not a dict
+                if not isinstance(log_data, list):
+                    print(f"Warning: Translation log was not a list, resetting to empty list", file=sys.stderr)
+                    log_data = []
             except (json.JSONDecodeError, FileNotFoundError):
                 log_data = []
         else:
