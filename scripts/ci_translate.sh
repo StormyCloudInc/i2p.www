@@ -115,7 +115,6 @@ for TARGET_LANG in $TARGET_LANGUAGES; do
 
         # Translate file using realtime API
         # Hash checking ensures we only translate if content actually changed
-        # Capture both stdout and stderr for debugging
         log_info "  Running translation command..."
         log_info "  Command: python3 $PYTHON_SCRIPT --source \"$FILE_PATH\" --target-lang \"$TARGET_LANG\" --model gpt-4o-mini --overwrite --check-hashes --output-root \"$REPO_ROOT\" --quiet"
 
@@ -135,37 +134,21 @@ for TARGET_LANG in $TARGET_LANGUAGES; do
             log_info "    $line"
         done
 
-        TRANSLATE_OUTPUT=$(python3 "$PYTHON_SCRIPT" \
+        # Run translation WITHOUT capturing output first, so we can see errors in real-time
+        log_info "  Starting translation (output will stream below)..."
+        python3 "$PYTHON_SCRIPT" \
             --source "$FILE_PATH" \
             --target-lang "$TARGET_LANG" \
             --model gpt-4o-mini \
             --overwrite \
             --check-hashes \
             --output-root "$REPO_ROOT" \
-            --quiet 2>&1)
+            --quiet
 
         TRANSLATE_EXIT=$?
         log_info "  Translation exit code: $TRANSLATE_EXIT"
-        log_info "  Translation output length: ${#TRANSLATE_OUTPUT} chars"
 
-        # Always show output for debugging
-        if [ -n "$TRANSLATE_OUTPUT" ]; then
-            log_info "  Translation output:"
-            echo "$TRANSLATE_OUTPUT" | while IFS= read -r line; do
-                log_info "    $line"
-            done
-        else
-            log_warn "  No output from translation command!"
-        fi
-        
-        # Check if output indicates file was skipped (no error, but no translation needed)
-        SKIPPED=0
-        if echo "$TRANSLATE_OUTPUT" | grep -qi "No files need translation"; then
-            SKIPPED=1
-            log_info "    Skipped (already translated): $REL_PATH"
-        fi
-        
-        if [ $TRANSLATE_EXIT -eq 0 ] && [ $SKIPPED -eq 0 ]; then
+        if [ $TRANSLATE_EXIT -eq 0 ]; then
             # Check if translated file actually exists
             REL_PATH_FOR_TRANS=$(relpath "$FILE_PATH" "$REPO_ROOT")
             TRANSLATED_PATH=$(echo "$REL_PATH_FOR_TRANS" | sed "s|^content/en/|content/$TARGET_LANG/|")
@@ -178,25 +161,10 @@ for TARGET_LANG in $TARGET_LANGUAGES; do
                 log_info "    Successfully translated: $REL_PATH"
             else
                 log_warn "    Translation completed but output file not found: $TRANSLATED_PATH"
-                # Check if there was any output indicating what happened
-                if [ -n "$TRANSLATE_OUTPUT" ]; then
-                    echo "$TRANSLATE_OUTPUT" | while IFS= read -r line; do
-                        log_warn "    $line"
-                    done
-                fi
             fi
-        elif [ $TRANSLATE_EXIT -eq 0 ] && [ $SKIPPED -eq 1 ]; then
-            # File was skipped - this is fine, no error
-            :
         else
             log_error "    Failed to translate: $REL_PATH"
             log_error "    Exit code: $TRANSLATE_EXIT"
-            # Show error output if any
-            if [ -n "$TRANSLATE_OUTPUT" ]; then
-                echo "$TRANSLATE_OUTPUT" | while IFS= read -r line; do
-                    log_error "    $line"
-                done
-            fi
             TRANSLATION_FAILED=1
         fi
     done
