@@ -190,43 +190,56 @@ def save_translation_hashes(hashes: Dict[str, str]) -> None:
 
 def get_files_to_translate(files: List[Path], base_dir: Optional[Path] = None) -> List[Path]:
     """Compare file hashes and return list of files that need translation.
-    
+
     Args:
         files: List of file paths to check
         base_dir: Base directory for relative paths in hash file (default: current working directory)
-    
+
     Returns:
         List of files that are new or have changed (hash differs)
     """
     stored_hashes = load_translation_hashes()
     files_to_translate = []
-    
+
     if base_dir is None:
         base_dir = Path.cwd()
-    
+
+    print(f"DEBUG get_files_to_translate: base_dir={base_dir}", file=sys.stderr)
+    print(f"DEBUG get_files_to_translate: stored_hashes keys={list(stored_hashes.keys())}", file=sys.stderr)
+
     for file_path in files:
         if not file_path.exists():
+            print(f"DEBUG: File does not exist: {file_path}", file=sys.stderr)
             continue
-        
+
         # Calculate relative path from base_dir for consistency
         try:
             rel_path = file_path.relative_to(base_dir)
         except ValueError:
             # If file is not under base_dir, use absolute path
             rel_path = file_path
-        
+            print(f"DEBUG: Could not make relative path for {file_path}, using absolute", file=sys.stderr)
+
         rel_path_str = str(rel_path).replace("\\", "/")  # Normalize path separators
-        
+
         current_hash = calculate_file_hash(file_path)
         stored_hash = stored_hashes.get(rel_path_str)
-        
+
+        print(f"DEBUG: Checking {rel_path_str}", file=sys.stderr)
+        print(f"DEBUG:   current_hash={current_hash[:16]}...", file=sys.stderr)
+        print(f"DEBUG:   stored_hash={stored_hash[:16] if stored_hash else 'None'}...", file=sys.stderr)
+
         if stored_hash is None:
             # New file
+            print(f"DEBUG:   -> NEW FILE, will translate", file=sys.stderr)
             files_to_translate.append(file_path)
         elif stored_hash != current_hash:
             # File has changed
+            print(f"DEBUG:   -> CHANGED FILE, will translate", file=sys.stderr)
             files_to_translate.append(file_path)
-    
+        else:
+            print(f"DEBUG:   -> UNCHANGED, skipping", file=sys.stderr)
+
     return files_to_translate
 
 
@@ -574,8 +587,17 @@ def main() -> int:
     # Filter by hash if requested
     if args.check_hashes and not args.dry_run:
         base_dir = files[0].parent.parent.parent if files else Path.cwd()
+        print(f"DEBUG: Hash checking enabled", file=sys.stderr)
+        print(f"DEBUG: base_dir = {base_dir}", file=sys.stderr)
+        print(f"DEBUG: files[0] = {files[0]}", file=sys.stderr)
+        print(f"DEBUG: files[0].parent.parent.parent = {files[0].parent.parent.parent}", file=sys.stderr)
+
         original_count = len(files)
         files = get_files_to_translate(files, base_dir=base_dir)
+
+        print(f"DEBUG: Original file count: {original_count}", file=sys.stderr)
+        print(f"DEBUG: After hash filter: {len(files)}", file=sys.stderr)
+
         if not files:
             if not args.quiet:
                 print("No files need translation (all files already translated)")

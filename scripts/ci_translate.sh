@@ -109,10 +109,14 @@ for TARGET_LANG in $TARGET_LANGUAGES; do
 
         REL_PATH=$(relpath "$FILE_PATH" "$REPO_ROOT")
         log_info "  Translating: $REL_PATH"
-        
+        log_info "  Debug: FILE_PATH=$FILE_PATH"
+        log_info "  Debug: TARGET_LANG=$TARGET_LANG"
+        log_info "  Debug: REPO_ROOT=$REPO_ROOT"
+
         # Translate file using realtime API
         # Hash checking ensures we only translate if content actually changed
         # Capture both stdout and stderr for debugging
+        log_info "  Running translation command..."
         TRANSLATE_OUTPUT=$(python3 "$PYTHON_SCRIPT" \
             --source "$FILE_PATH" \
             --target-lang "$TARGET_LANG" \
@@ -121,8 +125,18 @@ for TARGET_LANG in $TARGET_LANGUAGES; do
             --check-hashes \
             --output-root "$REPO_ROOT" \
             --quiet 2>&1)
-        
+
         TRANSLATE_EXIT=$?
+        log_info "  Translation exit code: $TRANSLATE_EXIT"
+        log_info "  Translation output length: ${#TRANSLATE_OUTPUT} chars"
+
+        # Always show output for debugging
+        if [ -n "$TRANSLATE_OUTPUT" ]; then
+            log_info "  Translation output:"
+            echo "$TRANSLATE_OUTPUT" | while IFS= read -r line; do
+                log_info "    $line"
+            done
+        fi
         
         # Check if output indicates file was skipped (no error, but no translation needed)
         SKIPPED=0
