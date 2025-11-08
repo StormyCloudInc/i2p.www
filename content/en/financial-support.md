@@ -223,16 +223,25 @@ API_Translate: true
     <div class="donation-method">
       <h4>Monero (XMR) - Recommended</h4>
       <p>Monero provides the strongest privacy guarantees for donations. All transactions are confidential and untraceable.</p>
-      <div class="crypto-address">45Gtj5tkhs4EsbnV7kkhMCRpbZUdqCQqR5qmLFVLAvbFCYaPL4pFbBkEBLJ7beHqkiJxdTBkPwFsT5EMu5jDrYBHPjQzPuv</div>
+      <div class="crypto-address">85igd4Dw6ychvi8iUYADHfgLCmdT348SA6sMnYgxE86YZxX98Au6rsF9B9DmcqEXWRZWDcPdarufHUUqwP73GVrq6BaC9dr</div>
     </div>
 
+    <div class="donation-method">
+      <h4>Bitcoin (BTC)</h4>
+      <p>Bitcoin donations are accepted for convenience, though they offer less privacy than Monero.</p>
+      <div class="crypto-address">3JSSF45pAW5ujWbBuRFe25pBiwp1vjSRNb</div>
+    </div>
 
-
-
+    <div class="donation-method">
+      <h4>Zcash (ZEC)</h4>
+      <p>Zcash offers enhanced privacy features for those who prefer this cryptocurrency.</p>
+      <div class="crypto-address">t1TwTuu4qU25aGvh59EMkCAZdmwJepkyQcD</div>
+    </div>
   </div>
 
   <div class="info-box">
     <p><strong>Privacy First:</strong> We recommend cryptocurrency donations for maximum anonymity. All donations support the entire project - no funds go to individual developers unless explicitly designated.</p>
+    <p style="margin-top: 0.75rem;"><strong>Other Cryptocurrencies:</strong> Want to donate using a different cryptocurrency? Please <a href="/en/contact/">contact us</a> and we'll provide an address for your preferred currency.</p>
   </div>
 </div>
 
