@@ -13,9 +13,10 @@ I2P is built entirely by volunteers who donate their time, expertise, and resour
 
 ## Our Supporters (2004-2025)
 
-We're grateful to everyone who has contributed financially to I2P over the years. Your support pays for infrastructure, domain registrations, and the countless hours that go into building secure, private communication tools.
+We're grateful to everyone who has contributed to I2P over the years - whether through financial donations, code contributions, infrastructure support, documentation, translations, or community building. Every contribution, no matter the form, helps make I2P stronger.
 
-### Donors
+<div class="supporters-grid">
+<div class="supporter-column">
 
 - Nathan Lee
 - Alex
@@ -23,18 +24,43 @@ We're grateful to everyone who has contributed financially to I2P over the years
 - JJE
 - JULLIAN
 - David
+
+</div>
+<div class="supporter-column">
+
 - Leonardo
 - pcboy
 - Stian Berger
 - susbarbatus
 - ComeIn3s
 - TimeTravelDuck
+
+</div>
+<div class="supporter-column">
+
 - Dr.Wax
 - foebrian
 - Scott
 - NaEaP
 - DuckDuckGo
-- [Your name here - donate to be listed!]
+- [Your name here!]
+
+</div>
+</div>
+
+<style>
+.supporters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.supporter-column ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+</style>
 
 ---
 
