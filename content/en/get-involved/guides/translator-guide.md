@@ -47,53 +47,6 @@ The I2P router console is the primary interface users interact with when running
 
 All router console translations are managed through Transifex in `.po` (gettext) format.
 
-### Website Translation
-
-The I2P website (including documentation, guides, and blog posts) uses a Git-based translation workflow. This allows for community-driven translations with full version control.
-
-**How it works:**
-
-1. **Find a page to translate** - Each documentation page has an "Edit on GitLab" link at the bottom
-2. **Fork the repository** - Click the link to view the page source on GitLab, then fork the project
-3. **Update the front matter** - In the Markdown file header, make two changes:
-   ```yaml
-   API_Translate: false
-   translator: your-username-here
-   ```
-4. **Translate the content** - Translate the entire page (we ask that you complete full pages, not partial translations)
-5. **Submit a Pull Request** - Submit your changes for review
-
-**Important guidelines:**
-
-- **Complete pages only** - Please translate entire pages rather than partial content
-- **Update front matter** - Always set `API_Translate: false` and add your `translator:` name
-- **Preserve formatting** - Keep Markdown syntax, links, and code blocks intact
-- **Language folders** - Translated pages go in language-specific folders (e.g., `content/es/` for Spanish)
-
-**Example:**
-
-Original English page header:
-```yaml
----
-title: "BitTorrent"
-description: "Using BitTorrent over I2P"
-lastUpdated: "2025-10"
-accurateFor: "2.10.0"
----
-```
-
-Translated Spanish page header:
-```yaml
----
-title: "BitTorrent"
-description: "Usando BitTorrent sobre I2P"
-lastUpdated: "2025-10"
-accurateFor: "2.10.0"
-API_Translate: false
-translator: juan-garcia
----
-```
-
 ## Translation Guidelines
 
 ### Style and Tone
