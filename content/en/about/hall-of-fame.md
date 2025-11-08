@@ -51,9 +51,15 @@ We're grateful to everyone who has contributed to I2P over the years - whether t
 <style>
 .supporters-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   margin: 2rem 0;
+}
+
+@media (max-width: 768px) {
+  .supporters-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .supporter-column ul {
