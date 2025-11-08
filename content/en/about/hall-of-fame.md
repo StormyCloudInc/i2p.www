@@ -178,26 +178,6 @@ We're grateful to everyone who has contributed to I2P over the years - whether t
 
 ---
 
-## Institutional Support
-
-### StormyCloud
-
-[StormyCloud](https://stormycloud.org) has been instrumental in supporting I2P's infrastructure and operations. As our fiscal sponsor (501c3 nonprofit), they process donations and provide critical infrastructure services. [Learn more about our partnership](/en/blog/2025/11/01/stormycloud-joins-the-i2p-family/).
-
----
-
-## How Your Donations Help
-
-Financial contributions to I2P support:
-
-- **Infrastructure** - Servers, bandwidth, and hosting for reseed servers and mirrors
-- **Domain registrations** - Keeping I2P domains and services online
-- **Development** - Supporting developers who maintain and improve I2P
-- **Documentation** - Creating guides, tutorials, and translated content
-- **Research** - Privacy and security research to strengthen the network
-
----
-
 ## Support I2P Today
 
 Ready to join the Hall of Fame? [Visit our donation page](/en/financial-support/) to contribute via cryptocurrency, credit card, or bank transfer. Every contribution, no matter the size, helps keep I2P strong and independent.
