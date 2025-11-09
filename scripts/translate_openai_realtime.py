@@ -44,7 +44,7 @@ TRANSLATION_HASHES_FILE = Path(__file__).resolve().parent / "translation_hashes.
 TRANSLATION_LOG = Path(__file__).resolve().parent / "translation_log.json"
 
 # Target languages for translation (can be modified as needed)
-TARGET_LANGUAGES = ["es", "ko", "zh"]
+TARGET_LANGUAGES = ["zh", "es", "ko", "ru", "cs", "de", "fr", "tr", "vi", "hi", "ar", "pt"]
 
 # Front matter keys that should NOT be translated
 NO_TRANSLATE_KEYS = {
@@ -124,7 +124,8 @@ class OpenAITranslator:
         lang_names = {
             "en": "English", "es": "Spanish", "de": "German", "ko": "Korean",
             "fr": "French", "it": "Italian", "pt": "Portuguese", "ru": "Russian",
-            "ja": "Japanese", "zh": "Chinese"
+            "ja": "Japanese", "zh": "Chinese", "cs": "Czech", "tr": "Turkish",
+            "vi": "Vietnamese", "hi": "Hindi", "ar": "Arabic"
         }
 
         target_lang_name = lang_names.get(target_lang.lower(), target_lang)

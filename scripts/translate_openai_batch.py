@@ -46,7 +46,7 @@ BATCH_STATE_FILE = Path(__file__).resolve().parent / "batch_state.json"
 TRANSLATION_HASHES_FILE = Path(__file__).resolve().parent / "translation_hashes.json"
 
 # Target languages for translation (can be modified as needed)
-TARGET_LANGUAGES = ["zh", "es", "ko"]
+TARGET_LANGUAGES = ["zh", "es", "ko", "ru", "cs", "de", "fr", "tr", "vi", "hi", "ar", "pt"]
 
 # Front matter keys that should NOT be translated
 NO_TRANSLATE_KEYS = {
@@ -402,7 +402,8 @@ def generate_batch_requests(
     lang_names = {
         "en": "English", "es": "Spanish", "de": "German", "ko": "Korean",
         "fr": "French", "it": "Italian", "pt": "Portuguese", "ru": "Russian",
-        "ja": "Japanese", "zh": "Chinese"
+        "ja": "Japanese", "zh": "Chinese", "cs": "Czech", "tr": "Turkish",
+        "vi": "Vietnamese", "hi": "Hindi", "ar": "Arabic"
     }
 
     target_lang_name = lang_names.get(target_lang.lower(), target_lang)
@@ -910,7 +911,7 @@ def main() -> int:
     parser.add_argument("--pattern", help="File pattern for source-dir (e.g., '2025-*.md')")
     parser.add_argument("--target-lang", help="Target language code (e.g., de, ko, es)")
     parser.add_argument("--source-lang", default="en", help="Source language code (default: en)")
-    parser.add_argument("--model", default="gpt-4o-mini", help="OpenAI model (default: gpt-4o-mini)")
+    parser.add_argument("--model", default="gpt-5", help="OpenAI model (default: gpt-5)")
     parser.add_argument("--output-root", help="Output root directory (default: auto-detect)")
     parser.add_argument("--dry-run", action="store_true", help="Preview without submitting")
 

@@ -50,18 +50,7 @@ Our primary IRC network is the Irc2P network within I2P; a default tunnel to thi
 
 ## Mailing Lists
 
-I2P has no active mailing lists, however archives can be accessed.
-
-**Lists:**
-
-- [i2p-browser-dev](http://lists.i2p/postorius/lists/i2p-browser-dev.lists.i2p/) ([Archive](http://lists.i2p/hyperkitty/lists/i2p-browser-dev@lists.i2p/))
-  I2P developer discussions - anything related to development of I2P
-
-- [i2p-browser-announce](http://lists.i2p/postorius/lists/i2p-browser-announce.lists.i2p/) ([Archive](http://lists.i2p/hyperkitty/lists/i2p-browser-announce@lists.i2p/))
-  General I2P discussion - anything that doesn't fit in a different list goes here
-
-- [i2p-outproxy-dev](http://lists.i2p/postorius/lists/i2p-outproxy-dev.lists.i2p/) ([Archive](http://lists.i2p/hyperkitty/lists/i2p-outproxy-dev@lists.i2p/))
-  General I2P discussion - anything that doesn't fit in a different list goes here
+Join our mailing list by entering your email in the footer of this website to receive updates and announcements about I2P.
 
 ## Team
 
@@ -70,28 +59,21 @@ I2P has no active mailing lists, however archives can be accessed.
 | Role | Person | Description |
 |------|--------|-------------|
 | **I2P Java Release Manager** | idk | Builds and signs the releases |
-| **Outreach** | Sadie | Coordinator with community, NGOs and human rights groups. Meeting facilitator, Digital Security training and Press |
-| **Assistant PR manager** | idk | Public speaking, public relations assistance |
 | **Forum admin** | eche\|on | I2P public forum maintainer |
-| **Download mirrors admin** | idk | Manage the mirrors for the download files |
-| **Website mirrors admin** | [vacant] | Manage the mirrors for the website |
-| **Monotone guru** | eche\|on | Manage the public monotone repositories |
+| **Download mirrors admin** | StormyCloud | Manage the mirrors for the download files |
 | **Packager; Linux** | idk | Linux (Debian/Ubuntu) distribution packager |
 | **Packager; Windows** | idk | Windows installer packager |
 | **Packager; OSX** | echelon | OSX installer packager |
 | **Release Manager Alternates** | eche\|on | Backup release managers |
 | **CI admin** | idk | Maintain Continuous Integration infrastructure |
-| **Reseed Admin** | backup | Monitors, advises and recruits reseed hosts |
-| **Gitlab admin** | idk | I2P Gitlab maintainer |
-| **Localization** | eche\|on, idk, Sadie | Admins on [Transifex](https://www.transifex.com/projects/p/I2P/) |
+| **Reseed Admin** | idk | Monitors, advises and recruits reseed hosts |
+| **Gitea admin** | idk | I2P Gitea maintainer |
+| **Localization** | eche\|on, idk, zzz | Admins on [Transifex](https://www.transifex.com/projects/p/I2P/) |
 | **Translators** | many many people! | Translators on [Transifex](https://www.transifex.com/projects/p/I2P/) |
-| **Usability Lead** | Sadie | Usability research |
-| **Product Development** | Sadie | Supervises projects from the early planning stages to project completion |
-| **Website Maintainer** | idk | Manage the public project website content design |
-| **Webserver admin** | eche\|on | Manage public project webservers |
+| **Website Maintainer** | StormyCloud | Manage the public project website content design |
+| **Webserver admin** | StormyCloud | Manage public project webservers |
 | **Website admin** | idk | Manage the public project website |
-| **News Admin** | eche\|on | Manage router console news feed |
-| **Backup News Admin** | idk | Manage the backup news feed |
+| **News Admin** | idk | Manage router console news feed |
 | **Google Play admin** | idk | |
 | **F-Droid admin** | idk | |
 | **Outproxy admin** | StormyCloud | |
@@ -102,62 +84,10 @@ I2P has no active mailing lists, however archives can be accessed.
 |---------|--------|-------------|
 | **I2P mail lead** | postman | Organize and develop the i2p mail system |
 | **I2PSnark lead** | idk | Maintains the integrated Bittorrent client |
-| **Syndie lead** | [vacant] | Syndie development |
 | **Susimail lead** | idk | Susimail development |
 | **Android lead** | idk | Android development |
-| **Console** | idk, Sadie | Router console HTML/CSS design |
+| **Console** | idk | Router console HTML/CSS design |
 | **SAM** | idk | SAM maintainer |
-
-### Contributors
-
-| Person | Contribution |
-|--------|-------------|
-| cervantes | fire2pe dev, console enhancements |
-| Mathiasdm | desktopgui, dijjer port |
-| idk | Debian/Ubuntu Packager and PPA maintainer |
-| str4d | Routerconsole backend and UI work, website revamp, unit tests work |
-| [vacant] | Help needed on many fronts! |
-
-### Past Contributors
-
-| Person | Contribution |
-|--------|-------------|
-| mihi | I2PTunnel development, ministreaming library |
-| zzz | Project lead, Lead Developer, Lead Maintainer, Forum Administrator, many other roles |
-| jrandom | Project lead, Syndie lead |
-| Complication | Project lead, Syndie lead, I2Phex, support guru |
-| mkvore | iMule lead |
-| redzara, striker, legion | I2Phex work |
-| Connely | Python SAM library, attack simulations |
-| mastiejaner | i2pmail development |
-| dust | Syndie help |
-| susi23 | i2p mail, susimail and susidns apps |
-| sirup | I2Phex (port of Phex to I2P) |
-| Ragnarok | addressbook, i2p-bt, syndie client |
-| duck | organize and develop the i2p-bt BitTorrent port |
-| thecrypto | encryption and signature routines, I2PIM |
-| aum | SAM jython code, work on stasher (DHT) and v2v (VoI2P) |
-| hypercubus | installer, systray, bogobot |
-| ugha | jbigi development, wiki migration, doc cleanup |
-| oOo | java debugging and client development on I2PTunnel and the router console |
-| BrianR | SAM perl module |
-| eco | i2psnark work |
-| shendaras | java cleanup |
-| JAnonymous | docs. wiki migration |
-| jar | translations into French |
-| scintilla | C port of jcpuid |
-| smeghead | C# SAM library, pants, fortuna integration |
-| Nightblade | libSAM |
-| dinoman, DrWoo | i2p-bt tracker development |
-| dr\|z3d | Console and website themes |
-| walking | Chinese translation |
-| monkeybrains | Dutch translation |
-| magma | French translation |
-| eche\|on, mixxy | German translation |
-| rus, 4get, slow | Russian translation |
-| user | Spanish translation |
-| thelastcode, hamada | Arabic translation |
-| ... and many others | |
 
 [Hall of Fame!](/en/about/hall-of-fame/)
 
