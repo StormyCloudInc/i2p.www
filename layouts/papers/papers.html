@@ -8,7 +8,7 @@
         <!-- Filter Controls -->
         <div class="papers-controls">
             <div class="search-box">
-                <input type="search" id="papers-search" placeholder="Search papers by title, author, or keywords..." />
+                <input type="search" id="papers-search" placeholder="{{ i18n "papers.searchPlaceholder" }}" />
                 <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
                     <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -16,16 +16,16 @@
             </div>
 
             <div class="filter-controls">
-                <label for="year-filter">Filter by year:</label>
+                <label for="year-filter">{{ i18n "papers.filterByYear" }}</label>
                 <select id="year-filter">
-                    <option value="all">All Years</option>
+                    <option value="all">{{ i18n "papers.allYears" }}</option>
                 </select>
 
                 <button id="sort-toggle" class="sort-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                         <path d="M12 5v14M5 12l7-7 7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <span id="sort-label">Newest First</span>
+                    <span id="sort-label">{{ i18n "papers.newestFirst" }}</span>
                 </button>
             </div>
         </div>
@@ -45,15 +45,15 @@
                 <circle cx="11" cy="11" r="8" stroke-width="2"/>
                 <path d="m21 21-4.35-4.35" stroke-width="2" stroke-linecap="round"/>
             </svg>
-            <p>No papers found matching your search.</p>
+            <p>{{ i18n "papers.noResultsFound" }}</p>
         </div>
     </div>
 </section>
 
 <section class="papers-footer">
     <div class="container">
-        <p><strong>To submit new or corrected entries:</strong> Please send to <a href="mailto:research@i2p.net">research@i2p.net</a>, preferably in BibTeX format.</p>
-        <p class="text-muted">Bibliography source code adapted from the <a href="https://freehaven.net/anonbib/" target="_blank">Free Haven anonymity bibliography</a>.</p>
+        <p><strong>{{ i18n "papers.submitEntries" }}</strong> {{ i18n "papers.submitEmail" }} <a href="mailto:research@i2p.net">research@i2p.net</a>, {{ i18n "papers.preferBibtex" }}</p>
+        <p class="text-muted">{{ i18n "papers.bibSource" }} <a href="https://freehaven.net/anonbib/" target="_blank">{{ i18n "papers.freeHavenBib" }}</a>.</p>
     </div>
 </section>
 
@@ -383,6 +383,15 @@
     const papersCount = document.getElementById('papers-count');
     const noResults = document.getElementById('no-results');
 
+    // i18n strings
+    const i18n = {
+        newestFirst: '{{ i18n "papers.newestFirst" }}',
+        oldestFirst: '{{ i18n "papers.oldestFirst" }}',
+        showingPapers: '{{ i18n "papers.showingPapers" }}',
+        showBibtex: '{{ i18n "papers.showBibtex" }}',
+        hideBibtex: '{{ i18n "papers.hideBibtex" }}'
+    };
+
     let sortAscending = false; // Default: newest first
 
     // Collect all papers and years
@@ -405,7 +414,9 @@
     // Update count
     function updateCount() {
         const visible = papers.filter(p => p.style.display !== 'none').length;
-        papersCount.textContent = `Showing ${visible} of ${papers.length} papers`;
+        papersCount.textContent = i18n.showingPapers
+            .replace('{visible}', visible)
+            .replace('{total}', papers.length);
 
         // Show/hide no results message
         if (visible === 0) {
@@ -446,7 +457,7 @@
     // Sort papers
     function sortPapers() {
         sortAscending = !sortAscending;
-        sortLabel.textContent = sortAscending ? 'Oldest First' : 'Newest First';
+        sortLabel.textContent = sortAscending ? i18n.oldestFirst : i18n.newestFirst;
         sortToggle.classList.toggle('reversed', sortAscending);
 
         const yearHeaders = Array.from(document.querySelectorAll('.paper-year'));
@@ -486,7 +497,7 @@
         if (e.target.classList.contains('bibtex-toggle')) {
             const bibtex = e.target.nextElementSibling;
             bibtex.classList.toggle('show');
-            e.target.textContent = bibtex.classList.contains('show') ? 'Hide BibTeX' : 'Show BibTeX';
+            e.target.textContent = bibtex.classList.contains('show') ? i18n.hideBibtex : i18n.showBibtex;
         }
     });
 
