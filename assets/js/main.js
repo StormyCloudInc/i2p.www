@@ -368,7 +368,7 @@
         function loadWidget() {
             if (widgetLoaded || !pollContainer) return;
 
-            const apiUrl = window.pollApiUrl || 'https://feedback.stormycloud.org';
+            const apiUrl = window.pollApiUrl || 'https://feedback.i2p.net';
             const pollId = window.pollId || '1';
 
             // Create widget div
@@ -384,7 +384,7 @@
 
             // Load widget script
             const script = document.createElement('script');
-            script.src = 'https://feedback.stormycloud.org/widgets/voting.js';
+            script.src = 'https://feedback.i2p.net/widgets/voting.js';
             script.onload = function() {
                 console.log('[Poll] Widget loaded successfully');
                 widgetLoaded = true;

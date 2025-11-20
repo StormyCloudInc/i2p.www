@@ -20,7 +20,7 @@
         console.log('[Network Detector] Tor network detected');
     } else {
         // Clearnet (default) - Use HTTPS for Safari compatibility
-        scriptSrc = 'https://feedback.stormycloud.org/widgets/docs-feedback.js';
+        scriptSrc = 'https://feedback.i2p.net/widgets/docs-feedback.js';
         console.log('[Network Detector] Clearnet detected');
     }
 
