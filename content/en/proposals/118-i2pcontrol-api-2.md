@@ -39,7 +39,8 @@ users of >=API2 with simplest most coherent possible API.
     "id": "id",
     "result": "result_value",
     "jsonrpc": "2.0"
-  }```
+  }
+```
 
 ### Parameters
 
@@ -119,55 +120,60 @@ next API version.
 
 ```text
       [nil]
+```
 
   * **control.restart** - Restart i2p instance
 
     * [nil]: No parameter needed
 
-
+    Returns:
 ```text
       [nil]
+```
 
   * **control.restart.graceful** - Restart i2p instance gracefully
 
     * [nil]: No parameter needed
 
-    ::
-
+    Returns:
+```text
       [nil]
+```
 
   * **control.shutdown** - Shut down i2p instance
 
     * [nil]: No parameter needed
 
-    ::
-
+    Returns:
+```text
       [nil]
+```
 
   * **control.shutdown.graceful** - Shut down i2p instance gracefully
 
     * [nil]: No parameter needed
 
-    ::
-
+    Returns:
+```text
       [nil]
+```
 
   * **control.update.find** - **BLOCKING** Search for signed updates
 
     * [nil]: No parameter needed
 
-    ::
-
+    Returns:
+```text
       true [boolean] // True iff signed update is available
+```
 
   * **control.update.start** - Start update process
 
     * [nil]: No parameter needed
 
-    ::
-
+    Returns:
+```text
       [nil]
-```
 ```
 * **i2pcontrol.** - Configure i2pcontrol
 
@@ -178,35 +184,38 @@ next API version.
 
 ```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: This will be an ip address like "0.0.0.0" or "192.168.0.1"
 
-
+    Returns:
 ```text
       [nil]
+```
 
   * **i2pcontrol.password** - Change the i2pcontrol password.
 
     * *set* [string]: Set the new password to this string
 
-    ::
-
+    Returns:
+```text
       [nil]
+```
 
   * **i2pcontrol.port** - Get/Set the port that i2pcontrol listens to.
 
     * *get* [null]: This parameter does not need to be set.
 
-    ::
-
+    Returns:
+```text
       7650 [number]
+```
 
     * *set* [number]: Change the port that i2pcontrol listens to to this port
 
-    ::
-
+    Returns:
+```text
       [nil]
-```
 ```
 * **settings.** - Get/Set i2p instance settings
 
@@ -217,147 +226,170 @@ next API version.
 
 ```text
       "setting-value" [string]
+```
 
     * *getAll* [null]:
 
-
+    Returns:
 ```text
       [object]
       {
         "setting-name" : "setting-value", [string]
-        ".." : ".." 
+        ".." : ".."
       }
+```
 
     * *set* [string]: Set the value of this setting
     * *setAll* [object] {"setting-name" : "setting-value", ".." : ".." }
 
-    ::
-
+    Returns:
+```text
       [nil]
+```
 
   * **settings.bandwidth.in** - Inbound bandwidth settings
   * **settings.bandwidth.out** - Outbound bandwidth settings
 
     * *get* [nil]: This parameter does not need to be set.
 
-    ::
-
+    Returns:
+```text
       0 [number]
+```
 
     * *set* [number]: Set the bandwidth limit
 
-    ::
-
+    Returns:
+```text
      [nil]
+```
 
   * **settings.ntcp.autoip** - Get IP auto detection setting for NTCP
 
     * *get* [null]: This parameter does not need to be set.
 
-    ::
-
+    Returns:
+```text
       true [boolean]
+```
 
   * **settings.ntcp.hostname** - Get NTCP hostname
 
     * *get* [null]: This parameter does not need to be set.
 
-    ::
-
+    Returns:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Set new hostname
 
-    ::
-
+    Returns:
+```text
       [nil]
+```
 
   * **settings.ntcp.port** - NTCP port
 
     * *get* [null]: This parameter does not need to be set.
 
-    ::
-
+    Returns:
+```text
       0 [number]
+```
 
     * *set* [number]: Set new NTCP port.
 
-    ::
-
+    Returns:
+```text
       [nil]
+```
 
     * *set* [boolean]: Set NTCP IP auto detection
 
-    ::
-
+    Returns:
+```text
       [nil]
+```
 
   * **settings.ssu.autoip** - Configure IP auto detection setting for SSU
 
     * *get* [nil]: This parameter does not need to be set.
 
-    ::
-
+    Returns:
+```text
       true [boolean]
+```
 
   * **settings.ssu.hostname** - Configure SSU hostname
 
     * *get* [null]: This parameter does not need to be set.
 
-    ::
-
+    Returns:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Set new SSU hostname
 
-    ::
-
+    Returns:
+```text
       [nil]
+```
 
   * **settings.ssu.port** - SSU port
 
     * *get* [null]: This parameter does not need to be set.
 
-    ::
-
+    Returns:
+```text
       0 [number]
+```
 
     * *set* [number]: Set new SSU port.
 
-    ::
-
+    Returns:
+```text
       [nil]
+```
 
     * *set* [boolean]: Set SSU IP auto detection
 
-    ::
-
+    Returns:
+```text
       [nil]
+```
 
   * **settings.share** - Get bandwidth share percentage
 
     * *get* [null]: This parameter does not need to be set.
 
-    ::
-
+    Returns:
+```text
       0 [number] // Bandwidth share percentage (0-100)
+```
 
     * *set* [number]: Set bandwidth share percentage (0-100)
+
+    Returns:
+```text
+      [nil]
+```
 
   * **settings.upnp** - Enable or disable UPNP
 
     * *get* [nil]: This parameter does not need to be set.
 
-    ::
-
+    Returns:
+```text
       true [boolean]
+```
 
     * *set* [boolean]: Set SSU IP auto detection
 
-    ::
-
+    Returns:
+```text
       [nil]
-```
 ```
 * **stats.** - Get stats from the i2p instance
 
@@ -390,15 +422,16 @@ next API version.
 
     * *get* [null]: This parameter does not need to be set.
 
-
+    Returns:
 ```text
       "status" [string]
+```
 
   * **status.net** - Get router network status
 
     * *get* [null]: This parameter does not need to be set.
 
-
+    Returns:
 ```text
       0 [number]
       /**
@@ -418,29 +451,31 @@ next API version.
        *   13 – ERROR_NO_ACTIVE_PEERS_CHECK_CONNECTION_AND_FIREWALL
        *   14 – ERROR_UDP_DISABLED_AND_TCP_UNSET
        */
+```
 
   * **status.isfloodfill** - Is the i2p instance currently a floodfill
 
     * *get* [null]: This parameter does not need to be set.
 
-    ::
-
+    Returns:
+```text
       true [boolean]
+```
 
   * **status.isreseeding** - Is the i2p instance currently reseeding
 
     * *get* [null]: This parameter does not need to be set.
 
-    ::
-
+    Returns:
+```text
       true [boolean]
+```
 
   * **status.ip** - Public IP detected of this i2p instance
 
     * *get* [null]: This parameter does not need to be set.
 
-    ::
-
+    Returns:
+```text
       "0.0.0.0" [string]
-```
 ```

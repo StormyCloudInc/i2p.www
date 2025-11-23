@@ -28,15 +28,15 @@ Este documento destaca essas questões não resolvidas.
 
 Qualquer pessoa que proponha novas criptografias deve primeiro estar familiarizada com os seguintes documentos:
 
-- Proposta 111 NTCP2 /proposals/111-ntcp-2/
-- Proposta 123 LS2 /proposals/123-new-netdb-entries/
-- Proposta 136 tipos de assinatura experimentais /proposals/136-experimental-sigtypes/
-- Proposta 137 tipos de assinatura opcionais /proposals/137-optional-sigtypes/
+- [Proposta 111 NTCP2](/pt/proposals/111-ntcp-2/)
+- [Proposta 123 LS2](/pt/proposals/123-new-netdb-entries/)
+- [Proposta 136 tipos de assinatura experimentais](/pt/proposals/136-experimental-sigtypes/)
+- [Proposta 137 tipos de assinatura opcionais](/pt/proposals/137-optional-sigtypes/)
 - Discussões para cada uma das propostas acima, vinculadas no interior
-- http://zzz.i2p/topics/2494 prioridades de proposta de 2018
-- http://zzz.i2p/topics/2418 proposta ECIES
-- http://zzz.i2p/topics/1768 visão geral de novas criptografias assimétricas
-- Visão geral de criptografias de baixo nível /docs/specs/cryptography/
+- [prioridades de proposta de 2018](http://zzz.i2p/topics/2494)
+- [proposta ECIES](http://zzz.i2p/topics/2418)
+- [visão geral de novas criptografias assimétricas](http://zzz.i2p/topics/1768)
+- [Visão geral de criptografias de baixo nível](/pt/docs/specs/common-structures/)
 
 
 ## Usos de Criptografia Assimétrica

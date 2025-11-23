@@ -65,12 +65,13 @@ thread: "http://zzz.i2p/topics/2030"
 
 ### 접두사
 
-RPC 명명 규칙은 CSS에서 사용되는 것과 유사하며, 다른 API 구현 (i2p, kovri, i2pd)을 위한 벤더 접두사를 포함합니다.::
+RPC 명명 규칙은 CSS에서 사용되는 것과 유사하며, 다른 API 구현 (i2p, kovri, i2pd)을 위한 벤더 접두사를 포함합니다.:
 
     XXX.YYY.ZZZ
     i2p.XXX.YYY.ZZZ
     i2pd.XXX.YYY.ZZZ
     kovri.XXX.YYY.ZZZ
+```
 
 벤더 특유의 접두사를 사용하는 전체적인 아이디어는 약간의 여유를 제공하여 다른 구현이 따라잡기를 기다리지 않고 구현이 혁신할 수 있도록 하는 것입니다. 모든 구현이 RPC를 구현하면 그 여러 접두사를 제거하고 다음 API 버전에 핵심 RPC로 포함할 수 있습니다.
 
@@ -82,24 +83,29 @@ RPC 명명 규칙은 CSS에서 사용되는 것과 유사하며, 다른 API 구�
    * *parameter* [매개변수 유형]: [null], [number], [string], [boolean],
      [array] 또는 [object]. [object]는 {key:value} 맵입니다.
 
-::
+반환:
+```text
 
   "return_value" [string] // RPC 호출에 의해 반환된 값입니다.
+```
 
 
 ### 메소드
+```
 
 * **authenticate** - 올바른 비밀번호가 제공되면, 이 메소드는 추가 접근을 위한 토큰과 지원되는 API 레벨 목록을 제공합니다.
 
   * *password* [string]: 이 i2pcontrol 구현의 비밀번호
 
-  ::
-
+    반환:
+```text
     [object]
     {
       "token" : [string], // 다른 모든 RPC 메소드에 제공될 토큰
       "api" : [[int],[int], ...]  // 지원되는 API 레벨 목록.
     }
+```
+```
 
 
 * **control.** - i2p 제어
@@ -108,57 +114,66 @@ RPC 명명 규칙은 CSS에서 사용되는 것과 유사하며, 다른 API 구�
 
     * [nil]: 매개변수가 필요하지 않습니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
 
   * **control.restart** - i2p 인스턴스 재시작
 
     * [nil]: 매개변수가 필요하지 않습니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
 
   * **control.restart.graceful** - i2p 인스턴스를 우아하게 재시작
 
     * [nil]: 매개변수가 필요하지 않습니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
 
   * **control.shutdown** - i2p 인스턴스 종료
 
     * [nil]: 매개변수가 필요하지 않습니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
 
   * **control.shutdown.graceful** - i2p 인스턴스를 우아하게 종료
 
     * [nil]: 매개변수가 필요하지 않습니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
 
   * **control.update.find** - **차단됨** 서명된 업데이트 검색
 
     * [nil]: 매개변수가 필요하지 않습니다.
 
-    ::
+    반환:
+```text
+      true [boolean]
+``` // 서명된 업데이트가 있는 경우 true
 
-      true [boolean] // 서명된 업데이트가 있는 경우 true
-
+```
   * **control.update.start** - 업데이트 프로세스 시작
 
     * [nil]: 매개변수가 필요하지 않습니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
+```
 
 
 * **i2pcontrol.** - i2pcontrol 설정
@@ -167,37 +182,43 @@ RPC 명명 규칙은 CSS에서 사용되는 것과 유사하며, 다른 API 구�
 
     * *get* [null]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: "0.0.0.0" 또는 "192.168.0.1"과 같은 IP 주소가 필요합니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
 
   * **i2pcontrol.password** - i2pcontrol 비밀번호 변경
 
     * *set* [string]: 새 비밀번호를 이 문자열로 설정합니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
 
   * **i2pcontrol.port** - i2pcontrol이 수신하는 포트 얻기/설정
 
     * *get* [null]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       7650 [number]
+```
 
     * *set* [number]: i2pcontrol이 수신하는 포트를 이 포트로 변경합니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
+```
 
 
 * **settings.** - i2p 인스턴스 설정 얻기/설정
@@ -206,149 +227,171 @@ RPC 명명 규칙은 CSS에서 사용되는 것과 유사하며, 다른 API 구�
 
     * *get*  [string]: 이 설정의 값을 가져옵니다.
 
-    ::
-
+    반환:
+```text
       "setting-value" [string]
+```
 
     * *getAll* [null]:
 
-    ::
-
+    반환:
+```text
       [object]
       {
         "setting-name" : "setting-value", [string]
-        ".." : ".." 
+        ".." : ".."
       }
+```
 
     * *set* [string]: 이 설정의 값을 설정합니다.
     * *setAll* [object] {"setting-name" : "setting-value", ".." : ".." }
 
-    ::
-
+    반환:
+```text
       [nil]
+```
 
   * **settings.bandwidth.in** - 인바운드 대역폭 설정
   * **settings.bandwidth.out** - 아웃바운드 대역폭 설정
 
     * *get* [nil]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       0 [number]
+```
 
     * *set* [number]: 대역폭 제한을 설정합니다.
 
-    ::
-
+    반환:
+```text
      [nil]
+```
 
   * **settings.ntcp.autoip** - NTCP의 IP 자동 감지 설정 얻기
 
     * *get* [null]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       true [boolean]
+```
 
   * **settings.ntcp.hostname** - NTCP 호스트 이름 얻기
 
     * *get* [null]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: 새 호스트 이름을 설정합니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
 
   * **settings.ntcp.port** - NTCP 포트
 
     * *get* [null]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       0 [number]
+```
 
     * *set* [number]: 새 NTCP 포트를 설정합니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
 
     * *set* [boolean]: NTCP IP 자동 감지를 설정합니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
 
   * **settings.ssu.autoip** - SSU의 IP 자동 감지 설정 구성
 
     * *get* [nil]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       true [boolean]
+```
 
   * **settings.ssu.hostname** - SSU 호스트 이름 구성
 
     * *get* [null]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: 새 SSU 호스트 이름을 설정합니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
 
   * **settings.ssu.port** - SSU 포트
 
     * *get* [null]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       0 [number]
+```
 
     * *set* [number]: 새 SSU 포트를 설정합니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
 
     * *set* [boolean]: SSU IP 자동 감지를 설정합니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
 
   * **settings.share** - 대역폭 공유 비율 얻기
 
     * *get* [null]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
-      0 [number] // 대역폭 공유 비율 (0-100)
+    반환:
+```text
+      0 [number]
+``` // 대역폭 공유 비율 (0-100)
 
     * *set* [number]: 대역폭 공유 비율 설정 (0-100)
 
+```
   * **settings.upnp** - UPNP 활성화 또는 비활성화
 
     * *get* [nil]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       true [boolean]
+```
 
     * *set* [boolean]: SSU IP 자동 감지를 설정합니다.
 
-    ::
-
+    반환:
+```text
       [nil]
+```
+```
 
 
 
@@ -373,9 +416,11 @@ RPC 명명 규칙은 CSS에서 사용되는 것과 유사하며, 다른 API 구�
 
     * *get* [null]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       0.0 [number]
+```
+```
 
 
 * **status.** - i2p 인스턴스 상태 가져오기
@@ -384,16 +429,17 @@ RPC 명명 규칙은 CSS에서 사용되는 것과 유사하며, 다른 API 구�
 
     * *get* [null]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       "status" [string]
+```
 
   * **status.net** - 라우터 네트워크 상태 가져오기
 
     * *get* [null]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       0 [number]
       /**
        *    0 – OK
@@ -412,27 +458,32 @@ RPC 명명 규칙은 CSS에서 사용되는 것과 유사하며, 다른 API 구�
        *   13 – ERROR_NO_ACTIVE_PEERS_CHECK_CONNECTION_AND_FIREWALL
        *   14 – ERROR_UDP_DISABLED_AND_TCP_UNSET
        */
+```
 
   * **status.isfloodfill** - 현재 i2p 인스턴스가 플러드필인지 여부
 
     * *get* [null]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       true [boolean]
+```
 
   * **status.isreseeding** - 현재 i2p 인스턴스가 리시드 중인지 여부
 
     * *get* [null]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       true [boolean]
+```
 
   * **status.ip** - 이 i2p 인스턴스의 공인 IP 감지
 
     * *get* [null]: 이 매개변수는 설정할 필요가 없습니다.
 
-    ::
-
+    반환:
+```text
       "0.0.0.0" [string]
+```
+```

@@ -65,12 +65,14 @@ Tous les paramètres RPC seront désormais en minuscules. Cela *va* briser la co
 
 ### Préfixes
 
-La méthode de naming des RPC est similaire à celle utilisée en CSS, avec des préfixes de vendeur pour les différentes implémentations d'API (i2p, kovri, i2pd)::
+La méthode de naming des RPC est similaire à celle utilisée en CSS, avec des préfixes de vendeur pour les différentes implémentations d'API (i2p, kovri, i2pd):
 
-    XXX.YYY.ZZZ
+```text
+XXX.YYY.ZZZ
     i2p.XXX.YYY.ZZZ
     i2pd.XXX.YYY.ZZZ
     kovri.XXX.YYY.ZZZ
+```
 
 L'idée générale des préfixes spécifiques aux vendeurs est de permettre une certaine flexibilité et de laisser les implémentations innover sans avoir à attendre que chaque autre implémentation rattrape son retard. Si un RPC est implémenté par toutes les implémentations, ses multiples préfixes peuvent être supprimés et il peut être inclus comme un RPC central dans la prochaine version de l'API.
 
@@ -82,24 +84,29 @@ L'idée générale des préfixes spécifiques aux vendeurs est de permettre une 
    * *paramètre* [type de paramètre] : [null], [number], [string], [boolean],
      [array] ou [object]. [object] étant une carte {clé:valeur}.
 
-::
+Renvoie:
+```text
 
   "return_value" [string] // C'est la valeur retournée par l'appel RPC
+```
 
 
 ### Méthodes
+```
 
 * **authenticate** - Étant donné qu'un mot de passe correct est fourni, cette méthode vous fournit un jeton pour un accès supplémentaire et une liste des niveaux d'API pris en charge.
 
   * *password* [string] : Le mot de passe pour cette implémentation i2pcontrol
 
-  ::
-
+    Renvoie:
+```text
     [object]
     {
       "token" : [string], // Le jeton à utiliser devra être fourni avec toutes les autres méthodes RPC
       "api" : [[int],[int], ...]  // Une liste des niveaux d'API pris en charge.
     }
+```
+```
 
 
 * **control.** - Contrôler i2p
@@ -108,57 +115,66 @@ L'idée générale des préfixes spécifiques aux vendeurs est de permettre une 
 
     * [nil] : Aucun paramètre nécessaire
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
 
   * **control.restart** - Redémarrer l'instance i2p
 
     * [nil] : Aucun paramètre nécessaire
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
 
   * **control.restart.graceful** - Redémarrer l'instance i2p en douceur
 
     * [nil] : Aucun paramètre nécessaire
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
 
   * **control.shutdown** - Éteindre l'instance i2p
 
     * [nil] : Aucun paramètre nécessaire
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
 
   * **control.shutdown.graceful** - Éteindre l'instance i2p en douceur
 
     * [nil] : Aucun paramètre nécessaire
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
 
   * **control.update.find** - **BLOQUANT** Recherche des mises à jour signées
 
     * [nil] : Aucun paramètre nécessaire
 
-    ::
+    Renvoie:
+```text
+      true [boolean]
+``` // True si et seulement si une mise à jour signée est disponible
 
-      true [boolean] // True si et seulement si une mise à jour signée est disponible
-
+```
   * **control.update.start** - Lancer le processus de mise à jour
 
     * [nil] : Aucun paramètre nécessaire
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
+```
 
 
 * **i2pcontrol.** - Configurer i2pcontrol
@@ -167,37 +183,43 @@ L'idée générale des préfixes spécifiques aux vendeurs est de permettre une 
 
     * *get* [null] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string] : Ce sera une adresse IP comme "0.0.0.0" ou "192.168.0.1"
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
 
   * **i2pcontrol.password** - Changer le mot de passe i2pcontrol.
 
     * *set* [string] : Définir le nouveau mot de passe sur cette chaîne
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
 
   * **i2pcontrol.port** - Obtenir/Configurer le port sur lequel i2pcontrol écoute.
 
     * *get* [null] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       7650 [number]
+```
 
     * *set* [number] : Changer le port sur lequel i2pcontrol écoute pour ce port
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
+```
 
 
 * **settings.** - Obtenir/Configurer les paramètres de l'instance i2p
@@ -206,149 +228,171 @@ L'idée générale des préfixes spécifiques aux vendeurs est de permettre une 
 
     * *get*  [string] : Obtenir la valeur de ce paramètre
 
-    ::
-
+    Renvoie:
+```text
       "setting-value" [string]
+```
 
     * *getAll* [null] :
 
-    ::
-
+    Renvoie:
+```text
       [object]
       {
         "setting-name" : "setting-value", [string]
-        ".." : ".." 
+        ".." : ".."
       }
+```
 
     * *set* [string] : Définir la valeur de ce paramètre
     * *setAll* [object] {"setting-name" : "setting-value", ".." : ".." }
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
 
   * **settings.bandwidth.in** - Paramètres de la bande passante entrante
   * **settings.bandwidth.out** - Paramètres de la bande passante sortante
 
     * *get* [nil] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       0 [number]
+```
 
     * *set* [number] : Définir la limite de bande passante
 
-    ::
-
+    Renvoie:
+```text
      [nil]
+```
 
   * **settings.ntcp.autoip** - Obtenir le paramètre de détection automatique de l'IP pour NTCP
 
     * *get* [null] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       true [boolean]
+```
 
   * **settings.ntcp.hostname** - Obtenir le nom d'hôte NTCP
 
     * *get* [null] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string] : Définir le nouveau nom d'hôte
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
 
   * **settings.ntcp.port** - Port NTCP
 
     * *get* [null] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       0 [number]
+```
 
     * *set* [number] : Définir le nouveau port NTCP.
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
 
     * *set* [boolean] : Définir la détection automatique de l'IP NTCP
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
 
   * **settings.ssu.autoip** - Configurer le paramètre de détection automatique de l'IP pour SSU
 
     * *get* [nil] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       true [boolean]
+```
 
   * **settings.ssu.hostname** - Configurer le nom d'hôte SSU
 
     * *get* [null] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string] : Définir le nouveau nom d'hôte SSU
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
 
   * **settings.ssu.port** - Port SSU
 
     * *get* [null] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       0 [number]
+```
 
     * *set* [number] : Définir le nouveau port SSU.
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
 
     * *set* [boolean] : Définir la détection automatique de l'IP SSU
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
 
   * **settings.share** - Obtenir le pourcentage de partage de la bande passante
 
     * *get* [null] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
-      0 [number] // Pourcentage de partage de bande passante (0-100)
+    Renvoie:
+```text
+      0 [number]
+``` // Pourcentage de partage de bande passante (0-100)
 
     * *set* [number] : Définir le pourcentage de partage de bande passante (0-100)
 
+```
   * **settings.upnp** - Activer ou désactiver UPNP
 
     * *get* [nil] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       true [boolean]
+```
 
     * *set* [boolean] : Définir la détection automatique de l'IP SSU
 
-    ::
-
+    Renvoie:
+```text
       [nil]
+```
+```
 
 
 
@@ -373,9 +417,11 @@ L'idée générale des préfixes spécifiques aux vendeurs est de permettre une 
 
     * *get* [null] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       0.0 [number]
+```
+```
 
 
 * **status.** - Obtenir le statut de l'instance i2p
@@ -384,16 +430,17 @@ L'idée générale des préfixes spécifiques aux vendeurs est de permettre une 
 
     * *get* [null] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       "status" [string]
+```
 
   * **status.net** - Obtenir le statut du réseau du routeur
 
     * *get* [null] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       0 [number]
       /**
        *    0 – OK
@@ -412,27 +459,32 @@ L'idée générale des préfixes spécifiques aux vendeurs est de permettre une 
        *   13 – ERROR_NO_ACTIVE_PEERS_CHECK_CONNECTION_AND_FIREWALL
        *   14 – ERROR_UDP_DISABLED_AND_TCP_UNSET
        */
+```
 
   * **status.isfloodfill** - L'instance i2p est-elle actuellement une floodfill
 
     * *get* [null] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       true [boolean]
+```
 
   * **status.isreseeding** - L'instance i2p est-elle actuellement en train de réensemencer
 
     * *get* [null] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       true [boolean]
+```
 
   * **status.ip** - IP publique détectée de cette instance i2p
 
     * *get* [null] : Ce paramètre n'a pas besoin d'être défini.
 
-    ::
-
+    Renvoie:
+```text
       "0.0.0.0" [string]
+```
+```

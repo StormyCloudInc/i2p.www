@@ -27,15 +27,15 @@ ElGamal은 오래되었고 느리며, 더 나은 대안이 있습니다.
 
 새로운 암호화를 제안하는 사람은 먼저 다음 문서들을 숙지해야 합니다:
 
-- 제안 111 NTCP2 /proposals/111-ntcp-2/
-- 제안 123 LS2 /proposals/123-new-netdb-entries/
-- 제안 136 실험적 서명 유형 /proposals/136-experimental-sigtypes/
-- 제안 137 선택적 서명 유형 /proposals/137-optional-sigtypes/
+- [제안 111 NTCP2](/ko/proposals/111-ntcp-2/)
+- [제안 123 LS2](/ko/proposals/123-new-netdb-entries/)
+- [제안 136 실험적 서명 유형](/ko/proposals/136-experimental-sigtypes/)
+- [제안 137 선택적 서명 유형](/ko/proposals/137-optional-sigtypes/)
 - 위의 각 제안에 대한 논의 스레드가 링크된 곳
-- http://zzz.i2p/topics/2494 2018 제안 우선순위
-- http://zzz.i2p/topics/2418 ECIES 제안
-- http://zzz.i2p/topics/1768 새로운 비대칭 암호화 개요
-- 저수준 암호화 개요 /docs/specs/cryptography/
+- [2018 제안 우선순위](http://zzz.i2p/topics/2494)
+- [ECIES 제안](http://zzz.i2p/topics/2418)
+- [새로운 비대칭 암호화 개요](http://zzz.i2p/topics/1768)
+- [저수준 암호화 개요](/ko/docs/specs/common-structures/)
 
 
 ## 비대칭 암호화 사용

@@ -27,15 +27,15 @@ Tento dokument zdůrazňuje tyto nevyřešené problémy.
 
 Každý, kdo navrhuje nové šifrování, musí nejprve znát následující dokumenty:
 
-- Návrh 111 NTCP2 /proposals/111-ntcp-2/
-- Návrh 123 LS2 /proposals/123-new-netdb-entries/
-- Návrh 136 experimentální typy podpisů /proposals/136-experimental-sigtypes/
-- Návrh 137 volitelné typy podpisů /proposals/137-optional-sigtypes/
+- [Návrh 111 NTCP2](/cs/proposals/111-ntcp-2/)
+- [Návrh 123 LS2](/cs/proposals/123-new-netdb-entries/)
+- [Návrh 136 experimentální typy podpisů](/cs/proposals/136-experimental-sigtypes/)
+- [Návrh 137 volitelné typy podpisů](/cs/proposals/137-optional-sigtypes/)
 - Diskusní vlákna zde pro každý z výše uvedených návrhů, odkazy uvnitř
-- http://zzz.i2p/topics/2494 priority návrhů pro rok 2018
-- http://zzz.i2p/topics/2418 návrh ECIES
-- http://zzz.i2p/topics/1768 přehled nového asymetrického šifrování
-- Přehled nízkoúrovňového šifrování /docs/specs/cryptography/
+- [priority návrhů pro rok 2018](http://zzz.i2p/topics/2494)
+- [návrh ECIES](http://zzz.i2p/topics/2418)
+- [přehled nového asymetrického šifrování](http://zzz.i2p/topics/1768)
+- [Přehled nízkoúrovňového šifrování](/cs/docs/specs/common-structures/)
 
 
 ## Použití asymetrického šifrování

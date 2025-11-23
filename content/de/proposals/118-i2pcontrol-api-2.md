@@ -64,12 +64,14 @@ Alle RPC-Parameter werden jetzt in Kleinbuchstaben geschrieben. Dies *wird* die 
 
 ### Präfixe
 
-Das RPC-Benennungsschema ähnelt dem, wie es in CSS gemacht wird, mit Anbieterpräfixen für die verschiedenen API-Implementierungen (i2p, kovri, i2pd)::
+Das RPC-Benennungsschema ähnelt dem, wie es in CSS gemacht wird, mit Anbieterpräfixen für die verschiedenen API-Implementierungen (i2p, kovri, i2pd):
 
-    XXX.YYY.ZZZ
+```text
+XXX.YYY.ZZZ
     i2p.XXX.YYY.ZZZ
     i2pd.XXX.YYY.ZZZ
     kovri.XXX.YYY.ZZZ
+```
 
 Die Grundidee mit anbieter-spezifischen Präfixen ist es, etwas Spielraum zu bieten und Implementierungen zu erlauben, zu innovieren, ohne darauf warten zu müssen, dass jede andere Implementierung aufholt. Wenn ein RPC von allen Implementierungen implementiert wird, können seine zahlreichen Präfixe entfernt werden, und es kann als Kern-RPC in der nächsten API-Version aufgenommen werden.
 
@@ -80,23 +82,28 @@ Die Grundidee mit anbieter-spezifischen Präfixen ist es, etwas Spielraum zu bie
    * *parameter* [Typ des Parameters]:  [null], [number], [string], [boolean],
      [array] oder [object]. [object] ist eine {key:value} Karte.
 
-::
+Gibt zurück:
+```text
 
   "return_value" [string] // Dies ist der Wert, der durch den RPC-Aufruf zurückgegeben wird.
 
+```
 ### Methoden
+```
 
 * **authenticate** - Wenn ein korrektes Passwort angegeben wird, liefert diese Methode Ihnen ein Token für weiteren Zugang und eine Liste unterstützter API-Level.
 
   * *password* [string]:  Das Passwort für diese i2pcontrol Implementierung
 
-  ::
-
+    Gibt zurück:
+```text
     [object]
     {
       "token" : [string], // Der Token, der mit allen anderen RPC-Methoden mitgeliefert werden muss
       "api" : [[int],[int], ...]  // Eine Liste unterstützter API-Level.
     }
+```
+```
 
 
 * **control.** - I2P steuern
@@ -105,57 +112,66 @@ Die Grundidee mit anbieter-spezifischen Präfixen ist es, etwas Spielraum zu bie
 
     * [nil]: Kein Parameter nötig
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
 
   * **control.restart** - I2P-Instanz neu starten
 
     * [nil]: Kein Parameter nötig
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
 
   * **control.restart.graceful** - I2P-Instanz sanft neu starten
 
     * [nil]: Kein Parameter nötig
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
 
   * **control.shutdown** - I2P-Instanz herunterfahren
 
     * [nil]: Kein Parameter nötig
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
 
   * **control.shutdown.graceful** - I2P-Instanz sanft herunterfahren
 
     * [nil]: Kein Parameter nötig
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
 
   * **control.update.find** - **BLOCKIEREND** Nach signierten Updates suchen
 
     * [nil]: Kein Parameter nötig
 
-    ::
+    Gibt zurück:
+```text
+      true [boolean]
+``` // Wahr, falls ein signiertes Update verfügbar ist
 
-      true [boolean] // Wahr, falls ein signiertes Update verfügbar ist
-
+```
   * **control.update.start** - Update-Prozess starten
 
     * [nil]: Kein Parameter nötig
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
+```
 
 
 * **i2pcontrol.** - I2PControl konfigurieren
@@ -164,37 +180,43 @@ Die Grundidee mit anbieter-spezifischen Präfixen ist es, etwas Spielraum zu bie
 
     * *get* [null]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Dies wird eine IP-Adresse wie "0.0.0.0" oder "192.168.0.1" sein
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
 
   * **i2pcontrol.password** - Das I2PControl-Passwort ändern.
 
     * *set* [string]: Das neue Passwort auf diesen String setzen
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
 
   * **i2pcontrol.port** - Den Port abfragen/festlegen, auf dem I2PControl seinen Dienst anbietet.
 
     * *get* [null]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       7650 [number]
+```
 
     * *set* [number]: Den Port ändern, auf dem I2PControl seinen Dienst anbietet
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
+```
 
 
 * **settings.** - I2P-Instanzeinstellungen abfragen/festlegen
@@ -203,149 +225,171 @@ Die Grundidee mit anbieter-spezifischen Präfixen ist es, etwas Spielraum zu bie
 
     * *get*  [string]: Den Wert dieser Einstellung abrufen
 
-    ::
-
+    Gibt zurück:
+```text
       "setting-value" [string]
+```
 
     * *getAll* [null]:
 
-    ::
-
+    Gibt zurück:
+```text
       [object]
       {
         "setting-name" : "setting-value", [string]
-        ".." : ".." 
+        ".." : ".."
       }
+```
 
     * *set* [string]: Den Wert dieser Einstellung setzen
     * *setAll* [object] {"setting-name" : "setting-value", ".." : ".." }
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
 
   * **settings.bandwidth.in** - Eingehende Bandbreiteneinstellungen
   * **settings.bandwidth.out** - Ausgehende Bandbreiteneinstellungen
 
     * *get* [nil]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       0 [number]
+```
 
     * *set* [number]: Das Bandbreitenlimit festlegen
 
-    ::
-
+    Gibt zurück:
+```text
      [nil]
+```
 
   * **settings.ntcp.autoip** - Auto-IP-Erkennungseinstellung für NTCP abrufen
 
     * *get* [null]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       true [boolean]
+```
 
   * **settings.ntcp.hostname** - NTCP-Hostname abrufen
 
     * *get* [null]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Neuen Hostnamen festlegen
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
 
   * **settings.ntcp.port** - NTCP-Port
 
     * *get* [null]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       0 [number]
+```
 
     * *set* [number]: Neuen NTCP-Port festlegen.
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
 
     * *set* [boolean]: NTCP IP Auto-Erkennung festlegen
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
 
   * **settings.ssu.autoip** - Konfiguriere die IP Auto-Erkennungseinstellung für SSU
 
     * *get* [nil]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       true [boolean]
+```
 
   * **settings.ssu.hostname** - SSU-Hostname konfigurieren
 
     * *get* [null]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Neuen SSU-Hostnamen festlegen
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
 
   * **settings.ssu.port** - SSU-Port
 
     * *get* [null]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       0 [number]
+```
 
     * *set* [number]: Neuen SSU-Port festlegen.
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
 
     * *set* [boolean]: SSU IP Auto-Erkennung festlegen
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
 
   * **settings.share** - Bandbreitenanteil in Prozent abrufen
 
     * *get* [null]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
-      0 [number] // Bandbreitenanteil in Prozent (0-100)
+    Gibt zurück:
+```text
+      0 [number]
+``` // Bandbreitenanteil in Prozent (0-100)
 
     * *set* [number]: Bandbreitenanteil in Prozent festlegen (0-100)
 
+```
   * **settings.upnp** - UPNP aktivieren oder deaktivieren
 
     * *get* [nil]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       true [boolean]
+```
 
     * *set* [boolean]: SSU IP Auto-Erkennung festlegen
 
-    ::
-
+    Gibt zurück:
+```text
       [nil]
+```
+```
 
 
 
@@ -370,9 +414,11 @@ Die Grundidee mit anbieter-spezifischen Präfixen ist es, etwas Spielraum zu bie
 
     * *get* [null]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       0.0 [number]
+```
+```
 
 
 * **status.** - I2P-Instanz-Status abrufen
@@ -381,16 +427,17 @@ Die Grundidee mit anbieter-spezifischen Präfixen ist es, etwas Spielraum zu bie
 
     * *get* [null]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       "status" [string]
+```
 
   * **status.net** - Router-Netzwerkstatus abrufen
 
     * *get* [null]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       0 [number]
       /**
        *    0 – OK
@@ -409,27 +456,32 @@ Die Grundidee mit anbieter-spezifischen Präfixen ist es, etwas Spielraum zu bie
        *   13 – ERROR_NO_ACTIVE_PEERS_CHECK_CONNECTION_AND_FIREWALL
        *   14 – ERROR_UDP_DISABLED_AND_TCP_UNSET
        */
+```
 
   * **status.isfloodfill** - Ist die I2P-Instanz derzeit ein Floodfill
 
     * *get* [null]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       true [boolean]
+```
 
   * **status.isreseeding** - Ist die I2P-Instanz derzeit in der Neubesamung
 
     * *get* [null]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       true [boolean]
+```
 
   * **status.ip** - Öffentliche IP-Adresse der I2P-Instanz ermittelt
 
     * *get* [null]: Dieser Parameter muss nicht gesetzt werden.
 
-    ::
-
+    Gibt zurück:
+```text
       "0.0.0.0" [string]
+```
+```

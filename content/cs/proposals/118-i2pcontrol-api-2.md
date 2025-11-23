@@ -68,12 +68,14 @@ uživatelům >=API2 co nejjednodušší a nejkoherentnější možné API.
 
 ### Předpony
 
-Pojmenovací schéma RPC je podobné jako v CSS, s předponami specifickými pro různé implementace API (i2p, kovri, i2pd)::
+Pojmenovací schéma RPC je podobné jako v CSS, s předponami specifickými pro různé implementace API (i2p, kovri, i2pd):
 
-    XXX.YYY.ZZZ
-    i2p.XXX.YYY.ZZZ
-    i2pd.XXX.YYY.ZZZ
-    kovri.XXX.YYY.ZZZ
+```text
+XXX.YYY.ZZZ
+i2p.XXX.YYY.ZZZ
+i2pd.XXX.YYY.ZZZ
+kovri.XXX.YYY.ZZZ
+```
 
 Celkovým záměrem u předpon specifických pro prodejce je umožnit určitý pohyb
 a umožnit implementacím inovovat, aniž by musely čekat, až všechny ostatní
@@ -88,10 +90,11 @@ další verzi API.
 
    * *parameter* [typ parametru]:  [null], [number], [string], [boolean],
      [array] nebo [object]. [object] je mapa {key:value}.
+  * Vrací:
 
-::
-
-  "return_value" [string] // Toto je hodnota vrácená voláním RPC
+```text
+"return_value" [string] // Toto je hodnota vrácená voláním RPC
+```
 
 
 ### Metody
@@ -100,13 +103,14 @@ další verzi API.
 
   * *password* [string]:  Heslo pro tuto implementaci i2pcontrol
 
-  ::
-
+    Vrací:
+```text
     [object]
     {
       "token" : [string], // Token, který má být dodán se všemi ostatními metodami RPC
       "api" : [[int],[int], ...]  // Seznam podporovaných úrovní API.
     }
+```
 
 
 * **control.** - Ovládání i2p
@@ -115,57 +119,64 @@ další verzi API.
 
     * [nil]: Není potřeba žádný parametr
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
   * **control.restart** - Restartovat instanci i2p
 
     * [nil]: Není potřeba žádný parametr
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
   * **control.restart.graceful** - Jemně restartovat instanci i2p
 
     * [nil]: Není potřeba žádný parametr
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
   * **control.shutdown** - Vypnout instanci i2p
 
     * [nil]: Není potřeba žádný parametr
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
   * **control.shutdown.graceful** - Jemně vypnout instanci i2p
 
     * [nil]: Není potřeba žádný parametr
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
   * **control.update.find** - **BLOKOVÁNÍ** Vyhledat podepsané aktualizace
 
     * [nil]: Není potřeba žádný parametr
 
-    ::
-
-      true [boolean] // Pravda, pokud je k dispozici podepsaná aktualizace
+    Vrací:
+```text
+      true [boolean]
+``` // Pravda, pokud je k dispozici podepsaná aktualizace
 
   * **control.update.start** - Spustit proces aktualizace
 
     * [nil]: Není potřeba žádný parametr
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
 
 * **i2pcontrol.** - Konfigurace i2pcontrol
@@ -174,37 +185,42 @@ další verzi API.
 
     * *get* [null]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Toto bude IP adresa jako "0.0.0.0" nebo "192.168.0.1"
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
   * **i2pcontrol.password** - Změnit heslo i2pcontrol.
 
     * *set* [string]: Nastavit nové heslo na tento řetězec
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
   * **i2pcontrol.port** - Získat/nastavit port, na kterém i2pcontrol naslouchá.
 
     * *get* [null]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       7650 [number]
+```
 
     * *set* [number]: Změnit port, na kterém i2pcontrol naslouchá, na tento port
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
 
 * **settings.** - Získat/nastavit nastavení instance i2p
@@ -213,133 +229,151 @@ další verzi API.
 
     * *get*  [string]: Získat hodnotu tohoto nastavení
 
-    ::
-
+    Vrací:
+```text
       "setting-value" [string]
+```
 
     * *getAll* [null]:
 
-    ::
-
+    Vrací:
+```text
       [object]
       {
         "setting-name" : "setting-value", [string]
-        ".." : ".." 
+        ".." : ".."
       }
+```
 
     * *set* [string]: Nastavit hodnotu tohoto nastavení
     * *setAll* [object] {"setting-name" : "setting-value", ".." : ".." }
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
   * **settings.bandwidth.in** - Nastavení příchozí šířky pásma
   * **settings.bandwidth.out** - Nastavení odchozí šířky pásma
 
     * *get* [nil]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       0 [number]
+```
 
     * *set* [number]: Nastavit limit šířky pásma
 
-    ::
-
+    Vrací:
+```text
      [nil]
+```
 
   * **settings.ntcp.autoip** - Získat nastavení automatické detekce IP pro NTCP
 
     * *get* [null]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       true [boolean]
+```
 
   * **settings.ntcp.hostname** - Získat hostitel NTCP
 
     * *get* [null]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Nastavit nového hostitele
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
   * **settings.ntcp.port** - NTCP port
 
     * *get* [null]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       0 [number]
+```
 
     * *set* [number]: Nastavit nový NTCP port.
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
     * *set* [boolean]: Nastavit automatickou detekci IP pro NTCP
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
   * **settings.ssu.autoip** - Konfigurace nastavení automatické detekce IP pro SSU
 
     * *get* [nil]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       true [boolean]
+```
 
   * **settings.ssu.hostname** - Konfigurace hostitele SSU
 
     * *get* [null]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Nastavit nového hostitele SSU
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
   * **settings.ssu.port** - SSU port
 
     * *get* [null]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       0 [number]
+```
 
     * *set* [number]: Nastavit nový SSU port.
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
     * *set* [boolean]: Nastavit automatickou detekci IP pro SSU
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
   * **settings.share** - Získat procentuální podíl šířky pásma
 
     * *get* [null]: Tento parametr nemusí být nastaven.
 
-    ::
-
-      0 [number] // Procentuální podíl šířky pásma (0-100)
+    Vrací:
+```text
+      0 [number]
+``` // Procentuální podíl šířky pásma (0-100)
 
     * *set* [number]: Nastavit procentuální podíl šířky pásma (0-100)
 
@@ -347,15 +381,17 @@ další verzi API.
 
     * *get* [nil]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       true [boolean]
+```
 
     * *set* [boolean]: Nastavit automatickou detekci IP pro SSU
 
-    ::
-
+    Vrací:
+```text
       [nil]
+```
 
 
 
@@ -380,9 +416,10 @@ další verzi API.
 
     * *get* [null]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       0.0 [number]
+```
 
 
 * **status.** - Získat stav instance i2p
@@ -391,16 +428,17 @@ další verzi API.
 
     * *get* [null]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       "status" [string]
+```
 
   * **status.net** - Získat stav routerové sítě
 
     * *get* [null]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       0 [number]
       /**
        *    0 – OK
@@ -419,27 +457,31 @@ další verzi API.
        *   13 – ERROR_NO_ACTIVE_PEERS_CHECK_CONNECTION_AND_FIREWALL
        *   14 – ERROR_UDP_DISABLED_AND_TCP_UNSET
        */
+```
 
   * **status.isfloodfill** - Je tato instance i2p momentálně floodfill
 
     * *get* [null]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       true [boolean]
+```
 
   * **status.isreseeding** - Dochází u této instance i2p k opětovnému nasazování
 
     * *get* [null]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       true [boolean]
+```
 
   * **status.ip** - Veřejná IP zjištěná pro tuto instanci i2p
 
     * *get* [null]: Tento parametr nemusí být nastaven.
 
-    ::
-
+    Vrací:
+```text
       "0.0.0.0" [string]
+```

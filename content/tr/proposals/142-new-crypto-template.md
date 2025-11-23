@@ -26,15 +26,15 @@ Bu belge, bu çözülmemiş meseleleri vurgulamaktadır.
 
 Yeni kripto öneren birisi, öncelikle aşağıdaki belgeleri tanımalıdır:
 
-- Öneri 111 NTCP2 /proposals/111-ntcp-2/
-- Öneri 123 LS2 /proposals/123-new-netdb-entries/
-- Öneri 136 deneysel imza türleri /proposals/136-experimental-sigtypes/
-- Öneri 137 isteğe bağlı imza türleri /proposals/137-optional-sigtypes/
+- [Öneri 111 NTCP2](/tr/proposals/111-ntcp-2/)
+- [Öneri 123 LS2](/tr/proposals/123-new-netdb-entries/)
+- [Öneri 136 deneysel imza türleri](/tr/proposals/136-experimental-sigtypes/)
+- [Öneri 137 isteğe bağlı imza türleri](/tr/proposals/137-optional-sigtypes/)
 - Yukarıdaki her bir öneri için buradaki tartışma başlıkları, bağlantılar içinde
-- http://zzz.i2p/topics/2494 2018 öneri öncelikleri
-- http://zzz.i2p/topics/2418 ECIES önerisi
-- http://zzz.i2p/topics/1768 yeni asimetrik kripto genel bakış
-- Düşük seviyeli kripto genel bakış /docs/specs/cryptography/
+- [2018 öneri öncelikleri](http://zzz.i2p/topics/2494)
+- [ECIES önerisi](http://zzz.i2p/topics/2418)
+- [yeni asimetrik kripto genel bakış](http://zzz.i2p/topics/1768)
+- [Düşük seviyeli kripto genel bakış](/tr/docs/specs/common-structures/)
 
 
 ## Asimetrik Kripto Kullanımları

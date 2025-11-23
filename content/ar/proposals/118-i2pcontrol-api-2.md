@@ -71,12 +71,13 @@ thread: "http://zzz.i2p/topics/2030"
 ### البادئات
 
 نظام تسمية RPC يشبه كيف يتم القيام به في CSS، مع بادئات البائع
-للتنفيذات المختلفة لـ API (i2p، kovri، i2pd)::
+للتنفيذات المختلفة لـ API (i2p، kovri، i2pd):
 
     XXX.YYY.ZZZ
     i2p.XXX.YYY.ZZZ
     i2pd.XXX.YYY.ZZZ
     kovri.XXX.YYY.ZZZ
+```
 
 الفكرة العامة من البادئات الخاصة بالبائع هي إتاحة بعض الحرية
 ودع التنفيذات تبتكر دون الحاجة إلى انتظار كل تنفيذ
@@ -91,25 +92,30 @@ thread: "http://zzz.i2p/topics/2030"
 
    * *parameter* [نوع المعلمة]:  [null]، [number]، [string]، [boolean]،
      [array] أو [object]. [object] هو خريطة {key:value}.
+  * يعيد:
 
-::
+```text
 
   "return_value" [string] // هذه هي القيمة التي تعيدها استدعاء RPC
+```
 
 
 ### الطرق
+```
 
 * **authenticate** - بالنظر إلى توفير كلمة مرور صحيحة، توفر هذه الطريقة لك رمزًا للوصول الإضافي وقائمة بمستويات API المدعومة.
 
   * *password* [string]:  كلمة المرور لهذه التنفيذ لـ i2pcontrol
 
-  ::
-
+    يعيد:
+```text
     [object]
     {
       "token" : [string], // الرمز الذي سيتم تقديمه مع جميع الطرق الأخرى لـ RPC
       "api" : [[int],[int], ...]  // قائمة بمستويات API المدعومة.
     }
+```
+```
 
 
 * **control.** - التحكم في i2p
@@ -118,57 +124,66 @@ thread: "http://zzz.i2p/topics/2030"
 
     * [nil]: لا حاجة لمعلمة
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
 
   * **control.restart** - إعادة تشغيل مثيل i2p
 
     * [nil]: لا حاجة لمعلمة
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
 
   * **control.restart.graceful** - إعادة تشغيل مثيل i2p بشكل سلس
 
     * [nil]: لا حاجة لمعلمة
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
 
   * **control.shutdown** - إيقاف تشغيل مثيل i2p
 
     * [nil]: لا حاجة لمعلمة
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
 
   * **control.shutdown.graceful** - إيقاف تشغيل مثيل i2p بشكل سلس
 
     * [nil]: لا حاجة لمعلمة
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
 
   * **control.update.find** - **حظر** البحث عن تحديثات موقعة
 
     * [nil]: لا حاجة لمعلمة
 
-    ::
+    يعيد:
+```text
+      true [boolean]
+``` // True إذا كانت التحديثات الموقعة متوفرة
 
-      true [boolean] // True إذا كانت التحديثات الموقعة متوفرة
-
+```
   * **control.update.start** - بدء عملية التحديث
 
     * [nil]: لا حاجة لمعلمة
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
+```
 
 
 * **i2pcontrol.** - قم بتكوين i2pcontrol
@@ -177,37 +192,43 @@ thread: "http://zzz.i2p/topics/2030"
 
     * *get* [null]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: سيكون هذا عنوان IP مثل "0.0.0.0" أو "192.168.0.1"
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
 
   * **i2pcontrol.password** - تغيير كلمة مرور i2pcontrol.
 
     * *set* [string]: تعيين كلمة المرور الجديدة إلى هذه السلسلة
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
 
   * **i2pcontrol.port** - احصل على/غير المنفذ الذي يستمع إليه i2pcontrol.
 
     * *get* [null]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       7650 [number]
+```
 
     * *set* [number]: غير المنفذ الذي يستمع إليه i2pcontrol إلى هذا المنفذ
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
+```
 
 
 * **settings.** - احصل على/غير إعدادات مثيل i2p
@@ -216,149 +237,171 @@ thread: "http://zzz.i2p/topics/2030"
 
     * *get*  [string]: احصل على قيمة هذا الإعداد
 
-    ::
-
+    يعيد:
+```text
       "setting-value" [string]
+```
 
     * *getAll* [null]:
 
-    ::
-
+    يعيد:
+```text
       [object]
       {
         "setting-name" : "setting-value", [string]
-        ".." : ".." 
+        ".." : ".."
       }
+```
 
     * *set* [string]: غير قيمة هذا الإعداد
     * *setAll* [object] {"setting-name" : "setting-value", ".." : ".." }
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
 
   * **settings.bandwidth.in** - إعدادات عرض النطاق الترددي الوارد
   * **settings.bandwidth.out** - إعدادات عرض النطاق الترددي الصادر
 
     * *get* [nil]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       0 [number]
+```
 
     * *set* [number]: حدد حدود عرض النطاق الترددي
 
-    ::
-
+    يعيد:
+```text
      [nil]
+```
 
   * **settings.ntcp.autoip** - احصل على إعداد الكشف التلقائي عن IP لـ NTCP
 
     * *get* [null]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       true [boolean]
+```
 
   * **settings.ntcp.hostname** - احصل على اسم مضيف NTCP
 
     * *get* [null]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: تعيين اسم مضيف جديد
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
 
   * **settings.ntcp.port** - منفذ NTCP
 
     * *get* [null]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       0 [number]
+```
 
     * *set* [number]: تعيين منفذ NTCP جديد.
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
 
     * *set* [boolean]: تعيين الكشف التلقائي عن IP لـ NTCP
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
 
   * **settings.ssu.autoip** - تكوين إعداد الكشف التلقائي عن IP لـ SSU
 
     * *get* [nil]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       true [boolean]
+```
 
   * **settings.ssu.hostname** - تكوين اسم المضيف
 
     * *get* [null]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: تعيين اسم مضيف SSU جديد
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
 
   * **settings.ssu.port** - منفذ SSU
 
     * *get* [null]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       0 [number]
+```
 
     * *set* [number]: تعيين منفذ SSU جديد.
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
 
     * *set* [boolean]: تعيين الكشف التلقائي عن IP لـ SSU
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
 
   * **settings.share** - احصل على نسبة مشاركة عرض النطاق الترددي
 
     * *get* [null]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
-      0 [number] // نسبة مشاركة عرض النطاق الترددي (0-100)
+    يعيد:
+```text
+      0 [number]
+``` // نسبة مشاركة عرض النطاق الترددي (0-100)
 
     * *set* [number]: تعيين نسبة مشاركة عرض النطاق الترددي (0-100)
 
+```
   * **settings.upnp** - تفعيل أو تعطيل UPNP
 
     * *get* [nil]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       true [boolean]
+```
 
     * *set* [boolean]: تعيين الكشف التلقائي عن IP لـ SSU
 
-    ::
-
+    يعيد:
+```text
       [nil]
+```
+```
 
 
 
@@ -383,9 +426,11 @@ thread: "http://zzz.i2p/topics/2030"
 
     * *get* [null]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       0.0 [number]
+```
+```
 
 
 * **status.** - احصل على حالة مثيل i2p
@@ -394,16 +439,17 @@ thread: "http://zzz.i2p/topics/2030"
 
     * *get* [null]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       "status" [string]
+```
 
   * **status.net** - احصل على حالة شبكة الموجه
 
     * *get* [null]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       0 [number]
       /**
        *    0 – OK
@@ -422,27 +468,32 @@ thread: "http://zzz.i2p/topics/2030"
        *   13 – ERROR_NO_ACTIVE_PEERS_CHECK_CONNECTION_AND_FIREWALL
        *   14 – ERROR_UDP_DISABLED_AND_TCP_UNSET
        */
+```
 
   * **status.isfloodfill** - هل مثيل i2p حاليًا يملأ الفيض
 
     * *get* [null]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       true [boolean]
+```
 
   * **status.isreseeding** - هل مثيل i2p حاليًا يعيد البذور
 
     * *get* [null]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       true [boolean]
+```
 
   * **status.ip** - عنوان IP العام المكتشف لهذا المثيل من i2p
 
     * *get* [null]: لا حاجة لتعيين هذه المعلمة.
 
-    ::
-
+    يعيد:
+```text
       "0.0.0.0" [string]
+```
+```
