@@ -24,9 +24,7 @@ a API mais simples e coerente possível.
 
 ## Especificação da API 2
 
-.. raw:: html
-
-  {% highlight lang='json' -%}
+```json
 {
     "id": "id",
     "method": "method_name",
@@ -42,7 +40,7 @@ a API mais simples e coerente possível.
     "result": "result_value",
     "jsonrpc": "2.0"
   }
-{% endhighlight %}
+```
 
 ### Parâmetros
 

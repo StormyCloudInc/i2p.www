@@ -30,6 +30,4 @@ Sẽ được thêm vào trang đặc tả cập nhật bộ định tuyến.
 
 không áp dụng
 
-## Xem thêm
 
-Đề xuất 129

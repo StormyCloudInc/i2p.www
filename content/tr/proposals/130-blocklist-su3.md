@@ -45,6 +45,4 @@ n/a
 
 
 
-## Ayrıca Bakınız
 
-Teklif 129

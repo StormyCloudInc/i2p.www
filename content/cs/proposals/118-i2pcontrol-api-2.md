@@ -24,9 +24,7 @@ uživatelům >=API2 co nejjednodušší a nejkoherentnější možné API.
 
 ## Specifikace API 2
 
-.. raw:: html
-
-  {% highlight lang='json' -%}
+```json
 {
     "id": "id",
     "method": "method_name",
@@ -42,7 +40,7 @@ uživatelům >=API2 co nejjednodušší a nejkoherentnější možné API.
     "result": "result_value",
     "jsonrpc": "2.0"
   }
-{% endhighlight %}
+```
 
 ### Parametry
 

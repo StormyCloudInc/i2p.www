@@ -41,7 +41,7 @@ of resolving a hostname to either an IPv4 or IPv6 address did not exist.
 
 In Java I2P, it's always been a challenge to propagate a configured
 hostname to both published transports, and the situation got more complex
-with IPv6. Open ticket 1050 http://trac.i2p2.i2p/ticket/1050 details some of the problems.
+with IPv6.
 It isn't clear if a dual-stack host should publish both a hostname and a literal
 IPv6 address or not. The hostname is published for the SSU address but not the NTCP address.
 
@@ -118,10 +118,7 @@ router addresses that contain hostnames.
 This also applies to "ihost0", "ihost1", and "ihost2" parameters in an SSU address.
 Routers should ignore introducer addresses that contain hostnames.
 
-The relevant section is "Router Address Specification" in the transport specifications:
-http://i2p-projekt.i2p/en/docs/specs/ntcp
-and
-http://i2p-projekt.i2p/en/docs/specs/ssu
+
 
 
 ## Notes

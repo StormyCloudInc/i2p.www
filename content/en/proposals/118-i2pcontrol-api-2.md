@@ -24,9 +24,7 @@ users of >=API2 with simplest most coherent possible API.
 
 ## API 2 Specification
 
-.. raw:: html
-
-  {% highlight lang='json' -%}
+```json
 {
     "id": "id",
     "method": "method_name",
@@ -41,44 +39,42 @@ users of >=API2 with simplest most coherent possible API.
     "id": "id",
     "result": "result_value",
     "jsonrpc": "2.0"
-  }
-{% endhighlight %}
+  }```
 
 ### Parameters
 
-"id"
-  The id number or the request.
+**`"id"`**
 
-  Used to identify which reply was spawn by which request.
+The id number or the request. Used to identify which reply was spawn by which request.
 
-"method_name"
-  The name of the RPC that is being invoked.
+**`"method_name"`**
 
-"auth_token"
-  The session authentication token.
+The name of the RPC that is being invoked.
 
-  Needs to be supplied with every RPC except for the 'authenticate' call.
+**`"auth_token"`**
 
-"method_parameter_value"
-  The method parameter.
+The session authentication token. Needs to be supplied with every RPC except for the 'authenticate' call.
 
-  Used to offer a different flavors of a method.  Like 'get', 'set' and flavors
-  like that.
+**`"method_parameter_value"`**
 
-"result_value"
-  The value that the RPC returns. Its type and contents depends on the method
-  and which method.
+The method parameter. Used to offer a different flavors of a method. Like 'get', 'set' and flavors like that.
+
+**`"result_value"`**
+
+The value that the RPC returns. Its type and contents depends on the method and which method.
 
 
 ### Prefixes
 
 The RPC naming scheme is similar to how it's done in CSS, with vendor prefixes
-for the different API implementations (i2p, kovri, i2pd)::
+for the different API implementations (i2p, kovri, i2pd):
 
-    XXX.YYY.ZZZ
-    i2p.XXX.YYY.ZZZ
-    i2pd.XXX.YYY.ZZZ
-    kovri.XXX.YYY.ZZZ
+```text
+XXX.YYY.ZZZ
+i2p.XXX.YYY.ZZZ
+i2pd.XXX.YYY.ZZZ
+kovri.XXX.YYY.ZZZ
+```
 
 The overall idea with vendor-specific prefixes is to allow for some wiggle room
 and let implementations innovate without having to wait for every other
@@ -93,10 +89,11 @@ next API version.
 
    * *parameter* [type of parameter]:  [null], [number], [string], [boolean],
      [array] or [object]. [object] being a {key:value} map.
+  * Returns:
 
-::
-
-  "return_value" [string] // This is the value returned by the RPC call
+```text
+"return_value" [string] // This is the value returned by the RPC call
+```
 
 
 ### Methods
@@ -105,31 +102,30 @@ next API version.
 
   * *password* [string]:  The password for this i2pcontrol implementation
 
-  ::
 
+```text
     [object]
     {
       "token" : [string], // The token to be used be supplied with all other RPC methods
       "api" : [[int],[int], ...]  // A list of supported API levels.
     }
-
-
+```
 * **control.** - Control i2p
 
   * **control.reseed** - Start reseeding
 
     * [nil]: No parameter needed
 
-    ::
 
+```text
       [nil]
 
   * **control.restart** - Restart i2p instance
 
     * [nil]: No parameter needed
 
-    ::
 
+```text
       [nil]
 
   * **control.restart.graceful** - Restart i2p instance gracefully
@@ -171,22 +167,22 @@ next API version.
     ::
 
       [nil]
-
-
+```
+```
 * **i2pcontrol.** - Configure i2pcontrol
 
   * **i2pcontrol.address** - Get/Set the ip address that i2pcontrol listens to.
 
     * *get* [null]: This parameter does not need to be set.
 
-    ::
 
+```text
       "0.0.0.0" [string]
 
     * *set* [string]: This will be an ip address like "0.0.0.0" or "192.168.0.1"
 
-    ::
 
+```text
       [nil]
 
   * **i2pcontrol.password** - Change the i2pcontrol password.
@@ -210,22 +206,22 @@ next API version.
     ::
 
       [nil]
-
-
+```
+```
 * **settings.** - Get/Set i2p instance settings
 
   * **settings.advanced** - Advanced settings
 
     * *get*  [string]: Get the value of this setting
 
-    ::
 
+```text
       "setting-value" [string]
 
     * *getAll* [null]:
 
-    ::
 
+```text
       [object]
       {
         "setting-name" : "setting-value", [string]
@@ -361,9 +357,8 @@ next API version.
     ::
 
       [nil]
-
-
-
+```
+```
 * **stats.** - Get stats from the i2p instance
 
   * **stats.advanced** - This method provides access to all stats kept within the instance.
@@ -385,27 +380,26 @@ next API version.
 
     * *get* [null]: This parameter does not need to be set.
 
-    ::
 
+```text
       0.0 [number]
-
-
+```
 * **status.** - Get i2p instance status
 
   * **status.router** - Get router status
 
     * *get* [null]: This parameter does not need to be set.
 
-    ::
 
+```text
       "status" [string]
 
   * **status.net** - Get router network status
 
     * *get* [null]: This parameter does not need to be set.
 
-    ::
 
+```text
       0 [number]
       /**
        *    0 – OK
@@ -448,3 +442,5 @@ next API version.
     ::
 
       "0.0.0.0" [string]
+```
+```

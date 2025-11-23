@@ -37,8 +37,7 @@ bez kontroly podpisu. Podpora pro úložiště RI je zatím nejasná a může m�
 
 ## Specifikace
 
-Ref: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 Pro typy podpisů v experimentálním rozmezí by floodfill měl přijímat a šířit netdb
 úložiště bez kontroly podpisu.
@@ -85,7 +84,4 @@ což ještě nebylo formálně navrženo.
 odmítána floodfills, protože podpis nelze ověřit.
 
 
-## Viz také
 
-Návrh 134
-Návrh 137

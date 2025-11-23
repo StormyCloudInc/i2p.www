@@ -45,6 +45,4 @@ n/a
 
 
 
-## Viz také
 
-Návrh 129

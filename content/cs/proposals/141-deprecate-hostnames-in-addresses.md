@@ -39,7 +39,7 @@ překladu hostitele na buď IPv4 nebo IPv6 adresu neexistovala.
 
 V Java I2P bylo vždy výzvou propagovat nakonfigurovaného
 hostitele na obě publikované transporty, a situace se stala složitější
-s IPv6. Otevřený tiket 1050 http://trac.i2p2.i2p/ticket/1050 detailně popisuje některé problémy.
+s IPv6.
 Není jasné, zda by host s duální sítí měl či neměl publikovat jak hostitele, tak doslovnou
 IPv6 adresu. Hostitel je publikován pro SSU adresu, ale ne pro NTCP adresu.
 
@@ -116,10 +116,7 @@ adresy routerů, které obsahují hostitele.
 To se také vztahuje na parametry "ihost0", "ihost1" a "ihost2" v adrese SSU.
 Routery by měly ignorovat adresy zprostředkovatelů, které obsahují hostitele.
 
-Relevantní sekce je "Router Address Specification" ve specifikacích transportu:
-http://i2p-projekt.i2p/en/docs/specs/ntcp
-a
-http://i2p-projekt.i2p/en/docs/specs/ssu
+
 
 
 ## Poznámky

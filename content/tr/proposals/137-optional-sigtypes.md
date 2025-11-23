@@ -49,8 +49,7 @@ bir floodfill, yönlendirici bilgi özelliklerinde destek ilan edebilir.
 
 ## Özellikler
 
-Ref: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 Opsiyonel bir imza türünü destekleyen bir yönlendirici,
 yayınlanmış yönlendirici bilgisine virgülle ayrılmış imza türü numaraları ile "sigTypes" özelliği eklemelidir.
@@ -88,7 +87,4 @@ Deneysel aralıkta olmayan bilinmeyen imza türleri için NetDB saklamaları
 floodfill'ler tarafından reddedilmeye devam edecektir, çünkü imza doğrulanamaz.
 
 
-## Ayrıca Bakınız
 
-Öneri 134
-Öneri 136

@@ -34,6 +34,4 @@ Các mục có thể là địa chỉ IPv4 hoặc IPv6 truần, hoặc băm củ
 
 Các bộ định tuyến không hỗ trợ tính năng này sẽ bỏ qua phần XML mới.
 
-## Xem thêm
 
-Đề xuất 130

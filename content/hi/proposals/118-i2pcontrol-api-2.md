@@ -22,9 +22,7 @@ thread: "http://zzz.i2p/topics/2030"
 
 ## API 2 विनिर्देश
 
-.. raw:: html
-
-  {% highlight lang='json' -%}
+```json
 {
     "id": "id",
     "method": "method_name",
@@ -40,7 +38,7 @@ thread: "http://zzz.i2p/topics/2030"
     "result": "result_value",
     "jsonrpc": "2.0"
   }
-{% endhighlight %}
+```
 
 ### पैरामीटर
 

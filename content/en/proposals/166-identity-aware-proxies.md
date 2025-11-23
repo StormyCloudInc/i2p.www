@@ -35,11 +35,11 @@ But is it a problem?
 ^^^^^^^^^^^^^^^^^^^^
 
 The shared identity problem is a problem when user-agents that speak the
-same protocol desire unlinkability. `It was first mentioned in the
+same protocol desire unlinkability. [It was first mentioned in the
 context of HTTP in this Reddit
-Thread <https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/>`__,
+Thread](https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/),
 with the deleted comments accessible courtesy of
-`pullpush.io <https://api.pullpush.io/reddit/search/comment/?link_id=579idi>`__.
+[pullpush.io](https://api.pullpush.io/reddit/search/comment/?link_id=579idi).
 *At the time* I was one of the most active respondents, and *at the
 time* I believed the issue was small. In the past 8 years, the situation
 and my opinion of it have changed, I now believe the threat posed by
@@ -258,24 +258,12 @@ proxy and socksify the underlying command:
 Addendum: ``example implementation of the attack``
                                                   
 
-`An example implementation of the Shared Identity attack on HTTP
-User-Agents <https://github.com/eyedeekay/colluding_sites_attack/>`__
+[An example implementation of the Shared Identity attack on HTTP
+User-Agents](https://github.com/eyedeekay/colluding_sites_attack/)
 has existed for several years. An additional example is available in the
-``simple-colluder`` subdirectory of `idk’s prop166
-repository <https://git.idk.i2p/idk/i2p.host-aware-proxy>`__ These
+``simple-colluder`` subdirectory of [idk’s prop166
+repository](https://git.idk.i2p/idk/i2p.host-aware-proxy) These
 examples are deliberately designed to demonstrate that the attack works
 and would require modification(albeit minor) to be turned into a real
 attack.
 
-Citations:
-''''''''''
-
-https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/
-https://api.pullpush.io/reddit/search/comment/?link_id=579idi
-https://github.com/eyedeekay/colluding_sites_attack/
-https://en.wikipedia.org/wiki/Shadow_profile
-https://github.com/eyedeekay/si-i2p-plugin/
-https://github.com/eyedeekay/eeproxy/
-/docs/api/socks/
-https://i2pgit.org/idk/i2p.www/-/compare/master...166-identity-aware-proxies?from_project_id=17
-https://i2pgit.org/idk/i2p.i2p/-/tree/i2p.i2p.2.6.0-browser-proxy-post-keepalive?ref_type=heads

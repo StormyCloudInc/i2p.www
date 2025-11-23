@@ -21,9 +21,7 @@ Alle RPC-Parameter werden jetzt in Kleinbuchstaben geschrieben. Dies *wird* die 
 
 ## API 2 Spezifikation
 
-.. raw:: html
-
-  {% highlight lang='json' -%}
+```json
 {
     "id": "id",
     "method": "method_name",
@@ -39,7 +37,7 @@ Alle RPC-Parameter werden jetzt in Kleinbuchstaben geschrieben. Dies *wird* die 
     "result": "result_value",
     "jsonrpc": "2.0"
   }
-{% endhighlight %}
+```
 
 ### Parameter
 

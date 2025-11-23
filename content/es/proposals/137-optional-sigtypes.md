@@ -48,8 +48,7 @@ anunciar soporte en sus propiedades de router info.
 
 ## Especificación
 
-Ref: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 Un router que soporta un tipo de firma opcional deberá añadir la propiedad "sigTypes"
 a su router info publicado, con números de tipo de firma separados por comas.
@@ -87,7 +86,4 @@ Las tiendas de NetDB de tipos de firma desconocidos que no están en el rango ex
 siendo rechazadas por los floodfills, ya que la firma no puede verificarse.
 
 
-## Véase También
 
-Propuesta 134
-Propuesta 136

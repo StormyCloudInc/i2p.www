@@ -28,8 +28,7 @@ Floodfill 应该接受和传播实验范围内签名类型的 LS 存储，而不
 
 ## 规格
 
-参考: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 对于实验范围内的签名类型，floodfill 应该接受和传播 netdb 存储而不检查签名。
 
@@ -58,7 +57,4 @@ Floodfill 应假设签名公钥长度为 128，或者从密钥证书长度中推
 
 不在实验范围内的未知签名类型的 NetDB 存储将继续被 floodfill 拒绝，因为签名无法验证。
 
-## 另请参阅
 
-提案 134
-提案 137

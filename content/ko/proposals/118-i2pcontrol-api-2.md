@@ -21,9 +21,7 @@ thread: "http://zzz.i2p/topics/2030"
 
 ## API 2 명세
 
-.. raw:: html
-
-  {% highlight lang='json' -%}
+```json
 {
     "id": "id",
     "method": "method_name",
@@ -39,7 +37,7 @@ thread: "http://zzz.i2p/topics/2030"
     "result": "result_value",
     "jsonrpc": "2.0"
   }
-{% endhighlight %}
+```
 
 ### 매개변수
 

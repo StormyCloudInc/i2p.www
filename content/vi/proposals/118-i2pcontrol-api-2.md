@@ -24,9 +24,7 @@ cho người dùng từ >=API2 với API đơn giản nhất và nhất quán nh
 
 ## Đặc tả API 2
 
-.. raw:: html
-
-  {% highlight lang='json' -%}
+```json
 {
     "id": "id",
     "method": "method_name",
@@ -42,7 +40,7 @@ cho người dùng từ >=API2 với API đơn giản nhất và nhất quán nh
     "result": "result_value",
     "jsonrpc": "2.0"
   }
-{% endhighlight %}
+```
 
 ### Tham số
 

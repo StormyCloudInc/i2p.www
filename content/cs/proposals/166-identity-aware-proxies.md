@@ -32,10 +32,10 @@ problémem sdílené identity je dokonalá.
 Je to ale problém?
 ^^^^^^^^^^^^^^^^^^^^
 
-Problém sdílené identity je problém, když uživatelské agenty, které mluví stejným protokolem, chtějí neodkazovatelnou identitu. `Bylo to poprvé uvedeno v
-kontextu HTTP v tomto vláknu na Redditu <https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/>`__,
+Problém sdílené identity je problém, když uživatelské agenty, které mluví stejným protokolem, chtějí neodkazovatelnou identitu. [Bylo to poprvé uvedeno v
+kontextu HTTP v tomto vláknu na Redditu](https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/),
 s odstraněnými komentáři přístupnými díky
-`pullpush.io <https://api.pullpush.io/reddit/search/comment/?link_id=579idi>`__.
+[pullpush.io](https://api.pullpush.io/reddit/search/comment/?link_id=579idi).
 *V té době* jsem byl jedním z nejaktivnějších respondentů a *v té době*
 jsem věřil, že problém je malý. Za posledních 8 let se situace a můj
 názor na ni změnil, nyní věřím, že hrozba představovaná
@@ -250,23 +250,11 @@ proxy a socksifikuje podkladový příkaz:
 Dodatky: ``příklad implementace útoku``
                                                   
 
-`Příklad implementace útoku sdílené identity na HTTP
-User-Agents <https://github.com/eyedeekay/colluding_sites_attack/>`__ existuje už několik let. Další příklad je k dispozici ve
-``simple-colluder`` podadresáři `idk's prop166
-repozitáře <https://git.idk.i2p/idk/i2p.host-aware-proxy>`__
+[Příklad implementace útoku sdílené identity na HTTP
+User-Agents](https://github.com/eyedeekay/colluding_sites_attack/) existuje už několik let. Další příklad je k dispozici ve
+``simple-colluder`` podadresáři [idk's prop166
+repozitáře](https://git.idk.i2p/idk/i2p.host-aware-proxy)
 Tyto příklady jsou záměrně navrženy tak, aby demonstrovaly, že útok
 funguje a vyžadovaly by úpravy (i když menší), aby se
 přeměnil na skutečný útok.
 
-Citace:
-''''''''''
-
-https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/
-https://api.pullpush.io/reddit/search/comment/?link_id=579idi
-https://github.com/eyedeekay/colluding_sites_attack/
-https://en.wikipedia.org/wiki/Shadow_profile
-https://github.com/eyedeekay/si-i2p-plugin/
-https://github.com/eyedeekay/eeproxy/
-/docs/api/socks/
-https://i2pgit.org/idk/i2p.www/-/compare/master...166-identity-aware-proxies?from_project_id=17
-https://i2pgit.org/idk/i2p.i2p/-/tree/i2p.i2p.2.6.0-browser-proxy-post-keepalive?ref_type=heads

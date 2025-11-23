@@ -48,6 +48,4 @@ Ana bilgisayar adları için destek isteğe bağlıdır.
 
 Bunu desteklemeyen yönlendiriciler yeni XML bölümünü görmezden gelecektir.
 
-## Ayrıca Bakınız
 
-Öneri 130

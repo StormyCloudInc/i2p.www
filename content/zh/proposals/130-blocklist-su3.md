@@ -30,6 +30,4 @@ thread: "http://zzz.i2p/topics/2192"
 
 不适用
 
-## 另见
 
-提案129

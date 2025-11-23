@@ -48,8 +48,7 @@ anunciar suporte em suas propriedades de informação do roteador.
 
 ## Especificação
 
-Ref: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 Um roteador que suporta um tipo de assinatura opcional deve adicionar a propriedade "sigTypes"
 à sua informação de roteador publicada, com números de tipos de assinatura separados por vírgula.
@@ -87,7 +86,4 @@ Armazenamentos NetDB de tipos de assinatura desconhecidos que não estão na fai
 sendo rejeitados por floodfills, pois a assinatura não pode ser verificada.
 
 
-## Veja Também
 
-Proposta 134
-Proposta 136

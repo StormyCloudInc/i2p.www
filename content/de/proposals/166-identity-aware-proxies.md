@@ -22,9 +22,9 @@ In diesem Szenario ist es dem Server möglich, die kryptografische Adresse (Dest
 Aber ist es ein Problem?
 ^^^^^^^^^^^^^^^^^^^^
 
-Das Shared Identity-Problem ist ein Problem, wenn Benutzeragenten, die dasselbe Protokoll sprechen, Unverlinkbarkeit wünschen. `Es wurde erstmals im Kontext von HTTP in diesem Reddit
-Thread <https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/>`__ erwähnt, wobei die gelöschten Kommentare dank
-`pullpush.io <https://api.pullpush.io/reddit/search/comment/?link_id=579idi>`__ zugänglich sind.
+Das Shared Identity-Problem ist ein Problem, wenn Benutzeragenten, die dasselbe Protokoll sprechen, Unverlinkbarkeit wünschen. [Es wurde erstmals im Kontext von HTTP in diesem Reddit
+Thread](https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/) erwähnt, wobei die gelöschten Kommentare dank
+[pullpush.io](https://api.pullpush.io/reddit/search/comment/?link_id=579idi) zugänglich sind.
 *Zu der Zeit* war ich einer der aktivsten Antworter, und *zu der Zeit* hielt ich das Problem für klein. In den letzten 8 Jahren hat sich die Situation und meine Meinung dazu geändert, und ich glaube jetzt, dass die Bedrohung durch bösartige Zielkorrelation erheblich wächst, da immer mehr Websites in der Lage sind, spezifische Benutzer zu „profilieren“.
 
 Dieser Angriff hat eine sehr niedrige Einstiegshürde. Er erfordert nur, dass ein verborgener Dienstbetreiber mehrere Dienste betreibt. Für Angriffe auf zeitgleiche Besuche (Besuch mehrerer Websites gleichzeitig) ist dies die einzige Voraussetzung. Für nicht-zeitgleiche Verlinkungen muss einer dieser Dienste ein Dienst sein, der „Konten“ hostet, die zu einem einzelnen Benutzer gehören, der getrackt werden soll.
@@ -137,22 +137,10 @@ Vereinfacht erzeugt das folgende Skript einen anwendungsbewussten SOCKS5-Proxy u
 Nachtrag: ``Beispielimplementierung des Angriffs``
                                                   
 
-`Eine Beispielimplementierung des Shared Identity-Angriffs auf HTTP
-Benutzeragenten <https://github.com/eyedeekay/colluding_sites_attack/>`__
+[Eine Beispielimplementierung des Shared Identity-Angriffs auf HTTP
+Benutzeragenten](https://github.com/eyedeekay/colluding_sites_attack/)
 existiert seit mehreren Jahren. Ein weiteres Beispiel ist im
-``simple-colluder`` Unterverzeichnis von `idks prop166
-Repository <https://git.idk.i2p/idk/i2p.host-aware-proxy>`__ verfügbar. Diese
+``simple-colluder`` Unterverzeichnis von [idks prop166
+Repository](https://git.idk.i2p/idk/i2p.host-aware-proxy) verfügbar. Diese
 Beispiele sind absichtlich so gestaltet, dass sie demonstrieren, dass der Angriff funktioniert, und würden Änderungen (wenn auch kleinere) erfordern, um in einen echten Angriff verwandelt zu werden.
 
-Zitationen:
-''''''''''
-
-https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/
-https://api.pullpush.io/reddit/search/comment/?link_id=579idi
-https://github.com/eyedeekay/colluding_sites_attack/
-https://en.wikipedia.org/wiki/Shadow_profile
-https://github.com/eyedeekay/si-i2p-plugin/
-https://github.com/eyedeekay/eeproxy/
-/docs/api/socks/
-https://i2pgit.org/idk/i2p.www/-/compare/master...166-identity-aware-proxies?from_project_id=17
-https://i2pgit.org/idk/i2p.i2p/-/tree/i2p.i2p.2.6.0-browser-proxy-post-keepalive?ref_type=heads

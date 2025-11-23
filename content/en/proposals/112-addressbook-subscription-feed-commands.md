@@ -12,7 +12,7 @@ implementedin: "0.9.26"
 
 ## Note
 Network deployment completed.
-See [SPEC]_ for the official specification.
+See [SPEC](/docs/specs/subscription/) for the official specification.
 
 
 ## Overview
@@ -25,9 +25,11 @@ Implemented in 0.9.26.
 ## Motivation
 
 Right now, the hosts.txt subscription servers just send data in a hosts.txt
-format, which is as follows::
+format, which is as follows:
 
-    example.i2p=b64destination
+  ```text
+  example.i2p=b64destination
+  ```
 
 There are several problems with this:
 
@@ -71,16 +73,19 @@ this is impossible with the current system.
 
 This proposal adds two new types of lines:
 
-1. Add and Change commands::
+1. Add and Change commands:
 
+     ```text
      example.i2p=b64destination#!key1=val1#key2=val2 ...
+     ```
 
-2. Remove commands::
+2. Remove commands:
 
+     ```text
      #!key1=val1#key2=val2 ...
+     ```
 
-Ordering
-````````
+#### Ordering
 A feed is not necessarily in-order or complete. For example, a change command
 may be on a line before an add command, or without an add command.
 
@@ -129,8 +134,7 @@ are included in the key/value section.
 Listed keys are required. All commands may contain additional key/value items
 not defined here.
 
-Add hostname
-````````````
+#### Add hostname
 Preceded by example.i2p=b64dest
   YES, this is the new host name and destination.
 action
@@ -138,12 +142,13 @@ action
 sig
   signature
 
-Example::
+Example:
 
+  ```text
   example.i2p=b64dest#!sig=b64sig
+  ```
 
-Change hostname
-```````````````
+#### Change hostname
 Preceded by example.i2p=b64dest
   YES, this is the new host name and old destination.
 action
@@ -153,12 +158,13 @@ oldname
 sig
   signature
 
-Example::
+Example:
 
+  ```text
   example.i2p=b64dest#!action=changename#oldname=oldhostname#sig=b64sig
+  ```
 
-Change destination
-``````````````````
+#### Change destination
 Preceded by example.i2p=b64dest
   YES, this is the old host name and new destination.
 action
@@ -170,12 +176,13 @@ oldsig
 sig
   signature
 
-Example::
+Example:
 
+  ```text
   example.i2p=b64dest#!action=changedest#olddest=oldb64dest#oldsig=b64sig#sig=b64sig
+  ```
 
-Add hostname alias
-``````````````````
+#### Add hostname alias
 Preceded by example.i2p=b64dest
   YES, this is the new (alias) host name and old destination.
 action
@@ -185,12 +192,13 @@ oldname
 sig
   signature
 
-Example::
+Example:
 
+  ```text
   example.i2p=b64dest#!action=addname#oldname=oldhostname#sig=b64sig
+  ```
 
-Add destination alias
-`````````````````````
+#### Add destination alias
 (Used for crypto upgrade)
 
 Preceded by example.i2p=b64dest
@@ -204,12 +212,13 @@ oldsig
 sig
   signature using dest
 
-Example::
+Example:
 
+  ```text
   example.i2p=b64dest#!action=adddest#olddest=oldb64dest#oldsig=b64sig#sig=b64sig
+  ```
 
-Add subdomain
-`````````````
+#### Add subdomain
 Preceded by subdomain.example.i2p=b64dest
   YES, this is the new host subdomain name and destination.
 action
@@ -223,12 +232,13 @@ oldsig
 sig
   signature using dest
 
-Example::
+Example:
 
+  ```text
   subdomain.example.i2p=b64dest#!action=addsubdomain#oldname=example.i2p#olddest=oldb64dest#oldsig=b64sig#sig=b64sig
+  ```
 
-Update metadata
-```````````````
+#### Update metadata
 Preceded by example.i2p=b64dest
   YES, this is the old host name and destination.
 action
@@ -238,12 +248,13 @@ sig
 
 (add any updated keys here)
 
-Example::
+Example:
 
+  ```text
   example.i2p=b64dest#!action=update#k1=v1#k2=v2#sig=b64sig
+  ```
 
-Remove hostname
-```````````````
+#### Remove hostname
 Preceded by example.i2p=b64dest
   NO, these are specified in the options
 action
@@ -255,12 +266,13 @@ dest
 sig
   signature
 
-Example::
+Example:
 
+  ```text
   #!action=removeall#name=example.i2p#dest=b64destsig=b64sig
+  ```
 
-Remove all with this destination
-````````````````````````````````
+#### Remove all with this destination
 Preceded by example.i2p=b64dest
   NO, these are specified in the options
 action
@@ -272,9 +284,11 @@ dest
 sig
   signature
 
-Example::
+Example:
 
+  ```text
   #!action=removeall#name=example.i2p#dest=b64destsig=b64sig
+  ```
 
 
 ### Signatures
@@ -299,8 +313,7 @@ oldsig is always the "inner" signature. Sign and verify without the 'oldsig' or
 'sig' keys present. sig is always the "outer" signature. Sign and verify with
 the 'oldsig' key present but not the 'sig' key.
 
-Input for signatures
-````````````````````
+#### Input for signatures
 To generate a byte stream to create or verify the signature, serialize as follows:
 
 - Remove the "sig" key
@@ -335,7 +348,3 @@ fetch all past commands.
 
 
 
-## References
-
-.. [SPEC]
-    {{ spec_url('subscription') }}

@@ -50,6 +50,4 @@ El soporte para nombres de host es opcional.
 
 Los routers que no soporten esto ignorarán la nueva sección XML.
 
-## Ver también
 
-Propuesta 130

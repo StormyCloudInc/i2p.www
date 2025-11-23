@@ -24,9 +24,7 @@ mümkün olan en basit ve en tutarlı API'yi sağlamaktır.
 
 ## API 2 Özellikleri
 
-.. raw:: html
-
-  {% highlight lang='json' -%}
+```json
 {
     "id": "id",
     "method": "method_name",
@@ -42,7 +40,7 @@ mümkün olan en basit ve en tutarlı API'yi sağlamaktır.
     "result": "result_value",
     "jsonrpc": "2.0"
   }
-{% endhighlight %}
+```
 
 ### Parametreler
 

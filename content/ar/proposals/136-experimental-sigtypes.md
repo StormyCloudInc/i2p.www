@@ -38,8 +38,7 @@ thread: "http://zzz.i2p/topics/2279"
 
 ## المواصفات
 
-المرجع: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 بالنسبة لأنواع التوقيع في النطاق التجريبي، يجب أن تقبل الفيضانات وتنتشر تخزينات netdb
 دون التحقق من التوقيع.
@@ -81,8 +80,5 @@ http://i2p-projekt.i2p/en/docs/spec/i2np
 في الرفض من قبل الفيضانات، حيث لا يمكن التحقق من التوقيع.
 
 
-## انظر أيضًا
 
-الاقتراح 134
-الاقتراح 137
 ```

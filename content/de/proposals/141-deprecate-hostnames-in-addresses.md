@@ -22,7 +22,7 @@ Der ursprüngliche Zweck von Hostnamen bestand darin, Benutzern mit häufig wech
 
 Außerdem unterstützte I2P anfangs kein IPv6, sodass die Komplikation der Auflösung eines Hostnamens zu einer IPv4- oder IPv6-Adresse nicht existierte.
 
-In Java I2P war es immer eine Herausforderung, einen konfigurierten Hostnamen auf beide veröffentlichten Transports zu übertragen, und die Situation wurde mit IPv6 komplexer. Das offene Ticket 1050 http://trac.i2p2.i2p/ticket/1050 beschreibt einige der Probleme. Es ist unklar, ob ein Dual-Stack-Host sowohl einen Hostnamen als auch eine wörtliche IPv6-Adresse veröffentlichen sollte oder nicht. Der Hostname wird für die SSU-Adresse veröffentlicht, jedoch nicht für die NTCP-Adresse.
+In Java I2P war es immer eine Herausforderung, einen konfigurierten Hostnamen auf beide veröffentlichten Transports zu übertragen, und die Situation wurde mit IPv6 komplexer. Es ist unklar, ob ein Dual-Stack-Host sowohl einen Hostnamen als auch eine wörtliche IPv6-Adresse veröffentlichen sollte oder nicht. Der Hostname wird für die SSU-Adresse veröffentlicht, jedoch nicht für die NTCP-Adresse.
 
 Kürzlich wurden DNS-Probleme sowohl indirekt als auch direkt durch Forschungen an der Georgia Tech angesprochen. Die Forscher führten eine große Anzahl von Floodfills mit veröffentlichten Hostnamen aus. Das unmittelbare Problem war, dass I2P für eine kleine Anzahl von Benutzern mit möglicherweise fehlerhaftem lokalem DNS vollständig blockierte.
 
@@ -51,10 +51,7 @@ Für den Code zur Validierung von Router-Infos und Transportverbindungen sollten
 
 Dies gilt auch für die "ihost0", "ihost1" und "ihost2" Parameter in einer SSU-Adresse. Router sollten Einleitungsadressen ignorieren, die Hostnamen enthalten.
 
-Der relevante Abschnitt ist "Router Address Specification" in den Transportspezifikationen:
-http://i2p-projekt.i2p/en/docs/specs/ntcp
-und
-http://i2p-projekt.i2p/en/docs/specs/ssu
+
 
 ## Anmerkungen
 

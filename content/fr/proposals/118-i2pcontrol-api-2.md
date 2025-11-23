@@ -21,9 +21,7 @@ Tous les paramètres RPC seront désormais en minuscules. Cela *va* briser la co
 
 ## Spécification API 2
 
-.. raw:: html
-
-  {% highlight lang='json' -%}
+```json
 {
     "id": "id",
     "method": "method_name",
@@ -39,7 +37,7 @@ Tous les paramètres RPC seront désormais en minuscules. Cela *va* briser la co
     "result": "result_value",
     "jsonrpc": "2.0"
   }
-{% endhighlight %}
+```
 
 ### Paramètres
 
