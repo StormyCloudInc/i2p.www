@@ -10,12 +10,12 @@ thread: "http://zzz.i2p/topics/2294"
 
 ## 개요
 
-이 제안서는 메시지를 전송할 때 대상 [Destination]_의 [LeaseSet]_에 있는 IBGWs 중 하나와 OBEP가 일치하도록 터널을 선택하거나 구축하는 아웃바운드 터널에 대한 I2CP 옵션을 추가합니다.
+이 제안서는 메시지를 전송할 때 대상 Destination의 LeaseSet에 있는 IBGWs 중 하나와 OBEP가 일치하도록 터널을 선택하거나 구축하는 아웃바운드 터널에 대한 I2CP 옵션을 추가합니다.
 
 
 ## 동기
 
-대부분의 I2P 라우터는 혼잡 관리를 위해 패킷 제거 형태를 사용합니다. 참조 구현은 메시지 크기와 이동 거리를 모두 고려하는 WRED 전략을 사용합니다 [TUNNEL-THROTTLING]_. 이 전략으로 인해 패킷 손실의 주요 원인은 OBEP입니다.
+대부분의 I2P 라우터는 혼잡 관리를 위해 패킷 제거 형태를 사용합니다. 참조 구현은 메시지 크기와 이동 거리를 모두 고려하는 WRED 전략을 사용합니다 ([tunnel throttling 문서](/en/docs/tunnels/implementation/#tunnelthrottling) 참조). 이 전략으로 인해 패킷 손실의 주요 원인은 OBEP입니다.
 
 
 ## 설계
@@ -30,7 +30,7 @@ thread: "http://zzz.i2p/topics/2294"
 
 ## 명세
 
-[I2CP-SPEC]_에 새로운 I2CP 옵션이 추가됩니다:
+[I2CP 명세](/en/docs/spec/i2cp/)에 새로운 I2CP 옵션이 추가됩니다:
 
     outbound.matchEndWithTarget
         Boolean
@@ -70,24 +70,6 @@ thread: "http://zzz.i2p/topics/2294"
 
 - 표준 터널의 경우 OBEP가 IBGW를 찾아 연결해야 하므로 지연 시간이 증가하여 첫 번째 RTT가 증가합니다 (첫 번째 패킷이 전송된 후 발생). 이 모드를 사용할 경우, OBEP는 터널을 구축하는 동안 IBGW를 찾아 연결해야 하므로 동일한 지연이 있지만 첫 번째 RTT는 감소합니다 (첫 번째 패킷이 전송되기 전에 발생).
 
-- 현재 표준 [VariableTunnelBuild]_ 크기는 2641바이트입니다. 따라서, 평균 메시지 크기가 이보다 큰 경우, 이 모드는 패킷 손실을 줄이는 데 기여할 것으로 예상됩니다.
+- 현재 표준 VariableTunnelBuild 크기는 2641바이트입니다. 따라서, 평균 메시지 크기가 이보다 큰 경우, 이 모드는 패킷 손실을 줄이는 데 기여할 것으로 예상됩니다.
 
 이러한 효과를 조사하여 어떤 표준 터널에 이 모드를 기본으로 활성화하는 것이 유익한지 결정하기 위해 더 많은 연구가 필요합니다.
-
-
-## 참고 자료
-
-.. [Destination]
-    {{ ctags_url('Destination') }}
-
-.. [I2CP-SPEC]
-    {{ spec_url('i2cp') }}
-
-.. [LeaseSet]
-    {{ ctags_url('LeaseSet') }}
-
-.. [TUNNEL-THROTTLING]
-    {{ site_url('docs/tunnels/implementation', True) }}#tunnel.throttling
-
-.. [VariableTunnelBuild]
-    {{ ctags_url('VariableTunnelBuild') }}

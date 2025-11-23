@@ -87,10 +87,10 @@ Les Identités de Routeur contiendront 10 copies (320 octets) des données aléa
 
 ### Économies Estimées
 
-Les Destinations sont incluses dans chaque SYN en streaming [Streaming]_
-et datagramme à réponse [Datagram]_.
-Les Infos Routeur (contenant des Identités de Routeur) sont incluses dans les Messages de Stockage de Base de Données [I2NP]_
-et dans les messages Session Confirmed dans [NTCP2]_ et [SSU2]_.
+Les Destinations sont incluses dans chaque SYN en streaming
+et datagramme à réponse.
+Les Infos Routeur (contenant des Identités de Routeur) sont incluses dans les Messages de Stockage de Base de Données
+et dans les messages Session Confirmed dans NTCP2 et SSU2.
 
 NTCP2 ne compresse pas l'Info Routeur.
 Les RIs dans les Messages de Stockage de Base de Données et les messages SSU2 Session Confirmed sont compressés avec gzip.
@@ -123,11 +123,11 @@ Les changements proposés à nos spécifications actuelles sont documentés ci-d
 
 
 ### Structures Communes
-Modifier la spécification des structures communes [COMMON]_
+Modifier la spécification des structures communes
 pour spécifier que le champ de clé publique de 256 octets de la Destination est ignoré et peut
 contenir des données aléatoires.
 
-Ajouter une section à la spécification des structures communes [COMMON]_
+Ajouter une section à la spécification des structures communes
 recommandant les meilleures pratiques pour le champ de clé publique de la Destination et les
 champs de remplissage dans la Destination et l'Identité de Routeur, comme suit :
 
@@ -137,14 +137,14 @@ et le champ de remplissage (pour les Destinations et les Identités de Routeur).
 
 ### Fichier de Clé Privée
 Le format du fichier de clé privée (eepPriv.dat) ne fait pas officiellement partie de nos spécifications
-mais il est documenté dans les javadocs Java I2P [PKF]_
+mais il est documenté dans les [Java I2P javadocs](http://idk.i2p/javadoc-i2p/net/i2p/data/PrivateKeyFile.html)
 et d'autres implémentations le supportent.
 Cela permet la portabilité des clés privées vers différentes implémentations.
 Ajoutez une note à ce javadoc que la clé publique de chiffrement peut être un remplissage aléatoire
 et que la clé privée de chiffrement peut être composée de zéros ou de données aléatoires.
 
 ### SAM
-Indiquer dans [SAM]_ que la clé privée de chiffrement n'est pas utilisée et peut être ignorée.
+Indiquer dans la spécification SAM que la clé privée de chiffrement n'est pas utilisée et peut être ignorée.
 Toutes les données aléatoires peuvent être retournées par le client.
 Le SAM Bridge peut envoyer des données aléatoires lors de la création (avec DEST GENERATE ou SESSION CREATE DESTINATION=TRANSIENT)
 plutôt que des zéros, afin que la représentation en Base 64 n'ait pas une série de caractères AAAA
@@ -152,7 +152,7 @@ et paraisse cassée.
 
 
 ### I2CP
-Aucun changement requis pour [I2CP]_. La clé privée pour la clé publique de chiffrement dans la Destination
+Aucun changement requis pour I2CP. La clé privée pour la clé publique de chiffrement dans la Destination
 n'est pas envoyée au routeur.
 
 
@@ -228,7 +228,7 @@ les Messages de Recherche de Base de Données chiffrés et leurs réponses.
 Délai estimé pour la conception, le développement, et le déploiement de cela serait ????????
 Mais serait après hybride ou ratchet ????????????
 
-Pour de plus amples discussions, voir [PQ]_.
+Pour de plus amples discussions, voir [this topic](http://zzz.i2p/topics/3294).
 
 
 
@@ -258,40 +258,4 @@ Sous réserve de questions de rétrocompatibilité, et après avoir désactivé 
 les implémentations peuvent supprimer complètement le code ElGamal.
 Environ 14 % des routeurs du réseau sont de type de chiffrement ElGamal, y compris de nombreux floodfills.
 
-Une demande de fusion brouillon pour Java I2P est disponible à [MR]_.
-
-
-## Références
-
-.. [Common]
-    {{ spec_url('common-structures') }}
-
-.. [Datagram]
-    {{ spec_url('datagrams') }}
-
-.. [I2CP]
-    {{ spec_url('i2cp') }}
-
-.. [I2NP]
-    {{ spec_url('i2np') }}
-
-.. [MR]
-    http://git.idk.i2p/i2p-hackers/i2p.i2p/-/merge_requests/66
-
-.. [NTCP2]
-    {{ spec_url('ntcp2') }}
-
-.. [PKF]
-    http://{{ i2pconv('idk.i2p/javadoc-i2p') }}/net/i2p/data/PrivateKeyFile.html
-
-.. [PQ]
-    http://zzz.i2p/topics/3294
-
-.. [SAM]
-    {{ site_url('docs/api/samv3') }}
-
-.. [SSU2]
-    {{ spec_url('ssu2') }}
-
-.. [Streaming]
-    {{ spec_url('streaming') }}
+Une demande de fusion brouillon pour Java I2P est disponible à [git.idk.i2p](http://git.idk.i2p/i2p-hackers/i2p.i2p/-/merge_requests/66).

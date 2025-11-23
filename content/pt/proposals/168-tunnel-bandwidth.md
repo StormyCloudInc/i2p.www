@@ -12,7 +12,7 @@ target: "0.9.65"
 ## NOTA
 
 Esta proposta foi aprovada e agora está na
-especificação [Tunnel-Creation-ECIES]_ a partir da API 0.9.65.
+[Tunnel Creation ECIES specification](/en/docs/spec/tunnel-creation-ecies/) a partir da API 0.9.65.
 Ainda não há implementações conhecidas; datas de implementação / versões da API ainda serão definidas.
 
 
@@ -42,7 +42,7 @@ mensagens de solicitação e resposta de construção de túnel.
 
 ## Design
 
-Adicione parâmetros de largura de banda aos registros em mensagens de construção de túnel ECIES [Tunnel-Creation-ECIES]_
+Adicione parâmetros de largura de banda aos registros em mensagens de construção de túnel ECIES (ver [Tunnel Creation ECIES specification](/en/docs/spec/tunnel-creation-ecies/))
 no campo de mapeamento de opções de construção de túnel. Use nomes de parâmetros curtos, uma vez que o espaço disponível
 para o campo de opções é limitado.
 As mensagens de construção de túnel são de tamanho fixo, assim não aumenta o
@@ -52,7 +52,7 @@ tamanho das mensagens.
 
 ## Especificação
 
-Atualize a especificação da mensagem de construção de túnel ECIES [Tunnel-Creation-ECIES]_
+Atualize a [especificação da mensagem de construção de túnel ECIES](/en/docs/spec/tunnel-creation-ecies/)
 da seguinte forma:
 
 Para registros de construção ECIES longos e curtos:
@@ -179,7 +179,3 @@ os roteadores devem verificar uma resposta "b" para confirmar o suporte.
 
 
 
-## Referências
-
-.. [Tunnel-Creation-ECIES]
-    {{ spec_url('tunnel-creation-ecies') }}

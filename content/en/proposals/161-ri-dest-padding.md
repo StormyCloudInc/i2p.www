@@ -87,10 +87,10 @@ Router Identities will contain 10 copies (320 bytes) of the random data.
 
 ### Estimated Savings
 
-Destinations are included in every streaming SYN [Streaming]_
-and repliable datagram [Datagram]_.
-Router Infos (containing Router Identities) are included in Database Store Messages [I2NP]_
-and in the Session Confirmed messages in [NTCP2]_ and [SSU2]_.
+Destinations are included in every streaming SYN
+and repliable datagram.
+Router Infos (containing Router Identities) are included in Database Store Messages
+and in the Session Confirmed messages in NTCP2 and SSU2.
 
 NTCP2 does not compress the Router Info.
 RIs in Database Store Messages and SSU2 Session Confirmed messages are gzipped.
@@ -122,11 +122,11 @@ Proposed changes to our current specifications are documented below.
 
 
 ### Common Structures
-Change the common structures specification [COMMON]_
+Change the common structures specification
 to specify that the 256-byte Destination public key field is ignored and may
 contain random data.
 
-Add a section to the common structures specification [COMMON]_
+Add a section to the common structures specification
 recommending best practice for the Destination public key field and the
 padding fields in the Destination and Router Identity, as follows:
 
@@ -136,14 +136,14 @@ and the padding field (for Destinations and Router Identities).
 
 ### Private Key File
 The private key file (eepPriv.dat) format is not an official part of our specifications
-but it is documented in the Java I2P javadocs [PKF]_
+but it is documented in the [Java I2P javadocs](http://idk.i2p/javadoc-i2p/net/i2p/data/PrivateKeyFile.html)
 and other implementations do support it.
 This enables portability of private keys to different implementations.
 Add a note to that javadoc that the encryption public key may be random padding
 and the encryption private key may be all zeros or random data.
 
 ### SAM
-Note in [SAM]_ that the encryption private key is unused and may be ignored.
+Note in the SAM specification that the encryption private key is unused and may be ignored.
 Any random data may be returned by the client.
 The SAM Bridge may send random data on creation (with DEST GENERATE or SESSION CREATE DESTINATION=TRANSIENT)
 rather than all zeros, so the Base 64 representation does not have a string of AAAA characters
@@ -151,7 +151,7 @@ and look broken.
 
 
 ### I2CP
-No changes required to [I2CP]_. The private key for the encryption public key in the Destination
+No changes required to I2CP. The private key for the encryption public key in the Destination
 is not sent to the router.
 
 
@@ -228,7 +228,7 @@ encrypted Database Lookup Messages and replies.
 Estimated time frame for design, development, and rollout of that would be ????????
 But would be after hybrid or ratchet ????????????
 
-For further discussion see [PQ]_.
+For further discussion see [this topic](http://zzz.i2p/topics/3294).
 
 
 
@@ -259,40 +259,4 @@ Subject to backward compatibility issues, and after disabling SSU,
 implementations may remove ElGamal code completely.
 Approximately 14% of routers in the network are ElGamal encryption type, including many floodfills.
 
-A draft merge request for Java I2P is at [MR]_.
-
-
-## References
-
-.. [Common]
-    {{ spec_url('common-structures') }}
-
-.. [Datagram]
-    {{ spec_url('datagrams') }}
-
-.. [I2CP]
-    {{ spec_url('i2cp') }}
-
-.. [I2NP]
-    {{ spec_url('i2np') }}
-
-.. [MR]
-    http://git.idk.i2p/i2p-hackers/i2p.i2p/-/merge_requests/66
-
-.. [NTCP2]
-    {{ spec_url('ntcp2') }}
-
-.. [PKF]
-    http://{{ i2pconv('idk.i2p/javadoc-i2p') }}/net/i2p/data/PrivateKeyFile.html
-
-.. [PQ]
-    http://zzz.i2p/topics/3294
-
-.. [SAM]
-    {{ site_url('docs/api/samv3') }}
-
-.. [SSU2]
-    {{ spec_url('ssu2') }}
-
-.. [Streaming]
-    {{ spec_url('streaming') }}
+A draft merge request for Java I2P is at [git.idk.i2p](http://git.idk.i2p/i2p-hackers/i2p.i2p/-/merge_requests/66).

@@ -12,12 +12,10 @@ thread: "http://zzz.i2p/topics/2500"
 This proposal was not implemented as specified,
 however, the ECIES long and short build messages (proposals 152 and 157)
 were designed with extensible options fields.
-See [SPEC]_ for the official specification.
+See the [Tunnel Creation ECIES specification](/en/docs/spec/tunnel-creation-ecies/) for the official specification.
 
 
 ## Overview
-
-ref: http://i2p-projekt.i2p/spec/tunnel-creation
 
 Add a flexible, extensible mechanism for options in the I2NP Tunnel Build Records
 which are contained in the Tunnel Build and Tunnel Build Reply messages.
@@ -93,10 +91,3 @@ The unused space in the Tunnel Build Records are filled with random data and cur
 The space can be converted to contain options without migration issues.
 In the build message, the presence of options is indicated in the flags byte.
 In the build reply message, the presence of options is indicated by a multi-byte magic number.
-
-
-
-## References
-
-.. [SPEC]
-   {{ spec_url('tunnel-creation-ecies') }}

@@ -30,13 +30,13 @@ Por lo tanto, en su mayoría deferimos la solución a una propuesta separada.
 Aunque añadimos algunas características de personalización a la especificación LS2,
 no requerimos ninguna nueva función hash.
 
-Muchos proyectos, como ZCash [ZCASH]_, están utilizando funciones hash y
+Muchos proyectos, como [ZCash](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf), están utilizando funciones hash y
 algoritmos de firma basados en algoritmos más nuevos que no son vulnerables a
 los siguientes ataques.
 
 ### Ataques de Extensión de Longitud
 
-SHA-256 y SHA-512 son vulnerables a Ataques de Extensión de Longitud (LEA) [LEA]_.
+SHA-256 y SHA-512 son vulnerables a [Ataques de Extensión de Longitud (LEA)](https://en.wikipedia.org/wiki/Length_extension_attack).
 Este es el caso cuando se firma los datos reales, no el hash de los datos.
 En la mayoría de los protocolos de I2P (streaming, datagramas, netdb y otros), los datos reales son firmados. Una excepción son los archivos SU3, donde se firma el hash.
 La otra excepción son los datagramas firmados para DSA (tipo de firma 0) solamente,
@@ -91,19 +91,19 @@ El nuevo tipo de firma puede ser utilizado tanto para conjuntos de arrendamiento
 
 ## Justificación
 
-- BLAKE2b no es vulnerable a LEA [BLAKE2]_.
+- [BLAKE2b](https://blake2.net/blake2.pdf) no es vulnerable a LEA.
 - BLAKE2b proporciona un método estándar para agregar cadenas de personalización para separación de dominios
 - BLAKE2b proporciona un método estándar para agregar una sal aleatoria para prevenir DMI.
 - BLAKE2b es más rápido que SHA-256 y SHA-512 (y MD5) en hardware moderno,
-  según [BLAKE2]_.
+  según la [especificación BLAKE2](https://blake2.net/blake2.pdf).
 - Ed25519 sigue siendo nuestro tipo de firma más rápido, mucho más rápido que ECDSA, al menos en Java.
-- Ed25519 [ED25519-REFS]_ requiere una función hash criptográfica de 512 bits.
+- [Ed25519](http://cr.yp.to/papers.html#ed25519) requiere una función hash criptográfica de 512 bits.
   No especifica SHA-512. BLAKE2b es igualmente adecuada para la función hash.
 - BLAKE2b está ampliamente disponible en bibliotecas para muchos lenguajes de programación, como Noise.
 
 ## Especificación
 
-Usar BLAKE2b-512 sin clave como en [BLAKE2]_ con sal y personalización.
+Usar BLAKE2b-512 sin clave como en la [especificación BLAKE2](https://blake2.net/blake2.pdf) con sal y personalización.
 Todos los usos de firmas BLAKE2b usarán una cadena de personalización de 16 caracteres.
 
 Cuando se use en la firma RedDSA_BLAKE2b_Ed25519,
@@ -116,8 +116,8 @@ Al calcular S, restablecer la sal al valor predeterminado de todo ceros.
 Cuando se use en la verificación RedDSA_BLAKE2b_Ed25519,
 no use una sal aleatoria, use el valor predeterminado de todo ceros.
 
-Las características de sal y personalización no están especificadas en [RFC-7693]_;
-use esas características como se especifica en [BLAKE2]_.
+Las características de sal y personalización no están especificadas en [RFC 7693](https://tools.ietf.org/html/rfc7693);
+use esas características como se especifica en la [especificación BLAKE2](https://blake2.net/blake2.pdf).
 
 ### Tipo de Firma
 
@@ -184,7 +184,7 @@ Pruebas unitarias                      "test1234test5678"
 - Alternativa 2: Ed25519ctx en RFC 8032;
   Proporciona resistencia a LEA y personalización.
   Estandarizado, pero ¿alguien lo usa?
-  Ver [RFC-8032]_ y [ED25519CTX]_.
+  Ver [RFC 8032](https://tools.ietf.org/html/rfc8032) y [esta discusión](https://moderncrypto.org/mail-archive/curves/2017/000925.html).
 - ¿Es el hash "con clave" útil para nosotros?
 
 ## Migración
@@ -212,31 +212,3 @@ Para la versión mínima del router 0.9.TBD, los routers deben asegurar:
 - Las conexiones de transmisión y los datagramas firmados no funcionarán a routers con menos de la versión 0.9.TBD,
   pero no hay forma de saberlo, por lo que el nuevo tipo de firma no debe usarse por defecto durante un período
   de meses o años después de que 0.9.TBD sea lanzado.
-
-## Referencias
-
-.. [BLAKE2]
-   https://blake2.net/blake2.pdf
-
-.. [ED25519CTX]
-   https://moderncrypto.org/mail-archive/curves/2017/000925.html
-
-.. [ED25519-REFS]
-    "Firmas de alta velocidad y alta seguridad" por Daniel
-    J. Bernstein, Niels Duif, Tanja Lange, Peter Schwabe, y
-    Bo-Yin Yang. http://cr.yp.to/papers.html#ed25519
-
-.. [EDDSA-FAULTS]
-   https://news.ycombinator.com/item?id=15414760
-
-.. [LEA]
-   https://en.wikipedia.org/wiki/Length_extension_attack
-
-.. [RFC-7693]
-   https://tools.ietf.org/html/rfc7693
-
-.. [RFC-8032]
-   https://tools.ietf.org/html/rfc8032
-
-.. [ZCASH]
-   https://github.com/zcash/zips/tree/master/protocol/protocol.pdf

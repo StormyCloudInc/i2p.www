@@ -12,7 +12,7 @@ target: "0.9.65"
 ## HINWEIS
 
 Dieser Vorschlag wurde genehmigt und ist nun in der
-[Tunnel-Creation-ECIES]_ Spezifikation ab API 0.9.65 enthalten.
+[Tunnel Creation ECIES specification](/en/docs/spec/tunnel-creation-ecies/) ab API 0.9.65 enthalten.
 Es gibt noch keine bekannten Implementierungen; Implementierungsdaten / API-Versionen sind noch festzulegen.
 
 
@@ -36,14 +36,14 @@ Dieser Vorschlag adressiert diese Probleme durch Hinzufügen von Bandbreitenpara
 
 ## Design
 
-Fügen Sie Bandbreitenparameter zu den Datensätzen in ECIES-Tunnelaufbaunachrichten [Tunnel-Creation-ECIES]_ im Mapping-Feld für Tunnelaufbauoptionen hinzu. Verwenden Sie kurze Parameternamen, da der verfügbare Platz für das Optionsfeld begrenzt ist.
+Fügen Sie Bandbreitenparameter zu den Datensätzen in ECIES-Tunnelaufbaunachrichten (siehe [Tunnel Creation ECIES specification](/en/docs/spec/tunnel-creation-ecies/)) im Mapping-Feld für Tunnelaufbauoptionen hinzu. Verwenden Sie kurze Parameternamen, da der verfügbare Platz für das Optionsfeld begrenzt ist.
 Tunnelaufbaunachrichten haben eine feste Größe, sodass die Nachrichten dadurch nicht größer werden.
 
 
 
 ## Spezifikation
 
-Aktualisieren Sie die ECIES-Tunnelaufbaunachrichtenspezifikation [Tunnel-Creation-ECIES]_
+Aktualisieren Sie die [ECIES-Tunnelaufbaunachrichtenspezifikation](/en/docs/spec/tunnel-creation-ecies/)
 wie folgt:
 
 Für sowohl lange als auch kurze ECIES-Aufbau-Datensätze:
@@ -148,7 +148,3 @@ sollten Router auf eine "b" Antwort prüfen, um die Unterstützung zu bestätige
 
 
 
-## Referenzen
-
-.. [Tunnel-Creation-ECIES]
-    {{ spec_url('tunnel-creation-ecies') }}

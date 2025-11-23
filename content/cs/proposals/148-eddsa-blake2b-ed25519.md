@@ -18,11 +18,11 @@ Během diskusí a návrhu NTCP2 (návrh 111) a LS2 (návrh 123) jsme stručně z
 
 Pro NTCP2 i LS2 jsme se rozhodli, že tyto útoky nejsou přímo relevantní pro dané návrhy a jakákoli řešení byla v konfliktu s cílem minimalizovat nové primitivy. Také jsme zjistili, že rychlost hashovacích funkcí v těchto protokolech nebyla důležitým faktorem v našich rozhodnutích. Proto jsme řešení většinou odložili na samostatný návrh. Přestože jsme do specifikace LS2 přidali některé personalizační prvky, nevyžadovali jsme žádné nové hashovací funkce.
 
-Mnoho projektů, jako například ZCash [ZCASH]_, používá hashovací funkce a algoritmy podpisu založené na novějších algoritmech, které nejsou zranitelné vůči následujícím útokům.
+Mnoho projektů, jako například [ZCash](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf), používá hashovací funkce a algoritmy podpisu založené na novějších algoritmech, které nejsou zranitelné vůči následujícím útokům.
 
 ### Útoky na rozšíření délky
 
-SHA-256 a SHA-512 jsou zranitelné vůči útokům na rozšíření délky (LEA) [LEA]_. To je případ, když jsou podepsána skutečná data, a ne hash dat. Ve většině I2P protokolů (streaming, datagramy, netdb a další) jsou podepisována skutečná data. Jednou výjimkou jsou soubory SU3, kde je podepisován hash. Další výjimkou jsou podepisované datagramy pro DSA (typ podpisu 0) pouze, kde je podepisován hash. Pro jiné typy podepisovaných datagramů jsou podepisována data.
+SHA-256 a SHA-512 jsou zranitelné vůči [útokům na rozšíření délky (LEA)](https://en.wikipedia.org/wiki/Length_extension_attack). To je případ, když jsou podepsána skutečná data, a ne hash dat. Ve většině I2P protokolů (streaming, datagramy, netdb a další) jsou podepisována skutečná data. Jednou výjimkou jsou soubory SU3, kde je podepisován hash. Další výjimkou jsou podepisované datagramy pro DSA (typ podpisu 0) pouze, kde je podepisován hash. Pro jiné typy podepisovaných datagramů jsou podepisována data.
 
 ### Útoky mezi protokoly
 
@@ -50,23 +50,23 @@ Změňte existující typ podpisu RedDSA_SHA512_Ed25519 tak, aby používal BLAK
 
 ## Ospravedlnění
 
-- BLAKE2b není zranitelný vůči LEA [BLAKE2]_.
+- [BLAKE2b](https://blake2.net/blake2.pdf) není zranitelný vůči LEA.
 - BLAKE2b poskytuje standardní způsob přidání personalizačních řetězců pro doménové oddělení
 - BLAKE2b poskytuje standardní způsob přidání náhodného saltu k zamezení DMI.
-- BLAKE2b je rychlejší než SHA-256 a SHA-512 (a MD5) na moderním hardwaru, podle [BLAKE2]_.
+- BLAKE2b je rychlejší než SHA-256 a SHA-512 (a MD5) na moderním hardwaru, podle [BLAKE2 specifikace](https://blake2.net/blake2.pdf).
 - Ed25519 je stále náš nejrychlejší typ podpisu, mnohem rychlejší než ECDSA, alespoň v Java.
-- Ed25519 [ED25519-REFS]_ vyžaduje 512bitovou kryptografickou hashovací funkci. Neurčuje SHA-512. BLAKE2b je stejně vhodný pro hashovací funkci.
+- [Ed25519](http://cr.yp.to/papers.html#ed25519) vyžaduje 512bitovou kryptografickou hashovací funkci. Neurčuje SHA-512. BLAKE2b je stejně vhodný pro hashovací funkci.
 - BLAKE2b je široce dostupný v knihovnách pro mnoho programovacích jazyků, například Noise.
 
 ## Specifikace
 
-Použijte nepodepsaný BLAKE2b-512, jak je uvedeno v [BLAKE2]_, se saltem a personalizací. Všechny použití BLAKE2b podpisů použijí 16znakový personalizační řetězec.
+Použijte nepodepsaný BLAKE2b-512, jak je uvedeno v [BLAKE2 specifikaci](https://blake2.net/blake2.pdf), se saltem a personalizací. Všechny použití BLAKE2b podpisů použijí 16znakový personalizační řetězec.
 
 Při použití v podepisování RedDSA_BLAKE2b_Ed25519 je povolen náhodný salt, nicméně není nutný, protože algoritmus podpisu přidává 80 bajtů náhodných dat (viz návrh 123). Pokud je to žádoucí, při hašování dat pro výpočet r nastavte nový 16bajtový náhodný salt pro každý podpis. Při výpočtu S obnovte salt na výchozí hodnotu všech nul.
 
 Při použití v ověřování RedDSA_BLAKE2b_Ed25519 nepoužívejte náhodný salt, použijte výchozí hodnotu všech nul.
 
-Salt a personalizační funkce nejsou specifikovány v [RFC-7693]_; použijte tyto funkce, jak jsou specifikovány v [BLAKE2]_.
+Salt a personalizační funkce nejsou specifikovány v [RFC 7693](https://tools.ietf.org/html/rfc7693); použijte tyto funkce, jak jsou specifikovány v [BLAKE2 specifikaci](https://blake2.net/blake2.pdf).
 
 ### Typ podpisu
 
@@ -119,7 +119,7 @@ Jednotkové testy                    "test1234test5678"
 ## Problémy
 
 - Alternativa 1: Návrh 146; Poskytuje odolnost vůči LEA
-- Alternativa 2: Ed25519ctx v RFC 8032; Poskytuje odolnost vůči LEA a personalizaci. Standardizováno, ale někdo to používá? Viz [RFC-8032]_ a [ED25519CTX]_.
+- Alternativa 2: Ed25519ctx v RFC 8032; Poskytuje odolnost vůči LEA a personalizaci. Standardizováno, ale někdo to používá? Viz [RFC 8032](https://tools.ietf.org/html/rfc8032) a [tuto diskuzi](https://moderncrypto.org/mail-archive/curves/2017/000925.html).
 - Je "keyed" hashing užitečný pro nás?
 
 ## Migrace
@@ -138,29 +138,3 @@ Pro minimální verzi routeru 0.9.TBD musí routery zajistit:
 - Při ověřování netdb store, nestahujte RI nebo LS s novým typem podpisu z routerů mladších než verze 0.9.TBD.
 - Routery s novým typem podpisu v jejich RI se nesmí připojovat k routerům mladším než verze 0.9.TBD, buď s NTCP, NTCP2 nebo SSU.
 - Streamingové spojení a podepisované datagramy nebudou fungovat na routery mladší než verze 0.9.TBD, ale není způsob, jak to zjistit, takže nový typ podpisu by neměl být používán jako výchozí po dobu několika měsíců nebo let po vydání 0.9.TBD.
-
-## Odkazy
-
-.. [BLAKE2]
-   https://blake2.net/blake2.pdf
-
-.. [ED25519CTX]
-   https://moderncrypto.org/mail-archive/curves/2017/000925.html
-
-.. [ED25519-REFS]
-    "Vysoce rychlé vysoce bezpečné podpisy" od Daniel J. Bernstein, Niels Duif, Tanja Lange, Peter Schwabe, a Bo-Yin Yang. http://cr.yp.to/papers.html#ed25519
-
-.. [EDDSA-FAULTS]
-   https://news.ycombinator.com/item?id=15414760
-
-.. [LEA]
-   https://en.wikipedia.org/wiki/Length_extension_attack
-
-.. [RFC-7693]
-   https://tools.ietf.org/html/rfc7693
-
-.. [RFC-8032]
-   https://tools.ietf.org/html/rfc8032
-
-.. [ZCASH]
-   https://github.com/zcash/zips/tree/master/protocol/protocol.pdf

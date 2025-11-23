@@ -22,7 +22,7 @@ Sujeito a pequenas revisões.
 
 O ECIES reduz a sobrecarga de mensagens de sessão existente (ES) em cerca de 90 bytes.
 Portanto, podemos aumentar o MTU em cerca de 90 bytes para conexões ECIES.
-Veja [ECIES]_, [STREAMING-SPEC]_ e [STREAMING-OPTIONS]_.
+Veja the [ECIES specification](/en/docs/spec/ecies/#overhead), [Streaming specification](/en/docs/spec/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/en/docs/api/streaming/).
 
 Sem aumentar o MTU, em muitos casos as economias de sobrecarga não são realmente 'economizadas',
 já que as mensagens serão preenchidas para usar duas mensagens de túnel completas de qualquer forma.
@@ -68,7 +68,7 @@ no entanto, não há provisão para negociar para cima em streaming,
 então o MTU deve permanecer em 1730.
 
 
-Conforme observado em [STREAMING-OPTIONS]_,
+Conforme observado em the [Streaming API documentation](/en/docs/api/streaming/),
 os dados nos pacotes SYN enviados de Alice para Bob podem exceder o MTU de Bob.
 Esta é uma fraqueza no protocolo de streaming.
 Portanto, os clientes de chave dupla devem limitar os dados nos pacotes SYN enviados
@@ -79,7 +79,7 @@ de carga útil enviado.
 
 ### Análise
 
-Como descrito em [ECIES]_, a sobrecarga do ElGamal para mensagens de sessão existentes é
+Como descrito em the [ECIES specification](/en/docs/spec/ecies/#overhead), a sobrecarga do ElGamal para mensagens de sessão existentes é
 151 bytes, e a sobrecarga do Ratchet é 69 bytes.
 Portanto, podemos aumentar o MTU para conexões ratchet em (151 - 69) = 82 bytes,
 de 1730 para 1812.
@@ -88,8 +88,8 @@ de 1730 para 1812.
 
 ## Especificação
 
-Adicione as seguintes mudanças e esclarecimentos à seção de Seleção e Negociação de MTU de [STREAMING-OPTIONS]_.
-Sem alterações em [STREAMING-SPEC]_.
+Adicione as seguintes mudanças e esclarecimentos à seção de Seleção e Negociação de MTU de the [Streaming API documentation](/en/docs/api/streaming/).
+Sem alterações em the [Streaming specification](/en/docs/spec/streaming/).
 
 
 O valor padrão da opção i2p.streaming.maxMessageSize permanece 1730 para todas as conexões, independentemente das chaves usadas.
@@ -161,8 +161,8 @@ no SYN ACK de Bob para Alice, e em todos os pacotes subsequentes enviados em amb
 
 ## Justificação
 
-Veja [CALCULATION]_ por que o valor atual é 1730.
-Veja [ECIES]_ por que a sobrecarga do ECIES é 82 bytes a menos que o ElGamal.
+Veja the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220) por que o valor atual é 1730.
+Veja the [ECIES specification](/en/docs/spec/ecies/#overhead) por que a sobrecarga do ECIES é 82 bytes a menos que o ElGamal.
 
 
 
@@ -206,16 +206,3 @@ negociará para baixo, como de costume.
 
 
 
-## Referências
-
-.. [CALCULATION]
-   https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220
-
-.. [ECIES]
-   {{ spec_url('ecies') }}#overhead
-
-.. [STREAMING-OPTIONS]
-    {{ site_url('docs/api/streaming', True) }}
-
-.. [STREAMING-SPEC]
-    {{ spec_url('streaming') }}#flags-and-option-data-fields

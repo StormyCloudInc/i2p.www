@@ -10,11 +10,11 @@ thread: "http://zzz.i2p/topics/2294"
 
 ## 概述
 
-该提案为出站隧道添加一个 I2CP 选项，促使在发送消息时选择或建立隧道，使得 OBEP 与目标 [LeaseSet]_ 的一个 IBGW 匹配。
+该提案为出站隧道添加一个 I2CP 选项，促使在发送消息时选择或建立隧道，使得 OBEP 与目标 LeaseSet 的一个 IBGW 匹配。
 
 ## 动机
 
-大多数 I2P 路由器采用一种丢包的拥塞管理形式。参考实现使用一种 WRED 策略，考虑到消息大小和传输距离 [TUNNEL-THROTTLING]_。由于这种策略，丢包的主要来源是 OBEP。
+大多数 I2P 路由器采用一种丢包的拥塞管理形式。参考实现使用一种 WRED 策略，考虑到消息大小和传输距离（参见 [tunnel throttling 文档](/en/docs/tunnels/implementation/#tunnelthrottling)）。由于这种策略，丢包的主要来源是 OBEP。
 
 ## 设计
 
@@ -26,7 +26,7 @@ thread: "http://zzz.i2p/topics/2294"
 
 ## 规范
 
-新增一个 I2CP 选项到 [I2CP-SPEC]_：
+新增一个 I2CP 选项到 [I2CP 规范](/en/docs/spec/i2cp/)：
 
     outbound.matchEndWithTarget
         Boolean
@@ -63,23 +63,6 @@ thread: "http://zzz.i2p/topics/2294"
 
 - 对于标准隧道，OBEP 可能需要找到和连接到 IBGW，增加延迟，从而增加第一次 RTT（因为这是在发送第一个数据包后发生）。使用这一模式，OBEP 需要在隧道构建期间找到和连接到 IBGW，增加相同的延迟但减少第一次 RTT（因为这是在发送第一个数据包前发生的）。
 
-- 当前标准的 [VariableTunnelBuild]_ 大小是 2641 字节。因此预计对于大于此大小的平均消息，这一模式将导致较低的丢包率。
+- 当前标准的 VariableTunnelBuild 大小是 2641 字节。因此预计对于大于此大小的平均消息，这一模式将导致较低的丢包率。
 
 需要更多研究来调查这些效果，以便决定哪些标准隧道会从默认启用这一模式中受益。
-
-## 参考文献
-
-.. [Destination]
-    {{ ctags_url('Destination') }}
-
-.. [I2CP-SPEC]
-    {{ spec_url('i2cp') }}
-
-.. [LeaseSet]
-    {{ ctags_url('LeaseSet') }}
-
-.. [TUNNEL-THROTTLING]
-    {{ site_url('docs/tunnels/implementation', True) }}#tunnel.throttling
-
-.. [VariableTunnelBuild]
-    {{ ctags_url('VariableTunnelBuild') }}

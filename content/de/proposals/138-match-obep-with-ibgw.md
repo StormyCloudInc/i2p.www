@@ -1,4 +1,3 @@
-```markdown
 ---
 title: "OBEPs mit IBGWs abgleichen"
 number: "138"
@@ -11,12 +10,12 @@ thread: "http://zzz.i2p/topics/2294"
 
 ## Übersicht
 
-Dieser Vorschlag fügt eine I2CP-Option für ausgehende Tunnel hinzu, die bewirkt, dass Tunnel ausgewählt oder aufgebaut werden, wenn eine Nachricht gesendet wird, sodass der OBEP mit einem der IBGWs aus dem [LeaseSet]_ für das Ziel-[Destination]_ übereinstimmt.
+Dieser Vorschlag fügt eine I2CP-Option für ausgehende Tunnel hinzu, die bewirkt, dass Tunnel ausgewählt oder aufgebaut werden, wenn eine Nachricht gesendet wird, sodass der OBEP mit einem der IBGWs aus dem LeaseSet für das Ziel-Destination übereinstimmt.
 
 
 ## Motivation
 
-Die meisten I2P-Router verwenden eine Form der Paketabwurfsteuerung zur Überlastungsverwaltung. Die Referenzimplementierung nutzt eine WRED-Strategie, die sowohl die Nachrichtengröße als auch die Reisedistanz berücksichtigt [TUNNEL-THROTTLING]_. Aufgrund dieser Strategie ist die Hauptquelle für Paketverlust der OBEP.
+Die meisten I2P-Router verwenden eine Form der Paketabwurfsteuerung zur Überlastungsverwaltung. Die Referenzimplementierung nutzt eine WRED-Strategie, die sowohl die Nachrichtengröße als auch die Reisedistanz berücksichtigt (siehe [Tunnel Throttling Dokumentation](/en/docs/tunnels/implementation/#tunnelthrottling)). Aufgrund dieser Strategie ist die Hauptquelle für Paketverlust der OBEP.
 
 
 ## Design
@@ -31,7 +30,7 @@ Dieser Modus würde effektiv bedeuten, dass der Empfänger den OBEP des Senders 
 
 ## Spezifikation
 
-Eine neue I2CP-Option wird zu [I2CP-SPEC]_ hinzugefügt:
+Eine neue I2CP-Option wird zur [I2CP-Spezifikation](/en/docs/spec/i2cp/) hinzugefügt:
 
     outbound.matchEndWithTarget
         Boolean
@@ -71,25 +70,6 @@ Dieser Vorschlag hat verschiedene Auswirkungen auf Latenz, RTT und Paketverlust:
 
 - Bei Standardtunneln muss der OBEP möglicherweise den IBGW finden und sich mit ihm verbinden, was die Latenz erhöht, die den ersten RTT verlängert (da dies nach dem Senden des ersten Pakets erfolgt). Bei Verwendung dieses Modus muss der OBEP während des Tunnelbaus den IBGW finden und sich mit ihm verbinden, was dieselbe Latenz hinzufügt, aber den ersten RTT verkürzt (da dies vor dem Senden des ersten Pakets erfolgt).
 
-- Die derzeitige Standardgröße von [VariableTunnelBuild]_ ist 2641 Bytes. Daher wird erwartet, dass dieser Modus zu einem geringeren Paketverlust bei durchschnittlichen Nachrichtengrößen führt, die größer als diese sind.
+- Die derzeitige Standardgröße von VariableTunnelBuild ist 2641 Bytes. Daher wird erwartet, dass dieser Modus zu einem geringeren Paketverlust bei durchschnittlichen Nachrichtengrößen führt, die größer als diese sind.
 
 Weitere Forschung ist notwendig, um diese Effekte zu untersuchen, um zu entscheiden, bei welchen Standardtunneln dieser Modus standardmäßig aktiviert werden sollte.
-
-
-## Referenzen
-
-.. [Destination]
-    {{ ctags_url('Destination') }}
-
-.. [I2CP-SPEC]
-    {{ spec_url('i2cp') }}
-
-.. [LeaseSet]
-    {{ ctags_url('LeaseSet') }}
-
-.. [TUNNEL-THROTTLING]
-    {{ site_url('docs/tunnels/implementation', True) }}#tunnel.throttling
-
-.. [VariableTunnelBuild]
-    {{ ctags_url('VariableTunnelBuild') }}
-```

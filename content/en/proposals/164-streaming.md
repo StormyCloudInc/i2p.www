@@ -47,7 +47,7 @@ If Alice and Charlie are API 0.9.58 or newer, any replay attempt by Bob will be 
 
 ## Specification
 
-Update [STREAMING]_ to add the following section:
+Update the [Streaming specification](/en/docs/spec/streaming/) to add the following section:
 
 ### Replay prevention
 
@@ -104,10 +104,3 @@ during the SYNCHRONIZE handshake and the NACKs would not make any sense.
 
 Implementations may add support at any time, no coordination is needed.
 Java I2P and i2pd routers implemented this in API 0.9.58 (released March 2023).
-
-
-
-## References
-
-.. [STREAMING]
-    {{ spec_url('streaming') }}

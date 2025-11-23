@@ -10,12 +10,12 @@ thread: "http://zzz.i2p/topics/2294"
 
 ## Visão Geral
 
-Esta proposta adiciona uma opção I2CP para túneis de saída que faz com que os túneis sejam escolhidos ou construídos quando uma mensagem é enviada de forma que o OBEP corresponda a um dos IBGWs do [LeaseSet]_ para o [Destination]_ alvo.
+Esta proposta adiciona uma opção I2CP para túneis de saída que faz com que os túneis sejam escolhidos ou construídos quando uma mensagem é enviada de forma que o OBEP corresponda a um dos IBGWs do LeaseSet para o Destination alvo.
 
 
 ## Motivação
 
-A maioria dos roteadores I2P emprega uma forma de descarte de pacotes para gerenciamento de congestionamento. A implementação de referência usa uma estratégia WRED que leva em consideração tanto o tamanho da mensagem quanto a distância percorrida [TUNNEL-THROTTLING]_. Devido a essa estratégia, a principal fonte de perda de pacotes é o OBEP.
+A maioria dos roteadores I2P emprega uma forma de descarte de pacotes para gerenciamento de congestionamento. A implementação de referência usa uma estratégia WRED que leva em consideração tanto o tamanho da mensagem quanto a distância percorrida (veja [documentação tunnel throttling](/en/docs/tunnels/implementation/#tunnelthrottling)). Devido a essa estratégia, a principal fonte de perda de pacotes é o OBEP.
 
 
 ## Design
@@ -30,7 +30,7 @@ Este modo efetivamente significaria que o destinatário está selecionando o OBE
 
 ## Especificação
 
-Uma nova opção I2CP é adicionada ao [I2CP-SPEC]_:
+Uma nova opção I2CP é adicionada à [especificação I2CP](/en/docs/spec/i2cp/):
 
     outbound.matchEndWithTarget
         Booleano
@@ -78,27 +78,9 @@ Esta proposta tem vários efeitos sobre a latência, RTT e perda de pacotes:
   conectar-se ao IBGW durante a construção do túnel, adicionando a mesma latência mas
   reduzindo o primeiro RTT (pois isso ocorre antes do primeiro pacote ser enviado).
 
-- O tamanho [VariableTunnelBuild]_ atualmente padrão é de 2641 bytes. Assim, é
+- O tamanho VariableTunnelBuild atualmente padrão é de 2641 bytes. Assim, é
   esperado que este modo resulte em menor perda de pacotes para tamanhos de mensagens
   médias maiores do que isso.
 
 Mais pesquisas são necessárias para investigar esses efeitos, a fim de decidir
 quais túneis padrão se beneficiariam deste modo estando habilitado por padrão.
-
-
-## Referências
-
-.. [Destination]
-    {{ ctags_url('Destination') }}
-
-.. [I2CP-SPEC]
-    {{ spec_url('i2cp') }}
-
-.. [LeaseSet]
-    {{ ctags_url('LeaseSet') }}
-
-.. [TUNNEL-THROTTLING]
-    {{ site_url('docs/tunnels/implementation', True) }}#tunnel.throttling
-
-.. [VariableTunnelBuild]
-    {{ ctags_url('VariableTunnelBuild') }}

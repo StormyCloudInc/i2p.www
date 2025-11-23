@@ -42,7 +42,7 @@ Se Alice e Charlie são com API 0.9.58 ou mais recente, qualquer tentativa de re
 
 ## Especificação
 
-Atualize [STREAMING]_ para adicionar a seguinte seção:
+Atualize a [especificação Streaming](/en/docs/spec/streaming/) para adicionar a seguinte seção:
 
 ### Prevenção de repetição
 
@@ -96,7 +96,3 @@ durante o handshake SYNCHRONIZE e os NACKs não fariam sentido.
 As implementações podem adicionar suporte a qualquer momento, não é necessária coordenação.
 Os roteadores Java I2P e i2pd implementaram isso na API 0.9.58 (lançada em março de 2023).
 
-## Referências
-
-.. [STREAMING]
-    {{ spec_url('streaming') }}

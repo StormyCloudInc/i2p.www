@@ -35,7 +35,7 @@ Alice와 Charlie가 API 0.9.58 이상 버전인 경우, Bob의 재연 시도는 
 
 ## 사양
 
-[STREAMING]_을 업데이트하여 다음 섹션을 추가합니다:
+[Streaming 사양](/en/docs/spec/streaming/)을 업데이트하여 다음 섹션을 추가합니다:
 
 ### 재연 방지
 
@@ -73,7 +73,3 @@ Bob에서 Alice로 보내는 SYNCHRONIZE ACK 패킷에는 변경이 필요하지
 
 
 
-## 참조
-
-.. [STREAMING]
-    {{ spec_url('streaming') }}

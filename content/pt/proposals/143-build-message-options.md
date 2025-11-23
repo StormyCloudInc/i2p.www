@@ -12,12 +12,10 @@ thread: "http://zzz.i2p/topics/2500"
 Esta proposta não foi implementada conforme especificado,
 no entanto, as mensagens de construção longas e curtas ECIES (propostas 152 e 157)
 foram projetadas com campos de opções extensíveis.
-Veja [SPEC]_ para a especificação oficial.
+Veja a [especificação Tunnel Creation ECIES](/en/docs/spec/tunnel-creation-ecies/) para a especificação oficial.
 
 
 ## Visão Geral
-
-ref: http://i2p-projekt.i2p/spec/tunnel-creation
 
 Adicione um mecanismo flexível e extensível para opções nos Registros de Construção de Túnel I2NP
 que estão contidas nas mensagens de Construção de Túnel e Resposta de Construção de Túnel.
@@ -92,10 +90,3 @@ O espaço não utilizado nos Registros de Construção de Túnel é preenchido c
 O espaço pode ser convertido para conter opções sem problemas de migração.
 Na mensagem de construção, a presença de opções é indicada no byte de flags.
 Na mensagem de resposta de construção, a presença de opções é indicada por um número mágico de vários bytes.
-
-
-
-## Referências
-
-.. [SPEC]
-   {{ spec_url('tunnel-creation-ecies') }}

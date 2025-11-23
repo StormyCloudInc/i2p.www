@@ -38,7 +38,7 @@ Alice ve Charlie API 0.9.58 veya daha yeni sürümde ise, Bob tarafından yapıl
 
 ## Spesifikasyon
 
-[STREAMING]'i güncelleyin ve aşağıdaki bölümü ekleyin:
+[Streaming spesifikasyonunu](/en/docs/spec/streaming/) güncelleyin ve aşağıdaki bölümü ekleyin:
 
 ### Yeniden Çalma Önleme
 
@@ -92,7 +92,3 @@ Java I2P ve i2pd yönlendiricileri, API 0.9.58'de (Mart 2023'te yayınlandı) bu
 
 
 
-## Referanslar
-
-.. [STREAMING]
-    {{ spec_url('streaming') }}

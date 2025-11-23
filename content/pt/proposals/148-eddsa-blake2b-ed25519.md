@@ -18,11 +18,11 @@ Durante discussões e o design do NTCP2 (proposta 111) e LS2 (proposta 123), con
 
 Para ambos NTCP2 e LS2, decidimos que esses ataques não eram diretamente relevantes para as propostas em questão, e quaisquer soluções conflitavam com o objetivo de minimizar novas primitivas. Também determinamos que a velocidade das funções hash nesses protocolos não era um fator importante em nossas decisões. Portanto, adiamos a solução para uma proposta separada. Enquanto adicionamos algumas características de personalização à especificação LS2, não exigimos quaisquer novas funções hash.
 
-Muitos projetos, como o ZCash [ZCASH]_, estão utilizando funções hash e algoritmos de assinatura baseados em novos algoritmos que não são vulneráveis aos seguintes ataques.
+Muitos projetos, como o [ZCash](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf), estão utilizando funções hash e algoritmos de assinatura baseados em novos algoritmos que não são vulneráveis aos seguintes ataques.
 
 ### Ataques de Extensão de Comprimento
 
-SHA-256 e SHA-512 são vulneráveis a Ataques de Extensão de Comprimento (LEA) [LEA]_. Isso ocorre quando dados reais são assinados, não o hash dos dados. Na maioria dos protocolos I2P (streaming, datagramas, netdb, e outros), os dados reais são assinados. Uma exceção são os arquivos SU3, onde o hash é assinado. A outra exceção são os datagramas assinados para DSA (tipo de assinatura 0) apenas, onde o hash é assinado. Para outros tipos de assinatura de datagrama assinados, os dados são assinados.
+SHA-256 e SHA-512 são vulneráveis a [Ataques de Extensão de Comprimento (LEA)](https://en.wikipedia.org/wiki/Length_extension_attack). Isso ocorre quando dados reais são assinados, não o hash dos dados. Na maioria dos protocolos I2P (streaming, datagramas, netdb, e outros), os dados reais são assinados. Uma exceção são os arquivos SU3, onde o hash é assinado. A outra exceção são os datagramas assinados para DSA (tipo de assinatura 0) apenas, onde o hash é assinado. Para outros tipos de assinatura de datagrama assinados, os dados são assinados.
 
 ### Ataques entre Protocolos
 
@@ -50,23 +50,23 @@ Modificar o tipo de assinatura RedDSA_SHA512_Ed25519 existente para usar BLAKE2b
 
 ## Justificativa
 
-- BLAKE2b não é vulnerável a LEA [BLAKE2]_.
+- [BLAKE2b](https://blake2.net/blake2.pdf) não é vulnerável a LEA.
 - BLAKE2b fornece um método padrão para adicionar cadeias de personalização para separação de domínio.
 - BLAKE2b fornece um método padrão para adicionar um sal aleatório para prevenir DMI.
-- BLAKE2b é mais rápido que SHA-256 e SHA-512 (e MD5) em hardware moderno, de acordo com [BLAKE2]_.
+- BLAKE2b é mais rápido que SHA-256 e SHA-512 (e MD5) em hardware moderno, de acordo com a [especificação BLAKE2](https://blake2.net/blake2.pdf).
 - Ed25519 ainda é nosso tipo de assinatura mais rápido, muito mais rápido que ECDSA, pelo menos em Java.
-- Ed25519 [ED25519-REFS]_ requer uma função hash criptográfica de 512 bits. Não especifica SHA-512. BLAKE2b é igualmente adequado para a função hash.
+- [Ed25519](http://cr.yp.to/papers.html#ed25519) requer uma função hash criptográfica de 512 bits. Não especifica SHA-512. BLAKE2b é igualmente adequado para a função hash.
 - BLAKE2b está amplamente disponível em bibliotecas para muitas linguagens de programação, como o Noise.
 
 ## Especificação
 
-Usar BLAKE2b-512 não autenticado como em [BLAKE2]_ com sal e personalização. Todos os usos de assinaturas BLAKE2b usarão uma cadeia de personalização de 16 caracteres.
+Usar BLAKE2b-512 não autenticado como na [especificação BLAKE2](https://blake2.net/blake2.pdf) com sal e personalização. Todos os usos de assinaturas BLAKE2b usarão uma cadeia de personalização de 16 caracteres.
 
 Quando usado em assinatura RedDSA_BLAKE2b_Ed25519, um sal aleatório é permitido, no entanto, não é necessário, pois o algoritmo de assinatura adiciona 80 bytes de dados aleatórios (ver proposta 123). Se desejado, ao fazer o hash dos dados para calcular r, defina um novo sal aleatório de 16 bytes BLAKE2b para cada assinatura. Ao calcular S, redefina o sal para o padrão de todos zeros.
 
 Quando usado em verificação RedDSA_BLAKE2b_Ed25519, não use um sal aleatório, use o padrão de todos zeros.
 
-As características de sal e personalização não são especificadas em [RFC-7693]_; use essas características conforme especificado em [BLAKE2]_.
+As características de sal e personalização não são especificadas em [RFC 7693](https://tools.ietf.org/html/rfc7693); use essas características conforme especificado na [especificação BLAKE2](https://blake2.net/blake2.pdf).
 
 ### Tipo de Assinatura
 
@@ -118,11 +118,11 @@ Testes unitários                   "test1234test5678"
 
 ## Questões
 
-- Alternativa 1: Proposta 146; 
+- Alternativa 1: Proposta 146;
   Fornece resistência ao LEA
-- Alternativa 2: Ed25519ctx no RFC 8032; 
-  Fornece resistência ao LEA e personalização. 
-  Padronizado, mas alguém o utiliza? Veja [RFC-8032]_ e [ED25519CTX]_.
+- Alternativa 2: Ed25519ctx no RFC 8032;
+  Fornece resistência ao LEA e personalização.
+  Padronizado, mas alguém o utiliza? Veja [RFC 8032](https://tools.ietf.org/html/rfc8032) e [esta discussão](https://moderncrypto.org/mail-archive/curves/2017/000925.html).
 - Hashing "chaveado" é útil para nós?
 
 ## Migração
@@ -141,31 +141,3 @@ Para a versão mínima do roteador 0.9.TBD, os roteadores devem garantir:
 - Ao verificar um store netdb, não buscar um RI ou LS com o novo tipo de assinatura de roteadores com versão inferior a 0.9.TBD.
 - Roteadores com um novo tipo de assinatura em seu RI não podem se conectar a roteadores com versão inferior a 0.9.TBD, seja por NTCP, NTCP2, ou SSU.
 - Conexões de streaming e datagramas assinados não funcionarão para roteadores com versão inferior a 0.9.TBD, mas não há como saber isso, então o novo tipo de assinatura não deve ser usado por padrão por um período de meses ou anos após o lançamento do 0.9.TBD.
-
-## Referências
-
-.. [BLAKE2]
-   https://blake2.net/blake2.pdf
-
-.. [ED25519CTX]
-   https://moderncrypto.org/mail-archive/curves/2017/000925.html
-
-.. [ED25519-REFS]
-    "High-speed high-security signatures" por Daniel
-    J. Bernstein, Niels Duif, Tanja Lange, Peter Schwabe, e
-    Bo-Yin Yang. http://cr.yp.to/papers.html#ed25519
-
-.. [EDDSA-FAULTS]
-   https://news.ycombinator.com/item?id=15414760
-
-.. [LEA]
-   https://en.wikipedia.org/wiki/Length_extension_attack
-
-.. [RFC-7693]
-   https://tools.ietf.org/html/rfc7693
-
-.. [RFC-8032]
-   https://tools.ietf.org/html/rfc8032
-
-.. [ZCASH]
-   https://github.com/zcash/zips/tree/master/protocol/protocol.pdf

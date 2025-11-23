@@ -28,13 +28,13 @@ Bu nedenle, çözümü ayrı bir öneriye erteledik.
 LS2 spesifikasyonuna bazı kişiselleştirme özellikleri eklerken,
 yeni karma işlevleri gerektirmedik.
 
-ZCash gibi birçok proje [ZCASH]_,
+[ZCash](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf) gibi birçok proje,
 yeni algoritmalara dayanan ve aşağıdaki saldırılara
 karşı savunmasız olmayan karma işlevlerini ve imza algoritmalarını kullanmaktadır.
 
 ### Uzunluk Uzantısı Saldırıları
 
-SHA-256 ve SHA-512 Uzunluk Uzantısı Saldırılarına (LEA) karşı savunmasızdır [LEA]_.
+SHA-256 ve SHA-512 [Uzunluk Uzantısı Saldırılarına (LEA)](https://en.wikipedia.org/wiki/Length_extension_attack) karşı savunmasızdır.
 Bu, gerçek verilerin değil, verinin karmasının imzalandığı durumlarda geçerlidir.
 Çoğu I2P protokolünde (akış, veri akışı, netdb ve diğerleri), gerçek veriler imzalanır.
 Bir istisna, karmanın imzalandığı SU3 dosyalarıdır.
@@ -92,19 +92,19 @@ Yeni imza türü, hem kör olmayan hem de kör kiralama setleri için kullanıla
 
 ## Gerekçelendirme
 
-- BLAKE2b, LEA'ya karşı savunmasız değildir [BLAKE2]_.
+- [BLAKE2b](https://blake2.net/blake2.pdf), LEA'ya karşı savunmasız değildir.
 - BLAKE2b, alan ayrımı için kişiselleştirme dizgileri eklemek için standart bir yol sağlar.
 - BLAKE2b, DMI'yı önlemek için rastgele bir tuz eklemek için standart bir yol sağlar.
 - BLAKE2b, modern donanımda SHA-256 ve SHA-512'den (ve MD5'ten) daha hızlıdır,
-  [BLAKE2]'ye göre.
+  [BLAKE2 spesifikasyonuna](https://blake2.net/blake2.pdf) göre.
 - Ed25519, Java'da en azından ECDSA'dan daha hızlı olan en hızlı imza türümüzdür.
-- Ed25519 [ED25519-REFS]_ 512 bitlik bir kriptografik karma işlev gerektirir.
+- [Ed25519](http://cr.yp.to/papers.html#ed25519) 512 bitlik bir kriptografik karma işlev gerektirir.
   SHA-512'yi belirtmez. BLAKE2b de hash işlevi için uygundur.
 - BLAKE2b, Noise gibi birçok programlama dili kütüphanesinde yaygın olarak bulunabilir.
 
 ## Spesifikasyon
 
-Tuz ve kişiselleştirme ile [BLAKE2]'deki gibi anahtarsız BLAKE2b-512 kullanılacaktır.
+Tuz ve kişiselleştirme ile [BLAKE2 spesifikasyonundaki](https://blake2.net/blake2.pdf) gibi anahtarsız BLAKE2b-512 kullanılacaktır.
 BLAKE2b imzalarının tüm kullanımları 16 karakterlik bir kişiselleştirme dizgisi kullanacaktır.
 
 RedDSA_BLAKE2b_Ed25519 imzalamada kullanıldığında,
@@ -117,8 +117,8 @@ S'yi hesaplarken tuzu sıfır tüm'e ayarlayın.
 RedDSA_BLAKE2b_Ed25519 doğrulamada kullanıldığında,
 rastgele bir tuz kullanmayın, sıfır tüm deyimine ayarlayın.
 
-Tuz ve kişiselleştirme özellikleri [RFC-7693]'de belirtilmemiştir;
-bu özellikleri [BLAKE2]'te belirtildiği gibi kullanın.
+Tuz ve kişiselleştirme özellikleri [RFC 7693](https://tools.ietf.org/html/rfc7693)'de belirtilmemiştir;
+bu özellikleri [BLAKE2 spesifikasyonunda](https://blake2.net/blake2.pdf) belirtildiği gibi kullanın.
 
 ### İmza Türü
 
@@ -182,7 +182,7 @@ Birim Testleri                      "test1234test5678"
 - Alternatif 2: Ed25519ctx RFC 8032'de;
   LEA direnci ve kişiselleştirme sağlar.
   Standartlaştırılmış, ancak herhangi biri kullanıyor mu?
-  Bkz. [RFC-8032]_ ve [ED25519CTX]_.
+  Bkz. [RFC 8032](https://tools.ietf.org/html/rfc8032) ve [bu tartışma](https://moderncrypto.org/mail-archive/curves/2017/000925.html).
 - "Anahtarlı" karmaşalama bizim için faydalı mı?
 
 ## Geçiş
@@ -208,31 +208,3 @@ Minimum yönlendirici sürümü 0.9.TBD için, yönlendiriciler aşağıdaki nok
 - RI'ında yeni imza türü olan yönlendiriciler, 0.9.TBD versiyonundan daha düşük yönlendiricilere NTCP, NTCP2 veya SSU ile bağlantı kuramayabilir.
 - Akış bağlantıları ve imzalı veri akışları 0.9.TBD versiyonundan daha düşük yönlendiriciler için çalışmayabilir,
   ancak bunu bilmenin bir yolu yoktur, bu yüzden 0.9.TBD yayınlandıktan sonra varsayılan olarak yeni imza türünün birkaç ay veya yıl boyunca kullanılmaması gerekir.
-
-## Kaynaklar
-
-.. [BLAKE2]
-   https://blake2.net/blake2.pdf
-
-.. [ED25519CTX]
-   https://moderncrypto.org/mail-archive/curves/2017/000925.html
-
-.. [ED25519-REFS]
-    "Yüksek hızda yüksek güvenlik imzaları" Daniel
-    J. Bernstein, Niels Duif, Tanja Lange, Peter Schwabe ve
-    Bo-Yin Yang tarafından. http://cr.yp.to/papers.html#ed25519
-
-.. [EDDSA-FAULTS]
-   https://news.ycombinator.com/item?id=15414760
-
-.. [LEA]
-   https://tr.wikipedia.org/wiki/Length_extension_attack
-
-.. [RFC-7693]
-   https://tools.ietf.org/html/rfc7693
-
-.. [RFC-8032]
-   https://tools.ietf.org/html/rfc8032
-
-.. [ZCASH]
-   https://github.com/zcash/zips/tree/master/protocol/protocol.pdf

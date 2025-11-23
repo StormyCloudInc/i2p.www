@@ -64,7 +64,7 @@ Tuy nhiên, do sự cẩn thận quá mức, chúng tôi khuyến nghị tối t
 
 ### Tiết kiệm Ước tính
 
-Các điểm đích được bao gồm trong mỗi SYN truyền tải [Streaming]_ và datagram có thể đáp trả [Datagram]_. Thông tin Router (chứa Nhận dạng Router) được bao gồm trong thông điệp Lưu trữ Cơ sở [I2NP]_ và trong các thông điệp Xác nhận Phiên trong [NTCP2]_ và [SSU2]_.
+Các điểm đích được bao gồm trong mỗi SYN truyền tải và datagram có thể đáp trả. Thông tin Router (chứa Nhận dạng Router) được bao gồm trong thông điệp Lưu trữ Cơ sở và trong các thông điệp Xác nhận Phiên trong NTCP2 và SSU2.
 
 NTCP2 không nén Thông tin Router. RIs trong các thông điệp Lưu trữ Cơ sở và thông điệp Xác nhận Phiên SSU2 được nén gzip. Thông tin Router được nén zip trong các tập tin tái sinh SU3.
 
@@ -90,21 +90,21 @@ Các đề xuất thay đổi đối với các đặc tả hiện tại của c
 
 
 ### Cấu trúc Chung
-Thay đổi đặc tả cấu trúc chung [COMMON]_ để chỉ rõ rằng trường khóa công khai Điểm đích 256 byte bị bỏ qua và có thể chứa dữ liệu ngẫu nhiên.
+Thay đổi đặc tả cấu trúc chung để chỉ rõ rằng trường khóa công khai Điểm đích 256 byte bị bỏ qua và có thể chứa dữ liệu ngẫu nhiên.
 
-Thêm một phần vào đặc tả cấu trúc chung [COMMON]_ khuyến nghị thực tiễn tốt nhất cho trường khóa công khai Điểm đích và trường đệm trong Điểm đích và Nhận dạng Router như sau:
+Thêm một phần vào đặc tả cấu trúc chung khuyến nghị thực tiễn tốt nhất cho trường khóa công khai Điểm đích và trường đệm trong Điểm đích và Nhận dạng Router như sau:
 
 Tạo 32 byte dữ liệu ngẫu nhiên bằng cách sử dụng máy tạo số ngẫu nhiên giả mật mã mạnh (PRNG) và lặp lại 32 byte đó khi cần thiết để lấp đầy trường khóa công khai (đối với Điểm đích) và trường đệm (đối với Điểm đích và Nhận dạng Router).
 
 ### Tệp khóa riêng
-Định dạng tệp khóa riêng (eepPriv.dat) không phải là một phần chính thức của các đặc tả của chúng tôi, nhưng được tài liệu trong javadocs I2P Java [PKF]_ và các triển khai khác có hỗ trợ. Điều này cho phép di chuyển khóa riêng giữa các triển khai khác nhau. Thêm một ghi chú vào tài liệu đó rằng khóa công khai mã hóa có thể là đệm ngẫu nhiên và khóa riêng mã hóa có thể là toàn số không hoặc dữ liệu ngẫu nhiên.
+Định dạng tệp khóa riêng (eepPriv.dat) không phải là một phần chính thức của các đặc tả của chúng tôi, nhưng được tài liệu trong [Java I2P javadocs](http://idk.i2p/javadoc-i2p/net/i2p/data/PrivateKeyFile.html) và các triển khai khác có hỗ trợ. Điều này cho phép di chuyển khóa riêng giữa các triển khai khác nhau. Thêm một ghi chú vào tài liệu đó rằng khóa công khai mã hóa có thể là đệm ngẫu nhiên và khóa riêng mã hóa có thể là toàn số không hoặc dữ liệu ngẫu nhiên.
 
 ### SAM
-Ghi chú trong [SAM]_ rằng khóa riêng mã hóa không được sử dụng và có thể bị bỏ qua. Bất kỳ dữ liệu ngẫu nhiên nào cũng có thể được trả về bởi máy khách. SAM Bridge có thể gửi dữ liệu ngẫu nhiên khi tạo (với DEST GENERATE hoặc SESSION CREATE DESTINATION=TRANSIENT) thay vì toàn số không, để biểu diễn Base 64 không có chuỗi ký tự AAAA và trông như bị hỏng.
+Ghi chú trong đặc tả SAM rằng khóa riêng mã hóa không được sử dụng và có thể bị bỏ qua. Bất kỳ dữ liệu ngẫu nhiên nào cũng có thể được trả về bởi máy khách. SAM Bridge có thể gửi dữ liệu ngẫu nhiên khi tạo (với DEST GENERATE hoặc SESSION CREATE DESTINATION=TRANSIENT) thay vì toàn số không, để biểu diễn Base 64 không có chuỗi ký tự AAAA và trông như bị hỏng.
 
 
 ### I2CP
-Không yêu cầu thay đổi đối với [I2CP]_. Khóa riêng cho khóa công khai mã hóa trong Điểm đích không được gửi tới router.
+Không yêu cầu thay đổi đối với I2CP. Khóa riêng cho khóa công khai mã hóa trong Điểm đích không được gửi tới router.
 
 
 ## Lập kế hoạch tương lai
@@ -162,7 +162,7 @@ Các khóa chữ ký PQ không khả thi, và các Điểm đích không chứa 
 
 Vì vậy, PQ chỉ ảnh hưởng đến Thông tin Router, và chỉ đối với các khóa tĩnh PQ (không phải tạm thời), không đối với PQ lai. Điều này sẽ dành cho một loại mã hóa mới và sẽ ảnh hưởng đến NTCP2, SSU2, và các Thông điệp Tra cứu Cơ sở dữ liệu mã hóa và các phản hồi. Thời gian thiết kế, phát triển và triển khai dự kiến sẽ là ???????? Nhưng sẽ sau khi lai hoặc ratchet ???????????
 
-Để thảo luận thêm, xem [PQ]_.
+Để thảo luận thêm, xem [this topic](http://zzz.i2p/topics/3294).
 
 
 
@@ -186,40 +186,4 @@ Việc thay đổi khóa, nếu được thực hiện, sẽ tương tự như �
 
 Tùy thuộc vào các vấn đề tương thích ngược, và sau khi vô hiệu hóa SSU, các triển khai có thể loại bỏ hoàn toàn mã ElGamal. Khoảng 14% router trong mạng là loại mã hóa ElGamal, bao gồm nhiều floodfills.
 
-Một yêu cầu sáp nhập nháp cho I2P Java có tại [MR]_.
-
-
-## Tham khảo
-
-.. [Common]
-    {{ spec_url('common-structures') }}
-
-.. [Datagram]
-    {{ spec_url('datagrams') }}
-
-.. [I2CP]
-    {{ spec_url('i2cp') }}
-
-.. [I2NP]
-    {{ spec_url('i2np') }}
-
-.. [MR]
-    http://git.idk.i2p/i2p-hackers/i2p.i2p/-/merge_requests/66
-
-.. [NTCP2]
-    {{ spec_url('ntcp2') }}
-
-.. [PKF]
-    http://{{ i2pconv('idk.i2p/javadoc-i2p') }}/net/i2p/data/PrivateKeyFile.html
-
-.. [PQ]
-    http://zzz.i2p/topics/3294
-
-.. [SAM]
-    {{ site_url('docs/api/samv3') }}
-
-.. [SSU2]
-    {{ spec_url('ssu2') }}
-
-.. [Streaming]
-    {{ spec_url('streaming') }}
+Một yêu cầu sáp nhập nháp cho I2P Java có tại [git.idk.i2p](http://git.idk.i2p/i2p-hackers/i2p.i2p/-/merge_requests/66).

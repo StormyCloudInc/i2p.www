@@ -32,14 +32,14 @@ Therefore, we mostly deferred the solution to a separate proposal.
 While we did add some personalization features to the LS2 specification,
 we did not require any new hash functions.
 
-Many projects, such as ZCash [ZCASH]_, are using hash functions and
+Many projects, such as [ZCash](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf), are using hash functions and
 signature algorithms based on newer algorithms that are not vulnerable to
 the following attacks.
 
 
 ### Length Extension Attacks
 
-SHA-256 and SHA-512 are vulnerable to Length Extension Attacks (LEA) [LEA]_.
+SHA-256 and SHA-512 are vulnerable to [Length Extension Attacks (LEA)](https://en.wikipedia.org/wiki/Length_extension_attack).
 This is the case when actual data is signed, not the hash of the data.
 In most I2P protocols (streaming, datagrams, netdb, and others), the actual
 data is signed. One exception is SU3 files, where the hash is signed.
@@ -101,20 +101,20 @@ The new signature type may be used for both unblinded and blinded leasesets.
 
 ## Justification
 
-- BLAKE2b is not vulnerable to LEA [BLAKE2]_.
+- [BLAKE2b](https://blake2.net/blake2.pdf) is not vulnerable to LEA.
 - BLAKE2b provides a standard way to add personalization strings for domain separation
 - BLAKE2b provides a standard way to add a random salt to prevent DMI.
 - BLAKE2b is faster than SHA-256 and SHA-512 (and MD5) on modern hardware,
-  according to [BLAKE2]_.
+  according to the [BLAKE2 specification](https://blake2.net/blake2.pdf).
 - Ed25519 is still our fastest signature type, much faster than ECDSA, at least in Java.
-- Ed25519 [ED25519-REFS]_ requires a 512 bit cryptographic hash function.
+- [Ed25519](http://cr.yp.to/papers.html#ed25519) requires a 512 bit cryptographic hash function.
   It does not specify SHA-512. BLAKE2b is just as suitable for the hash function.
 - BLAKE2b is widely available in libraries for many programming languages, such as Noise.
 
 
 ## Specification
 
-Use unkeyed BLAKE2b-512 as in [BLAKE2]_ with salt and personalization.
+Use unkeyed BLAKE2b-512 as in the [BLAKE2 specification](https://blake2.net/blake2.pdf) with salt and personalization.
 All uses of BLAKE2b signatures will use a 16-character personalization string.
 
 
@@ -128,8 +128,8 @@ When calculating S, reset the salt to the default of all-zeros.
 When used in RedDSA_BLAKE2b_Ed25519 verification,
 do not use a random salt, use the default of all-zeros.
 
-The salt and personalization features are not specified in [RFC-7693]_;
-use those features as specified in [BLAKE2]_.
+The salt and personalization features are not specified in [RFC 7693](https://tools.ietf.org/html/rfc7693);
+use those features as specified in the [BLAKE2 specification](https://blake2.net/blake2.pdf).
 
 
 ### Signature Type
@@ -205,10 +205,10 @@ Unit tests                          "test1234test5678"
 
 - Alternative 1: Proposal 146;
   Provides LEA resistance
-- Alternative 2: Ed25519ctx in RFC 8032;
+- Alternative 2: [Ed25519ctx in RFC 8032](https://tools.ietf.org/html/rfc8032);
   Provides LEA resistance and personalization.
   Standardized, but does anybody use it?
-  See [RFC-8032]_ and [ED25519CTX]_.
+  See [RFC 8032](https://tools.ietf.org/html/rfc8032) and [this discussion](https://moderncrypto.org/mail-archive/curves/2017/000925.html).
 - Is "keyed" hashing useful to us?
 
 
@@ -238,36 +238,3 @@ For the minimum router version 0.9.TBD, routers must ensure:
 - Streaming connections and signed datagrams won't work to routers less than version 0.9.TBD,
   but there's no way to know that, so the new sig type should not be used by default for some period
   of months or years after 0.9.TBD is released.
-
-
-
-## References
-
-.. [BLAKE2]
-   https://blake2.net/blake2.pdf
-
-.. [ED25519CTX]
-   https://moderncrypto.org/mail-archive/curves/2017/000925.html
-
-.. [ED25519-REFS]
-    "High-speed high-security signatures" by Daniel
-    J. Bernstein, Niels Duif, Tanja Lange, Peter Schwabe, and
-    Bo-Yin Yang. http://cr.yp.to/papers.html#ed25519
-
-.. [EDDSA-FAULTS]
-   https://news.ycombinator.com/item?id=15414760
-
-.. [LEA]
-   https://en.wikipedia.org/wiki/Length_extension_attack
-
-.. [RFC-7693]
-   https://tools.ietf.org/html/rfc7693
-
-.. [RFC-8032]
-   https://tools.ietf.org/html/rfc8032
-
-.. [ZCASH]
-   https://github.com/zcash/zips/tree/master/protocol/protocol.pdf
-
-
-

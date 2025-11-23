@@ -18,11 +18,11 @@ Trong quá trình thảo luận và thiết kế NTCP2 (đề xuất 111) và LS
 
 Đối với cả NTCP2 và LS2, chúng tôi quyết định rằng các phương thức tấn công này không liên quan trực tiếp đến các đề xuất đang có, và bất kỳ giải pháp nào cũng xung đột với mục tiêu tối thiểu hóa các nguyên thủy mới. Ngoài ra, chúng tôi xác định rằng tốc độ của các hàm băm trong các giao thức này không phải là yếu tố quan trọng trong các quyết định của chúng tôi. Do đó, chúng tôi chủ yếu trì hoãn giải pháp cho một đề xuất riêng biệt. Mặc dù chúng tôi đã thêm một số tính năng cá nhân hóa vào đặc tả LS2, nhưng chúng tôi không yêu cầu bất kỳ hàm băm mới nào.
 
-Nhiều dự án, như ZCash [ZCASH]_, đang sử dụng các hàm băm và thuật toán chữ ký dựa trên các thuật toán mới hơn mà không dễ bị các phương thức tấn công sau đây.
+Nhiều dự án, như [ZCash](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf), đang sử dụng các hàm băm và thuật toán chữ ký dựa trên các thuật toán mới hơn mà không dễ bị các phương thức tấn công sau đây.
 
 ### Tấn Công Mở Rộng Độ Dài
 
-SHA-256 và SHA-512 dễ bị Tấn Công Mở Rộng Độ Dài (LEA) [LEA]_. Đây là trường hợp khi dữ liệu thực tế được ký, không phải là băm của dữ liệu. Trong hầu hết các giao thức I2P (truyền tải, gói dữ liệu, netdb, và những thứ khác), dữ liệu thực tế được ký. Một ngoại lệ là tệp SU3, nơi băm được ký. Ngoại lệ khác là gói dữ liệu đã ký cho DSA (loại chữ ký 0) chỉ, nơi băm được ký. Đối với các loại chữ ký gói dữ liệu khác, dữ liệu được ký.
+SHA-256 và SHA-512 dễ bị [Tấn Công Mở Rộng Độ Dài (LEA)](https://en.wikipedia.org/wiki/Length_extension_attack). Đây là trường hợp khi dữ liệu thực tế được ký, không phải là băm của dữ liệu. Trong hầu hết các giao thức I2P (truyền tải, gói dữ liệu, netdb, và những thứ khác), dữ liệu thực tế được ký. Một ngoại lệ là tệp SU3, nơi băm được ký. Ngoại lệ khác là gói dữ liệu đã ký cho DSA (loại chữ ký 0) chỉ, nơi băm được ký. Đối với các loại chữ ký gói dữ liệu khác, dữ liệu được ký.
 
 ### Tấn Công Giao Thoa Giao Thức
 
@@ -50,23 +50,23 @@ Chỉnh sửa loại chữ ký RedDSA_SHA512_Ed25519 hiện có để sử dụn
 
 ## Lý do
 
-- BLAKE2b không dễ bị LEA [BLAKE2]_.
+- [BLAKE2b](https://blake2.net/blake2.pdf) không dễ bị LEA.
 - BLAKE2b cung cấp một cách tiêu chuẩn để thêm các chuỗi cá nhân hóa cho việc phân tách miền.
 - BLAKE2b cung cấp một cách tiêu chuẩn để thêm muối ngẫu nhiên để ngăn DMI.
-- BLAKE2b nhanh hơn SHA-256 và SHA-512 (và MD5) trên phần cứng hiện đại, theo [BLAKE2]_.
+- BLAKE2b nhanh hơn SHA-256 và SHA-512 (và MD5) trên phần cứng hiện đại, theo [đặc tả BLAKE2](https://blake2.net/blake2.pdf).
 - Ed25519 vẫn là loại chữ ký nhanh nhất của chúng tôi, nhanh hơn nhiều so với ECDSA, ít nhất là trong Java.
-- Ed25519 [ED25519-REFS]_ yêu cầu một hàm băm mật mã 512-bit. Nó không chỉ định SHA-512. BLAKE2b cũng rất thích hợp cho hàm băm.
+- [Ed25519](http://cr.yp.to/papers.html#ed25519) yêu cầu một hàm băm mật mã 512-bit. Nó không chỉ định SHA-512. BLAKE2b cũng rất thích hợp cho hàm băm.
 - BLAKE2b có sẵn rộng rãi trong các thư viện cho nhiều ngôn ngữ lập trình, chẳng hạn như Noise.
 
 ## Đặc tả
 
-Sử dụng BLAKE2b-512 không khóa như trong [BLAKE2]_ với muối và cá nhân hóa. Tất cả các ứng dụng của chữ ký BLAKE2b sẽ sử dụng một chuỗi cá nhân hóa dài 16 ký tự.
+Sử dụng BLAKE2b-512 không khóa như trong [đặc tả BLAKE2](https://blake2.net/blake2.pdf) với muối và cá nhân hóa. Tất cả các ứng dụng của chữ ký BLAKE2b sẽ sử dụng một chuỗi cá nhân hóa dài 16 ký tự.
 
 Khi được sử dụng trong việc ký RedDSA_BLAKE2b_Ed25519, Một muối ngẫu nhiên được phép, tuy nhiên không cần thiết, vì thuật toán chữ ký thêm 80 byte dữ liệu ngẫu nhiên (xem đề xuất 123). Nếu muốn, khi đang băm dữ liệu để tính toán r, thiết lập một muối ngẫu nhiên 16-byte mới BLAKE2b cho mỗi chữ ký. Khi tính toán S, thiết lập lại muối về mặc định của toàn số không.
 
 Khi được sử dụng trong việc kiểm tra RedDSA_BLAKE2b_Ed25519, không sử dụng muối ngẫu nhiên, sử dụng mặc định của toàn số không.
 
-Các tính năng muối và cá nhân hóa không được chỉ định trong [RFC-7693]_; sử dụng các tính năng đó như đã chỉ định trong [BLAKE2]_.
+Các tính năng muối và cá nhân hóa không được chỉ định trong [RFC 7693](https://tools.ietf.org/html/rfc7693); sử dụng các tính năng đó như đã chỉ định trong [đặc tả BLAKE2](https://blake2.net/blake2.pdf).
 
 ### Loại Chữ Ký
 
@@ -119,7 +119,7 @@ Unit tests                          "test1234test5678"
 ## Vấn đề
 
 - Phương án thay thế 1: Đề xuất 146; Cung cấp sự kháng cự cho LEA
-- Phương án thay thế 2: Ed25519ctx trong RFC 8032; Cung cấp sự kháng cự cho LEA và cá nhân hóa. Đã được tiêu chuẩn hóa, nhưng có ai sử dụng không? Xem [RFC-8032]_ và [ED25519CTX]_.
+- Phương án thay thế 2: Ed25519ctx trong RFC 8032; Cung cấp sự kháng cự cho LEA và cá nhân hóa. Đã được tiêu chuẩn hóa, nhưng có ai sử dụng không? Xem [RFC 8032](https://tools.ietf.org/html/rfc8032) và [cuộc thảo luận này](https://moderncrypto.org/mail-archive/curves/2017/000925.html).
 - Việc băm "có khóa" có ích cho chúng tôi không?
 
 ## Di chuyển
@@ -138,21 +138,3 @@ Các bộ định tuyến mới có thể bắt đầu sử dụng loại chữ 
 - Khi xác minh một lưu trữ netdb, không lấy RI hoặc LS với loại chữ ký mới từ các bộ định tuyến có phiên bản nhỏ hơn 0.9.TBD.
 - Các bộ định tuyến với loại chữ ký mới trong RI của chúng không thể kết nối với các bộ định tuyến có phiên bản nhỏ hơn 0.9.TBD, cả với NTCP, NTCP2, hay SSU.
 - Các kết nối truyền tải và gói dữ liệu đã ký sẽ không hoạt động với các bộ định tuyến có phiên bản nhỏ hơn 0.9.TBD, nhưng không có cách nào để biết điều đó, vì vậy loại chữ ký mới không nên được sử dụng theo mặc định trong một vài tháng hoặc năm sau khi 0.9.TBD được phát hành.
-
-## Tham khảo
-
-.. [BLAKE2] https://blake2.net/blake2.pdf
-
-.. [ED25519CTX] https://moderncrypto.org/mail-archive/curves/2017/000925.html
-
-.. [ED25519-REFS] "Chữ ký nhanh với bảo mật cao" của Daniel J. Bernstein, Niels Duif, Tanja Lange, Peter Schwabe, và Bo-Yin Yang. http://cr.yp.to/papers.html#ed25519
-
-.. [EDDSA-FAULTS] https://news.ycombinator.com/item?id=15414760
-
-.. [LEA] https://en.wikipedia.org/wiki/Length_extension_attack
-
-.. [RFC-7693] https://tools.ietf.org/html/rfc7693
-
-.. [RFC-8032] https://tools.ietf.org/html/rfc8032
-
-.. [ZCASH] https://github.com/zcash/zips/tree/master/protocol/protocol.pdf

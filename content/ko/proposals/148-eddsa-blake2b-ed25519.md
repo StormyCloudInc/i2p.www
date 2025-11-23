@@ -18,11 +18,11 @@ NTCP2(제안 111) 및 LS2(제안 123)의 논의 및 설계 중에 가능한 다�
 
 NTCP2 및 LS2 모두에서 이러한 공격은 제안서와 직접적으로 관련이 없으며, 가능한 해법이 새로운 프리미티브를 최소화하는 목표와 상충된다고 결론지었습니다. 또한 이러한 프로토콜의 해시 함수 속도가 우리의 결정에 중요한 요소가 아니라고 판단했습니다. 따라서 해법을 별도의 제안서로 연기했습니다. LS2 사양에 일부 개인화 기능을 추가했으나, 새로운 해시 함수는 필요하지 않았습니다.
 
-ZCash [ZCASH]_ 등의 많은 프로젝트들은 다음 공격에 취약하지 않은 최신 알고리즘을 기반으로 해시 함수와 서명 알고리즘을 사용하고 있습니다.
+[ZCash](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf) 등의 많은 프로젝트들은 다음 공격에 취약하지 않은 최신 알고리즘을 기반으로 해시 함수와 서명 알고리즘을 사용하고 있습니다.
 
 ### 길이 확장 공격
 
-SHA-256 및 SHA-512는 길이 확장 공격(LEA) [LEA]_에 취약합니다. 이는 데이터 자체가 서명될 때 해당됩니다. 대부분의 I2P 프로토콜(스트리밍, 데이터그램, 네트워크 데이터베이스 등)에서 실제 데이터가 서명됩니다. 예외는 SU3 파일로, 여기서는 해시가 서명됩니다. 다른 예외는 DSA(서명 유형 0)용 서명된 데이터그램으로, 여기서는 해시가 서명됩니다. 다른 서명된 데이터그램 서명 유형에서는 데이터 자체가 서명됩니다.
+SHA-256 및 SHA-512는 [길이 확장 공격(LEA)](https://en.wikipedia.org/wiki/Length_extension_attack)에 취약합니다. 이는 데이터 자체가 서명될 때 해당됩니다. 대부분의 I2P 프로토콜(스트리밍, 데이터그램, 네트워크 데이터베이스 등)에서 실제 데이터가 서명됩니다. 예외는 SU3 파일로, 여기서는 해시가 서명됩니다. 다른 예외는 DSA(서명 유형 0)용 서명된 데이터그램으로, 여기서는 해시가 서명됩니다. 다른 서명된 데이터그램 서명 유형에서는 데이터 자체가 서명됩니다.
 
 ### 교차 프로토콜 공격
 
@@ -50,23 +50,23 @@ I2P 프로토콜은 중복 메시지 식별(DMI)에 취약할 수 있습니다. 
 
 ## 정당화
 
-- BLAKE2b는 LEA에 취약하지 않습니다 [BLAKE2]_.
+- [BLAKE2b](https://blake2.net/blake2.pdf)는 LEA에 취약하지 않습니다.
 - BLAKE2b는 도메인 분리를 위한 표준 방법으로 개인화 문자열을 추가할 수 있습니다.
 - BLAKE2b는 DMI를 방지하기 위해 무작위 솔트를 추가할 수 있는 표준 방법을 제공합니다.
-- BLAKE2b는 최신 하드웨어에서 SHA-256 및 SHA-512(및 MD5)보다 빠릅니다 [BLAKE2]_.
+- BLAKE2b는 최신 하드웨어에서 SHA-256 및 SHA-512(및 MD5)보다 빠릅니다, [BLAKE2 사양](https://blake2.net/blake2.pdf)에 따르면.
 - Ed25519는 여전히 가장 빠른 서명 유형이며, 최소한 Java에서는 ECDSA보다 훨씬 빠릅니다.
-- Ed25519 [ED25519-REFS]_는 512비트 암호화 해시 함수를 요구합니다. SHA-512를 지정하지는 않습니다. BLAKE2b는 해시 함수로 적합합니다.
+- [Ed25519](http://cr.yp.to/papers.html#ed25519)는 512비트 암호화 해시 함수를 요구합니다. SHA-512를 지정하지는 않습니다. BLAKE2b는 해시 함수로 적합합니다.
 - BLAKE2b는 Noise와 같은 여러 프로그래밍 언어의 라이브러리에서 널리 사용 가능합니다.
 
 ## 사양
 
-솔트와 개인화를 사용하여 [BLAKE2]_에 설명된 대로 키 없는 BLAKE2b-512를 사용합니다. BLAKE2b 서명의 모든 사용은 16자 개인화 문자열을 사용합니다.
+솔트와 개인화를 사용하여 [BLAKE2 사양](https://blake2.net/blake2.pdf)에 설명된 대로 키 없는 BLAKE2b-512를 사용합니다. BLAKE2b 서명의 모든 사용은 16자 개인화 문자열을 사용합니다.
 
 RedDSA_BLAKE2b_Ed25519 서명에 사용할 때, 랜덤 솔트가 허용되지만 필요하지는 않습니다. 서명 알고리즘이 80바이트의 랜덤 데이터를 추가하기 때문입니다(제안 123 참조). 필요한 경우, r을 계산하기 위해 데이터를 해싱할 때, 각 서명에 대해 새로운 BLAKE2b 16바이트 랜덤 솔트를 설정합니다. S를 계산할 때 솔트를 모두 0으로 설정합니다.
 
 RedDSA_BLAKE2b_Ed25519 검증에 사용할 때, 랜덤 솔트를 사용하지 말고 기본값 모두 0을 사용합니다.
 
-솔트와 개인화 기능은 [RFC-7693]_에 명시되지 않았습니다; 해당 기능은 [BLAKE2]_에 명시된 대로 사용합니다.
+솔트와 개인화 기능은 [RFC 7693](https://tools.ietf.org/html/rfc7693)에 명시되지 않았습니다; 해당 기능은 [BLAKE2 사양](https://blake2.net/blake2.pdf)에 명시된 대로 사용합니다.
 
 ### 서명 유형
 
@@ -122,7 +122,7 @@ SU3 파일                            지원하지 않음
   LEA 저항 제공
 - 대안 2: RFC 8032의 Ed25519ctx;
   LEA 저항 및 개인화를 제공합니다. 표준화 되었지만 누가 사용하나요?
-  [RFC-8032]_ 및 [ED25519CTX]_ 참조.
+  [RFC 8032](https://tools.ietf.org/html/rfc8032) 및 [이 토론](https://moderncrypto.org/mail-archive/curves/2017/000925.html) 참조.
 - "키" 해싱이 우리에게 유용한가요?
 
 ## 마이그레이션
@@ -141,31 +141,3 @@ SU3 파일                            지원하지 않음
 - NetDB 저장소를 검증할 때, 새로운 서명 유형의 RI 또는 LS를 버전 0.9.TBD 미만의 라우터에서 가져오지 마세요.
 - RI에 새로운 서명 유형이 있는 라우터는 NTCP, NTCP2, 또는 SSU를 통해 버전 0.9.TBD 미만의 라우터에 연결할 수 없습니다.
 - 스트리밍 연결 및 서명된 데이터그램은 버전 0.9.TBD 미만의 라우터에서 작동하지 않지만, 이를 알 방법이 없으므로, 0.9.TBD 릴리스 후 몇 개월 또는 몇 년간 기본적으로 새로운 서명 유형을 사용해서는 안 됩니다.
-
-## 참고 문헌
-
-.. [BLAKE2]  
-   https://blake2.net/blake2.pdf
-
-.. [ED25519CTX]  
-   https://moderncrypto.org/mail-archive/curves/2017/000925.html
-
-.. [ED25519-REFS]  
-    "High-speed high-security signatures" by Daniel  
-    J. Bernstein, Niels Duif, Tanja Lange, Peter Schwabe, and  
-    Bo-Yin Yang. http://cr.yp.to/papers.html#ed25519
-
-.. [EDDSA-FAULTS]  
-   https://news.ycombinator.com/item?id=15414760
-
-.. [LEA]  
-   https://en.wikipedia.org/wiki/Length_extension_attack
-
-.. [RFC-7693]  
-   https://tools.ietf.org/html/rfc7693
-
-.. [RFC-8032]  
-   https://tools.ietf.org/html/rfc8032
-
-.. [ZCASH]  
-   https://github.com/zcash/zips/tree/master/protocol/protocol.pdf

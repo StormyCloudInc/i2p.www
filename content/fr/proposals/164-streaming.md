@@ -47,7 +47,7 @@ Si Alice et Charlie disposent de l'API 0.9.58 ou plus récent, toute tentative d
 
 ## Spécification
 
-Mettre à jour [STREAMING]_ pour ajouter la section suivante :
+Mettre à jour la [spécification Streaming](/en/docs/spec/streaming/) pour ajouter la section suivante :
 
 ### Prévention de la relecture
 
@@ -107,7 +107,3 @@ Les routeurs Java I2P et i2pd ont implémenté cela dans l'API 0.9.58 (publiée 
 
 
 
-## Références
-
-.. [STREAMING]
-    {{ spec_url('streaming') }}
