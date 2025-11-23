@@ -451,7 +451,7 @@ CSRNG(n)
     geeignet für die Generierung von Schlüsselmaterial), MUSS es sicher sein, dass
     einige n-Byte-Ausgabe als Schlüsselmaterial verwendet wird, wenn die Byte-Sequenzen unmittelbar
     davor und danach im Netzwerk offen gelegt werden (wie in einem Salt oder verschlüsseltem
-    Padding). Implementierungen, die sich auf eine möglicherweise unzuverlässige Quelle verlassen, sollten irgendwelche ausgegebenen Daten, die im Netzwerk offen gelegt werden, hashen [PRNG-REFS]_.
+    Padding). Implementierungen, die sich auf eine möglicherweise unzuverlässige Quelle verlassen, sollten irgendwelche ausgegebenen Daten, die im Netzwerk offen gelegt werden, hashen. See [PRNG references](http://projectbullrun.org/dual-ec/ext-rand.html) and [Tor dev discussion](https://lists.torproject.org/pipermail/tor-dev/2015-November/009954.html).
 
 H(p, d)
     SHA-256 Hash-Funktion, die einen Personaliserungs-String p und Daten d aufnimmt und eine
@@ -462,7 +462,7 @@ H(p, d)
         H(p, d) := SHA-256(p || d)
 
 STREAM
-    Der ChaCha20 Stromchiffre wie in [RFC-7539-S2.4]_ beschrieben, mit dem Anfangszähler
+    Der ChaCha20 Stromchiffre wie in [RFC 7539 Section 2.4](https://tools.ietf.org/html/rfc7539#section-2.4) beschrieben, mit dem Anfangszähler
     auf 1 gesetzt. S_KEY_LEN = 32 und S_IV_LEN = 12.
 
     ENCRYPT(k, iv, plaintext)
@@ -526,8 +526,8 @@ HKDF(salt, ikm, info, n)
     von 32 Byte Länge und einen kontextspezifischen 'Info'-Wert und ein Ausgabe von n Bytes produziert, das
     geeignet ist, als Schlüsselmaterial verwendet zu werden.
 
-    Verwende HKDF wie in [RFC-5869]_ beschrieben, unter Verwendung der HMAC-Hash-Funktion SHA-256
-    wie in [RFC-2104]_. Das bedeutet, dass SALT_LEN maximal 32 Byte beträgt.
+    Verwende HKDF wie in [RFC 5869](https://tools.ietf.org/html/rfc5869) beschrieben, unter Verwendung der HMAC-Hash-Funktion SHA-256
+    wie in [RFC 2104](https://tools.ietf.org/html/rfc2104). Das bedeutet, dass SALT_LEN maximal 32 Byte beträgt.
 
 
 
@@ -697,10 +697,10 @@ Schlüsseldaten für die Verschleierung
 `````````````````````````````````````
 
 Wir verwenden das folgende Schema für die Verschleierung von Schlüsseln
-basierend auf Ed25519 und ZCash RedDSA [ZCASH]_.
+basierend auf Ed25519 und [ZCash RedDSA](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf).
 Die Red25519-Signaturen sind über die Ed25519-Kurve unter Verwendung von SHA-512 für den Hash.
 
-Wir verwenden nicht Tor's rend-spec-v3.txt Anhang A.2 [TOR-REND-SPEC-V3]_,
+Wir verwenden nicht [Tor's rend-spec-v3.txt appendix A.2](https://spec.torproject.org/rend-spec-v3),
 der ähnliche Designziele hat, weil seine verschleierten öffentlichen Schlüssel
 nicht auf der Primordnser-Untergruppe sein können, mit unbekannten Sicherheitsimplikationen.
 
@@ -726,7 +726,7 @@ Die Sicherheit eines Verschleierungsschemas erfordert, dass die
 Verteilung von Alpha dieselbe ist wie die unverschleierten privaten Schlüssel.
 Wenn wir jedoch einen Ed25519 privaten Schlüssel (Typ 7)
 auf einen Red25519 privaten Schlüssel (Typ 11) verschleiern, ist die Verteilung anders.
-Um die Anforderungen des Zcash Abschnitts 4.1.6.1 [ZCASH]_
+Um die Anforderungen des [Zcash section 4.1.6.1](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf)
 zu erfüllen, sollte Red25519 (Typ 11) auch für unverschleierte Schlüssel verwendet werden, damit
 "die Kombination aus einem neu randomisierten öffentlichen Schlüssel und Signaturen unter diesem Schlüssel den Schlüssel, aus dem er neu randomisiert wurde, nicht offenbart."
 Wir erlauben Typ 7 für bestehende Ziele, empfehlen aber
@@ -737,11 +737,11 @@ Typ 11 für neue Ziele, die verschlüsselt werden sollen.
 #### Definitionen
 
 B
-    Der Ed25519-Basispunkt (Generator) 2^255 - 19 wie in [ED25519-REFS]_
+    Der Ed25519-Basispunkt (Generator) 2^255 - 19 wie in [Ed25519](http://cr.yp.to/papers.html#ed25519)
 
 L
     Die Ed25519-Ordnungsgröße 2^252 + 27742317777372353535851937790883648493
-    wie in [ED25519-REFS]_
+    wie in [Ed25519](http://cr.yp.to/papers.html#ed25519)
 
 DERIVE_PUBLIC(a)
     Konvertiere einen privaten Schlüssel zu einem öffentlichen, wie in Ed25519 (mit G multiplizieren)
@@ -845,7 +845,7 @@ wird das unverschleierte Leaseset vom unverschleierten transienten Ed25519 oder 
 und überprüft mit dem unverschleierten Ed25519 oder Red25519 transienten öffentlichen Signierungsschlüssel (Signaturtypen 7 oder 11) wie gewohnt.
 Siehe unten für zusätzliche Anmerkungen zu Offline-Schlüsseln für verschlüsselte Leasesets.
 
-Zur Unterzeichnung des verschlüsselten Leasesets verwenden wir Red25519, basierend auf RedDSA [ZCASH]_
+Zur Unterzeichnung des verschlüsselten Leasesets verwenden wir Red25519, basierend auf [RedDSA](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf)
 zum Signieren und Verifizieren mit verschleierten Schlüsseln.
 Die Red25519-Signaturen sind über die Ed25519-Kurve, unter Verwendung von SHA-512 für den Hash, erstellt.
 
@@ -1222,8 +1222,8 @@ Anmerkungen
   groß genug ist, um die größten n, die wir erfordern, unterzubringen (oder wir können es einmal pro
   gewünschtem Schlüssel mit einem Zählerargument aufrufen). BLAKE2b ist viel schneller als SHA-256 und
   würde bei Verwendung von Keyed-Blake2b die Gesamtanzahl der Hash-Funktionsaufrufe verringern.
-  Anzahl der Hash-Funktionsaufrufe reduzieren. Allerdings siehe Vorschlag 148, in dem vorgeschlagen wird, dass wir zu BLAKE2b aus anderen Gründen wechseln. 
-  [UNSCIENTIFIC-KDF-SPEEDS]_
+  Anzahl der Hash-Funktionsaufrufe reduzieren. Allerdings siehe Vorschlag 148, in dem vorgeschlagen wird, dass wir zu BLAKE2b aus anderen Gründen wechseln.
+  See [Secure key derivation performance](https://www.lvh.io/posts/secure-key-derivation-performance.html).
 
 
 ### Meta LS2
