@@ -403,7 +403,8 @@
             // Update attributes if needed
             pollWidget.setAttribute('data-poll-id', pollId);
             pollWidget.setAttribute('data-api-url', apiUrl);
-            pollWidget.setAttribute('data-show-results', 'true');
+            // Don't force results view, allow voting if not voted
+            pollWidget.setAttribute('data-show-results', 'false');
 
             console.log('[Poll] Widget element ready, poll ID:', pollId, 'API URL:', apiUrl);
             
