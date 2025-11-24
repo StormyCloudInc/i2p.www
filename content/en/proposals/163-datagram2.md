@@ -20,13 +20,13 @@ Check implementation documentation for status.
 
 ## Overview
 
-Pulled out from [Prop123]_ as a separate proposal.
+Pulled out from [Prop123](/proposals/123-new-netdb-entries/) as a separate proposal.
 
 Offline signatures cannot be verified in the repliable datagram processing.
 Needs a flag to indicate offline signed but there's no place to put a flag.
 
 Will require a completely new I2CP protocol number and format,
-to be added to the [DATAGRAMS]_ specification.
+to be added to the [DATAGRAMS](/docs/api/datagrams/) specification.
 Let's call it "Datagram2".
 
 
@@ -54,19 +54,17 @@ Left over from LS2 work otherwise completed in 2019.
 
 The first application to use Datagram2 is expected to be
 bittorrent UDP announces, as implemented in i2psnark and zzzot,
-see [Prop160]_.
+see [Prop160](/proposals/160-udp-trackers/).
 
 
 ## Repliable Datagram Spec
 
 For reference,
 following is a review of the specification for repliable datagrams,
-copied from [Datagrams]_.
+copied from [Datagrams](/docs/api/datagrams/).
 The standard I2CP protocol number for repliable datagrams is PROTO_DATAGRAM (17).
 
-.. raw:: html
-
-  {% highlight lang='dataspec' -%}
+```text
 +----+----+----+----+----+----+----+----+
   | from                                  |
   +                                       +
@@ -109,7 +107,7 @@ The standard I2CP protocol number for repliable datagrams is PROTO_DATAGRAM (17)
               Length: 0 to about 31.5 KB (see notes)
 
   Total length: Payload length + 423+
-{% endhighlight %}
+```
 
 
 
@@ -123,9 +121,9 @@ The standard I2CP protocol number for repliable datagrams is PROTO_DATAGRAM (17)
   signature verification will fail if interpreted as repliable datagram or streaming.
   This is accomplished by moving the signature after the payload,
   and by including the destination hash in the signature function.
-- Add replay prevention for datagrams, as was done in [Prop164]_ for streaming.
+- Add replay prevention for datagrams, as was done in [Prop164](/proposals/164-streaming/) for streaming.
 - Add section for arbitrary options
-- Reuse offline signature format from [Common]_ and [Streaming]_.
+- Reuse offline signature format from [Common](/docs/specs/common-structures/) and [Streaming](/docs/specs/streaming/).
 - Offline signature section must be before the variable-length
   payload and signature sections, as it specifies the length
   of the signature.
@@ -136,19 +134,17 @@ The standard I2CP protocol number for repliable datagrams is PROTO_DATAGRAM (17)
 ### Protocol
 
 The new I2CP protocol number for Datagram2 is 19.
-Add it as PROTO_DATAGRAM2 to [I2CP]_.
+Add it as PROTO_DATAGRAM2 to [I2CP](/docs/specs/i2cp/).
 
 The new I2CP protocol number for Datagram3 is 20.
-Add it as PROTO_DATAGRAM2 to [I2CP]_.
+Add it as PROTO_DATAGRAM2 to [I2CP](/docs/specs/i2cp/).
 
 
 ### Datagram2 Format
 
-Add Datagram2 to [DATAGRAMS]_ as follows:
+Add Datagram2 to [DATAGRAMS](/docs/api/datagrams/) as follows:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' -%}
+```text
 +----+----+----+----+----+----+----+----+
   |                                       |
   ~            from                       ~
@@ -226,7 +222,7 @@ Add Datagram2 to [DATAGRAMS]_ as follows:
                (if no offline signature) or the transient pubkey
                (if offline signed)
 
-{% endhighlight %}
+```
 
 Total length: minimum 433 + payload length;
 typical length for X25519 senders and without offline signatures:
@@ -234,7 +230,7 @@ typical length for X25519 senders and without offline signatures:
 Note that the message will typically be compressed with gzip at the I2CP layer,
 which will result in significant savings if the from destination is compressible.
 
-Note: The offline signature format is the same as in the Common Structures spec [Common]_ and [Streaming]_.
+Note: The offline signature format is the same as in the Common Structures spec [Common](/docs/specs/common-structures/) and [Streaming](/docs/specs/streaming/).
 
 ### Signatures
 
@@ -259,11 +255,9 @@ and discard the datagram on failure, for replay prevention.
 
 ### Datagram3 Format
 
-Add Datagram3 to [DATAGRAMS]_ as follows:
+Add Datagram3 to [DATAGRAMS](/docs/api/datagrams/) as follows:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' -%}
+```text
 +----+----+----+----+----+----+----+----+
   |                                       |
   ~            fromhash                   ~
@@ -298,7 +292,7 @@ Add Datagram3 to [DATAGRAMS]_ as follows:
   payload ::  The data
               Length: 0 to about 61 KB (see notes)
 
-{% endhighlight %}
+```
 
 Total length: minimum 34 + payload length.
 
@@ -330,10 +324,10 @@ or by the router at the ratchet layer.
 ## Notes
 
 - The practical length is limited by lower layers of protocols - the tunnel
-  message spec [TUNMSG]_ limits messages to about 61.2 KB and the transports
-  [TRANSPORT]_ currently limit messages to about 64 KB, so the data length here
+  message spec [TUNMSG](/docs/specs/implementation/) limits messages to about 61.2 KB and the transports
+  currently limit messages to about 64 KB, so the data length here
   is limited to about 61 KB.
-- See important notes about the reliability of large datagrams [API]_. For
+- See important notes about the reliability of large datagrams [API](/docs/). For
   best results, limit the payload to about 10 KB or less.
 
 
@@ -358,7 +352,7 @@ The most prominent UDP application is bittorrent.
 Bittorrent DHT: Needs extension flag probably,
 e.g. i2p_dg2, coordinate with BiglyBT
 
-Bittorrent UDP Announces [Prop160]_: Design in from the beginning.
+Bittorrent UDP Announces [Prop160](/proposals/160-udp-trackers/): Design in from the beginning.
 Coordindate with BiglyBT, i2psnark, zzzot
 
 ### Others
@@ -370,38 +364,5 @@ Streamr: Nobody's using it, no migration planned
 SAM UDP apps: None known
 
 
-## References
 
-.. [API]
-    {{ site_url('docs/api/datagrams', True) }}
-
-.. [BT-SPEC]
-    {{ site_url('docs/applications/bittorrent', True) }}
-
-.. [Common]
-    {{ spec_url('common-structures') }}
-
-.. [DATAGRAMS]
-    {{ spec_url('datagrams') }}
-
-.. [I2CP]
-    {{ site_url('docs/protocol/i2cp', True) }}
-
-.. [Prop123]
-    {{ proposal_url('123') }}
-
-.. [Prop160]
-    {{ proposal_url('160') }}
-
-.. [Prop164]
-    {{ proposal_url('164') }}
-
-.. [Streaming]
-    {{ spec_url('streaming') }}
-
-.. [TRANSPORT]
-    {{ site_url('docs/transport', True) }}
-
-.. [TUNMSG]
-    {{ spec_url('tunnel-message') }}#notes
 

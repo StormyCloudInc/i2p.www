@@ -25,15 +25,15 @@ thread: "http://zzz.i2p/topics/2499"
 
 يجب على أي شخص يقترح تشفيراً جديداً أن يكون على دراية بالوثائق التالية أولاً:
 
-- اقتراح 111 NTCP2 /proposals/111-ntcp-2/
-- اقتراح 123 LS2 /proposals/123-new-netdb-entries/
-- اقتراح 136 أنواع التوقيع التجريبية /proposals/136-experimental-sigtypes/
-- اقتراح 137 أنواع التوقيع الاختيارية /proposals/137-optional-sigtypes/
+- [اقتراح 111 NTCP2](/ar/proposals/111-ntcp-2/)
+- [اقتراح 123 LS2](/ar/proposals/123-new-netdb-entries/)
+- [اقتراح 136 أنواع التوقيع التجريبية](/ar/proposals/136-experimental-sigtypes/)
+- [اقتراح 137 أنواع التوقيع الاختيارية](/ar/proposals/137-optional-sigtypes/)
 - ثريدات النقاش هنا لكل من الاقتراحات المذكورة أعلاه، المرتبطة بداخل
-- http://zzz.i2p/topics/2494 أولويات الاقتراحات لعام 2018
-- http://zzz.i2p/topics/2418 اقتراح ECIES
-- http://zzz.i2p/topics/1768 نظرة عامة على تشفير غير متماثل جديد
-- نظرة عامة على التشفير ذو المستوى المنخفض /docs/specs/cryptography/
+- [أولويات الاقتراحات لعام 2018](http://zzz.i2p/topics/2494)
+- [اقتراح ECIES](http://zzz.i2p/topics/2418)
+- [نظرة عامة على تشفير غير متماثل جديد](http://zzz.i2p/topics/1768)
+- [نظرة عامة على التشفير ذو المستوى المنخفض](/ar/docs/specs/common-structures/)
 
 ## استخدامات التشفير غير المتماثل
 

@@ -43,7 +43,7 @@ Bob 在接收时验证该哈希与他的哈希匹配。
 
 ## 规范
 
-更新 [STREAMING]_ 以添加以下部分：
+更新 [Streaming 规范](/en/docs/spec/streaming/) 以添加以下部分：
 
 ### 防止重放
 
@@ -95,8 +95,4 @@ Bob 必须丢弃该包。
 实现可以随时添加支持，无需协调。
 Java I2P 和 i2pd 路由器在 API 0.9.58 中实现了这一点（2023 年 3 月发布）。
 
-## 参考
-
-.. [STREAMING]
-    {{ spec_url('streaming') }}
 ```

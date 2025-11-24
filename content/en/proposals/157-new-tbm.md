@@ -13,7 +13,7 @@ target: "0.9.51"
 Implemented as of API version 0.9.51.
 Network deployment and testing in progress.
 Subject to minor revision.
-See [I2NP]_ and [Tunnel-Creation-ECIES]_ for the final specification.
+See [I2NP](/en/docs/spec/i2np/) and [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) for the final specification.
 
 
 
@@ -27,7 +27,7 @@ For typical Variable Tunnel Build and Variable Tunnel Build Reply messages,
 the total size is 2113 bytes. This message is fragmented into three 1KB tunnel
 messages for the reverse path.
 
-Changes to the 528-byte record format for ECIES-X25519 routers are specified in [Prop152]_ and [Tunnel-Creation-ECIES]_.
+Changes to the 528-byte record format for ECIES-X25519 routers are specified in [Prop152](/en/proposals/152-ecies-tunnels/) and [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/).
 For a mix of ElGamal and ECIES-X25519 routers in a tunnel, the record size must remain
 528 bytes. However, if all routers in a tunnel are ECIES-X25519, a new, smaller
 build record is possible, because ECIES-X25519 encryption has much less overhead
@@ -45,13 +45,13 @@ This is expected to happen by year-end 2021.
 
 ### Goals
 
-See [Prop152]_ and [Prop156]_ for additional goals.
+See [Prop152](/en/proposals/152-ecies-tunnels/) and [Prop156](/en/proposals/156-ecies-routers/) for additional goals.
 
 - Smaller records and messages
-- Maintain sufficient space for future options, as in [Prop152]_ and [Tunnel-Creation-ECIES]_
+- Maintain sufficient space for future options, as in [Prop152](/en/proposals/152-ecies-tunnels/) and [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/)
 - Fit in one tunnel message for the reverse path
 - Support ECIES hops only
-- Maintain improvements implemented in [Prop152]_ and [Tunnel-Creation-ECIES]_
+- Maintain improvements implemented in [Prop152](/en/proposals/152-ecies-tunnels/) and [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/)
 - Maximize compatibility with current network
 - Hide inbound build messages from the OBEP
 - Hide outbound build reply messages from the IBGW
@@ -62,10 +62,10 @@ See [Prop152]_ and [Prop156]_ for additional goals.
 
 ### Non-Goals
 
-See [Prop156]_ for additional non-goals.
+See [Prop156](/en/proposals/156-ecies-routers/) for additional non-goals.
 
 - No requirement for mixed ElGamal/ECIES tunnels
-- Layer encryption changes, for that see [Prop153]_
+- Layer encryption changes, for that see [Prop153](/en/proposals/153-chacha20-layer-encryption/)
 - No speedups of crypto operations. It's assumed that ChaCha20 and AES are similar,
   even with AESNI, at least for the small data sizes in question.
 
@@ -81,11 +81,11 @@ Encrypted request and reply records will be 218 bytes, compared to 528 bytes now
 
 The plaintext request records will be 154 bytes,
 compared to 222 bytes for ElGamal records,
-and 464 bytes for ECIES records as defined in [Prop152]_ and [Tunnel-Creation-ECIES]_.
+and 464 bytes for ECIES records as defined in [Prop152](/en/proposals/152-ecies-tunnels/) and [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/).
 
 The plaintext response records will be 202 bytes,
 compared to 496 bytes for ElGamal records,
-and 512 bytes for ECIES records as defined in [Prop152]_ and [Tunnel-Creation-ECIES]_.
+and 512 bytes for ECIES records as defined in [Prop152](/en/proposals/152-ecies-tunnels/) and [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/).
 
 The reply encryption will be ChaCha20 (NOT ChaCha20/Poly1305),
 so the plaintext records do not need to be a multiple of 16 bytes.
@@ -99,8 +99,7 @@ layer and reply keys, so they do not need to be explicitly included in the reque
 Both will be "variable" with a one-byte number of records field,
 as with the existing Variable messages.
 
-ShortTunnelBuild: Type 25
-````````````````````````````````
+#### ShortTunnelBuild: Type 25
 
 Typical length (with 4 records): 873 bytes
 
@@ -117,8 +116,7 @@ in a single tunnel message. See the appendix below.
 
 
 
-OutboundTunnelBuildReply: Type 26
-``````````````````````````````````````
+#### OutboundTunnelBuildReply: Type 26
 
 We define a new OutboundTunnelBuildReply message.
 This is used for outbound tunnel builds only.
@@ -132,8 +130,7 @@ The other records go into the other slots.
 It then garlic encrypts the message to originator with the derived symmetric keys.
 
 
-Notes
-```````
+#### Notes
 
 By garlic encrypting the OTBRM and STBM, we also avoid any potential
 issues with compatibility at the IBGW and OBEP of the paired tunnels.
@@ -143,56 +140,54 @@ issues with compatibility at the IBGW and OBEP of the paired tunnels.
 
 ### Message Flow
 
-.. raw:: html
-
-  {% highlight %}
+```
 STBM: Short tunnel build message (type 25)
-  OTBRM: Outbound tunnel build reply message (type 26)
+OTBRM: Outbound tunnel build reply message (type 26)
 
-  Outbound Build A-B-C
-  Reply through existing inbound D-E-F
-
-
-                  New Tunnel
-           STBM      STBM      STBM
-  Creator ------> A ------> B ------> C ---\
-                                     OBEP   \
-                                            | Garlic wrapped
-                                            | OTBRM
-                                            | (TUNNEL delivery)
-                                            | from OBEP to
-                                            | creator
-                Existing Tunnel             /
-  Creator <-------F---------E-------- D <--/
-                                     IBGW
+Outbound Build A-B-C
+Reply through existing inbound D-E-F
 
 
-
-  Inbound Build D-E-F
-  Sent through existing outbound A-B-C
-
-
-                Existing Tunnel
-  Creator ------> A ------> B ------> C ---\
-                                    OBEP    \
-                                            | Garlic wrapped (optional)
-                                            | STBM
-                                            | (ROUTER delivery)
-                                            | from creator
-                  New Tunnel                | to IBGW
-            STBM      STBM      STBM        /
-  Creator <------ F <------ E <------ D <--/
-                                     IBGW
+                New Tunnel
+         STBM      STBM      STBM
+Creator ------> A ------> B ------> C ---\
+                                   OBEP   \
+                                          | Garlic wrapped
+                                          | OTBRM
+                                          | (TUNNEL delivery)
+                                          | from OBEP to
+                                          | creator
+              Existing Tunnel             /
+Creator <-------F---------E-------- D <--/
+                                   IBGW
 
 
 
-{% endhighlight %}
+Inbound Build D-E-F
+Sent through existing outbound A-B-C
+
+
+              Existing Tunnel
+Creator ------> A ------> B ------> C ---\
+                                  OBEP    \
+                                          | Garlic wrapped (optional)
+                                          | STBM
+                                          | (ROUTER delivery)
+                                          | from creator
+                New Tunnel                | to IBGW
+          STBM      STBM      STBM        /
+Creator <------ F <------ E <------ D <--/
+                                   IBGW
+
+
+
+```
 
 
 
 ### Record Encryption
 
-Request and reply record encryption: as defined in [Prop152]_ and [Tunnel-Creation-ECIES]_.
+Request and reply record encryption: as defined in [Prop152](/en/proposals/152-ecies-tunnels/) and [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/).
 
 Reply record encryption for other slots: ChaCha20.
 
@@ -226,11 +221,10 @@ This is a topic for additional research.
 
 
 
-Short Request Record Unencrypted
-```````````````````````````````````````
+#### Short Request Record Unencrypted
 
 This is the proposed specification of the tunnel BuildRequestRecord for ECIES-X25519 routers.
-Summary of changes from [Tunnel-Creation-ECIES]_:
+Summary of changes from [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/):
 
 - Change unencrypted length from 464 to 154 bytes
 - Change encrypted length from 528 to 218 bytes
@@ -244,27 +238,23 @@ All fields are big-endian.
 
 Unencrypted size: 154 bytes.
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```
 bytes     0-3: tunnel ID to receive messages as, nonzero
-  bytes     4-7: next tunnel ID, nonzero
-  bytes    8-39: next router identity hash
-  byte       40: flags
-  bytes   41-42: more flags, unused, set to 0 for compatibility
-  byte       43: layer encryption type
-  bytes   44-47: request time (in minutes since the epoch, rounded down)
-  bytes   48-51: request expiration (in seconds since creation)
-  bytes   52-55: next message ID
-  bytes    56-x: tunnel build options (Mapping)
-  bytes     x-x: other data as implied by flags or options
-  bytes   x-153: random padding (see below)
+bytes     4-7: next tunnel ID, nonzero
+bytes    8-39: next router identity hash
+byte       40: flags
+bytes   41-42: more flags, unused, set to 0 for compatibility
+byte       43: layer encryption type
+bytes   44-47: request time (in minutes since the epoch, rounded down)
+bytes   48-51: request expiration (in seconds since creation)
+bytes   52-55: next message ID
+bytes    56-x: tunnel build options (Mapping)
+bytes     x-x: other data as implied by flags or options
+bytes   x-153: random padding (see below)
+```
 
-{% endhighlight %}
 
-
-The flags field is the same as defined in [Tunnel-Creation]_ and contains the following::
+The flags field is the same as defined in [Tunnel-Creation](/en/docs/spec/tunnel-creation/) and contains the following:
 
  Bit order: 76543210 (bit 7 is MSB)
  bit 7: if set, allow messages from anyone
@@ -287,7 +277,7 @@ It is used for the KDF for the IBGW layer and reply keys and IVs.
 This is only included in the plaintext record in an Inbound Tunnel Build message.
 It is required because there is no DH at this layer for the build record.
 
-The tunnel build options is a Mapping structure as defined in [Common]_.
+The tunnel build options is a Mapping structure as defined in [Common](/en/docs/spec/common-structures/).
 This is for future use. No options are currently defined.
 If the Mapping structure is empty, this is two bytes 0x00 0x00.
 The maximum size of the Mapping (including the length field) is 98 bytes,
@@ -295,33 +285,28 @@ and the maximum value of the Mapping length field is 96.
 
 
 
-Short Request Record Encrypted
-`````````````````````````````````````
+#### Short Request Record Encrypted
 
 All fields are big-endian except for the ephemeral public key which is little-endian.
 
 Encrypted size: 218 bytes
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```
 bytes    0-15: Hop's truncated identity hash
-  bytes   16-47: Sender's ephemeral X25519 public key
-  bytes  48-201: ChaCha20 encrypted ShortBuildRequestRecord
-  bytes 202-217: Poly1305 MAC
-
-{% endhighlight %}
+bytes   16-47: Sender's ephemeral X25519 public key
+bytes  48-201: ChaCha20 encrypted ShortBuildRequestRecord
+bytes 202-217: Poly1305 MAC
+```
 
 
 
 ### Short Reply Record
 
 
-Short Reply Record Unencrypted
-`````````````````````````````````````
+#### Short Reply Record Unencrypted
+
 This is the proposed specification of the tunnel ShortBuildReplyRecord for ECIES-X25519 routers.
-Summary of changes from [Tunnel-Creation-ECIES]_:
+Summary of changes from [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/):
 
 - Change unencrypted length from 512 to 202 bytes
 - Change encrypted length from 528 to 218 bytes
@@ -333,43 +318,34 @@ All fields are big-endian.
 
 Unencrypted size: 202 bytes.
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```
 bytes    0-x: Tunnel Build Reply Options (Mapping)
-  bytes    x-x: other data as implied by options
-  bytes  x-200: Random padding (see below)
-  byte     201: Reply byte
+bytes    x-x: other data as implied by options
+bytes  x-200: Random padding (see below)
+byte     201: Reply byte
+```
 
-{% endhighlight %}
-
-The tunnel build reply options is a Mapping structure as defined in [Common]_.
+The tunnel build reply options is a Mapping structure as defined in [Common](/en/docs/spec/common-structures/).
 This is for future use. No options are currently defined.
 If the Mapping structure is empty, this is two bytes 0x00 0x00.
 The maximum size of the Mapping (including the length field) is 201 bytes,
 and the maximum value of the Mapping length field is 199.
 
 The reply byte is one of the following values
-as defined in [Tunnel-Creation]_ to avoid fingerprinting:
+as defined in [Tunnel-Creation](/en/docs/spec/tunnel-creation/) to avoid fingerprinting:
 
 - 0x00 (accept)
 - 30 (TUNNEL_REJECT_BANDWIDTH)
 
 
-Short Reply Record Encrypted
-```````````````````````````````````
+#### Short Reply Record Encrypted
 
 Encrypted size: 218 bytes
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```
 bytes   0-201: ChaCha20 encrypted ShortBuildReplyRecord
-  bytes 202-217: Poly1305 MAC
-
-{% endhighlight %}
+bytes 202-217: Poly1305 MAC
+```
 
 
 
@@ -390,23 +366,20 @@ When received by the OBEP, it is transformed to an OutboundTunnelBuildReply,
 garlic wrapped, and sent to the originator.
 
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 +----+----+----+----+----+----+----+----+
-  | num| ShortBuildRequestRecords...
-  +----+----+----+----+----+----+----+----+
+| num| ShortBuildRequestRecords...
++----+----+----+----+----+----+----+----+
 
-  num ::
-         1 byte `Integer`
-         Valid values: 1-8
+num ::
+       1 byte `Integer`
+       Valid values: 1-8
 
-  record size: 218 bytes
-  total size: 1+$num*218
-{% endhighlight %}
+record size: 218 bytes
+total size: 1+$num*218
+```
 
-Notes
-`````
+#### Notes
 * Typical number of records is 4, for a total size of 873.
 
 
@@ -420,30 +393,27 @@ This message is only sent by the OBEP to the IBEP (creator) via an existing inbo
 It may not be sent to any other hop.
 It is always garlic encrypted.
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 +----+----+----+----+----+----+----+----+
-  | num|                                  |
-  +----+                                  +
-  |      ShortBuildReplyRecords...        |
-  +----+----+----+----+----+----+----+----+
+| num|                                  |
++----+                                  +
+|      ShortBuildReplyRecords...        |
++----+----+----+----+----+----+----+----+
 
-  num ::
-         Total number of records,
-         1 byte `Integer`
-         Valid values: 1-8
+num ::
+       Total number of records,
+       1 byte `Integer`
+       Valid values: 1-8
 
-  ShortBuildReplyRecords ::
-         Encrypted records
-         length: num * 218
+ShortBuildReplyRecords ::
+       Encrypted records
+       length: num * 218
 
-  encrypted record size: 218 bytes
-  total size: 1+$num*218
-{% endhighlight %}
+encrypted record size: 218 bytes
+total size: 1+$num*218
+```
 
-Notes
-`````
+#### Notes
 * Typical number of records is 4, for a total size of 873.
 * This message should be garlic encrypted.
 
@@ -459,35 +429,32 @@ Unlike long records we can't use left part of ck for reply key, because it's not
 Reply key is used to encypt reply that record using AEAD/Chaha20/Poly1305 and Chacha20 to reply other records.
 Both use the same key, nonce is record's position in the message starting from 0.
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 keydata = HKDF(ck, ZEROLEN, "SMTunnelReplyKey", 64)
-  replyKey = keydata[32:63]
-  ck = keydata[0:31]
+replyKey = keydata[32:63]
+ck = keydata[0:31]
 
-  Layer key:
-  Layer key is always AES for now, but same KDF can be used from Chacha20
+Layer key:
+Layer key is always AES for now, but same KDF can be used from Chacha20
 
-  keydata = HKDF(ck, ZEROLEN, "SMTunnelLayerKey", 64)
-  layerKey = keydata[32:63]
+keydata = HKDF(ck, ZEROLEN, "SMTunnelLayerKey", 64)
+layerKey = keydata[32:63]
 
-  IV key for non-OBEP record:
-  ivKey = keydata[0:31]
-  because it's last
+IV key for non-OBEP record:
+ivKey = keydata[0:31]
+because it's last
 
-  IV key for OBEP record:
-  ck = keydata[0:31]
-  keydata = HKDF(ck, ZEROLEN, "TunnelLayerIVKey", 64)
-  ivKey = keydata[32:63]
-  ck = keydata[0:31]
+IV key for OBEP record:
+ck = keydata[0:31]
+keydata = HKDF(ck, ZEROLEN, "TunnelLayerIVKey", 64)
+ivKey = keydata[32:63]
+ck = keydata[0:31]
 
-  OBEP garlic reply key/tag:
-  keydata = HKDF(ck, ZEROLEN, "RGarlicKeyAndTag", 64)
-  replyKey = keydata[32:63]
-  replyTag = keydata[0:7]
-
-{% endhighlight %}
+OBEP garlic reply key/tag:
+keydata = HKDF(ck, ZEROLEN, "RGarlicKeyAndTag", 64)
+replyKey = keydata[32:63]
+replyTag = keydata[0:7]
+```
 
 
 
@@ -555,93 +522,89 @@ Without garlic overhead for unencrypted inbound STBM,
 if we don't use ITBM:
 
 
-.. raw:: html
-
-  {% highlight lang='text' %}
+```
 Current 4-slot size: 4 * 528 + overhead = 3 tunnel messages
 
-  4-slot build message to fit in one tunnel message, ECIES-only:
+4-slot build message to fit in one tunnel message, ECIES-only:
 
-  1024
-  - 21 fragment header
-  ----
-  1003
-  - 35 unfragmented ROUTER delivery instructions
-  ----
-  968
-  - 16 I2NP header
-  ----
-  952
-  - 1 number of slots
-  ----
-  951
-  / 4 slots
-  ----
-  237 New encrypted build record size (vs. 528 now)
-  - 16 trunc. hash
-  - 32 eph. key
-  - 16 MAC
-  ----
-  173 cleartext build record max (vs. 222 now)
+1024
+- 21 fragment header
+----
+1003
+- 35 unfragmented ROUTER delivery instructions
+----
+968
+- 16 I2NP header
+----
+952
+- 1 number of slots
+----
+951
+/ 4 slots
+----
+237 New encrypted build record size (vs. 528 now)
+- 16 trunc. hash
+- 32 eph. key
+- 16 MAC
+----
+173 cleartext build record max (vs. 222 now)
 
 
 
-{% endhighlight %}
+```
 
 
 With garlic overhead for 'N' noise pattern to encrypt inbound STBM,
 if we don't use ITBM:
 
-.. raw:: html
-
-  {% highlight lang='text' %}
+```
 Current 4-slot size: 4 * 528 + overhead = 3 tunnel messages
 
-  4-slot garlic-encrypted build message to fit in one tunnel message, ECIES-only:
+4-slot garlic-encrypted build message to fit in one tunnel message, ECIES-only:
 
-  1024
-  - 21 fragment header
-  ----
-  1003
-  - 35 unfragmented ROUTER delivery instructions
-  ----
-  968
-  - 16 I2NP header
-  -  4 length
-  ----
-  948
-  - 32 byte eph. key
-  ----
-  916
-  - 7 byte DateTime block
-  ----
-  909
-  - 3 byte Garlic block overhead
-  ----
-  906
-  - 9 byte I2NP header
-  ----
-  897
-  - 1 byte Garlic LOCAL delivery instructions
-  ----
-  896
-  - 16 byte Poly1305 MAC
-  ----
-  880
-  - 1 number of slots
-  ----
-  879
-  / 4 slots
-  ----
-  219 New encrypted build record size (vs. 528 now)
-  - 16 trunc. hash
-  - 32 eph. key
-  - 16 MAC
-  ----
-  155 cleartext build record max (vs. 222 now)
+1024
+- 21 fragment header
+----
+1003
+- 35 unfragmented ROUTER delivery instructions
+----
+968
+- 16 I2NP header
+-  4 length
+----
+948
+- 32 byte eph. key
+----
+916
+- 7 byte DateTime block
+----
+909
+- 3 byte Garlic block overhead
+----
+906
+- 9 byte I2NP header
+----
+897
+- 1 byte Garlic LOCAL delivery instructions
+----
+896
+- 16 byte Poly1305 MAC
+----
+880
+- 1 number of slots
+----
+879
+/ 4 slots
+----
+219 New encrypted build record size (vs. 528 now)
+- 16 trunc. hash
+- 32 eph. key
+- 16 MAC
+----
+155 cleartext build record max (vs. 222 now)
 
 
-{% endhighlight %}
+```
 
 Notes:
 
@@ -654,44 +617,4 @@ The garlic-wrapped OTBRM will be slightly smaller than the garlic-wrapped STBM,
 because the delivery instructions are LOCAL not ROUTER,
 there's no DATETIME block included, and
 it uses an 8-byte tag rather than the 32-byte ephemeral key for a full 'N' message.
-
-
-
-## References
-
-.. [Common]
-    {{ spec_url('common-structures') }}
-
-.. [ECIES]
-   {{ spec_url('ecies') }}
-
-.. [I2NP]
-    {{ spec_url('i2np') }}
-
-.. [Prop123]
-    {{ proposal_url('123') }}
-
-.. [Prop144]
-    {{ proposal_url('144') }}
-
-.. [Prop145]
-    {{ proposal_url('145') }}
-
-.. [Prop152]
-    {{ proposal_url('152') }}
-
-.. [Prop153]
-    {{ proposal_url('153') }}
-
-.. [Prop154]
-    {{ proposal_url('154') }}
-
-.. [Prop156]
-    {{ proposal_url('156') }}
-
-.. [Tunnel-Creation]
-    {{ spec_url('tunnel-creation') }}
-
-.. [Tunnel-Creation-ECIES]
-    {{ spec_url('tunnel-creation-ecies') }}
 

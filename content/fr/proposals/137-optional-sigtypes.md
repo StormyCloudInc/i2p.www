@@ -34,8 +34,7 @@ Pour tout autre type de signature dans la gamme standard (non expérimentale), u
 
 ## Spécification
 
-Ref: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 Un routeur qui prend en charge un type de signature optionnel doit ajouter la propriété "sigTypes" à ses informations publiées de routeur, avec des numéros de type de signature séparés par des virgules. Les types de signature seront dans un ordre numérique trié. Les types de signature obligatoires (0-4,7) ne doivent pas être inclus.
 
@@ -59,6 +58,4 @@ Des problèmes similaires devront être abordés avec des types de cryptage non 
 
 Les NetDB stockant des types de signature inconnus qui ne sont pas dans la gamme expérimentale continueront d'être rejetés par les floodfills, car la signature ne peut pas être vérifiée.
 
-## Voir aussi
 
-Proposition 134 Proposition 136

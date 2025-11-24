@@ -41,7 +41,7 @@ de resolver un nombre de host a una dirección IPv4 o IPv6 no existía.
 
 En Java I2P, siempre ha sido un desafío propagar un nombre de host configurado
 a ambos transportes publicados, y la situación se volvió más compleja
-con IPv6. El ticket abierto 1050 http://trac.i2p2.i2p/ticket/1050 detalla algunos de los problemas.
+con IPv6.
 No está claro si un host de doble pila debería publicar tanto un nombre de host como una dirección
 IPv6 literal o no. El nombre de host se publica para la dirección SSU pero no para la dirección NTCP.
 
@@ -117,10 +117,7 @@ del router que contengan nombres de host.
 Esto también se aplica a los parámetros "ihost0", "ihost1" e "ihost2" en una dirección SSU.
 Los routers deben ignorar direcciones de introductor que contengan nombres de host.
 
-La sección relevante es "Especificación de Dirección del Router" en las especificaciones de transporte:
-http://i2p-projekt.i2p/en/docs/specs/ntcp
-y
-http://i2p-projekt.i2p/en/docs/specs/ssu
+
 
 
 ## Notas

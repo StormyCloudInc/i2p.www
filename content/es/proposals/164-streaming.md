@@ -47,7 +47,7 @@ Si Alice y Charlie son API 0.9.58 o más reciente, cualquier intento de repetici
 
 ## Especificación
 
-Actualizar [STREAMING]_ para añadir la siguiente sección:
+Actualizar la [especificación de Streaming](/en/docs/spec/streaming/) para añadir la siguiente sección:
 
 ### Prevención de repetición
 
@@ -107,7 +107,3 @@ Los routers Java I2P e i2pd implementaron esto en la API 0.9.58 (lanzada en marz
 
 
 
-## Referencias
-
-.. [STREAMING]
-    {{ spec_url('streaming') }}

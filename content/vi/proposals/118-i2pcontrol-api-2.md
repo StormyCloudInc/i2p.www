@@ -24,9 +24,7 @@ cho người dùng từ >=API2 với API đơn giản nhất và nhất quán nh
 
 ## Đặc tả API 2
 
-.. raw:: html
-
-  {% highlight lang='json' -%}
+```json
 {
     "id": "id",
     "method": "method_name",
@@ -42,7 +40,7 @@ cho người dùng từ >=API2 với API đơn giản nhất và nhất quán nh
     "result": "result_value",
     "jsonrpc": "2.0"
   }
-{% endhighlight %}
+```
 
 ### Tham số
 
@@ -73,12 +71,14 @@ cho người dùng từ >=API2 với API đơn giản nhất và nhất quán nh
 ### Tiền tố
 
 Quy tắc đặt tên RPC tương tự như cách thực hiện trong CSS, với tiền tố của nhà cung cấp
-cho các triển khai API khác nhau (i2p, kovri, i2pd)::
+cho các triển khai API khác nhau (i2p, kovri, i2pd):
 
-    XXX.YYY.ZZZ
-    i2p.XXX.YYY.ZZZ
-    i2pd.XXX.YYY.ZZZ
-    kovri.XXX.YYY.ZZZ
+```text
+XXX.YYY.ZZZ
+i2p.XXX.YYY.ZZZ
+i2pd.XXX.YYY.ZZZ
+kovri.XXX.YYY.ZZZ
+```
 
 Ý tưởng chung với tiền tố đặc trưng cho nhà cung cấp là cho phép một số linh hoạt
 và để các triển khai phát triển mà không phải chờ đợi các triển khai khác
@@ -91,10 +91,11 @@ bắt kịp. Nếu một RPC được triển khai bởi tất cả các triển
 
    * *parameter* [kiểu tham số]:  [null], [number], [string], [boolean],
      [array] hoặc [object]. [object] là một bản đồ {key:value}.
+  * Trả về:
 
-::
-
-  "return_value" [string] // Đây là giá trị được trả về bởi cuộc gọi RPC
+```text
+"return_value" [string] // Đây là giá trị được trả về bởi cuộc gọi RPC
+```
 
 
 ### Phương thức
@@ -103,13 +104,14 @@ bắt kịp. Nếu một RPC được triển khai bởi tất cả các triển
 
   * *password* [string]:  Mật khẩu cho triển khai i2pcontrol này
 
-  ::
-
+    Trả về:
+```text
     [object]
     {
       "token" : [string], // Mã thông báo sẽ được sử dụng cung cấp với tất cả các phương thức RPC khác
       "api" : [[int],[int], ...]  // Danh sách các cấp độ API hỗ trợ.
     }
+```
 
 
 * **control.** - Kiểm soát i2p
@@ -118,57 +120,64 @@ bắt kịp. Nếu một RPC được triển khai bởi tất cả các triển
 
     * [nil]: Không cần tham số
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
   * **control.restart** - Khởi động lại phiên bản i2p
 
     * [nil]: Không cần tham số
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
   * **control.restart.graceful** - Khởi động lại phiên bản i2p một cách nhã nhặn
 
     * [nil]: Không cần tham số
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
   * **control.shutdown** - Tắt phiên bản i2p
 
     * [nil]: Không cần tham số
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
   * **control.shutdown.graceful** - Tắt phiên bản i2p một cách nhã nhặn
 
     * [nil]: Không cần tham số
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
   * **control.update.find** - **KHỐI** Tìm kiếm bản cập nhật có chữ ký
 
     * [nil]: Không cần tham số
 
-    ::
-
-      true [boolean] // Đúng nếu có bản cập nhật có chữ ký
+    Trả về:
+```text
+      true [boolean]
+``` // Đúng nếu có bản cập nhật có chữ ký
 
   * **control.update.start** - Bắt đầu quá trình cập nhật
 
     * [nil]: Không cần tham số
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
 
 * **i2pcontrol.** - Cấu hình i2pcontrol
@@ -177,37 +186,42 @@ bắt kịp. Nếu một RPC được triển khai bởi tất cả các triển
 
     * *get* [null]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Đây sẽ là một địa chỉ IP như "0.0.0.0" hoặc "192.168.0.1"
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
   * **i2pcontrol.password** - Đổi mật khẩu i2pcontrol.
 
     * *set* [string]: Đặt mật khẩu mới cho chuỗi này
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
   * **i2pcontrol.port** - Nhận/Đặt cổng mà i2pcontrol lắng nghe.
 
     * *get* [null]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       7650 [number]
+```
 
     * *set* [number]: Thay đổi cổng mà i2pcontrol lắng nghe đến cổng này
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
 
 * **settings.** - Nhận/Đặt cấu hình phiên bản i2p
@@ -216,133 +230,151 @@ bắt kịp. Nếu một RPC được triển khai bởi tất cả các triển
 
     * *get*  [string]: Nhận giá trị của cài đặt này
 
-    ::
-
+    Trả về:
+```text
       "setting-value" [string]
+```
 
     * *getAll* [null]:
 
-    ::
-
+    Trả về:
+```text
       [object]
       {
         "setting-name" : "setting-value", [string]
-        ".." : ".." 
+        ".." : ".."
       }
+```
 
     * *set* [string]: Đặt giá trị của cài đặt này
     * *setAll* [object] {"setting-name" : "setting-value", ".." : ".." }
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
   * **settings.bandwidth.in** - Cài đặt băng thông đầu vào
   * **settings.bandwidth.out** - Cài đặt băng thông đầu ra
 
     * *get* [nil]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       0 [number]
+```
 
     * *set* [number]: Đặt giới hạn băng thông
 
-    ::
-
+    Trả về:
+```text
      [nil]
+```
 
   * **settings.ntcp.autoip** - Nhận cài đặt tự động phát hiện IP cho NTCP
 
     * *get* [null]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       true [boolean]
+```
 
   * **settings.ntcp.hostname** - Nhận tên máy chủ NTCP
 
     * *get* [null]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Đặt tên máy chủ mới
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
   * **settings.ntcp.port** - Cổng NTCP
 
     * *get* [null]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       0 [number]
+```
 
     * *set* [number]: Đặt cổng NTCP mới.
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
     * *set* [boolean]: Đặt tự động phát hiện IP cho NTCP
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
   * **settings.ssu.autoip** - Cấu hình cài đặt tự động phát hiện IP cho SSU
 
     * *get* [nil]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       true [boolean]
+```
 
   * **settings.ssu.hostname** - Cấu hình tên máy chủ SSU
 
     * *get* [null]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Đặt tên máy chủ SSU mới
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
   * **settings.ssu.port** - Cổng SSU
 
     * *get* [null]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       0 [number]
+```
 
     * *set* [number]: Đặt cổng SSU mới.
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
     * *set* [boolean]: Đặt tự động phát hiện IP cho SSU
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
   * **settings.share** - Nhận tỷ lệ chia sẻ băng thông
 
     * *get* [null]: Tham số này không cần phải đặt.
 
-    ::
-
-      0 [number] // Tỷ lệ chia sẻ băng thông (0-100)
+    Trả về:
+```text
+      0 [number]
+``` // Tỷ lệ chia sẻ băng thông (0-100)
 
     * *set* [number]: Đặt tỷ lệ chia sẻ băng thông (0-100)
 
@@ -350,15 +382,17 @@ bắt kịp. Nếu một RPC được triển khai bởi tất cả các triển
 
     * *get* [nil]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       true [boolean]
+```
 
     * *set* [boolean]: Đặt tự động phát hiện IP cho SSU
 
-    ::
-
+    Trả về:
+```text
       [nil]
+```
 
 
 
@@ -383,9 +417,10 @@ bắt kịp. Nếu một RPC được triển khai bởi tất cả các triển
 
     * *get* [null]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       0.0 [number]
+```
 
 
 * **status.** - Nhận trạng thái phiên bản i2p
@@ -394,16 +429,17 @@ bắt kịp. Nếu một RPC được triển khai bởi tất cả các triển
 
     * *get* [null]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       "status" [string]
+```
 
   * **status.net** - Nhận trạng thái mạng của router
 
     * *get* [null]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       0 [number]
       /**
        *    0 – OK
@@ -422,27 +458,31 @@ bắt kịp. Nếu một RPC được triển khai bởi tất cả các triển
        *   13 – LỖI_KHÔNG_CÓ_PEERS_CHỦ_ĐỘNG_KIỂM_TRA_KẾT_NỐI_VÀ_TƯỜNG_LỎA
        *   14 – LỖI_UDP_Vô_HIỆU_HÓA_VÀ_TCP_CHƯA_ĐẶT
        */
+```
 
   * **status.isfloodfill** - Instance i2p hiện tại có phải là floodfill không
 
     * *get* [null]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       true [boolean]
+```
 
   * **status.isreseeding** - Instance i2p hiện tại có đang tải xuống lại không
 
     * *get* [null]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       true [boolean]
+```
 
   * **status.ip** - IP công khai phát hiện của instance i2p này
 
     * *get* [null]: Tham số này không cần phải đặt.
 
-    ::
-
+    Trả về:
+```text
       "0.0.0.0" [string]
+```

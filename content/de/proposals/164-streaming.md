@@ -46,7 +46,7 @@ Wenn Alice und Charlie API 0.9.58 oder neuer sind, wird jeder Wiedergabeversuch 
 
 ## Spezifikation
 
-Aktualisieren Sie [STREAMING]_ um den folgenden Abschnitt hinzuzufügen:
+Aktualisieren Sie die [Streaming-Spezifikation](/en/docs/spec/streaming/) um den folgenden Abschnitt hinzuzufügen:
 
 ### Wiedergabeverhinderung
 
@@ -106,7 +106,3 @@ Java I2P- und i2pd-Router implementierten dies in API 0.9.58 (veröffentlicht im
 
 
 
-## Referenzen
-
-.. [STREAMING]
-    {{ spec_url('streaming') }}

@@ -28,15 +28,15 @@ Tài liệu này làm rõ các vấn đề chưa được giải quyết này.
 
 Bất kỳ ai đề xuất mã hóa mới phải nắm rõ các tài liệu sau:
 
-- Đề xuất 111 NTCP2 /proposals/111-ntcp-2/
-- Đề xuất 123 LS2 /proposals/123-new-netdb-entries/
-- Đề xuất 136 các loại chữ ký thử nghiệm /proposals/136-experimental-sigtypes/
-- Đề xuất 137 các loại chữ ký tùy chọn /proposals/137-optional-sigtypes/
+- [Đề xuất 111 NTCP2](/vi/proposals/111-ntcp-2/)
+- [Đề xuất 123 LS2](/vi/proposals/123-new-netdb-entries/)
+- [Đề xuất 136 các loại chữ ký thử nghiệm](/vi/proposals/136-experimental-sigtypes/)
+- [Đề xuất 137 các loại chữ ký tùy chọn](/vi/proposals/137-optional-sigtypes/)
 - Các luồng thảo luận ở đây cho từng đề xuất trên, được liên kết trong đó
-- http://zzz.i2p/topics/2494 các ưu tiên đề xuất năm 2018
-- http://zzz.i2p/topics/2418 đề xuất ECIES
-- http://zzz.i2p/topics/1768 tổng quan mã hóa bất đối xứng mới
-- Tổng quan mã hóa cấp thấp /docs/specs/cryptography/
+- [các ưu tiên đề xuất năm 2018](http://zzz.i2p/topics/2494)
+- [đề xuất ECIES](http://zzz.i2p/topics/2418)
+- [tổng quan mã hóa bất đối xứng mới](http://zzz.i2p/topics/1768)
+- [Tổng quan mã hóa cấp thấp](/vi/docs/specs/common-structures/)
 
 
 ## Các Sử Dụng Mã hóa Bất Đối Xứng

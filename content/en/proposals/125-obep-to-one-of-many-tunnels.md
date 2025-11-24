@@ -26,8 +26,8 @@ multiple tunnels also enables us to implement multicast at the OBEP (by
 delivering the message to all specified tunnels).
 
 An alternative to the delegation part of this proposal would be to send through
-a [LeaseSet]_ hash, similar to the existing ability to specify a target
-[RouterIdentity]_ hash. This would result in a smaller message and a potentially
+a LeaseSet hash, similar to the existing ability to specify a target
+[RouterIdentity](http://localhost:63465/en/docs/specs/common-structures/#common-structure-specification) hash. This would result in a smaller message and a potentially
 newer LeaseSet. However:
 
 1. It would force the OBEP to do a lookup
@@ -36,15 +36,15 @@ newer LeaseSet. However:
 
 3. The LeaseSet may be encrypted, so the OBEP couldn't get the leases.
 
-4. Specifying a LeaseSet reveals to the OBEP the [Destination]_ of the message,
+4. Specifying a LeaseSet reveals to the OBEP the [Destination](/en/docs/specs/common-structures/#destination) of the message,
    which they could otherwise only discover by scraping all the LeaseSets in the
    network and looking for a Lease match.
 
 
 ## Design
 
-The originator (OBGW) would place some (all?) of the target [Leases]_ in the
-delivery instructions [TUNNEL-DELIVERY]_ instead of picking just one.
+The originator (OBGW) would place some (all?) of the target [Leases](http://localhost:63465/en/docs/specs/common-structures/#lease) in the
+delivery instructions [TUNNEL-DELIVERY](/en/docs/specs/i2np/#tunnel-message-delivery-instructions) instead of picking just one.
 
 The OBEP would select one of those to deliver to. The OBEP would select, if
 available, one that it is already connected to, or already knows about. This
@@ -52,7 +52,7 @@ would make the OBEP-IBGW path faster and more reliable, and reduce overall
 network connections.
 
 We have one unused delivery type (0x03) and two remaining bits (0 and 1) in the
-flags for [TUNNEL-DELIVERY]_, which we can leverage to implement these features.
+flags for TUNNEL-DELIVERY, which we can leverage to implement these features.
 
 
 ## Security Implications
@@ -62,7 +62,7 @@ target Destination or their view of the NetDB:
 
 - An adversary that controls the OBEP and is scraping LeaseSets from the NetDB
   can already determine whether a message is being sent to a particular
-  Destination, by searching for the [TunnelId]_ / [RouterIdentity]_ pair. At
+  Destination, by searching for the TunnelId / RouterIdentity pair. At
   worst, the presence of multiple Leases in the TMDI might make it faster to
   find a match in the adversary's database.
 
@@ -84,12 +84,9 @@ which particular application a message is from.
 
 ## Specification
 
-The First Fragment Delivery Instructions [TUNNEL-DELIVERY]_ would be modified as
-follows:
+The First Fragment Delivery Instructions would be modified as follows:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 +----+----+----+----+----+----+----+----+
   |flag|  Tunnel ID (opt)  |              |
   +----+----+----+----+----+              +
@@ -99,7 +96,7 @@ follows:
   +                                       +
   |                                       |
   +                        +----+----+----+
-  |                        |dly | Message  
+  |                        |dly | Message
   +----+----+----+----+----+----+----+----+
    ID (opt) |extended opts (opt)|cnt | (o)
   +----+----+----+----+----+----+----+----+
@@ -124,70 +121,43 @@ follows:
        |
   +----+
 
-  flag ::
-         1 byte
-         Bit order: 76543210
-         bits 6-5: delivery type
-                   0x03 = TUNNELS
-         bit 0: multicast? If 0, deliver to one of the tunnels
-                           If 1, deliver to all of the tunnels
-                           Set to 0 for compatibility with future uses if
-                           delivery type is not TUNNELS
+flag ::
+       1 byte
+       Bit order: 76543210
+       bits 6-5: delivery type
+                 0x03 = TUNNELS
+       bit 0: multicast? If 0, deliver to one of the tunnels
+                         If 1, deliver to all of the tunnels
+                         Set to 0 for compatibility with future uses if
+                         delivery type is not TUNNELS
 
-  Count ::
-         1 byte
-         Optional, present if delivery type is TUNNELS
-         2-255 - Number of id/hash pairs to follow
+Count ::
+       1 byte
+       Optional, present if delivery type is TUNNELS
+       2-255 - Number of id/hash pairs to follow
 
-  Tunnel ID :: `TunnelId`
-  To Hash ::
-         36 bytes each
-         Optional, present if delivery type is TUNNELS
-         id/hash pairs
+Tunnel ID :: TunnelId
+To Hash ::
+       36 bytes each
+       Optional, present if delivery type is TUNNELS
+       id/hash pairs
 
-  Total length: Typical length is:
-         75 bytes for count 2 TUNNELS delivery (unfragmented tunnel message);
-         79 bytes for count 2 TUNNELS delivery (first fragment)
+Total length: Typical length is:
+       75 bytes for count 2 TUNNELS delivery (unfragmented tunnel message);
+       79 bytes for count 2 TUNNELS delivery (first fragment)
 
-  Rest of delivery instructions unchanged
-{% endhighlight %}
+Rest of delivery instructions unchanged
+```
 
 
 ## Compatibility
 
 The only peers that need to be understand the new specification are the OBGWs
 and the OBEPs. We can therefore make this change compatible with the existing
-network by making its use conditional on the target I2P version [VERSIONS]_:
+network by making its use conditional on the target I2P version:
 
 * The OBGWs must select compatible OBEPs when building outbound tunnels, based
-  on the I2P version advertised in their [RouterInfo]_.
+  on the I2P version advertised in their [RouterInfo](http://localhost:63465/en/docs/specs/common-structures/#routerinfo).
 
 * Peers that advertise the target version must support parsing the new flags,
   and must not reject the instructions as invalid.
-
-
-## References
-
-.. [Destination]
-    {{ ctags_url('Destination') }}
-
-.. [Leases]
-    {{ ctags_url('Lease') }}
-
-.. [LeaseSet]
-    {{ ctags_url('LeaseSet') }}
-
-.. [RouterIdentity]
-    {{ ctags_url('RouterIdentity') }}
-
-.. [RouterInfo]
-    {{ ctags_url('RouterInfo') }}
-
-.. [TUNNEL-DELIVERY]
-    {{ ctags_url('TunnelMessageDeliveryInstructions') }}
-
-.. [TunnelId]
-    {{ ctags_url('TunnelId') }}
-
-.. [VERSIONS]
-    {{ spec_url('i2np') }}#protocol-versions

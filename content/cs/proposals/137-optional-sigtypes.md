@@ -48,8 +48,7 @@ inzerovat podporu ve svých vlastnostech router info.
 
 ## Specifikace
 
-Ref: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 Router, který podporuje volitelný typ podpisu, by měl přidat vlastnost "sigTypes"
 do svého zveřejněného router info s čísly typů podpisů oddělenými čárkami.
@@ -87,7 +86,4 @@ což ještě nebylo formálně navrženo.
 odmítány floodfilly, protože podpis nemůže být ověřen.
 
 
-## Viz také
 
-Návrh 134
-Návrh 136

@@ -50,6 +50,4 @@ O suporte para nomes de host é opcional.
 
 Roteadores que não suportam isso irão ignorar a nova seção XML.
 
-## Veja Também
 
-Proposta 130

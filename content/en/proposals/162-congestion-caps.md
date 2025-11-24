@@ -54,12 +54,10 @@ over several minutes, not an instantaneous measurement.
 
 ## Specification
 
-Update [NETDB]_ as follows:
+Update [NETDB](/docs/how/network-database) as follows:
 
 
-.. raw:: html
-
-  {% highlight %}
+```text
 D: Medium congestion, or a low-performance router (e.g. Android, Raspberry Pi)
      Other routers should downgrade or limit this router's
      apparent tunnel capacity in the profile.
@@ -73,7 +71,7 @@ D: Medium congestion, or a low-performance router (e.g. Android, Raspberry Pi)
   G: This router is temporarily or permanently rejecting all tunnels.
      Do not attempt to build a tunnel through this router,
      until a new RI is received without the 'G'.
-{% endhighlight %}
+```
 
 For consistency, implementations should add any congestion cap
 at the end (after R or U).
@@ -129,7 +127,4 @@ act on published caps in 0.9.59 (July 2023).
 
 
 
-## References
 
-.. [NETDB]
-    {{ site_url('docs/how/network-database', True) }}

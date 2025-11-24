@@ -22,7 +22,7 @@ Neste cenário, é possível que o servidor colete e armazene o endereço cripto
 Mas é um problema?
 ^^^^^^^^^^^^^^^^^^^^
 
-O problema da identidade compartilhada é um problema quando os agentes de usuário que falam o mesmo protocolo desejam desvinculação. `Foi mencionado pela primeira vez no contexto do HTTP neste Tópico Reddit <https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/>`__, com os comentários apagados acessíveis graças ao `pullpush.io <https://api.pullpush.io/reddit/search/comment/?link_id=579idi>`__. *Na época*, eu era um dos respondentes mais ativos, e *na época* eu acreditava que o problema era pequeno. Nos últimos 8 anos, a situação e minha opinião sobre ela mudaram, e agora acredito que a ameaça representada pela correlação maliciosa de destino cresce consideravelmente à medida que mais sites estão em posição de "proﬁlar" usuários especíﬁcos.
+O problema da identidade compartilhada é um problema quando os agentes de usuário que falam o mesmo protocolo desejam desvinculação. [Foi mencionado pela primeira vez no contexto do HTTP neste Tópico Reddit](https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/), com os comentários apagados acessíveis graças ao [pullpush.io](https://api.pullpush.io/reddit/search/comment/?link_id=579idi). *Na época*, eu era um dos respondentes mais ativos, e *na época* eu acreditava que o problema era pequeno. Nos últimos 8 anos, a situação e minha opinião sobre ela mudaram, e agora acredito que a ameaça representada pela correlação maliciosa de destino cresce consideravelmente à medida que mais sites estão em posição de "proﬁlar" usuários especíﬁcos.
 
 Este ataque tem uma barreira de entrada muito baixa. Ele apenas requer que um operador de serviço oculto opere múltiplos serviços. Para ataques em visitas contemporâneas (visitando múltiplos sites ao mesmo tempo), este é o único requisito. Para vinculação não contemporânea, um desses serviços deve ser um serviço que hospede "contas" que pertençam a um único usuário alvo de rastreamento.
 
@@ -134,17 +134,5 @@ Basicamente, o seguinte script produzirá um proxy SOCKS5 consciente de aplicati
 Adendo: ``implementação de exemplo do ataque``
                                                   
 
-`Uma implementação de exemplo do ataque de Identidade Compartilhada em Agentes de Usuário HTTP <https://github.com/eyedeekay/colluding_sites_attack/>`__ existe há vários anos. Um exemplo adicional está disponível no subdiretório ``simple-colluder`` do `repositório prop166 de idk <https://git.idk.i2p/idk/i2p.host-aware-proxy>`__ Estes exemplos são deliberadamente projetados para demonstrar que o ataque funciona e requereria modificação (embora menor) para ser transformado em um ataque real.
+[Uma implementação de exemplo do ataque de Identidade Compartilhada em Agentes de Usuário HTTP](https://github.com/eyedeekay/colluding_sites_attack/) existe há vários anos. Um exemplo adicional está disponível no subdiretório ``simple-colluder`` do [repositório prop166 de idk](https://git.idk.i2p/idk/i2p.host-aware-proxy) Estes exemplos são deliberadamente projetados para demonstrar que o ataque funciona e requereria modificação (embora menor) para ser transformado em um ataque real.
 
-Citações:
-''''''''''
-
-https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/
-https://api.pullpush.io/reddit/search/comment/?link_id=579idi
-https://github.com/eyedeekay/colluding_sites_attack/
-https://en.wikipedia.org/wiki/Shadow_profile
-https://github.com/eyedeekay/si-i2p-plugin/
-https://github.com/eyedeekay/eeproxy/
-/docs/api/socks/
-https://i2pgit.org/idk/i2p.www/-/compare/master...166-identity-aware-proxies?from_project_id=17
-https://i2pgit.org/idk/i2p.i2p/-/tree/i2p.i2p.2.6.0-browser-proxy-post-keepalive?ref_type=heads

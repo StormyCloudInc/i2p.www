@@ -87,10 +87,10 @@ Router Identities bude obsahovat 10 kopií (320 bytů) náhodných dat.
 
 ### Odhadované úspory
 
-Destinations jsou zahrnuty v každém přenosu SYN [Streaming]_
-a znovu odpovídatelném datagramu [Datagram]_.
-Router Infos (obsahující Router Identities) jsou zahrnuty v Messages obchodu s databází [I2NP]_
-a v zprávách potvrzovaných schůzkou v [NTCP2]_ a [SSU2]_.
+Destinations jsou zahrnuty v každém přenosu SYN
+a znovu odpovídatelném datagramu.
+Router Infos (obsahující Router Identities) jsou zahrnuty v Messages obchodu s databází
+a v zprávách potvrzovaných schůzkou v NTCP2 a SSU2.
 
 NTCP2 nekomprimuje Router Info.
 RIs v Messages obchodu s databází a SSU2 potvrzené schůzky jsou gzipovány.
@@ -122,11 +122,11 @@ Navrhované změny našich aktuálních specifikací jsou dokumentovány níže.
 
 
 ### Běžné struktury
-Změnit specifikaci běžných struktur [COMMON]_
+Změnit specifikaci běžných struktur
 tak, aby se uvedlo, že 256-bytové pole veřejného klíče Destination je ignorováno a může
 obsahovat náhodná data.
 
-Přidat sekci do specifikace běžných struktur [COMMON]_
+Přidat sekci do specifikace běžných struktur
 doporučující osvědčené postupy pro pole veřejného klíče Destination a
 výplňová pole v Destination a Router Identity, jako následující:
 
@@ -136,14 +136,14 @@ a pole výplně (pro Destinations a Router Identities).
 
 ### Soubor soukromého klíče
 Formát souboru soukromého klíče (eepPriv.dat) není oficiální součástí našich specifikací,
-ale je dokumentován v Java I2P javadocs [PKF]_
+ale je dokumentován v [Java I2P javadocs](http://idk.i2p/javadoc-i2p/net/i2p/data/PrivateKeyFile.html)
 a další implementace jej podporují.
 To umožňuje přenositelnost soukromých klíčů do různých implementací.
 Přidat poznámku k tomu javadoc, že šifrovací veřejný klíč může být náhodná výplň
 a šifrovací soukromý klíč může být samé nuly nebo náhodná data.
 
 ### SAM
-Poznámka v [SAM]_ že šifrovací soukromý klíč se nepoužívá a může být ignorován.
+Poznámka v specifikaci SAM že šifrovací soukromý klíč se nepoužívá a může být ignorován.
 Jakákoli náhodná data mohou být navrácena klientem.
 SAM Bridge může poslat náhodná data při vytváření (s DEST GENERATE nebo SESSION CREATE DESTINATION=TRANSIENT)
 místo samých nul, aby Base 64 reprezentace neobsahovala sekvenci znaků AAAA
@@ -151,7 +151,7 @@ a nepůsobila jako poškozená.
 
 
 ### I2CP
-Nejsou vyžadovány žádné změny pro [I2CP]_. Soukromý klíč pro šifrovací veřejný klíč v Destination
+Nejsou vyžadovány žádné změny pro I2CP. Soukromý klíč pro šifrovací veřejný klíč v Destination
 není odesílán routeru.
 
 
@@ -229,7 +229,7 @@ zašifrované dotazy na databázi a odpovědi.
 Odhadovaný časový rámec pro návrh, vývoj a nasazení toho by byl ????????
 Ale stalo by se to až po hybridním nebo ratchetu ????????????
 
-Pro další diskusi viz [PQ]_.
+Pro další diskusi viz [this topic](http://zzz.i2p/topics/3294).
 
 
 
@@ -259,40 +259,4 @@ S ohledem na problémy s zpětnou kompatibilitou, a po zakázání SSU,
 implementace mohou zcela odstranit kód ElGamal.
 Přibližně 14 % routerů v síti je typu šifrování ElGamal, včetně mnoha floodfillů.
 
-Návrh na sloučení pro Java I2P je na [MR]_.
-
-
-## Reference
-
-.. [Common]
-    {{ spec_url('common-structures') }}
-
-.. [Datagram]
-    {{ spec_url('datagrams') }}
-
-.. [I2CP]
-    {{ spec_url('i2cp') }}
-
-.. [I2NP]
-    {{ spec_url('i2np') }}
-
-.. [MR]
-    http://git.idk.i2p/i2p-hackers/i2p.i2p/-/merge_requests/66
-
-.. [NTCP2]
-    {{ spec_url('ntcp2') }}
-
-.. [PKF]
-    http://{{ i2pconv('idk.i2p/javadoc-i2p') }}/net/i2p/data/PrivateKeyFile.html
-
-.. [PQ]
-    http://zzz.i2p/topics/3294
-
-.. [SAM]
-    {{ site_url('docs/api/samv3') }}
-
-.. [SSU2]
-    {{ spec_url('ssu2') }}
-
-.. [Streaming]
-    {{ spec_url('streaming') }}
+Návrh na sloučení pro Java I2P je na [git.idk.i2p](http://git.idk.i2p/i2p-hackers/i2p.i2p/-/merge_requests/66).

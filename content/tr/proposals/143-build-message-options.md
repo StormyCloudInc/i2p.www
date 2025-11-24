@@ -13,12 +13,10 @@ thread: "http://zzz.i2p/topics/2500"
 Bu öneri belirtildiği şekilde uygulanmamıştır,
 ancak ECIES uzun ve kısa yapı mesajları (öneriler 152 ve 157)
 genişletilebilir seçenekler alanı ile tasarlanmıştır.
-Resmi spesifikasyon için [SPEC]_ bölümüne bakınız.
+Resmi spesifikasyon için [Tunnel Creation ECIES spesifikasyonuna](/en/docs/spec/tunnel-creation-ecies/) bakınız.
 
 
 ## Genel Bakış
-
-ref: http://i2p-projekt.i2p/spec/tunnel-creation
 
 Tünel Yapı ve Tünel Yapı Yanıt mesajlarında bulunan I2NP Tünel Yapı Kayıtları için esnek, genişletilebilir bir seçenek mekanizması ekleyin.
 
@@ -92,10 +90,3 @@ Tünel Yapı Kayıtlarındaki boş alan rastgele veri ile doldurulur ve şu anda
 Alan, geçiş sorunları olmadan seçenekler içerecek şekilde dönüştürülebilir.
 Yapı mesajında, seçeneklerin varlığı bayrak baytında belirtilmiştir.
 Yapı yanıt mesajında, seçeneklerin varlığı çok baytlı bir magic number ile belirtilmiştir.
-
-
-
-## Referanslar
-
-.. [SPEC]
-   {{ spec_url('tunnel-creation-ecies') }}

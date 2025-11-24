@@ -42,8 +42,7 @@ GOST 提案 134 揭示了几个关于之前未使用的实验性签名类型范�
 
 ## 规范
 
-参考：http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 支持可选签名类型的路由器应在其发布的路由器信息中添加 "sigTypes" 属性，
 使用逗号分隔的签名类型数字。
@@ -79,7 +78,4 @@ http://i2p-projekt.i2p/en/docs/spec/i2np
 因为无法验证签名。
 
 
-## 另见
 
-提案 134
-提案 136

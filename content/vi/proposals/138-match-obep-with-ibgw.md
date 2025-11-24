@@ -10,12 +10,12 @@ thread: "http://zzz.i2p/topics/2294"
 
 ## Tổng quan
 
-Đề xuất này thêm một tùy chọn I2CP cho các đường hầm đi ra ngoài, nhằm lựa chọn hoặc xây dựng các đường hầm khi một thông điệp được gửi sao cho OBEP khớp với một trong các IBGW từ [LeaseSet]_ cho [Destination]_ đích.
+Đề xuất này thêm một tùy chọn I2CP cho các đường hầm đi ra ngoài, nhằm lựa chọn hoặc xây dựng các đường hầm khi một thông điệp được gửi sao cho OBEP khớp với một trong các IBGW từ LeaseSet cho Destination đích.
 
 
 ## Động lực
 
-Hầu hết các router I2P sử dụng một dạng bỏ gói tin để quản lý tắc nghẽn. Triển khai tham chiếu sử dụng chiến lược WRED, tính toán cả kích thước thông điệp và khoảng cách di chuyển [TUNNEL-THROTTLING]_. Do chiến lược này, nguồn gốc chính của mất gói là OBEP.
+Hầu hết các router I2P sử dụng một dạng bỏ gói tin để quản lý tắc nghẽn. Triển khai tham chiếu sử dụng chiến lược WRED, tính toán cả kích thước thông điệp và khoảng cách di chuyển (xem [tài liệu tunnel throttling](/en/docs/tunnels/implementation/#tunnelthrottling)). Do chiến lược này, nguồn gốc chính của mất gói là OBEP.
 
 
 ## Thiết kế
@@ -30,7 +30,7 @@ Chế độ này có nghĩa là người nhận sẽ lựa chọn OBEP của ng�
 
 ## Đặc tả
 
-Một tùy chọn I2CP mới được thêm vào [I2CP-SPEC]_:
+Một tùy chọn I2CP mới được thêm vào [đặc tả I2CP](/en/docs/spec/i2cp/):
 
     outbound.matchEndWithTarget
         Boolean
@@ -70,24 +70,6 @@ Một triển khai thử nghiệm đã được hoàn thành.
 
 - Đối với các đường hầm chuẩn, OBEP có thể cần tìm và kết nối với IBGW, tăng độ trễ có tác động tới RTT đầu (vì việc này xảy ra sau khi gói tin đầu tiên đã được gửi đi). Sử dụng chế độ này, OBEP sẽ cần tìm và kết nối với IBGW trong quá trình xây dựng đường hầm, thêm cùng độ trễ nhưng giảm RTT đầu (vì việc này xảy ra trước khi gói tin đầu tiên được gửi đi).
 
-- Kích thước [VariableTunnelBuild]_ hiện tại là 2641 byte. Do đó, dự kiến chế độ này sẽ giảm thiểu mất gói cho các kích thước thông điệp trung bình lớn hơn này.
+- Kích thước VariableTunnelBuild hiện tại là 2641 byte. Do đó, dự kiến chế độ này sẽ giảm thiểu mất gói cho các kích thước thông điệp trung bình lớn hơn này.
 
 Cần thêm nhiều nghiên cứu để điều tra các ảnh hưởng này, nhằm quyết định xem những đường hầm chuẩn nào sẽ được hưởng lợi từ việc chế độ này được bật mặc định.
-
-
-## Tham khảo
-
-.. [Destination]
-    {{ ctags_url('Destination') }}
-
-.. [I2CP-SPEC]
-    {{ spec_url('i2cp') }}
-
-.. [LeaseSet]
-    {{ ctags_url('LeaseSet') }}
-
-.. [TUNNEL-THROTTLING]
-    {{ site_url('docs/tunnels/implementation', True) }}#tunnel.throttling
-
-.. [VariableTunnelBuild]
-    {{ ctags_url('VariableTunnelBuild') }}

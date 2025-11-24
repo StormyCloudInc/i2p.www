@@ -12,12 +12,10 @@ thread: "http://zzz.i2p/topics/2500"
 Dieser Vorschlag wurde nicht wie spezifiziert implementiert,
 jedoch wurden die ECIES langen und kurzen Build-Nachrichten (Vorschläge 152 und 157)
 mit erweiterbaren Optionsfeldern entworfen.
-Siehe [SPEC]_ für die offizielle Spezifikation.
+Siehe die [Tunnel Creation ECIES Spezifikation](/en/docs/spec/tunnel-creation-ecies/) für die offizielle Spezifikation.
 
 
 ## Übersicht
-
-Ref: http://i2p-projekt.i2p/spec/tunnel-creation
 
 Fügen Sie einen flexiblen, erweiterbaren Mechanismus für Optionen in den I2NP Tunnel Build Records hinzu,
 die in den Tunnel Build und Tunnel Build Reply-Nachrichten enthalten sind.
@@ -91,10 +89,3 @@ Der ungenutzte Platz in den Tunnel Build Records wird mit zufälligen Daten gef�
 Der Raum kann ohne Migrationsprobleme in Optionen umgewandelt werden.
 In der Build-Nachricht wird das Vorhandensein von Optionen im Flags-Byte angezeigt.
 In der Build-Antwort-Nachricht wird das Vorhandensein von Optionen durch eine mehrbyteige magische Zahl angezeigt.
-
-
-
-## Referenzen
-
-.. [SPEC]
-   {{ spec_url('tunnel-creation-ecies') }}

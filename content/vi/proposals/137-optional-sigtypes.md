@@ -40,8 +40,7 @@ Tất cả floodfills phải hỗ trợ các loại chữ ký DSA (0), ECDSA (1-
 
 ## Đặc tả
 
-Tham khảo: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 Một router hỗ trợ một loại chữ ký tùy chọn sẽ thêm thuộc tính "sigTypes" vào thông tin router đã công bố của nó, với các số loại chữ ký được tách bằng dấu phẩy. Các loại chữ ký sẽ được sắp xếp theo thứ tự số. Các loại chữ ký bắt buộc (0-4,7) sẽ không được bao gồm.
 
@@ -71,7 +70,4 @@ Các vấn đề tương tự sẽ cần được giải quyết với các lo�
 NetDB lưu trữ các loại chữ ký không xác định không nằm trong phạm vi thử nghiệm sẽ tiếp tục bị từ chối bởi floodfills, vì chữ ký không thể được xác minh.
 
 
-## Xem Thêm
 
-Đề xuất 134
-Đề xuất 136

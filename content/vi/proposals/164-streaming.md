@@ -47,7 +47,7 @@ Nếu Alice và Charlie sử dụng API 0.9.58 hoặc mới hơn, mọi nỗ l�
 
 ## Đặc Tả
 
-Cập nhật [STREAMING]_ để thêm phần sau:
+Cập nhật [đặc tả Streaming](/en/docs/spec/streaming/) để thêm phần sau:
 
 ### Phòng Ngừa Phát Lại
 
@@ -107,7 +107,3 @@ Các router Java I2P và i2pd đã thực thi điều này trong API 0.9.58 (ph�
 
 
 
-## Tham Khảo
-
-.. [STREAMING]
-    {{ spec_url('streaming') }}

@@ -36,11 +36,11 @@ I2P клиентское приложение.
 ^^^^^^^^^^^^^^^^^^^^
 
 Проблема разделенной идентичности — это проблема, когда пользовательские агенты,
-говорящие на одном и том же протоколе, стремятся к разъединенности. `Впервые
+говорящие на одном и том же протоколе, стремятся к разъединенности. [Впервые
 в контексте HTTP она была упомянута в этом ветке на Reddit
-<https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/>`__,
+](https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/),
 с комментариями, доступными благодаря
-`pullpush.io <https://api.pullpush.io/reddit/search/comment/?link_id=579idi>`__.
+[pullpush.io](https://api.pullpush.io/reddit/search/comment/?link_id=579idi).
 *На тот момент* я был одним из самых активных респондентов и *на тот
 момент* я считал, что вопрос незначителен. За последние 8 лет ситуация
 и мое мнение о ней изменились, я теперь считаю, что угроза, вызванная
@@ -259,25 +259,12 @@ Go приложения или для go-i2p, но не подходят для 
 Приложение: ``пример реализации атаки``
                                                   
 
-`Пример реализации атаки Разделенной идентичности на HTTP
-пользовательских агентов <https://github.com/eyedeekay/colluding_sites_attack/>`__
+[Пример реализации атаки Разделенной идентичности на HTTP
+пользовательских агентов](https://github.com/eyedeekay/colluding_sites_attack/)
 существует уже несколько лет. Еще один пример доступен в
-подкаталоге ``simple-colluder`` `репозитория idk’s prop166
-<https://git.idk.i2p/idk/i2p.host-aware-proxy>`__ Эти
+подкаталоге ``simple-colluder`` [репозитория idk’s prop166
+](https://git.idk.i2p/idk/i2p.host-aware-proxy) Эти
 примеры специально разработаны, чтобы продемонстрировать, что атака
 работает и потребует модификации (хотя и незначительной) для превращения в
 реальную атаку.
 
-Цитаты:
-''''''''''
-
-https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/
-https://api.pullpush.io/reddit/search/comment/?link_id=579idi
-https://github.com/eyedeekay/colluding_sites_attack/
-https://en.wikipedia.org/wiki/Shadow_profile
-https://github.com/eyedeekay/si-i2p-plugin/
-https://github.com/eyedeekay/eeproxy/
-/docs/api/socks/
-https://i2pgit.org/idk/i2p.www/-/compare/master...166-identity-aware-proxies?from_project_id=17
-https://i2pgit.org/idk/i2p.i2p/-/tree/i2p.i2p.2.6.0-browser-proxy-post-keepalive?ref_type=heads
-```

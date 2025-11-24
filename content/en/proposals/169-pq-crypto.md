@@ -16,19 +16,19 @@ cryptography have been proceeding for a decade, the choices
 have not become clear until recently.
 
 We started looking at the implications of PQ crypto
-in 2022 [FORUM]_.
+in 2022 [http://zzz.i2p/topics/3294](http://zzz.i2p/topics/3294).
 
 TLS standards added hybrid encryption support in the last two years and it now
 is used for a significant portion of encrypted traffic on the internet
-due to support in Chrome and Firefox [CLOUDFLARE]_.
+due to support in Chrome and Firefox [https://blog.cloudflare.com/pq-2024/](https://blog.cloudflare.com/pq-2024/).
 
 NIST recently finalized and published the recommended algorithms
-for post-quantum cryptography [NIST-PQ]_.
+for post-quantum cryptography [https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards](https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards).
 Several common cryptography libraries now support the NIST standards
 or will be releasing support in the near future.
 
-Both [CLOUDFLARE]_ and [NIST-PQ]_ recommend that migration start immediately.
-See also the 2022 NSA PQ FAQ [NSA-PQ]_.
+Both [https://blog.cloudflare.com/pq-2024/](https://blog.cloudflare.com/pq-2024/) and [https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards](https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards) recommend that migration start immediately.
+See also the 2022 NSA PQ FAQ [https://media.defense.gov/2022/Sep/07/2003071836/-1/-1/0/CSI_CNSA_2.0_FAQ_.PDF](https://media.defense.gov/2022/Sep/07/2003071836/-1/-1/0/CSI_CNSA_2.0_FAQ_.PDF).
 I2P should be a leader in security and cryptography.
 Now is the time to implement the recommended algorithms.
 Using our flexible crypto type and signature type system,
@@ -68,23 +68,21 @@ of development. The overall rollout will probably be from late 2025 through mid-
 See the Priorities and Rollout section below for details.
 
 
-==================================  ======
-Protocol / Feature                  Status
-==================================  ======
-Hybrid MLKEM Ratchet and LS         Approved 2026-06; beta target 2025-08; release target 2025-11
-Hybrid MLKEM NTCP2                  Some details to be finalized
-Hybrid MLKEM SSU2                   Some details to be finalized
-MLDSA SigTypes 12-14                Proposal is stable but may not be finalized until 2026
-MLDSA Dests                         Tested on live net, requires net upgrade for floodfill support
-Hybrid SigTypes 15-17               Preliminary
-Hybrid Dests
-==================================  ======
+| Protocol / Feature | Status |
+|--------------------|--------|
+| Hybrid MLKEM Ratchet and LS | Approved 2026-06; beta target 2025-08; release target 2025-11 |
+| Hybrid MLKEM NTCP2 | Some details to be finalized |
+| Hybrid MLKEM SSU2 | Some details to be finalized |
+| MLDSA SigTypes 12-14 | Proposal is stable but may not be finalized until 2026 |
+| MLDSA Dests | Tested on live net, requires net upgrade for floodfill support |
+| Hybrid SigTypes 15-17 | Preliminary |
+| Hybrid Dests | |
 
 
 
 ## Design
 
-We will support the NIST FIPS 203 and 204 standards [FIPS203]_ [FIPS204]_
+We will support the NIST FIPS 203 and 204 standards [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf) [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf)
 which are based on, but NOT compatible with,
 CRYSTALS-Kyber and CRYSTALS-Dilithium (versions 3.1, 3, and older).
 
@@ -94,15 +92,13 @@ CRYSTALS-Kyber and CRYSTALS-Dilithium (versions 3.1, 3, and older).
 
 We will support hybrid key exchange in the following protocols:
 
-=======  ==========  ================  ===============
-Proto    Noise Type  Support PQ only?  Support Hybrid?
-=======  ==========  ================  ===============
-NTCP2       XK       no                yes
-SSU2        XK       no                yes
-Ratchet     IK       no                yes
-TBM          N       no                no
-NetDB        N       no                no
-=======  ==========  ================  ===============
+| Proto   | Noise Type | Support PQ only? | Support Hybrid? |
+|---------|------------|------------------|-----------------|
+| NTCP2   | XK         | no               | yes             |
+| SSU2    | XK         | no               | yes             |
+| Ratchet | IK         | no               | yes             |
+| TBM     | N          | no               | no              |
+| NetDB   | N          | no               | no              |
 
 PQ KEM provides ephemeral keys only, and does not directly support
 static-key handshakes such as Noise XK and IK.
@@ -111,19 +107,17 @@ Noise N does not use a two-way key exchange and so it is not suitable
 for hybrid encryption.
 
 So we will support hybrid encryption only, for NTCP2, SSU2, and Ratchet.
-We will define the three ML-KEM variants as in [FIPS203]_,
+We will define the three ML-KEM variants as in [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf),
 for 3 new encryption types total.
 Hybrid types will only be defined in combination with X25519.
 
 The new encryption types are:
 
-================  ====
-  Type            Code
-================  ====
-MLKEM512_X25519     5
-MLKEM768_X25519     6
-MLKEM1024_X25519    7
-================  ====
+| Type | Code |
+|------|------|
+| MLKEM512_X25519 | 5 |
+| MLKEM768_X25519 | 6 |
+| MLKEM1024_X25519 | 7 |
 
 Overhead will be substantial. Typical message 1 and 2 sizes (for XK and IK)
 are currently around 100 bytes (before any additional payload).
@@ -134,23 +128,21 @@ This will increase by 8x to 15x depending on algorithm.
 
 We will support PQ and hybrid signatures in the following structures:
 
-==========================  ================  ===============
-Type                        Support PQ only?  Support Hybrid?
-==========================  ================  ===============
-RouterInfo                  yes               yes
-LeaseSet                    yes               yes
-Streaming SYN/SYNACK/Close  yes               yes
-Repliable Datagrams         yes               yes
-Datagram2 (prop. 163)       yes               yes
-I2CP create session msg     yes               yes
-SU3 files                   yes               yes
-X.509 certificates          yes               yes
-Java keystores              yes               yes
-==========================  ================  ===============
+| Type | Support PQ only? | Support Hybrid? |
+|------|------------------|-----------------|
+| RouterInfo | yes | yes |
+| LeaseSet | yes | yes |
+| Streaming SYN/SYNACK/Close | yes | yes |
+| Repliable Datagrams | yes | yes |
+| Datagram2 (prop. 163) | yes | yes |
+| I2CP create session msg | yes | yes |
+| SU3 files | yes | yes |
+| X.509 certificates | yes | yes |
+| Java keystores | yes | yes |
 
 
 So we will support both PQ-only and hybrid signatures.
-We will define the three ML-DSA variants as in [FIPS204]_,
+We will define the three ML-DSA variants as in [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf),
 three hybrid variants with Ed25519,
 and three PQ-only variants with prehash for SU3 files only,
 for 9 new signature types total.
@@ -159,7 +151,7 @@ We will use the standard ML-DSA, NOT the pre-hash variants (HashML-DSA),
 except for SU3 files.
 
 We will use the "hedged" or randomized signing variant,
-not the "determinstic" variant, as defined in [FIPS204]_ section 3.4.
+not the "determinstic" variant, as defined in [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf) section 3.4.
 This ensures that each signature is different, even when over the same data,
 and provides additional protection against side-channel attacks.
 See the implementation notes section below for additional details
@@ -168,22 +160,20 @@ about algorithm choices including encoding and context.
 
 The new signature types are:
 
-============================  ====
-        Type                  Code
-============================  ====
-MLDSA44                        12
-MLDSA65                        13
-MLDSA87                        14
-MLDSA44_EdDSA_SHA512_Ed25519   15
-MLDSA65_EdDSA_SHA512_Ed25519   16
-MLDSA87_EdDSA_SHA512_Ed25519   17
-MLDSA44ph                      18
-MLDSA65ph                      19
-MLDSA87ph                      20
-============================  ====
+| Type | Code |
+|------|------|
+| MLDSA44 | 12 |
+| MLDSA65 | 13 |
+| MLDSA87 | 14 |
+| MLDSA44_EdDSA_SHA512_Ed25519 | 15 |
+| MLDSA65_EdDSA_SHA512_Ed25519 | 16 |
+| MLDSA87_EdDSA_SHA512_Ed25519 | 17 |
+| MLDSA44ph | 18 |
+| MLDSA65ph | 19 |
+| MLDSA87ph | 20 |
 
 X.509 certificates and other DER encodings will use the
-composite structures and OIDs defined in [COMPOSITE-SIGS]_.
+composite structures and OIDs defined in [https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/](https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/).
 
 Overhead will be substantial. Typical Ed25519 destination and router identity
 sizes are 391 bytes.
@@ -213,31 +203,30 @@ The encryption type in the key certificate will continue to be type 4.
 
 ### New Crypto Required
 
-- ML-KEM (formerly CRYSTALS-Kyber) [FIPS203]_
-- ML-DSA (formerly CRYSTALS-Dilithium) [FIPS204]_
-- SHA3-128 (formerly Keccak-256) [FIPS202]_ Used only for SHAKE128
-- SHA3-256 (formerly Keccak-512) [FIPS202]_
-- SHAKE128 and SHAKE256 (XOF extensions to SHA3-128 and SHA3-256) [FIPS202]_
+- ML-KEM (formerly CRYSTALS-Kyber) [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf)
+- ML-DSA (formerly CRYSTALS-Dilithium) [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf)
+- SHA3-128 (formerly Keccak-256) [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf) Used only for SHAKE128
+- SHA3-256 (formerly Keccak-512) [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf)
+- SHAKE128 and SHAKE256 (XOF extensions to SHA3-128 and SHA3-256) [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf)
 
-Test vectors for SHA3-256, SHAKE128, and SHAKE256 are at [NIST-VECTORS]_.
+Test vectors for SHA3-256, SHAKE128, and SHAKE256 are at [https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values](https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values).
 
 Note that the Java bouncycastle library supports all the above.
-C++ library support is in OpenSSL 3.5 [OPENSSL]_.
+C++ library support is in OpenSSL 3.5 [https://openssl-library.org/post/2025-02-04-release-announcement-3.5/](https://openssl-library.org/post/2025-02-04-release-announcement-3.5/).
 
 
 ### Alternatives
 
-We will not support [FIPS205]_ (Sphincs+), it is much much slower and bigger than ML-DSA.
+We will not support [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf) (Sphincs+), it is much much slower and bigger than ML-DSA.
 We will not support the upcoming FIPS206 (Falcon), it is not yet standardized.
 We will not support NTRU or other PQ candidates that were not standardized by NIST.
 
 
-Rosenpass
-`````````
+### Rosenpass
 
-There is some research [PQ-WIREGUARD]_ on adapting Wireguard (IK)
+There is some research [https://eprint.iacr.org/2020/379.pdf](https://eprint.iacr.org/2020/379.pdf) on adapting Wireguard (IK)
 for pure PQ crypto, but there are several open questions in that paper.
-Later, this approach was implemented as Rosenpass [Rosenpass]_ [Rosenpass-Whitepaper]_
+Later, this approach was implemented as Rosenpass [https://rosenpass.eu/](https://rosenpass.eu/) [https://raw.githubusercontent.com/rosenpass/rosenpass/papers-pdf/whitepaper.pdf](https://raw.githubusercontent.com/rosenpass/rosenpass/papers-pdf/whitepaper.pdf)
 for PQ Wireguard.
 
 Rosenpass uses a Noise KK-like handshake with preshared Classic McEliece 460896 static keys
@@ -263,164 +252,144 @@ and we will review it for ideas and inspiration. TODO.
 
 ### Common Structures
 
-Update the sections and tables in the common structures document [COMMON]_ as follows:
+Update the sections and tables in the common structures document [/en/docs/spec/common-structures/](/en/docs/spec/common-structures/) as follows:
 
 
-PublicKey
-````````````````
+### PublicKey
 
 The new Public Key types are:
 
-================    ================= ======  =====
-  Type              Public Key Length Since   Usage
-================    ================= ======  =====
-MLKEM512_X25519               32      0.9.xx  See proposal 169, for Leasesets only, not for RIs or Destinations
-MLKEM768_X25519               32      0.9.xx  See proposal 169, for Leasesets only, not for RIs or Destinations
-MLKEM1024_X25519              32      0.9.xx  See proposal 169, for Leasesets only, not for RIs or Destinations
-MLKEM512                     800      0.9.xx  See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations
-MLKEM768                    1184      0.9.xx  See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations
-MLKEM1024                   1568      0.9.xx  See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations
-MLKEM512_CT                  768      0.9.xx  See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations
-MLKEM768_CT                 1088      0.9.xx  See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations
-MLKEM1024_CT                1568      0.9.xx  See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations
-NONE                           0      0.9.xx  See proposal 169, for destinations with PQ sig types only, not for RIs or Leasesets
-================    ================= ======  =====
+| Type | Public Key Length | Since | Usage |
+|------|-------------------|-------|-------|
+| MLKEM512_X25519 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM768_X25519 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM1024_X25519 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM512 | 800 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| MLKEM768 | 1184 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| MLKEM1024 | 1568 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| MLKEM512_CT | 768 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| MLKEM768_CT | 1088 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| MLKEM1024_CT | 1568 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| NONE | 0 | 0.9.xx | See proposal 169, for destinations with PQ sig types only, not for RIs or Leasesets |
 
 Hybrid public keys are the X25519 key.
 KEM public keys are the ephemeral PQ key sent from Alice to Bob.
-Encoding and byte order are defined in [FIPS203]_.
+Encoding and byte order are defined in [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf).
 
 MLKEM*_CT keys are not really public keys, they are the "ciphertext" sent from Bob to Alice in the Noise handshake.
 They are listed here for completeness.
 
 
 
-PrivateKey
-````````````````
+### PrivateKey
 
 The new Private Key types are:
 
-================    ================== ======  =====
-  Type              Private Key Length Since   Usage
-================    ================== ======  =====
-MLKEM512_X25519               32       0.9.xx  See proposal 169, for Leasesets only, not for RIs or Destinations
-MLKEM768_X25519               32       0.9.xx  See proposal 169, for Leasesets only, not for RIs or Destinations
-MLKEM1024_X25519              32       0.9.xx  See proposal 169, for Leasesets only, not for RIs or Destinations
-MLKEM512                    1632       0.9.xx  See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations
-MLKEM768                    2400       0.9.xx  See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations
-MLKEM1024                   3168       0.9.xx  See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations
-================    ================== ======  =====
+| Type | Private Key Length | Since | Usage |
+|------|---------------------|-------|-------|
+| MLKEM512_X25519 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM768_X25519 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM1024_X25519 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM512 | 1632 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| MLKEM768 | 2400 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| MLKEM1024 | 3168 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
 
 Hybrid private keys are the X25519 keys.
 KEM private keys are for Alice only.
-KEM encoding and byte order are defined in [FIPS203]_.
+KEM encoding and byte order are defined in [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf).
 
 
 
 
-SigningPublicKey
-````````````````
+### SigningPublicKey
 
 The new Signing Public Key types are:
 
-============================   ==============  ======  =====
-         Type                  Length (bytes)  Since   Usage
-============================   ==============  ======  =====
-MLDSA44                              1312      0.9.xx  See proposal 169
-MLDSA65                              1952      0.9.xx  See proposal 169
-MLDSA87                              2592      0.9.xx  See proposal 169
-MLDSA44_EdDSA_SHA512_Ed25519         1344      0.9.xx  See proposal 169
-MLDSA65_EdDSA_SHA512_Ed25519         1984      0.9.xx  See proposal 169
-MLDSA87_EdDSA_SHA512_Ed25519         2624      0.9.xx  See proposal 169
-MLDSA44ph                            1344      0.9.xx  Only for SU3 files, not for netdb structures
-MLDSA65ph                            1984      0.9.xx  Only for SU3 files, not for netdb structures
-MLDSA87ph                            2624      0.9.xx  Only for SU3 files, not for netdb structures
-============================   ==============  ======  =====
+| Type | Length (bytes) | Since | Usage |
+|------|----------------|-------|-------|
+| MLDSA44 | 1312 | 0.9.xx | See proposal 169 |
+| MLDSA65 | 1952 | 0.9.xx | See proposal 169 |
+| MLDSA87 | 2592 | 0.9.xx | See proposal 169 |
+| MLDSA44_EdDSA_SHA512_Ed25519 | 1344 | 0.9.xx | See proposal 169 |
+| MLDSA65_EdDSA_SHA512_Ed25519 | 1984 | 0.9.xx | See proposal 169 |
+| MLDSA87_EdDSA_SHA512_Ed25519 | 2624 | 0.9.xx | See proposal 169 |
+| MLDSA44ph | 1344 | 0.9.xx | Only for SU3 files, not for netdb structures |
+| MLDSA65ph | 1984 | 0.9.xx | Only for SU3 files, not for netdb structures |
+| MLDSA87ph | 2624 | 0.9.xx | Only for SU3 files, not for netdb structures |
 
-Hybrid signing public keys are the Ed25519 key followed by the PQ key, as in [COMPOSITE-SIGS]_.
-Encoding and byte order are defined in [FIPS204]_.
+Hybrid signing public keys are the Ed25519 key followed by the PQ key, as in [https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/](https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/).
+Encoding and byte order are defined in [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf).
 
 
-SigningPrivateKey
-`````````````````
+### SigningPrivateKey
 
 The new Signing Private Key types are:
 
-============================   ==============  ======  =====
-         Type                  Length (bytes)  Since   Usage
-============================   ==============  ======  =====
-MLDSA44                              2560      0.9.xx  See proposal 169
-MLDSA65                              4032      0.9.xx  See proposal 169
-MLDSA87                              4896      0.9.xx  See proposal 169
-MLDSA44_EdDSA_SHA512_Ed25519         2592      0.9.xx  See proposal 169
-MLDSA65_EdDSA_SHA512_Ed25519         4064      0.9.xx  See proposal 169
-MLDSA87_EdDSA_SHA512_Ed25519         4928      0.9.xx  See proposal 169
-MLDSA44ph                            2592      0.9.xx  Only for SU3 files, not for netdb structuresSee proposal 169
-MLDSA65ph                            4064      0.9.xx  Only for SU3 files, not for netdb structuresSee proposal 169
-MLDSA87ph                            4928      0.9.xx  Only for SU3 files, not for netdb structuresSee proposal 169
-============================   ==============  ======  =====
+| Type | Length (bytes) | Since | Usage |
+|------|----------------|-------|-------|
+| MLDSA44 | 2560 | 0.9.xx | See proposal 169 |
+| MLDSA65 | 4032 | 0.9.xx | See proposal 169 |
+| MLDSA87 | 4896 | 0.9.xx | See proposal 169 |
+| MLDSA44_EdDSA_SHA512_Ed25519 | 2592 | 0.9.xx | See proposal 169 |
+| MLDSA65_EdDSA_SHA512_Ed25519 | 4064 | 0.9.xx | See proposal 169 |
+| MLDSA87_EdDSA_SHA512_Ed25519 | 4928 | 0.9.xx | See proposal 169 |
+| MLDSA44ph | 2592 | 0.9.xx | Only for SU3 files, not for netdb structures. See proposal 169 |
+| MLDSA65ph | 4064 | 0.9.xx | Only for SU3 files, not for netdb structures. See proposal 169 |
+| MLDSA87ph | 4928 | 0.9.xx | Only for SU3 files, not for netdb structures. See proposal 169 |
 
-Hybrid signing private keys are the Ed25519 key followed by the PQ key, as in [COMPOSITE-SIGS]_.
-Encoding and byte order are defined in [FIPS204]_.
+Hybrid signing private keys are the Ed25519 key followed by the PQ key, as in [https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/](https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/).
+Encoding and byte order are defined in [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf).
 
 
-Signature
-``````````
+### Signature
 
 The new Signature types are:
 
-============================   ==============  ======  =====
-         Type                  Length (bytes)  Since   Usage
-============================   ==============  ======  =====
-MLDSA44                              2420      0.9.xx  See proposal 169
-MLDSA65                              3309      0.9.xx  See proposal 169
-MLDSA87                              4627      0.9.xx  See proposal 169
-MLDSA44_EdDSA_SHA512_Ed25519         2484      0.9.xx  See proposal 169
-MLDSA65_EdDSA_SHA512_Ed25519         3373      0.9.xx  See proposal 169
-MLDSA87_EdDSA_SHA512_Ed25519         4691      0.9.xx  See proposal 169
-MLDSA44ph                            2484      0.9.xx  Only for SU3 files, not for netdb structuresSee proposal 169
-MLDSA65ph                            3373      0.9.xx  Only for SU3 files, not for netdb structuresSee proposal 169
-MLDSA87ph                            4691      0.9.xx  Only for SU3 files, not for netdb structuresSee proposal 169
-============================   ==============  ======  =====
+| Type | Length (bytes) | Since | Usage |
+|------|----------------|-------|-------|
+| MLDSA44 | 2420 | 0.9.xx | See proposal 169 |
+| MLDSA65 | 3309 | 0.9.xx | See proposal 169 |
+| MLDSA87 | 4627 | 0.9.xx | See proposal 169 |
+| MLDSA44_EdDSA_SHA512_Ed25519 | 2484 | 0.9.xx | See proposal 169 |
+| MLDSA65_EdDSA_SHA512_Ed25519 | 3373 | 0.9.xx | See proposal 169 |
+| MLDSA87_EdDSA_SHA512_Ed25519 | 4691 | 0.9.xx | See proposal 169 |
+| MLDSA44ph | 2484 | 0.9.xx | Only for SU3 files, not for netdb structures. See proposal 169 |
+| MLDSA65ph | 3373 | 0.9.xx | Only for SU3 files, not for netdb structures. See proposal 169 |
+| MLDSA87ph | 4691 | 0.9.xx | Only for SU3 files, not for netdb structures. See proposal 169 |
 
-Hybrid signatures are the Ed25519 signature followed by the PQ signature, as in [COMPOSITE-SIGS]_.
+Hybrid signatures are the Ed25519 signature followed by the PQ signature, as in [https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/](https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/).
 Hybrid signatures are verified by verifying both signatures, and failing
 if either one fails.
-Encoding and byte order are defined in [FIPS204]_.
+Encoding and byte order are defined in [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf).
 
 
 
-Key Certificates
-````````````````
+### Key Certificates
 
 The new Signing Public Key types are:
 
-============================  ===========  =======================  ======  =====
-        Type                  Type Code    Total Public Key Length  Since   Usage
-============================  ===========  =======================  ======  =====
-MLDSA44                           12                 1312           0.9.xx  See proposal 169
-MLDSA65                           13                 1952           0.9.xx  See proposal 169
-MLDSA87                           14                 2592           0.9.xx  See proposal 169
-MLDSA44_EdDSA_SHA512_Ed25519      15                 1344           0.9.xx  See proposal 169
-MLDSA65_EdDSA_SHA512_Ed25519      16                 1984           0.9.xx  See proposal 169
-MLDSA87_EdDSA_SHA512_Ed25519      17                 2624           0.9.xx  See proposal 169
-MLDSA44ph                         18                  n/a           0.9.xx  Only for SU3 files
-MLDSA65ph                         19                  n/a           0.9.xx  Only for SU3 files
-MLDSA87ph                         20                  n/a           0.9.xx  Only for SU3 files
-============================  ===========  =======================  ======  =====
+| Type | Type Code | Total Public Key Length | Since | Usage |
+|------|-----------|-------------------------|-------|-------|
+| MLDSA44 | 12 | 1312 | 0.9.xx | See proposal 169 |
+| MLDSA65 | 13 | 1952 | 0.9.xx | See proposal 169 |
+| MLDSA87 | 14 | 2592 | 0.9.xx | See proposal 169 |
+| MLDSA44_EdDSA_SHA512_Ed25519 | 15 | 1344 | 0.9.xx | See proposal 169 |
+| MLDSA65_EdDSA_SHA512_Ed25519 | 16 | 1984 | 0.9.xx | See proposal 169 |
+| MLDSA87_EdDSA_SHA512_Ed25519 | 17 | 2624 | 0.9.xx | See proposal 169 |
+| MLDSA44ph | 18 | n/a | 0.9.xx | Only for SU3 files |
+| MLDSA65ph | 19 | n/a | 0.9.xx | Only for SU3 files |
+| MLDSA87ph | 20 | n/a | 0.9.xx | Only for SU3 files |
 
 
 
 The new Crypto Public Key types are:
 
-================    ===========  ======================= ======  =====
-  Type              Type Code    Total Public Key Length Since   Usage
-================    ===========  ======================= ======  =====
-MLKEM512_X25519          5                 32            0.9.xx  See proposal 169, for Leasesets only, not for RIs or Destinations
-MLKEM768_X25519          6                 32            0.9.xx  See proposal 169, for Leasesets only, not for RIs or Destinations
-MLKEM1024_X25519         7                 32            0.9.xx  See proposal 169, for Leasesets only, not for RIs or Destinations
-NONE                   255                  0            0.9.xx  See proposal 169
-================    ===========  ======================= ======  =====
+| Type | Type Code | Total Public Key Length | Since | Usage |
+|------|-----------|-------------------------|-------|-------|
+| MLKEM512_X25519 | 5 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM768_X25519 | 6 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM1024_X25519 | 7 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| NONE | 255 | 0 | 0.9.xx | See proposal 169 |
 
 
 Hybrid key types are NEVER included in key certificates; only in leasesets.
@@ -431,8 +400,7 @@ but there is no crypto key, and the
 entire 384-byte main section is for the signing key.
 
 
-Destination sizes
-``````````````````
+### Destination sizes
 
 Here are lengths for the new Destination types.
 Enc type for all is NONE (type 255) and the encryption key length is treated as 0.
@@ -451,21 +419,18 @@ skey[0:383] 5 (932 >> 8) (932 & 0xff) 00 12 00 255 skey[384:1311]
 
 
 
-============================  ===========  =======================  ======  ======  =====
-        Type                  Type Code    Total Public Key Length  Main    Excess  Total Dest Length
-============================  ===========  =======================  ======  ======  =====
-MLDSA44                           12                 1312           384      928    1319
-MLDSA65                           13                 1952           384     1568    1959
-MLDSA87                           14                 2592           384     2208    2599
-MLDSA44_EdDSA_SHA512_Ed25519      15                 1344           384      960    1351
-MLDSA65_EdDSA_SHA512_Ed25519      16                 1984           384     1600    1991
-MLDSA87_EdDSA_SHA512_Ed25519      17                 2624           384     2240    2631
-============================  ===========  =======================  ======  ======  =====
+| Type | Type Code | Total Public Key Length | Main | Excess | Total Dest Length |
+|------|-----------|-------------------------|------|--------|-------------------|
+| MLDSA44 | 12 | 1312 | 384 | 928 | 1319 |
+| MLDSA65 | 13 | 1952 | 384 | 1568 | 1959 |
+| MLDSA87 | 14 | 2592 | 384 | 2208 | 2599 |
+| MLDSA44_EdDSA_SHA512_Ed25519 | 15 | 1344 | 384 | 960 | 1351 |
+| MLDSA65_EdDSA_SHA512_Ed25519 | 16 | 1984 | 384 | 1600 | 1991 |
+| MLDSA87_EdDSA_SHA512_Ed25519 | 17 | 2624 | 384 | 2240 | 2631 |
 
 
 
-RouterIdent sizes
-``````````````````
+### RouterIdent sizes
 
 Here are lengths for the new Destination types.
 Enc type for all is X25519 (type 4).
@@ -480,22 +445,20 @@ enckey[0:31] skey[0:351] 5 (960 >> 8) (960 & 0xff) 00 12 00 4 skey[352:1311]
 
 
 
-============================  ===========  =======================  ======  ======  =====
-        Type                  Type Code    Total Public Key Length  Main    Excess  Total RouterIdent Length
-============================  ===========  =======================  ======  ======  =====
-MLDSA44                           12                 1312           352      960    1351
-MLDSA65                           13                 1952           352     1600    1991
-MLDSA87                           14                 2592           352     2240    2631
-MLDSA44_EdDSA_SHA512_Ed25519      15                 1344           352      992    1383
-MLDSA65_EdDSA_SHA512_Ed25519      16                 1984           352     1632    2023
-MLDSA87_EdDSA_SHA512_Ed25519      17                 2624           352     2272    2663
-============================  ===========  =======================  ======  ======  =====
+| Type | Type Code | Total Public Key Length | Main | Excess | Total RouterIdent Length |
+|------|-----------|-------------------------|------|--------|--------------------------|
+| MLDSA44 | 12 | 1312 | 352 | 960 | 1351 |
+| MLDSA65 | 13 | 1952 | 352 | 1600 | 1991 |
+| MLDSA87 | 14 | 2592 | 352 | 2240 | 2631 |
+| MLDSA44_EdDSA_SHA512_Ed25519 | 15 | 1344 | 352 | 992 | 1383 |
+| MLDSA65_EdDSA_SHA512_Ed25519 | 16 | 1984 | 352 | 1632 | 2023 |
+| MLDSA87_EdDSA_SHA512_Ed25519 | 17 | 2624 | 352 | 2272 | 2663 |
 
 
 
 ### Handshake Patterns
 
-Handshakes use [Noise]_ handshake patterns.
+Handshakes use [https://noiseprotocol.org/noise.html](https://noiseprotocol.org/noise.html) handshake patterns.
 
 The following letter mapping is used:
 
@@ -506,12 +469,9 @@ The following letter mapping is used:
 - ekem1 = the KEM ciphertext, sent from Bob to Alice
 
 The following modifications to XK and IK for hybrid forward secrecy (hfs) are
-as specified in [Noise-Hybrid]_ section 5:
+as specified in [https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf](https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf) section 5:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```
 XK:                       XKhfs:
   <- s                      <- s
   ...                       ...
@@ -532,15 +492,11 @@ XK:                       XKhfs:
 
   e1 and ekem1 are encrypted. See pattern definitions below.
   NOTE: e1 and ekem1 are different sizes (unlike X25519)
+```
 
-{% endhighlight %}
+The e1 pattern is defined as follows, as specified in [https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf](https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf) section 4:
 
-The e1 pattern is defined as follows, as specified in [Noise-Hybrid]_ section 4:
-
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```
 For Alice:
   (encap_key, decap_key) = PQ_KEYGEN()
 
@@ -555,17 +511,12 @@ For Alice:
   encap_key = DECRYPT(k, n, ciphertext, ad)
   n++
   MixHash(ciphertext)
+```
 
 
-{% endhighlight %}
+The ekem1 pattern is defined as follows, as specified in [https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf](https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf) section 4:
 
-
-The ekem1 pattern is defined as follows, as specified in [Noise-Hybrid]_ section 4:
-
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```
 For Bob:
 
   (kem_ciphertext, kem_shared_key) = ENCAPS(encap_key)
@@ -587,34 +538,30 @@ For Bob:
   // MixKey
   kem_shared_key = DECAPS(kem_ciphertext, decap_key)
   MixKey(kem_shared_key)
-
-
-{% endhighlight %}
+```
 
 
 
 
 ### Noise Handshake KDF
 
-Issues
-``````
+#### Issues
 
-- Should we change the handshake hash function? See [Choosing-Hash]_.
+- Should we change the handshake hash function? See [https://kerkour.com/fast-secure-hash-function-sha256-sha512-sha3-blake3](https://kerkour.com/fast-secure-hash-function-sha256-sha512-sha3-blake3).
   SHA256 is not vulnerable to PQ, but if we do want to upgrade
   our hash function, now is the time, while we're changing other things.
-  The current IETF SSH proposal [SSH-HYBRID]_ is to use MLKEM768
+  The current IETF SSH proposal [https://datatracker.ietf.org/doc/draft-ietf-sshm-mlkem-hybrid-kex/](https://datatracker.ietf.org/doc/draft-ietf-sshm-mlkem-hybrid-kex/) is to use MLKEM768
   with SHA256, and MLKEM1024 with SHA384. That proposal includes
   a discussion of the security considerations.
 - Should we stop sending 0-RTT ratchet data (other than the LS)?
 - Should we switch ratchet from IK to XK if we don't send 0-RTT data?
 
 
-Overview
-````````
+#### Overview
 
 This section applies to both IK and XK protocols.
 
-The hybrid handshake is defined in [Noise-Hybrid]_.
+The hybrid handshake is defined in [https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf](https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf).
 The first message, from Alice to Bob, contains e1, the encapsulation key, before the message payload.
 This is treated as an additional static key; call EncryptAndHash() on it (as Alice)
 or DecryptAndHash() (as Bob).
@@ -627,11 +574,10 @@ Then, calculate the kem_shared_key and call MixKey(kem_shared_key).
 Then process the message payload as usual.
 
 
-Defined ML-KEM Operations
-`````````````````````````
+#### Defined ML-KEM Operations
 
 We define the following functions corresponding to the cryptographic building blocks used
-as defined in [FIPS203]_.
+as defined in [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf).
 
 (encap_key, decap_key) = PQ_KEYGEN()
     Alice creates the encapsulation and decapsulation keys
@@ -658,8 +604,7 @@ The kem_shared_key is mixed into the chaining key with MixHash().
 See below for details.
 
 
-Alice KDF for Message 1
-`````````````````````````
+#### Alice KDF for Message 1
 
 For XK: After the 'es' message pattern and before the payload, add:
 
@@ -667,9 +612,7 @@ OR
 
 For IK: After the 'es' message pattern and before the 's' message pattern, add:
 
-.. raw:: html
-
-  {% highlight lang='text' %}
+```
 This is the "e1" message pattern:
   (encap_key, decap_key) = PQ_KEYGEN()
 
@@ -690,12 +633,10 @@ This is the "e1" message pattern:
   NOTE: For the next section (payload for XK or static key for IK),
   the keydata and chain key remain the same,
   and n now equals 1 (instead of 0 for non-hybrid).
+```
 
-{% endhighlight %}
 
-
-Bob KDF for Message 1
-`````````````````````````
+#### Bob KDF for Message 1
 
 For XK: After the 'es' message pattern and before the payload, add:
 
@@ -703,9 +644,7 @@ OR
 
 For IK: After the 'es' message pattern and before the 's' message pattern, add:
 
-.. raw:: html
-
-  {% highlight lang='text' %}
+```
 This is the "e1" message pattern:
 
   // DecryptAndHash(encap_key_section)
@@ -724,12 +663,10 @@ This is the "e1" message pattern:
   NOTE: For the next section (payload for XK or static key for IK),
   the keydata and chain key remain the same,
   and n now equals 1 (instead of 0 for non-hybrid).
+```
 
-{% endhighlight %}
 
-
-Bob KDF for Message 2
-`````````````````````````
+#### Bob KDF for Message 2
 
 For XK: After the 'ee' message pattern and before the payload, add:
 
@@ -737,9 +674,7 @@ OR
 
 For IK: After the 'ee' message pattern and before the 'se' message pattern, add:
 
-.. raw:: html
-
-  {% highlight lang='text' %}
+```
 This is the "ekem1" message pattern:
 
   (kem_ciphertext, kem_shared_key) = ENCAPS(encap_key)
@@ -759,18 +694,14 @@ This is the "ekem1" message pattern:
   chainKey = keydata[0:31]
 
   End of "ekem1" message pattern.
+```
 
-{% endhighlight %}
 
-
-Alice KDF for Message 2
-`````````````````````````
+#### Alice KDF for Message 2
 
 After the 'ee' message pattern (and before the 'ss' message pattern for IK), add:
 
-.. raw:: html
-
-  {% highlight lang='text' %}
+```
 This is the "ekem1" message pattern:
 
   // DecryptAndHash(kem_ciphertext_section)
@@ -789,28 +720,26 @@ This is the "ekem1" message pattern:
   chainKey = keydata[0:31]
 
   End of "ekem1" message pattern.
+```
 
-{% endhighlight %}
 
+#### KDF for Message 3 (XK only)
 
-KDF for Message 3 (XK only)
-```````````````````````````
 unchanged
 
 
-KDF for split()
-```````````````
+#### KDF for split()
+
 unchanged
 
 
 
 ### Ratchet
 
-Update the ECIES-Ratchet specification [ECIES]_ as follows:
+Update the ECIES-Ratchet specification [/en/docs/spec/ecies/](/en/docs/spec/ecies/) as follows:
 
 
-Noise identifiers
-`````````````````
+#### Noise identifiers
 
 - "Noise_IKhfselg2_25519+MLKEM512_ChaChaPoly_SHA256"
 - "Noise_IKhfselg2_25519+MLKEM768_ChaChaPoly_SHA256"
@@ -818,8 +747,7 @@ Noise identifiers
 
 
 
-1b) New session format (with binding)
-`````````````````````````````````````
+#### 1b) New session format (with binding)
 
 Changes: Current ratchet contained the static key in the first ChaCha section,
 and the payload in the second section.
@@ -831,9 +759,7 @@ The third section contains the payload.
 
 Encrypted format:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 +----+----+----+----+----+----+----+----+
   |                                       |
   +                                       +
@@ -879,15 +805,11 @@ Encrypted format:
   +         (MAC) for Payload Section     +
   |             16 bytes                  |
   +----+----+----+----+----+----+----+----+
-
-
-{% endhighlight %}
+```
 
 Decrypted format:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 Payload Part 1:
 
   +----+----+----+----+----+----+----+----+
@@ -923,27 +845,23 @@ Payload Part 1:
   +                                       +
   |                                       |
   +----+----+----+----+----+----+----+----+
-
-{% endhighlight %}
+```
 
 Sizes:
 
-================    =========  =====  =========  =============  =============  ==========  =======
-  Type              Type Code  X len  Msg 1 len  Msg 1 Enc len  Msg 1 Dec len  PQ key len  pl len
-================    =========  =====  =========  =============  =============  ==========  =======
-X25519                   4       32     96+pl        64+pl             pl           --       pl
-MLKEM512_X25519          5       32    912+pl       880+pl         800+pl          800       pl
-MLKEM768_X25519          6       32   1296+pl      1360+pl        1184+pl         1184       pl
-MLKEM1024_X25519         7       32   1680+pl      1648+pl        1568+pl         1568       pl
-================    =========  =====  =========  =============  =============  ==========  =======
+| Type | Type Code | X len | Msg 1 len | Msg 1 Enc len | Msg 1 Dec len | PQ key len | pl len |
+|------|-----------|-------|-----------|---------------|---------------|------------|--------|
+| X25519 | 4 | 32 | 96+pl | 64+pl | pl | -- | pl |
+| MLKEM512_X25519 | 5 | 32 | 912+pl | 880+pl | 800+pl | 800 | pl |
+| MLKEM768_X25519 | 6 | 32 | 1296+pl | 1360+pl | 1184+pl | 1184 | pl |
+| MLKEM1024_X25519 | 7 | 32 | 1680+pl | 1648+pl | 1568+pl | 1568 | pl |
 
 Note that the payload must contain a DateTime block, so the minimum payload size is 7.
 The minimum message 1 sizes may be calculated accordingly.
 
 
 
-1g) New Session Reply format
-````````````````````````````
+#### 1g) New Session Reply format
 
 Changes: Current ratchet has an empty payload for the first ChaCha section,
 and the payload in the second section.
@@ -955,9 +873,7 @@ The third section contains the payload.
 
 Encrypted format:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 +----+----+----+----+----+----+----+----+
   |       Session Tag   8 bytes           |
   +----+----+----+----+----+----+----+----+
@@ -997,15 +913,11 @@ Encrypted format:
   +         (MAC) for Payload Section     +
   |             16 bytes                  |
   +----+----+----+----+----+----+----+----+
-
-
-{% endhighlight %}
+```
 
 Decrypted format:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 Payload Part 1:
 
 
@@ -1034,41 +946,36 @@ Payload Part 1:
   +                                       +
   |                                       |
   +----+----+----+----+----+----+----+----+
-
-{% endhighlight %}
+```
 
 Sizes:
 
-================    =========  =====  =========  =============  =============  ==========  =======
-  Type              Type Code  Y len  Msg 2 len  Msg 2 Enc len  Msg 2 Dec len  PQ CT len   opt len
-================    =========  =====  =========  =============  =============  ==========  =======
-X25519                   4       32     72+pl        32+pl             pl           --       pl
-MLKEM512_X25519          5       32    856+pl       816+pl         768+pl          768       pl
-MLKEM768_X25519          6       32   1176+pl      1136+pl        1088+pl         1088       pl
-MLKEM1024_X25519         7       32   1656+pl      1616+pl        1568+pl         1568       pl
-================    =========  =====  =========  =============  =============  ==========  =======
+| Type | Type Code | Y len | Msg 2 len | Msg 2 Enc len | Msg 2 Dec len | PQ CT len | opt len |
+|------|-----------|-------|-----------|---------------|---------------|-----------|---------|
+| X25519 | 4 | 32 | 72+pl | 32+pl | pl | -- | pl |
+| MLKEM512_X25519 | 5 | 32 | 856+pl | 816+pl | 768+pl | 768 | pl |
+| MLKEM768_X25519 | 6 | 32 | 1176+pl | 1136+pl | 1088+pl | 1088 | pl |
+| MLKEM1024_X25519 | 7 | 32 | 1656+pl | 1616+pl | 1568+pl | 1568 | pl |
 
 Note that while message 2 will normally have a nonzero payload,
-the ratchet specification [ECIES]_ does not require it, so the minimum payload size is 0.
+the ratchet specification [/en/docs/spec/ecies/](/en/docs/spec/ecies/) does not require it, so the minimum payload size is 0.
 The minimum message 2 sizes may be calculated accordingly.
 
 
 
 ### NTCP2
 
-Update the NTCP2 specification [NTCP2]_ as follows:
+Update the NTCP2 specification [/en/docs/spec/ntcp2/](/en/docs/spec/ntcp2/) as follows:
 
 
-Noise identifiers
-`````````````````
+#### Noise identifiers
 
 - "Noise_XKhfsaesobfse+hs2+hs3_25519+MLKEM512_ChaChaPoly_SHA256"
 - "Noise_XKhfsaesobfse+hs2+hs3_25519+MLKEM768_ChaChaPoly_SHA256"
 - "Noise_XKhfsaesobfse+hs2+hs3_25519+MLKEM1024_ChaChaPoly_SHA256"
 
 
-1) SessionRequest
-``````````````````
+#### 1) SessionRequest
 
 Changes: Current NTCP2 contains only the options in the ChaCha section.
 With ML-KEM, the ChaCha section will also contain the encrypted PQ public key.
@@ -1076,9 +983,7 @@ With ML-KEM, the ChaCha section will also contain the encrypted PQ public key.
 
 Raw contents:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 +----+----+----+----+----+----+----+----+
   |                                       |
   +        obfuscated with RH_B           +
@@ -1109,15 +1014,11 @@ Raw contents:
   +----+----+----+----+----+----+----+----+
 
   Same as before except add a second ChaChaPoly frame
-
-
-{% endhighlight %}
+```
 
 Unencrypted data (Poly1305 authentication tag not shown):
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 +----+----+----+----+----+----+----+----+
   |                                       |
   +                                       +
@@ -1141,28 +1042,22 @@ Unencrypted data (Poly1305 authentication tag not shown):
   ~               .   .   .               ~
   |                                       |
   +----+----+----+----+----+----+----+----+
-
-
-
-{% endhighlight %}
+```
 
 Sizes:
 
-================    =========  =====  =========  =============  =============  ==========  =======
-  Type              Type Code  X len  Msg 1 len  Msg 1 Enc len  Msg 1 Dec len  PQ key len  opt len
-================    =========  =====  =========  =============  =============  ==========  =======
-X25519                   4       32     64+pad       32              16           --         16
-MLKEM512_X25519          5       32    880+pad      848             816          800         16
-MLKEM768_X25519          6       32   1264+pad     1232            1200         1184         16
-MLKEM1024_X25519         7       32   1648+pad     1616            1584         1568         16
-================    =========  =====  =========  =============  =============  ==========  =======
+| Type | Type Code | X len | Msg 1 len | Msg 1 Enc len | Msg 1 Dec len | PQ key len | opt len |
+|------|-----------|-------|-----------|---------------|---------------|------------|---------|
+| X25519 | 4 | 32 | 64+pad | 32 | 16 | -- | 16 |
+| MLKEM512_X25519 | 5 | 32 | 880+pad | 848 | 816 | 800 | 16 |
+| MLKEM768_X25519 | 6 | 32 | 1264+pad | 1232 | 1200 | 1184 | 16 |
+| MLKEM1024_X25519 | 7 | 32 | 1648+pad | 1616 | 1584 | 1568 | 16 |
 
 Note: Type codes are for internal use only. Routers will remain type 4,
 and support will be indicated in the router addresses.
 
 
-2) SessionCreated
-``````````````````
+#### 2) SessionCreated
 
 Changes: Current NTCP2 contains only the options in the ChaCha section.
 With ML-KEM, the ChaCha section will also contain the encrypted PQ public key.
@@ -1170,9 +1065,7 @@ With ML-KEM, the ChaCha section will also contain the encrypted PQ public key.
 
 Raw contents:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 +----+----+----+----+----+----+----+----+
   |                                       |
   +        obfuscated with RH_B           +
@@ -1206,14 +1099,11 @@ Raw contents:
   +----+----+----+----+----+----+----+----+
 
   Same as before except add a second ChaChaPoly frame
-
-{% endhighlight %}
+```
 
 Unencrypted data (Poly1305 auth tag not shown):
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 +----+----+----+----+----+----+----+----+
   |                                       |
   +                                       +
@@ -1237,33 +1127,28 @@ Unencrypted data (Poly1305 auth tag not shown):
   ~               .   .   .               ~
   |                                       |
   +----+----+----+----+----+----+----+----+
-
-{% endhighlight %}
+```
 
 Sizes:
 
-================    =========  =====  =========  =============  =============  ==========  =======
-  Type              Type Code  Y len  Msg 2 len  Msg 2 Enc len  Msg 2 Dec len  PQ CT len   opt len
-================    =========  =====  =========  =============  =============  ==========  =======
-X25519                   4       32     64+pad       32              16           --         16
-MLKEM512_X25519          5       32    848+pad      816             784          768         16
-MLKEM768_X25519          6       32   1136+pad     1104            1104         1088         16
-MLKEM1024_X25519         7       32   1616+pad     1584            1584         1568         16
-================    =========  =====  =========  =============  =============  ==========  =======
+| Type | Type Code | Y len | Msg 2 len | Msg 2 Enc len | Msg 2 Dec len | PQ CT len | opt len |
+|------|-----------|-------|-----------|---------------|---------------|-----------|---------|
+| X25519 | 4 | 32 | 64+pad | 32 | 16 | -- | 16 |
+| MLKEM512_X25519 | 5 | 32 | 848+pad | 816 | 784 | 768 | 16 |
+| MLKEM768_X25519 | 6 | 32 | 1136+pad | 1104 | 1104 | 1088 | 16 |
+| MLKEM1024_X25519 | 7 | 32 | 1616+pad | 1584 | 1584 | 1568 | 16 |
 
 Note: Type codes are for internal use only. Routers will remain type 4,
 and support will be indicated in the router addresses.
 
 
 
-3) SessionConfirmed
-```````````````````
+#### 3) SessionConfirmed
 
 Unchanged
 
 
-Key Derivation Function (KDF) (for data phase)
-``````````````````````````````````````````````
+#### Key Derivation Function (KDF) (for data phase)
 
 Unchanged
 
@@ -1272,19 +1157,18 @@ Unchanged
 
 ### SSU2
 
-Update the SSU2 specification [SSU2]_ as follows:
+Update the SSU2 specification [/en/docs/spec/ssu2/](/en/docs/spec/ssu2/) as follows:
 
 
-Noise identifiers
-`````````````````
+#### Noise identifiers
 
 - "Noise_XKhfschaobfse+hs1+hs2+hs3_25519+MLKEM512_ChaChaPoly_SHA256"
 - "Noise_XKhfschaobfse+hs1+hs2+hs3_25519+MLKEM768_ChaChaPoly_SHA256"
 - "Noise_XKhfschaobfse+hs1+hs2+hs3_25519+MLKEM1024_ChaChaPoly_SHA256"
 
 
-Long Header
-`````````````
+#### Long Header
+
 The long header is 32 bytes. It is used before a session is created, for Token Request, SessionRequest, SessionCreated, and Retry.
 It is also used for out-of-session Peer Test and Hole Punch messages.
 
@@ -1294,9 +1178,7 @@ Do we only do that for types 0 and 1 or for all 6 types?
 
 Before header encryption:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 
 +----+----+----+----+----+----+----+----+
   |      Destination Connection ID        |
@@ -1325,16 +1207,15 @@ Before header encryption:
 
   Token :: 8 bytes, unsigned big endian integer
 
-{% endhighlight %}
+```
 
 
-Short Header
-`````````````
+#### Short Header
+
 unchanged
 
 
-SessionRequest (Type 0)
-```````````````````````
+#### SessionRequest (Type 0)
 
 Changes: Current SSU2 contains only the block data in the ChaCha section.
 With ML-KEM, the ChaCha section will also contain the encrypted PQ public key.
@@ -1342,9 +1223,7 @@ With ML-KEM, the ChaCha section will also contain the encrypted PQ public key.
 
 Raw contents:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 +----+----+----+----+----+----+----+----+
   |  Long Header bytes 0-15, ChaCha20     |
   +  encrypted with Bob intro key         +
@@ -1384,13 +1263,11 @@ Raw contents:
   +----+----+----+----+----+----+----+----+
 
 
-{% endhighlight %}
+```
 
 Unencrypted data (Poly1305 authentication tag not shown):
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 +----+----+----+----+----+----+----+----+
   |      Destination Connection ID        |
   +----+----+----+----+----+----+----+----+
@@ -1416,20 +1293,16 @@ Unencrypted data (Poly1305 authentication tag not shown):
   +          (length varies)              +
   |     see below for allowed blocks      |
   +----+----+----+----+----+----+----+----+
-
-
-{% endhighlight %}
+```
 
 Sizes, not including IP overhead:
 
-================    =========  =====  =========  =============  =============  ==========  =======
-  Type              Type Code  X len  Msg 1 len  Msg 1 Enc len  Msg 1 Dec len  PQ key len  pl len
-================    =========  =====  =========  =============  =============  ==========  =======
-X25519                   4       32     80+pl        16+pl             pl         --         pl
-MLKEM512_X25519          5       32    896+pl       832+pl         800+pl        800         pl
-MLKEM768_X25519          6       32   1280+pl      1216+pl        1184+pl       1184         pl
-MLKEM1024_X25519         7      n/a   too big
-================    =========  =====  =========  =============  =============  ==========  =======
+| Type | Type Code | X len | Msg 1 len | Msg 1 Enc len | Msg 1 Dec len | PQ key len | pl len |
+|------|-----------|-------|-----------|---------------|---------------|------------|--------|
+| X25519 | 4 | 32 | 80+pl | 16+pl | pl | -- | pl |
+| MLKEM512_X25519 | 5 | 32 | 896+pl | 832+pl | 800+pl | 800 | pl |
+| MLKEM768_X25519 | 6 | 32 | 1280+pl | 1216+pl | 1184+pl | 1184 | pl |
+| MLKEM1024_X25519 | 7 | n/a | too big | | | | |
 
 Note: Type codes are for internal use only. Routers will remain type 4,
 and support will be indicated in the router addresses.
@@ -1439,17 +1312,15 @@ About 1316 for IPv4 and 1336 for IPv6.
 
 
 
-SessionCreated (Type 1)
-````````````````````````
+#### SessionCreated (Type 1)
+
 Changes: Current SSU2 contains only the block data in the ChaCha section.
 With ML-KEM, the ChaCha section will also contain the encrypted PQ public key.
 
 
 Raw contents:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 +----+----+----+----+----+----+----+----+
   |  Long Header bytes 0-15, ChaCha20     |
   +  encrypted with Bob intro key and     +
@@ -1489,13 +1360,11 @@ Raw contents:
   +----+----+----+----+----+----+----+----+
 
 
-{% endhighlight %}
+```
 
 Unencrypted data (Poly1305 auth tag not shown):
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 +----+----+----+----+----+----+----+----+
   |      Destination Connection ID        |
   +----+----+----+----+----+----+----+----+
@@ -1521,19 +1390,16 @@ Unencrypted data (Poly1305 auth tag not shown):
   +          (length varies)              +
   |      see below for allowed blocks     |
   +----+----+----+----+----+----+----+----+
-
-{% endhighlight %}
+```
 
 Sizes, not including IP overhead:
 
-================    =========  =====  =========  =============  =============  ==========  =======
-  Type              Type Code  Y len  Msg 2 len  Msg 2 Enc len  Msg 2 Dec len  PQ CT len   pl len
-================    =========  =====  =========  =============  =============  ==========  =======
-X25519                   4       32     80+pl        16+pl             pl         --         pl
-MLKEM512_X25519          5       32    864+pl       800+pl         768+pl        768         pl
-MLKEM768_X25519          6       32   1184+pl      1118+pl        1088+pl       1088         pl
-MLKEM1024_X25519         7      n/a   too big
-================    =========  =====  =========  =============  =============  ==========  =======
+| Type | Type Code | Y len | Msg 2 len | Msg 2 Enc len | Msg 2 Dec len | PQ CT len | pl len |
+|------|-----------|-------|-----------|---------------|---------------|-----------|--------|
+| X25519 | 4 | 32 | 80+pl | 16+pl | pl | -- | pl |
+| MLKEM512_X25519 | 5 | 32 | 864+pl | 800+pl | 768+pl | 768 | pl |
+| MLKEM768_X25519 | 6 | 32 | 1184+pl | 1118+pl | 1088+pl | 1088 | pl |
+| MLKEM1024_X25519 | 7 | n/a | too big | | | | |
 
 Note: Type codes are for internal use only. Routers will remain type 4,
 and support will be indicated in the router addresses.
@@ -1542,20 +1408,19 @@ Minimum MTU for MLKEM768_X25519:
 About 1316 for IPv4 and 1336 for IPv6.
 
 
-SessionConfirmed (Type 2)
-`````````````````````````
+#### SessionConfirmed (Type 2)
+
 unchanged
 
 
 
-KDF for data phase
-```````````````````
+#### KDF for data phase
+
 unchanged
 
 
 
-Relay and Peer Test
-```````````````````
+#### Relay and Peer Test
 
 Relay blocks, Peer Test blocks, and Peer Test messages all contain signatures.
 Unfortunately, PQ signatures are larger than the MTU.
@@ -1566,8 +1431,7 @@ This will be done in a separate proposal TBD.
 Until that is completed, Relay and Peer Test will not be supported.
 
 
-Issues
-``````
+#### Issues
 
 We could internally use the version field and use 3 for MLKEM512 and 4 for MLKEM768.
 
@@ -1592,12 +1456,12 @@ to avoid copying the signature?
 
 TODO
 
-[MLDSA-OIDS]_ section 8.1 disallows HashML-DSA in X.509 certificates
+[https://datatracker.ietf.org/doc/draft-ietf-lamps-dilithium-certificates/](https://datatracker.ietf.org/doc/draft-ietf-lamps-dilithium-certificates/) section 8.1 disallows HashML-DSA in X.509 certificates
 and does not assign OIDs for HashML-DSA, because of implementation
 complexities and reduced security.
 
 For PQ-only signatures of SU3 files,
-use the OIDs defined in [MLDSA-OIDS]_ of the non-prehash variants for the certificates.
+use the OIDs defined in [https://datatracker.ietf.org/doc/draft-ietf-lamps-dilithium-certificates/](https://datatracker.ietf.org/doc/draft-ietf-lamps-dilithium-certificates/) of the non-prehash variants for the certificates.
 We do not define hybrid signatures of SU3 files,
 because we may have to hash the files twice (although HashML-DSA and X2559 use the same
 hash function SHA512). Also, concatenating two keys and signatures in
@@ -1630,42 +1494,36 @@ Update other documents that give guidance on Destination sizes, including:
 
 Size increase (bytes):
 
-================    ==============  =============
-  Type              Pubkey (Msg 1)  Cipertext (Msg 2)
-================    ==============  =============
-MLKEM512_X25519       +816               +784
-MLKEM768_X25519      +1200              +1104
-MLKEM1024_X25519     +1584              +1584
-================    ==============  =============
+| Type | Pubkey (Msg 1) | Cipertext (Msg 2) |
+|------|----------------|-------------------|
+| MLKEM512_X25519 | +816 | +784 |
+| MLKEM768_X25519 | +1200 | +1104 |
+| MLKEM1024_X25519 | +1584 | +1584 |
 
 Speed:
 
-Speeds as reported by [CLOUDFLARE]_:
+Speeds as reported by [https://blog.cloudflare.com/pq-2024/](https://blog.cloudflare.com/pq-2024/):
 
-================    ==============
-  Type              Relative speed
-================    ==============
-X25519 DH/keygen    baseline
-MLKEM512            2.25x faster
-MLKEM768            1.5x faster
-MLKEM1024           1x (same)
-XK                  4x DH (keygen + 3 DH)
-MLKEM512_X25519     4x DH + 2x PQ (keygen + enc/dec) = 4.9x DH = 22% slower
-MLKEM768_X25519     4x DH + 2x PQ (keygen + enc/dec) = 5.3x DH = 32% slower
-MLKEM1024_X25519    4x DH + 2x PQ (keygen + enc/dec) = 6x DH = 50% slower
-================    ==============
+| Type | Relative speed |
+|------|----------------|
+| X25519 DH/keygen | baseline |
+| MLKEM512 | 2.25x faster |
+| MLKEM768 | 1.5x faster |
+| MLKEM1024 | 1x (same) |
+| XK | 4x DH (keygen + 3 DH) |
+| MLKEM512_X25519 | 4x DH + 2x PQ (keygen + enc/dec) = 4.9x DH = 22% slower |
+| MLKEM768_X25519 | 4x DH + 2x PQ (keygen + enc/dec) = 5.3x DH = 32% slower |
+| MLKEM1024_X25519 | 4x DH + 2x PQ (keygen + enc/dec) = 6x DH = 50% slower |
 
 
 Preliminary test results in Java:
 
-====================  ===================  ============  ======
-  Type                Relative DH/encaps   DH/decaps     keygen
-====================  ===================  ============  ======
-X25519                     baseline        baseline      baseline
-MLKEM512                   29x faster      22x faster    17x faster
-MLKEM768                   17x faster      14x faster    9x faster
-MLKEM1024                  12x faster      10x faster    6x faster
-====================  ===================  ============  ======
+| Type | Relative DH/encaps | DH/decaps | keygen |
+|------|-------------------|-----------|--------|
+| X25519 | baseline | baseline | baseline |
+| MLKEM512 | 29x faster | 22x faster | 17x faster |
+| MLKEM768 | 17x faster | 14x faster | 9x faster |
+| MLKEM1024 | 12x faster | 10x faster | 6x faster |
 
 
 ### Signatures
@@ -1681,76 +1539,66 @@ resulting in a much higher size increase in-transit.
 See design section above.
 
 
-============================  =======  ====  =======  ======  ======  ========  =====
-        Type                  Pubkey   Sig   Key+Sig  RIdent  Dest    RInfo     LS/Streaming/Datagram (each msg)
-============================  =======  ====  =======  ======  ======  ========  =====
-EdDSA_SHA512_Ed25519              32     64     96      391     391   baseline  baseline
-MLDSA44                         1312   2420   3732     1351    1319   +3316     +3284
-MLDSA65                         1952   3309   5261     1991    1959   +5668     +5636
-MLDSA87                         2592   4627   7219     2631    2599   +7072     +7040
-MLDSA44_EdDSA_SHA512_Ed25519    1344   2484   3828     1383    1351   +3412     +3380
-MLDSA65_EdDSA_SHA512_Ed25519    1984   3373   5357     2023    1991   +5668     +5636
-MLDSA87_EdDSA_SHA512_Ed25519    2624   4691   7315     2663    2631   +7488     +7456
-============================  =======  ====  =======  ======  ======  ========  =====
+| Type | Pubkey | Sig | Key+Sig | RIdent | Dest | RInfo | LS/Streaming/Datagram (each msg) |
+|------|--------|-----|---------|--------|------|-------|----------------------------------|
+| EdDSA_SHA512_Ed25519 | 32 | 64 | 96 | 391 | 391 | baseline | baseline |
+| MLDSA44 | 1312 | 2420 | 3732 | 1351 | 1319 | +3316 | +3284 |
+| MLDSA65 | 1952 | 3309 | 5261 | 1991 | 1959 | +5668 | +5636 |
+| MLDSA87 | 2592 | 4627 | 7219 | 2631 | 2599 | +7072 | +7040 |
+| MLDSA44_EdDSA_SHA512_Ed25519 | 1344 | 2484 | 3828 | 1383 | 1351 | +3412 | +3380 |
+| MLDSA65_EdDSA_SHA512_Ed25519 | 1984 | 3373 | 5357 | 2023 | 1991 | +5668 | +5636 |
+| MLDSA87_EdDSA_SHA512_Ed25519 | 2624 | 4691 | 7315 | 2663 | 2631 | +7488 | +7456 |
 
 Speed:
 
-Speeds as reported by [CLOUDFLARE]_:
+Speeds as reported by [https://blog.cloudflare.com/pq-2024/](https://blog.cloudflare.com/pq-2024/):
 
-====================  ===================  ======
-  Type                Relative speed sign  verify
-====================  ===================  ======
-EdDSA_SHA512_Ed25519        baseline       baseline
-MLDSA44                     5x slower      2x faster
-MLDSA65                       ???          ???
-MLDSA87                       ???          ???
-====================  ===================  ======
+| Type | Relative speed sign | verify |
+|------|---------------------|--------|
+| EdDSA_SHA512_Ed25519 | baseline | baseline |
+| MLDSA44 | 5x slower | 2x faster |
+| MLDSA65 | ??? | ??? |
+| MLDSA87 | ??? | ??? |
 
 Preliminary test results in Java:
 
-====================  ===================  ============  ======
-  Type                Relative speed sign  verify        keygen
-====================  ===================  ============  ======
-EdDSA_SHA512_Ed25519       baseline        baseline      baseline
-MLDSA44                    4.6x slower     1.7x faster   2.6x faster
-MLDSA65                    8.1x slower     same          1.5x faster
-MLDSA87                    11.1x slower    1.5x slower   same
-====================  ===================  ============  ======
+| Type | Relative speed sign | verify | keygen |
+|------|---------------------|--------|--------|
+| EdDSA_SHA512_Ed25519 | baseline | baseline | baseline |
+| MLDSA44 | 4.6x slower | 1.7x faster | 2.6x faster |
+| MLDSA65 | 8.1x slower | same | 1.5x faster |
+| MLDSA87 | 11.1x slower | 1.5x slower | same |
 
 
 
 
 ## Security Analysis
 
-NIST security categories are summarized in [NIST-PQ-END]_ slide 10.
+NIST security categories are summarized in [https://www.nccoe.nist.gov/sites/default/files/2023-08/pqc-light-at-the-end-of-the-tunnel-presentation.pdf](https://www.nccoe.nist.gov/sites/default/files/2023-08/pqc-light-at-the-end-of-the-tunnel-presentation.pdf) slide 10.
 Preliminary criteria:
 Our minimum NIST security category should be 2 for hybrid protocols
 and 3 for PQ-only.
 
-========  ======
-Category  As Secure As
-========  ======
-   1      AES128
-   2      SHA256
-   3      AES192
-   4      SHA384
-   5      AES256
-========  ======
+| Category | As Secure As |
+|----------|--------------|
+| 1 | AES128 |
+| 2 | SHA256 |
+| 3 | AES192 |
+| 4 | SHA384 |
+| 5 | AES256 |
 
 
 ### Handshakes
 These are all hybrid protocols.
 Probably need to prefer MLKEM768; MLKEM512 is not secure enough.
 
-NIST security categories [FIPS203]_ :
+NIST security categories [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf):
 
-=========  ========
-Algorithm  Security Category
-=========  ========
-MLKEM512      1
-MLKEM768      3
-MLKEM1024     5
-=========  ========
+| Algorithm | Security Category |
+|-----------|-------------------|
+| MLKEM512 | 1 |
+| MLKEM768 | 3 |
+| MLKEM1024 | 5 |
 
 
 ### Signatures
@@ -1758,15 +1606,13 @@ This proposal defines both hybrid and PQ-only signature types.
 MLDSA44 hybrid is preferable to MLDSA65 PQ-only.
 The keys and sig sizes for MLDSA65 and MLDSA87 are probably too big for us, at least at first.
 
-NIST security categories [FIPS204]_ :
+NIST security categories [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf):
 
-=========  ========
-Algorithm  Security Category
-=========  ========
-MLDSA44       2
-MLKEM67       3
-MLKEM87       5
-=========  ========
+| Algorithm | Security Category |
+|-----------|-------------------|
+| MLDSA44 | 2 |
+| MLKEM67 | 3 |
+| MLKEM87 | 5 |
 
 
 ## Type Preferences
@@ -1802,19 +1648,19 @@ MLDSA65 and hybrid variant may be too large
 ### Library Support
 
 Bouncycastle, BoringSSL, and WolfSSL libraries support MLKEM and MLDSA now.
-OpenSSL support is be in their 3.5 release April 8, 2025 [OPENSSL]_.
+OpenSSL support is be in their 3.5 release April 8, 2025 [https://openssl-library.org/post/2025-02-04-release-announcement-3.5/](https://openssl-library.org/post/2025-02-04-release-announcement-3.5/).
 
 The southernstorm.com Noise library adapted by Java I2P contained preliminary support for
 hybrid handshakes, but we removed it as unused; we will have to add it back
-and update it to match [Noise-Hybrid]_.
+and update it to match [https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf](https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf).
 
 ### Signing Variants
 
 We will use the "hedged" or randomized signing variant,
-not the "determinstic" variant, as defined in [FIPS204]_ section 3.4.
+not the "determinstic" variant, as defined in [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf) section 3.4.
 This ensures that each signature is different, even when over the same data,
 and provides additional protection against side-channel attacks.
-While [FIPS204]_ specifies that the "hedged" variant is the default,
+While [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf) specifies that the "hedged" variant is the default,
 this may or may not be true in various libraries.
 Implementors must ensure that the "hedged" variant is used for signing.
 
@@ -1822,7 +1668,7 @@ We use the normal signing process (called Pure ML-DSA Signature Generation)
 which encodes the message internally as 0x00 || len(ctx) || ctx || message,
 where ctx is some optional value of size 0x00..0xFF.
 We are not using any optional context. len(ctx) == 0.
-This process is defined in [FIPS204]_ Algorithm 2 step 10 and Algorithm 3 step 5.
+This process is defined in [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf) Algorithm 2 step 10 and Algorithm 3 step 5.
 Note that some published test vectors may require setting a mode
 where the message is not encoded.
 
@@ -1849,8 +1695,7 @@ Increase minimum bandwidth requirements for floodfills?
 
 ### Ratchet
 
-Shared Tunnels
-``````````````
+#### Shared Tunnels
 
 Auto-classify/detect of multiple protocols on the same tunnels should be possible based
 on a length check of message 1 (New Session Message).
@@ -1908,8 +1753,8 @@ Clients may use the same or different X25519 static keys for the X25519
 and the hybrid protocols on the same tunnels, implementation-dependent.
 
 
-Forward Secrecy
-```````````````
+#### Forward Secrecy
+
 The ECIES specification allows Garlic Messages in the New Session Message payload,
 which allows for 0-RTT delivery of the initial streaming packet,
 usually a HTTP GET, together with the client's leaseset.
@@ -1922,8 +1767,8 @@ Strategies may also depend on traffic type or tunnel type,
 or on GET vs. POST, for example.
 Implementation-dependent.
 
-New Session Size
-````````````````
+#### New Session Size
+
 MLKEM, MLDSA, or both on the same destination, will dramatically increase
 the size of the New Session Message, as described above.
 This may significantly decrease the reliability of New Session Message
@@ -1982,15 +1827,13 @@ with version flags.
 If we do require new transport names, they would be:
 
 
-=========  ====
-Transport  Type
-=========  ====
-NTCP2PQ1   MLKEM512_X25519
-NTCP2PQ2   MLKEM768_X25519
-NTCP2PQ3   MLKEM1024_X25519
-SSU2PQ1    MLKEM512_X25519
-SSU2PQ2    MLKEM768_X25519
-=========  ====
+| Transport | Type |
+|-----------|------|
+| NTCP2PQ1 | MLKEM512_X25519 |
+| NTCP2PQ2 | MLKEM768_X25519 |
+| NTCP2PQ3 | MLKEM1024_X25519 |
+| SSU2PQ1 | MLKEM512_X25519 |
+| SSU2PQ2 | MLKEM768_X25519 |
 
 Note that SSU2 cannot support MLKEM1024, it is too big.
 
@@ -2000,8 +1843,7 @@ Note that SSU2 cannot support MLKEM1024, it is too big.
 
 We have several alternatives to consider:
 
-Type 5/6/7 Routers
-``````````````````
+#### Type 5/6/7 Routers
 
 Not recommended.
 Use only the new transports listed above that match the router type.
@@ -2010,8 +1852,7 @@ Would take several release cycles to debug and ensure support before enabling by
 Might extend rollout by a year or more over alternatives below.
 
 
-Type 4 Routers
-``````````````
+#### Type 4 Routers
 
 Recommended.
 As PQ does not affect the X25519 static key or N handshake protocols,
@@ -2019,8 +1860,7 @@ we could leave the routers as type 4, and just advertise new transports.
 Older routers could still connect, build tunnels through, or send netdb messages to.
 
 
-NTCP2 Alternatives
-``````````````````
+#### NTCP2 Alternatives
 
 Type 4 routers could advertise both NTCP2 and NTCP2PQ* addresses.
 These could use the same static key and other parameters, or not.
@@ -2032,8 +1872,7 @@ Bob to classify and frame the incoming Session Request message.
 Separate ports and addresses will be difficult for Java but straightforward for i2pd.
 
 
-SSU2 Alternatives
-``````````````````
+#### SSU2 Alternatives
 
 Type 4 routers could advertise both SSU2 and SSU2PQ* addresses.
 With added header flags, Bob could identify the incoming transport
@@ -2050,16 +1889,14 @@ If in different addresses with different ports, these could use the same static 
 Separate ports and addresses will be difficult for Java but straightforward for i2pd.
 
 
-Recommendations
-````````````````
+#### Recommendations
 
 TODO
 
 
 ### Router Sig. Types
 
-Type 12-17 Routers
-``````````````````
+#### Type 12-17 Routers
 
 Older routers verify RIs and so cannot connect, build tunnels through, or send netdb messages to.
 Would take several release cycles to debug and ensure support before enabling by default.
@@ -2071,8 +1908,7 @@ No alternatives.
 
 ### LS Enc. Types
 
-Type 5-7 LS Keys
-``````````````````
+#### Type 5-7 LS Keys
 
 These may be present in the LS with older type 4 X25519 keys.
 Older routers will ignore unknown keys.
@@ -2086,8 +1922,7 @@ Java I2P uses this strategy for ElGamal+X25519 on the same destination.
 
 ### Dest. Sig. Types
 
-Type 12-17 Dests
-``````````````````
+#### Type 12-17 Dests
 
 Routers verify leaseset signatures and so cannot connect, or receive leasesets for type 12-17 destinations.
 Would take several release cycles to debug and ensure support before enabling by default.
@@ -2123,30 +1958,28 @@ Signature rollout will also be a year or more later than encryption rollout,
 because no backward compatibility is possible.
 Also, MLDSA adoption in the industry will be standardized by the CA/Browser Forum
 and Certificate Authorities. CAs need hardware security module (HSM) support
-first, which is not currently available [CABFORUM]_.
+first, which is not currently available [https://cabforum.org/2024/10/10/2024-10-10-minutes-of-the-code-signing-certificate-working-group/](https://cabforum.org/2024/10/10/2024-10-10-minutes-of-the-code-signing-certificate-working-group/).
 We expect the CA/Browser Forum to drive decisions on specific parameter
-choices, including whether to support or require composite signatures [COMPOSITE-SIGS]_.
+choices, including whether to support or require composite signatures [https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/](https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/).
 
 
 
 
-======================   ====
-Milestone                Target
-======================   ====
-Ratchet beta             Late 2025
-Select best enc type     Early 2026
-NTCP2 beta               Early 2026
-SSU2 beta                Mid 2026
-Ratchet production       Mid 2026
-Ratchet default          Late 2026
-Signature beta           Late 2026
-NTCP2 production         Late 2026
-SSU2 production          Early 2027
-Select best sig type     Early 2027
-NTCP2 default            Early 2027
-SSU2 default             Mid 2027
-Signature production     Mid 2027
-======================   ====
+| Milestone | Target |
+|-----------|--------|
+| Ratchet beta | Late 2025 |
+| Select best enc type | Early 2026 |
+| NTCP2 beta | Early 2026 |
+| SSU2 beta | Mid 2026 |
+| Ratchet production | Mid 2026 |
+| Ratchet default | Late 2026 |
+| Signature beta | Late 2026 |
+| NTCP2 production | Late 2026 |
+| SSU2 production | Early 2027 |
+| Select best sig type | Early 2027 |
+| NTCP2 default | Early 2027 |
+| SSU2 default | Mid 2027 |
+| Signature production | Mid 2027 |
 
 
 
@@ -2164,97 +1997,9 @@ We should be able to just try one-then-the-other, as we did with X25519, to be p
 
 - Noise Hash selection - stay with SHA256 or upgrade?
   SHA256 should be good for another 20-30 years, not threatened by PQ,
-  See [NIST-PQ-UPDATE]_ and [NIST-PQ-END]_.
+  See [https://csrc.nist.gov/csrc/media/Presentations/2022/update-on-post-quantum-encryption-and-cryptographi/Day%202%20-%20230pm%20Chen%20PQC%20ISPAB.pdf](https://csrc.nist.gov/csrc/media/Presentations/2022/update-on-post-quantum-encryption-and-cryptographi/Day%202%20-%20230pm%20Chen%20PQC%20ISPAB.pdf) and [https://www.nccoe.nist.gov/sites/default/files/2023-08/pqc-light-at-the-end-of-the-tunnel-presentation.pdf](https://www.nccoe.nist.gov/sites/default/files/2023-08/pqc-light-at-the-end-of-the-tunnel-presentation.pdf).
   If SHA256 is broken we have worse problems (netdb).
 - NTCP2 separate port, separate router address
 - SSU2 relay / peer test
 - SSU2 version field
 - SSU2 router address version
-
-
-
-## References
-
-.. [CABFORUM]
-   https://cabforum.org/2024/10/10/2024-10-10-minutes-of-the-code-signing-certificate-working-group/
-
-.. [Choosing-Hash]
-   https://kerkour.com/fast-secure-hash-function-sha256-sha512-sha3-blake3
-
-.. [CLOUDFLARE]
-   https://blog.cloudflare.com/pq-2024/
-
-.. [COMMON]
-    {{ spec_url('common-structures') }}
-
-.. [COMPOSITE-SIGS]
-   https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/
-
-.. [ECIES]
-   {{ spec_url('ecies') }}
-
-.. [FORUM]
-   http://zzz.i2p/topics/3294
-
-.. [FIPS202]
-   https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf
-
-.. [FIPS203]
-   https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf
-
-.. [FIPS204]
-   https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf
-
-.. [FIPS205]
-   https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf
-
-.. [MLDSA-OIDS]
-   https://datatracker.ietf.org/doc/draft-ietf-lamps-dilithium-certificates/
-
-.. [NIST-PQ]
-   https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards
-
-.. [NIST-PQ-UPDATE]
-   https://csrc.nist.gov/csrc/media/Presentations/2022/update-on-post-quantum-encryption-and-cryptographi/Day%202%20-%20230pm%20Chen%20PQC%20ISPAB.pdf
-
-.. [NIST-PQ-END]
-   https://www.nccoe.nist.gov/sites/default/files/2023-08/pqc-light-at-the-end-of-the-tunnel-presentation.pdf
-
-.. [NIST-VECTORS]
-   https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values
-
-.. [Noise]
-   https://noiseprotocol.org/noise.html
-
-.. [Noise-Hybrid]
-   https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf
-
-.. [NSA-PQ]
-   https://media.defense.gov/2022/Sep/07/2003071836/-1/-1/0/CSI_CNSA_2.0_FAQ\_.PDF
-
-.. [NTCP2]
-   {{ spec_url('ntcp2') }}
-
-.. [OPENSSL]
-   https://openssl-library.org/post/2025-02-04-release-announcement-3.5/
-
-.. [PQ-WIREGUARD]
-   https://eprint.iacr.org/2020/379.pdf
-
-.. [RFC-2104]
-    https://tools.ietf.org/html/rfc2104
-
-.. [Rosenpass]
-   https://rosenpass.eu/
-
-.. [Rosenpass-Whitepaper]
-   https://raw.githubusercontent.com/rosenpass/rosenpass/papers-pdf/whitepaper.pdf
-
-.. [SSH-HYBRID]
-   https://datatracker.ietf.org/doc/draft-ietf-sshm-mlkem-hybrid-kex/
-
-.. [SSU2]
-   {{ spec_url('ssu2') }}
-
-.. [TLS-HYBRID]
-   https://datatracker.ietf.org/doc/draft-ietf-tls-hybrid-design/

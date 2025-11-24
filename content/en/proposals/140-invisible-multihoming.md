@@ -12,10 +12,10 @@ thread: "http://zzz.i2p/topics/2335"
 
 This proposal outlines a design for a protocol enabling an I2P client, service
 or external balancer process to manage multiple routers transparently hosting a
-single [Destination]_.
+single [Destination](http://localhost:63465/en/docs/specs/common-structures/#destination).
 
 The proposal currently does not specify a concrete implementation. It could be
-implemented as an extension to [I2CP]_, or as a new protocol.
+implemented as an extension to [I2CP](/en/docs/specs/i2cp/), or as a new protocol.
 
 
 ## Motivation
@@ -23,7 +23,7 @@ implemented as an extension to [I2CP]_, or as a new protocol.
 Multihoming is where multiple routers are used to host the same Destination.
 The current way to multihome with I2P is to run the same Destination on each
 router independently; the router that gets used by clients at any particular
-time is the last one to publish a [LeaseSet]_.
+time is the last one to publish a LeaseSet.
 
 This is a hack and presumably won't work for large websites at scale. Say we had
 100 multihoming routers each with 16 tunnels. That's 1600 LeaseSet publishes
@@ -31,7 +31,7 @@ every 10 minutes, or almost 3 per second. The floodfills would get overwhelmed
 and throttles would kick in. And that's before we even mention the lookup
 traffic.
 
-[Prop123]_ solves this problem with a meta-LeaseSet, which lists the 100 real
+Proposal 123 solves this problem with a meta-LeaseSet, which lists the 100 real
 LeaseSet hashes. A lookup becomes a two-stage process: first looking up the
 meta-LeaseSet, and then one of the named LeaseSets. This is a good solution to
 the lookup traffic issue, but on its own it creates a significant privacy leak:
@@ -87,11 +87,9 @@ Imagine the following desired configuration:
 - Four routers, each managing three inbound tunnels.
 - All twelve tunnels should be published in a single LeaseSet.
 
-Single-client
-`````````````
-.. raw:: html
+### Single-client
 
-  {% highlight lang='text' %}
+```
                 -{ [Tunnel 1]===\
                  |-{ [Tunnel 2]====[Router 1]-----
                  |-{ [Tunnel 3]===/               \
@@ -107,13 +105,11 @@ Single-client
                  |-{ [Tunnel 10]==\               /
                  |-{ [Tunnel 11]===[Router 4]-----
                   -{ [Tunnel 12]==/
-{% endhighlight %}
+```
 
-Multi-client
-````````````
-.. raw:: html
+### Multi-client
 
-  {% highlight lang='text' %}
+```
                 -{ [Tunnel 1]===\
                  |-{ [Tunnel 2]====[Router 1]---------[Frontend 1]
                  |-{ [Tunnel 3]===/          \                    \
@@ -129,10 +125,10 @@ Multi-client
                  |-{ [Tunnel 10]==\          /                    /
                  |-{ [Tunnel 11]===[Router 4]---------[Frontend 4]
                   -{ [Tunnel 12]==/
-{% endhighlight %}
+```
 
-General client process
-``````````````````````
+### General client process
+
 - Load or generate a Destination.
 
 - Open up a session with each router, tied to the Destination.
@@ -152,10 +148,10 @@ General client process
 
   - Publish the LeaseSet through one or more of the routers.
 
-Differences to I2CP
-```````````````````
+### Differences to I2CP
+
 To create and manage this configuration, the client needs the following new
-functionality beyond what is currently provided by [I2CP]_:
+functionality beyond what is currently provided by [I2CP](/en/docs/specs/i2cp/):
 
 - Tell a router to build tunnels, without creating a LeaseSet for them.
 - Get a list of the current tunnels in the inbound pool.
@@ -169,9 +165,7 @@ in how the client manages its tunnels:
 
 ### Protocol outline
 
-.. raw:: html
-
-  {% highlight %}
+```
          Client                           Router
 
                     --------------------->  Create Session
@@ -186,53 +180,45 @@ in how the client manages its tunnels:
                     --------------------->  Send Packet
       Send Status  <---------------------
   Packet Received  <---------------------
-{% endhighlight %}
+```
 
-Messages
-````````
-    Create Session
-        Create a session for the given Destination.
+### Messages
 
-    Session Status
-        Confirmation that the session has been set up, and the client can now
-        start building tunnels.
+**Create Session**
+- Create a session for the given Destination.
 
-    Get Fast Tier
-        Request a list of the peers that the router currently would consider
-        building tunnels through.
+**Session Status**
+- Confirmation that the session has been set up, and the client can now start building tunnels.
 
-    Peer List
-        A list of peers known to the router.
+**Get Fast Tier**
+- Request a list of the peers that the router currently would consider building tunnels through.
 
-    Create Tunnel
-        Request that the router build a new tunnel through the specified peers.
+**Peer List**
+- A list of peers known to the router.
 
-    Tunnel Status
-        The result of a particular tunnel build, once it is available.
+**Create Tunnel**
+- Request that the router build a new tunnel through the specified peers.
 
-    Get Tunnel Pool
-        Request a list of the current tunnels in the inbound or outbound pool
-        for the Destination.
+**Tunnel Status**
+- The result of a particular tunnel build, once it is available.
 
-    Tunnel List
-        A list of tunnels for the requested pool.
+**Get Tunnel Pool**
+- Request a list of the current tunnels in the inbound or outbound pool for the Destination.
 
-    Publish LeaseSet
-        Request that the router publish the provided LeaseSet through one of the
-        outbound tunnels for the Destination. No reply status is needed; the
-        router should continue re-trying until it is satisfied that the LeaseSet
-        has been published.
+**Tunnel List**
+- A list of tunnels for the requested pool.
 
-    Send Packet
-        An outgoing packet from the client. Optionally specifies an outbound
-        tunnel through which the packet must (should?) be sent.
+**Publish LeaseSet**
+- Request that the router publish the provided LeaseSet through one of the outbound tunnels for the Destination. No reply status is needed; the router should continue re-trying until it is satisfied that the LeaseSet has been published.
 
-    Send Status
-        Informs the client of the success or failure of sending a packet.
+**Send Packet**
+- An outgoing packet from the client. Optionally specifies an outbound tunnel through which the packet must (should?) be sent.
 
-    Packet Received
-        An incoming packet for the client. Optionally specifies the inbound
-        tunnel through which the packet was received(?)
+**Send Status**
+- Informs the client of the success or failure of sending a packet.
+
+**Packet Received**
+- An incoming packet for the client. Optionally specifies the inbound tunnel through which the packet was received(?)
 
 
 ## Security implications
@@ -287,14 +273,14 @@ peers.
 ## Compatibility
 
 This design is completely backwards-compatible with the network, because there
-are no changes to the [LeaseSet]_ format. All routers would need to be aware of
+are no changes to the LeaseSet format. All routers would need to be aware of
 the new protocol, but this is not a concern as they would all be controlled by
 the same entity.
 
 
 ## Performance and scalability notes
 
-The upper limit of 16 [Leases]_ per LeaseSet is unaltered by this proposal. For
+The upper limit of 16 Leases per LeaseSet is unaltered by this proposal. For
 Destinations that require more tunnels than this, there are two possible network
 modifications:
 
@@ -304,7 +290,7 @@ modifications:
   packet sizes. The maximum feasible LeaseSet size is defined by the MTU of the
   underlying transports, and is therefore around 16kB.
 
-- Implement [Prop123]_ for tiered LeaseSets. In combination with this proposal,
+- Implement Proposal 123 for tiered LeaseSets. In combination with this proposal,
   the Destinations for the sub-LeaseSets could be spread across multiple
   routers, effectively acting like multiple IP addresses for a clearnet service.
 
@@ -312,21 +298,3 @@ modifications:
 ## Acknowledgements
 
 Thanks to psi for the discussion that led to this proposal.
-
-
-## References
-
-.. [Destination]
-    {{ ctags_url('Destination') }}
-
-.. [I2CP]
-    {{ site_url('docs/protocol/i2cp', True) }}
-
-.. [Leases]
-    {{ ctags_url('Lease') }}
-
-.. [LeaseSet]
-    {{ ctags_url('LeaseSet') }}
-
-.. [Prop123]
-    {{ proposal_url('123') }}

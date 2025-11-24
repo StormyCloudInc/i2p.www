@@ -48,8 +48,7 @@ advertise support in its router info properties.
 
 ## Specification
 
-Ref: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 A router that supports an optional sig type shall add "sigTypes" property
 to its published router info, with comma-separated sig type numbers.
@@ -87,7 +86,4 @@ NetDB stores of unknown sig types that are not in the experimental range will co
 to be rejected by floodfills, as the signature cannot be verified.
 
 
-## See Also
 
-Proposal 134
-Proposal 136

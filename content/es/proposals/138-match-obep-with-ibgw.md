@@ -10,12 +10,12 @@ thread: "http://zzz.i2p/topics/2294"
 
 ## Resumen
 
-Esta propuesta añade una opción I2CP para túneles de salida que hace que los túneles se seleccionen o construyan cuando se envía un mensaje de manera que el OBEP coincida con uno de los IBGWs del [LeaseSet]_ para el [Destination]_ objetivo.
+Esta propuesta añade una opción I2CP para túneles de salida que hace que los túneles se seleccionen o construyan cuando se envía un mensaje de manera que el OBEP coincida con uno de los IBGWs del LeaseSet para el Destination objetivo.
 
 
 ## Motivación
 
-La mayoría de los routers I2P emplean una forma de eliminación de paquetes para la gestión de la congestión. La implementación de referencia utiliza una estrategia WRED que toma en cuenta tanto el tamaño del mensaje como la distancia de viaje [TUNNEL-THROTTLING]_. Debido a esta estrategia, la principal fuente de pérdida de paquetes es el OBEP.
+La mayoría de los routers I2P emplean una forma de eliminación de paquetes para la gestión de la congestión. La implementación de referencia utiliza una estrategia WRED que toma en cuenta tanto el tamaño del mensaje como la distancia de viaje (véase [documentación de tunnel throttling](/en/docs/tunnels/implementation/#tunnelthrottling)). Debido a esta estrategia, la principal fuente de pérdida de paquetes es el OBEP.
 
 
 ## Diseño
@@ -30,7 +30,7 @@ Este modo efectivamente significaría que el destinatario está seleccionando el
 
 ## Especificación
 
-Se añade una nueva opción I2CP a [I2CP-SPEC]_:
+Se añade una nueva opción I2CP a la [especificación I2CP](/en/docs/spec/i2cp/):
 
     outbound.matchEndWithTarget
         Booleano
@@ -76,24 +76,6 @@ Esta propuesta tiene varios efectos sobre la latencia, RTT y pérdida de paquete
 - Para túneles estándar, el OBEP puede necesitar encontrar y conectarse al IBGW,
   añadiendo latencia que incrementa el primer RTT (ya que esto ocurre después de que se haya enviado el primer paquete). Usando este modo, el OBEP necesitaría encontrar y conectarse al IBGW durante la construcción del túnel, añadiendo la misma latencia pero reduciendo el primer RTT (ya que esto ocurre antes de que se haya enviado el primer paquete).
 
-- El tamaño actualmente estándar [VariableTunnelBuild]_ es de 2641 bytes. Por lo tanto, se espera que este modo resulte en una menor pérdida de paquetes para tamaños de mensaje promedio mayores que este.
+- El tamaño actualmente estándar VariableTunnelBuild es de 2641 bytes. Por lo tanto, se espera que este modo resulte en una menor pérdida de paquetes para tamaños de mensaje promedio mayores que este.
 
 Se necesita más investigación para investigar estos efectos, con el fin de decidir qué túneles estándar se beneficiarían de tener este modo habilitado por defecto.
-
-
-## Referencias
-
-.. [Destination]
-    {{ ctags_url('Destination') }}
-
-.. [I2CP-SPEC]
-    {{ spec_url('i2cp') }}
-
-.. [LeaseSet]
-    {{ ctags_url('LeaseSet') }}
-
-.. [TUNNEL-THROTTLING]
-    {{ site_url('docs/tunnels/implementation', True) }}#tunnel.throttling
-
-.. [VariableTunnelBuild]
-    {{ ctags_url('VariableTunnelBuild') }}

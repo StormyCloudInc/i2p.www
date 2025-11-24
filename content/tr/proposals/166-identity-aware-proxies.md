@@ -22,9 +22,9 @@ Bu senaryoda, sunucu faaliyetlere yanıt vermek için kullanılan kriptografik a
 Ama bu bir problem mi?
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Paylaşılan kimlik problemi, aynı protokolü konuşan kullanıcı ajanları bağlantısızlığı istediklerinde bir problem olur. `Bu konu ilk olarak HTTP bağlamında şu Reddit
-Konu Başlığı <https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/>`__, ve silinmiş yorumlar
-`pullpush.io <https://api.pullpush.io/reddit/search/comment/?link_id=579idi>`__ aracılığıyla erişilebilir.
+Paylaşılan kimlik problemi, aynı protokolü konuşan kullanıcı ajanları bağlantısızlığı istediklerinde bir problem olur. [Bu konu ilk olarak HTTP bağlamında şu Reddit
+Konu Başlığı](https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/), ve silinmiş yorumlar
+[pullpush.io](https://api.pullpush.io/reddit/search/comment/?link_id=579idi) aracılığıyla erişilebilir.
 *O dönemde* en aktif cevap verenlerden biriydim ve *o dönemde* bu konunun küçük olduğunu düşündüm. Geçen 8 yıl içinde, durum ve bu konudaki görüşüm değişti, şimdi kötü niyetli hedef korelasyon tehdidinin, daha fazla site kullanıcılara
 özgü profiller oluşturmaya meyilli hale geldikçe, önemli ölçüde büyüdüğüne inanıyorum.
 
@@ -160,22 +160,10 @@ Kabaca, aşağıdaki script, uygulama farkındalığına sahip bir SOCKS5 proxy 
 Ek: ``saldırının örnek uygulaması``
                                                   
 
-`HTTP Kullanıcı-Ajanlarına yönelik Paylaşılan Kimlik saldırısının
-bir örnek uygulaması <https://github.com/eyedeekay/colluding_sites_attack/>`__
+[HTTP Kullanıcı-Ajanlarına yönelik Paylaşılan Kimlik saldırısının
+bir örnek uygulaması](https://github.com/eyedeekay/colluding_sites_attack/)
 birkaç yıl önce oluşturulmuştur. Ek bir örnek ``simple-colluder`` alt dizininde mevcuttur
-`idk’nın prop166 deposunda <https://git.idk.i2p/idk/i2p.host-aware-proxy>`__ Bu
+[idk’nın prop166 deposunda](https://git.idk.i2p/idk/i2p.host-aware-proxy) Bu
 örnekler, saldırının çalıştığını göstermek üzere kasıtlı olarak tasarlanmıştır ve
 gerçek bir saldırıya dönüştürülmesi için modifikasyon(albeit minor) gereklidir.
 
-Alıntılar:
-''''''''''
-
-https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/
-https://api.pullpush.io/reddit/search/comment/?link_id=579idi
-https://github.com/eyedeekay/colluding_sites_attack/
-https://en.wikipedia.org/wiki/Shadow_profile
-https://github.com/eyedeekay/si-i2p-plugin/
-https://github.com/eyedeekay/eeproxy/
-/docs/api/socks/
-https://i2pgit.org/idk/i2p.www/-/compare/master...166-identity-aware-proxies?from_project_id=17
-https://i2pgit.org/idk/i2p.i2p/-/tree/i2p.i2p.2.6.0-browser-proxy-post-keepalive?ref_type=heads

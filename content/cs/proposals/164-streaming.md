@@ -46,7 +46,7 @@ Pokud jsou Alice a Charlie na verzi API 0.9.58 nebo novější, jakýkoli pokus 
 
 ## Specifikace
 
-Aktualizujte [STREAMING]_ a přidejte následující sekci:
+Aktualizujte [specifikaci Streaming](/en/docs/spec/streaming/) a přidejte následující sekci:
 
 ### Prevence opakování
 
@@ -106,7 +106,3 @@ Java I2P a i2pd routery to implementovaly v API 0.9.58 (uvolněné v březnu 202
 
 
 
-## Reference
-
-.. [STREAMING]
-    {{ spec_url('streaming') }}

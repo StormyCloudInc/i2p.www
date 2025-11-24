@@ -46,6 +46,4 @@ n/a
 
 
 
-## Voir aussi
 
-Proposition 129

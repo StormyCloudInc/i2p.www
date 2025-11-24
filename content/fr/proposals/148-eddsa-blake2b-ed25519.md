@@ -18,11 +18,11 @@ Lors des discussions et de la conception de NTCP2 (proposition 111) et LS2 (prop
 
 Pour NTCP2 et LS2, nous avons décidé que ces attaques n'étaient pas directement pertinentes pour les propositions en cours, et toute solution était en conflit avec l'objectif de minimiser les nouvelles primitives. De plus, nous avons déterminé que la vitesse des fonctions de hachage dans ces protocoles n'était pas un facteur important dans nos décisions. Par conséquent, nous avons principalement renvoyé la solution à une proposition distincte. Bien que nous ayons ajouté certaines fonctionnalités de personnalisation à la spécification LS2, nous n'avons pas exigé de nouvelles fonctions de hachage.
 
-De nombreux projets, tels que ZCash [ZCASH]_, utilisent des fonctions de hachage et des algorithmes de signature basés sur des algorithmes plus récents qui ne sont pas vulnérables aux attaques suivantes.
+De nombreux projets, tels que [ZCash](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf), utilisent des fonctions de hachage et des algorithmes de signature basés sur des algorithmes plus récents qui ne sont pas vulnérables aux attaques suivantes.
 
 ### Attaques d'extension de longueur
 
-SHA-256 et SHA-512 sont vulnérables aux attaques d'extension de longueur (LEA) [LEA]_. C'est le cas lorsque des données réelles sont signées, et non le hachage des données. Dans la plupart des protocoles I2P (streaming, datagrammes, netdb, et autres), les données réelles sont signées. Une exception est les fichiers SU3, où le hachage est signé. L'autre exception est les datagrammes signés pour DSA (type de signature 0) uniquement, où le hachage est signé. Pour les autres types de signature de datagramme signés, les données sont signées.
+SHA-256 et SHA-512 sont vulnérables aux [attaques d'extension de longueur (LEA)](https://en.wikipedia.org/wiki/Length_extension_attack). C'est le cas lorsque des données réelles sont signées, et non le hachage des données. Dans la plupart des protocoles I2P (streaming, datagrammes, netdb, et autres), les données réelles sont signées. Une exception est les fichiers SU3, où le hachage est signé. L'autre exception est les datagrammes signés pour DSA (type de signature 0) uniquement, où le hachage est signé. Pour les autres types de signature de datagramme signés, les données sont signées.
 
 ### Attaques cross-protocole
 
@@ -50,23 +50,23 @@ Modifier le type de signature existant RedDSA_SHA512_Ed25519 pour utiliser BLAKE
 
 ## Justification
 
-- BLAKE2b n'est pas vulnérable à LEA [BLAKE2]_.
+- [BLAKE2b](https://blake2.net/blake2.pdf) n'est pas vulnérable à LEA.
 - BLAKE2b offre un moyen standard d'ajouter des chaînes de personnalisation pour la séparation des domaines.
 - BLAKE2b offre un moyen standard d'ajouter un sel aléatoire pour prévenir DMI.
-- BLAKE2b est plus rapide que SHA-256 et SHA-512 (et MD5) sur le matériel moderne, selon [BLAKE2]_.
+- BLAKE2b est plus rapide que SHA-256 et SHA-512 (et MD5) sur le matériel moderne, selon la [spécification BLAKE2](https://blake2.net/blake2.pdf).
 - Ed25519 est toujours notre type de signature le plus rapide, beaucoup plus rapide qu'ECDSA, du moins en Java.
-- Ed25519 [ED25519-REFS]_ nécessite une fonction de hachage cryptographique de 512 bits. Il ne spécifie pas SHA-512. BLAKE2b est tout aussi approprié pour la fonction de hachage.
+- [Ed25519](http://cr.yp.to/papers.html#ed25519) nécessite une fonction de hachage cryptographique de 512 bits. Il ne spécifie pas SHA-512. BLAKE2b est tout aussi approprié pour la fonction de hachage.
 - BLAKE2b est largement disponible dans les bibliothèques pour de nombreux langages de programmation, tels que Noise.
 
 ## Spécification
 
-Utiliser BLAKE2b-512 non clé comme dans [BLAKE2]_ avec sel et personnalisation. Toutes les utilisations des signatures BLAKE2b utiliseront une chaîne de personnalisation de 16 caractères.
+Utiliser BLAKE2b-512 non clé comme dans la [spécification BLAKE2](https://blake2.net/blake2.pdf) avec sel et personnalisation. Toutes les utilisations des signatures BLAKE2b utiliseront une chaîne de personnalisation de 16 caractères.
 
 Lorsqu'il est utilisé dans la signature RedDSA_BLAKE2b_Ed25519, un sel aléatoire est autorisé, cependant il n'est pas nécessaire, car l'algorithme de signature ajoute 80 octets de données aléatoires (voir proposition 123). Si désiré, lors du hachage des données pour calculer r, définir un nouveau sel aléatoire BLAKE2b de 16 octets pour chaque signature. Lors du calcul de S, réinitialiser le sel à la valeur par défaut de tous les zéros.
 
 Lorsqu'il est utilisé dans la vérification RedDSA_BLAKE2b_Ed25519, ne pas utiliser un sel aléatoire, utiliser la valeur par défaut de tous les zéros.
 
-Les fonctionnalités de sel et de personnalisation ne sont pas spécifiées dans [RFC-7693]_; utiliser ces fonctionnalités telles que spécifiées dans [BLAKE2]_.
+Les fonctionnalités de sel et de personnalisation ne sont pas spécifiées dans [RFC 7693](https://tools.ietf.org/html/rfc7693); utiliser ces fonctionnalités telles que spécifiées dans la [spécification BLAKE2](https://blake2.net/blake2.pdf).
 
 ### Type de signature
 
@@ -119,7 +119,7 @@ Tests unitaires                     "test1234test5678"
 ## Problèmes
 
 - Alternative 1 : Proposition 146 ; fournit une résistance LEA
-- Alternative 2 : Ed25519ctx dans RFC 8032 ; fournit une résistance LEA et une personnalisation. Standardisé, mais quelqu'un l'utilise-t-il ? Voir [RFC-8032]_ et [ED25519CTX]_.
+- Alternative 2 : Ed25519ctx dans RFC 8032 ; fournit une résistance LEA et une personnalisation. Standardisé, mais quelqu'un l'utilise-t-il ? Voir [RFC 8032](https://tools.ietf.org/html/rfc8032) et [cette discussion](https://moderncrypto.org/mail-archive/curves/2017/000925.html).
 - Le hachage "clé" est-il utile pour nous ?
 
 ## Migration
@@ -138,31 +138,3 @@ Pour la version minimale du routeur 0.9.TBD, les routeurs doivent s'assurer :
 - Lors de la vérification d'un stockage netdb, ne pas récupérer un RI ou LS avec le nouveau type de signature à partir de routeurs de version inférieure à 0.9.TBD.
 - Les routeurs avec un nouveau type de signature dans leur RI ne peuvent pas se connecter à des routeurs de version inférieure à 0.9.TBD, que ce soit avec NTCP, NTCP2 ou SSU.
 - Les connexions de streaming et les datagrammes signés ne fonctionneront pas avec des routeurs de version inférieure à 0.9.TBD, mais il n'y a aucun moyen de le savoir, donc le nouveau type de signature ne devrait pas être utilisé par défaut pendant une certaine période de mois ou d'années après la version 0.9.TBD.
-
-## Références
-
-.. [BLAKE2]
-   https://blake2.net/blake2.pdf
-
-.. [ED25519CTX]
-   https://moderncrypto.org/mail-archive/curves/2017/000925.html
-
-.. [ED25519-REFS]
-    "High-speed high-security signatures" par Daniel
-    J. Bernstein, Niels Duif, Tanja Lange, Peter Schwabe, et
-    Bo-Yin Yang. http://cr.yp.to/papers.html#ed25519
-
-.. [EDDSA-FAULTS]
-   https://news.ycombinator.com/item?id=15414760
-
-.. [LEA]
-   https://fr.wikipedia.org/wiki/Attaque_par_extension_de_longueur
-
-.. [RFC-7693]
-   https://tools.ietf.org/html/rfc7693
-
-.. [RFC-8032]
-   https://tools.ietf.org/html/rfc8032
-
-.. [ZCASH]
-   https://github.com/zcash/zips/tree/master/protocol/protocol.pdf

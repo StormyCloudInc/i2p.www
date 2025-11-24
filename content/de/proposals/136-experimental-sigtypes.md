@@ -33,8 +33,7 @@ Floodfills sollten LS-Stores mit Sig-Typen im experimentellen Bereich akzeptiere
 
 ## Spezifikation
 
-Ref: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 Für Sig-Typen im experimentellen Bereich sollte ein Floodfill NetDB-Stores akzeptieren und verteilen, ohne die Signatur zu prüfen.
 
@@ -72,7 +71,4 @@ die bisher noch nicht formell vorgeschlagen wurden.
 NetDB-Stores unbekannter Sig-Typen, die nicht im experimentellen Bereich liegen, werden weiterhin von Floodfills abgelehnt, da die Signatur nicht verifiziert werden kann.
 
 
-## Siehe auch
 
-Vorschlag 134
-Vorschlag 137

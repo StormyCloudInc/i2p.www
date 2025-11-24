@@ -18,11 +18,11 @@ Während der Diskussionen und des Designs von NTCP2 (Vorschlag 111) und LS2 (Vor
 
 Für sowohl NTCP2 als auch LS2 entschieden wir, dass diese Angriffe nicht direkt relevant für die gegenwärtigen Vorschläge waren und jede Lösung im Widerspruch zur Minimierung neuer Primitiven stand. Außerdem stellten wir fest, dass die Geschwindigkeit der Hash-Funktionen in diesen Protokollen kein bedeutender Faktor bei unseren Entscheidungen war. Daher haben wir die Lösung größtenteils auf einen separaten Vorschlag vertagt. Während wir einige Personalisierungsfunktionen in die LS2-Spezifikation aufgenommen haben, verlangten wir keine neuen Hash-Funktionen.
 
-Viele Projekte, wie ZCash [ZCASH]_, verwenden Hash-Funktionen und Signaturalgorithmen, die auf neueren Algorithmen basieren, die nicht anfällig für die folgenden Angriffe sind.
+Viele Projekte, wie [ZCash](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf), verwenden Hash-Funktionen und Signaturalgorithmen, die auf neueren Algorithmen basieren, die nicht anfällig für die folgenden Angriffe sind.
 
 ### Length Extension Attacks
 
-SHA-256 und SHA-512 sind anfällig für Length Extension Attacks (LEA) [LEA]_. Dies ist der Fall, wenn tatsächliche Daten signiert werden, nicht der Hash der Daten. In den meisten I2P-Protokollen (Streaming, Datagramme, NetDB und andere) werden die tatsächlichen Daten signiert. Eine Ausnahme sind SU3-Dateien, bei denen der Hash signiert wird. Eine andere Ausnahme sind signierte Datagramme für DSA (Sig-Typ 0) nur, bei denen der Hash signiert wird. Für andere signierte Datagramm-Sig-Typen werden die Daten signiert.
+SHA-256 und SHA-512 sind anfällig für [Length Extension Attacks (LEA)](https://en.wikipedia.org/wiki/Length_extension_attack). Dies ist der Fall, wenn tatsächliche Daten signiert werden, nicht der Hash der Daten. In den meisten I2P-Protokollen (Streaming, Datagramme, NetDB und andere) werden die tatsächlichen Daten signiert. Eine Ausnahme sind SU3-Dateien, bei denen der Hash signiert wird. Eine andere Ausnahme sind signierte Datagramme für DSA (Sig-Typ 0) nur, bei denen der Hash signiert wird. Für andere signierte Datagramm-Sig-Typen werden die Daten signiert.
 
 ### Cross-Protocol Attacks
 
@@ -50,23 +50,23 @@ Modifizieren Sie den bestehenden RedDSA_SHA512_Ed25519-Signaturtyp, um BLAKE2b-5
 
 ## Rechtfertigung
 
-- BLAKE2b ist nicht anfällig für LEA [BLAKE2]_.
+- [BLAKE2b](https://blake2.net/blake2.pdf) ist nicht anfällig für LEA.
 - BLAKE2b bietet eine standardisierte Möglichkeit, Personalisierungsstrings zur Domänentrennung hinzuzufügen.
 - BLAKE2b bietet eine standardisierte Möglichkeit, ein zufälliges Salz hinzuzufügen, um DMI zu verhindern.
-- BLAKE2b ist auf moderner Hardware schneller als SHA-256 und SHA-512 (und MD5), laut [BLAKE2]_.
+- BLAKE2b ist auf moderner Hardware schneller als SHA-256 und SHA-512 (und MD5), laut der [BLAKE2 Spezifikation](https://blake2.net/blake2.pdf).
 - Ed25519 ist immer noch unser schnellster Signaturtyp, viel schneller als ECDSA, zumindest in Java.
-- Ed25519 [ED25519-REFS]_ erfordert eine 512-Bit-kryptographische Hash-Funktion. Es spezifiziert nicht SHA-512. BLAKE2b ist genauso geeignet für die Hash-Funktion.
+- [Ed25519](http://cr.yp.to/papers.html#ed25519) erfordert eine 512-Bit-kryptographische Hash-Funktion. Es spezifiziert nicht SHA-512. BLAKE2b ist genauso geeignet für die Hash-Funktion.
 - BLAKE2b ist in Bibliotheken für viele Programmiersprachen weit verbreitet, wie zum Beispiel Noise.
 
 ## Spezifikation
 
-Verwenden Sie unkeyed BLAKE2b-512 wie in [BLAKE2]_ mit Salz und Personalisierung. Alle Verwendungen von BLAKE2b-Signaturen werden einen 16-Zeichen-Personalisierungsstring verwenden.
+Verwenden Sie unkeyed BLAKE2b-512 wie in der [BLAKE2 Spezifikation](https://blake2.net/blake2.pdf) mit Salz und Personalisierung. Alle Verwendungen von BLAKE2b-Signaturen werden einen 16-Zeichen-Personalisierungsstring verwenden.
 
 Bei der Verwendung im RedDSA_BLAKE2b_Ed25519-Signieren ist ein zufälliges Salz erlaubt, aber nicht notwendig, da der Signaturalgorithmus 80 Bytes zufällige Daten hinzufügt (siehe Vorschlag 123). Falls gewünscht, beim Hashing der Daten zur Berechnung von r, setzen Sie ein neues 16-Byte zufälliges BLAKE2b-Salz für jede Signatur. Beim Berechnen von S setzen Sie das Salz zurück auf den Standard, nämlich alle Nullen.
 
 Bei der Verwendung im RedDSA_BLAKE2b_Ed25519-Verifizieren verwenden Sie kein zufälliges Salz, verwenden Sie den Standard von allen Nullen.
 
-Die Salz- und Personalisierungsfunktionen sind nicht in [RFC-7693]_ spezifiziert; verwenden Sie diese Funktionen wie in [BLAKE2]_ angegeben.
+Die Salz- und Personalisierungsfunktionen sind nicht in [RFC 7693](https://tools.ietf.org/html/rfc7693) spezifiziert; verwenden Sie diese Funktionen wie in der [BLAKE2 Spezifikation](https://blake2.net/blake2.pdf) angegeben.
 
 ### Signaturtyp
 
@@ -121,7 +121,7 @@ Unit-Tests                           "test1234test5678"
 - Alternative 1: Vorschlag 146;
   Bietet LEA-Resistenz
 - Alternative 2: Ed25519ctx in RFC 8032;
-  Bietet LEA-Resistenz und Personalisierung. Standardisiert, aber benutzt es überhaupt jemand? Siehe [RFC-8032]_ und [ED25519CTX]_.
+  Bietet LEA-Resistenz und Personalisierung. Standardisiert, aber benutzt es überhaupt jemand? Siehe [RFC 8032](https://tools.ietf.org/html/rfc8032) und [diese Diskussion](https://moderncrypto.org/mail-archive/curves/2017/000925.html).
 - Ist "keyed" Hashing für uns nützlich?
 
 ## Migration
@@ -140,31 +140,3 @@ Für die minimale Routerversion 0.9.TBD müssen Router sicherstellen:
 - Beim Überprüfen eines netdb stores lesen Sie keine RI oder LS mit dem neuen Sig-Typ von Routern unter Version 0.9.TBD.
 - Router mit einem neuen Sig-Typ in ihrer RI dürfen keine Verbindung zu Routern unter Version 0.9.TBD herstellen, weder mit NTCP, NTCP2 noch SSU.
 - Streaming-Verbindungen und signierte Datagramme funktionieren nicht bei Routern unter Version 0.9.TBD, aber es gibt keine Möglichkeit, dies zu wissen, daher sollte der neue Sig-Typ nicht standardmäßig für einen Zeitraum von Monaten oder Jahren nach Freigabe von 0.9.TBD verwendet werden.
-
-## Referenzen
-
-.. [BLAKE2]
-   https://blake2.net/blake2.pdf
-
-.. [ED25519CTX]
-   https://moderncrypto.org/mail-archive/curves/2017/000925.html
-
-.. [ED25519-REFS]
-    "High-speed high-security signatures" von Daniel
-    J. Bernstein, Niels Duif, Tanja Lange, Peter Schwabe, und
-    Bo-Yin Yang. http://cr.yp.to/papers.html#ed25519
-
-.. [EDDSA-FAULTS]
-   https://news.ycombinator.com/item?id=15414760
-
-.. [LEA]
-   https://de.wikipedia.org/wiki/Länge_Erweiterungsangriff
-
-.. [RFC-7693]
-   https://tools.ietf.org/html/rfc7693
-
-.. [RFC-8032]
-   https://tools.ietf.org/html/rfc8032
-
-.. [ZCASH]
-   https://github.com/zcash/zips/tree/master/protocol/protocol.pdf

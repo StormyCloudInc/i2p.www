@@ -22,9 +22,7 @@ Todos los parámetros RPC ahora estarán en minúsculas. Esto *romperá* la comp
 
 ## Especificación de API 2
 
-.. raw:: html
-
-  {% highlight lang='json' -%}
+```json
 {
     "id": "id",
     "method": "nombre_del_metodo",
@@ -40,7 +38,7 @@ Todos los parámetros RPC ahora estarán en minúsculas. Esto *romperá* la comp
     "result": "valor_del_resultado",
     "jsonrpc": "2.0"
   }
-{% endhighlight %}
+```
 
 ### Parámetros
 
@@ -68,12 +66,14 @@ Todos los parámetros RPC ahora estarán en minúsculas. Esto *romperá* la comp
 
 ### Prefijos
 
-El esquema de nombres RPC es similar a cómo se hace en CSS, con prefijos de vendedor para las diferentes implementaciones de API (i2p, kovri, i2pd)::
+El esquema de nombres RPC es similar a cómo se hace en CSS, con prefijos de vendedor para las diferentes implementaciones de API (i2p, kovri, i2pd):
 
-    XXX.YYY.ZZZ
+```text
+XXX.YYY.ZZZ
     i2p.XXX.YYY.ZZZ
     i2pd.XXX.YYY.ZZZ
     kovri.XXX.YYY.ZZZ
+```
 
 La idea general con los prefijos específicos del vendedor es permitir cierta flexibilidad y dejar que las implementaciones innoven sin tener que esperar a que todas las demás implementaciones se pongan al día. Si un RPC es implementado por todas las implementaciones, se pueden eliminar sus múltiples prefijos y puede incluirse como un RPC central en la próxima versión de API.
 
@@ -85,9 +85,11 @@ La idea general con los prefijos específicos del vendedor es permitir cierta fl
    * *parámetro* [tipo de parámetro]:  [nulo], [número], [cadena], [booleano],
      [arreglo] o [objeto]. [objeto] siendo un mapa {clave:valor}.
 
-::
+Devuelve:
+```text
 
   "valor_devuelto" [cadena] // Este es el valor devuelto por la llamada RPC
+```
 
 
 ### Métodos
@@ -96,13 +98,15 @@ La idea general con los prefijos específicos del vendedor es permitir cierta fl
 
   * *contraseña* [cadena]: La contraseña para esta implementación de i2pcontrol
 
-  ::
+  Devuelve:
+```text
 
     [objeto]
     {
       "token" : [cadena], // El token que se usará con todos los demás métodos RPC
       "api" : [[int],[int], ...] // Una lista de niveles de API compatibles.
     }
+```
 
 
 * **control.** - Controlar i2p
@@ -111,57 +115,71 @@ La idea general con los prefijos específicos del vendedor es permitir cierta fl
 
     * [nulo]: No se necesita ningún parámetro
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
 
+```
   * **control.restart** - Reiniciar instancia de i2p
 
     * [nulo]: No se necesita ningún parámetro
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
 
+```
   * **control.restart.graceful** - Reiniciar instancia de i2p de forma ordenada
 
     * [nulo]: No se necesita ningún parámetro
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
 
+```
   * **control.shutdown** - Apagar instancia de i2p
 
     * [nulo]: No se necesita ningún parámetro
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
 
+```
   * **control.shutdown.graceful** - Apagar instancia de i2p de forma ordenada
 
     * [nulo]: No se necesita ningún parámetro
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
 
+```
   * **control.update.find** - **BLOQUEO** Buscar actualizaciones firmadas
 
     * [nulo]: No se necesita ningún parámetro
 
-    ::
+    Devuelve:
+```text
 
       true [booleano] // Verdadero si hay una actualización firmada disponible
 
+```
   * **control.update.start** - Iniciar proceso de actualización
 
     * [nulo]: No se necesita ningún parámetro
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
+```
 
 
 * **i2pcontrol.** - Configurar i2pcontrol
@@ -170,37 +188,45 @@ La idea general con los prefijos específicos del vendedor es permitir cierta fl
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       "0.0.0.0" [cadena]
 
     * *establecer* [cadena]: Esta será una dirección IP como "0.0.0.0" o "192.168.0.1"
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
 
+```
   * **i2pcontrol.password** - Cambiar la contraseña de i2pcontrol.
 
     * *establecer* [cadena]: Establecer la nueva contraseña a esta cadena
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
 
+```
   * **i2pcontrol.port** - Obtener/Establecer el puerto al que escucha i2pcontrol.
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       7650 [número]
 
     * *establecer* [número]: Cambiar el puerto al que escucha i2pcontrol a este puerto
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
+```
 
 
 * **settings.** - Obtener/Establecer configuraciones de instancia de i2p
@@ -209,13 +235,15 @@ La idea general con los prefijos específicos del vendedor es permitir cierta fl
 
     * *obtener*  [cadena]: Obtener el valor de esta configuración
 
-    ::
+    Devuelve:
+```text
 
       "valor-configuración" [cadena]
 
     * *obtenerTodo* [nulo]:
 
-    ::
+    Devuelve:
+```text
 
       [objeto]
       {
@@ -226,132 +254,160 @@ La idea general con los prefijos específicos del vendedor es permitir cierta fl
     * *establecer* [cadena]: Establecer el valor de esta configuración
     * *establecerTodo* [objeto] {"nombre-configuración" : "valor-configuración", ".." : ".." }
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
 
+```
   * **settings.bandwidth.in** - Configuraciones de ancho de banda entrante
   * **settings.bandwidth.out** - Configuraciones de ancho de banda saliente
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       0 [número]
 
     * *establecer* [número]: Establecer el límite de ancho de banda
 
-    ::
+    Devuelve:
+```text
 
      [nulo]
 
+```
   * **settings.ntcp.autoip** - Obtener configuración de detección automática de IP para NTCP
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       true [booleano]
 
+```
   * **settings.ntcp.hostname** - Obtener nombre de host NTCP
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       "0.0.0.0" [cadena]
 
     * *establecer* [cadena]: Establecer nuevo nombre de host
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
 
+```
   * **settings.ntcp.port** - Puerto NTCP
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       0 [número]
 
     * *establecer* [número]: Establecer nuevo puerto NTCP.
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
 
     * *establecer* [booleano]: Establecer detección automática de IP NTCP
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
 
+```
   * **settings.ssu.autoip** - Configurar detección automática de IP para SSU
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       true [booleano]
 
+```
   * **settings.ssu.hostname** - Configurar nombre de host SSU
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       "0.0.0.0" [cadena]
 
     * *establecer* [cadena]: Establecer nuevo nombre de host SSU
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
 
+```
   * **settings.ssu.port** - Puerto SSU
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       0 [número]
 
     * *establecer* [número]: Establecer nuevo puerto SSU.
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
 
     * *establecer* [booleano]: Establecer detección automática de IP SSU
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
 
+```
   * **settings.share** - Obtener porcentaje de compartición de ancho de banda
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       0 [número] // Porcentaje de compartición de ancho de banda (0-100)
 
     * *establecer* [número]: Establecer porcentaje de compartición de ancho de banda (0-100)
 
+```
   * **settings.upnp** - Activar o desactivar UPNP
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       true [booleano]
 
     * *establecer* [booleano]: Establecer detección automática de IP SSU
 
-    ::
+    Devuelve:
+```text
 
       [nulo]
+```
 
 
 
@@ -376,9 +432,11 @@ La idea general con los prefijos específicos del vendedor es permitir cierta fl
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       0.0 [número]
+```
 
 
 * **status.** - Obtener estado de la instancia de i2p
@@ -387,15 +445,18 @@ La idea general con los prefijos específicos del vendedor es permitir cierta fl
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       "estado" [cadena]
 
+```
   * **status.net** - Obtener estado de la red del enrutador
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       0 [número]
       /**
@@ -416,26 +477,33 @@ La idea general con los prefijos específicos del vendedor es permitir cierta fl
        *   14 – ERROR_UDP_DESACTIVADO_Y_TCP_NO_ESTABLECIDO
        */
 
+```
   * **status.isfloodfill** - ¿Es actualmente la instancia i2p un floodfill?
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       true [booleano]
 
+```
   * **status.isreseeding** - ¿Está actualmente la instancia i2p reabasteciendo?
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       true [booleano]
 
+```
   * **status.ip** - IP pública detectada de esta instancia de i2p
 
     * *obtener* [nulo]: Este parámetro no necesita ser establecido.
 
-    ::
+    Devuelve:
+```text
 
       "0.0.0.0" [cadena]
+```

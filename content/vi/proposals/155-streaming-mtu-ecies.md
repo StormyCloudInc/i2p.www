@@ -22,7 +22,7 @@ Có thể chỉnh sửa nhỏ.
 
 ECIES giảm mức tiêu thụ thông điệp phiên hiện tại (ES) khoảng 90 byte.
 Do đó, chúng ta có thể tăng MTU lên khoảng 90 byte cho các kết nối ECIES.
-Xem [ECIES]_, [STREAMING-SPEC]_, và [STREAMING-OPTIONS]_.
+Xem the [ECIES specification](/en/docs/spec/ecies/#overhead), [Streaming specification](/en/docs/spec/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/en/docs/api/streaming/).
 
 Nếu không tăng MTU, trong nhiều trường hợp tiết kiệm không thực sự 'tiết kiệm',
 vì các thông điệp sẽ được đệm để sử dụng hết hai thông điệp đường hầm đầy đủ.
@@ -68,7 +68,7 @@ tuy nhiên, không có quy định cho việc thương lượng lên trong luồ
 nên MTU nên duy trì ở mức 1730.
 
 
-Như đã nêu trong [STREAMING-OPTIONS]_,
+Như đã nêu trong the [Streaming API documentation](/en/docs/api/streaming/),
 dữ liệu trong các gói SYN được gửi từ Alice đến Bob có thể vượt quá MTU của Bob.
 Đây là một điểm yếu trong giao thức truyền trực tuyến.
 Do đó, khách hàng hai khóa phải giới hạn dữ liệu trong các gói SYN gửi
@@ -79,7 +79,7 @@ tải trọng thực tế được gửi.
 
 ### Phân tích
 
-Như mô tả trong [ECIES]_, mức tiêu thụ của ElGamal cho các thông điệp phiên hiện tại là
+Như mô tả trong the [ECIES specification](/en/docs/spec/ecies/#overhead), mức tiêu thụ của ElGamal cho các thông điệp phiên hiện tại là
 151 byte, và mức tiêu thụ Ratchet là 69 byte.
 Do đó, chúng ta có thể tăng MTU cho các kết nối ratchet lên (151 - 69) = 82 byte,
 từ 1730 lên 1812.
@@ -88,8 +88,8 @@ từ 1730 lên 1812.
 
 ## Thông số kỹ thuật
 
-Thêm các thay đổi và làm rõ sau vào phần Lựa chọn và Thương lượng MTU của [STREAMING-OPTIONS]_.
-Không có thay đổi nào với [STREAMING-SPEC]_.
+Thêm các thay đổi và làm rõ sau vào phần Lựa chọn và Thương lượng MTU của the [Streaming API documentation](/en/docs/api/streaming/).
+Không có thay đổi nào với the [Streaming specification](/en/docs/spec/streaming/).
 
 
 Giá trị mặc định của tùy chọn i2p.streaming.maxMessageSize vẫn là 1730 cho tất cả các kết nối, dù sử dụng khóa nào.
@@ -161,8 +161,8 @@ trong SYN ACK từ Bob đến Alice, và trong tất cả các gói gửi sau đ
 
 ## Biện minh
 
-Xem [CALCULATION]_ để biết lý do tại sao giá trị hiện tại là 1730.
-Xem [ECIES]_ để biết tại sao tiêu thụ ECIES thấp hơn ElGamal là 82 byte.
+Xem the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220) để biết lý do tại sao giá trị hiện tại là 1730.
+Xem the [ECIES specification](/en/docs/spec/ecies/#overhead) để biết tại sao tiêu thụ ECIES thấp hơn ElGamal là 82 byte.
 
 
 
@@ -206,16 +206,3 @@ sẽ thương lượng xuống, như thường lệ.
 
 
 
-## Tài liệu tham khảo
-
-.. [CALCULATION]
-   https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220
-
-.. [ECIES]
-   {{ spec_url('ecies') }}#overhead
-
-.. [STREAMING-OPTIONS]
-    {{ site_url('docs/api/streaming', True) }}
-
-.. [STREAMING-SPEC]
-    {{ spec_url('streaming') }}#flags-and-option-data-fields

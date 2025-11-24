@@ -22,7 +22,7 @@ O objetivo original dos nomes de host era ajudar usuários com IPs frequentement
 
 Além disso, no início, o I2P não suportava IPv6, então a complicação de resolver um nome de host para um endereço IPv4 ou IPv6 não existia.
 
-No Java I2P, sempre foi um desafio propagar um nome de host configurado para ambos os transportes publicados, e a situação ficou mais complexa com IPv6. O ticket aberto 1050 http://trac.i2p2.i2p/ticket/1050 detalha alguns dos problemas. Não está claro se um host dual-stack deve publicar tanto um nome de host quanto um endereço IPv6 literal ou não. O nome de host é publicado para o endereço SSU, mas não para o endereço NTCP.
+No Java I2P, sempre foi um desafio propagar um nome de host configurado para ambos os transportes publicados, e a situação ficou mais complexa com IPv6. Não está claro se um host dual-stack deve publicar tanto um nome de host quanto um endereço IPv6 literal ou não. O nome de host é publicado para o endereço SSU, mas não para o endereço NTCP.
 
 Recentemente, questões de DNS foram levantadas (tanto indiretamente quanto diretamente) por pesquisas no Georgia Tech. Os pesquisadores operaram um grande número de floodfills com nomes de host publicados. O problema imediato era que, para um pequeno número de usuários com possível DNS local quebrado, isso travava completamente o I2P.
 
@@ -50,7 +50,7 @@ Altere as especificações de transporte NTCP e SSU para indicar que o parâmetr
 
 Isso também se aplica aos parâmetros "ihost0", "ihost1" e "ihost2" em um endereço SSU. Os roteadores devem ignorar endereços de introdutores que contenham nomes de host.
 
-A seção relevante é "Especificação de Endereço de Roteador" nas especificações de transporte: http://i2p-projekt.i2p/en/docs/specs/ntcp e http://i2p-projekt.i2p/en/docs/specs/ssu
+
 
 ## Notas
 

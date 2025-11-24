@@ -83,9 +83,9 @@ Yönlendirici Kimlikleri rastgele verilerin 10 kopyasını (320 bayt) içerir.
 
 ### Tahmini Tasarruflar
 
-Hedefler her akış SYN [Streaming]_ ve yanıtlanabilir datagram [Datagram]_ içinde 
-bulunur. Yönlendirici Bilgileri (Yönlendirici Kimlikleri içerir) Veritabanı Depolama Mesajlarında [I2NP]_ 
-ve [NTCP2]_ ve [SSU2]_ içindeki Oturum Onaylanmış mesajlarında bulunur.
+Hedefler her akış SYN ve yanıtlanabilir datagram içinde
+bulunur. Yönlendirici Bilgileri (Yönlendirici Kimlikleri içerir) Veritabanı Depolama Mesajlarında
+ve NTCP2 ve SSU2 içindeki Oturum Onaylanmış mesajlarında bulunur.
 
 NTCP2 Yönlendirici Bilgisini sıkıştırmaz.
 Veritabanı Depolama Mesajlarındaki RI'lar ve SSU2 Oturum Onaylanmış mesajlar sıkıştırılır.
@@ -117,10 +117,10 @@ Mevcut spesifikasyonlarımızda önerilen değişiklikler aşağıda belgelenmi�
 
 
 ### Ortak Yapılar
-Ortak yapılar spesifikasyonunu [COMMON]_ (ortak yapılar) değiştirme
+Ortak yapılar spesifikasyonunu değiştirme
 Hedef açık anahtar alanının göz ardı edildiğini ve rastgele veriler içerebileceğini belirtin.
 
-Ortak yapılar spesifikasyonuna [COMMON]_ Hedef açık anahtar alanı ve
+Ortak yapılar spesifikasyonuna Hedef açık anahtar alanı ve
 Hedef ve Yönlendirici Kimliği'ndeki dolgu alanları için en iyi uygulamayı öneren bir bölüm ekleyin:
 
 32 bayt rastgele veri oluşturmak için güçlü bir kriptografik sözde rastgele sayı üreteci (PRNG) kullanın
@@ -129,13 +129,13 @@ Hedef ve Yönlendirici Kimliği için dolgu alanını dolduracak şekilde gerekt
 
 ### Özel Anahtar Dosyası
 Özel anahtar dosyası (eepPriv.dat) formatı, spesifikasyonlarımızın resmi bir parçası değildir
-ancak Java I2P javadoc'larında [PKF]_ belgelenmiştir ve diğer uygulamalar bunu destekler.
+ancak [Java I2P javadocs](http://idk.i2p/javadoc-i2p/net/i2p/data/PrivateKeyFile.html) belgelenmiştir ve diğer uygulamalar bunu destekler.
 Bu, özel anahtarların farklı uygulamalara taşınabilirliğine olanak sağlar.
 Bu javadocs'da şifreleme açık anahtarının rastgele dolgu olabileceğine ve şifreleme özel anahtarının tüm sıfır veya rastgele
 veri olabileceğine dair bir not ekleyin.
 
 ### SAM
-[SAM]_ şifreleme özel anahtarının kullanılmadığını ve göz ardı edilebileceğini
+SAM spesifikasyonunda şifreleme özel anahtarının kullanılmadığını ve göz ardı edilebileceğini
 belirtin. Herhangi bir rastgele veri istemci tarafından döndürülebilir.
 SAM Köprüsü, Base 64 gösterimi bir dizi AAAA karakter içermemesi ve bozuk görünmemesi
 için tüm sıfırlar yerine rastgele veriler gönderebilir (DEST GENERATE veya SESSION CREATE DESTINATION=TRANSIENT
@@ -143,7 +143,7 @@ ile oluşturma sırasında).
 
 
 ### I2CP
-[I2CP]_ için değişiklik gerekmez. Hedefteki şifreleme açık anahtarı
+I2CP için değişiklik gerekmez. Hedefteki şifreleme açık anahtarı
 ile ilişkili özel anahtar yönlendiriciye gönderilmez.
 
 
@@ -221,7 +221,7 @@ yanıtlarını etkiler.
 Bu tasarım, geliştirme ve yayılma için öngörülen zaman çerçevesi nedir ????????
 Ancak hibrit veya ratchetten sonra olur ????????????
 
-Daha fazla tartışma için bkz [PQ]_.
+Daha fazla tartışma için bkz [this topic](http://zzz.i2p/topics/3294).
 
 
 
@@ -253,40 +253,4 @@ Geriye dönük uyumluluk sorunlarına tabi olarak, ve SSU devre dışı bırakı
 uygulamalar ElGamal kodunu tamamen kaldırabilir.
 Ağdaki yönlendiricilerin yaklaşık %14'ü ElGamal şifreleme türündedir, bunların birçoğu floodfill'dir.
 
-Java I2P için bir taslak birleştirme isteği [MR]_ adresindedir.
-
-
-## Referanslar
-
-.. [Common]
-    {{ spec_url('common-structures') }}
-
-.. [Datagram]
-    {{ spec_url('datagrams') }}
-
-.. [I2CP]
-    {{ spec_url('i2cp') }}
-
-.. [I2NP]
-    {{ spec_url('i2np') }}
-
-.. [MR]
-    http://git.idk.i2p/i2p-hackers/i2p.i2p/-/merge_requests/66
-
-.. [NTCP2]
-    {{ spec_url('ntcp2') }}
-
-.. [PKF]
-    http://{{ i2pconv('idk.i2p/javadoc-i2p') }}/net/i2p/data/PrivateKeyFile.html
-
-.. [PQ]
-    http://zzz.i2p/topics/3294
-
-.. [SAM]
-    {{ site_url('docs/api/samv3') }}
-
-.. [SSU2]
-    {{ spec_url('ssu2') }}
-
-.. [Streaming]
-    {{ spec_url('streaming') }}
+Java I2P için bir taslak birleştirme isteği [git.idk.i2p](http://git.idk.i2p/i2p-hackers/i2p.i2p/-/merge_requests/66) adresindedir.

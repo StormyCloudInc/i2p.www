@@ -33,8 +33,7 @@ Floodfills nên chấp nhận, và lưu truyền, các lưu trữ LS với các 
 
 ## Đặc tả
 
-Tham khảo: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 Đối với các loại chữ ký trong phạm vi thử nghiệm, một floodfill nên chấp nhận và lưu truyền lưu trữ netdb mà không kiểm tra chữ ký.
 
@@ -66,7 +65,4 @@ Các vấn đề tương tự sẽ cần được giải quyết với các lo�
 Lưu trữ NetDB của các loại chữ ký không rõ không nằm trong phạm vi thử nghiệm sẽ tiếp tục bị từ chối bởi floodfills, vì chữ ký không thể được xác minh.
 
 
-## Xem Thêm
 
-Đề xuất 134
-Đề xuất 137

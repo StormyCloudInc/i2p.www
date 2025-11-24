@@ -24,9 +24,7 @@ mümkün olan en basit ve en tutarlı API'yi sağlamaktır.
 
 ## API 2 Özellikleri
 
-.. raw:: html
-
-  {% highlight lang='json' -%}
+```json
 {
     "id": "id",
     "method": "method_name",
@@ -42,7 +40,7 @@ mümkün olan en basit ve en tutarlı API'yi sağlamaktır.
     "result": "result_value",
     "jsonrpc": "2.0"
   }
-{% endhighlight %}
+```
 
 ### Parametreler
 
@@ -71,12 +69,14 @@ mümkün olan en basit ve en tutarlı API'yi sağlamaktır.
 ### Önekler
 
 RPC adlandırma şeması, farklı API uygulamaları için satıcı önekleriyle CSS'de nasıl yapıldığına benzer
-(i2p, kovri, i2pd)::
+(i2p, kovri, i2pd):
 
-    XXX.YYY.ZZZ
+```text
+XXX.YYY.ZZZ
     i2p.XXX.YYY.ZZZ
     i2pd.XXX.YYY.ZZZ
     kovri.XXX.YYY.ZZZ
+```
 
 Satıcıya özel öneklerle ilgili genel amaç, bazı esneklik sağlamaktır
 ve diğer tüm uygulamaların yetişmesini beklemek zorunda kalmadan yenilik yapmalarına izin vermek.
@@ -91,24 +91,29 @@ ve bir sonraki API sürümünde çekirdek bir RPC olarak dahil edilebilir.
    * *parameter* [parametre türü]: [null], [number], [string], [boolean],
      [array] veya [object]. [object], {anahtar:değer} haritası olur.
 
-::
+Döndürür:
+```text
 
   "return_value" [string] // RPC çağrısı tarafından döndürülen değer
+```
 
 
 ### Yöntemler
+```
 
 * **authenticate** - Doğru bir şifre sağlandığında, bu yöntem size daha fazla erişim için bir belirteç ve desteklenen API seviyelerinin bir listesini sağlar.
 
   * *password* [string]:  Bu i2pcontrol uygulaması için şifre
 
-  ::
-
+    Döndürür:
+```text
     [object]
     {
       "token" : [string], // Diğer tüm RPC yöntemleriyle sağlanacak belirteç
       "api" : [[int],[int], ...]  // Desteklenen API seviyelerinin listesi.
     }
+```
+```
 
 
 * **control.** - i2p'yi kontrol et
@@ -117,57 +122,66 @@ ve bir sonraki API sürümünde çekirdek bir RPC olarak dahil edilebilir.
 
     * [nil]: Parametre gerekmiyor
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
 
   * **control.restart** - i2p örneğini yeniden başlat
 
     * [nil]: Parametre gerekmiyor
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
 
   * **control.restart.graceful** - i2p örneğini nazikçe yeniden başlat
 
     * [nil]: Parametre gerekmiyor
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
 
   * **control.shutdown** - i2p örneğini kapat
 
     * [nil]: Parametre gerekmiyor
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
 
   * **control.shutdown.graceful** - i2p örneğini nazikçe kapat
 
     * [nil]: Parametre gerekmiyor
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
 
   * **control.update.find** - **BLOKE EDİCİ** İmzalı güncellemeleri ara
 
     * [nil]: Parametre gerekmiyor
 
-    ::
+    Döndürür:
+```text
+      true [boolean]
+``` // İmzalı güncelleme mevcutsa doğru
 
-      true [boolean] // İmzalı güncelleme mevcutsa doğru
-
+```
   * **control.update.start** - Güncelleme sürecine başla
 
     * [nil]: Parametre gerekmiyor
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
+```
 
 
 * **i2pcontrol.** - i2pcontrol yapılandırın
@@ -176,37 +190,43 @@ ve bir sonraki API sürümünde çekirdek bir RPC olarak dahil edilebilir.
 
     * *get* [null]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: "0.0.0.0" veya "192.168.0.1" gibi bir IP adresi olacak
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
 
   * **i2pcontrol.password** - i2pcontrol şifresini değiştirin.
 
     * *set* [string]: Yeni şifreyi bu dizeye ayarlayın
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
 
   * **i2pcontrol.port** - i2pcontrol'un dinlediği portu al/ayarla.
 
     * *get* [null]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       7650 [number]
+```
 
     * *set* [number]: i2pcontrol'un dinlediği portu bu porta değiştirin
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
+```
 
 
 * **settings.** - i2p örneği ayarlarını al/ayarla
@@ -215,149 +235,171 @@ ve bir sonraki API sürümünde çekirdek bir RPC olarak dahil edilebilir.
 
     * *get*  [string]: Bu ayarın değerini al
 
-    ::
-
+    Döndürür:
+```text
       "setting-value" [string]
+```
 
     * *getAll* [null]:
 
-    ::
-
+    Döndürür:
+```text
       [object]
       {
         "setting-name" : "setting-value", [string]
-        ".." : ".." 
+        ".." : ".."
       }
+```
 
     * *set* [string]: Bu ayarın değerini ayarla
     * *setAll* [object] {"setting-name" : "setting-value", ".." : ".." }
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
 
   * **settings.bandwidth.in** - Gelen bant genişliği ayarları
   * **settings.bandwidth.out** - Giden bant genişliği ayarları
 
     * *get* [nil]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       0 [number]
+```
 
     * *set* [number]: Bant genişliği sınırını ayarla
 
-    ::
-
+    Döndürür:
+```text
      [nil]
+```
 
   * **settings.ntcp.autoip** - NTCP için IP otomatik algılama ayarını al
 
     * *get* [null]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       true [boolean]
+```
 
   * **settings.ntcp.hostname** - NTCP sunucu adını al
 
     * *get* [null]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Yeni sunucu adını ayarla
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
 
   * **settings.ntcp.port** - NTCP portu
 
     * *get* [null]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       0 [number]
+```
 
     * *set* [number]: Yeni NTCP portunu ayarla.
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
 
     * *set* [boolean]: NTCP IP otomatik algılama ayarla
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
 
   * **settings.ssu.autoip** - SSU için IP otomatik algılama ayarını yapılandırın
 
     * *get* [nil]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       true [boolean]
+```
 
   * **settings.ssu.hostname** - SSU sunucu adını yapılandırın
 
     * *get* [null]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Yeni SSU sunucu adını ayarla
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
 
   * **settings.ssu.port** - SSU portu
 
     * *get* [null]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       0 [number]
+```
 
     * *set* [number]: Yeni SSU portunu ayarla.
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
 
     * *set* [boolean]: SSU IP otomatik algılama ayarla
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
 
   * **settings.share** - Bant genişliği paylaşım yüzdesini al
 
     * *get* [null]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
-      0 [number] // Bant genişliği paylaşım yüzdesi (0-100)
+    Döndürür:
+```text
+      0 [number]
+``` // Bant genişliği paylaşım yüzdesi (0-100)
 
     * *set* [number]: Bant genişliği paylaşım yüzdesini ayarla (0-100)
 
+```
   * **settings.upnp** - UPNP'yi etkinleştir veya devre dışı bırak
 
     * *get* [nil]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       true [boolean]
+```
 
     * *set* [boolean]: SSU IP otomatik algılama ayarla
 
-    ::
-
+    Döndürür:
+```text
       [nil]
+```
+```
 
 
 
@@ -382,9 +424,11 @@ ve bir sonraki API sürümünde çekirdek bir RPC olarak dahil edilebilir.
 
     * *get* [null]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       0.0 [number]
+```
+```
 
 
 * **status.** - i2p örneği durumunu al
@@ -393,16 +437,17 @@ ve bir sonraki API sürümünde çekirdek bir RPC olarak dahil edilebilir.
 
     * *get* [null]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       "status" [string]
+```
 
   * **status.net** - Yönlendirici ağ durumunu al
 
     * *get* [null]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       0 [number]
       /**
        *    0 – OK
@@ -421,27 +466,32 @@ ve bir sonraki API sürümünde çekirdek bir RPC olarak dahil edilebilir.
        *   13 – ERROR_NO_ACTIVE_PEERS_CHECK_CONNECTION_AND_FIREWALL
        *   14 – ERROR_UDP_DISABLED_AND_TCP_UNSET
        */
+```
 
   * **status.isfloodfill** - i2p örneği şu anda bir floodfill mi
 
     * *get* [null]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       true [boolean]
+```
 
   * **status.isreseeding** - i2p örneği şu anda yeniden tohumlanıyor mu
 
     * *get* [null]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       true [boolean]
+```
 
   * **status.ip** - Bu i2p örneğinin algılanan genel IP'si
 
     * *get* [null]: Bu parametrenin ayarlanmasına gerek yoktur.
 
-    ::
-
+    Döndürür:
+```text
       "0.0.0.0" [string]
+```
+```

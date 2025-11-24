@@ -22,15 +22,15 @@ ElGamal ist alt und langsam, und es gibt bessere Alternativen. Es gibt jedoch me
 
 Jeder, der neue Kryptographie vorschlägt, muss zuerst mit den folgenden Dokumenten vertraut sein:
 
-- Vorschlag 111 NTCP2 /proposals/111-ntcp-2/
-- Vorschlag 123 LS2 /proposals/123-new-netdb-entries/
-- Vorschlag 136 experimentelle Sig-Typen /proposals/136-experimental-sigtypes/
-- Vorschlag 137 optionale Sig-Typen /proposals/137-optional-sigtypes/
+- [Vorschlag 111 NTCP2](/de/proposals/111-ntcp-2/)
+- [Vorschlag 123 LS2](/de/proposals/123-new-netdb-entries/)
+- [Vorschlag 136 experimentelle Sig-Typen](/de/proposals/136-experimental-sigtypes/)
+- [Vorschlag 137 optionale Sig-Typen](/de/proposals/137-optional-sigtypes/)
 - Diskussionsfäden hier für jeden der obigen Vorschläge, innerhalb verlinkt
-- http://zzz.i2p/topics/2494 Prioritäten für Vorschläge 2018
-- http://zzz.i2p/topics/2418 ECIES-Vorschlag
-- http://zzz.i2p/topics/1768 Übersicht über neue asymmetrische Kryptographie
-- Niedrig-Level-Krypto-Übersicht /docs/specs/cryptography/
+- [Prioritäten für Vorschläge 2018](http://zzz.i2p/topics/2494)
+- [ECIES-Vorschlag](http://zzz.i2p/topics/2418)
+- [Übersicht über neue asymmetrische Kryptographie](http://zzz.i2p/topics/1768)
+- [Niedrig-Level-Krypto-Übersicht](/de/docs/specs/common-structures/)
 
 ## Verwendung der asymmetrischen Kryptographie
 

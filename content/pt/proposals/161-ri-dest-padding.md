@@ -87,10 +87,10 @@ As Identidades de Roteador conterão 10 cópias (320 bytes) dos dados aleatório
 
 ### Estimativa de Economia
 
-Os Destinos estão incluídos em cada SYN de streaming [Streaming]_
-e datagrama respondível [Datagram]_.
-Infos de Roteador (contendo Identidades de Roteador) estão incluídos em Mensagens de Armazenamento de Banco de Dados [I2NP]_
-e nas mensagens Sessão Confirmada em [NTCP2]_ e [SSU2]_.
+Os Destinos estão incluídos em cada SYN de streaming
+e datagrama respondível.
+Infos de Roteador (contendo Identidades de Roteador) estão incluídos em Mensagens de Armazenamento de Banco de Dados
+e nas mensagens Sessão Confirmada em NTCP2 e SSU2.
 
 NTCP2 não comprime a Info de Roteador.
 RIs em Mensagens de Armazenamento de Banco de Dados e mensagens Sessão Confirmada SSU2 são compactados com gzip.
@@ -122,11 +122,11 @@ As mudanças propostas para nossas especificações atuais estão documentadas a
 
 
 ### Estruturas Comuns
-Alterar a especificação das estruturas comuns [COMMON]_
+Alterar a especificação das estruturas comuns
 para especificar que o campo de chave pública de Destino de 256 bytes é ignorado e pode
 conter dados aleatórios.
 
-Adicionar uma seção à especificação das estruturas comuns [COMMON]_
+Adicionar uma seção à especificação das estruturas comuns
 recomendando a melhor prática para o campo de chave pública de Destino e os
 campos de preenchimento do Destino e Identidade de Roteador, conforme segue:
 
@@ -136,14 +136,14 @@ e o campo de preenchimento (para Destinos e Identidades de Roteador).
 
 ### Arquivo de Chave Privada
 O formato do arquivo de chave privada (eepPriv.dat) não é uma parte oficial de nossas especificações
-mas está documentado nos javadocs Java I2P [PKF]_
+mas está documentado nos [Java I2P javadocs](http://idk.i2p/javadoc-i2p/net/i2p/data/PrivateKeyFile.html)
 e outras implementações o suportam.
 Isso permite a portabilidade de chaves privadas entre diferentes implementações.
 Adicionar uma nota a esse javadoc de que a chave pública de criptografia pode ser um preenchimento aleatório
 e a chave privada de criptografia pode ser toda de zeros ou dados aleatórios.
 
 ### SAM
-Nota em [SAM]_ que a chave privada de criptografia não é usada e pode ser ignorada.
+Nota na especificação SAM que a chave privada de criptografia não é usada e pode ser ignorada.
 Qualquer dado aleatório pode ser retornado pelo cliente.
 A SAM Bridge pode enviar dados aleatórios na criação (com DEST GENERATE ou SESSION CREATE DESTINATION=TRANSIENT)
 ao invés de todos zeros, para que a representação em Base 64 não tenha uma sequência de caracteres AAAA
@@ -151,7 +151,7 @@ e pareça quebrada.
 
 
 ### I2CP
-Nenhuma mudança necessária para o [I2CP]_. A chave privada para a chave pública de criptografia no Destino
+Nenhuma mudança necessária para o I2CP. A chave privada para a chave pública de criptografia no Destino
 não é enviada para o roteador.
 
 
@@ -227,7 +227,7 @@ Mensagens de Pesquisa de Banco de Dados criptografadas e respostas.
 Prazo estimado para projeto, desenvolvimento e implantação disso seria ????????
 Mas seria após híbrido ou ratchet ????????????
 
-Para mais discussões, veja [PQ]_.
+Para mais discussões, veja [this topic](http://zzz.i2p/topics/3294).
 
 
 
@@ -257,40 +257,4 @@ Sujeito a questões de compatibilidade com versões anteriores, e após desabili
 as implementações podem remover completamente o código ElGamal.
 Aproximadamente 14% dos roteadores na rede são do tipo de criptografia ElGamal, incluindo muitos floodfills.
 
-Uma solicitação de mesclagem preliminar para I2P em Java está em [MR]_.
-
-
-## Referências
-
-.. [Common]
-    {{ spec_url('common-structures') }}
-
-.. [Datagram]
-    {{ spec_url('datagrams') }}
-
-.. [I2CP]
-    {{ spec_url('i2cp') }}
-
-.. [I2NP]
-    {{ spec_url('i2np') }}
-
-.. [MR]
-    http://git.idk.i2p/i2p-hackers/i2p.i2p/-/merge_requests/66
-
-.. [NTCP2]
-    {{ spec_url('ntcp2') }}
-
-.. [PKF]
-    http://{{ i2pconv('idk.i2p/javadoc-i2p') }}/net/i2p/data/PrivateKeyFile.html
-
-.. [PQ]
-    http://zzz.i2p/topics/3294
-
-.. [SAM]
-    {{ site_url('docs/api/samv3') }}
-
-.. [SSU2]
-    {{ spec_url('ssu2') }}
-
-.. [Streaming]
-    {{ spec_url('streaming') }}
+Uma solicitação de mesclagem preliminar para I2P em Java está em [git.idk.i2p](http://git.idk.i2p/i2p-hackers/i2p.i2p/-/merge_requests/66).

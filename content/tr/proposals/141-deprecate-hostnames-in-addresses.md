@@ -39,7 +39,7 @@ bu yüzden bir host ismini IPv4 veya IPv6 adresine çözme karmaşıklığı yok
 
 Java I2P'de, yapılandırılmış bir host ismini hem yayınlanan iletim araçlarına
 hem de IPv6 ile daha karmaşık hale gelen duruma yaymak her zaman bir zorluk olmuştur.
-Açık bilet 1050 http://trac.i2p2.i2p/ticket/1050 bu sorunlardan bazılarını detaylandırıyor.
+
 Çift yığınlı bir hostun hem bir host ismi hem de bir literal IPv6 adresi yayınlaması
 gerekip gerekmediği net değildir. Host ismi SSU adresi için yayınlanır ama
 NTCP adresi için yayınlanmaz.
@@ -122,10 +122,7 @@ host isimlerini içeren bireysel yönlendirici adreslerini görmezden gelmesi ge
 Bu aynı zamanda bir SSU adresindeki "ihost0", "ihost1" ve "ihost2" parametreleri için de geçerlidir.
 Yönlendiriciler, host isimlerini içeren tanıtıcı adresleri görmezden gelmelidir.
 
-İlgili bölüm, taşıma spesifikasyonlarındaki "Yönlendirici Adresi Spesifikasyonu":
-http://i2p-projekt.i2p/en/docs/specs/ntcp
-ve
-http://i2p-projekt.i2p/en/docs/specs/ssu
+
 
 
 ## Notlar

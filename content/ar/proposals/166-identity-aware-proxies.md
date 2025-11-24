@@ -23,7 +23,7 @@ target: "0.9.65"
 لكن هل هي مشكلة؟
 ^^^^^^^^^^^^^^^^^^^^
 
-تعتبر مشكلة الهوية المشتركة مشكلة عندما يرغب وكلاء المستخدم الذين يتحدثون نفس البروتوكول في عدم الارتباط. تمت الإشارة إلى ذلك لأول مرة في سياق HTTP في هذا `الموضوع على Reddit <https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/>`__، مع الوصول إلى التعليقات المحذوفة بفضل `pullpush.io <https://api.pullpush.io/reddit/search/comment/?link_id=579idi>`__. *في ذلك الوقت* كنت واحدًا من أكثر المستجيبين نشاطًا، وفي ذلك الوقت كنت أعتقد أن المشكلة صغيرة. خلال السنوات الثماني الماضية، تغيرت الظروف ورأيي فيها، وأنا الآن أعتقد أن التهديد الذي يشكله ربط الوجهة الخبيث يزيد بشكل كبير مع زيادة المواقع التي تسعى إلى إنشاء "بروفايل" لمستخدمين محددين.
+تعتبر مشكلة الهوية المشتركة مشكلة عندما يرغب وكلاء المستخدم الذين يتحدثون نفس البروتوكول في عدم الارتباط. تمت الإشارة إلى ذلك لأول مرة في سياق HTTP في هذا [الموضوع على Reddit](https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/)، مع الوصول إلى التعليقات المحذوفة بفضل [pullpush.io](https://api.pullpush.io/reddit/search/comment/?link_id=579idi). *في ذلك الوقت* كنت واحدًا من أكثر المستجيبين نشاطًا، وفي ذلك الوقت كنت أعتقد أن المشكلة صغيرة. خلال السنوات الثماني الماضية، تغيرت الظروف ورأيي فيها، وأنا الآن أعتقد أن التهديد الذي يشكله ربط الوجهة الخبيث يزيد بشكل كبير مع زيادة المواقع التي تسعى إلى إنشاء "بروفايل" لمستخدمين محددين.
 
 هذا الهجوم له عتبة دخول منخفضة جدًا. يتطلب فقط أن يشغل مشغل الخدمة المخفية خدمات متعددة. بالنسبة للهجمات على الزيارات المعاصرة (زيارات متعددة في نفس الوقت)، فهذا هو المتطلب الوحيد. بالنسبة للربط غير المعاصر، يجب أن تكون إحدى تلك الخدمات هي خدمة تستضيف "حسابات" تنتمي إلى مستخدم واحد مستهدف بالتتبع.
 
@@ -133,18 +133,5 @@ target: "0.9.65"
 
 مُلحق: ``تنفيذ مثال للهجوم``
 
-`تنفيذ مثال لهجوم الهوية المشتركة على وكلاء المستخدمين HTTP <https://github.com/eyedeekay/colluding_sites_attack/>`__ موجود منذ عدة سنوات. مثال إضافي متاح في `المجلد الفرعي ``simple-colluder`` لمستودع prop166 لـ idk <https://git.idk.i2p/idk/i2p.host-aware-proxy>`__ تم تصميم هذه الأمثلة عمدًا لإثبات أن الهجوم يعمل وأنها سوف تتطلب تعديلًا (وإن كان طفيفًا) لتحويلها إلى هجوم حقيقي.
+[تنفيذ مثال لهجوم الهوية المشتركة على وكلاء المستخدمين HTTP](https://github.com/eyedeekay/colluding_sites_attack/) موجود منذ عدة سنوات. مثال إضافي متاح في `المجلد الفرعي ``simple-colluder`[ لمستودع prop166 لـ idk](https://git.idk.i2p/idk/i2p.host-aware-proxy) تم تصميم هذه الأمثلة عمدًا لإثبات أن الهجوم يعمل وأنها سوف تتطلب تعديلًا (وإن كان طفيفًا) لتحويلها إلى هجوم حقيقي.
 
-الاقتباسات:
-''''''''''
-
-https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/
-https://api.pullpush.io/reddit/search/comment/?link_id=579idi
-https://github.com/eyedeekay/colluding_sites_attack/
-https://en.wikipedia.org/wiki/Shadow_profile
-https://github.com/eyedeekay/si-i2p-plugin/
-https://github.com/eyedeekay/eeproxy/
-/docs/api/socks/
-https://i2pgit.org/idk/i2p.www/-/compare/master...166-identity-aware-proxies?from_project_id=17
-https://i2pgit.org/idk/i2p.i2p/-/tree/i2p.i2p.2.6.0-browser-proxy-post-keepalive?ref_type=heads
-```

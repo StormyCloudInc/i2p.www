@@ -24,9 +24,7 @@ a API mais simples e coerente possível.
 
 ## Especificação da API 2
 
-.. raw:: html
-
-  {% highlight lang='json' -%}
+```json
 {
     "id": "id",
     "method": "method_name",
@@ -42,7 +40,7 @@ a API mais simples e coerente possível.
     "result": "result_value",
     "jsonrpc": "2.0"
   }
-{% endhighlight %}
+```
 
 ### Parâmetros
 
@@ -72,12 +70,14 @@ a API mais simples e coerente possível.
 ### Prefixos
 
 O esquema de nomenclatura RPC é semelhante ao como é feito em CSS, com prefixos de fornecedores
-para as diferentes implementações de API (i2p, kovri, i2pd)::
+para as diferentes implementações de API (i2p, kovri, i2pd):
 
-    XXX.YYY.ZZZ
+```text
+XXX.YYY.ZZZ
     i2p.XXX.YYY.ZZZ
     i2pd.XXX.YYY.ZZZ
     kovri.XXX.YYY.ZZZ
+```
 
 A ideia geral com os prefixos específicos de fornecedores é permitir alguma margem de manobra
 e deixar as implementações inovarem sem ter que esperar que todas as outras implementações
@@ -91,10 +91,12 @@ ser removidos e ele pode ser incluído como um RPC central na próxima versão d
 
    * *parameter* [tipo de parâmetro]:  [null], [number], [string], [boolean],
      [array] ou [object]. [object] sendo um mapa {key:value}.
+  * Retorna:
 
-::
+```text
 
   "return_value" [string] // Este é o valor retornado pela chamada RPC
+```
 
 
 ### Métodos
@@ -103,13 +105,14 @@ ser removidos e ele pode ser incluído como um RPC central na próxima versão d
 
   * *password* [string]:  A senha para esta implementação do i2pcontrol
 
-  ::
-
+    Retorna:
+```text
     [object]
     {
       "token" : [string], // O token a ser usado que deve ser fornecido com todos os outros métodos RPC
       "api" : [[int],[int], ...]  // Uma lista de níveis de API suportados.
     }
+```
 
 
 * **control.** - Controlar i2p
@@ -118,57 +121,64 @@ ser removidos e ele pode ser incluído como um RPC central na próxima versão d
 
     * [nil]: Nenhum parâmetro necessário
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
   * **control.restart** - Reiniciar a instância do i2p
 
     * [nil]: Nenhum parâmetro necessário
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
   * **control.restart.graceful** - Reiniciar a instância do i2p de maneira graciosa
 
     * [nil]: Nenhum parâmetro necessário
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
   * **control.shutdown** - Encerrar a instância do i2p
 
     * [nil]: Nenhum parâmetro necessário
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
   * **control.shutdown.graceful** - Encerrar a instância do i2p de maneira graciosa
 
     * [nil]: Nenhum parâmetro necessário
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
   * **control.update.find** - **BLOQUEANTE** Procurar por atualizações assinadas
 
     * [nil]: Nenhum parâmetro necessário
 
-    ::
-
-      true [boolean] // Verdadeiro se houver uma atualização assinada disponível
+    Retorna:
+```text
+      true [boolean]
+``` // Verdadeiro se houver uma atualização assinada disponível
 
   * **control.update.start** - Iniciar o processo de atualização
 
     * [nil]: Nenhum parâmetro necessário
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
 
 * **i2pcontrol.** - Configurar o i2pcontrol
@@ -177,37 +187,42 @@ ser removidos e ele pode ser incluído como um RPC central na próxima versão d
 
     * *get* [null]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Este será um endereço IP como "0.0.0.0" ou "192.168.0.1"
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
   * **i2pcontrol.password** - Alterar a senha do i2pcontrol.
 
     * *set* [string]: Definir a nova senha para esta string
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
   * **i2pcontrol.port** - Obter/Definir a porta à qual o i2pcontrol se conecta.
 
     * *get* [null]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       7650 [number]
+```
 
     * *set* [number]: Alterar a porta à qual o i2pcontrol se conecta para esta porta
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
 
 * **settings.** - Obter/Definir configurações da instância i2p
@@ -216,133 +231,151 @@ ser removidos e ele pode ser incluído como um RPC central na próxima versão d
 
     * *get*  [string]: Obter o valor desta configuração
 
-    ::
-
+    Retorna:
+```text
       "setting-value" [string]
+```
 
     * *getAll* [null]:
 
-    ::
-
+    Retorna:
+```text
       [object]
       {
         "setting-name" : "setting-value", [string]
-        ".." : ".." 
+        ".." : ".."
       }
+```
 
     * *set* [string]: Definir o valor desta configuração
     * *setAll* [object] {"setting-name" : "setting-value", ".." : ".." }
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
   * **settings.bandwidth.in** - Configurações de largura de banda de entrada
   * **settings.bandwidth.out** - Configurações de largura de banda de saída
 
     * *get* [nil]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       0 [number]
+```
 
     * *set* [number]: Definir o limite de largura de banda
 
-    ::
-
+    Retorna:
+```text
      [nil]
+```
 
   * **settings.ntcp.autoip** - Obter configuração de detecção automática de IP para NTCP
 
     * *get* [null]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       true [boolean]
+```
 
   * **settings.ntcp.hostname** - Obter nome do host NTCP
 
     * *get* [null]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Definir novo nome do host
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
   * **settings.ntcp.port** - Porta NTCP
 
     * *get* [null]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       0 [number]
+```
 
     * *set* [number]: Definir nova porta NTCP.
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
     * *set* [boolean]: Definir detecção automática de IP NTCP
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
   * **settings.ssu.autoip** - Configurar detecção automática de IP para SSU
 
     * *get* [nil]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       true [boolean]
+```
 
   * **settings.ssu.hostname** - Configurar nome do host SSU
 
     * *get* [null]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       "0.0.0.0" [string]
+```
 
     * *set* [string]: Definir novo nome do host SSU
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
   * **settings.ssu.port** - Porta SSU
 
     * *get* [null]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       0 [number]
+```
 
     * *set* [number]: Definir nova porta SSU.
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
     * *set* [boolean]: Definir detecção automática de IP SSU
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
   * **settings.share** - Obter porcentagem de compartilhamento de largura de banda
 
     * *get* [null]: Este parâmetro não precisa ser definido.
 
-    ::
-
-      0 [number] // Porcentagem de compartilhamento de largura de banda (0-100)
+    Retorna:
+```text
+      0 [number]
+``` // Porcentagem de compartilhamento de largura de banda (0-100)
 
     * *set* [number]: Definir porcentagem de compartilhamento de largura de banda (0-100)
 
@@ -350,15 +383,17 @@ ser removidos e ele pode ser incluído como um RPC central na próxima versão d
 
     * *get* [nil]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       true [boolean]
+```
 
     * *set* [boolean]: Definir detecção automática de IP SSU
 
-    ::
-
+    Retorna:
+```text
       [nil]
+```
 
 
 
@@ -383,9 +418,10 @@ ser removidos e ele pode ser incluído como um RPC central na próxima versão d
 
     * *get* [null]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       0.0 [number]
+```
 
 
 * **status.** - Obter status da instância i2p
@@ -394,16 +430,17 @@ ser removidos e ele pode ser incluído como um RPC central na próxima versão d
 
     * *get* [null]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       "status" [string]
+```
 
   * **status.net** - Obter status da rede do roteador
 
     * *get* [null]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       0 [number]
       /**
        *    0 – OK
@@ -422,27 +459,31 @@ ser removidos e ele pode ser incluído como um RPC central na próxima versão d
        *   13 – ERRO_SEM_PEERS_ATIVOS_VERIFIQUE_CONEXÃO_E_FIREWALL
        *   14 – ERRO_UDP_DESABILITADO_E_TCP_NÃO_DEFINIDO
        */
+```
 
   * **status.isfloodfill** - A instância i2p é atualmente um floodfill
 
     * *get* [null]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       true [boolean]
+```
 
   * **status.isreseeding** - A instância i2p está atualmente em reseeding
 
     * *get* [null]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       true [boolean]
+```
 
   * **status.ip** - IP público detectado desta instância i2p
 
     * *get* [null]: Este parâmetro não precisa ser definido.
 
-    ::
-
+    Retorna:
+```text
       "0.0.0.0" [string]
+```

@@ -50,6 +50,4 @@ Le support pour les noms d'hôtes est optionnel.
 
 Les routeurs qui ne supportent pas cela ignoreront la nouvelle section XML.
 
-## Voir aussi
 
-Proposition 130

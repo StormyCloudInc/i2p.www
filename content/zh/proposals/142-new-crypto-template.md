@@ -25,15 +25,15 @@ ElGamal算法已经过时且运行缓慢，现在有更好的替代方案。然�
 
 任何提议新加密方案的人首先必须熟悉以下文件：
 
-- 提案 111 NTCP2 /proposals/111-ntcp-2/
-- 提案 123 LS2 /proposals/123-new-netdb-entries/
-- 提案 136 实验性签名类型 /proposals/136-experimental-sigtypes/
-- 提案 137 可选签名类型 /proposals/137-optional-sigtypes/
+- [提案 111 NTCP2](/zh/proposals/111-ntcp-2/)
+- [提案 123 LS2](/zh/proposals/123-new-netdb-entries/)
+- [提案 136 实验性签名类型](/zh/proposals/136-experimental-sigtypes/)
+- [提案 137 可选签名类型](/zh/proposals/137-optional-sigtypes/)
 - 以上每个提案的讨论线程，链接包含于其中
-- http://zzz.i2p/topics/2494 2018年的提案优先级
-- http://zzz.i2p/topics/2418 ECIES提案
-- http://zzz.i2p/topics/1768 新非对称加密概述
-- 低级别加密概述 /docs/specs/cryptography/
+- [2018年的提案优先级](http://zzz.i2p/topics/2494)
+- [ECIES提案](http://zzz.i2p/topics/2418)
+- [新非对称加密概述](http://zzz.i2p/topics/1768)
+- [低级别加密概述](/zh/docs/specs/common-structures/)
 
 
 ## 非对称加密的用途

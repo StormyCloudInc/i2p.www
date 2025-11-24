@@ -12,7 +12,7 @@ implementedin: "0.9.46"
 
 ## Note
 ECIES to ElG is implemented in 0.9.46 and the proposal phase is closed.
-See [I2NP]_ for the official specification.
+See [I2NP](/docs/specs/i2np/) for the official specification.
 This proposal may still be referenced for background information.
 ECIES to ECIES with included keys is implemented as of 0.9.48.
 The ECIES-to-ECIES (derived keys) section may be reopened or incorporated
@@ -27,9 +27,9 @@ in a future proposal.
 - DLM: I2NP Database Lookup Message
 - DSM: I2NP Database Store Message
 - DSRM: I2NP Database Search Reply Message
-- ECIES: ECIES-X25519-AEAD-Ratchet (propoosal 144)
+- ECIES: ECIES-X25519-AEAD-Ratchet ([proposal 144](/proposals/144-ecies-x25519-aead-ratchet/))
 - ElG: ElGamal
-- ENCRYPT(k, n, payload, ad): As defined in [ECIES]_
+- ENCRYPT(k, n, payload, ad): As defined in [ECIES](/docs/specs/ecies/)
 - LS: Leaseset
 - lookup: I2NP DLM
 - reply: I2NP DSM or DSRM
@@ -47,7 +47,7 @@ in ElGamal/AES+SessionTags.
 However, AES replies may be tampered with at the IBEP as there is no authentication,
 and the replies are not forward secret.
 
-With [ECIES]_ destinations, the intent of proposal 144 is that
+With [ECIES](/docs/specs/ecies/) destinations, the intent of proposal 144 is that
 the destinations no longer support 32-byte tags and AES decryption.
 The specifics were intentionally not included in that proposal.
 
@@ -98,7 +98,7 @@ i2pd has not yet implemented dual-crypto destinations.
 ## Design
 
 - New DLM format will add a bit to the flags field to specify ECIES-encrypted replies.
-  ECIES-encrypted replies will use the [ECIES]_ Existing Session message format,
+  ECIES-encrypted replies will use the [ECIES](/docs/specs/ecies/) Existing Session message format,
   with a prepended tag and a ChaCha/Poly payload and MAC.
 
 - Define two variants. One for ElG routers, where a DH operation is not possible,
@@ -113,14 +113,12 @@ a X25519 public key.
 
 ## Specification
 
-In the [I2NP]_ DLM (DatabaseLookup) specification, make the following changes.
+In the [I2NP](/docs/specs/i2np/) DLM (DatabaseLookup) specification, make the following changes.
 
 
 Add flag bit 4 "ECIESFlag" for the new encryption options.
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```text
 flags ::
        bit 4: ECIESFlag
                before release 0.9.46 ignored
@@ -128,7 +126,7 @@ flags ::
                0  => send unencrypted or ElGamal reply
                1  => send ChaCha/Poly encrypted reply using enclosed key
                      (whether tag is enclosed depends on bit 1)
-{% endhighlight %}
+```
 
 Flag bit 4 is used in combination with bit 1 to determine the reply encryption mode.
 Flag bit 4 must only be set when sending to routers with version 0.9.46 or higher.
@@ -162,18 +160,14 @@ No changes to the existing binary format.
 
 Requester key generation (clarification):
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```text
 reply_key :: CSRNG(32) 32 bytes random data
   reply_tags :: Each is CSRNG(32) 32 bytes random data
-{% endhighlight %}
+```
 
 Message format (add check for ECIESFlag):
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```text
 reply_key ::
        32 byte `SessionKey` big-endian
        only included if encryptionFlag == 1 AND ECIESFlag == 0, only as of release 0.9.7
@@ -187,7 +181,7 @@ reply_key ::
   reply_tags ::
        one or more 32 byte `SessionTag`s (typically one)
        only included if encryptionFlag == 1 AND ECIESFlag == 0, only as of release 0.9.7
-{% endhighlight %}
+```
 
 
 
@@ -201,19 +195,15 @@ The reply_key and reply_tags fields are redefined for an ECIES-encrypted reply.
 
 Requester key generation:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```text
 reply_key :: CSRNG(32) 32 bytes random data
   reply_tags :: Each is CSRNG(8) 8 bytes random data
-{% endhighlight %}
+```
 
 Message format:
 Redefine reply_key and reply_tags fields as follows:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```text
 reply_key ::
        32 byte ECIES `SessionKey` big-endian
        only included if encryptionFlag == 0 AND ECIESFlag == 1, only as of release 0.9.46
@@ -227,15 +217,12 @@ reply_key ::
   reply_tags ::
        an 8 byte ECIES `SessionTag`
        only included if encryptionFlag == 0 AND ECIESFlag == 1, only as of release 0.9.46
+```
 
-{% endhighlight %}
 
+The reply is an ECIES Existing Session message, as defined in [ECIES](/docs/specs/ecies/).
 
-The reply is an ECIES Existing Session message, as defined in [ECIES]_.
-
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```text
 tag :: 8 byte reply_tag
 
   k :: 32 byte session key
@@ -248,8 +235,7 @@ tag :: 8 byte reply_tag
   payload :: Plaintext data, the DSM or DSRM.
 
   ciphertext = ENCRYPT(k, n, payload, ad)
-
-{% endhighlight %}
+```
 
 
 
@@ -263,7 +249,7 @@ Supported as of 0.9.49.
 ECIES routers were introduced in 0.9.48, see [Prop156]_.
 As of 0.9.49, ECIES destinations and routers may use the same format as in
 the "ECIES to ElG" section above, with reply keys included in the request.
-The lookup will use the "one time format" in [ECIES]_
+The lookup will use the "one time format" in [ECIES](/docs/specs/ecies/)
 as the requester is anonymous.
 
 For a new method with derived keys, see the next section.
@@ -276,7 +262,7 @@ For a new method with derived keys, see the next section.
 ECIES destination or router sends a lookup to a ECIES router, and the reply keys are derived from the DH.
 Not fully defined or supported, implementation is TBD.
 
-The lookup will use the "one time format" in [ECIES]_
+The lookup will use the "one time format" in [ECIES](/docs/specs/ecies/)
 as the requester is anonymous.
 
 Redefine reply_key field as follows. There are no associated tags.
@@ -285,22 +271,17 @@ The tags will be generated in the KDF below.
 This section is incomplete and requires further study.
 
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```text
 reply_key ::
        32 byte X25519 ephemeral `PublicKey` of the requester, little-endian
        only included if encryptionFlag == 1 AND ECIESFlag == 1, only as of release 0.9.TBD
+```
 
-{% endhighlight %}
-
-The reply is an ECIES Existing Session message, as defined in [ECIES]_.
-See [ECIES]_ for all definitions.
+The reply is an ECIES Existing Session message, as defined in [ECIES](/docs/specs/ecies/).
+See [ECIES](/docs/specs/ecies/) for all definitions.
 
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```text
 // Alice's X25519 ephemeral keys
   // aesk = Alice ephemeral private key
   aesk = GENERATE_PRIVATE()
@@ -338,9 +319,9 @@ See [ECIES]_ for all definitions.
   sessTag_ck = keydata[0:31]
   symmKey_ck = keydata[32:63]
 
-  tag :: 8 byte tag as generated from RATCHET_TAG() in [ECIES]_
+  tag :: 8 byte tag as generated from RATCHET_TAG() in [ECIES](/docs/specs/ecies/)
 
-  k :: 32 byte key as generated from RATCHET_KEY() in [ECIES]_
+  k :: 32 byte key as generated from RATCHET_KEY() in [ECIES](/docs/specs/ecies/)
 
   n :: The index of the tag. Typically 0.
 
@@ -349,18 +330,16 @@ See [ECIES]_ for all definitions.
   payload :: Plaintext data, the DSM or DSRM.
 
   ciphertext = ENCRYPT(k, n, payload, ad)
-{% endhighlight %}
+```
 
 
 
 ### Reply format
 
 This is the existing session message,
-same as in [ECIES]_, copied below for reference.
+same as in [ECIES](/docs/specs/ecies/), copied below for reference.
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```text
 +----+----+----+----+----+----+----+----+
   |       Session Tag                     |
   +----+----+----+----+----+----+----+----+
@@ -382,8 +361,7 @@ same as in [ECIES]_, copied below for reference.
   Payload Section encrypted data :: remaining data minus 16 bytes
 
   MAC :: Poly1305 message authentication code, 16 bytes
-
-{% endhighlight %}
+```
 
 
 ## Justification
@@ -420,13 +398,4 @@ If a database lookup message with bit 4 set and bit 1 unset is mistakenly sent t
 a router without support, it will probably ignore the supplied key and tag, and
 sent the reply unencrypted.
 
-## References
 
-.. [ECIES]
-   {{ spec_url('ecies') }}
-
-.. [I2NP]
-    {{ spec_url('i2np') }}
-
-.. [Prop156]
-    {{ proposal_url('156') }}

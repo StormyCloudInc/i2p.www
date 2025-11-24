@@ -48,8 +48,7 @@ die Unterstützung in seinen Routerinfo-Eigenschaften anzeigen.
 
 ## Spezifikation
 
-Ref: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 Ein Router, der einen optionalen Signaturtyp unterstützt, soll die Eigenschaft "sigTypes"
 zu seinen veröffentlichten Routerinfos hinzufügen, mit kommagetrennten Signaturtyp-Nummern.
@@ -87,7 +86,4 @@ NetDB-Speicherungen von unbekannten Signaturtypen, die nicht im experimentellen 
 von Floodfills abgelehnt, da die Signatur nicht verifiziert werden kann.
 
 
-## Siehe auch
 
-Vorschlag 134
-Vorschlag 136

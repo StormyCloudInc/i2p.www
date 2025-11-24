@@ -60,8 +60,8 @@ target: "0.9.57"
 
 ### 预计节省
 
-在每个流媒体 SYN [Streaming]_ 和可回复数据报 [Datagram]_ 中都会包含目标。
-数据库存储消息中的路由器信息（包含路由器身份），以及在 [NTCP2]_ 和 [SSU2]_ 中的会话确认消息中也有这些信息。
+在每个流媒体 SYN 和可回复数据报中都会包含目标。
+数据库存储消息中的路由器信息（包含路由器身份），以及在 NTCP2 和 SSU2 中的会话确认消息中也有这些信息。
 
 NTCP2 不压缩路由器信息。
 数据库存储消息和 SSU2 会话确认消息中的 RIs 是经过 gzip 压缩的。
@@ -88,20 +88,20 @@ Router Info      1000 typ.     71             320                    32         
 我们当前规范的建议更改在下方记录。
 
 ### 通用结构
-修改通用结构规范 [COMMON]_ 以指定 256 字节目标公钥字段被忽略，并可包含随机数据。
+修改通用结构规范以指定 256 字节目标公钥字段被忽略，并可包含随机数据。
 
-在通用结构规范 [COMMON]_ 中添加一个章节，推荐目标公钥字段和目标与路由器身份中的填充字段的最佳实践，如下：
+在通用结构规范中添加一个章节，推荐目标公钥字段和目标与路由器身份中的填充字段的最佳实践，如下：
 
 使用强大的密码学伪随机数生成器 (PRNG) 生成 32 字节的随机数据，并根据需要重复这 32 字节以填充公共钥(field 字段（对于目标））和填充字段（对于目标和路由器身份）。
 
 ### 私钥文件
-私钥文件（eepPriv.dat）格式不是我们规范的正式部分，但它在 Java I2P javadocs [PKF]_ 中已文档化，其他实现也支持它。这使私钥能在不同实现之间便携。添加一个注解到该 javadoc，说明加密公钥可能是随机填充，而加密私钥可能全是零或随机数据。
+私钥文件（eepPriv.dat）格式不是我们规范的正式部分，但它在 [Java I2P javadocs](http://idk.i2p/javadoc-i2p/net/i2p/data/PrivateKeyFile.html) 中已文档化，其他实现也支持它。这使私钥能在不同实现之间便携。添加一个注解到该 javadoc，说明加密公钥可能是随机填充，而加密私钥可能全是零或随机数据。
 
 ### SAM
-在 [SAM]_ 中指出加密私钥未使用，且可能被忽略。客户端可能会返回任意随机数据。SAM Bridge 在创建时（通过 DEST GENERATE 或 SESSION CREATE DESTINATION=TRANSIENT）可能发送随机数据，而不是全零，这样 Base 64 表示就不会显示一串 AAAA 字符，看起来是损坏的。
+在 SAM 规范中指出加密私钥未使用，且可能被忽略。客户端可能会返回任意随机数据。SAM Bridge 在创建时（通过 DEST GENERATE 或 SESSION CREATE DESTINATION=TRANSIENT）可能发送随机数据，而不是全零，这样 Base 64 表示就不会显示一串 AAAA 字符，看起来是损坏的。
 
 ### I2CP
-无需对 [I2CP]_ 做出任何更改。目标中的加密公钥的私钥不会发送到路由器。
+无需对 I2CP 做出任何更改。目标中的加密公钥的私钥不会发送到路由器。
 
 ## 未来规划
 
@@ -159,7 +159,7 @@ ratchet 的静态密钥在租赁集中，而不在目标中。
 设计、开发和推出的预计时限是？？？？？？？？？？
 但会是在混合体或 ratchet 之后？？？？？？？
 
-有关进一步讨论，请参见 [PQ]_。
+有关进一步讨论，请参见 [this topic](http://zzz.i2p/topics/3294)。
 
 ## 问题
 
@@ -179,39 +179,4 @@ ratchet 的静态密钥在租赁集中，而不在目标中。
 受限于向后兼容性问题，以及在禁用 SSU 之后，实现可能会完全移除 ElGamal 代码。
 网络中约 14% 的路由器是 ElGamal 加密类型，包括许多 floodfills。
 
-Java I2P 的草稿合并请求在 [MR]_。
-
-## 参考资料
-
-.. [Common]
-    {{ spec_url('common-structures') }}
-
-.. [Datagram]
-    {{ spec_url('datagrams') }}
-
-.. [I2CP]
-    {{ spec_url('i2cp') }}
-
-.. [I2NP]
-    {{ spec_url('i2np') }}
-
-.. [MR]
-    http://git.idk.i2p/i2p-hackers/i2p.i2p/-/merge_requests/66
-
-.. [NTCP2]
-    {{ spec_url('ntcp2') }}
-
-.. [PKF]
-    http://{{ i2pconv('idk.i2p/javadoc-i2p') }}/net/i2p/data/PrivateKeyFile.html
-
-.. [PQ]
-    http://zzz.i2p/topics/3294
-
-.. [SAM]
-    {{ site_url('docs/api/samv3') }}
-
-.. [SSU2]
-    {{ spec_url('ssu2') }}
-
-.. [Streaming]
-    {{ spec_url('streaming') }}
+Java I2P 的草稿合并请求在 [git.idk.i2p](http://git.idk.i2p/i2p-hackers/i2p.i2p/-/merge_requests/66)。

@@ -55,6 +55,4 @@ Support for host names is optional.
 Routers that don't support this will ignore the new XML section.
 
 
-## See Also
 
-Proposal 130

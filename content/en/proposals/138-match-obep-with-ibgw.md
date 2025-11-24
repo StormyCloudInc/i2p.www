@@ -12,14 +12,14 @@ thread: "http://zzz.i2p/topics/2294"
 
 This proposal adds an I2CP option for outbound tunnels that causes tunnels to be
 picked or built when a message is sent such that the OBEP matches one of the
-IBGWs from the [LeaseSet]_ for the target [Destination]_.
+IBGWs from the LeaseSet for the target Destination.
 
 
 ## Motivation
 
 Most I2P routers employ a form of packet-dropping for congestion management. The
 reference implementation uses a WRED strategy that takes both message size and
-travel distance into account [TUNNEL-THROTTLING]_. Due to this strategy, the
+travel distance into account (see [tunnel throttling documentation](/en/docs/tunnels/implementation/#tunnelthrottling)). Due to this strategy, the
 primary source of packet loss is the OBEP.
 
 
@@ -41,7 +41,7 @@ option (with the final hop possibly being outside the sender's fast tier).
 
 ## Specification
 
-A new I2CP option is added to [I2CP-SPEC]_:
+A new I2CP option is added to the [I2CP specification](/en/docs/spec/i2cp/):
 
     outbound.matchEndWithTarget
         Boolean
@@ -93,27 +93,9 @@ This proposal has various effects on latency, RTT and packet loss:
   connect to the IBGW during tunnel building, adding the same latency but
   reducing the first RTT (as this occurs before the first packet has been sent).
 
-- The currently-standard [VariableTunnelBuild]_ size is 2641 bytes. Thus it is
+- The currently-standard VariableTunnelBuild size is 2641 bytes. Thus it is
   expected that this mode would result in lower packet loss for average message
   sizes larger than this.
 
 More research is necessary to investigate these effects, in order to decide
 which standard tunnels would benefit from this mode being enabled by default.
-
-
-## References
-
-.. [Destination]
-    {{ ctags_url('Destination') }}
-
-.. [I2CP-SPEC]
-    {{ spec_url('i2cp') }}
-
-.. [LeaseSet]
-    {{ ctags_url('LeaseSet') }}
-
-.. [TUNNEL-THROTTLING]
-    {{ site_url('docs/tunnels/implementation', True) }}#tunnel.throttling
-
-.. [VariableTunnelBuild]
-    {{ ctags_url('VariableTunnelBuild') }}

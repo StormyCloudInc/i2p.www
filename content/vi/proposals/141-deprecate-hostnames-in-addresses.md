@@ -22,7 +22,7 @@ Mục đích ban đầu của tên miền là giúp người dùng với IP thay
 
 Cũng vậy, từ đầu, I2P không hỗ trợ IPv6, vì vậy sự phức tạp của việc phân giải một tên miền đến địa chỉ IPv4 hoặc IPv6 không tồn tại.
 
-Trong Java I2P, luôn là một thách thức để chuyển một tên miền cấu hình ra cả hai phương tiện công bố, và tình huống càng trở nên phức tạp hơn với IPv6. Vé mở 1050 http://trac.i2p2.i2p/ticket/1050 nêu chi tiết một số vấn đề. Không rõ liệu một máy chủ kép nên công bố cả tên miền và một địa chỉ IPv6 thực hay không. Tên miền được công bố cho địa chỉ SSU nhưng không phải địa chỉ NTCP.
+Trong Java I2P, luôn là một thách thức để chuyển một tên miền cấu hình ra cả hai phương tiện công bố, và tình huống càng trở nên phức tạp hơn với IPv6. Không rõ liệu một máy chủ kép nên công bố cả tên miền và một địa chỉ IPv6 thực hay không. Tên miền được công bố cho địa chỉ SSU nhưng không phải địa chỉ NTCP.
 
 Gần đây, các vấn đề DNS đã được đề cập (cả gián tiếp và trực tiếp) qua nghiên cứu tại Georgia Tech. Các nhà nghiên cứu đã chạy một số lượng lớn các floodfills với tên miền đã công bố. Vấn đề ngay lập tức là đối với một số nhỏ người dùng có thể có DNS địa phương bị hỏng, nó khiến I2P bị treo hoàn toàn.
 
@@ -51,10 +51,7 @@ Thay đổi thông số kỹ thuật truyền thông NTCP và SSU để chỉ ra
 
 Điều này cũng áp dụng cho các tham số "ihost0", "ihost1", và "ihost2" trong địa chỉ SSU. Các router nên bỏ qua các địa chỉ người giới thiệu chứa tên miền.
 
-Mục liên quan là "Đặc tả Địa chỉ Router" trong đặc tả truyền thông:
-http://i2p-projekt.i2p/en/docs/specs/ntcp
-và
-http://i2p-projekt.i2p/en/docs/specs/ssu
+
 
 ## Ghi chú
 

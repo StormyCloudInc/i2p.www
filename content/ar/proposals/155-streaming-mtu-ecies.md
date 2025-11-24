@@ -22,7 +22,7 @@ implementedin: "0.9.47"
 
 يقلل ECIES من الحمل الزائد لرسائل الجلسات القائمة (ES) بحوالي 90 بايت.
 لذلك يمكننا زيادة الـ MTU بحوالي 90 بايت للاتصالات بـ ECIES.
-انظر [ECIES]_, [STREAMING-SPEC]_, و[STREAMING-OPTIONS]_.
+انظر the [ECIES specification](/en/docs/spec/ecies/#overhead), [Streaming specification](/en/docs/spec/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/en/docs/api/streaming/).
 
 دون زيادة الـ MTU، في العديد من الحالات لا يتم "توفير" المدخرات فعليًا،
 حيث سيتم تعبئة الرسائل لاستخدام رسائل النفق الكاملة على أي حال.
@@ -68,7 +68,7 @@ implementedin: "0.9.47"
 لذلك يجب أن يبقى الـ MTU عند 1730.
 
 
-كما هو مذكور في [STREAMING-OPTIONS]_,
+كما هو مذكور في the [Streaming API documentation](/en/docs/api/streaming/),
 قد تتجاوز البيانات في حزم SYN المرسلة من Alice إلى Bob الحد الأقصى لـ MTU الخاص بـ Bob.
 هذه نقطة ضعف في بروتوكول البث.
 لذلك، يجب على العملاء ثنائي المفتاح أن يقتصروا البيانات في حزم SYN المرسلة
@@ -79,7 +79,7 @@ implementedin: "0.9.47"
 
 ### التحليل
 
-كما هو موضح في [ECIES]_, فإن الحمل الزائد لـ ElGamal لرسائل الجلسات القائمة هو
+كما هو موضح في the [ECIES specification](/en/docs/spec/ecies/#overhead), فإن الحمل الزائد لـ ElGamal لرسائل الجلسات القائمة هو
 151 بايت، والحمل الزائد لـ Ratchet هو 69 بايت.
 لذلك، يمكننا زيادة الـ MTU لروابط Ratchet بمقدار (151 - 69) = 82 بايت،
 من 1730 إلى 1812.
@@ -88,8 +88,8 @@ implementedin: "0.9.47"
 
 ## المواصفات
 
-أضف التغييرات والتوضيحات التالية إلى قسم اختيار وتفاوض الـ MTU في [STREAMING-OPTIONS]_.
-لا تغيير في [STREAMING-SPEC]_.
+أضف التغييرات والتوضيحات التالية إلى قسم اختيار وتفاوض الـ MTU في the [Streaming API documentation](/en/docs/api/streaming/).
+لا تغيير في the [Streaming specification](/en/docs/spec/streaming/).
 
 
 تظل القيمة الافتراضية للخيار i2p.streaming.maxMessageSize عند 1730 لجميع الاتصالات، بغض النظر عن المفاتيح المستخدمة.
@@ -161,8 +161,8 @@ negotiated_mtu، وهو الحد الأدنى من الـ MTU لدى Alice وBob
 
 ## التبرير
 
-انظر إلى [CALCULATION]_ لمعرفة لماذا القيمة الحالية هي 1730.
-انظر إلى [ECIES]_ لمعرفة لماذا الحمل الزائد لـ ECIES أقل بـ 82 بايت من ElGamal.
+انظر إلى the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220) لمعرفة لماذا القيمة الحالية هي 1730.
+انظر إلى the [ECIES specification](/en/docs/spec/ecies/#overhead) لمعرفة لماذا الحمل الزائد لـ ECIES أقل بـ 82 بايت من ElGamal.
 
 
 
@@ -205,16 +205,3 @@ negotiated_mtu، وهو الحد الأدنى من الـ MTU لدى Alice وBob
 
 
 
-## المراجع
-
-.. [CALCULATION]
-   https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220
-
-.. [ECIES]
-   {{ spec_url('ecies') }}#overhead
-
-.. [STREAMING-OPTIONS]
-    {{ site_url('docs/api/streaming', True) }}
-
-.. [STREAMING-SPEC]
-    {{ spec_url('streaming') }}#flags-and-option-data-fields

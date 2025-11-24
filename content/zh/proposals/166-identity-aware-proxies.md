@@ -135,18 +135,5 @@ target: "0.9.65"
 附录：``攻击的示例实现``
                                                   
 
-`一个针对 HTTP 用户代理的共享身份攻击的示例实现 <https://github.com/eyedeekay/colluding_sites_attack/>`__ 已存在数年。额外的示例如在 `idk 的 prop166 存储库 <https://git.idk.i2p/idk/i2p.host-aware-proxy>`__ 的 ``simple-colluder`` 子目录中可用。这些示例是故意设计用于演示攻击有效，并需要修改（虽然很小）才能变成真实攻击。
+[一个针对 HTTP 用户代理的共享身份攻击的示例实现](https://github.com/eyedeekay/colluding_sites_attack/) 已存在数年。额外的示例如在 [idk 的 prop166 存储库](https://git.idk.i2p/idk/i2p.host-aware-proxy) 的 ``simple-colluder`` 子目录中可用。这些示例是故意设计用于演示攻击有效，并需要修改（虽然很小）才能变成真实攻击。
 
-引用：
-''''''''''
-
-https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/
-https://api.pullpush.io/reddit/search/comment/?link_id=579idi
-https://github.com/eyedeekay/colluding_sites_attack/
-https://en.wikipedia.org/wiki/Shadow_profile
-https://github.com/eyedeekay/si-i2p-plugin/
-https://github.com/eyedeekay/eeproxy/
-/docs/api/socks/
-https://i2pgit.org/idk/i2p.www/-/compare/master...166-identity-aware-proxies?from_project_id=17
-https://i2pgit.org/idk/i2p.i2p/-/tree/i2p.i2p.2.6.0-browser-proxy-post-keepalive?ref_type=heads
-```

@@ -12,7 +12,7 @@ target: "0.9.65"
 ## NOTE
 
 This proposal was approved and is now in the
-[Tunnel-Creation-ECIES]_ specification as of API 0.9.65.
+[Tunnel Creation ECIES specification](/en/docs/spec/tunnel-creation-ecies/) as of API 0.9.65.
 There are no known implementations yet; implementation dates / API versions are TBD.
 
 
@@ -42,7 +42,7 @@ the tunnel build request and reply messages.
 
 ## Design
 
-Add bandwidth parameters to the records in ECIES tunnel build messages [Tunnel-Creation-ECIES]_
+Add bandwidth parameters to the records in ECIES tunnel build messages (see [Tunnel Creation ECIES specification](/en/docs/spec/tunnel-creation-ecies/))
 in the tunnel build options mapping field. Use short parameter names since the space available
 for the options field is limited.
 Tunnel build messages are fixed-size so this does not increase the
@@ -52,7 +52,7 @@ size of the messages.
 
 ## Specification
 
-Update the ECIES tunnel build message specification [Tunnel-Creation-ECIES]_
+Update the [ECIES tunnel build message specification](/en/docs/spec/tunnel-creation-ecies/)
 as follows:
 
 For both long and short ECIES build records:
@@ -176,10 +176,3 @@ Implementations may add support at any time, no coordination is needed.
 
 As there is currently no API version defined where support for this proposal is required,
 routers should check for a "b" response to confirm support.
-
-
-
-## References
-
-.. [Tunnel-Creation-ECIES]
-    {{ spec_url('tunnel-creation-ecies') }}

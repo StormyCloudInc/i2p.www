@@ -12,12 +12,10 @@ thread: "http://zzz.i2p/topics/2500"
 Đề xuất này không được thực hiện theo chỉ định,
 tuy nhiên, các thông điệp xây dựng dài và ngắn của ECIES (đề xuất 152 và 157)
 được thiết kế với các trường tùy chọn mở rộng.
-Xem [SPEC]_ để biết thông số kỹ thuật chính thức.
+Xem [thông số kỹ thuật Tunnel Creation ECIES](/en/docs/spec/tunnel-creation-ecies/) để biết thông số kỹ thuật chính thức.
 
 
 ## Tổng quan
-
-tham khảo: http://i2p-projekt.i2p/spec/tunnel-creation
 
 Thêm một cơ chế linh hoạt và mở rộng cho các tùy chọn trong các Bản ghi Xây dựng Đường hầm I2NP
 nằm trong các thông điệp Xây dựng Đường hầm và Phản hồi Xây dựng Đường hầm.
@@ -93,10 +91,3 @@ Không gian chưa sử dụng trong các Bản ghi Xây dựng Đường hầm �
 Không gian có thể được chuyển đổi để chứa các tùy chọn mà không gặp vấn đề di cư.
 Trong thông điệp xây dựng, sự hiện diện của các tùy chọn được chỉ định trong byte cờ.
 Trong thông điệp phản hồi xây dựng, sự hiện diện của các tùy chọn được chỉ định bằng một số ma thuật nhiều byte.
-
-
-
-## Tham khảo
-
-.. [SPEC]
-   {{ spec_url('tunnel-creation-ecies') }}

@@ -38,8 +38,7 @@ RI depoları için destek belirlenecek olup, daha fazla güvenlik etkisine sahip
 
 ## Spesifikasyon
 
-Ref: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 Deneysel aralıktaki imza türleri için, bir floodfill imzayı kontrol etmeden
 netdb depolarını kabul edip yaymalıdır.
@@ -85,7 +84,4 @@ Deneysel aralıkta olmayan bilinmeyen imza türlerinin netdb depoları,
 imza doğrulanamayacağı için floodfills tarafından reddedilmeye devam edecektir.
 
 
-## Ayrıca Bakınız
 
-Öneri 134
-Öneri 137

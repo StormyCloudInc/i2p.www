@@ -13,7 +13,7 @@ implementedin: "0.9.46"
 ## Note
 Network deployment and testing in progress.
 Subject to minor revisions.
-See [SPEC]_ for the official specification.
+See [SPEC](/docs/specs/ecies/) for the official specification.
 
 The following features are not implemented as of 0.9.46:
 
@@ -26,21 +26,21 @@ The following features are not implemented as of 0.9.46:
 ## Overview
 
 This is a proposal for the first new end-to-end encryption type
-since the beginning of I2P, to replace ElGamal/AES+SessionTags [Elg-AES]_.
+since the beginning of I2P, to replace ElGamal/AES+SessionTags [Elg-AES](/docs/legacy/elgamal-aes/).
 
 It relies on previous work as follows:
 
-- Common structures spec [Common]_
-- [I2NP]_ spec including LS2
-- ElGamal/AES+Session Tags [Elg-AES]_
-- http://zzz.i2p/topics/1768 new asymmetric crypto overview
-- Low-level crypto overview [CRYPTO-ELG]_
-- ECIES http://zzz.i2p/topics/2418
-- [NTCP2]_ [Prop111]_
+- Common structures spec [Common Structures](/docs/specs/common-structures/)
+- [I2NP](/docs/specs/i2np/) spec including LS2
+- ElGamal/AES+Session Tags [Elg-AES](/docs/legacy/elgamal-aes/)
+- [http://zzz.i2p/topics/1768](http://zzz.i2p/topics/1768) new asymmetric crypto overview
+- Low-level crypto overview [CRYPTO-ELG](/docs/specs/cryptography/)
+- ECIES [http://zzz.i2p/topics/2418](http://zzz.i2p/topics/2418)
+- [NTCP2](/docs/specs/ntcp2/) [Proposal 111](/proposals/111-ntcp-2/)
 - 123 New netDB Entries
 - 142 New Crypto Template
-- [Noise]_ protocol
-- [Signal]_ double ratchet algorithm
+- [Noise](https://noiseprotocol.org/noise.html) protocol
+- [Signal](https://signal.org/docs/) double ratchet algorithm
 
 The goal is to support new encryption for end-to-end,
 destination-to-destination communication.
@@ -81,7 +81,7 @@ As a review,
 we added support for encryption types when we added support for signature types.
 The encryption type field is always zero, both in Destinations and RouterIdentities.
 Whether to ever change that is TBD.
-Reference the common structures specification [Common]_.
+Reference the common structures specification [Common Structures](/docs/specs/common-structures/).
 
 
 
@@ -92,7 +92,7 @@ As a review, we use ElGamal for:
 
 1) Tunnel Build messages (key is in RouterIdentity)
    Replacement is not covered in this proposal.
-   See proposal 152 [Prop152]_.
+   See proposal 152 [Proposal 152](/proposals/152-ecies-tunnels).
 
 2) Router-to-router encryption of netdb and other I2NP msgs (Key is in RouterIdentity)
    Depends on this proposal.
@@ -164,9 +164,9 @@ Eliminate several problems with session tags, including:
 - LS2 format changes (proposal 123 is done)
 - New DHT rotation algorithm or shared random generation
 - New encryption for tunnel building.
-  See proposal 152 [Prop152]_.
+  See proposal 152 [Proposal 152](/proposals/152-ecies-tunnels).
 - New encryption for tunnel layer encryption.
-  See proposal 153 [Prop153]_.
+  See proposal 153 [Proposal 153](/proposals/153-chacha20-layer-encryption).
 - Methods of encryption, transmission, and reception of I2NP DLM / DSM / DSRM messages.
   Not changing.
 - No LS1-to-LS2 or ElGamal/AES-to-this-proposal communication is supported.
@@ -206,7 +206,7 @@ This also eliminates the storage of session tags on the sending side,
 thus cutting the storage requirements in half.
 
 A full two-way handshake, similar to Noise IK pattern, is needed to avoid Key Compromise Impersonation (KCI) attacks.
-See the Noise "Payload Security Properties" table in [NOISE]_.
+See the Noise "Payload Security Properties" table in [NOISE](https://noiseprotocol.org/noise.html).
 For more information on KCI, see the paper https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf
 
 
@@ -256,7 +256,7 @@ which are not required for current I2P protocols:
 - ECIES (but this is essentially X25519)
 - Elligator2
 
-Existing I2P router implementations that have not yet implemented [NTCP2]_ ([Prop111]_)
+Existing I2P router implementations that have not yet implemented [NTCP2](/docs/specs/ntcp2/) ([Proposal 111](/proposals/111-ntcp-2/))
 will also require implementations for:
 
 - X25519 key generation and DH
@@ -271,15 +271,15 @@ This indicates a little-endian 32-byte X25519 public key,
 and the end-to-end protocol specified here.
 
 Crypto type 0 is ElGamal.
-Crypto types 1-3 are reserved for ECIES-ECDH-AES-SessionTag, see proposal 145 [Prop145]_.
+Crypto types 1-3 are reserved for ECIES-ECDH-AES-SessionTag, see proposal 145 [Proposal 145](/proposals/145-ecies).
 
 
 ### Noise Protocol Framework
 
 This proposal provides the requirements based on the Noise Protocol Framework
-[NOISE]_ (Revision 34, 2018-07-11).
+[NOISE](https://noiseprotocol.org/noise.html) (Revision 34, 2018-07-11).
 Noise has similar properties to the Station-To-Station protocol
-[STS]_, which is the basis for the [SSU]_ protocol.  In Noise parlance, Alice
+[STS](https://en.wikipedia.org/wiki/Station-to-Station_protocol), which is the basis for the [SSU](/docs/specs/ssu/) protocol.  In Noise parlance, Alice
 is the initiator, and Bob is the responder.
 
 This proposal is based on the Noise protocol Noise_IK_25519_ChaChaPoly_SHA256.
@@ -296,38 +296,37 @@ This Noise protocol uses the following primitives:
   Alice does not transmit her static key to Bob (N)
 
 - DH Function: X25519
-  X25519 DH with a key length of 32 bytes as specified in [RFC-7748]_.
+  X25519 DH with a key length of 32 bytes as specified in [RFC-7748](https://tools.ietf.org/html/rfc7748).
 
 - Cipher Function: ChaChaPoly
-  AEAD_CHACHA20_POLY1305 as specified in [RFC-7539]_ section 2.8.
+  AEAD_CHACHA20_POLY1305 as specified in [RFC-7539](https://tools.ietf.org/html/rfc7539) section 2.8.
   12 byte nonce, with the first 4 bytes set to zero.
-  Identical to that in [NTCP2]_.
+  Identical to that in [NTCP2](/docs/specs/ntcp2/).
 
 - Hash Function: SHA256
   Standard 32-byte hash, already used extensively in I2P.
 
 
-Additions to the Framework
-``````````````````````````
+### Additions to the Framework
 
 This proposal defines the following enhancements to
 Noise_IK_25519_ChaChaPoly_SHA256.  These generally follow the guidelines in
-[NOISE]_ section 13.
+[NOISE](https://noiseprotocol.org/noise.html) section 13.
 
-1) Cleartext ephemeral keys are encoded with [Elligator2]_.
+1) Cleartext ephemeral keys are encoded with [Elligator2](https://elligator.cr.yp.to/).
 
 2) The reply is prefixed with a cleartext tag.
 
 3) The payload format is defined for messages 1, 2, and the data phase.
    Of course, this is not defined in Noise.
 
-All messages include an [I2NP]_ Garlic Message header.
+All messages include an [I2NP](/docs/specs/i2np/) Garlic Message header.
 The data phase uses encryption similar to, but not compatible with, the Noise data phase.
 
 
 ### Handshake Patterns
 
-Handshakes use [Noise]_ handshake patterns.
+Handshakes use [Noise](https://noiseprotocol.org/noise.html) handshake patterns.
 
 The following letter mapping is used:
 
@@ -337,20 +336,18 @@ The following letter mapping is used:
 
 One-time and Unbound sessions are similar to the Noise N pattern.
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 <- s
   ...
   e es p ->
 
-{% endhighlight %}
+```
 
 Bound sessions are similar to the Noise IK pattern.
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 <- s
   ...
   e es s ss p ->
@@ -358,7 +355,7 @@ Bound sessions are similar to the Noise IK pattern.
   <- p
   p ->
 
-{% endhighlight %}
+```
 
 
 ### Sessions
@@ -386,8 +383,7 @@ For this proposal, we define two mechanisms to create a bidirectional protocol -
 These mechanisms provide increased efficiency and security.
 
 
-Session Context
-```````````````
+### Session Context
 
 As with ElGamal/AES+SessionTags, all inbound and outbound sessions
 must be in a given context, either the router's context or
@@ -404,8 +400,7 @@ See section 1c) below.
 
 
 
-Pairing Inbound and Outbound Sessions
-`````````````````````````````````````
+### Pairing Inbound and Outbound Sessions
 
 When an outbound session is created at the originator (Alice),
 a new inbound session is created and paired with the outbound session,
@@ -423,8 +418,7 @@ with the capability of ratcheting the DH keys.
 
 
 
-Binding Sessions and Destinations
-`````````````````````````````````
+### Binding Sessions and Destinations
 
 There is only one outbound session to a given destination or router.
 There may be several current inbound sessions from a given destination or router.
@@ -449,8 +443,7 @@ and a outbound session will be created and bound to same Destination.
 As the sessions ratchet, they continue to be bound to the far-end Destination.
 
 
-Benefits of Binding and Pairing
-```````````````````````````````
+### Benefits of Binding and Pairing
 
 For the common, streaming case, we expect Alice and Bob to use the protocol as follows:
 
@@ -470,8 +463,7 @@ to an outbound session bound to the same Destination, we achieve two major benef
 use ephemeral-ephemeral DH.
 
 
-Message ACKs
-````````````
+### Message ACKs
 
 In ElGamal/AES+SessionTags, when a LeaseSet is bundled as a garlic clove,
 or tags are delivered, the sending router requests an ACK.
@@ -494,8 +486,7 @@ and the far-end destination (contained in the lease set) will be necessary to
 verify the binding static key.
 
 
-Session Timeouts
-````````````````
+### Session Timeouts
 
 Outbound sessions should always expire before inbound sessions.
 One an outbound session expires, and a new one is created, a new paired inbound
@@ -520,7 +511,7 @@ CSRNG(n)
 H(p, d)
     SHA-256 hash function that takes a personalization string p and data d, and
     produces an output of length 32 bytes.
-    As defined in [NOISE]_.
+    As defined in [NOISE](https://noiseprotocol.org/noise.html).
     || below means append.
 
     Use SHA-256 as follows::
@@ -537,7 +528,7 @@ MixHash(d)
         MixHash(d) := h = SHA-256(h || d)
 
 STREAM
-    The ChaCha20/Poly1305 AEAD as specified in [RFC-7539]_.
+    The ChaCha20/Poly1305 AEAD as specified in [RFC-7539](https://tools.ietf.org/html/rfc7539).
     S_KEY_LEN = 32 and S_IV_LEN = 12.
 
     ENCRYPT(k, n, plaintext, ad)
@@ -587,13 +578,13 @@ HKDF(salt, ikm, info, n)
     of length 32 bytes, and a context-specific 'info' value, and produces an output
     of n bytes suitable for use as key material.
 
-    Use HKDF as specified in [RFC-5869]_, using the HMAC hash function SHA-256
-    as specified in [RFC-2104]_. This means that SALT_LEN is 32 bytes max.
+    Use HKDF as specified in [RFC-5869](https://tools.ietf.org/html/rfc5869), using the HMAC hash function SHA-256
+    as specified in [RFC-2104](https://tools.ietf.org/html/rfc2104). This means that SALT_LEN is 32 bytes max.
 
 MixKey(d)
     Use HKDF() with a previous chainKey and new data d, and
     sets the new chainKey and k.
-    As defined in [NOISE]_.
+    As defined in [NOISE](https://noiseprotocol.org/noise.html).
 
     Use HKDF as follows::
 
@@ -606,10 +597,9 @@ MixKey(d)
 ### 1) Message format
 
 
-Review of Current Message Format
-````````````````````````````````
+### Review of Current Message Format
 
-The Garlic Message as specified in [I2NP]_ is as follows.
+The Garlic Message as specified in [I2NP](/docs/specs/i2np/) is as follows.
 As a design goal is that intermediate hops cannot distinguish new from old crypto,
 this format cannot change, even though the length field is redundant.
 The format is shown with the full 16-byte header, although the
@@ -618,12 +608,11 @@ actual header may be in a different format, depending on the transport used.
 When decrypted the data contains a series of Garlic Cloves and additional
 data, also known as a Clove Set.
 
-See [I2NP]_ for details and a full specification.
+See [I2NP](/docs/specs/i2np/) for details and a full specification.
 
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+----+----+----+
   |type|      msg_id       |  expiration
   +----+----+----+----+----+----+----+----+
@@ -637,11 +626,10 @@ See [I2NP]_ for details and a full specification.
   |                                       |
   +----+----+----+----+----+----+----+----+
 
-{% endhighlight %}
+```
 
 
-Review of Encrypted Data Format
-````````````````````````````````
+### Review of Encrypted Data Format
 
 The current message format, used for over 15 years,
 is ElGamal/AES+SessionTags.
@@ -671,8 +659,7 @@ If not found, and the data is at least (514+16) long, he attempts to decrypt the
 and if successful, decrypts the AES block.
 
 
-New Session Tags and Comparison to Signal
-`````````````````````````````````````````
+### New Session Tags and Comparison to Signal
 
 In Signal Double Ratchet, the header contains:
 
@@ -722,7 +709,7 @@ The static key should be included if replies are expected,
 i.e. for streaming and repliable datagrams.
 It should not be included for raw datagrams.
 
-The New Session message is similar to the one-way Noise [NOISE]_ pattern
+The New Session message is similar to the one-way Noise [NOISE](https://noiseprotocol.org/noise.html) pattern
 "N" (if the static key is not sent),
 or the two-way pattern "IK" (if the static key is sent).
 
@@ -733,9 +720,8 @@ or the two-way pattern "IK" (if the static key is sent).
 Length is 96 + payload length.
 Encrypted format:
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+----+----+----+
   |                                       |
   +                                       +
@@ -778,24 +764,21 @@ Encrypted format:
 
   MAC :: Poly1305 message authentication code, 16 bytes
 
-{% endhighlight %}
+```
 
 
-New Session Ephemeral Key
-`````````````````````````
+### New Session Ephemeral Key
 
 The ephemeral key is 32 bytes, encoded with Elligator2.
 This key is never reused; a new key is generated with
 each message, including retransmissions.
 
-Static Key
-``````````
+### Static Key
 
 When decryptied, Alice's X25519 static key, 32 bytes.
 
 
-Payload
-```````
+### Payload
 
 Encrypted length is the remainder of the data.
 Decrypted length is 16 less than the encrypted length.
@@ -812,9 +795,8 @@ If no reply is required, no static key is sent.
 Length is 96 + payload length.
 Encrypted format:
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+----+----+----+
   |                                       |
   +                                       +
@@ -857,10 +839,9 @@ Encrypted format:
 
   MAC :: Poly1305 message authentication code, 16 bytes
 
-{% endhighlight %}
+```
 
-New Session Ephemeral Key
-`````````````````````````
+### New Session Ephemeral Key
 
 Alice's ephemeral key.
 The ephemeral key is 32 bytes, encoded with Elligator2, little endian.
@@ -868,8 +849,7 @@ This key is never reused; a new key is generated with
 each message, including retransmissions.
 
 
-Flags Section Decrypted data
-````````````````````````````
+### Flags Section Decrypted data
 
 The Flags section contains nothing.
 It is always 32 bytes, because it must be the same length
@@ -879,8 +859,7 @@ by testing if the 32 bytes are all zeros.
 
 TODO any flags needed here?
 
-Payload
-```````
+### Payload
 
 Encrypted length is the remainder of the data.
 Decrypted length is 16 less than the encrypted length.
@@ -899,9 +878,8 @@ no session setup or static key is required.
 Length is 96 + payload length.
 Encrypted format:
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+----+----+----+
   |                                       |
   +                                       +
@@ -944,19 +922,17 @@ Encrypted format:
 
   MAC :: Poly1305 message authentication code, 16 bytes
 
-{% endhighlight %}
+```
 
 
-New Session One Time Key
-````````````````````````
+### New Session One Time Key
 
 The one time key is 32 bytes, encoded with Elligator2, little endian.
 This key is never reused; a new key is generated with
 each message, including retransmissions.
 
 
-Flags Section Decrypted data
-````````````````````````````````
+### Flags Section Decrypted data
 
 The Flags section contains nothing.
 It is always 32 bytes, because it must be the same length
@@ -966,9 +942,8 @@ by testing if the 32 bytes are all zeros.
 
 TODO any flags needed here?
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+----+----+----+
   |                                       |
   +                                       +
@@ -981,11 +956,10 @@ TODO any flags needed here?
 
   zeros:: All zeros, 32 bytes.
 
-{% endhighlight %}
+```
 
 
-Payload
-```````
+### Payload
 
 Encrypted length is the remainder of the data.
 Decrypted length is 16 less than the encrypted length.
@@ -996,10 +970,9 @@ See the payload section below for format and additional requirements.
 
 ### 1f) KDFs for New Session Message
 
-KDF for Initial ChainKey
-````````````````````````
+### KDF for Initial ChainKey
 
-This is standard [NOISE]_ for IK with a modified protocol name.
+This is standard [NOISE](https://noiseprotocol.org/noise.html) for IK with a modified protocol name.
 Note that we use the same initializer for both the IK pattern (bound sessions)
 and for N pattern (unbound sessions).
 
@@ -1008,9 +981,8 @@ First, to indicate that the ephemeral keys are encoded with Elligator2,
 and second, to indicate that MixHash() is called before the second message
 to mix in the tag value.
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 This is the "e" message pattern:
 
   // Define protocol_name.
@@ -1028,15 +1000,13 @@ This is the "e" message pattern:
 
   // up until here, can all be precalculated by Alice for all outgoing connections
 
-{% endhighlight %}
+```
 
 
-KDF for Flags/Static Key Section Encrypted Contents
-```````````````````````````````````````````````````
+### KDF for Flags/Static Key Section Encrypted Contents
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 This is the "e" message pattern:
 
   // Bob's X25519 static keys
@@ -1102,16 +1072,14 @@ This is the "e" message pattern:
   End of "s" message pattern.
 
 
-{% endhighlight %}
+```
 
 
 
-KDF for Payload Section (with Alice static key)
-```````````````````````````````````````````````
+### KDF for Payload Section (with Alice static key)
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 This is the "ss" message pattern:
 
   // Noise ss
@@ -1137,11 +1105,10 @@ This is the "ss" message pattern:
   // Save for New Session Reply KDF
   h = SHA256(h || ciphertext)
 
-{% endhighlight %}
+```
 
 
-KDF for Payload Section (without Alice static key)
-``````````````````````````````````````````````````
+### KDF for Payload Section (without Alice static key)
 
 Note that this is a Noise "N" pattern, but we use the same "IK" initializer
 as for bound sessions.
@@ -1154,16 +1121,15 @@ If the static key is all zeros, the "ss" message pattern must be skipped.
 
 
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 chainKey = from Flags/Static key section
   k = from Flags/Static key section
   n = 1
   ad = h from Flags/Static key section
   ciphertext = ENCRYPT(k, n, payload, ad)
 
-{% endhighlight %}
+```
 
 
 
@@ -1181,9 +1147,8 @@ The length of the second part is 16 + payload length.
 Total length is 72 + payload length.
 Encrypted format:
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+----+----+----+
   |       Session Tag   8 bytes           |
   +----+----+----+----+----+----+----+----+
@@ -1223,18 +1188,16 @@ Encrypted format:
 
   MAC :: Poly1305 message authentication code, 16 bytes
 
-{% endhighlight %}
+```
 
-Session Tag
-```````````
+### Session Tag
 The tag is generated in the Session Tags KDF, as initialized
 in the DH Initialization KDF below.
 This correlates the reply to the session.
 The Session Key from the DH Initialization is not used.
 
 
-New Session Reply Ephemeral Key
-````````````````````````````````
+### New Session Reply Ephemeral Key
 
 Bob's ephemeral key.
 The ephemeral key is 32 bytes, encoded with Elligator2, little endian.
@@ -1242,36 +1205,31 @@ This key is never reused; a new key is generated with
 each message, including retransmissions.
 
 
-Payload
-```````
+### Payload
 Encrypted length is the remainder of the data.
 Decrypted length is 16 less than the encrypted length.
 Payload will usually contain one or more Garlic Clove blocks.
 See the payload section below for format and additional requirements.
 
 
-KDF for Reply TagSet
-`````````````````````
+### KDF for Reply TagSet
 
 One or more tags are created from the TagSet, which is initialized using
 the KDF below, using the chainKey from the New Session message.
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 // Generate tagset
   tagsetKey = HKDF(chainKey, ZEROLEN, "SessionReplyTags", 32)
   tagset_nsr = DH_INITIALIZE(chainKey, tagsetKey)
 
-{% endhighlight %}
+```
 
 
-KDF for Reply Key Section Encrypted Contents
-````````````````````````````````````````````
+### KDF for Reply Key Section Encrypted Contents
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 // Keys from the New Session message
   // Alice's X25519 keys
   // apk and aepk are sent in original New Session message
@@ -1342,11 +1300,10 @@ KDF for Reply Key Section Encrypted Contents
 
   chainKey is used in the ratchet below.
 
-{% endhighlight %}
+```
 
 
-KDF for Payload Section Encrypted Contents
-``````````````````````````````````````````
+### KDF for Payload Section Encrypted Contents
 
 This is like the first Existing Session message,
 post-split, but without a separate tag.
@@ -1354,9 +1311,8 @@ Additionally, we use the hash from above to bind the
 payload to the NSR message.
 
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 // split()
   keydata = HKDF(chainKey, ZEROLEN, "", 64)
   k_ab = keydata[0:31]
@@ -1369,7 +1325,7 @@ payload to the NSR message.
   n = 0
   ad = h
   ciphertext = ENCRYPT(k, n, payload, ad)
-{% endhighlight %}
+```
 
 
 ### Notes
@@ -1396,13 +1352,11 @@ Session tag (8 bytes)
 Encrypted data and MAC (see section 3 below)
 
 
-Format
-``````
+### Format
 Encrypted:
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+----+----+----+
   |       Session Tag                     |
   +----+----+----+----+----+----+----+----+
@@ -1425,22 +1379,18 @@ Encrypted:
 
   MAC :: Poly1305 message authentication code, 16 bytes
 
-{% endhighlight %}
+```
 
 
-Payload
-```````
+### Payload
 Encrypted length is the remainder of the data.
 Decrypted length is 16 less than the encrypted length.
 See the payload section below for format and requirements.
 
 
 KDF
+
 ```
-
-.. raw:: html
-
-  {% highlight lang='text' %}
 See AEAD section below.
 
   // AEAD parameters for Existing Session payload
@@ -1448,7 +1398,7 @@ See AEAD section below.
   n = The message number N in the current chain, as retrieved from the associated Session Tag.
   ad = The session tag, 8 bytes
   ciphertext = ENCRYPT(k, n, payload, ad)
-{% endhighlight %}
+```
 
 
 
@@ -1457,7 +1407,7 @@ See AEAD section below.
 
 Format: 32-byte public and private keys, little-endian.
 
-Justification: Used in [NTCP2]_.
+Justification: Used in [NTCP2](/docs/specs/ntcp2/).
 
 
 
@@ -1467,31 +1417,29 @@ In standard Noise handshakes, the initial handshake messages in each direction s
 ephemeral keys that are transmitted in cleartext.
 As valid X25519 keys are distinguishable from random, a man-in-the-middle may distinguish
 these messages from Existing Session messages that start with random session tags.
-In [NTCP2]_ ([Prop111]_), we used a low-overhead XOR function using the out-of-band static key to obfuscate
+In [NTCP2](/docs/specs/ntcp2/) ([Proposal 111](/proposals/111-ntcp-2/)), we used a low-overhead XOR function using the out-of-band static key to obfuscate
 the key. However, the threat model here is different; we do not want to allow any MitM to
 use any means to confirm the destination of the traffic, or to distinguish
 the initial handshake messages from Existing Session messages.
 
-Therefore, [Elligator2]_ is used to transform the ephemeral keys in the New Session and New Session Reply messages
+Therefore, [Elligator2](https://elligator.cr.yp.to/) is used to transform the ephemeral keys in the New Session and New Session Reply messages
 so that they are indistinguishable from uniform random strings.
 
 
 
-Format
-``````
+### Format
 
 32-byte public and private keys.
 Encoded keys are little endian.
 
-As defined in [Elligator2]_, the encoded keys are indistinguishable from 254 random bits.
+As defined in [Elligator2](https://elligator.cr.yp.to/), the encoded keys are indistinguishable from 254 random bits.
 We require 256 random bits (32 bytes). Therefore, the encoding and decoding are
 defined as follows:
 
 Encoding:
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 ENCODE_ELG2() Definition
 
   // Encode as defined in Elligator2 specification
@@ -1499,33 +1447,30 @@ ENCODE_ELG2() Definition
   // OR in 2 random bits to MSB
   randomByte = CSRNG(1)
   encodedKey[31] |= (randomByte & 0xc0)
-{% endhighlight %}
+```
 
 
 Decoding:
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 DECODE_ELG2() Definition
 
   // Mask out 2 random bits from MSB
   encodedKey[31] &= 0x3f
   // Decode as defined in Elligator2 specification
   pubkey = decode(encodedKey)
-{% endhighlight %}
+```
 
 
 
 
-Justification
-`````````````
+### Justification
 
 Required to prevent the OBEP and IBGW from classifying traffic.
 
 
-Notes
-`````
+### Notes
 
 Elligator2 doubles average the key generation time, as half the private keys
 result in public keys that are unsuitable for encoding with Elligator2.
@@ -1540,7 +1485,7 @@ Therefore, the generator should store the result of ENCODE_ELG2()
 so it does not have to be calculated again.
 
 Additionally, the unsuitable keys may be added to the pool of keys
-used for [NTCP2]_, where Elligator2 is not used.
+used for [NTCP2](/docs/specs/ntcp2/), where Elligator2 is not used.
 The security issues of doing so is TBD.
 
 
@@ -1548,21 +1493,19 @@ The security issues of doing so is TBD.
 
 ### 3) AEAD (ChaChaPoly)
 
-AEAD using ChaCha20 and Poly1305, same as in [NTCP2]_.
-This corresponds to [RFC-7539]_, which is also
-used similarly in TLS [RFC-7905]_.
+AEAD using ChaCha20 and Poly1305, same as in [NTCP2](/docs/specs/ntcp2/).
+This corresponds to [RFC-7539](https://tools.ietf.org/html/rfc7539), which is also
+used similarly in TLS [RFC-7905](https://tools.ietf.org/html/rfc7905).
 
 
 
-New Session and New Session Reply Inputs
-````````````````````````````````````````
+### New Session and New Session Reply Inputs
 
 Inputs to the encryption/decryption functions
 for an AEAD block in a New Session message:
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 k :: 32 byte cipher key
        See New Session and New Session Reply KDFs above.
 
@@ -1574,18 +1517,16 @@ k :: 32 byte cipher key
 
   data :: Plaintext data, 0 or more bytes
 
-{% endhighlight %}
+```
 
 
-Existing Session Inputs
-```````````````````````
+### Existing Session Inputs
 
 Inputs to the encryption/decryption functions
 for an AEAD block in an Existing Session message:
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 k :: 32 byte session key
        As looked up from the accompanying session tag.
 
@@ -1604,17 +1545,15 @@ k :: 32 byte session key
 
   data :: Plaintext data, 0 or more bytes
 
-{% endhighlight %}
+```
 
 
-Encrypted Format
-````````````````
+### Encrypted Format
 
 Output of the encryption function, input to the decryption function:
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+----+----+----+
   |                                       |
   +                                       +
@@ -1631,10 +1570,9 @@ Output of the encryption function, input to the decryption function:
 
   MAC :: Poly1305 message authentication code, 16 bytes
 
-{% endhighlight %}
+```
 
-Notes
-`````
+### Notes
 - Since ChaCha20 is a stream cipher, plaintexts need not be padded.
   Additional keystream bytes are discarded.
 
@@ -1648,17 +1586,15 @@ Notes
   data frame.
 
 
-AEAD Error Handling
-```````````````````
+### AEAD Error Handling
 
 All received data that fails the AEAD verification must be discarded.
 No response is returned.
 
 
-Justification
-`````````````
+### Justification
 
-Used in [NTCP2]_.
+Used in [NTCP2](/docs/specs/ntcp2/).
 
 
 
@@ -1687,8 +1623,7 @@ Note: The New Session one-time public key is not part of the ratchet, its sole f
 is to encrypt Alice's initial DH ratchet key.
 
 
-Message Numbers
-```````````````
+### Message Numbers
 
 The Double Ratchet handles lost or out-of-order messages by including in each message header
 a tag. The receiver looks up the index of the tag, this is the message number N.
@@ -1698,8 +1633,7 @@ while retaining skipped tags
 from the previous tag set in case the skipped messages arrive later.
 
 
-Sample Implementation
-``````````````````````
+### Sample Implementation
 
 We define the following data structures and functions to implement these ratchets.
 
@@ -1775,8 +1709,7 @@ TAGSET
 
 
 
-4a) DH Ratchet
-``````````````
+### 4a) DH Ratchet
 
 Ratchets but not nearly as fast as Signal does.
 We separate the ack of the received key from generating the new key.
@@ -1888,9 +1821,8 @@ Subsequent tag sets are generated as for tag sets 2 and 3.
 The tag set number is (1 + sender key id + receiver key id).
 
 
-.. raw:: html
+```
 
-  {% highlight %}
 Tag Sender                    Tag Receiver
 
                    ... use tag set #0 ...
@@ -1959,7 +1891,7 @@ Tag Sender                    Tag Receiver
        To create a new odd-numbered tag set, the sender sends a reverse request
        to the receiver. The receiver sends a new reverse key to the sender.
 
-{% endhighlight %}
+```
 
 After the DH ratchet is complete for an outbound tagset, and a new outbound tagset is created,
 it should be used immediately, and the old outbound tagset may be deleted.
@@ -2004,9 +1936,8 @@ Lastly, we use it after a DH Ratchet to generate a new tag set
 in a single direction for additional Existing Session messages.
 
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 Inputs:
   1) rootKey = chainKey from Payload Section
   2) k from the New Session KDF or split()
@@ -2026,7 +1957,7 @@ Inputs:
   sessTag_ck = keydata[0:31]
   symmKey_ck = keydata[32:63]
 
-{% endhighlight %}
+```
 
 
 #### DH RATCHET KDF
@@ -2034,9 +1965,8 @@ Inputs:
 This is used after new DH keys are exchanged in NextKey blocks,
 before a tagset is exhausted.
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 
 // Tag sender generates new X25519 ephemeral keys
   // and sends rapk to tag receiver in a NextKey block
@@ -2053,12 +1983,11 @@ before a tagset is exhausted.
   rootKey = nextRootKey // from previous tagset in this direction
   newTagSet = DH_INITIALIZE(rootKey, tagsetKey)
 
-{% endhighlight %}
+```
 
 
 
-4b) Session Tag Ratchet
-```````````````````````
+### 4b) Session Tag Ratchet
 
 Ratchets for every message, as in Signal.
 The session tag ratchet is synchronized with the symmetric key ratchet,
@@ -2084,9 +2013,8 @@ See the Message Number block definition.
 
 This is the definition of RATCHET_TAG().
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 Inputs:
   1) Session Tag Chain key sessTag_ck
      First time: output from DH ratchet
@@ -2126,11 +2054,10 @@ Inputs:
   // or more if tag is longer than 8 bytes
   tag_n = keydata_n[32:39]
 
-{% endhighlight %}
+```
 
 
-4c) Symmetric Key Ratchet
-`````````````````````````
+### 4c) Symmetric Key Ratchet
 
 Ratchets for every message, as in Signal.
 Each symmetric key has an associated message number and session tag.
@@ -2156,9 +2083,8 @@ This also provides some additional security, since the session tags go out on th
 
 This is the definition of RATCHET_KEY().
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 Inputs:
   1) Symmetric Key Chain key symmKey_ck
      First time: output from DH ratchet
@@ -2190,7 +2116,7 @@ Inputs:
   k_n = keydata_n[32:63]
 
 
-{% endhighlight %}
+```
 
 
 
@@ -2198,7 +2124,7 @@ Inputs:
 
 This replaces the AES section format defined in the ElGamal/AES+SessionTags specification.
 
-This uses the same block format as defined in the [NTCP2]_ specification.
+This uses the same block format as defined in the [NTCP2](/docs/specs/ntcp2/) specification.
 Individual block types are defined differently.
 
 There are concerns that encouraging implementers to share code
@@ -2209,8 +2135,7 @@ ordering and valid block rules are different for the two contexts.
 
 
 
-Payload Section Decrypted data
-``````````````````````````````
+### Payload Section Decrypted data
 
 Encrypted length is the remainder of the data.
 Decrypted length is 16 less than the encrypted length.
@@ -2234,8 +2159,7 @@ Padding                                 254         varies
 
 
 
-Unencrypted data
-````````````````
+### Unencrypted data
 There are zero or more blocks in the encrypted frame.
 Each block contains a one-byte identifier, a two-byte length,
 and zero or more bytes of data.
@@ -2248,9 +2172,8 @@ so the max unencrypted data is 65519 bytes.
 
 (Poly1305 auth tag not shown):
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+----+----+----+
   |blk |  size   |       data             |
   +----+----+----+                        +
@@ -2291,11 +2214,10 @@ so the max unencrypted data is 65519 bytes.
   Block length is 2 bytes
   Maximum single block data size is 65516 bytes.
 
-{% endhighlight %}
+```
 
 
-Block Ordering Rules
-````````````````````
+### Block Ordering Rules
 In the New Session message,
 the DateTime block is required, and must be the first block.
 
@@ -2330,8 +2252,7 @@ Other block types probably won't have multiple blocks in
 a single frame, but it is not prohibited.
 
 
-DateTime
-````````
+### DateTime
 An expiration.
 Assists in reply prevention.
 Bob must validate that the message is recent, using this timestamp.
@@ -2339,9 +2260,8 @@ Bob must implement a Bloom filter or other mechanism to prevent replay attacks,
 if the time is valid.
 Generally included in New Session messages only.
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+----+----+
   | 0  |    4    |     timestamp     |
   +----+----+----+----+----+----+----+
@@ -2351,13 +2271,12 @@ Generally included in New Session messages only.
   timestamp :: Unix timestamp, unsigned seconds.
                Wraps around in 2106
 
-{% endhighlight %}
+```
 
 
-Garlic Clove
-````````````
+### Garlic Clove
 
-A single decrypted Garlic Clove as specified in [I2NP]_,
+A single decrypted Garlic Clove as specified in [I2NP](/docs/specs/i2np/),
 with modifications to remove fields that are unused
 or redundant.
 Warning: This format is significantly different than
@@ -2365,9 +2284,8 @@ the one for ElGamal/AES. Each clove is a separate payload block.
 Garlic Cloves may not be fragmented across blocks or
 across ChaChaPoly frames.
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+----+----+----+
   | 11 |  size   |                        |
   +----+----+----+                        +
@@ -2388,7 +2306,7 @@ across ChaChaPoly frames.
   size :: size of all data to follow
 
   Delivery Instructions :: As specified in
-         the Garlic Clove section of [I2NP]_.
+         the Garlic Clove section of [I2NP](/docs/specs/i2np/).
          Length varies but is typically 1, 33, or 37 bytes
 
   type :: I2NP message type
@@ -2397,7 +2315,7 @@ across ChaChaPoly frames.
 
   Expiration :: 4 bytes, seconds since the epoch
 
-{% endhighlight %}
+```
 
 Notes:
 
@@ -2405,17 +2323,17 @@ Notes:
   malformed or malicious data will not cause reads to
   overrun into the next block.
 
-- The Clove Set format specified in [I2NP]_ is not used.
+- The Clove Set format specified in [I2NP](/docs/specs/i2np/) is not used.
   Each clove is contained in its own block.
 
 - The I2NP message header is 9 bytes, with an identical format
-  to that used in [NTCP2]_.
+  to that used in [NTCP2](/docs/specs/ntcp2/).
 
 - The Certificate, Message ID, and Expiration from the
-  Garlic Message definition in [I2NP]_ are not included.
+  Garlic Message definition in [I2NP](/docs/specs/i2np/) are not included.
 
 - The Certificate, Clove ID, and Expiration from the
-  Garlic Clove definition in [I2NP]_ are not included.
+  Garlic Clove definition in [I2NP](/docs/specs/i2np/) are not included.
 
 Justification:
 
@@ -2429,8 +2347,7 @@ Justification:
   as new block types.
 
 
-Termination
-```````````
+### Termination
 Implementation is optional.
 Drop the session.
 This must be the last non-padding block in the frame.
@@ -2439,9 +2356,8 @@ No more messages will be sent in this session.
 Not allowed in NS or NSR. Only included in Existing Session messages.
 
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+----+----+----+
   | 4  |  size   | rsn|     addl data     |
   +----+----+----+----+                   +
@@ -2458,12 +2374,11 @@ Not allowed in NS or NSR. Only included in Existing Session messages.
                or reason text.
                Format unspecified and may vary based on reason code.
 
-{% endhighlight %}
+```
 
 
 
-Options
-```````
+### Options
 UNIMPLEMENTED, for further study.
 Pass updated options.
 Options include various parameters for the session.
@@ -2473,9 +2388,8 @@ The options block may be variable length,
 as more_options may be present.
 
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+----+----+----+
   | 5  |  size   |ver |flg |STL |STimeout |
   +----+----+----+----+----+----+----+----+
@@ -2522,7 +2436,7 @@ as more_options may be present.
 
   more_options :: Format undefined, for future use
 
-{% endhighlight %}
+```
 
 SOTW is the sender's recommendation to the receiver for the
 receiver's inbound tag window (the maximum lookahead).
@@ -2546,8 +2460,7 @@ Issues:
   but those options have not been fully implemented or studied there.
 
 
-Message Numbers
-```````````````
+### Message Numbers
 Implementation is optional.
 The length (number of messages sent) in the previous tag set (PN).
 Receiver may immediately delete tags higher than PN from the previous tag set.
@@ -2555,9 +2468,8 @@ Receiver may expire tags less than or equal to PN from the previous tag set
 after a short time (e.g. 2 minutes).
 
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+
   | 6  |  size   |  PN    |
  +----+----+----+----+----+
@@ -2566,7 +2478,7 @@ after a short time (e.g. 2 minutes).
   size :: 2
   PN :: 2 bytes big endian. The index of the last tag sent in the previous tag set.
 
-{% endhighlight %}
+```
 
 
 Notes:
@@ -2578,8 +2490,7 @@ Notes:
 - Do not send this block in tag set 0, because there was no previous tag set.
 
 
-Next DH Ratchet Public Key
-``````````````````````````
+### Next DH Ratchet Public Key
 The next DH ratchet key is in the payload,
 and it is optional. We don't ratchet every time.
 (This is different than in signal, where it is in the header, and sent every time)
@@ -2589,9 +2500,8 @@ Key ID = 0.
 
 Not allowed in NS or NSR. Only included in Existing Session messages.
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+----+----+----+
   | 7  |  size   |flag|  key ID |         |
   +----+----+----+----+----+----+         +
@@ -2619,7 +2529,7 @@ Not allowed in NS or NSR. Only included in Existing Session messages.
                 Only if bit 0 is 1
 
 
-{% endhighlight %}
+```
 
 Notes:
 
@@ -2635,17 +2545,15 @@ Notes:
 - See the DH Ratchet section above for details.
 
 
-Ack
-```
+### Ack
+
 This is only sent if an ack request block was received.
 Multiple acks may be present to ack multiple messages.
 
 Not allowed in NS or NSR. Only included in Existing Session messages.
 
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
+```
 +----+----+----+----+----+----+----+----+
   | 8  |  size   |tagsetid |   N     |    |
   +----+----+----+----+----+----+----+    +
@@ -2661,7 +2569,7 @@ Not allowed in NS or NSR. Only included in Existing Session messages.
   N :: 2 bytes, big endian, from the message being acked
 
 
-{% endhighlight %}
+```
 
 
 Notes:
@@ -2673,8 +2581,7 @@ Notes:
 
 
 
-Ack Request
-```````````
+### Ack Request
 Request an in-band ack.
 To replace the out-of-band DeliveryStatus Message in the Garlic Clove.
 
@@ -2684,9 +2591,8 @@ are returned in an ack block.
 Not allowed in NS or NSR. Only included in Existing Session messages.
 
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+
   |  9 |  size   |flg |
   +----+----+----+----+
@@ -2696,12 +2602,11 @@ Not allowed in NS or NSR. Only included in Existing Session messages.
   flg :: 1 byte flags
          bits 7-0: Unused, set to 0 for future compatibility
 
-{% endhighlight %}
+```
 
 
 
-Padding
-```````
+### Padding
 All padding is inside AEAD frames.
 TODO Padding inside AEAD should roughly adhere to the negotiated parameters.
 TODO Alice sent her requested tx/rx min/max parameters in the NS message.
@@ -2713,9 +2618,8 @@ If present, this must be the last block in the frame.
 
 
 
-.. raw:: html
+```
 
-  {% highlight lang='dataspec' %}
 +----+----+----+----+----+----+----+----+
   |254 |  size   |      padding           |
   +----+----+----+                        +
@@ -2728,7 +2632,7 @@ If present, this must be the last block in the frame.
   size :: 2 bytes, big endian, 0-65516
   padding :: zeros or random data
 
-{% endhighlight %}
+```
 
 Notes:
 
@@ -2741,14 +2645,12 @@ Notes:
 - Router response on violation of negotiated padding is implementation-dependent.
 
 
-Other block types
-`````````````````
+### Other block types
 Implementations should ignore unknown block types for
 forward compatibility.
 
 
-Future work
-```````````
+### Future work
 - The padding length is either to be decided on a per-message basis and
   estimates of the length distribution, or random delays should be added.
   These countermeasures are to be included to resist DPI, as message sizes
@@ -2779,9 +2681,8 @@ Alice ratchets immediately.
 
 Continues on with those sessions.
 
-.. raw:: html
+```
 
-  {% highlight %}
 Alice                           Bob
 
   New Session (1b)     ------------------->
@@ -2836,7 +2737,7 @@ Alice                           Bob
   <--------------     Existing Session
                       with bundled HTTP reply part 5
 
-{% endhighlight %}
+```
 
 
 
@@ -2863,9 +2764,8 @@ Alice has three options:
 
 Option 3 message flow:
 
-.. raw:: html
+```
 
-  {% highlight %}
 Alice                           Bob
 
   New Session (1b)     ------------------->
@@ -2944,7 +2844,7 @@ Alice                           Bob
   <--------------     Existing Session
                       with bundled streaming ack
 
-{% endhighlight %}
+```
 
 
 
@@ -2956,9 +2856,8 @@ Additional messages or replies may be sent.
 Similar to HTTP GET, but with smaller options for session tag window size and lifetime.
 Maybe don't request a ratchet.
 
-.. raw:: html
+```
 
-  {% highlight %}
 Alice                           Bob
 
   New Session (1b)     ------------------->
@@ -3009,7 +2908,7 @@ Alice                           Bob
   <--------------     Existing Session
                       with bundled message
 
-{% endhighlight %}
+```
 
 
 
@@ -3025,9 +2924,8 @@ No next key is included. No reply or ratchet is requested.
 No ratchet is sent.
 Options set session tags window to zero.
 
-.. raw:: html
+```
 
-  {% highlight %}
 Alice                           Bob
 
   New Session (1c)     ------------------->
@@ -3062,7 +2960,7 @@ Alice                           Bob
 
   Existing Session     ------------------->
 
-{% endhighlight %}
+```
 
 
 
@@ -3075,9 +2973,8 @@ No reply LS or DSM are bundled. No next key is included. No reply or ratchet is 
 No ratchet is sent.
 Options set session tags window to zero.
 
-.. raw:: html
+```
 
-  {% highlight %}
 Alice                           Bob
 
   One-Time Message (1d)   ------------------->
@@ -3085,7 +2982,7 @@ Alice                           Bob
   without bundled LS
   without bundled Delivery Status Message
 
-{% endhighlight %}
+```
 
 
 
@@ -3139,8 +3036,7 @@ Recommended parameters and timeouts:
 Following are recommendations for classifying incoming messages.
 
 
-X25519 Only
-`````````````
+### X25519 Only
 
 On a tunnel that is solely used with this protocol, do identification
 as is done currently with ElGamal/AES+SessionTags:
@@ -3152,8 +3048,7 @@ If not found, treat the initial data as a DH public key and nonce.
 Perform a DH operation and the specified KDF, and attempt to decrypt the remaining data.
 
 
-X25519 Shared with ElGamal/AES+SessionTags
-````````````````````````````````````````````
+### X25519 Shared with ElGamal/AES+SessionTags
 
 On a tunnel that supports both this protocol and
 ElGamal/AES+SessionTags, classify incoming messages as follows:
@@ -3227,15 +3122,13 @@ No padding is assumed for analysis of the new protocol.
 No bundled leaseset is assumed.
 
 
-ElGamal/AES+SessionTags
-```````````````````````````
+### ElGamal/AES+SessionTags
 
 New session message, same each direction:
 
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 ElGamal block:
   514 bytes
 
@@ -3255,13 +3148,12 @@ ElGamal block:
 
   Total:
   1657 bytes
-{% endhighlight %}
+```
 
 Existing session messages, same each direction:
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 AES block:
   - 32 byte session tag
   - 2 byte tag count
@@ -3275,22 +3167,21 @@ AES block:
   - 15 byte clove cert, id, exp.
   - 0 byte padding assuming 1936 byte message
   151 total
-{% endhighlight %}
+```
 
-  {% highlight lang='text' %}
+
+```
 Four message total (two each direction)
   3616 bytes overhead
-{% endhighlight %}
+```
 
 
-ECIES-X25519-AEAD-Ratchet
-`````````````````````````````
+### ECIES-X25519-AEAD-Ratchet
 
 Alice-to-Bob New Session message:
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 - 32 byte ephemeral public key
   - 32 byte static public key
   - 16 byte Poly1305 MAC
@@ -3302,13 +3193,12 @@ Alice-to-Bob New Session message:
 
   Total:
   148 bytes overhead
-{% endhighlight %}
+```
 
 Bob-to-Alice New Session Reply message:
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 - 8 byte session tag
   - 32 byte ephemeral public key
   - 16 byte Poly1305 MAC
@@ -3319,13 +3209,12 @@ Bob-to-Alice New Session Reply message:
 
   Total:
   117 bytes overhead
-{% endhighlight %}
+```
 
 Existing session messages, same each direction:
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 - 8 byte session tag
   - 3 byte Garlic block overhead
   - 9 byte I2NP header
@@ -3334,40 +3223,36 @@ Existing session messages, same each direction:
 
   Total:
   69 bytes
-{% endhighlight %}
+```
 
 
-Comparison
-````````````````
+### Comparison
 
 Four message total (two each direction):
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 372 bytes
   90% (approx. 10x) reduction compared to ElGamal/AES+SessionTags
-{% endhighlight %}
+```
 
 Handshake only:
 
-.. raw:: html
+```
 
-  {% highlight lang='text' %}
 ElGamal: 1657 + 1657 = 3314 bytes
   Ratchet: 148 _ 117 = 265 bytes
   92% (approx. 12x) reduction compared to ElGamal/AES+SessionTags
-{% endhighlight %}
+```
 
 Long-term total (ignoring handshakes):
 
-.. raw:: html
 
-  {% highlight lang='text' %}
+```
 ElGamal: 151 + 32 byte tag sent previously = 183 bytes
   Ratchet: 69 bytes
   64% (approx. 3x) reduction compared to ElGamal/AES+SessionTags
-{% endhighlight %}
+```
 
 
 ### CPU
@@ -3468,8 +3353,7 @@ While still extremely unlikely, they will be much more likely than
 they were for ElGamal/AES+SessionTags, and could actually happen.
 
 
-Alternate
-``````````````````
+### Alternate
 
 Using twice the sessions per second (128) and twice the tag window (64),
 we have 4 times the tags (7.4 million). Max for one in a million
@@ -3484,8 +3368,7 @@ By reducing the target to 1 in 10,000, there's plenty of margin
 with 8 byte tags.
 
 
-Storage
-```````````
+### Storage
 
 The sender generates tags and keys on the fly, so there is no storage.
 This cuts overall storage requirements in half compared to ElGamal/AES.
@@ -3507,12 +3390,12 @@ Therefore, the total space savings vs. ElGamal/AES is a factor of 10.7, or 92%.
 
 ### I2NP Changes Required
 
-Database Lookups from ECIES Destinations: See [Prop154]_,
-now incorporated in [I2NP]_ for release 0.9.46.
+Database Lookups from ECIES Destinations: See [Proposal 154](/proposals/154-ecies-lookups),
+now incorporated in [I2NP](/docs/specs/i2np/) for release 0.9.46.
 
 This proposal requires LS2 support to publish the X25519 public key with the leaseset.
-No changes are required to the LS2 specifications in [I2NP]_.
-All support was designed, specified, and implemented in [Prop123]_ implemented in 0.9.38.
+No changes are required to the LS2 specifications in [I2NP](/docs/specs/i2np/).
+All support was designed, specified, and implemented in [Proposal 123](/proposals/123-new-netdb-entries) implemented in 0.9.38.
 
 
 
@@ -3520,8 +3403,8 @@ All support was designed, specified, and implemented in [Prop123]_ implemented i
 
 None.
 This proposal requires LS2 support, and a property to be set in the I2CP options to be enabled.
-No changes are required to the [I2CP]_ specifications.
-All support was designed, specified, and implemented in [Prop123]_ implemented in 0.9.38.
+No changes are required to the [I2CP](/docs/specs/i2cp/) specifications.
+All support was designed, specified, and implemented in [Proposal 123](/proposals/123-new-netdb-entries) implemented in 0.9.38.
 
 The option required to enable ECIES is a single I2CP property
 for I2CP, BOB, SAM, or i2ptunnel.
@@ -3531,27 +3414,25 @@ or i2cp.leaseSetEncType=4,0 for ECIES and ElGamal dual keys.
 
 
 
-I2CP Options
-``````````````````
+### I2CP Options
 
-This section is copied from [Prop123]_.
+This section is copied from [Proposal 123](/proposals/123-new-netdb-entries).
 
 Option in SessionConfig Mapping:
 
-::
-
+```
   i2cp.leaseSetEncType=nnn[,nnn]  The encryption types to be used.
                                   0: ElGamal
                                   1-3: See proposal 145
                                   4: This proposal.
+```
 
 
-Create Leaseset2 Message
-````````````````````````````
+### Create Leaseset2 Message
 
 This proposal requires LS2 which is supported as of release 0.9.38.
-No changes are required to the [I2CP]_ specifications.
-All support was designed, specified, and implemented in [Prop123]_ implemented in 0.9.38.
+No changes are required to the [I2CP](/docs/specs/i2cp/) specifications.
+All support was designed, specified, and implemented in [Proposal 123](/proposals/123-new-netdb-entries) implemented in 0.9.38.
 
 
 
@@ -3562,92 +3443,7 @@ Any router supporting LS2 with dual keys (0.9.38 or higher) should support
 connection to destinations with dual keys.
 
 ECIES-only destinations will require a majority of the floodfills to be updated
-to 0.9.46 to get encrypted lookup replies. See [Prop154]_.
+to 0.9.46 to get encrypted lookup replies. See [Proposal 154](/proposals/154-ecies-lookups).
 
 ECIES-only destinations can only connect with other destinations that are
 either ECIES-only, or dual-key.
-
-
-
-## References
-
-.. [Common]
-    {{ spec_url('common-structures') }}
-
-.. [CRYPTO-ELG]
-    {{ site_url('docs/how/cryptography', True) }}#elgamal
-
-.. [ElG-AES]
-    {{ site_url('docs/how/elgamal-aes', True) }}
-
-.. [Elligator2]
-    https://elligator.cr.yp.to/elligator-20130828.pdf
-    https://www.imperialviolet.org/2013/12/25/elligator.html
-    See also OBFS4 code
-
-.. [GARLICSPEC]
-    {{ site_url('docs/how/garlic-routing', True) }}
-
-.. [I2CP]
-    {{ spec_url('i2cp') }}
-
-.. [I2NP]
-    {{ spec_url('i2np') }}
-
-.. [NTCP2]
-    {{ spec_url('ntcp2') }}
-
-.. [NOISE]
-    https://noiseprotocol.org/noise.html
-
-.. [Prop111]
-    {{ proposal_url('111') }}
-
-.. [Prop123]
-    {{ proposal_url('123') }}
-
-.. [Prop142]
-    {{ proposal_url('142') }}
-
-.. [Prop145]
-    {{ proposal_url('145') }}
-
-.. [Prop152]
-    {{ proposal_url('152') }}
-
-.. [Prop153]
-    {{ proposal_url('153') }}
-
-.. [Prop154]
-    {{ proposal_url('154') }}
-
-.. [RFC-2104]
-    https://tools.ietf.org/html/rfc2104
-
-.. [RFC-5869]
-    https://tools.ietf.org/html/rfc5869
-
-.. [RFC-7539]
-    https://tools.ietf.org/html/rfc7539
-
-.. [RFC-7748]
-    https://tools.ietf.org/html/rfc7748
-
-.. [RFC-7905]
-    https://tools.ietf.org/html/rfc7905
-
-.. [RFC-4880-S5.1]
-    https://tools.ietf.org/html/rfc4880#section-5.1
-
-.. [Signal]
-    https://signal.org/docs/specifications/doubleratchet/
-
-.. [SPEC]
-    {{ spec_url('ecies') }}
-
-.. [SSU]
-    {{ site_url('docs/transport/ssu', True) }}
-
-.. [STS]
-    Diffie, W.; van Oorschot P. C.; Wiener M. J., Authentication and
-    Authenticated Key Exchanges

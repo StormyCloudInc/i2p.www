@@ -22,7 +22,7 @@ a list of gateways and keys so that clients may connect to that destination.
 
 So, leasesets are somewhat like a DNS record. But there is currently no facility to
 find out if that host supports any services, either on that destination or a different one,
-in a manner similar to DNS SRV records [SRV]_ [RFC2782]_.
+in a manner similar to DNS [SRV records](https://en.wikipedia.org/wiki/SRV_record) as defined in [RFC 2782](https://datatracker.ietf.org/doc/html/rfc2782).
 
 The first application for this may be peer-to-peer email.
 Other possible applications: DNS, GNS, key servers, certificate authorities, time servers,
@@ -33,7 +33,7 @@ bittorrent, cryptocurrencies, other peer-to-peer applications.
 
 ### Service Lists
 
-The LS2 proposal 123 [Prop123]_ defined 'service records' that indicated a destination
+The LS2 [Proposal 123](/en/proposals/123-new-netdb-entries/) defined 'service records' that indicated a destination
 was participating in a global service. The floodfills would aggregate these records
 into global 'service lists'.
 This was never implemented due to complexity, lack of authentication,
@@ -44,13 +44,13 @@ not a global pool of destinations for some global service.
 
 ### GNS
 
-GNS [GNS]_ proposes that everybody runs their own DNS server.
+GNS proposes that everybody runs their own DNS server.
 This proposal is complementary, in that we could use service records to specify
 that GNS (or DNS) is supported, with a standard service name of "domain" on port 53.
 
 ### Dot well-known
 
-In [DOTWELLKNOWN]_ it is proposed that services be looked up via an HTTP request to
+It has been [proposed](http://i2pforum.i2p/viewtopic.php?p=3102) that services be looked up via an HTTP request to
 /.well-known/i2pmail.key. This requires that every service must have a related
 website to host the key. Most users do not run websites.
 
@@ -71,10 +71,10 @@ alone do not provide a generic record for any service.
 
 ## Design
 
-Service records are placed in the options section in LS2 [LS2]_.
+Service records are placed in the options section in [LS2](/en/docs/spec/common-structures/).
 The LS2 options section is currently unused.
 Not supported for LS1.
-This is similar to the tunnel bandwidth proposal [Prop168]_,
+This is similar to the [tunnel bandwidth proposal](/en/proposals/168-tunnel-bandwidth/),
 which defines options for tunnel build records.
 
 To lookup a service address for a specific hostname or b32, the router fetches the
@@ -107,7 +107,7 @@ Defined as follows:
 - optionkey := _service._proto
 - service := The symbolic name of the desired service. Must be lower case. Example: "smtp".
   Allowed chars are [a-z0-9-] and must not start or end with a '-'.
-  Standard identifiers from [REGISTRY]_ or Linux /etc/services must be used if defined there.
+  Standard identifiers from the [DNS-SD Service Types registry](http://www.dns-sd.org/ServiceTypes.html) or Linux /etc/services must be used if defined there.
 - proto := The transport protocol of the desired service. Must be lower case, either "tcp" or "udp".
   "tcp" means streaming and "udp" means repliable datagrams.
   Protocol indicators for raw datagrams and datagram2 may be defined later.
@@ -123,33 +123,31 @@ Defined as follows:
   Only useful if more than one record, but required even if just one record.
 - port := The I2CP port on which the service is to be found. Non-negative integer. Example: "25"
   Port 0 is supported but not recommended.
-- target := The hostname or b32 of the destination providing the service. A valid hostname as in [NAMING]_. Must be lower case.
+- target := The hostname or b32 of the destination providing the service. A valid [hostname](/en/docs/naming/). Must be lower case.
   Example: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.b32.i2p" or "example.i2p".
   b32 is recommended unless the hostname is "well known", i.e. in official or default address books.
 - appoptions := arbitrary text specific to the application, must not contain " " or ",". Encoding is UTF-8.
 
-Examples
-``````````
+### Examples
 
 In LS2 for aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.b32.i2p, pointing to one SMTP server:
 
-"_smtp._tcp" "1 86400 0 0 25 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.b32.i2p"
+    "_smtp._tcp" "1 86400 0 0 25 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.b32.i2p"
 
 In LS2 for aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.b32.i2p, pointing to two SMTP servers:
 
-"_smtp._tcp" "1 86400 0 0 25 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.b32.i2p,86400 1 0 25 cccccccccccccccccccccccccccccccccccccccccccc.b32.i2p"
+    "_smtp._tcp" "1 86400 0 0 25 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.b32.i2p,86400 1 0 25 cccccccccccccccccccccccccccccccccccccccccccc.b32.i2p"
 
 In LS2 for bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.b32.i2p, pointing to itself as a SMTP server:
 
-"_smtp._tcp" "0 999999 25"
+    "_smtp._tcp" "0 999999 25"
 
 Possible format for redirecting email (see below):
 
-"_smtp._tcp" "1 86400 0 0 25 smtp.postman.i2p example@mail.i2p"
+    "_smtp._tcp" "1 86400 0 0 25 smtp.postman.i2p example@mail.i2p"
 
 
-Limits
-```````
+### Limits
 
 The Mapping data structure format used for LS2 options limits keys and values to 255 bytes (not chars) max.
 With a b32 target, the optionvalue is about 67 bytes, so only 3 records would fit.
@@ -157,8 +155,7 @@ Maybe only one or two with a long appoptions field, or up to four or five with a
 This should be sufficient; multiple records should be rare.
 
 
-Differences from [RFC2782]_
-````````````````````````````
+### Differences from RFC 2782
 
 - No trailing dots
 - No name after the proto
@@ -168,8 +165,7 @@ Differences from [RFC2782]_
 - Additional appoptions field
 
 
-Notes
-`````
+### Notes
 
 No wildcarding such as (asterisk), (asterisk)._tcp, or _tcp is allowed.
 Each supported service must have its own record.
@@ -178,15 +174,15 @@ Each supported service must have its own record.
 
 ### Service Name Registry
 
-Non-standard identifiers that are not listed in [REGISTRY]_ or Linux /etc/services
-may be requested and added to the common structures specification [LS2]_.
+Non-standard identifiers that are not listed in the [DNS-SD Service Types registry](http://www.dns-sd.org/ServiceTypes.html) or Linux /etc/services
+may be requested and added to the [common structures specification](/en/docs/spec/common-structures/).
 
 Service-specific appoptions formats may also be added there.
 
 
 ### I2CP Specification
 
-The [I2CP]_ protocol must be extended to support service lookups.
+The [I2CP protocol](/en/docs/spec/i2cp/) must be extended to support service lookups.
 Additional MessageStatusMessage and/or HostReplyMessage error codes related to service lookup
 are required.
 To make the lookup facility general, not just service record-specific,
@@ -203,9 +199,9 @@ Service records may be cached up to the TTL specified by the application, client
 
 Extend the specification as follows:
 
-Configuration options
-`````````````````````
-Add the following to [I2CP-OPTIONS]
+#### Configuration options
+
+Add the following to the [I2CP configuration options](/en/docs/protocol/i2cp/)
 
 i2cp.leaseSetOption.nnn
 
@@ -217,8 +213,7 @@ Example:
 i2cp.leaseSetOption.0=_smtp._tcp=1 86400 0 0 25 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.b32.i2p
 
 
-HostLookup Message
-``````````````````
+#### HostLookup Message
 
 - Lookup type 2: Hash lookup, request options mapping
 - Lookup type 3: Hostname lookup, request options mapping
@@ -228,8 +223,7 @@ For lookup type 4, item 5 is a Destination.
 
 
 
-HostReply Message
-``````````````````
+#### HostReply Message
 
 For lookup types 2-4, the router must fetch the leaseset,
 even if the lookup key is in the address book.
@@ -255,7 +249,7 @@ the reply will contain a new error code 7 (lookup type unsupported).
 
 ### SAM Specification
 
-The [SAMv3]_ protocol must be extended to support service lookups.
+The [SAMv3 protocol](/en/docs/api/samv3/) must be extended to support service lookups.
 
 Extend NAMING LOOKUP as follows:
 
@@ -286,7 +280,7 @@ If OPTIONS=true was in the lookup, and the leaseset is not found, a new result v
 
 An alternative design was considered, to support lookups of services
 as a full hostname, for example _smtp._tcp.example.i2p,
-by updating [NAMING]_ to specify handling of hostnames starting with '_'.
+by updating the [naming specification](/en/docs/naming/) to specify handling of hostnames starting with '_'.
 This was rejected for two reasons:
 
 - I2CP and SAM changes would still be necessary to pass through the TTL and port information to the client.
@@ -328,7 +322,7 @@ TODO how to do this in a generic way
 
 ### Changes required for Email
 
-Out of the scope of this proposal. See [DOTWELLKNOWN]_ for a discussion.
+Out of the scope of this proposal. See the [discussion on i2pforum](http://i2pforum.i2p/viewtopic.php?p=3102) for more details.
 
 
 ## Implementation Notes
@@ -380,42 +374,3 @@ No version bump should be necessary.
 Implementations may add support at any time, no coordination is needed,
 except for an agreement on the effective API version for the I2CP changes.
 SAM compatibility versions for each implementation will be documented in the SAM spec.
-
-
-## References
-
-.. [DOTWELLKNOWN]
-    http://i2pforum.i2p/viewtopic.php?p=3102
-
-.. [I2CP]
-    {{ spec_url('i2cp') }}
-
-.. [I2CP-OPTIONS]
-    {{ site_url('docs/protocol/i2cp', True) }}
-
-.. [LS2]
-    {{ spec_url('common-structures') }}
-
-.. [GNS]
-    http://zzz.i2p/topcs/1545
-
-.. [NAMING]
-    {{ site_url('docs/naming', True) }}
-
-.. [Prop123]
-    {{ proposal_url('123') }}
-
-.. [Prop168]
-    {{ proposal_url('168') }}
-
-.. [REGISTRY]
-    http://www.dns-sd.org/ServiceTypes.html
-
-.. [RFC2782]
-    https://datatracker.ietf.org/doc/html/rfc2782
-
-.. [SAMv3]
-    {{ site_url('docs/api/samv3') }}
-
-.. [SRV]
-    https://en.wikipedia.org/wiki/SRV_record

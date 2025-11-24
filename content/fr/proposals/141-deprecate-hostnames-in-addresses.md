@@ -41,7 +41,7 @@ de résoudre un nom d'hôte en une adresse IPv4 ou IPv6 n'existait pas.
 
 Dans Java I2P, il a toujours été difficile de propager un nom d'hôte configuré
 aux deux transports publiés, et la situation s'est compliquée
-avec IPv6. Le ticket ouvert 1050 http://trac.i2p2.i2p/ticket/1050 détaille certains des problèmes.
+avec IPv6.
 Il n'est pas clair si un hôte dual-stack doit publier à la fois un nom d'hôte et une adresse
 IPv6 littérale ou non. Le nom d'hôte est publié pour l'adresse SSU mais pas pour l'adresse NTCP.
 
@@ -118,10 +118,7 @@ de routeurs individuelles qui contiennent des noms d'hôte.
 Ceci s'applique également aux paramètres "ihost0", "ihost1", et "ihost2" dans une adresse SSU.
 Les routeurs doivent ignorer les adresses des introducers qui contiennent des noms d'hôte.
 
-La section pertinente est "Spécification d'adresse du routeur" dans les spécifications de transport :
-http://i2p-projekt.i2p/fr/docs/specs/ntcp
-et
-http://i2p-projekt.i2p/fr/docs/specs/ssu
+
 
 
 ## Notes

@@ -11,12 +11,10 @@ thread: "http://zzz.i2p/topics/2500"
 ## 注意
 该提案未按指定实现，
 然而，ECIES 长短构建消息（提案 152 和 157）设计了可扩展的选项字段。
-请参见 [SPEC]_ 查看官方规范。
+请参见 [Tunnel Creation ECIES 规范](/en/docs/spec/tunnel-creation-ecies/) 查看官方规范。
 
 
 ## 概述
-
-参考: http://i2p-projekt.i2p/spec/tunnel-creation
 
 在隧道构建和隧道构建回复消息中，添加一个灵活、可扩展的机制，用于 I2NP 隧道构建记录中的选项。
 
@@ -89,10 +87,3 @@ TBRM 中有 495 个备用字节。
 该空间可以转换为包含选项而不会出现迁移问题。
 在构建消息中，选项的存在通过标志字节表示。
 在构建回复消息中，选项的存在通过一个多字节魔数表示。
-
-
-
-## 参考
-
-.. [SPEC]
-   {{ spec_url('tunnel-creation-ecies') }}

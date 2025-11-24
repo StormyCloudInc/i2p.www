@@ -28,15 +28,15 @@ Ce document met en évidence ces problèmes non résolus.
 
 Toute personne proposant une nouvelle cryptographie doit d'abord être familière avec les documents suivants :
 
-- Proposition 111 NTCP2 /proposals/111-ntcp-2/
-- Proposition 123 LS2 /proposals/123-new-netdb-entries/
-- Proposition 136 types de signature expérimentale /proposals/136-experimental-sigtypes/
-- Proposition 137 types de signature optionnelle /proposals/137-optional-sigtypes/
+- [Proposition 111 NTCP2](/fr/proposals/111-ntcp-2/)
+- [Proposition 123 LS2](/fr/proposals/123-new-netdb-entries/)
+- [Proposition 136 types de signature expérimentale](/fr/proposals/136-experimental-sigtypes/)
+- [Proposition 137 types de signature optionnelle](/fr/proposals/137-optional-sigtypes/)
 - Fils de discussion ici pour chacune des propositions ci-dessus, liés à l'intérieur
-- http://zzz.i2p/topics/2494 priorités des propositions 2018
-- http://zzz.i2p/topics/2418 proposition ECIES
-- http://zzz.i2p/topics/1768 aperçu de la nouvelle cryptographie asymétrique
-- Vue d'ensemble de la cryptographie bas niveau /docs/specs/cryptography/
+- [priorités des propositions 2018](http://zzz.i2p/topics/2494)
+- [proposition ECIES](http://zzz.i2p/topics/2418)
+- [aperçu de la nouvelle cryptographie asymétrique](http://zzz.i2p/topics/1768)
+- [Vue d'ensemble de la cryptographie bas niveau](/fr/docs/specs/common-structures/)
 
 
 ## Utilisations de la Cryptographie Asymétrique

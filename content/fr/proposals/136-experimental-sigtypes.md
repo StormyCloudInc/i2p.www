@@ -37,8 +37,7 @@ sans vérifier la signature. Le support pour les stockages RI est à définir, e
 
 ## Spécification
 
-Réf : http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 Pour les types de signature dans la plage expérimentale, un floodfill devrait accepter et propager les stockages netdb
 sans vérifier la signature.
@@ -85,7 +84,4 @@ Les stockages NetDB de types de signature inconnus qui ne sont pas dans la plage
 d'être rejetés par les floodfills, car la signature ne peut être vérifiée.
 
 
-## Voir aussi
 
-Proposition 134
-Proposition 137

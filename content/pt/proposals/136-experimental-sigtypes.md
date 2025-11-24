@@ -36,8 +36,7 @@ sem verificar a assinatura. O suporte para armazenamentos RI está em definiçã
 
 ## Especificação
 
-Ref: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 Para tipos de assinatura na faixa experimental, um floodfill deve aceitar e propagar armazenamentos de netdb
 sem verificar a assinatura.
@@ -84,7 +83,4 @@ Armazenamentos de NetDB de tipos de assinatura desconhecidos que não estão na 
 a ser rejeitados pelos floodfills, pois a assinatura não pode ser verificada.
 
 
-## Veja Também
 
-Proposta 134
-Proposta 137

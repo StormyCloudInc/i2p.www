@@ -42,7 +42,7 @@ The solution is adding two new "caps" or capabilities to the Router Info to indi
 
 ### IPv6 Introducers
 
-Our specifications [SSU]_ and [SSU-SPEC]_ contain errors and inconsistencies about whether
+Our specifications for SSU contain errors and inconsistencies about whether
 IPv6 introducers are supported for IPv4 introductions.
 In any case, this has never been implemented in either Java I2P or i2pd.
 This needs to be corrected.
@@ -50,7 +50,7 @@ This needs to be corrected.
 
 ### IPv6 Introdutions
 
-Our specifications [SSU]_ and [SSU-SPEC]_ make clear that
+Our specifications for SSU make clear that
 IPv6 introductions are not supported.
 This was under the assumption that IPv6 is never firewalled.
 This is clearly not true, and we need to improve support for firewalled IPv6 routers.
@@ -60,11 +60,9 @@ This is clearly not true, and we need to improve support for firewalled IPv6 rou
 
 Legend: ----- is IPv4, ====== is IPv6
 
-Current IPv4-only:
+**Current IPv4-only:**
 
-.. raw:: html
-
-  {% highlight %}
+```
         Alice                         Bob                  Charlie
     RelayRequest ---------------------->
          <-------------- RelayResponse    RelayIntro ----------->
@@ -73,14 +71,11 @@ Current IPv4-only:
          <-------------------------------------------- SessionCreated
     SessionConfirmed ------------------------------------------>
     Data <--------------------------------------------------> Data
-{% endhighlight %}
+```
 
+**IPv4 introduction, IPv6 introducer:**
 
-IPv4 introduction, IPv6 introducer
-
-.. raw:: html
-
-  {% highlight %}
+```
 Alice                         Bob                  Charlie
     RelayRequest ======================>
          <============== RelayResponse    RelayIntro ----------->
@@ -89,14 +84,11 @@ Alice                         Bob                  Charlie
          <-------------------------------------------- SessionCreated
     SessionConfirmed ------------------------------------------>
     Data <--------------------------------------------------> Data
-{% endhighlight %}
+```
 
-IPv6 introduction, IPv6 introducer
+**IPv6 introduction, IPv6 introducer:**
 
-
-.. raw:: html
-
-  {% highlight %}
+```
 Alice                         Bob                  Charlie
     RelayRequest ======================>
          <============== RelayResponse    RelayIntro ===========>
@@ -105,13 +97,11 @@ Alice                         Bob                  Charlie
          <============================================ SessionCreated
     SessionConfirmed ==========================================>
     Data <==================================================> Data
-{% endhighlight %}
+```
 
-IPv6 introduction, IPv4 introducer
+**IPv6 introduction, IPv4 introducer:**
 
-.. raw:: html
-
-  {% highlight %}
+```
 Alice                         Bob                  Charlie
     RelayRequest ---------------------->
          <-------------- RelayResponse    RelayIntro ===========>
@@ -120,7 +110,7 @@ Alice                         Bob                  Charlie
          <============================================ SessionCreated
     SessionConfirmed ==========================================>
     Data <==================================================> Data
-{% endhighlight %}
+```
 
 
 ## Design
@@ -139,7 +129,6 @@ There are three changes to be implemented.
 
 This was originally implemented without a formal proposal, but it is required for
 IPv6 introductions, so we include it here.
-See also [CAPS]_.
 
 
 Two new capabilities "4" and "6" are defined.
@@ -207,7 +196,7 @@ We have also described this as "part 1" of the proposal.
 
 #### Spec Changes
 
-[SSU]_ currently says (IPv6 notes):
+The SSU specification currently says (IPv6 notes):
 
 IPv6 is supported as of version 0.9.8. Published relay addresses may be IPv4 or IPv6, and Alice-Bob communication may be via IPv4 or IPv6.
 
@@ -220,7 +209,7 @@ Therefore, routers should only trust the 'C' capability on an IPv6 address if th
 
 
 
-[SSU-SPEC]_ currently says (Relay Request):
+The SSU specification currently says (Relay Request):
 
 The IP address is only included if it is be different than the packet's source address and port.
 In the current implementation, the IP length is always 0 and the port is always 0,
@@ -248,11 +237,11 @@ We have also described this as "part 2" of the proposal.
 
 #### Spec Changes
 
-[SSU]_ currently says (IPv6 notes):
+The SSU specification currently says (IPv6 notes):
 
 Bob-Charlie and Alice-Charlie communication is via IPv4 only.
 
-[SSU-SPEC]_ currently says (Relay Request):
+The SSU specification currently says (Relay Request):
 
 There are no plans to implement relaying for IPv6.
 
@@ -260,7 +249,7 @@ Change to say:
 
 Relaying for IPv6 is supported as of release 0.9.xx
 
-[SSU-SPEC]_ currently says (Relay Response):
+The SSU specification currently says (Relay Response):
 
 Charlie's IP address must be IPv4, as that is the address that Alice will send the SessionRequest to after the Hole Punch.
 There are no plans to implement relaying for IPv6.
@@ -271,7 +260,7 @@ Charlie's IP address may be IPv4 or, as of release 0.9.xx, IPv6.
 That is the address that Alice will send the SessionRequest to after the Hole Punch.
 Relaying for IPv6 is supported as of release 0.9.xx
 
-[SSU-SPEC]_ currently says (Relay Intro):
+The SSU specification currently says (Relay Intro):
 
 Alice's IP address is always 4 bytes in the current implementation, because Alice is trying to connect to Charlie via IPv4.
 This message must be sent via an established IPv4 connection,
@@ -296,21 +285,3 @@ As of release 0.9.xx, any SSU address published with introducers must contain "4
 All old routers should ignore the caps property in NTCP2, and unknown capability characters in the SSU caps property.
 
 Any SSU address with introducers that does not contain a "4" or "6" cap is assumed to be for IPv4 introduction.
-
-
-
-
-
-## References
-
-.. [CAPS]
-    http://zzz.i2p/topics/3050
-
-.. [NTCP2]
-    {{ spec_url('ntcp2') }}
-
-.. [SSU]
-    {{ site_url('docs/transport/ssu', True) }}
-
-.. [SSU-SPEC]
-    {{ spec_url('ssu') }}

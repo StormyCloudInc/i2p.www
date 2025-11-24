@@ -37,8 +37,7 @@ sin verificar la firma. El soporte para almacenes RI está por determinar, y pue
 
 ## Especificación
 
-Ref: http://i2p-projekt.i2p/en/docs/spec/common-structures
-http://i2p-projekt.i2p/en/docs/spec/i2np
+
 
 Para tipos de firma en el rango experimental, un floodfill debe aceptar y difundir almacenes netdb
 sin verificar la firma.
@@ -85,7 +84,4 @@ Los almacenes NetDB de tipos de firma desconocidos que no están en el rango exp
 siendo rechazados por los floodfills, ya que la firma no puede ser verificada.
 
 
-## Ver También
 
-Propuesta 134  
-Propuesta 137  

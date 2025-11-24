@@ -14,9 +14,9 @@ Network deployment and testing in progress.
 Subject to revision.
 Status:
 
-- ECIES Routers implemented as of 0.9.48, see [Common]_.
-- Tunnel building implemented as of 0.9.48, see [Tunnel-Creation-ECIES]_.
-- Encrypted messages to ECIES routers implemented as of 0.9.49, see [ECIES-ROUTERS]_.
+- ECIES Routers implemented as of 0.9.48, see [Common Structures](/docs/specs/common-structures/).
+- Tunnel building implemented as of 0.9.48, see [Tunnel Creation ECIES](/docs/specs/implementation/).
+- Encrypted messages to ECIES routers implemented as of 0.9.49, see [ECIES](/docs/specs/ecies/).
 - New tunnel build messages implemented as of 0.9.51.
 
 
@@ -31,8 +31,8 @@ Router Identities currently contain an ElGamal encryption key.
 This has been the standard since the beginnings of I2P.
 ElGamal is slow and needs to be replaced in all places it is used.
 
-The proposals for LS2 [Prop123]_ and ECIES-X25519-AEAD-Ratchet [Prop144]_
-(now specified in [ECIES]_) defined the replacement of ElGamal with ECIES
+The proposals for LS2 [Proposal 123](/proposals/123-new-netdb-entries) and ECIES-X25519-AEAD-Ratchet [Proposal 144](/proposals/144-ecies-x25519-aead-ratchet)
+(now specified in [ECIES](/docs/specs/ecies/)) defined the replacement of ElGamal with ECIES
 for Destinations.
 
 This proposal defines the replacement of ElGamal with ECIES-X25519 for routers.
@@ -43,7 +43,7 @@ See the reference section for links.
 
 ### Goals
 
-See [Prop152]_ for additional goals.
+See [Proposal 152](/proposals/152-ecies-tunnels) for additional goals.
 
 - Replace ElGamal with ECIES-X25519 in Router Identities
 - Reuse existing cryptographic primitives
@@ -57,10 +57,10 @@ See [Prop152]_ for additional goals.
 
 ### Non-Goals
 
-See [Prop152]_ for additional non-goals.
+See [Proposal 152](/proposals/152-ecies-tunnels) for additional non-goals.
 
 - No requirement for dual-key routers
-- Layer encryption changes, for that see [Prop153]_
+- Layer encryption changes, for that see [Proposal 153](/proposals/153-chacha20-layer-encryption)
 
 
 ## Design
@@ -72,17 +72,17 @@ For Destinations, the key is in the leaseset, not in the Destination, and
 we support multiple encryption types in the same leaseset.
 
 None of that is required for routers. The router's encryption key
-is in its Router Identity. See the common structures spec [Common]_.
+is in its Router Identity. See the common structures spec [Common Structures](/docs/specs/common-structures/).
 
 For routers, we will replace the 256 byte ElGamal key in the Router Identity
 with a 32 byte X25519 key and 224 bytes of padding.
 This will be indicated by the crypto type in the key certificate.
 The crypto type (same as used in the LS2) is 4.
 This indicates a little-endian 32-byte X25519 public key.
-This is the standard construction as defined in the common structures spec [Common]_.
+This is the standard construction as defined in the common structures spec [Common Structures](/docs/specs/common-structures/).
 
 This is identical to the method proposed for ECIES-P256
-for crypto types 1-3 in proposal 145 [Prop145]_.
+for crypto types 1-3 in proposal 145 [Proposal 145](/proposals/145-ecies).
 While this proposal was never adopted, the Java implementation developers prepared for
 crypto types in Router Identity key certificates by adding checks in several
 places in the code base. Most of this work was done in mid-2019.
@@ -90,7 +90,7 @@ places in the code base. Most of this work was done in mid-2019.
 
 ### Tunnel Build Message
 
-Several changes to the tunnel creation specification [Tunnel-Creation]_
+Several changes to the tunnel creation specification [Tunnel Creation](/docs/specs/implementation/)
 are required to use ECIES instead of ElGamal.
 In addition, we will make improvements to the tunnel build messages
 to increase security.
@@ -98,21 +98,20 @@ to increase security.
 In phase 1, we will change the format and encryption of the
 Build Request Record and Build Response Record for ECIES hops.
 These changes will be compatible with existing ElGamal routers.
-These changes are defined in proposal 152 [Prop152]_.
+These changes are defined in proposal 152 [Proposal 152](/proposals/152-ecies-tunnels).
 
 In phase 2, we will add a new version of the
 Build Request Message, Build Reply Message,
 Build Request Record and Build Response Record.
 The size will be reduced for efficiency.
 These changes must be supported by all hops in a tunnel, and all hops must be ECIES.
-These changes are defined in proposal 157 [Prop157]_.
+These changes are defined in proposal 157 [Proposal 157](/proposals/157-new-tbm).
 
 
 
 ### End-to-End Encryption
 
-History
-```````````
+#### History
 
 In the original design of Java I2P, there was a single ElGamal Session Key Manager (SKM)
 shared by the router and all its local Destinations.
@@ -123,7 +122,7 @@ the sender sent ephemeral keys only, not a static key.
 The message was not bound to the sender's identity.
 
 Then, we designed the ECIES Ratchet SKM in
-ECIES-X25519-AEAD-Ratchet [Prop144]_,  now specified in [ECIES]_.
+ECIES-X25519-AEAD-Ratchet [Proposal 144](/proposals/144-ecies-x25519-aead-ratchet), now specified in [ECIES](/docs/specs/ecies/).
 This design was specified using the Noise "IK" pattern, which included the sender's
 static key in the first message. This protocol is used for ECIES (type 4) Destinations.
 The IK pattern does not allow for anonymous senders.
@@ -134,8 +133,7 @@ but in a compatible way, so a ECIES SKM could receive both anonymous and non-ano
 The intent was to use zero-key for ECIES routers.
 
 
-Use Cases and Threat Models
-```````````````````````````````
+#### Use Cases and Threat Models
 
 The use case and threat model for messages sent to routers is very different from
 that for end-to-end messages between Destinations.
@@ -168,27 +166,26 @@ Router use-case non-goals:
 - No need for non-anonymous messages
 - No need to send messages through inbound exploratory tunnels (a router does not publish exploratory leasesets)
 - No need for sustained message traffic using tags
-- No need to run "dual key" Session Key Managers as described in [ECIES]_ for Destinations. Routers only have one public key.
+- No need to run "dual key" Session Key Managers as described in [ECIES](/docs/specs/ecies/) for Destinations. Routers only have one public key.
 
 
-Design Conclusions
-```````````````````````
+#### Design Conclusions
 
-The ECIES Router SKM does not need a full Ratchet SKM as specified in [ECIES]_ for Destinations.
+The ECIES Router SKM does not need a full Ratchet SKM as specified in [ECIES](/docs/specs/ecies/) for Destinations.
 There is no requirement for non-anonymous messages using the IK pattern.
 The threat model does not require Elligator2-encoded ephemeral keys.
 
 Therefore, the router SKM will use the Noise "N" pattern, same as specified
-in [Prop152]_ for tunnel building.
-It will use the same payload format as specified in [ECIES]_ for Destinations.
-The zero static key (no binding or session) mode of IK specified in [ECIES]_ will not be used.
+in [Proposal 152](/proposals/152-ecies-tunnels) for tunnel building.
+It will use the same payload format as specified in [ECIES](/docs/specs/ecies/) for Destinations.
+The zero static key (no binding or session) mode of IK specified in [ECIES](/docs/specs/ecies/) will not be used.
 
 Replies to lookups will be encrypted with a ratchet tag if requested in the lookup.
-This is as documented in [Prop154]_,  now specified in [I2NP]_.
+This is as documented in [Proposal 154](/proposals/154-ecies-lookups), now specified in [I2NP](/docs/specs/i2np/).
 
 The design enables the router to have a single ECIES Session Key Manager.
 There is no need to run "dual key" Session Key Managers as
-described in [ECIES]_ for Destinations.
+described in [ECIES](/docs/specs/ecies/) for Destinations.
 Routers only have one public key.
 
 An ECIES router does not have an ElGamal static key.
@@ -198,7 +195,7 @@ through ElGamal routers and send encrypted messages to ElGamal routers.
 An ECIES router MAY require a partial ElGamal Session Key Manager to
 receive ElGamal-tagged messages received as replies to NetDB lookups
 from pre-0.9.46 floodfill routers, as those routers do not
-have an implementation of ECIES-tagged replies as specified in [Prop152]_.
+have an implementation of ECIES-tagged replies as specified in [Proposal 152](/proposals/152-ecies-tunnels).
 If not, an ECIES router may not request an encrypted reply from a
 pre-0.9.46 floodfill router.
 
@@ -211,43 +208,40 @@ As of this date, approximately 85% of the network is 0.9.46 or higher.
 
 ## Specification
 
-X25519: See [ECIES]_.
+X25519: See [ECIES](/docs/specs/ecies/).
 
-Router Identity and Key Certificate: See [Common]_.
+Router Identity and Key Certificate: See [Common Structures](/docs/specs/common-structures/).
 
-Tunnel Building: See [Prop152]_.
+Tunnel Building: See [Proposal 152](/proposals/152-ecies-tunnels).
 
-New Tunnel Build Message: See [Prop157]_.
+New Tunnel Build Message: See [Proposal 157](/proposals/157-new-tbm).
 
 
 ### Request Encryption
 
-The request encryption is the same as that specified in [Tunnel-Creation-ECIES]_ and [Prop152]_,
+The request encryption is the same as that specified in [Tunnel Creation ECIES](/docs/specs/implementation/) and [Proposal 152](/proposals/152-ecies-tunnels),
 using the Noise "N" pattern.
 
 Replies to lookups will be encrypted with a ratchet tag if requested in the lookup.
 Database Lookup request messages contain the 32-byte reply key and 8-byte reply tag
-as specified in [I2NP]_ and [Prop154]_. The key and tag are used to encrypt the reply.
+as specified in [I2NP](/docs/specs/i2np/) and [Proposal 154](/proposals/154-ecies-lookups). The key and tag are used to encrypt the reply.
 
 Tag sets are not created.
 The zero static key scheme specified in
-ECIES-X25519-AEAD-Ratchet [Prop144]_ and [ECIES]_ will not be used.
+ECIES-X25519-AEAD-Ratchet [Proposal 144](/proposals/144-ecies-x25519-aead-ratchet) and [ECIES](/docs/specs/ecies/) will not be used.
 Ephemeral keys will not be Elligator2-encoded.
 
 Generally, these will be New Session messages and will be sent with a zero static key
 (no binding or session), as the sender of the message is anonymous.
 
 
-KDF for Initial ck and h
-````````````````````````
+#### KDF for Initial ck and h
 
-This is standard [NOISE]_ for pattern "N" with a standard protocol name.
-This is the same as specified in [Tunnel-Creation-ECIES]_ and [Prop152]_ for tunnel build messages.
+This is standard [Noise](https://noiseprotocol.org/noise.html) for pattern "N" with a standard protocol name.
+This is the same as specified in [Tunnel Creation ECIES](/docs/specs/implementation/) and [Proposal 152](/proposals/152-ecies-tunnels) for tunnel build messages.
 
 
-.. raw:: html
-
-  {% highlight lang='text' %}
+```text
 This is the "e" message pattern:
 
   // Define protocol_name.
@@ -265,22 +259,17 @@ This is the "e" message pattern:
   h = SHA256(h);
 
   // up until here, can all be precalculated by all routers.
+```
 
-{% endhighlight %}
 
-
-KDF for Message
-````````````````````````
+#### KDF for Message
 
 Message creators generate an ephemeral X25519 keypair for each message.
 Ephemeral keys must be unique per message.
-This is the same as specified in [Tunnel-Creation-ECIES]_ and [Prop152]_ for tunnel build messages.
+This is the same as specified in [Tunnel Creation ECIES](/docs/specs/implementation/) and [Proposal 152](/proposals/152-ecies-tunnels) for tunnel build messages.
 
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```text
 // Target router's X25519 static keypair (hesk, hepk) from the Router Identity
   hesk = GENERATE_PRIVATE()
   hepk = DERIVE_PUBLIC(hesk)
@@ -327,15 +316,12 @@ This is the same as specified in [Tunnel-Creation-ECIES]_ and [Prop152]_ for tun
 
   // MixHash(ciphertext) is not required
   //h = SHA256(h || ciphertext)
-
-{% endhighlight %}
-
+```
 
 
-Payload
-````````````````````````
+#### Payload
 
-The payload is the same block format as defined in [ECIES]_ and [Prop144]_.
+The payload is the same block format as defined in [ECIES](/docs/specs/ecies/) and [Proposal 144](/proposals/144-ecies-x25519-aead-ratchet).
 All messages must contain a DateTime block for replay prevention.
 
 
@@ -344,7 +330,7 @@ All messages must contain a DateTime block for replay prevention.
 Replies to Database Lookup messages are Database Store or Database Search Reply messages.
 They are encrypted as Existing Session messages with
 the 32-byte reply key and 8-byte reply tag
-as specified in [I2NP]_ and [Prop154]_.
+as specified in [I2NP](/docs/specs/i2np/) and [Proposal 154](/proposals/154-ecies-lookups).
 
 
 There are no explicit replies to Database Store messages. The sender may bundle its
@@ -375,8 +361,8 @@ as early as possible, to reduce CPU usage.
 
 ## Issues
 
-Proposal 145 [Prop145]_ may or may not be rewritten to be mostly-compatible with
-Proposal 152 [Prop152]_.
+Proposal 145 [Proposal 145](/proposals/145-ecies) may or may not be rewritten to be mostly-compatible with
+Proposal 152 [Proposal 152](/proposals/152-ecies-tunnels).
 
 
 
@@ -396,7 +382,7 @@ each I2P implementation.
 
 ECIES routers can connect to and receive connections from ElGamal routers.
 This should be possible now, as several checks were added to the Java code base
-by mid-2019 in reaction to unfinished proposal 145 [Prop145]_.
+by mid-2019 in reaction to unfinished proposal 145 [Proposal 145](/proposals/145-ecies).
 Ensure there's nothing in the code bases
 that prevents point-to-point connections to non-ElGamal routers.
 
@@ -424,7 +410,7 @@ Target release, if changes required: 0.9.48
 
 Ensure that ECIES router infos may be stored to and retrieved from ElGamal floodfills.
 This should be possible now, as several checks were added to the Java code base
-by mid-2019 in reaction to unfinished proposal 145 [Prop145]_.
+by mid-2019 in reaction to unfinished proposal 145 [Proposal 145](/proposals/145-ecies).
 Ensure there's nothing in the code bases
 that prevents storage of non-ElGamal RouterInfos in the network database.
 
@@ -434,7 +420,7 @@ Target release, if changes required: 0.9.48
 
 ### Tunnel Building
 
-Implement tunnel building as defined in proposal 152 [Prop152]_.
+Implement tunnel building as defined in proposal 152 [Proposal 152](/proposals/152-ecies-tunnels).
 Start with having an ECIES router build tunnels with all ElGamal hops;
 use its own build request record for an inbound tunnel to test and debug.
 
@@ -451,7 +437,7 @@ Target release: 0.9.48, late 2020
 ### Ratchet messages to ECIES floodfills
 
 Implement and test reception of ECIES messages (with zero static key) by ECIES floodfills,
-as defined in proposal 144 [Prop144]_.
+as defined in proposal 144 [Proposal 144](/proposals/144-ecies-x25519-aead-ratchet).
 Implement ant test reception of AEAD replies to DatabaseLookup messages by ECIES routers.
 
 Enable auto-floodfill by ECIES routers.
@@ -491,7 +477,7 @@ late 2021 for the majority of the network to be rekeyed.
 
 ### New Tunnel Build Message (Phase 2)
 
-Implement and test the new Tunnel Build Message as defined in proposal 157 [Prop157]_.
+Implement and test the new Tunnel Build Message as defined in proposal 157 [Proposal 157](/proposals/157-new-tbm).
 Roll the support out in release 0.9.51.
 Do additional testing, then enable in release 0.9.52.
 
@@ -513,46 +499,3 @@ Target release: 0.9.53, early 2022.
 
 
 
-## References
-
-.. [Common]
-    {{ spec_url('common-structures') }}
-
-.. [ECIES]
-   {{ spec_url('ecies') }}
-
-.. [ECIES-ROUTERS]
-   {{ spec_url('ecies-routers') }}
-
-.. [I2NP]
-    {{ spec_url('i2np') }}
-
-.. [NOISE]
-    https://noiseprotocol.org/noise.html
-
-.. [Prop123]
-    {{ proposal_url('123') }}
-
-.. [Prop144]
-    {{ proposal_url('144') }}
-
-.. [Prop145]
-    {{ proposal_url('145') }}
-
-.. [Prop152]
-    {{ proposal_url('152') }}
-
-.. [Prop153]
-    {{ proposal_url('153') }}
-
-.. [Prop154]
-    {{ proposal_url('154') }}
-
-.. [Prop157]
-    {{ proposal_url('157') }}
-
-.. [Tunnel-Creation]
-    {{ spec_url('tunnel-creation') }}
-
-.. [Tunnel-Creation-ECIES]
-   {{ spec_url('tunnel-creation-ecies') }}

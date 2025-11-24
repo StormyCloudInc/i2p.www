@@ -19,11 +19,11 @@ thread: "http://zzz.i2p/topics/2689"
 
 对于 NTCP2 和 LS2，我们决定这些攻击与当前提案无直接关联，且任何解决方案都与最小化基本构件的目标相冲突。此外，我们认为这些协议中哈希函数的速度不是我们决策的一个重要因素。因此，我们主要将解决方案推迟到单独的提案中。虽然我们在 LS2 规范中添加了一些个性化功能，但没有要求使用任何新的哈希函数。
 
-许多项目，例如 ZCash [ZCASH]_，使用的哈希函数和签名算法基于不易受以下攻击影响的新算法。
+许多项目，例如 [ZCash](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf)，使用的哈希函数和签名算法基于不易受以下攻击影响的新算法。
 
 ### 长度扩展攻击
 
-SHA-256 和 SHA-512 易受长度扩展攻击（LEA）[LEA]_ 的影响。这种情况发生在实际数据被签名，而不是数据的哈希被签名时。在大多数 I2P 协议（流式传输、数据报、网络数据库等）中，实际数据被签名。一个例外是 SU3 文件，其中哈希被签名。另一个例外是 DSA（签名类型 0）仅用于签名的数据报，其中哈希被签名。对于其他签名的数据报签名类型，数据被签名。
+SHA-256 和 SHA-512 易受[长度扩展攻击（LEA）](https://en.wikipedia.org/wiki/Length_extension_attack)的影响。这种情况发生在实际数据被签名，而不是数据的哈希被签名时。在大多数 I2P 协议（流式传输、数据报、网络数据库等）中，实际数据被签名。一个例外是 SU3 文件，其中哈希被签名。另一个例外是 DSA（签名类型 0）仅用于签名的数据报，其中哈希被签名。对于其他签名的数据报签名类型，数据被签名。
 
 ### 跨协议攻击
 
@@ -51,23 +51,23 @@ I2P 协议可能易受重复消息识别（DMI）攻击。这可能使攻击者�
 
 ## 理由
 
-- BLAKE2b 不易受 LEA 的影响 [BLAKE2]_。
+- [BLAKE2b](https://blake2.net/blake2.pdf) 不易受 LEA 的影响。
 - BLAKE2b 提供了一种为域分离添加个性化字符串的标准方法。
 - BLAKE2b 提供了一种防止 DMI 的标准方法，添加随机盐。
-- BLAKE2b 在现代硬件上比 SHA-256 和 SHA-512（以及 MD5）更快，根据 [BLAKE2]_。
+- BLAKE2b 在现代硬件上比 SHA-256 和 SHA-512（以及 MD5）更快，根据 [BLAKE2 规范](https://blake2.net/blake2.pdf)。
 - Ed25519 仍是我们最快的签名类型，比 ECDSA 快得多，至少在 Java 中是这样。
-- Ed25519 [ED25519-REFS]_ 需要 512 位的加密哈希函数。它并不指定 SHA-512。BLAKE2b 同样适合作为哈希函数。
+- [Ed25519](http://cr.yp.to/papers.html#ed25519) 需要 512 位的加密哈希函数。它并不指定 SHA-512。BLAKE2b 同样适合作为哈希函数。
 - BLAKE2b 在许多编程语言如 Noise 的库中广泛可用。
 
 ## 规范
 
-使用 [BLAKE2]_ 中定义的未加密 BLAKE2b-512，带有盐和个性化。所有 BLAKE2b 签名的使用将使用一个 16 个字符的个性化字符串。
+使用 [BLAKE2 规范](https://blake2.net/blake2.pdf)中定义的未加密 BLAKE2b-512，带有盐和个性化。所有 BLAKE2b 签名的使用将使用一个 16 个字符的个性化字符串。
 
 在 RedDSA_BLAKE2b_Ed25519 签名中，允许使用随机盐，但不必要，因为签名算法已经添加了 80 字节的随机数据（参见提案 123）。如有需要，在计算 r 的过程中哈希数据时，为每个签名设置一个新的 BLAKE2b 16 字节随机盐。在计算 S 时，将盐重置为全零的默认值。
 
 在 RedDSA_BLAKE2b_Ed25519 验证中，不使用随机盐，使用全零的默认值。
 
-[BLAKE2]_ 没有指定盐和个性化功能；使用 [BLAKE2]_ 中指定的那些功能。
+[RFC 7693](https://tools.ietf.org/html/rfc7693) 没有指定盐和个性化功能；使用 [BLAKE2 规范](https://blake2.net/blake2.pdf)中指定的那些功能。
 
 ### 签名类型
 
@@ -125,7 +125,7 @@ SU3 文件                            不适用，不支持
 - 备选方案 2：RFC 8032 中的 Ed25519ctx；
   提供 LEA 抗性和个性化。
   标准化，但有人用吗？
-  参见 [RFC-8032]_ 和 [ED25519CTX]_。
+  参见 [RFC 8032](https://tools.ietf.org/html/rfc8032) 和 [这个讨论](https://moderncrypto.org/mail-archive/curves/2017/000925.html)。
 - “密钥格式”哈希对我们有用吗？
 
 ## 迁移
@@ -149,33 +149,5 @@ SU3 文件                            不适用，不支持
 - 在验证 netdb 存储时，不要从低于版本 0.9.TBD 的路由器获取具有新签名类型的 RI 或 LS。
 - 具有新签名类型的路由器在它们的 RI 中可能不会连接到低于版本 0.9.TBD 的路由器，无论是通过 NTCP、NTCP2 还是 SSU。
 - 流媒体连接和签名数据报不会在低于版本 0.9.TBD 的路由器上工作，但无法知道这一点，因此在 0.9.TBD 发布的几个月或几年后新签名类型不应默认使用。
-
-## 参考文献
-
-.. [BLAKE2]
-   https://blake2.net/blake2.pdf
-
-.. [ED25519CTX]
-   https://moderncrypto.org/mail-archive/curves/2017/000925.html
-
-.. [ED25519-REFS]
-    "High-speed high-security signatures" by Daniel
-    J. Bernstein, Niels Duif, Tanja Lange, Peter Schwabe, and
-    Bo-Yin Yang. http://cr.yp.to/papers.html#ed25519
-
-.. [EDDSA-FAULTS]
-   https://news.ycombinator.com/item?id=15414760
-
-.. [LEA]
-   https://en.wikipedia.org/wiki/Length_extension_attack
-
-.. [RFC-7693]
-   https://tools.ietf.org/html/rfc7693
-
-.. [RFC-8032]
-   https://tools.ietf.org/html/rfc8032
-
-.. [ZCASH]
-   https://github.com/zcash/zips/tree/master/protocol/protocol.pdf
 
 ```

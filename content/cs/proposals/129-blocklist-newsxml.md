@@ -55,6 +55,4 @@ Podpora pro názvy hostitelů je volitelná.
 Routery, které toto nepodporují, novou sekci XML ignorují.
 
 
-## Viz také
 
-Návrh 130

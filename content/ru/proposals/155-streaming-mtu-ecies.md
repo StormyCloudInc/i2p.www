@@ -22,7 +22,7 @@ implementedin: "0.9.47"
 
 ECIES сокращает накладные расходы на существующие сеансовые (ES) сообщения примерно на 90 байт.
 Поэтому мы можем увеличить MTU примерно на 90 байт для соединений ECIES.
-См. [ECIES]_, [STREAMING-SPEC]_ и [STREAMING-OPTIONS]_.
+См. the [ECIES specification](/en/docs/spec/ecies/#overhead), [Streaming specification](/en/docs/spec/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/en/docs/api/streaming/).
 
 Без увеличения MTU, во многих случаях экономия на накладных расходах на самом деле не "сохраняется",
 так как сообщения будут дополнены для использования двух полных туннельных сообщений в любом случае.
@@ -68,7 +68,7 @@ Leaseset, возможно, еще не был получен, или внутр
 поэтому MTU должно оставаться на уровне 1730.
 
 
-Как отмечено в [STREAMING-OPTIONS]_,
+Как отмечено в the [Streaming API documentation](/en/docs/api/streaming/),
 данные в SYN-пакетах, отправляемых от Alice к Bob, могут превышать MTU Bob.
 Это слабость в стриминговом протоколе.
 Таким образом, клиенты с двойным ключом должны ограничивать данные в отправляемых SYN-пакетах
@@ -79,7 +79,7 @@ Leaseset, возможно, еще не был получен, или внутр
 
 ### Анализ
 
-Как описано в [ECIES]_, накладные расходы ElGamal для существующих сеансовых сообщений составляют
+Как описано в the [ECIES specification](/en/docs/spec/ecies/#overhead), накладные расходы ElGamal для существующих сеансовых сообщений составляют
 151 байт, а накладные расходы Ratchet составляют 69 байт.
 Следовательно, мы можем увеличить MTU для соединений Ratchet на (151 - 69) = 82 байта,
 с 1730 до 1812.
@@ -88,8 +88,8 @@ Leaseset, возможно, еще не был получен, или внутр
 
 ## Спецификация
 
-Добавьте следующие изменения и пояснения к разделу выбора и переговоров MTU [STREAMING-OPTIONS]_.
-Изменения в [STREAMING-SPEC]_ не требуются.
+Добавьте следующие изменения и пояснения к разделу выбора и переговоров MTU the [Streaming API documentation](/en/docs/api/streaming/).
+Изменения в the [Streaming specification](/en/docs/spec/streaming/) не требуются.
 
 
 Значение по умолчанию для варианта i2p.streaming.maxMessageSize остается 1730 для всех соединений, независимо от используемых ключей.
@@ -161,8 +161,8 @@ negotiated_mtu, минимум из MTU Alice и Bob, который будет 
 
 ## Обоснование
 
-См. [CALCULATION]_ почему текущее значение 1730.
-См. [ECIES]_ почему накладные расходы ECIES на 82 байта меньше, чем у ElGamal.
+См. the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220) почему текущее значение 1730.
+См. the [ECIES specification](/en/docs/spec/ecies/#overhead) почему накладные расходы ECIES на 82 байта меньше, чем у ElGamal.
 
 
 
@@ -206,16 +206,3 @@ negotiated_mtu, минимум из MTU Alice и Bob, который будет 
 
 
 
-## Ссылки
-
-.. [CALCULATION]
-   https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220
-
-.. [ECIES]
-   {{ spec_url('ecies') }}#overhead
-
-.. [STREAMING-OPTIONS]
-    {{ site_url('docs/api/streaming', True) }}
-
-.. [STREAMING-SPEC]
-    {{ spec_url('streaming') }}#flags-and-option-data-fields

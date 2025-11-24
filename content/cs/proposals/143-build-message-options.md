@@ -12,12 +12,10 @@ thread: "http://zzz.i2p/topics/2500"
 Tento návrh nebyl implementován tak, jak bylo specifikováno,
 nicméně dlouhé a krátké zprávy o výstavbě ECIES (návrhy 152 a 157)
 byly navrženy s rozšiřitelnými poli možností.
-Viz [SPEC]_ pro oficiální specifikaci.
+Viz [specifikace Tunnel Creation ECIES](/en/docs/spec/tunnel-creation-ecies/) pro oficiální specifikaci.
 
 
 ## Přehled
-
-ref: http://i2p-projekt.i2p/spec/tunnel-creation
 
 Přidat flexibilní a rozšiřitelný mechanismus pro volby v I2NP Záznamech o Výstavbě Tunelu,
 které jsou obsaženy ve Zprávách o Výstavbě Tunelu a Odpovědích na Výstavbu Tunelu.
@@ -92,10 +90,3 @@ Nepoužitý prostor v Záznamech o Výstavbě Tunelu je vyplněn náhodnými dat
 Prostor může být převeden na obsah možností bez problémů s migrací.
 Ve zprávě o výstavbě je přítomnost možností indikována ve vlajkovém bajtu.
 V odpovědi na výstavbu je přítomnost možností indikována vícebajtovým magickým číslem.
-
-
-
-## Odkazy
-
-.. [SPEC]
-   {{ spec_url('tunnel-creation-ecies') }}

@@ -13,15 +13,15 @@ implementedin: "0.9.40"
 ## Note
 Network deployment and testing in progress.
 Subject to minor revisions.
-See [SPEC]_ for the official specification.
+See [SPEC](/docs/specs/b32-for-encrypted-leasesets/) for the official specification.
 
 
 ## Overview
 
 Standard Base 32 ("b32") addresses contain the hash of the destination.
-This will not work for encrypted ls2 (proposal 123).
+This will not work for encrypted ls2 ([proposal 123](/proposals/123-new-netdb-entries/)).
 
-You can't use a traditional base 32 address for an encrypted LS2 (proposal 123),
+You can't use a traditional base 32 address for an encrypted LS2 ([proposal 123](/proposals/123-new-netdb-entries/)),
 as it contains only the hash of the destination. It does not provide the non-blinded public key.
 Clients must know the destination's public key, sig type,
 the blinded sig type, and an optional secret or private key
@@ -185,11 +185,3 @@ to 32-byte hashes in old software.
 
 
 
-## References
-
-.. [ADLER32]
-    https://en.wikipedia.org/wiki/CRC-32
-    https://tools.ietf.org/html/rfc3309
-
-.. [SPEC]
-    {{ spec_url('b32encrypted') }}

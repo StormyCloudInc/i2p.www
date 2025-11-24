@@ -50,6 +50,4 @@ Unterstützung für Hostnamen ist optional.
 
 Router, die dies nicht unterstützen, ignorieren den neuen XML-Abschnitt.
 
-## Siehe auch
 
-Vorschlag 130

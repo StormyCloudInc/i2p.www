@@ -135,15 +135,3 @@ I2P HTTP 프록시에 관한 공유된 신원 문제가 얼마나 심각한지�
 
 `HTTP 사용자 에이전트에서의 공유된 신원 공격의 예제 구현 <https://github.com/eyedeekay/colluding_sites_attack/>` __가 몇 년 전부터 존재했습니다. 추가적 예시는 `idk의 prop166 저장소 <https://git.idk.i2p/idk/i2p.host-aware-proxy>` __의 ``simple-colluder`` 하위 디렉터리에서 사용할 수 있습니다. 이러한 예시는 공격이 작동한다는 것을 입증하도록 설계되었으며, 실제 공격으로 변환하기 위해서는 (비록 사소한) 수정이 필요할 것입니다.
 
-참고 자료:
-''''''''''
-
-https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/
-https://api.pullpush.io/reddit/search/comment/?link_id=579idi
-https://github.com/eyedeekay/colluding_sites_attack/
-https://en.wikipedia.org/wiki/Shadow_profile
-https://github.com/eyedeekay/si-i2p-plugin/
-https://github.com/eyedeekay/eeproxy/
-/docs/api/socks/
-https://i2pgit.org/idk/i2p.www/-/compare/master...166-identity-aware-proxies?from_project_id=17
-https://i2pgit.org/idk/i2p.i2p/-/tree/i2p.i2p.2.6.0-browser-proxy-post-keepalive?ref_type=heads
