@@ -1,229 +1,226 @@
 ---
-title: "隐形多归属"
+title: "不可见多重宿主"
 number: "140"
 author: "str4d"
 created: "2017-05-22"
 lastupdated: "2017-07-04"
-status: "开放"
+status: "打开"
 thread: "http://zzz.i2p/topics/2335"
 ---
 
-## 概览
+## 概述
 
-该提案概述了一种协议设计，使I2P客户端、服务或外部负载均衡进程能够管理多个透明托管单一[目的地](http://localhost:63465/en/docs/specs/common-structures/#destination)的路由器。
+本提案概述了一个协议设计，使 I2P 客户端、服务或外部负载均衡器进程能够透明地管理托管单个 [Destination](http://localhost:63465/en/docs/specs/common-structures/#destination) 的多个 router。
 
-提案目前并未指定具体的实现。它可以作为[I2CP](/en/docs/specs/i2cp/)的扩展实现，或者作为一种新协议。
-
+该提案目前没有指定具体的实现方式。它可以作为 [I2CP](/en/docs/specs/i2cp/) 的扩展来实现，或者作为一个新协议来实现。
 
 ## 动机
 
-多归属是指使用多个路由器托管相同的目的地。当前使用I2P进行多归属的方法是独立地在每个路由器上运行相同的目的地；客户在任何特定时间使用的路由器是最后一个发布[LeaseSet](http://localhost:63465/en/docs/specs/common-structures/#leaseset)的路由器。
+Multihoming是指使用多个router来托管同一个Destination。目前在I2P中实现multihoming的方法是在每个router上独立运行相同的Destination；客户端在任何特定时间使用的router是最后一个发布LeaseSet的router。
 
-这是一种权宜之计，可能无法在大规模网站上工作。假设我们有100个多归属路由器，每个都有16个隧道。这样每10分钟有1600次LeaseSet发布，或者说每秒几乎3次。泛洪填充将被淹没，并会触发节流措施。这还没有提到查询流量。
+这是一个临时解决方案，在大规模网站中可能无法正常工作。假设我们有100个多归属router，每个都有16个tunnel。这意味着每10分钟有1600个LeaseSet发布，或者说每秒钟接近3个。floodfill节点会不堪重负，限流机制会启动。而这还没有考虑查询流量。
 
-[Proposal 123](/en/proposals/123-new-netdb-entries/)使用元LeaseSet解决了这个问题，其中列出了100个实际LeaseSet的哈希。查询变成一个两阶段过程：首先查询元LeaseSet，然后再查询其中一个列出的LeaseSet。虽然这对查询流量问题是一个很好的解决方案，但它自身会造成一个显著的隐私泄露：通过监视发布的元LeaseSet，可以判断哪些多归属路由器在线，因为每个实际LeaseSet对应一个单一路由器。
+提案123通过元LeaseSet解决了这个问题，元LeaseSet列出了100个真实的LeaseSet哈希值。查找变成了一个两阶段过程：首先查找元LeaseSet，然后查找其中一个指定的LeaseSet。这是解决查找流量问题的好方案，但它本身会造成严重的隐私泄露：通过监控发布的元LeaseSet可以确定哪些多宿主路由器在线，因为每个真实的LeaseSet都对应一个单独的路由器。
 
-我们需要一种方法，让I2P客户端或服务能够将单一目的地分布到多个路由器上，以一种对LeaseSet本身来说是与使用单一路由器不可区分的方式进行。
-
+我们需要一种方式让I2P客户端或服务能够将单个Destination分布到多个router上，这种方式从LeaseSet本身的角度来看与使用单个router无法区分。
 
 ## 设计
 
+### Definitions
+
+    User
+        The person or organisation wanting to multihome their Destination(s). A
+        single Destination is considered here without loss of generality (WLOG).
+
+    Client
+        The application or service running behind the Destination. It may be a
+        client-side, server-side, or peer-to-peer application; we refer to it as
+        a client in the sense that it connects to the I2P routers.
+
+        The client consists of three parts, which may all be in the same process
+        or may be split across processes or machines (in a multi-client setup):
+
+        Balancer
+            The part of the client that manages peer selection and tunnel
+            building. There is a single balancer at any one time, and it
+            communicates with all I2P routers. There may be failover balancers.
+
+        Frontend
+            The part of the client that can be operated in parallel. Each
+            frontend communicates with a single I2P router.
+
+        Backend
+            The part of the client that is shared between all frontends. It has
+            no direct communication with any I2P router.
+
+    Router
+        An I2P router run by the user that sits at the boundary between the I2P
+        network and the user's network (akin to an edge device in corporate
+        networks). It builds tunnels under the command of a balancer, and routes
+        packets for a client or frontend.
+
+### High-level overview
+
+想象以下所需的配置：
+
+- 一个具有单个 Destination 的客户端应用程序。
+- 四个 router，每个管理三条入站 tunnel。
+- 所有十二条 tunnel 都应该发布在单个 LeaseSet 中。
+
+### Single-client
+
+```
+                -{ [Tunnel 1]===\
+                 |-{ [Tunnel 2]====[Router 1]-----
+                 |-{ [Tunnel 3]===/               \
+                 |                                 \
+                 |-{ [Tunnel 4]===\                 \
+  [Destination]  |-{ [Tunnel 5]====[Router 2]-----   \
+    \            |-{ [Tunnel 6]===/               \   \
+     [LeaseSet]--|                               [Client]
+                 |-{ [Tunnel 7]===\               /   /
+                 |-{ [Tunnel 8]====[Router 3]-----   /
+                 |-{ [Tunnel 9]===/                 /
+                 |                                 /
+                 |-{ [Tunnel 10]==\               /
+                 |-{ [Tunnel 11]===[Router 4]-----
+                  -{ [Tunnel 12]==/
+```
 ### 定义
 
-    用户
-        想要对其目的地（目的地）进行多归属的个人或组织。在此仅考虑单一目的地而不失一般性（WLOG）。
-
-    客户端
-        在目的地后面运行的应用程序或服务。它可能是客户端、服务器端或点对点应用程序；我们称之为客户端，因为它连接到I2P路由器。
-
-        客户端由三部分组成，这些部分可以在同一进程中，也可以在多客户端设置中分布在不同进程或机器上：
-
-        负载均衡
-            管理对等选择和隧道建立的客户端部分。在任何一个时间点只有一个负载均衡，并与所有I2P路由器通信。可能存在故障转移均衡器。
-
-        前端
-            可以并行操作的客户端部分。每个前端与单一I2P路由器通信。
-
-        后端
-            所有前端共享的客户端部分。它与任何I2P路由器无直接通信。
-
-    路由器
-        用户运行的I2P路由器，位于I2P网络与用户网络之间的边界（类似于企业网络中的边缘设备）。它在负载均衡器的指令下建立隧道，并为客户端或前端路由数据包。
-
+```
+                -{ [Tunnel 1]===\
+                 |-{ [Tunnel 2]====[Router 1]---------[Frontend 1]
+                 |-{ [Tunnel 3]===/          \                    \
+                 |                            \                    \
+                 |-{ [Tunnel 4]===\            \                    \
+  [Destination]  |-{ [Tunnel 5]====[Router 2]---\-----[Frontend 2]   \
+    \            |-{ [Tunnel 6]===/          \   \                \   \
+     [LeaseSet]--|                         [Balancer]            [Backend]
+                 |-{ [Tunnel 7]===\          /   /                /   /
+                 |-{ [Tunnel 8]====[Router 3]---/-----[Frontend 3]   /
+                 |-{ [Tunnel 9]===/            /                    /
+                 |                            /                    /
+                 |-{ [Tunnel 10]==\          /                    /
+                 |-{ [Tunnel 11]===[Router 4]---------[Frontend 4]
+                  -{ [Tunnel 12]==/
+```
 ### 高层概述
 
-设想以下期望配置：
+- 加载或生成一个 Destination。
 
-- 一个具有单一目的地的客户端应用程序。
-- 四个路由器，每个管理三个入站隧道。
-- 所有十二个隧道应在单一LeaseSet中发布。
+- 与每个路由器建立一个会话，绑定到目标地址。
 
-单客户端
+- 定期（大约每十分钟，但会根据tunnel活跃度有所增减）：
+
+- 从每个路由器获取快速层级。
+
+- 使用对等节点的超集来构建往返每个 router 的隧道。
+
+    - By default, tunnels to/from a particular router will use peers from
+      that router's fast tier, but this is not enforced by the protocol.
+
+- 从所有活跃的路由器收集活跃入站隧道集合，并创建一个 LeaseSet。
+
+- 通过一个或多个 router 发布 LeaseSet。
+
+### 单客户端
+
+要创建和管理这个配置，客户端需要以下超出当前 [I2CP](/en/docs/specs/i2cp/) 所提供功能的新功能：
+
+- 告诉 router 构建隧道，但不为其创建 LeaseSet。
+- 获取入站池中当前隧道的列表。
+
+此外，以下功能将使客户端在管理其 tunnel 方面具有显著的灵活性：
+
+- 获取一个 router 快速层的内容。
+- 告诉一个 router 使用给定的对等节点列表构建入站或出站 tunnel。
+
+### 多客户端
 
 ```
-                -{ [隧道 1]===\
-                 |-{ [隧道 2]====[路由器 1]-----
-                 |-{ [隧道 3]===/               \
-                 |                                 \
-                 |-{ [隧道 4]===\                 \
-  [目的地]         |-{ [隧道 5]====[路由器 2]-----   \
-    \            |-{ [隧道 6]===/               \   \
-     [LeaseSet]--|                               [客户端]
-                 |-{ [隧道 7]===\               /   /
-                 |-{ [隧道 8]====[路由器 3]-----   /
-                 |-{ [隧道 9]===/                 /
-                 |                                 /
-                 |-{ [隧道 10]==\               /
-                 |-{ [隧道 11]===[路由器 4]-----
-                  -{ [隧道 12]==/
+         Client                           Router
 
-多客户端
-
+                    --------------------->  Create Session
+   Session Status  <---------------------
+                    --------------------->  Get Fast Tier
+        Peer List  <---------------------
+                    --------------------->  Create Tunnel
+    Tunnel Status  <---------------------
+                    --------------------->  Get Tunnel Pool
+      Tunnel List  <---------------------
+                    --------------------->  Publish LeaseSet
+                    --------------------->  Send Packet
+      Send Status  <---------------------
+  Packet Received  <---------------------
 ```
-                -{ [隧道 1]===\
-                 |-{ [隧道 2]====[路由器 1]---------[前端 1]
-                 |-{ [隧道 3]===/          \                    \
-                 |                            \                    \
-                 |-{ [隧道 4]===\            \                    \
-  [目的地]         |-{ [隧道 5]====[路由器 2]---\-----[前端 2]   \
-    \            |-{ [隧道 6]===/          \   \                \   \
-     [LeaseSet]--|                         [负载均衡]            [后端]
-                 |-{ [隧道 7]===\          /   /                /   /
-                 |-{ [隧道 8]====[路由器 3]---/-----[前端 3]   /
-                 |-{ [隧道 9]===/            /                    /
-                 |                            /                    /
-                 |-{ [隧道 10]==\          /                    /
-                 |-{ [隧道 11]===[路由器 4]---------[前端 4]
-                  -{ [隧道 12]==/
-
 ### 通用客户端进程
-- 载入或生成一个目的地。
 
-- 与每个路由器建立一个会话，绑定到该目的地。
+**创建会话** - 为给定的 Destination 创建会话。
 
-- 定期（大约每十分钟，但可根据隧道存活时间增减）：
+**Session Status** - 确认会话已建立，客户端现在可以开始构建tunnel。
 
-  - 从每个路由器获取快速层。
+**Get Fast Tier** - 请求当前 router 考虑用于构建 tunnel 的对等节点列表。
 
-  - 使用对等体的超集建立每个路由器的隧道。
+**Peer List** - router已知的对等节点列表。
 
-    - 默认情况下，特定路由器的隧道将使用该路由器快速层的对等体，但协议不强制执行。
+**创建隧道** - 请求 router 通过指定的对等节点构建新隧道。
 
-  - 从所有活跃路由器收集活动入站隧道的集合，并创建一个LeaseSet。
+**Tunnel状态** - 特定tunnel构建的结果，一旦可用即显示。
 
-  - 通过一个或多个路由器发布LeaseSet。
+**Get Tunnel Pool** - 请求获取目标地址的入站或出站池中当前隧道的列表。
 
-### 与I2CP的区别
-为了创建和管理此配置，客户端需要以下新增功能，超出[I2CP](/en/docs/specs/i2cp/)当前提供的功能：
+**Tunnel 列表** - 请求池的 tunnel 列表。
 
-- 指示路由器建立隧道，而不为其创建LeaseSet。
-- 获取当前入站池中的隧道列表。
+**发布 LeaseSet** - 请求 router 通过目标地址的某个出站 tunnel 发布提供的 LeaseSet。无需回复状态；router 应该持续重试，直到确信 LeaseSet 已被发布。
 
-此外，以下功能将为客户端提供在管理隧道时的显著灵活性：
+**发送数据包** - 来自客户端的出站数据包。可选择指定数据包必须（应该？）通过的出站tunnel。
 
-- 获取路由器快速层的内容。
-- 指示路由器使用指定对等体列表建立入站或出站隧道。
+**发送状态** - 通知客户端数据包发送的成功或失败。
 
-### 协议概述
+**数据包已接收** - 客户端接收到的传入数据包。可选择性地指定接收该数据包的入站tunnel(?)
 
-```
-         客户端                           路由器
+## Security implications
 
-                    --------------------->  创建会话
-   会话状态     <---------------------
-                    --------------------->  获取快速层
-        对等体列表  <---------------------
-                    --------------------->  创建隧道
-    隧道状态    <---------------------
-                    --------------------->  获取隧道池
-      隧道列表    <---------------------
-                    --------------------->  发布LeaseSet
-                    --------------------->  发送数据包
-      发送状态    <---------------------
-  数据包接收    <---------------------
+从router的角度来看，这种设计在功能上等同于现状。router仍然构建所有tunnel，维护自己的对等配置文件，并强制执行router和客户端操作之间的分离。默认配置是完全相同的，因为该router的tunnel是从其自己的快速层构建的。
 
-### 消息
-    创建会话
-        为给定的目的地创建一个会话。
+从netDB的角度来看，通过此协议创建的单个LeaseSet与现状相同，因为它利用了预先存在的功能。然而，对于接近16个Lease的较大LeaseSet，观察者可能能够确定该LeaseSet是多宿主的：
 
-    会话状态
-        确认会话已建立，客户端现在可以开始建立隧道。
+- 快速层的当前最大大小为 75 个节点。入站网关（IBGW，在 Lease 中发布的节点）从该层的一部分中选择（通过哈希而非计数按隧道池随机分区）：
 
-    获取快速层
-        请求路由器当前考虑使用其建立隧道的对等体列表。
+      1 hop
+          The whole fast tier
 
-    对等体列表
-        路由器已知的对等体列表。
+      2 hops
+          Half of the fast tier
+          (the default until mid-2014)
 
-    创建隧道
-        请求路由器通过指定的对等体建立一个新隧道。
+      3+ hops
+          A quarter of the fast tier
+          (3 being the current default)
 
-    隧道状态
-        一旦可用，特定隧道建立的结果。
+这意味着平均来说，IBGW 将来自一组 20-30 个对等节点。
 
-    获取隧道池
-        请求入站或出站池中当前隧道的列表。
+- 在单宿主设置中，一个完整的 16-tunnel LeaseSet 将有 16 个 IBGW，这些 IBGW 从最多（比如）20 个对等节点的集合中随机选择。
 
-    隧道列表
-        请求池的隧道列表。
+- 在使用默认配置的4个router多宿主设置中，一个完整的16-tunnel LeaseSet将从最多80个对等节点的集合中随机选择16个IBGW，尽管各router之间可能会有一部分共同的对等节点。
 
-    发布LeaseSet
-        请求路由器通过目的一的一个出站隧道发布提供的LeaseSet。不需要回复状态；路由器应继续重试，直至确信LeaseSet已发布。
+因此，使用默认配置时，通过统计分析可能会发现某个 LeaseSet 是由此协议生成的。也可能会推断出有多少个 router，尽管快速层级上的节点变动会降低这种分析的有效性。
 
-    发送数据包
-        从客户的出站数据包。选项性地指定必须（或应该）通过的出站隧道。
+由于客户端完全控制选择哪些对等节点，通过从缩减的对等节点集合中选择IBGW，可以减少或消除这种信息泄露。
 
-    发送状态
-        通知客户端发送包的成功或失败。
+## Compatibility
 
-    数据包接收
-        客户的入站数据包。选项性地指定通过接收到的入站隧道（？）
+这种设计与网络完全向后兼容，因为LeaseSet格式没有任何改动。所有router都需要了解新协议，但这不是问题，因为它们都由同一个实体控制。
 
+## Performance and scalability notes
 
-## 安全影响
+每个 LeaseSet 最多包含 16 个 Lease 的上限在此提案中保持不变。对于需要更多隧道的目标地址，有两种可能的网络修改：
 
-从路由器的角度来看，此设计在功能上等同于现状。路由器仍然建立所有隧道，维护自己的对等体档案，并在路由器与客户端操作之间进行分离。在默认配置中完全相同，因为路由器的隧道是从其快速层中构建的。
+- 增加LeaseSet大小的上限。这是最简单的实现方式（尽管在能够广泛使用之前仍需要全网络的支持），但可能会由于数据包更大而导致查找速度变慢。最大可行的LeaseSet大小由底层传输协议的MTU定义，因此约为16kB。
 
-从netDB的角度来看，通过此协议创建的单一LeaseSet与现状相同，因为它利用了事先存在的功能。然而，对于接近16条腿（Leases）的较大LeaseSet，观察者可能可以判断LeaseSet是多归属的：
+- 实现提案 123 以支持分层 LeaseSets。结合此提案，子 LeaseSets 的目的地可以分布在多个 routers 上，有效地像明网服务的多个 IP 地址一样工作。
 
-- 当前快速层的最大尺寸是75个对等体。入站网关(IBGW，Lease中发布的节点)从层的一部分中选择（各隧道池随机分区，哈希而非计数）：
+## Acknowledgements
 
-      1跳
-          整个快速层
-
-      2跳
-          一半的快速层
-          （默认直到2014年中）
-
-      3+跳
-          四分之一的快速层
-          （3是当前默认值）
-
-  这意味着平均来说，IBGW将来自一组20-30个对等体。
-
-- 在单一归属设置中，完整的16隧道LeaseSet将在20个对等体的集合中随机选择16个IBGW。
-
-- 在默认配置的4路由器多归属设置中，完整的16隧道LeaseSet将在最多80个对等体的集合中随机选择16个IBGW，但可能会有一些路由器之间的共同对等体。
-
-因此，默认配置下，通过统计分析可能可以推测LeaseSet是由该协议生成的。可能还可以推测出有多少个路由器，尽管快速层的变化会减小此分析的有效性。
-
-由于客户端完全控制选择哪些对等体，因此可通过从减少的对等体集合中选择IBGW来减少或消除此信息泄漏。
-
-
-## 兼容性
-
-此设计与网络完全向后兼容，因为[LeaseSet](http://localhost:63465/en/docs/specs/common-structures/#leaseset)格式没有变化。所有路由器都需要了解新协议，但这不成问题，因为它们将由同一个实体控制。
-
-
-## 性能和可扩展性注意事项
-
-此提案未改变每个LeaseSet的16条[Lease](http://localhost:63465/en/docs/specs/common-structures/#lease)的上限。对于需要更多隧道的目的地，有两种可能的网络修改：
-
-- 增加LeaseSet大小的上限。这将是最简单的实现方式（尽管仍需在网络中普遍支持才能广泛使用），但是可能由于更大的数据包尺寸导致查询变慢。LeaseSet大小的最大可行性由底层传输的MTU界定，因此大约为16kB。
-
-- 为分层LeaseSet应用[Prop123]。结合本提案，子LeaseSets的目的地可以分布在多个路由器上，实际上就像为一个清晰的服务分配了多个IP地址。
-
-
-## 致谢
-
-感谢psi对本提案的讨论。
+感谢 psi 的讨论，促成了这个提案。

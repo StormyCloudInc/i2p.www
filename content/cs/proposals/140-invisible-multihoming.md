@@ -1,229 +1,230 @@
 ---
-title: "Neviditelné Multihoming"
+title: "Neviditelný Multihoming"
 number: "140"
 author: "str4d"
 created: "2017-05-22"
 lastupdated: "2017-07-04"
-status: "Otevřený"
+status: "Otevřít"
 thread: "http://zzz.i2p/topics/2335"
 ---
 
 ## Přehled
 
-Tento návrh načrtává design protokolu umožňujícího I2P klientovi, službě nebo externímu balancer procesu spravovat více routerů, které neviditelně hostují jediný [Destination](http://localhost:63465/en/docs/specs/common-structures/#destination).
+Tento návrh popisuje design protokolu umožňujícího I2P klientovi, službě nebo externímu balancovacímu procesu transparentně spravovat více routerů hostujících jedinou [Destination](http://localhost:63465/en/docs/specs/common-structures/#destination).
 
 Návrh momentálně nespecifikuje konkrétní implementaci. Mohl by být implementován jako rozšíření [I2CP](/en/docs/specs/i2cp/), nebo jako nový protokol.
 
-
 ## Motivace
 
-Multihoming spočívá ve využití více routerů k hostování stejného destinace. Současný způsob, jak v I2P provádět multihoming, je provozovat stejnou destinaci na každém routeru nezávisle; router, který je právě používán klienty, je ten poslední, který publikoval [LeaseSet](http://localhost:63465/en/docs/specs/common-structures/#leaseset).
+Multihoming je situace, kdy je pro hostování stejné Destination použito více routerů. Současný způsob multihomingu v I2P spočívá v nezávislém spuštění stejné Destination na každém routeru; router, který je klienty v daném okamžiku používán, je ten, který naposledy publikoval LeaseSet.
 
-To je hack a pravděpodobně nebude fungovat pro rozsáhlé webové stránky. Řekněme, že máme 100 multihoming routerů, každý s 16 tunely. To je 1600 publikovaných LeaseSet každých 10 minut, což je téměř 3 za sekundu. Floodfill routery by byly zahlcené a aktivovaly by se omezovače. A to ještě předtím, než zmíníme lookup trafic.
+Tohle je hack a pravděpodobně nebude fungovat pro velké weby v měřítku. Řekněme, že máme 100 multihoming routerů, každý se 16 tunely. To je 1600 publikací LeaseSet každých 10 minut, nebo téměř 3 za sekundu. Floodfilly by se přetížily a začaly by fungovat omezení. A to ještě ani nezmiňujeme vyhledávací provoz.
 
-[Proposal 123](/en/proposals/123-new-netdb-entries/) řeší tento problém pomocí meta-LeaseSet, který uvádí 100 skutečných hashů LeaseSet. Lookup se stává dvoufázovým procesem: nejdříve hledání meta-LeaseSet a poté jednoho z uvedených LeaseSets. To je dobré řešení problému s lookup trafficem, ale samo o sobě vytváří významný únik soukromí: Je možné určit, které multihoming routery jsou online sledováním publikovaného meta-LeaseSet, protože každý skutečný LeaseSet odpovídá jednomu routeru.
+Návrh 123 řeší tento problém pomocí meta-LeaseSet, který uvádí 100 skutečných hashů LeaseSet. Vyhledávání se stává dvoustupňovým procesem: nejprve se vyhledá meta-LeaseSet a poté jeden z pojmenovaných LeaseSets. Toto je dobré řešení problému s vyhledávacím provozem, ale samo o sobě vytváří významný únik soukromí: Je možné určit, které multihoming routery jsou online, sledováním publikovaného meta-LeaseSet, protože každý skutečný LeaseSet odpovídá jedinému routeru.
 
-Potřebujeme způsob, jakým by I2P klient nebo služba mohla rozprostřít jedinou Destinaci mezi více routerů tak, aby to bylo nerozeznatelné od používání jednoho routeru (z pohledu LeaseSet samotného).
+Potřebujeme způsob, jak může I2P klient nebo služba rozdělit jednu Destination napříč více routery, způsobem, který je nerozlišitelný od používání jediného routeru (z pohledu samotného LeaseSet).
 
+## Návrh
 
-## Design
+### Definitions
 
-### Definice
+    User
+        The person or organisation wanting to multihome their Destination(s). A
+        single Destination is considered here without loss of generality (WLOG).
 
-    Uživatěl
-        Osoba nebo organizace, která chce provádět multihoming svých Destinací. Zde se uvažuje s jedinou Destinací bez ztráty obecnosti (WLOG).
+    Client
+        The application or service running behind the Destination. It may be a
+        client-side, server-side, or peer-to-peer application; we refer to it as
+        a client in the sense that it connects to the I2P routers.
 
-    Klient
-        Aplikace nebo služba běžící za Destinací. Může to být aplikace na straně klienta, serveru nebo peer-to-peer aplikace; odkazujeme na ni jako na klienta ve smyslu, že se připojuje k I2P routerům.
-
-        Klient se skládá ze tří částí, které mohou být všechny ve stejném procesu nebo mohou být rozděleny mezi procesy nebo stroje (v nastavení s více klienty):
+        The client consists of three parts, which may all be in the same process
+        or may be split across processes or machines (in a multi-client setup):
 
         Balancer
-            Část klienta, která spravuje výběr peerů a budování tunelů. V každém okamžiku je pouze jeden balancer a komunikuje se všemi I2P routery. Mohou existovat záložní balancery.
+            The part of the client that manages peer selection and tunnel
+            building. There is a single balancer at any one time, and it
+            communicates with all I2P routers. There may be failover balancers.
 
         Frontend
-            Část klienta, která může běžet paralelně. Každý frontend komunikuje s jedním I2P routerem.
+            The part of the client that can be operated in parallel. Each
+            frontend communicates with a single I2P router.
 
         Backend
-            Část klienta, která je sdílena mezi všemi frontend. Nemá přímou komunikaci s jakýmkoliv I2P routerem.
+            The part of the client that is shared between all frontends. It has
+            no direct communication with any I2P router.
 
     Router
-        I2P router spravovaný uživatelem, který sídlí na hranici mezi I2P sítí a uživatelskou sítí (podobně jako hraniční zařízení v korporačních sítích). Buduje tunely pod velením balanceru a směruje pakety pro klienta nebo frontend.
+        An I2P router run by the user that sits at the boundary between the I2P
+        network and the user's network (akin to an edge device in corporate
+        networks). It builds tunnels under the command of a balancer, and routes
+        packets for a client or frontend.
 
-### Přehled na vysoké úrovni
+### High-level overview
 
 Představte si následující požadovanou konfiguraci:
 
-- Aplikační klient s jednou Destinací.
-- Čtyři routery, každý spravující tři příchodové tunely.
-- Všechny dvanáct tunelů by měly být publikovány v jednom LeaseSet.
+- Klientská aplikace s jednou Destination.
+- Čtyři routery, každý spravující tři příchozí tunely.
+- Všech dvanáct tunelů by mělo být publikováno v jednom LeaseSet.
 
-Jednokanálový klient
+### Single-client
 
 ```
-                -{ [Tunel 1]===\
-                 |-{ [Tunel 2]====[Router 1]-----
-                 |-{ [Tunel 3]===/               \
+                -{ [Tunnel 1]===\
+                 |-{ [Tunnel 2]====[Router 1]-----
+                 |-{ [Tunnel 3]===/               \
                  |                                 \
-                 |-{ [Tunel 4]===\                 \
-  [Destinace]    |-{ [Tunel 5]====[Router 2]-----   \
-    \            |-{ [Tunel 6]===/               \   \
-     [LeaseSet]--|                               [Klient]
-                 |-{ [Tunel 7]===\               /   /
-                 |-{ [Tunel 8]====[Router 3]-----   /
-                 |-{ [Tunel 9]===/                 /
+                 |-{ [Tunnel 4]===\                 \
+  [Destination]  |-{ [Tunnel 5]====[Router 2]-----   \
+    \            |-{ [Tunnel 6]===/               \   \
+     [LeaseSet]--|                               [Client]
+                 |-{ [Tunnel 7]===\               /   /
+                 |-{ [Tunnel 8]====[Router 3]-----   /
+                 |-{ [Tunnel 9]===/                 /
                  |                                 /
-                 |-{ [Tunel 10]==\               /
-                 |-{ [Tunel 11]===[Router 4]-----
-                  -{ [Tunel 12]==/
-
-Vícekanálový klient
+                 |-{ [Tunnel 10]==\               /
+                 |-{ [Tunnel 11]===[Router 4]-----
+                  -{ [Tunnel 12]==/
+```
+### Definice
 
 ```
-                -{ [Tunel 1]===\
-                 |-{ [Tunel 2]====[Router 1]---------[Frontend 1]
-                 |-{ [Tunel 3]===/          \                    \
+                -{ [Tunnel 1]===\
+                 |-{ [Tunnel 2]====[Router 1]---------[Frontend 1]
+                 |-{ [Tunnel 3]===/          \                    \
                  |                            \                    \
-                 |-{ [Tunel 4]===\            \                    \
-  [Destinace]    |-{ [Tunel 5]====[Router 2]---\-----[Frontend 2]   \
-    \            |-{ [Tunel 6]===/          \   \                \   \
+                 |-{ [Tunnel 4]===\            \                    \
+  [Destination]  |-{ [Tunnel 5]====[Router 2]---\-----[Frontend 2]   \
+    \            |-{ [Tunnel 6]===/          \   \                \   \
      [LeaseSet]--|                         [Balancer]            [Backend]
-                 |-{ [Tunel 7]===\          /   /                /   /
-                 |-{ [Tunel 8]====[Router 3]---/-----[Frontend 3]   /
-                 |-{ [Tunel 9]===/            /                    /
+                 |-{ [Tunnel 7]===\          /   /                /   /
+                 |-{ [Tunnel 8]====[Router 3]---/-----[Frontend 3]   /
+                 |-{ [Tunnel 9]===/            /                    /
                  |                            /                    /
-                 |-{ [Tunel 10]==\          /                    /
-                 |-{ [Tunel 11]===[Router 4]---------[Frontend 4]
-                  -{ [Tunel 12]==/
+                 |-{ [Tunnel 10]==\          /                    /
+                 |-{ [Tunnel 11]===[Router 4]---------[Frontend 4]
+                  -{ [Tunnel 12]==/
+```
+### Přehled na vysoké úrovni
 
-### Obecný proces klienta
-- Načíst nebo vygenerovat Destinaci.
+- Načíst nebo vygenerovat Destination.
 
-- Otevřít sezení s každým routerem, svázané s Destinací.
+- Otevřít relaci s každým routerem, vázanou na Destination.
 
-- Pravidelně (asi každých deset minut, ale více či méně v závislosti na živosti tunelů):
+- Pravidelně (přibližně každých deset minut, ale více či méně na základě
+  životnosti tunelu):
 
-  - Získat rychlou vrstvu od každého routeru.
+- Získejte rychlou úroveň z každého routeru.
 
-  - Použít nadmnožinu peerů pro vytvoření tunelů k/od každého routeru.
+- Použijte nadmnožinu peerů k budování tunnelů do/z každého routeru.
 
-    - Ve výchozím nastavení budou tunely k/od určitého routeru používat peery z rychlé vrstvy tohoto routeru, ale toto není protokolem vynuceno.
+    - By default, tunnels to/from a particular router will use peers from
+      that router's fast tier, but this is not enforced by the protocol.
 
-  - Shromáždit sadu aktivních příchozích tunelů od všech aktivních routerů a vytvořit LeaseSet.
+- Shromáždit sadu aktivních příchozích tunelů ze všech aktivních routerů a vytvořit LeaseSet.
 
-  - Publikovat LeaseSet prostřednictvím jednoho nebo více routerů.
+- Publikovat LeaseSet prostřednictvím jednoho nebo více routerů.
 
-### Rozdíly oproti I2CP
-Pro vytvoření a správu této konfigurace potřebuje klient následující novou funkcionalitu nad rámec toho, co je aktuálně poskytováno [I2CP](/en/docs/specs/i2cp/):
+### Jeden klient
 
-- Povědět routeru, aby vybudoval tunely, aniž by pro ně vytvořil LeaseSet.
-- Získat seznam aktuálních tunelů v příchozí skupině.
+Pro vytvoření a správu této konfigurace potřebuje klient následující novou funkcionalitu nad rámec toho, co v současnosti poskytuje [I2CP](/en/docs/specs/i2cp/):
 
-Navíc by následující funkce umožnily významnou flexibilitu v tom, jak klient spravuje své tunely:
+- Říct routeru, aby vybudoval tunely, aniž by pro ně vytvořil LeaseSet.
+- Získat seznam aktuálních tunelů v inbound poolu.
 
-- Získat obsah rychlé vrstvy routeru.
-- Povědět routeru, aby vybudoval příchodový nebo odchodový tunel pomocí daného seznamu peerů.
+Navíc by následující funkcionalita umožnila významnou flexibilitu v tom, jak klient spravuje své tunnely:
 
-### Náčrt protokolu
+- Získat obsah rychlé úrovně routeru.
+- Říct routeru, aby vybudoval příchozí nebo odchozí tunel pomocí daného seznamu
+  peerů.
+
+### Více klientů
 
 ```
-         Klient                           Router
+         Client                           Router
 
-                    --------------------->  Vytvořit Sezení
-   Stav Sezení     <---------------------
-                    --------------------->  Získat Rychlou Vrstvu
-       Seznam Peerů  <---------------------
-                    --------------------->  Vytvořit Tunel
-   Stav Tunelu  <---------------------
-                    --------------------->  Získat Skupinu Tunelů
-      Seznam Tunelek  <---------------------
-                    --------------------->  Publikovat LeaseSet
-                    --------------------->  Odeslat Paket
-     Stav Odeslání <---------------------
-     Obdržený Paket  <---------------------
+                    --------------------->  Create Session
+   Session Status  <---------------------
+                    --------------------->  Get Fast Tier
+        Peer List  <---------------------
+                    --------------------->  Create Tunnel
+    Tunnel Status  <---------------------
+                    --------------------->  Get Tunnel Pool
+      Tunnel List  <---------------------
+                    --------------------->  Publish LeaseSet
+                    --------------------->  Send Packet
+      Send Status  <---------------------
+  Packet Received  <---------------------
+```
+### Obecný klientský proces
 
-### Zprávy
-    Vytvořit Sezení
-        Vytvořit sezení pro danou Destinaci.
+**Vytvořit relaci** - Vytvoří relaci pro danou Destination.
 
-    Stav Sezení
-        Potvrzení, že sezení bylo nastaveno, a klient nyní může začít budovat tunely.
+**Stav relace** - Potvrzení, že relace byla nastavena a klient nyní může začít budovat tunnely.
 
-    Získat Rychlou Vrstvu
-        Požádat o seznam peerů, které by router momentálně považoval za vhodné pro budování tunelů.
+**Get Fast Tier** - Vyžádání seznamu peerů, přes které by router aktuálně zvážil budování tunelů.
 
-    Seznam Peerů
-        Seznam peerů známých routeru.
+**Seznam peerů** - Seznam peerů známých routeru.
 
-    Vytvořit Tunel
-        Požádat, aby router vytvořil nový tunel pomocí určených peerů.
+**Vytvořit Tunnel** - Požádat router, aby vybudoval nový tunnel přes zadané uzly.
 
-    Stav Tunelu
-        Výsledek určitého vytvoření tunelu, jakmile je dostupný.
+**Stav tunelu** - Výsledek konkrétního vytvoření tunelu, jakmile je dostupný.
 
-    Získat Skupinu Tunelů
-        Požádat o seznam aktuálních tunelů v příchozí nebo odchozí skupině pro Destinaci.
+**Získat pool tunelů** - Požadavek na seznam aktuálních tunelů v příchozím nebo odchozím poolu pro Destination.
 
-    Seznam Tunelek
-        Seznam tunelů pro požadovanou skupinu.
+**Seznam tunelů** - Seznam tunelů pro požadovaný pool.
 
-    Publikovat LeaseSet
-        Požádat, aby router publikoval poskytnutý LeaseSet prostřednictvím jednoho z odchozích tunelů pro Destinaci. Není potřeba zpětné potvrzení; router by měl pokračovat ve zkoušení, dokud nebude přesvědčen, že LeaseSet byl publikován.
+**Publikovat LeaseSet** - Požadavek, aby router publikoval poskytnutý LeaseSet prostřednictvím jednoho z odchozích tunelů pro Cíl. Není potřeba žádný stav odpovědi; router by měl pokračovat v opakovaných pokusech, dokud nebude spokojen s tím, že LeaseSet byl publikován.
 
-    Odeslat Paket
-        Odchozí paket od klienta. Př optionally specifikuje odchozí tunel, kterým musí (mělo by?) být zasláno.
+**Odeslat Packet** - Odchozí packet od klienta. Volitelně specifikuje odchozí tunnel, kterým musí (měl by?) být packet odeslán.
 
-    Stav Odeslání
-        Informuje klienta o úspěchu nebo neúspěchu odeslání paketu.
+**Send Status** - Informuje klienta o úspěchu nebo neúspěchu odeslání paketu.
 
-    Obdržený Paket
-        Příchozí paket pro klienta. Volitelně specifikuje příchozí tunel, kterým byl paket přijat(?)
+**Packet Received** - Příchozí paket pro klienta. Volitelně specifikuje příchozí tunnel, kterým byl paket přijat(?)
 
+## Security implications
 
-## Bezpečnostní důsledky
+Z pohledu routerů je tento návrh funkčně ekvivalentní současnému stavu. Router stále buduje všechny tunely, udržuje své vlastní profily peerů a vynucuje oddělení mezi router a klientskými operacemi. Ve výchozí konfiguraci je zcela identický, protože tunely pro daný router jsou budovány z jeho vlastní rychlé vrstvy.
 
-Z pohledu routerů je tento design funkcionálně ekvivalentní současné situaci. Router stále buduje všechny tunely, udržuje své vlastní profily peerů a zajišťuje oddělení mezi routerem a klientskými operacemi. V základní konfiguraci je úplně identický, protože tunely pro daný router jsou budovány z jeho vlastní rychlé vrstvy.
+Z pohledu netDB je jednotlivý LeaseSet vytvořený prostřednictvím tohoto protokolu identický se současným stavem, protože využívá již existující funkcionalitu. Nicméně u větších LeaseSets blížících se 16 Leases může být pro pozorovatele možné určit, že LeaseSet je multihomed:
 
-Z pohledu netDB je jeden LeaseSet vytvořený prostřednictvím tohoto protokolu identický s současnou situací, protože využívá předexistující funkčnost. Nicméně, pro větší LeaseSety přibližující se 16 Lease, by mohlo být možné pro pozorovatele určit, že LeaseSet je multihoming:
+- Aktuální maximální velikost rychlé úrovně je 75 peerů. Inbound Gateway
+  (IBGW, uzel publikovaný v Lease) je vybrán z části této úrovně
+  (náhodně rozdělené podle hash pro každý tunnel pool, nikoli podle počtu):
 
-- Současná maximální velikost rychlé vrstvy je 75 peerů. Inbound Gateway (IBGW, uzel publikovaný v Lease) je vybírán z části vrstvy (rozdělený náhodně na tunelové skupiny podle hashe, ne podle počtu):
+      1 hop
+          The whole fast tier
 
-      1 skok
-          Celá rychlá vrstva
+      2 hops
+          Half of the fast tier
+          (the default until mid-2014)
 
-      2 skoky
-          Polovina rychlé vrstvy
-          (výchozí do poloviny roku 2014)
+      3+ hops
+          A quarter of the fast tier
+          (3 being the current default)
 
-      3+ skoky
-          Čtvrtina rychlé vrstvy
-          (3 je aktuální výchozí hodnota)
+To znamená, že v průměru budou IBGW pocházet ze skupiny 20-30 peerů.
 
-  To znamená, že průměrně budou IBGWs z množiny 20-30 peerů.
+- V jednodomé konfiguraci by úplný 16-tunelový LeaseSet měl 16 IBGW náhodně vybraných ze sady až (řekněme) 20 peerů.
 
-- V nastavení s jednou doménou, plně 16-tunelový LeaseSet by měl 16 IBGWs náhodně vybraných ze sady až (řekněme) 20 peerů.
+- V 4-routerovém multihomed nastavení používajícím výchozí konfiguraci by měl úplný 16-tunnel LeaseSet 16 IBGW náhodně vybraných ze sady maximálně 80 peerů, ačkoli mezi routery bude pravděpodobně zlomek společných peerů.
 
-- V nastavení s 4 routery pro multihoming využívajícím výchozí konfiguraci, plně 16-tunelový LeaseSet by měl 16 IBGWs náhodně vybraných ze sady nejvíce 80 peerů, ačkoli je pravděpodobné, že mezi routery bude frakce společných peerů.
+Takže s výchozí konfigurací může být možné prostřednictvím statistické analýzy zjistit, že LeaseSet je generován tímto protokolem. Mohlo by být také možné zjistit, kolik je routerů, ačkoli efekt změn v rychlých vrstvách by snížil účinnost této analýzy.
 
-Takže s výchozí konfigurací by mohlo být možné pomocí statistické analýzy zjistit, že LeaseSet je generován tímto protokolem. Mohlo by být rovněž možné zjistit, kolik routerů existuje, ačkoli efekt rychlé vrstvy by snížil efektivitu této analýzy.
+Jelikož má klient plnou kontrolu nad tím, které peer vybere, toto unikání informací by mohlo být sníženo nebo eliminováno výběrem IBGW z redukované sady peer.
 
-Protože klient má plnou kontrolu nad výběrem peerů, mohl by tento únik informací být snížen nebo eliminován výběrem IBGWs z omezené sady peerů.
+## Compatibility
 
+Tento návrh je zcela zpětně kompatibilní se sítí, protože nedochází k žádným změnám formátu LeaseSet. Všechny routery by musely být informovány o novém protokolu, ale to není problém, jelikož by všechny byly ovládány stejnou entitou.
 
-## Kompatibilita
+## Performance and scalability notes
 
-Tento design je plně zpětně kompatibilní se sítí, protože nejsou provedeny žádné změny formátu [LeaseSet](http://localhost:63465/en/docs/specs/common-structures/#leaseset). Všechny routery by musely být obeznámeny s novým protokolem, ale to není problém, jelikož by všechny byly řízeny stejnou entitou.
+Horní limit 16 Lease na LeaseSet zůstává tímto návrhem nezměněn. Pro Destinations, které vyžadují více tunelů než je tento limit, existují dvě možné síťové modifikace:
 
+- Zvýšit horní limit velikosti LeaseSets. Toto by bylo nejjednodušší k implementaci (ačkoli by to stále vyžadovalo rozsáhlou podporu v síti, než by to mohlo být široce používáno), ale mohlo by to vést k pomalejším vyhledáváním kvůli větším velikostem paketů. Maximální proveditelná velikost LeaseSet je definována MTU podkladových transportů, a proto je kolem 16kB.
 
-## Poznámky k výkonu a škálovatelnosti
+- Implementovat Návrh 123 pro vrstvené LeaseSets. V kombinaci s tímto návrhem by mohly být Destinations pro pod-LeaseSets rozloženy napříč více routery, což by efektivně fungovalo jako více IP adres pro službu na clearnetu.
 
-Horní limit 16 [Lease](http://localhost:63465/en/docs/specs/common-structures/#lease) na LeaseSet není tímto návrhem změněn. Pro Destinace, které vyžadují více tunelů než tohle, existují dvě možné úpravy sítě:
+## Acknowledgements
 
-- Zvýšit horní limit velikosti LeaseSetů. Toto by bylo nejjednodušší implementovat (i když by to stále vyžadovalo kompletní podporu napříč sítí, než by to mohlo být široce použito), ale mohlo by to vést k pomalejšímu vyhledávání kvůli větší velikosti paketů. Maximální proveditelná velikost LeaseSetu je definována MTU podkladových transportů a proto je kolem 16 kB.
-
-- Implementovat [Proposal 123](/en/proposals/123-new-netdb-entries/) pro hierarchické LeaseSety. V kombinaci s tímto návrhem by Destinace pro podřízené LeaseSety mohly být rozloženy napříč více routery, efektivně fungující jako více IP adres pro službu na clearnetu.
-
-
-## Poděkování
-
-Díky psi za diskusi, která vedla k tomuto návrhu.
+Díky psi za diskuzi, která vedla k tomuto návrhu.

@@ -51,12 +51,16 @@
                             {{ $translations := $page.AllTranslations }}
                             {{ range .Site.Languages }}
                                 {{ $lang := . }}
+                                {{ $langName := i18n (printf "languages.%s" $lang.Lang) }}
+                                {{ if not $langName }}
+                                    {{ $langName = $lang.LanguageName }}
+                                {{ end }}
                                 {{ $matches := where $translations "Lang" $lang.Lang }}
                                 {{ if gt (len $matches) 0 }}
                                     {{ $target := index $matches 0 }}
-                                    <a href="{{ $target.RelPermalink }}" class="lang-option{{ if eq $lang.Lang $page.Site.Language.Lang }} active{{ end }}">{{ $lang.LanguageName }}</a>
+                                    <a href="{{ $target.RelPermalink }}" class="lang-option{{ if eq $lang.Lang $page.Site.Language.Lang }} active{{ end }}">{{ $langName }}</a>
                                 {{ else }}
-                                    <a href="{{ printf "/%s/" $lang.Lang }}" class="lang-option{{ if eq $lang.Lang $page.Site.Language.Lang }} active{{ end }}">{{ $lang.LanguageName }}</a>
+                                    <a href="{{ printf "/%s/" $lang.Lang }}" class="lang-option{{ if eq $lang.Lang $page.Site.Language.Lang }} active{{ end }}">{{ $langName }}</a>
                                 {{ end }}
                             {{ end }}
                         </div>

@@ -4,133 +4,137 @@ number: "148"
 author: "zzz"
 created: "2019-03-12"
 lastupdated: "2019-04-11"
-status: "Open"
+status: "Öffnen"
 thread: "http://zzz.i2p/topics/2689"
 ---
 
 ## Übersicht
 
-Dieser Vorschlag fügt einen neuen Signaturtyp hinzu, der BLAKE2b-512 mit Personalisierungsstrings und Salzen verwendet, um SHA-512 zu ersetzen. Dies wird drei Klassen von möglichen Angriffen eliminieren.
+Dieser Vorschlag fügt einen neuen Signaturtyp hinzu, der BLAKE2b-512 mit Personalisierungsstrings und Salts verwendet, um SHA-512 zu ersetzen. Dies wird drei Klassen möglicher Angriffe eliminieren.
 
 ## Motivation
 
-Während der Diskussionen und des Designs von NTCP2 (Vorschlag 111) und LS2 (Vorschlag 123) haben wir kurz verschiedene mögliche Angriffe in Betracht gezogen und wie man sie verhindern kann. Drei dieser Angriffe sind Length Extension Attacks, Cross-Protocol Attacks und Duplicate Message Identification.
+Während der Diskussionen und des Designs von NTCP2 (Vorschlag 111) und LS2 (Vorschlag 123) haben wir verschiedene mögliche Angriffe kurz betrachtet und wie man sie verhindern kann. Drei dieser Angriffe sind Length Extension Attacks, Cross-Protocol Attacks und Duplicate Message Identification.
 
-Für sowohl NTCP2 als auch LS2 entschieden wir, dass diese Angriffe nicht direkt relevant für die gegenwärtigen Vorschläge waren und jede Lösung im Widerspruch zur Minimierung neuer Primitiven stand. Außerdem stellten wir fest, dass die Geschwindigkeit der Hash-Funktionen in diesen Protokollen kein bedeutender Faktor bei unseren Entscheidungen war. Daher haben wir die Lösung größtenteils auf einen separaten Vorschlag vertagt. Während wir einige Personalisierungsfunktionen in die LS2-Spezifikation aufgenommen haben, verlangten wir keine neuen Hash-Funktionen.
+Sowohl für NTCP2 als auch für LS2 entschieden wir, dass diese Angriffe nicht direkt relevant für die vorliegenden Vorschläge waren, und jegliche Lösungen standen im Konflikt mit dem Ziel, neue Primitive zu minimieren. Außerdem stellten wir fest, dass die Geschwindigkeit der Hash-Funktionen in diesen Protokollen kein wichtiger Faktor für unsere Entscheidungen war. Daher vertagten wir die Lösung größtenteils auf einen separaten Vorschlag. Obwohl wir der LS2-Spezifikation einige Personalisierungsfunktionen hinzufügten, erforderten wir keine neuen Hash-Funktionen.
 
-Viele Projekte, wie [ZCash](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf), verwenden Hash-Funktionen und Signaturalgorithmen, die auf neueren Algorithmen basieren, die nicht anfällig für die folgenden Angriffe sind.
+Viele Projekte, wie [ZCash](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf), verwenden Hash-Funktionen und Signaturalgorithmen, die auf neueren Algorithmen basieren, welche nicht anfällig für die folgenden Angriffe sind.
 
 ### Length Extension Attacks
 
-SHA-256 und SHA-512 sind anfällig für [Length Extension Attacks (LEA)](https://en.wikipedia.org/wiki/Length_extension_attack). Dies ist der Fall, wenn tatsächliche Daten signiert werden, nicht der Hash der Daten. In den meisten I2P-Protokollen (Streaming, Datagramme, NetDB und andere) werden die tatsächlichen Daten signiert. Eine Ausnahme sind SU3-Dateien, bei denen der Hash signiert wird. Eine andere Ausnahme sind signierte Datagramme für DSA (Sig-Typ 0) nur, bei denen der Hash signiert wird. Für andere signierte Datagramm-Sig-Typen werden die Daten signiert.
+SHA-256 und SHA-512 sind anfällig für [Length Extension Attacks (LEA)](https://en.wikipedia.org/wiki/Length_extension_attack). Dies ist der Fall, wenn tatsächliche Daten signiert werden, nicht der Hash der Daten. In den meisten I2P-Protokollen (Streaming, Datagrams, netDb und andere) werden die tatsächlichen Daten signiert. Eine Ausnahme sind SU3-Dateien, bei denen der Hash signiert wird. Die andere Ausnahme sind signierte Datagrams für DSA (Sig-Typ 0) nur, bei denen der Hash signiert wird. Für andere signierte Datagram-Sig-Typen werden die Daten signiert.
 
 ### Cross-Protocol Attacks
 
-Signierte Daten in I2P-Protokollen können aufgrund fehlender Domänentrennung anfällig für Cross-Protocol Attacks (CPA) sein. Dies ermöglicht es einem Angreifer, Daten, die in einem Kontext (wie ein signiertes Datagramm) empfangen wurden, als valide, signierte Daten in einem anderen Kontext (wie Streaming oder Netzwerkdatenbank) zu präsentieren. Während es unwahrscheinlich ist, dass die signierten Daten aus einem Kontext in einem anderen Kontext als gültige Daten interpretiert werden, ist es schwierig oder unmöglich, alle Situationen sicher zu analysieren. Darüber hinaus kann in einigen Kontexten ein Angreifer möglicherweise ein Opfer dazu bringen, speziell gestaltete Daten zu signieren, die gültige Daten in einem anderen Kontext sein könnten. Auch hier ist es schwierig oder unmöglich, alle Situationen sicher zu analysieren.
+Signierte Daten in I2P-Protokollen können aufgrund fehlender Domain-Separation anfällig für Cross-Protocol Attacks (CPA) sein. Dies ermöglicht es einem Angreifer, Daten, die in einem Kontext empfangen wurden (wie ein signiertes Datagramm), zu verwenden und sie als gültige, signierte Daten in einem anderen Kontext (wie Streaming oder Netzwerkdatenbank) zu präsentieren. Obwohl es unwahrscheinlich ist, dass die signierten Daten aus einem Kontext als gültige Daten in einem anderen Kontext geparst würden, ist es schwierig oder unmöglich, alle Situationen zu analysieren, um sicher zu wissen. Zusätzlich könnte es in manchen Kontexten für einen Angreifer möglich sein, ein Opfer dazu zu bringen, speziell präparierte Daten zu signieren, die gültige Daten in einem anderen Kontext sein könnten. Auch hier ist es schwierig oder unmöglich, alle Situationen zu analysieren, um sicher zu wissen.
 
-### Duplicate Message Identification
+### Length Extension Attacks
 
-I2P-Protokolle können anfällig für Duplicate Message Identification (DMI) sein. Dies könnte es einem Angreifer ermöglichen, zu identifizieren, dass zwei signierte Nachrichten denselben Inhalt haben, selbst wenn diese Nachrichten und ihre Signaturen verschlüsselt sind. Obwohl es aufgrund der in I2P verwendeten Verschlüsselungsmethoden unwahrscheinlich ist, ist es schwierig oder unmöglich, alle Situationen sicher zu analysieren. Durch die Verwendung einer Hash-Funktion, die es ermöglicht, ein zufälliges Salz hinzuzufügen, werden alle Signaturen unterschiedlich sein, selbst wenn dieselben Daten signiert werden. Während Red25519, wie in Vorschlag 123 definiert, ein zufälliges Salz zur Hash-Funktion hinzufügt, löst dies das Problem bei unverschlüsselten Lease-Sets nicht.
+I2P-Protokolle können anfällig für Duplicate Message Identification (DMI) sein. Dies könnte es einem Angreifer ermöglichen zu identifizieren, dass zwei signierte Nachrichten den gleichen Inhalt haben, auch wenn diese Nachrichten und ihre Signaturen verschlüsselt sind. Obwohl dies aufgrund der in I2P verwendeten Verschlüsselungsmethoden unwahrscheinlich ist, ist es schwierig oder unmöglich, alle Situationen zu analysieren, um sicher zu wissen. Durch die Verwendung einer Hash-Funktion, die eine Methode zum Hinzufügen eines zufälligen Salts bereitstellt, werden alle Signaturen unterschiedlich sein, auch wenn dieselben Daten signiert werden. Während Red25519 wie in Vorschlag 123 definiert einen zufälligen Salt zur Hash-Funktion hinzufügt, löst dies das Problem für unverschlüsselte leaseSets nicht.
 
-### Geschwindigkeit
+### Cross-Protokoll-Angriffe
 
-Obwohl dies keine Hauptmotivation für diesen Vorschlag ist, ist SHA-512 relativ langsam, und schnellere Hash-Funktionen sind verfügbar.
+Obwohl dies nicht die primäre Motivation für diesen Vorschlag ist, ist SHA-512 relativ langsam, und schnellere Hash-Funktionen sind verfügbar.
 
-## Ziele
+## Goals
 
-- Verhinderung oben genannter Angriffe
-- Minimierung der Nutzung neuer Kryptoprimitive
-- Verwendung bewährter, standardmäßiger Kryptoprimitive
-- Nutzung standardmäßiger Kurven
-- Verwendung schnellerer Primitive, wenn verfügbar
+- Verhindere oben genannte Angriffe
+- Minimiere die Verwendung neuer kryptographischer Primitive
+- Verwende bewährte, standardisierte kryptographische Primitive
+- Verwende Standardkurven
+- Verwende schnellere Primitive, falls verfügbar
 
 ## Design
 
-Modifizieren Sie den bestehenden RedDSA_SHA512_Ed25519-Signaturtyp, um BLAKE2b-512 anstelle von SHA-512 zu verwenden. Fügen Sie einzigartige Personalisierungsstrings für jeden Anwendungsfall hinzu. Der neue Signaturtyp kann für sowohl verblendete als auch unverblendete Lease-Sets verwendet werden.
+Modifizieren Sie den bestehenden RedDSA_SHA512_Ed25519 Signaturtyp, um BLAKE2b-512 anstelle von SHA-512 zu verwenden. Fügen Sie eindeutige Personalisierungszeichenfolgen für jeden Anwendungsfall hinzu. Der neue Signaturtyp kann sowohl für unblinded als auch blinded leasesets verwendet werden.
 
-## Rechtfertigung
+## Justification
 
 - [BLAKE2b](https://blake2.net/blake2.pdf) ist nicht anfällig für LEA.
-- BLAKE2b bietet eine standardisierte Möglichkeit, Personalisierungsstrings zur Domänentrennung hinzuzufügen.
-- BLAKE2b bietet eine standardisierte Möglichkeit, ein zufälliges Salz hinzuzufügen, um DMI zu verhindern.
-- BLAKE2b ist auf moderner Hardware schneller als SHA-256 und SHA-512 (und MD5), laut der [BLAKE2 Spezifikation](https://blake2.net/blake2.pdf).
+- BLAKE2b bietet eine Standardmethode zum Hinzufügen von Personalisierungsstrings für Domain-Separation
+- BLAKE2b bietet eine Standardmethode zum Hinzufügen eines zufälligen Salts zur Verhinderung von DMI.
+- BLAKE2b ist schneller als SHA-256 und SHA-512 (und MD5) auf moderner Hardware,
+  laut der [BLAKE2-Spezifikation](https://blake2.net/blake2.pdf).
 - Ed25519 ist immer noch unser schnellster Signaturtyp, viel schneller als ECDSA, zumindest in Java.
-- [Ed25519](http://cr.yp.to/papers.html#ed25519) erfordert eine 512-Bit-kryptographische Hash-Funktion. Es spezifiziert nicht SHA-512. BLAKE2b ist genauso geeignet für die Hash-Funktion.
-- BLAKE2b ist in Bibliotheken für viele Programmiersprachen weit verbreitet, wie zum Beispiel Noise.
+- [Ed25519](http://cr.yp.to/papers.html#ed25519) erfordert eine 512-Bit-kryptographische Hash-Funktion.
+  Es spezifiziert nicht SHA-512. BLAKE2b ist genauso geeignet für die Hash-Funktion.
+- BLAKE2b ist weit verbreitet in Bibliotheken für viele Programmiersprachen verfügbar, wie zum Beispiel Noise.
 
-## Spezifikation
+## Specification
 
-Verwenden Sie unkeyed BLAKE2b-512 wie in der [BLAKE2 Spezifikation](https://blake2.net/blake2.pdf) mit Salz und Personalisierung. Alle Verwendungen von BLAKE2b-Signaturen werden einen 16-Zeichen-Personalisierungsstring verwenden.
+Verwenden Sie unkeyed BLAKE2b-512 wie in der [BLAKE2-Spezifikation](https://blake2.net/blake2.pdf) mit Salt und Personalisierung. Alle Verwendungen von BLAKE2b-Signaturen werden eine 16-Zeichen-Personalisierungszeichenkette verwenden.
 
-Bei der Verwendung im RedDSA_BLAKE2b_Ed25519-Signieren ist ein zufälliges Salz erlaubt, aber nicht notwendig, da der Signaturalgorithmus 80 Bytes zufällige Daten hinzufügt (siehe Vorschlag 123). Falls gewünscht, beim Hashing der Daten zur Berechnung von r, setzen Sie ein neues 16-Byte zufälliges BLAKE2b-Salz für jede Signatur. Beim Berechnen von S setzen Sie das Salz zurück auf den Standard, nämlich alle Nullen.
+Bei der Verwendung beim RedDSA_BLAKE2b_Ed25519-Signieren ist ein zufälliges Salt erlaubt, jedoch nicht notwendig, da der Signaturalgorithmus 80 Bytes an Zufallsdaten hinzufügt (siehe Vorschlag 123). Falls gewünscht, setzen Sie beim Hashen der Daten zur Berechnung von r ein neues BLAKE2b 16-Byte-Zufalls-Salt für jede Signatur. Bei der Berechnung von S setzen Sie das Salt auf den Standard von Null-Bytes zurück.
 
-Bei der Verwendung im RedDSA_BLAKE2b_Ed25519-Verifizieren verwenden Sie kein zufälliges Salz, verwenden Sie den Standard von allen Nullen.
+Bei der Verwendung in RedDSA_BLAKE2b_Ed25519-Verifikation kein zufälliges Salt verwenden, sondern die Standardeinstellung aus lauter Nullen verwenden.
 
-Die Salz- und Personalisierungsfunktionen sind nicht in [RFC 7693](https://tools.ietf.org/html/rfc7693) spezifiziert; verwenden Sie diese Funktionen wie in der [BLAKE2 Spezifikation](https://blake2.net/blake2.pdf) angegeben.
+Die Salt- und Personalization-Features sind nicht in [RFC 7693](https://tools.ietf.org/html/rfc7693) spezifiziert; verwenden Sie diese Features wie in der [BLAKE2-Spezifikation](https://blake2.net/blake2.pdf) angegeben.
 
-### Signaturtyp
+### Erkennung doppelter Nachrichten
 
-Für RedDSA_BLAKE2b_Ed25519 ersetzen Sie die SHA-512 Hash-Funktion in RedDSA_SHA512_Ed25519 (Signaturtyp 11, wie in Vorschlag 123 definiert) durch BLAKE2b-512. Keine weiteren Änderungen.
+Für RedDSA_BLAKE2b_Ed25519 ersetze die SHA-512 Hash-Funktion in RedDSA_SHA512_Ed25519 (Signaturtyp 11, wie in Proposal 123 definiert) durch BLAKE2b-512. Keine anderen Änderungen.
 
-Wir benötigen keinen Ersatz für EdDSA_SHA512_Ed25519ph (Signaturtyp 8) für su3-Dateien, da die vorgehashte Version von EdDSA nicht anfällig für LEA ist. EdDSA_SHA512_Ed25519 (Signaturtyp 7) wird für su3-Dateien nicht unterstützt.
+Wir benötigen keinen Ersatz für EdDSA_SHA512_Ed25519ph (Signaturtyp 8) für su3-Dateien, da die vorab-gehashte Version von EdDSA nicht anfällig für LEA ist. EdDSA_SHA512_Ed25519 (Signaturtyp 7) wird für su3-Dateien nicht unterstützt.
 
-| Typ | Typcode | Seit | Nutzung |
-|-----|---------|------|---------|
-| RedDSA_BLAKE2b_Ed25519 | 12 | TBD | Nur für Router-Identitäten, Destinations und verschlüsselte Lease-Sets; wird niemals für Router-Identitäten verwendet |
-
-### Allgemeine Strukturdatenlängen
+| Type | Type Code | Since | Usage |
+|------|-----------|-------|-------|
+| RedDSA_BLAKE2b_Ed25519 | 12 | TBD | For Router Identities, Destinations and encrypted leasesets only; never used for Router Identities |
+### Geschwindigkeit
 
 Das Folgende gilt für den neuen Signaturtyp.
 
-| Datentyp | Länge |
-|----------|-------|
+| Data Type | Length |
+|-----------|--------|
 | Hash | 64 |
-| Privater Schlüssel | 32 |
-| Öffentlicher Schlüssel | 32 |
-| Signatur | 64 |
+| Private Key | 32 |
+| Public Key | 32 |
+| Signature | 64 |
+### Personalizations
 
-### Personalisierungen
+Um eine Domänen-Trennung für die verschiedenen Verwendungen von Signaturen zu gewährleisten, werden wir die BLAKE2b-Personalisierungsfunktion verwenden.
 
-Um Domänentrennung für die verschiedenen Anwendungen von Signaturen zu bieten, werden wir die BLAKE2b-Personalisierungsfunktion verwenden.
+Alle Verwendungen von BLAKE2b-Signaturen verwenden eine 16-Zeichen-Personalisierungszeichenfolge. Alle neuen Verwendungen müssen in die Tabelle hier aufgenommen werden, mit einer eindeutigen Personalisierung.
 
-Alle Verwendungen von BLAKE2b-Signaturen werden einen 16-Zeichen-Personalisierungsstring verwenden. Alle neuen Verwendungen müssen hier der Tabelle mit einem einzigartigen Personalisierungsstring hinzugefügt werden.
+Der NTCP 1 und SSU Handshake verwendet unten stehende für die signierten Daten, die im Handshake selbst definiert sind. Signierte RouterInfos in DatabaseStore Messages verwenden die NetDb Entry Personalisierung, genau wie wenn sie in der NetDB gespeichert wären.
 
-Die unten genannten NTCP1 und SSU-Handschläge sind für die signierten Daten definiert, die im Handschlag selbst definiert sind. Signierte RouterInfos in DatabaseStore-Nachrichten verwenden die Netzwerk-Datenbank-Personalisierung, so als ob sie im NetDB gespeichert wären.
-
-| Nutzung | 16 Zeichen Personalisierung |
-|---------|-----------------------------|
+| Usage | 16 Byte Personalization |
+|-------|--------------------------|
 | I2CP SessionConfig | "I2CP_SessionConf" |
-| NetDB-Einträge (RI, LS, LS2) | "network_database" |
-| NTCP 1 Handshake | "NTCP_1_handshake" |
-| Signierte Datagramme | "sign_datagramI2P" |
+| NetDB Entries (RI, LS, LS2) | "network_database" |
+| NTCP 1 handshake | "NTCP_1_handshake" |
+| Signed Datagrams | "sign_datagramI2P" |
 | Streaming | "streaming_i2psig" |
-| SSU Handshake | "SSUHandshakeSign" |
-| SU3-Dateien | n/a, nicht unterstützt |
-| Unit-Tests | "test1234test5678" |
+| SSU handshake | "SSUHandshakeSign" |
+| SU3 Files | n/a, not supported |
+| Unit tests | "test1234test5678" |
+## Ziele
 
-## Anmerkungen
+## Design
 
-## Probleme
-
-- Alternative 1: Vorschlag 146;
+- Alternative 1: Proposal 146;
   Bietet LEA-Resistenz
-- Alternative 2: Ed25519ctx in RFC 8032;
-  Bietet LEA-Resistenz und Personalisierung. Standardisiert, aber benutzt es überhaupt jemand? Siehe [RFC 8032](https://tools.ietf.org/html/rfc8032) und [diese Diskussion](https://moderncrypto.org/mail-archive/curves/2017/000925.html).
+- Alternative 2: [Ed25519ctx in RFC 8032](https://tools.ietf.org/html/rfc8032);
+  Bietet LEA-Resistenz und Personalisierung.
+  Standardisiert, aber nutzt es überhaupt jemand?
+  Siehe [RFC 8032](https://tools.ietf.org/html/rfc8032) und [diese Diskussion](https://moderncrypto.org/mail-archive/curves/2017/000925.html).
 - Ist "keyed" Hashing für uns nützlich?
 
-## Migration
+## Begründung
 
-Gleich wie beim Rollout vorheriger Signaturtypen.
+Das gleiche wie bei der Einführung vorheriger Signaturtypen.
 
-Wir planen, neue Router vom Typ 7 auf Typ 12 als Standard umzustellen. Wir planen, bestehende Router schließlich vom Typ 7 auf Typ 12 zu migrieren, indem wir den "Rekeying"-Prozess nutzen, der nach der Einführung von Typ 7 verwendet wurde. Wir planen, neue Destinationen vom Typ 7 auf Typ 12 als Standard umzustellen. Wir planen, neue verschlüsselte Destinationen vom Typ 11 auf Typ 13 als Standard umzustellen.
+Wir planen, neue Router vom Typ 7 standardmäßig auf Typ 12 zu ändern. Wir planen, bestehende Router schließlich von Typ 7 auf Typ 12 zu migrieren, unter Verwendung des "Rekeying"-Prozesses, der nach der Einführung von Typ 7 verwendet wurde. Wir planen, neue Destinations vom Typ 7 standardmäßig auf Typ 12 zu ändern. Wir planen, neue verschlüsselte Destinations vom Typ 11 standardmäßig auf Typ 13 zu ändern.
 
-Wir werden das Blinden von Typen 7, 11 und 12 auf Typ 12 unterstützen. Wir werden das Blinden von Typ 12 auf Typ 11 nicht unterstützen.
+Wir werden Blinding von den Typen 7, 11 und 12 zu Typ 12 unterstützen. Wir werden kein Blinding von Typ 12 zu Typ 11 unterstützen.
 
-Neue Router könnten beginnen, den neuen Sig-Typ standardmäßig zu verwenden, nachdem einige Monate vergangen sind. Neue Destinationen könnten beginnen, den neuen Sig-Typ standardmäßig zu verwenden, vielleicht ein Jahr später.
+Neue Router könnten nach einigen Monaten standardmäßig den neuen Signaturtyp verwenden. Neue Ziele könnten nach etwa einem Jahr standardmäßig den neuen Signaturtyp verwenden.
 
-Für die minimale Routerversion 0.9.TBD müssen Router sicherstellen:
+Für die minimale Router-Version 0.9.TBD müssen Router sicherstellen:
 
-- Speichern (oder verbreiten) Sie keine RI oder LS mit dem neuen Sig-Typ zu Routern unter Version 0.9.TBD.
-- Beim Überprüfen eines netdb stores lesen Sie keine RI oder LS mit dem neuen Sig-Typ von Routern unter Version 0.9.TBD.
-- Router mit einem neuen Sig-Typ in ihrer RI dürfen keine Verbindung zu Routern unter Version 0.9.TBD herstellen, weder mit NTCP, NTCP2 noch SSU.
-- Streaming-Verbindungen und signierte Datagramme funktionieren nicht bei Routern unter Version 0.9.TBD, aber es gibt keine Möglichkeit, dies zu wissen, daher sollte der neue Sig-Typ nicht standardmäßig für einen Zeitraum von Monaten oder Jahren nach Freigabe von 0.9.TBD verwendet werden.
+- Speichere (oder überflute) keine RI oder LS mit dem neuen sig type an router mit einer Version kleiner als 0.9.TBD.
+- Beim Verifizieren eines netDb store, hole keine RI oder LS mit dem neuen sig type von routern mit einer Version kleiner als 0.9.TBD.
+- Router mit einem neuen sig type in ihrer RI können sich möglicherweise nicht mit routern mit einer Version kleiner als 0.9.TBD verbinden,
+  weder mit NTCP, NTCP2, noch mit SSU.
+- Streaming-Verbindungen und signierte Datagramme funktionieren nicht zu routern mit einer Version kleiner als 0.9.TBD,
+  aber es gibt keine Möglichkeit das zu wissen, daher sollte der neue sig type für einen Zeitraum
+  von Monaten oder Jahren nach der Veröffentlichung von 0.9.TBD nicht standardmäßig verwendet werden.

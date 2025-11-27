@@ -1,279 +1,230 @@
 ---
-title: "Görünmez Multihoming"
+title: "Görünmez Çoklu Barındırma"
 number: "140"
 author: "str4d"
 created: "2017-05-22"
 lastupdated: "2017-07-04"
-status: "Açık"
+status: "Aç"
 thread: "http://zzz.i2p/topics/2335"
 ---
 
 ## Genel Bakış
 
-Bu öneri, bir I2P istemcisi, hizmeti veya harici dengeleme sürecinin, tek bir [Destination](http://localhost:63465/en/docs/specs/common-structures/#destination) üzerinde birden fazla yönlendiricinin şeffaf bir şekilde yönetilmesini sağlayan bir protokol tasarımını özetlemektedir.
+Bu öneri, bir I2P istemcisi, hizmeti veya harici dengeleyici sürecinin tek bir [Destination](http://localhost:63465/en/docs/specs/common-structures/#destination)'ı şeffaf bir şekilde barındıran birden fazla router'ı yönetmesini sağlayan bir protokol için tasarımı özetlemektedir.
 
-Öneri şu anda somut bir uygulama belirtmemektedir. [I2CP](/en/docs/specs/i2cp/) için bir uzantı ya da yeni bir protokol olarak uygulanabilir.
-
+Bu öneri şu anda somut bir uygulama belirtmiyor. [I2CP](/en/docs/specs/i2cp/) için bir uzantı olarak veya yeni bir protokol olarak uygulanabilir.
 
 ## Motivasyon
 
-Multihoming, aynı Destination'ı barındırmak için birden fazla yönlendiricinin kullanıldığı durumdur. Şu anki I2P ile multihoming yapma yöntemi, her yönlendiricide bağımsız olarak aynı Destination'ı çalıştırmaktır; herhangi bir zamanda istemciler tarafından kullanılan yönlendirici, en son [LeaseSet](http://localhost:63465/en/docs/specs/common-structures/#leaseset) yayınlayandır.
+Multihoming, aynı Destination'ı barındırmak için birden fazla router'ın kullanıldığı durumdur. I2P ile multihoming yapmanın mevcut yolu, aynı Destination'ı her router üzerinde bağımsız olarak çalıştırmaktır; herhangi bir zamanda istemciler tarafından kullanılan router, LeaseSet yayınlayan son router'dır.
 
-Bu yöntem bir hack olup, büyük ölçekli web siteleri için uygun değildir. Örneğin, her biri 16 tünel olan 100 multihoming yönlendiricimiz olduğunu varsayalım. Bu, her 10 dakikada bir 1600 LeaseSet yayını, yani saniyede neredeyse 3 yayın anlamına gelir. Yoğunluğun fazla olması anaforları boğar ve sınırlamalar devreye girer. Bahsetmediğimiz arama trafiğinden bile önce.
+Bu bir hack ve muhtemelen büyük ölçekli web siteleri için çalışmayacaktır. Diyelim ki her biri 16 tunnel'a sahip 100 multihoming router'ımız var. Bu, her 10 dakikada 1600 LeaseSet yayını veya neredeyse saniyede 3 tane demektir. floodfill'ler bunalmış olurdu ve kısıtlamalar devreye girerdi. Bu, arama trafiğinden bahsetmeden önceki durum.
 
-[Proposal 123](/en/proposals/123-new-netdb-entries/), 100 gerçek LeaseSet hash'ini listeleyen bir meta-LeaseSet ile bu sorunu çözer. Bir arama iki aşamalı bir işlem haline gelir: önce meta-LeaseSet, ardından adlandırılan LeaseSet’lerden biri aranır. Bu, arama trafiği sorununa iyi bir çözüm ancak kendiliğinden önemli bir gizlilik açığı oluşturur: Yayınlanan meta-LeaseSet'i izleyerek hangi multihoming yönlendiricilerin çevrimiçi olduğunu belirlemek mümkündür, çünkü her gerçek LeaseSet tek bir yönlendiriciye karşılık gelir.
+Öneri 123 bu sorunu 100 gerçek LeaseSet hash'ini listeleyen bir meta-LeaseSet ile çözüyor. Arama iki aşamalı bir süreç haline geliyor: önce meta-LeaseSet'i arama, sonra da adlandırılmış LeaseSet'lerden birini arama. Bu, arama trafiği sorununa iyi bir çözüm, ancak kendi başına önemli bir gizlilik sızıntısı yaratıyor: Yayınlanan meta-LeaseSet'i izleyerek hangi multihoming router'ların çevrimiçi olduğunu belirlemek mümkün, çünkü her gerçek LeaseSet tek bir router'a karşılık geliyor.
 
-Bir I2P istemcisi ya da hizmeti için, bir Destination'ı birden fazla yönlendiriciye yayma yollarına ihtiyacımız var, LeaseSet'in perspektifinden tek bir yönlendirici kullanmaya ayırtedilemeyecek bir şekilde.
-
+Bir I2P istemcisinin veya servisinin tek bir Destination'ı birden fazla router arasında dağıtabilmesi için bir yönteme ihtiyacımız var, bu şekilde tek bir router kullanmaktan ayırt edilemez olmalı (LeaseSet'in kendisi açısından).
 
 ## Tasarım
 
-### Tanımlar
+### Definitions
 
-    Kullanıcı
-        Destination'larını multihome yapmak isteyen kişi veya kuruluş. Tek bir
-        Destination burada genellik kaybetmeden (WLOG) ele alınmıştır.
+    User
+        The person or organisation wanting to multihome their Destination(s). A
+        single Destination is considered here without loss of generality (WLOG).
 
-    İstemci
-        Destination'ın arkasında çalışan uygulama veya hizmet. İstemci tarafta,
-        sunucu tarafında veya eşten-eşe bir uygulama olabilir; I2P yönlendiricilere
-        bağlanması anlamında bir istemci olarak adlandırılır.
+    Client
+        The application or service running behind the Destination. It may be a
+        client-side, server-side, or peer-to-peer application; we refer to it as
+        a client in the sense that it connects to the I2P routers.
 
-        İstemci üç bölümden oluşur ve hepsi aynı süreç içinde olabilir veya
-        (çoklu istemci kurulumunda) süreçler veya makineler arasında bölünebilir:
+        The client consists of three parts, which may all be in the same process
+        or may be split across processes or machines (in a multi-client setup):
 
-        Dengeleyici
-            İstemcinin eş seçimi ve tünel oluşturma işlemlerini yöneten parça.
-            Herhangi bir zamanda tek bir dengeleyici vardır ve tüm I2P yönlendiricilerle iletişim kurar.
-            Yedek dengeleyiciler olabilir.
+        Balancer
+            The part of the client that manages peer selection and tunnel
+            building. There is a single balancer at any one time, and it
+            communicates with all I2P routers. There may be failover balancers.
 
-        Ön Uç
-            Paralel çalıştırılabilen istemci parçası. Her ön uç tek bir I2P yönlendirici ile iletişim kurar.
+        Frontend
+            The part of the client that can be operated in parallel. Each
+            frontend communicates with a single I2P router.
 
-        Arka Uç
-            Tüm ön uçlar arasında paylaşılan istemci parçası. Herhangi bir I2P
-            yönlendirici ile doğrudan iletişimi yoktur.
+        Backend
+            The part of the client that is shared between all frontends. It has
+            no direct communication with any I2P router.
 
-    Yönlendirici
-        Kullanıcı tarafından çalıştırılan ve I2P ağı ile kullanıcının ağı arasındaki sınırda duran
-        bir I2P yönlendirici (kurumsal ağlardaki uç cihazlara benzer).
-        Bir dengeleyicinin komutuyla tünel oluşturur ve bir istemci veya
-        ön uç için paketleri yönlendirir.
+    Router
+        An I2P router run by the user that sits at the boundary between the I2P
+        network and the user's network (akin to an edge device in corporate
+        networks). It builds tunnels under the command of a balancer, and routes
+        packets for a client or frontend.
 
-### Yüksek seviye genel bakış
+### High-level overview
 
 Aşağıdaki istenen konfigürasyonu hayal edin:
 
-- Tek bir Destination'a sahip bir istemci uygulaması.
-- Her biri üç gelen tünel yöneten dört yönlendirici.
-- Tüm on iki tünel tek bir LeaseSet içinde yayımlanmalıdır.
+- Tek Destination'a sahip bir istemci uygulaması.
+- Her biri üç gelen tunnel'ı yöneten dört router.
+- Tüm on iki tunnel tek bir LeaseSet'te yayınlanmalıdır.
 
-Tek istemci
+### Single-client
 
 ```
-                -{ [Tünel 1]===\
-                 |-{ [Tünel 2]====[Yönlendirici 1]-----
-                 |-{ [Tünel 3]===/               \
+                -{ [Tunnel 1]===\
+                 |-{ [Tunnel 2]====[Router 1]-----
+                 |-{ [Tunnel 3]===/               \
                  |                                 \
-                 |-{ [Tünel 4]===\                 \
-  [Destination]  |-{ [Tünel 5]====[Yönlendirici 2]-----   \
-    \            |-{ [Tünel 6]===/               \   \
-     [LeaseSet]--|                               [İstemci]
-                 |-{ [Tünel 7]===\               /   /
-                 |-{ [Tünel 8]====[Yönlendirici 3]-----   /
-                 |-{ [Tünel 9]===/                 /
+                 |-{ [Tunnel 4]===\                 \
+  [Destination]  |-{ [Tunnel 5]====[Router 2]-----   \
+    \            |-{ [Tunnel 6]===/               \   \
+     [LeaseSet]--|                               [Client]
+                 |-{ [Tunnel 7]===\               /   /
+                 |-{ [Tunnel 8]====[Router 3]-----   /
+                 |-{ [Tunnel 9]===/                 /
                  |                                 /
-                 |-{ [Tünel 10]==\               /
-                 |-{ [Tünel 11]===[Yönlendirici 4]-----
-                  -{ [Tünel 12]==/
-
-Çoklu istemci
+                 |-{ [Tunnel 10]==\               /
+                 |-{ [Tunnel 11]===[Router 4]-----
+                  -{ [Tunnel 12]==/
+```
+### Tanımlar
 
 ```
-                -{ [Tünel 1]===\
-                 |-{ [Tünel 2]====[Yönlendirici 1]---------[Ön uç 1]
-                 |-{ [Tünel 3]===/          \                    \
+                -{ [Tunnel 1]===\
+                 |-{ [Tunnel 2]====[Router 1]---------[Frontend 1]
+                 |-{ [Tunnel 3]===/          \                    \
                  |                            \                    \
-                 |-{ [Tünel 4]===\            \                    \
-  [Destination]  |-{ [Tünel 5]====[Yönlendirici 2]---\-----[Ön uç 2]   \
-    \            |-{ [Tünel 6]===/          \   \                \   \
-     [LeaseSet]--|                         [Dengeleyici]            [Arka uç]
-                 |-{ [Tünel 7]===\          /   /                /   /
-                 |-{ [Tünel 8]====[Yönlendirici 3]---/-----[Ön uç 3]   /
-                 |-{ [Tünel 9]===/            /                    /
+                 |-{ [Tunnel 4]===\            \                    \
+  [Destination]  |-{ [Tunnel 5]====[Router 2]---\-----[Frontend 2]   \
+    \            |-{ [Tunnel 6]===/          \   \                \   \
+     [LeaseSet]--|                         [Balancer]            [Backend]
+                 |-{ [Tunnel 7]===\          /   /                /   /
+                 |-{ [Tunnel 8]====[Router 3]---/-----[Frontend 3]   /
+                 |-{ [Tunnel 9]===/            /                    /
                  |                            /                    /
-                 |-{ [Tünel 10]==\          /                    /
-                 |-{ [Tünel 11]===[Yönlendirici 4]---------[Ön uç 4]
-                  -{ [Tünel 12]==/
+                 |-{ [Tunnel 10]==\          /                    /
+                 |-{ [Tunnel 11]===[Router 4]---------[Frontend 4]
+                  -{ [Tunnel 12]==/
+```
+### Üst düzey genel bakış
 
-### Genel istemci süreci
-- Bir Destination yükleyin veya oluşturun.
+- Bir Destination yükle veya oluştur.
 
-- Her yönlendiriciyle, Destination'a bağlı bir oturum açın.
+- Her router ile Destination'a bağlı bir oturum açın.
 
-- Periyodik olarak (her on dakikada bir civarında, ancak tünel canlılığına bağlı olarak daha fazla veya daha az):
+- Düzenli olarak (yaklaşık her on dakikada bir, ancak tunnel canlılığına bağlı olarak az ya da çok):
 
-  - Her yönlendiriciden hızlı katmanı alın.
+- Her router'dan hızlı katmanı elde edin.
 
-  - Her yönlendiriciye giden/gelen tünelleri oluşturmak için eşlerin üst kümesini kullanın.
+- Her router'dan/router'a tünel oluşturmak için peer'ların üst kümesini kullanın.
 
-    - Varsayılan olarak, belirli bir yönlendiriciye gidip gelen tüneller, o yönlendiricinin hızlı katmanındaki
-      eşleri kullanacaktır, ancak bu protokol tarafından zorunlu değildir.
+    - By default, tunnels to/from a particular router will use peers from
+      that router's fast tier, but this is not enforced by the protocol.
 
-  - Tüm aktif yönlendiricilerden aktif gelen tünellerin setini toplayın ve bir
-    LeaseSet oluşturun.
+- Tüm aktif router'lardan aktif gelen tunnel'ların setini topla ve bir LeaseSet oluştur.
 
-  - LeaseSet'i bir veya daha çok yönlendirici aracılığıyla yayımlayın.
+- LeaseSet'i router'lardan bir veya birkaçı aracılığıyla yayınla.
 
-### I2CP'ye farklar
-Bu konfigürasyonu oluşturmak ve yönetmek için, istemcinin [I2CP](/en/docs/specs/i2cp/) tarafından şu anda sağlanandan daha fazla yeni işlevselliğe ihtiyacı vardır:
+### Tek istemci
 
-- Bir LeaseSet oluşturmadan, bir yönlendiriciye tüneller inşa etmesini söylemek.
-- Gelen havuzdaki mevcut tünellerin bir listesini almak.
+Bu konfigürasyonu oluşturmak ve yönetmek için, client'ın şu anda [I2CP](/en/docs/specs/i2cp/) tarafından sağlanandan daha fazla yeni işlevselliğe ihtiyacı vardır:
 
-Ayrıca, istemcinin tünellerini yönetirken önemli bir esneklik sağlayacak olan şu işlevsellik:
+- Bir router'a, onlar için LeaseSet oluşturmadan tüneller inşa etmesini söyler.
+- Gelen havuzundaki mevcut tünellerin listesini alır.
 
-- Bir yönlendiricinin hızlı katmanının içeriğini almak.
-- Belirtilen bir eş listesini kullanarak bir gelen veya giden tünel inşa etmesi için bir yönlendiriciye emir vermek.
+Ek olarak, aşağıdaki işlevsellik, istemcinin tunnel'larını nasıl yönettiği konusunda önemli esneklik sağlayacaktır:
 
-### Protokol taslağı
+- Bir router'ın hızlı katmanının içeriğini al.
+- Bir router'a verilen eş listesini kullanarak gelen veya giden tunnel oluşturmasını söyle.
+
+### Çoklu istemci
 
 ```
-         İstemci                           Yönlendirici
+         Client                           Router
 
-                    --------------------->  Oturum Oluştur
-   Oturum Durumu  <---------------------
-                    --------------------->  Hızlı Katmanı Al
-        Eş Listesi  <---------------------
-                    --------------------->  Tünel Oluştur
-    Tünel Durumu  <---------------------
-                    --------------------->  Tünel Havuzunu Al
-      Tünel Listesi  <---------------------
-                    --------------------->  LeaseSet Yayınla
-                    --------------------->  Paket Gönder
-      Gönderme Durumu  <---------------------
-  Paket Alındı  <---------------------
+                    --------------------->  Create Session
+   Session Status  <---------------------
+                    --------------------->  Get Fast Tier
+        Peer List  <---------------------
+                    --------------------->  Create Tunnel
+    Tunnel Status  <---------------------
+                    --------------------->  Get Tunnel Pool
+      Tunnel List  <---------------------
+                    --------------------->  Publish LeaseSet
+                    --------------------->  Send Packet
+      Send Status  <---------------------
+  Packet Received  <---------------------
+```
+### Genel istemci süreci
 
-### Mesajlar
-    Oturum Oluştur
-        Verilen Destination için bir oturum oluşturun.
+**Oturum Oluştur** - Belirtilen Destination için bir oturum oluştur.
 
-    Oturum Durumu
-        Oturumun kurulduğuna ve istemcinin artık tüneller oluşturmaya
-        başlayabileceğine dair onay.
+**Oturum Durumu** - Oturumun kurulduğunun onayı ve istemcinin artık tunnel'ları oluşturmaya başlayabileceği.
 
-    Hızlı Katmanı Al
-        Yönlendiricinin şu anda tünel oluşturmayı düşüneceği
-        eşlerin bir listesini isteyin.
+**Get Fast Tier** - Router'ın şu anda tunnel'lar oluşturmayı düşüneceği eşlerin listesini talep et.
 
-    Eş Listesi
-        Yönlendirici tarafından bilinen bir eşler listesi.
+**Peer Listesi** - Router tarafından bilinen peer'ların listesi.
 
-    Tünel Oluştur
-        Yönlendiriciden, belirtilen eşler aracılığıyla yeni bir tünel
-        oluşturmasını isteyin.
+**Tunnel Oluştur** - Router'ın belirtilen eşler üzerinden yeni bir tunnel oluşturmasını talep eder.
 
-    Tünel Durumu
-        Belirli bir tünel inşasının sonucu, kullanılabilir olduğunda.
+**Tunnel Durumu** - Belirli bir tunnel oluşturma işleminin sonucu, mevcut olduğunda.
 
-    Tünel Havuzunu Al
-        Destination'ın gelen veya giden havuzundaki mevcut tünellerin
-        bir listesini isteyin.
+**Tunnel Pool Al** - Hedef için gelen veya giden havuzdaki mevcut tunnelların listesini talep et.
 
-    Tünel Listesi
-        İstenen havuz için tünellerin listesi.
+**Tunnel Listesi** - İstenen havuz için tunnel'ların listesi.
 
-    LeaseSet Yayınla
-        Yönlendiricinin, sağlanan LeaseSet'i Destination için bir giden
-        tünel aracılığıyla yayımlamasını isteyin. Yanıttan status bildirimi
-        gerekmez; yönlendirici LeaseSet'in yayımlandığına tatmin olana
-        kadar yeniden denemeye devam etmelidir.
+**LeaseSet Yayınla** - Router'ın sağlanan LeaseSet'i Destination için giden tunnel'lardan biri aracılığıyla yayınlamasını talep eder. Yanıt durumu gerekmez; router LeaseSet'in yayınlandığından emin olana kadar yeniden denemeye devam etmelidir.
 
-    Paket Gönder
-        İstemciden gelen bir çıkış paketi. Paketin gönderileceği
-        giden tüneli isteğe bağlı olarak belirtir (belirtmeli?).
+**Paket Gönder** - İstemciden giden bir paket. İsteğe bağlı olarak, paketin gönderilmesi gereken (gönderilmesi gerekir mi?) bir giden tunnel belirtir.
 
-    Gönderme Durumu
-        Bir paketin gönderilmesinin başarı veya başarısızlığını
-        istemciye bildirir.
+**Gönderim Durumu** - İstemciyi bir paketin gönderilmesinin başarılı veya başarısız olduğu konusunda bilgilendirir.
 
-    Paket Alındı
-        İstemci için bir gelen paket. Paketin alındığı
-        gelen tüneli isteğe bağlı olarak belirtir(?)
+**Paket Alındı** - İstemci için gelen bir paket. İsteğe bağlı olarak paketin alındığı gelen tunnel'ı belirtir(?)
 
+## Security implications
 
-## Güvenlik etkileri
+Router'ların perspektifinden bakıldığında, bu tasarım işlevsel olarak mevcut durumla eşdeğerdir. Router hala tüm tunnel'ları inşa eder, kendi peer profillerini tutar ve router ile istemci operasyonları arasında ayrımı zorlar. Varsayılan yapılandırmada tamamen aynıdır, çünkü o router için tunnel'lar kendi hızlı katmanından inşa edilir.
 
-Yönlendiricilerin perspektifinden, bu tasarım işlevsel olarak mevcut duruma
-eşdeğerdir. Yönlendirici hala tüm tünelleri oluşturur, kendi eş profillerini
-korur ve yönlendirici ile istemci işlemleri arasında ayrımı uygular. Varsayılan
-konfigürasyon tamamen aynıdır, çünkü bu yönlendirici için tüneller kendi hızlı
-katmanından yapılmıştır.
+netDB perspektifinden bakıldığında, bu protokol aracılığıyla oluşturulan tek bir LeaseSet, mevcut işlevsellikten yararlandığı için mevcut durumla aynıdır. Ancak, 16 Lease'e yaklaşan daha büyük LeaseSet'ler için, bir gözlemcinin LeaseSet'in çok konumlu (multihomed) olduğunu belirlemesi mümkün olabilir:
 
-netDB açısından, bu protokol aracılığıyla oluşturulan tek bir LeaseSet, mevcut
-durumla aynıdır çünkü önceden var olan işlevselliği kullanır. Bununla birlikte,
-16 Lease'e yaklaşan daha büyük LeaseSet'ler için, bir gözlemcinin LeaseSet'in
-multihome yapıldığını belirlemesi mümkün olabilir:
-
-- Hızlı katmanın mevcut maksimum büyüklüğü 75 eştir. İnbound Gateway
-  (IBGW, Lease içinde yayımlanan düğüm), katmanın bir kısmından
-  (sayım değil, hash'e göre rastgele ayrılmış tünel havuzuna göre):
+- Hızlı katmanın mevcut maksimum boyutu 75 eştir. Inbound Gateway
+  (IBGW, bir Lease'de yayınlanan düğüm) katmanın bir kesiminden seçilir
+  (hash ile tunnel pool başına rastgele bölümlendirilir, sayıya göre değil):
 
       1 hop
-          Tüm hızlı katman
+          The whole fast tier
 
-      2 hop
-          Hızlı katmanın yarısı
-          (2014 ortalarına kadar varsayılan)
+      2 hops
+          Half of the fast tier
+          (the default until mid-2014)
 
-      3+ hop
-          Hızlı katmanın dörtte biri
-          (şu anki varsayılan olan 3)
+      3+ hops
+          A quarter of the fast tier
+          (3 being the current default)
 
-  Yani, ortalama olarak IBGWs 20-30 eşlik bir setten olacaktır.
+Bu, ortalama olarak IBGW'lerin 20-30 eşten oluşan bir kümeden olacağı anlamına gelir.
 
-- Tekil homed kurulumda, tam 16 tünelli LeaseSet'in bir setten rastgele seçilmiş
-  16 IBGW'si olacaktır, en fazla (diyelim ki) 20 eş.
+- Tek bağlantılı bir kurulumda, tam 16-tünelli bir LeaseSet, (diyelim) 20 peer'e kadar olan bir setten rastgele seçilen 16 IBGW'ye sahip olacaktır.
 
-- Varsayılan konfigürasyon kullanılarak dört yönlendirici multihomed bir kurulumda,
-  tam 16 tünelli LeaseSet rastgele seçilmiş 16 IBGW'si en fazla 80 eş
-  içeren bir setteng olacaktır, ancak yönlendiriciler arasında muhtemelen
-  ortak eşler olacaktır.
+- Varsayılan yapılandırmayı kullanan 4 router'lı multihomed kurulumda, tam bir 16-tunnel LeaseSet, en fazla 80 peer'dan oluşan bir setten rastgele seçilmiş 16 IBGW'ye sahip olacaktır, ancak router'lar arasında ortak peer'ların bir kısmının bulunması muhtemeldir.
 
-Dolayısıyla varsayılan konfigürasyonda, LeaseSet'in bu protokol tarafından
-üretildiğini anlamak için istatistiksel analizle tespit edilmesi mümkün olabilir.
-Kaç adet yönlendirici olduğunu anlamak da mümkün olabilir, ancak hızlı
-katmanlarının değişiklik etkisi bu analizin etkinliğini azaltacaktır.
+Bu nedenle varsayılan yapılandırma ile, istatistiksel analiz yoluyla bir LeaseSet'in bu protokol tarafından üretildiğini anlamanın mümkün olabileceği söylenebilir. Ayrıca kaç router olduğunu da anlamak mümkün olabilir, ancak hızlı katmanlardaki değişimin bu analizin etkinliğini azaltacağı da söylenebilir.
 
-İstemci seçmelerinde tam kontrole sahip olduğundan, bu bilgi sızıntısı,
-IBGWs'yi bir eşler setinden seçerek azaltılabilir veya ortadan kaldırılabilir.
+İstemci hangi eşleri seçeceği konusunda tam kontrole sahip olduğundan, bu bilgi sızıntısı azaltılmış bir eş kümesinden IBGW'ler seçilerek azaltılabilir veya ortadan kaldırılabilir.
 
+## Compatibility
 
-## Uyumluluk
+Bu tasarım, LeaseSet formatında hiçbir değişiklik olmadığı için ağ ile tamamen geriye dönük uyumludur. Tüm router'ların yeni protokolden haberdar olması gerekir, ancak hepsi aynı varlık tarafından kontrol edileceği için bu bir endişe kaynağı değildir.
 
-Bu tasarım ağ ile tamamen geriye dönük uyumludur, çünkü [LeaseSet](http://localhost:63465/en/docs/specs/common-structures/#leaseset) formatında
-herhangi bir değişiklik yoktur. Tüm yönlendiricilerin yeni protokolden haberdar
-olması gerekecektir, ancak bunlar aynı kuruluş tarafından kontrol edildiğinden bu
-bir endişe değildir.
+## Performance and scalability notes
 
+Bu öneriye göre LeaseSet başına 16 Lease üst sınırı değiştirilmemiştir. Bundan daha fazla tünele ihtiyaç duyan Destination'lar için iki olası ağ modifikasyonu bulunmaktadır:
 
-## Performans ve ölçeklenebilirlik notları
+- LeaseSet'lerin boyut üst sınırını artırın. Bu uygulaması en basit olan yöntem olacaktır (yine de yaygın olarak kullanılabilmesi için kapsamlı ağ desteği gerektirecek olsa da), ancak daha büyük paket boyutları nedeniyle daha yavaş aramalar ile sonuçlanabilir. Maksimum uygulanabilir LeaseSet boyutu, alttaki aktarım katmanlarının MTU'su tarafından tanımlanır ve bu nedenle yaklaşık 16kB civarındadır.
 
-LeaseSet başına 16 [Lease]'in üst sınırı bu öneriyle değişmeden kalmaktadır. Daha fazla
-tünele ihtiyaç duyan Destinations için iki olası ağ değişikliği vardır:
+- Tiered LeaseSet'ler için Proposal 123'ü uygulayın. Bu önerinin kombinasyonunda,
+  alt-LeaseSet'ler için Destination'lar birden fazla router'a yayılabilir,
+  etkin bir şekilde clearnet servisler için birden fazla IP adresi gibi davranır.
 
-- LeaseSet boyutunun üst limitini artırmak. Bu, uygulanması en kolay olanıdır
-  (ancak, yaygın olarak kullanılabilmesi için yaygın ağ desteği gerektirir),
-  ancak daha büyük paket boyutları nedeniyle daha yavaş aramalara yol açabilir.
-  MTU'su tarafından tanımlanan maksimum uygulanabilir LeaseSet boyutu taşımaların
-  ve dolayısıyla yaklaşık 16kB olur.
+## Acknowledgements
 
-- [Proposal 123](/en/proposals/123-new-netdb-entries/) uygulaması ile katmanlı LeaseSet'ler. Bu öneriyle
-  birlikte, alt-LeaseSet'lere olan Destinations, birden fazla yönlendiriciye
-  yayılabilir ve bu da, temiz ağ hizmeti için birden fazla IP adresi gibi
-  davranır.
-
-
-## Teşekkürler
-
-Bu öneriye yol açan tartışmadan dolayı psi'ye teşekkür ederiz.
+Bu öneriye yol açan tartışma için psi'ye teşekkürler.

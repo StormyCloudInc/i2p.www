@@ -4,226 +4,225 @@ number: "140"
 author: "str4d"
 created: "2017-05-22"
 lastupdated: "2017-07-04"
-status: "Open"
+status: "열기"
 thread: "http://zzz.i2p/topics/2335"
 ---
 
 ## 개요
 
-이 제안서는 I2P 클라이언트나 서비스 또는 외부 로드 밸런서 프로세스가 단일 [Destination](http://localhost:63465/en/docs/specs/common-structures/#destination)을 투명하게 호스팅하는 여러 라우터를 관리할 수 있는 프로토콜 디자인을 설명합니다.
+이 제안서는 I2P 클라이언트, 서비스 또는 외부 밸런서 프로세스가 단일 [Destination](http://localhost:63465/en/docs/specs/common-structures/#destination)을 투명하게 호스팅하는 여러 router들을 관리할 수 있도록 하는 프로토콜 설계를 개요합니다.
 
-현재 이 제안서는 구체적인 구현을 명시하지 않습니다. 이는 [I2CP]의 확장으로 구현되거나 새로운 프로토콜로 구현될 수 있습니다.
-
+이 제안은 현재 구체적인 구현을 명시하지 않습니다. [I2CP](/en/docs/specs/i2cp/)의 확장으로 구현되거나 새로운 프로토콜로 구현될 수 있습니다.
 
 ## 동기
 
-멀티호밍은 여러 라우터가 동일한 Destination을 호스팅할 때 발생합니다. 현재 I2P에서 멀티호밍하는 방법은 각 라우터에서 독립적으로 동일한 Destination을 실행하는 것입니다. 클라이언트가 특정 시점에 사용하는 라우터는 가장 마지막에 [LeaseSet]을 게시한 라우터입니다.
+멀티호밍은 동일한 Destination을 호스팅하기 위해 여러 router를 사용하는 것입니다. I2P에서 멀티호밍을 하는 현재 방식은 각 router에서 동일한 Destination을 독립적으로 실행하는 것이며, 특정 시점에 클라이언트가 사용하게 되는 router는 마지막으로 LeaseSet을 게시한 것입니다.
 
-이 방법은 대형 웹사이트에서 확장성 문제가 있을 수도 있습니다. 예를 들어, 각 16개의 터널을 가진 100개의 멀티호밍 라우터가 있다고 가정해봅시다. 매 10분마다 1600개의 LeaseSet이 게시되며, 이는 초당 거의 3개에 해당합니다. 플러드필이 과부하가 발생해 스로틀이 작동하게 될 것입니다. 이는 조회 트래픽을 언급하기 전의 상황입니다.
+이것은 해킹이며 대규모 웹사이트에서는 확장성 있게 작동하지 않을 것으로 추정됩니다. 각각 16개의 터널을 가진 100개의 멀티호밍 라우터가 있다고 가정해봅시다. 그러면 10분마다 1600개의 LeaseSet 게시가 이루어지며, 이는 거의 초당 3개에 해당합니다. floodfill들이 과부하에 걸리고 스로틀이 작동할 것입니다. 그리고 이는 조회 트래픽을 언급하기도 전의 이야기입니다.
 
-[Prop123]은 메타-LeaseSet를 사용하여 이 문제를 해결합니다. 이는 100개의 실제 LeaseSet 해시를 나열합니다. 조회는 두 단계로 진행됩니다: 먼저 메타-LeaseSet을 조회한 다음 이름이 지정된 LeaseSets 중 하나를 조회합니다. 이는 조회 트래픽 문제에 대한 훌륭한 해결책이지만, 이는 상당한 개인정보 유출을 초래합니다: 실제 LeaseSet은 단일 라우터에 해당하므로, 게시된 메타-LeaseSet을 모니터링하여 온라인 상태의 멀티호밍 라우터를 식별할 수 있습니다.
+Proposal 123은 100개의 실제 LeaseSet 해시를 나열하는 meta-LeaseSet으로 이 문제를 해결합니다. 조회는 2단계 프로세스가 됩니다: 먼저 meta-LeaseSet을 조회하고, 그 다음 명명된 LeaseSet 중 하나를 조회합니다. 이는 조회 트래픽 문제에 대한 좋은 해결책이지만, 그 자체로는 심각한 프라이버시 누출을 야기합니다: 각 실제 LeaseSet이 단일 router에 대응되기 때문에, 게시된 meta-LeaseSet을 모니터링하여 어떤 multihoming router들이 온라인 상태인지 확인할 수 있습니다.
 
-우리는 I2P 클라이언트나 서비스가 단일 Destination을 여러 라우터로 확산할 수 있는 방법이 필요합니다. 이는 LeaseSet 그 자체의 관점에서 단일 라우터를 사용하는 것과 구별할 수 없는 방식이어야 합니다.
+I2P 클라이언트나 서비스가 단일 Destination을 여러 router에 분산시킬 수 있는 방법이 필요합니다. 이는 LeaseSet 자체의 관점에서 볼 때 단일 router를 사용하는 것과 구별되지 않는 방식이어야 합니다.
 
+## 설계
 
-## 디자인
+### Definitions
 
-### 정의
+    User
+        The person or organisation wanting to multihome their Destination(s). A
+        single Destination is considered here without loss of generality (WLOG).
 
-    사용자
-        Destination(들)을 멀티호밍하려는 개인이나 조직입니다. 일반성의 손실 없이 단일 Destination을 여기에 고려합니다.
+    Client
+        The application or service running behind the Destination. It may be a
+        client-side, server-side, or peer-to-peer application; we refer to it as
+        a client in the sense that it connects to the I2P routers.
 
-    클라이언트
-        Destination 뒤에서 실행되는 애플리케이션이나 서비스입니다. 이는 클라이언트 측, 서버 측 또는 피어 투 피어 애플리케이션일 수 있으며, I2P 라우터에 연결되므로 이를 클라이언트라 부릅니다.
+        The client consists of three parts, which may all be in the same process
+        or may be split across processes or machines (in a multi-client setup):
 
-        클라이언트는 세 부분으로 구성됩니다. 이는 모두 동일한 프로세스에 있거나 여러 프로세스나 머신에 분할될 수 있습니다 (최소 클라이언트 구성 설정에서):
+        Balancer
+            The part of the client that manages peer selection and tunnel
+            building. There is a single balancer at any one time, and it
+            communicates with all I2P routers. There may be failover balancers.
 
-        밸런서
-            피어 선택 및 터널 빌딩을 관리하는 클라이언트의 일부입니다. 한 번에 하나의 밸런서가 존재하며, 모든 I2P 라우터와 통신합니다. 백업 밸런서가 있을 수 있습니다.
+        Frontend
+            The part of the client that can be operated in parallel. Each
+            frontend communicates with a single I2P router.
 
-        프론트엔드
-            병렬로 운영될 수 있는 클라이언트의 일부입니다. 각 프론트엔드는 단일 I2P 라우터와 통신합니다.
+        Backend
+            The part of the client that is shared between all frontends. It has
+            no direct communication with any I2P router.
 
-        백엔드
-            모든 프론트엔드가 공유하는 클라이언트의 일부입니다. 이는 직접적으로 어떤 I2P 라우터와도 통신하지 않습니다.
+    Router
+        An I2P router run by the user that sits at the boundary between the I2P
+        network and the user's network (akin to an edge device in corporate
+        networks). It builds tunnels under the command of a balancer, and routes
+        packets for a client or frontend.
 
-    라우터
-        사용자가 운영하는 I2P 라우터로, I2P 네트워크와 사용자의 네트워크의 경계에 위치합니다 (기업 네트워크의 엣지 장치와 유사함). 이는 밸런서의 명령에 따라 터널을 구축하며, 클라이언트나 프론트엔드를 위한 패킷을 라우팅합니다.
+### High-level overview
 
-### 고수준 개요
-
-다음과 같은 구성 설정을 원한다고 상상해보세요:
+다음과 같은 원하는 구성을 상상해보십시오:
 
 - 하나의 Destination을 가진 클라이언트 애플리케이션.
-- 각각 세 개의 인바운드 터널을 관리하는 네 개의 라우터.
-- 모든 열두 개의 터널이 단일 LeaseSet에 게시되어야 합니다.
+- 각각 3개의 인바운드 터널을 관리하는 4개의 router.
+- 모든 12개의 터널은 단일 LeaseSet에 게시되어야 함.
 
-단일-클라이언트
+### Single-client
 
 ```
-                -{ [터널 1]===\
-                 |-{ [터널 2]====[라우터 1]-----
-                 |-{ [터널 3]===/               \
+                -{ [Tunnel 1]===\
+                 |-{ [Tunnel 2]====[Router 1]-----
+                 |-{ [Tunnel 3]===/               \
                  |                                 \
-                 |-{ [터널 4]===\                 \
-  [Destination]  |-{ [터널 5]====[라우터 2]-----   \
-    \            |-{ [터널 6]===/               \   \
-     [LeaseSet]--|                               [클라이언트]
-                 |-{ [터널 7]===\               /   /
-                 |-{ [터널 8]====[라우터 3]-----   /
-                 |-{ [터널 9]===/                 /
+                 |-{ [Tunnel 4]===\                 \
+  [Destination]  |-{ [Tunnel 5]====[Router 2]-----   \
+    \            |-{ [Tunnel 6]===/               \   \
+     [LeaseSet]--|                               [Client]
+                 |-{ [Tunnel 7]===\               /   /
+                 |-{ [Tunnel 8]====[Router 3]-----   /
+                 |-{ [Tunnel 9]===/                 /
                  |                                 /
-                 |-{ [터널 10]==\               /
-                 |-{ [터널 11]===[라우터 4]-----
-                  -{ [터널 12]==/
-
-멀티-클라이언트
+                 |-{ [Tunnel 10]==\               /
+                 |-{ [Tunnel 11]===[Router 4]-----
+                  -{ [Tunnel 12]==/
+```
+### 정의
 
 ```
-                -{ [터널 1]===\
-                 |-{ [터널 2]====[라우터 1]---------[프론트엔드 1]
-                 |-{ [터널 3]===/          \                    \
+                -{ [Tunnel 1]===\
+                 |-{ [Tunnel 2]====[Router 1]---------[Frontend 1]
+                 |-{ [Tunnel 3]===/          \                    \
                  |                            \                    \
-                 |-{ [터널 4]===\            \                    \
-  [Destination]  |-{ [터널 5]====[라우터 2]---\-----[프론트엔드 2]   \
-    \            |-{ [터널 6]===/          \   \                \   \
-     [LeaseSet]--|                         [밸런서]            [백엔드]
-                 |-{ [터널 7]===\          /   /                /   /
-                 |-{ [터널 8]====[라우터 3]---/-----[프론트엔드 3]   /
-                 |-{ [터널 9]===/            /                    /
+                 |-{ [Tunnel 4]===\            \                    \
+  [Destination]  |-{ [Tunnel 5]====[Router 2]---\-----[Frontend 2]   \
+    \            |-{ [Tunnel 6]===/          \   \                \   \
+     [LeaseSet]--|                         [Balancer]            [Backend]
+                 |-{ [Tunnel 7]===\          /   /                /   /
+                 |-{ [Tunnel 8]====[Router 3]---/-----[Frontend 3]   /
+                 |-{ [Tunnel 9]===/            /                    /
                  |                            /                    /
-                 |-{ [터널 10]==\          /                    /
-                 |-{ [터널 11]===[라우터 4]---------[프론트엔드 4]
-                  -{ [터널 12]==/
+                 |-{ [Tunnel 10]==\          /                    /
+                 |-{ [Tunnel 11]===[Router 4]---------[Frontend 4]
+                  -{ [Tunnel 12]==/
+```
+### 고수준 개요
 
-### 일반적인 클라이언트 프로세스
 - Destination을 로드하거나 생성합니다.
 
 - 각 라우터와 Destination에 연결된 세션을 엽니다.
 
-- 주기적으로 (약 10분마다, 그러나 터널 생존율에 따라 더 많거나 적어짐):
+- 주기적으로 (약 10분마다, 하지만 tunnel 활성도에 따라 더 길거나 짧을 수 있음):
 
-  - 각 라우터로부터 빠른 계층을 가져옵니다.
+- 각 라우터에서 fast tier를 획득합니다.
 
-  - 피어의 초집합을 사용하여 각 라우터로부터/로 터널을 빌드합니다.
+- 각 router로/로부터 tunnel을 구축하기 위해 피어들의 상위 집합을 사용합니다.
 
-    - 기본적으로 특정 라우터로부터/로 가는 터널은 그 라우터의 빠른 계층 피어를 사용하지만, 프로토콜에 의해 강제하지는 않습니다.
+    - By default, tunnels to/from a particular router will use peers from
+      that router's fast tier, but this is not enforced by the protocol.
 
-  - 모든 활성 라우터로부터 활성 인바운드 터널 집합을 수집하여 LeaseSet을 만듭니다.
+- 모든 활성 router에서 활성 인바운드 터널 집합을 수집하고 LeaseSet을 생성합니다.
 
-  - 하나 이상의 라우터를 통해 LeaseSet을 게시합니다.
+- 하나 이상의 라우터를 통해 LeaseSet을 게시합니다.
 
-### I2CP와의 차이점
-이 구성을 생성하고 관리하려면 클라이언트는 현재 [I2CP]가 제공하는 것 이상의 기능이 필요합니다:
+### 단일 클라이언트
 
-- LeaseSet을 생성하지 않고 라우터에게 터널을 구축하라고 지시할 수 있습니다.
-- 인바운드 풀에 있는 현재 터널 목록을 얻을 수 있습니다.
+이 구성을 생성하고 관리하기 위해, 클라이언트는 현재 [I2CP](/en/docs/specs/i2cp/)에서 제공하는 것 이상의 다음과 같은 새로운 기능이 필요합니다:
 
-추가적으로, 다음 기능은 클라이언트가 터널을 관리하는 데 상당한 유연성을 제공합니다:
+- LeaseSet을 생성하지 않고 router에게 터널을 구축하도록 지시합니다.
+- 인바운드 풀에 있는 현재 터널 목록을 가져옵니다.
 
-- 라우터의 빠른 계층의 내용을 얻을 수 있습니다.
-- 특정 피어 목록을 사용하여 인바운드 또는 아웃바운드 터널을 구축하도록 라우터에게 지시할 수 있습니다.
+또한 다음 기능들은 클라이언트가 tunnel을 관리하는 방식에서 상당한 유연성을 제공할 것입니다:
 
-### 프로토콜 개요
+- router의 fast tier 내용을 가져옵니다.
+- 주어진 peer 목록을 사용하여 inbound 또는 outbound tunnel을 구축하도록 router에 지시합니다.
+
+### 멀티 클라이언트
 
 ```
-         클라이언트                           라우터
+         Client                           Router
 
-                    --------------------->  세션 생성
-   세션 상태   <---------------------
-                    --------------------->  빠른 계층 가져오기
-       피어 목록  <---------------------
-                    --------------------->  터널 생성
-   터널 상태     <---------------------
-                    --------------------->  터널 풀 가져오기
-      터널 목록  <---------------------
-                    --------------------->  LeaseSet 게시
-                    --------------------->  패킷 전송
-    전송 상태    <---------------------
-   수신 패킷    <---------------------
+                    --------------------->  Create Session
+   Session Status  <---------------------
+                    --------------------->  Get Fast Tier
+        Peer List  <---------------------
+                    --------------------->  Create Tunnel
+    Tunnel Status  <---------------------
+                    --------------------->  Get Tunnel Pool
+      Tunnel List  <---------------------
+                    --------------------->  Publish LeaseSet
+                    --------------------->  Send Packet
+      Send Status  <---------------------
+  Packet Received  <---------------------
+```
+### 일반 클라이언트 프로세스
 
-### 메시지
-    세션 생성
-        주어진 Destination에 대한 세션을 생성합니다.
+**세션 생성** - 주어진 Destination에 대한 세션을 생성합니다.
 
-    세션 상태
-        세션이 설정되었음을 확인하고, 클라이언트는 이제 터널 생성을 시작할 수 있습니다.
+**세션 상태** - 세션이 설정되었음을 확인하며, 클라이언트가 이제 tunnel 구축을 시작할 수 있습니다.
 
-    빠른 계층 가져오기
-        라우터가 현재 터널을 구축할 수 있는 피어 목록을 요청합니다.
+**Get Fast Tier** - router가 현재 터널 구축을 고려할 피어들의 목록을 요청합니다.
 
-    피어 목록
-        라우터가 알고 있는 피어 목록입니다.
+**피어 목록** - router에게 알려진 피어들의 목록입니다.
 
-    터널 생성
-        라우터에게 지정된 피어를 통해 새로운 터널을 생성하도록 요청합니다.
+**터널 생성** - router가 지정된 피어들을 통해 새로운 터널을 구축하도록 요청합니다.
 
-    터널 상태
-        특정 터널 생성의 결과가 사용 가능할 때 알립니다.
+**Tunnel 상태** - 특정 tunnel 구축의 결과로, 사용 가능해진 후의 상태입니다.
 
-    터널 풀 가져오기
-        Destination에 대한 인바운드 또는 아웃바운드 풀의 현재 터널 목록을 요청합니다.
+**터널 풀 가져오기** - Destination에 대한 인바운드 또는 아웃바운드 풀의 현재 tunnel 목록을 요청합니다.
 
-    터널 목록
-        요청된 풀의 터널 목록입니다.
+**Tunnel 목록** - 요청된 풀에 대한 tunnel들의 목록입니다.
 
-    LeaseSet 게시
-        Destination을 위한 아웃바운드 터널 중 하나를 통해 제공된 LeaseSet을 게시하도록 라우터에게 요청합니다. 회신 상태는 필요치 않으며, 라우터는 LeaseSet이 게시되었다고 만족할 때까지 계속 시도해야 합니다.
+**LeaseSet 게시** - router가 목적지에 대한 아웃바운드 터널 중 하나를 통해 제공된 LeaseSet을 게시하도록 요청합니다. 응답 상태는 필요하지 않습니다. router는 LeaseSet이 게시되었다고 만족할 때까지 계속 재시도해야 합니다.
 
-    패킷 전송
-        클라이언트로부터의 아웃바운드 패킷입니다. 선택적으로 패킷이 전송되어야 하는 아웃바운드 터널을 지정할 수 있습니다.
+**Send Packet** - 클라이언트로부터 나가는 패킷입니다. 선택적으로 패킷이 전송되어야 하는(해야 하는?) 아웃바운드 tunnel을 지정합니다.
 
-    전송 상태
-        클라이언트에게 패킷 송신의 성공 또는 실패를 알립니다.
+**Send Status** - 패킷 전송의 성공 또는 실패를 클라이언트에게 알려줍니다.
 
-    수신 패킷
-        클라이언트를 위한 인바운드 패킷입니다. 선택적으로 패킷이 수신된 인바운드 터널을 지정할 수 있습니다(?)
+**패킷 수신됨** - 클라이언트를 위한 수신 패킷입니다. 선택적으로 패킷이 수신된 인바운드 tunnel을 지정합니다(?)
 
+## Security implications
 
-## 보안상의 문제
+router의 관점에서 보면, 이 설계는 기능적으로 현재 상태와 동일합니다. router는 여전히 모든 터널을 구축하고, 자체 피어 프로필을 유지하며, router와 클라이언트 운영 간의 분리를 시행합니다. 기본 구성에서는 해당 router에 대한 터널이 자체 fast tier에서 구축되기 때문에 완전히 동일합니다.
 
-라우터들의 관점에서, 이 디자인은 기능적으로 현재 상태와 동일합니다. 라우터는 여전히 모든 터널을 구축하고, 자체 피어 프로필을 유지하며, 라우터와 클라이언트의 작업 간의 분리를 강제합니다. 기본 설정에서는 라우터의 빠른 계층에서 그 라우터를 위한 터널을 구축하기 때문에 완전히 동일합니다.
+netDB의 관점에서, 이 프로토콜을 통해 생성된 단일 LeaseSet은 기존 기능을 활용하기 때문에 현재 상태와 동일합니다. 하지만 16개의 Lease에 근접한 더 큰 LeaseSet의 경우, 관찰자가 해당 LeaseSet이 multihomed임을 판단할 수 있을 가능성이 있습니다:
 
-netDB의 관점에서, 이 프로토콜을 통해 생성된 단일 LeaseSet은 기존의 것과 동일합니다. 그러나 16개의 Lease에 가까운 대형 LeaseSets의 경우, 관찰자가 LeaseSet이 멀티호밍되었다고 판단할 수 있습니다:
+- 현재 고속 계층의 최대 크기는 75개 피어입니다. Inbound Gateway
+  (IBGW, Lease에 게시된 노드)는 계층의 일부분에서 선택됩니다
+  (터널 풀별로 개수가 아닌 해시로 무작위 분할됨):
 
-- 현재 빠른 계층의 최대 크기는 75 피어입니다. 인바운드 게이트웨이 (IBGW, Lease에 게시된 노드)는 계층의 일부에서 선택됩니다 (랜덤 해시로 인해 퍼-터널 풀에 따라 분할됨):
+      1 hop
+          The whole fast tier
 
-      1 홉
-          전체 빠른 계층
+      2 hops
+          Half of the fast tier
+          (the default until mid-2014)
 
-      2 홉
-          빠른 계층의 절반
-          (2014년 중반까지의 기본값)
+      3+ hops
+          A quarter of the fast tier
+          (3 being the current default)
 
-      3+ 홉
-          빠른 계층의 4분의 1
-          (현재 기본값은 3)
+이는 평균적으로 IBGW들이 20-30개의 피어 집합에서 선택된다는 의미입니다.
 
-  이는 평균적으로 IBGWs가 20-30 개의 피어 그룹에서 선택됨을 의미합니다.
+- 단일 홈 설정에서 전체 16개 터널 LeaseSet은 최대 (예를 들어) 20개 피어 세트에서 무작위로 선택된 16개의 IBGW를 가질 것입니다.
 
-- 단일 호밍 설정에서 16개의 완전한 터널 LeaseSet은 최대 20개의 피어 그룹에서 랜덤하게 선택된 16개의 IBGWs를 가집니다.
+- 기본 구성을 사용하는 4개 router 멀티홈 설정에서, 전체 16-tunnel LeaseSet은 최대 80개의 피어 집합에서 무작위로 선택된 16개의 IBGW를 가지게 되며, router들 사이에는 공통 피어의 일부가 있을 가능성이 높습니다.
 
-- 기본 설정을 사용하는 4 라우터 멀티호밍 설정에서, 16개의 전체 터널 LeaseSet은 최대 80 피어에서 랜덤하게 선택된 16개의 IBGWs를 가질 것이며, 라우터 간의 공통 피어는 일부 있을 수 있습니다.
+따라서 기본 설정으로는 통계 분석을 통해 LeaseSet이 이 프로토콜에 의해 생성되고 있다는 것을 알아낼 수 있을 가능성이 있습니다. 또한 router가 몇 개나 있는지 파악하는 것도 가능할 수 있지만, 빠른 계층에서의 이탈(churn) 효과가 이러한 분석의 효과를 감소시킬 것입니다.
 
-따라서 기본 설정을 사용하면 통계적 분석을 통해 LeaseSet이 이 프로토콜로 생성되고 있다는 것을 알 수 있습니다. 또한 몇 개의 라우터가 있는지 알아낼 수도 있지만, 빠른 계층의 변동은 이 분석의 효과를 줄일 것입니다.
+클라이언트가 어떤 peer를 선택할지 완전히 제어할 수 있으므로, 제한된 peer 집합에서 IBGW를 선택함으로써 이러한 정보 누출을 줄이거나 제거할 수 있습니다.
 
-클라이언트가 선택한 피어를 완전히 제어할 수 있으므로, 이 정보 누출은 피어 집합을 줄이거나 선택하여 IBGWs를 선택함으로써 줄이거나 제거할 수 있습니다.
+## Compatibility
 
+이 설계는 LeaseSet 형식에 변경사항이 없기 때문에 네트워크와 완전히 하위 호환됩니다. 모든 router들이 새로운 프로토콜을 인식해야 하지만, 모두 동일한 주체에 의해 제어될 것이므로 이는 문제가 되지 않습니다.
 
-## 호환성
+## Performance and scalability notes
 
-이 설계는 [LeaseSet] 형식에 대한 변경사항이 없기 때문에 네트워크와 완전히 호환됩니다. 모든 라우터가 새로운 프로토콜을 인식해야 하겠지만, 이는 같은 개체에 의해 제어되므로 문제가 되지 않습니다.
+LeaseSet당 16개의 Lease라는 상한선은 이 제안에 의해 변경되지 않습니다. 이보다 더 많은 터널이 필요한 Destination의 경우, 두 가지 가능한 네트워크 수정 방법이 있습니다:
 
+- LeaseSet 크기의 상한선을 늘립니다. 이것이 구현하기에는 가장 간단하지만 (광범위하게 사용되기 전에 전반적인 네트워크 지원이 여전히 필요하지만), 더 큰 패킷 크기로 인해 조회 속도가 느려질 수 있습니다. 실현 가능한 최대 LeaseSet 크기는 기본 전송의 MTU에 의해 정의되므로 약 16kB입니다.
 
-## 성능 및 확장성 주의사항
+- 계층화된 LeaseSet을 위한 제안 123을 구현합니다. 이 제안과 함께, 하위 LeaseSet들의 Destination들을 여러 router들에 분산시킬 수 있으며, 이는 일반 인터넷 서비스의 여러 IP 주소처럼 효과적으로 작동합니다.
 
-이 제안서는 LeaseSet 당 16 [Lease](http://localhost:63465/en/docs/specs/common-structures/#lease)의 상한을 변경하지 않습니다. 더 많은 터널이 필요한 Destination의 경우, 두 가지 가능한 네트워크 수정이 있습니다:
+## Acknowledgements
 
-- LeaseSets의 상한 크기를 늘립니다. 이는 구현하기 가장 쉽지만 (널리 사용되기 전 범용적인 네트워크 지원이 필요하긴 합니다), 패킷 크기가 커짐에 따라 조회 속도가 느려질 수 있습니다. 최대 가능 LeaseSet 크기는 기본 전송의 MTU에 의해 정의되며, 따라서 약 16kB입니다.
-
-- [Prop123]을 계층화된 LeaseSets에 구현합니다. 이 제안서와 함께, 하위 LeaseSets에 대한 Destination은 여러 라우터에 걸쳐 분산될 수 있으며, 이는 클리어넷 서비스의 여러 IP 주소처럼 작동하게 됩니다.
-
-
-## 감사의 말
-
-이 제안을 이루는 논의에 감사를 드립니다, psi.
+이 제안으로 이어진 토론에 대해 psi에게 감사드립니다.

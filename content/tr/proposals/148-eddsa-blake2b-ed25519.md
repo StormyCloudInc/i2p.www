@@ -4,201 +4,136 @@ number: "148"
 author: "zzz"
 created: "2019-03-12"
 lastupdated: "2019-04-11"
-status: "Open"
+status: "Açık"
 thread: "http://zzz.i2p/topics/2689"
 ---
 
 ## Genel Bakış
 
-Bu öneri, SHA-512 yerine
-kişiselleştirme dizgileri ve tuzlar ile birlikte BLAKE2b-512 kullanan yeni bir imza türü eklemektedir.
-Bu, üç türdeki potansiyel saldırıyı ortadan kaldıracaktır.
+Bu öneri, SHA-512'yi değiştirmek için kişiselleştirme dizgileri ve tuzlarla birlikte BLAKE2b-512 kullanan yeni bir imza türü ekler. Bu, olası üç saldırı sınıfını ortadan kaldıracaktır.
 
 ## Motivasyon
 
-NTCP2 (öneri 111) ve LS2 (öneri 123) tasarımı ve tartışmaları sırasında,
-çeşitli saldırıları ve bu saldırıların nasıl önlenebileceğini kısa bir süre düşündük.
-Bu saldırılardan üçü Uzunluk Uzantısı Saldırıları, Protokoller Arası Saldırılar ve Çift Mesaj Tanımlamadır.
+NTCP2 (öneri 111) ve LS2 (öneri 123) tartışmaları ve tasarımı sırasında, mümkün olan çeşitli saldırıları ve bunları nasıl önleyeceğimizi kısaca değerlendirdik. Bu saldırılardan üçü Uzunluk Genişletme Saldırıları, Çapraz Protokol Saldırıları ve Yinelenen Mesaj Tanımlamasıdır.
 
-Hem NTCP2 hem de LS2 için, bu saldırıların mevcut önerilerle doğrudan ilgili olmadığını ve
-herhangi bir çözümün yeni ilkelere karşı çeliştiğini belirledik.
-Ayrıca, bu protokollerdeki karma işlevlerinin hızının kararlarımızda önemli bir
-etken olmadığını belirledik.
-Bu nedenle, çözümü ayrı bir öneriye erteledik.
-LS2 spesifikasyonuna bazı kişiselleştirme özellikleri eklerken,
-yeni karma işlevleri gerektirmedik.
+Hem NTCP2 hem de LS2 için, bu saldırıların eldeki önerilere doğrudan ilgili olmadığına ve herhangi bir çözümün yeni primitifleri minimize etme hedefiyle çeliştiğine karar verdik. Ayrıca, bu protokollerdeki hash fonksiyonlarının hızının kararlarımızda önemli bir faktör olmadığını belirledik. Bu nedenle, çözümü çoğunlukla ayrı bir öneriye erteledik. LS2 spesifikasyonuna bazı kişiselleştirme özellikleri eklemekle birlikte, herhangi bir yeni hash fonksiyonu gerektirmedik.
 
-[ZCash](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf) gibi birçok proje,
-yeni algoritmalara dayanan ve aşağıdaki saldırılara
-karşı savunmasız olmayan karma işlevlerini ve imza algoritmalarını kullanmaktadır.
+Birçok proje, [ZCash](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf) gibi, aşağıdaki saldırılara karşı savunmasız olmayan yeni algoritmalara dayalı hash fonksiyonları ve imza algoritmaları kullanmaktadır.
 
-### Uzunluk Uzantısı Saldırıları
+### Length Extension Attacks
 
-SHA-256 ve SHA-512 [Uzunluk Uzantısı Saldırılarına (LEA)](https://en.wikipedia.org/wiki/Length_extension_attack) karşı savunmasızdır.
-Bu, gerçek verilerin değil, verinin karmasının imzalandığı durumlarda geçerlidir.
-Çoğu I2P protokolünde (akış, veri akışı, netdb ve diğerleri), gerçek veriler imzalanır.
-Bir istisna, karmanın imzalandığı SU3 dosyalarıdır.
-Diğer bir istisna, yalnızca DSA için imzalanmış veri akışları (imza türü 0) olup,
-bu durumda karma imzalanır.
-Diğer imzalı veri akış türleri için, veri imzalanır.
+SHA-256 ve SHA-512, [Uzunluk Genişletme Saldırılarına (LEA)](https://en.wikipedia.org/wiki/Length_extension_attack) karşı savunmasızdır. Bu durum, verinin hash'i değil, gerçek verinin imzalandığı durumlarda geçerlidir. Çoğu I2P protokolünde (streaming, datagramlar, netDb ve diğerleri), gerçek veri imzalanır. Bir istisna, hash'in imzalandığı SU3 dosyalarıdır. Diğer istisna ise yalnızca DSA (sig türü 0) için imzalanmış datagrams'lardır; burada hash imzalanır. Diğer imzalanmış datagram sig türleri için ise veri imzalanır.
+
+### Cross-Protocol Attacks
+
+I2P protokollerindeki imzalı veriler, domain ayrımının olmaması nedeniyle Cross-Protocol Attacks (CPA) saldırılarına karşı savunmasız olabilir. Bu durum, bir saldırganın bir bağlamda (imzalı datagram gibi) alınan veriyi başka bir bağlamda (streaming veya network database gibi) geçerli, imzalı veri olarak sunmasına olanak tanır. Bir bağlamdan gelen imzalı verinin başka bir bağlamda geçerli veri olarak ayrıştırılması olasılığı düşük olsa da, tüm durumları analiz ederek kesin olarak bilmek zor veya imkansızdır. Ek olarak, bazı bağlamlarda bir saldırganın kurbanı başka bir bağlamda geçerli veri olabilecek özel olarak hazırlanmış veriyi imzalamaya yönlendirebilmesi mümkün olabilir. Yine, tüm durumları analiz ederek kesin olarak bilmek zor veya imkansızdır.
+
+### Uzunluk Genişletme Saldırıları
+
+I2P protokolleri Duplicate Message Identification (DMI) saldırısına karşı savunmasız olabilir. Bu, bir saldırganın iki imzalı mesajın aynı içeriğe sahip olduğunu, bu mesajlar ve imzaları şifrelenmiş olsa bile tespit etmesine olanak tanıyabilir. I2P'de kullanılan şifreleme yöntemleri nedeniyle olası olmasa da, emin olmak için tüm durumları analiz etmek zor veya imkansızdır. Rastgele salt ekleme yöntemi sağlayan bir hash fonksiyonu kullanarak, aynı veri imzalanırken bile tüm imzalar farklı olacaktır. 123 numaralı öneride tanımlandığı üzere Red25519 hash fonksiyonuna rastgele salt eklemesine rağmen, bu şifrelenmemiş lease set'ler için sorunu çözmez.
 
 ### Protokoller Arası Saldırılar
 
-I2P protokollerindeki imzalı veriler,
-alan ayrımı eksikliğinden dolayı Protokoller Arası Saldırılara (CPA) karşı savunmasız olabilir.
-Bu durum, bir saldırganın bir bağlamda (örneğin imzalı bir veri akışı)
-alınan veriyi başka bir bağlamda (örneğin akış veya ağ veritabanı) geçerli,
-imzalı veri olarak sunmasına olanak tanır.
-Bir bağlamdaki imzalı verinin başka bir bağlamda
-geçerli veri olarak ayrıştırılması olası olmasa da,
-tüm durumları kesin olarak analiz etmek zordur veya imkansızdır.
-Ayrıca, bir bağlamda, bir saldırganın kurbanı başka bir bağlamda
-geçerli veri olabilecek özel olarak hazırlanmış verileri
-imzalamaya zorlayabilmesi mümkün olabilir.
-Yine, tüm durumları kesin olarak analiz etmek zordur veya imkansızdır.
+Bu öneri için birincil motivasyon olmasa da, SHA-512 nispeten yavaştır ve daha hızlı hash fonksiyonları mevcuttur.
 
-### Çift Mesaj Tanımlama
-
-I2P protokolleri, Çift Mesaj Tanımlama (DMI) saldırısına karşı savunmasız olabilir.
-Bu, bir saldırganın iki imzalı mesajın aynı içeriğe sahip olduğunu
-tanımlamasına olanak tanıyabilir; bu mesajlar ve imzaları şifrelenmiş olsa bile.
-I2P'de kullanılan şifreleme yöntemleri nedeniyle bu durum olası değilse de,
-tüm durumları kesin olarak analiz etmek zordur veya imkansızdır.
-Bir rastgele tuz ekleme yöntemi sağlayan bir karma işlevi kullanarak,
-aynı verileri imzalarken tüm imzalar farklı olacaktır.
-Öneri 123'te tanımlandığı gibi Red25519 karma işlevine
-rastgele bir tuz eklese de, bu sorun şifrelenmemiş kiralama setleri için
-çözülmez.
-
-### Hız
-
-Bu öneri için birincil bir motivasyon olmasa da,
-SHA-512 nispeten yavaştır ve mevcut daha hızlı karma işlevleri vardır.
-
-## Hedefler
+## Goals
 
 - Yukarıdaki saldırıları önlemek
-- Yeni kripto ilkel kullanımlarını minimize etmek
-- Kanıtlanmış, standart kripto ilkel kullanmak
+- Yeni kripto ilkellerinin kullanımını minimize etmek
+- Kanıtlanmış, standart kripto ilkelerini kullanmak
 - Standart eğrileri kullanmak
-- Mevcutsa daha hızlı ilkel kullanmak
+- Mevcut ise daha hızlı ilkeleri kullanmak
 
-## Tasarım
+## Design
 
-Mevcut RedDSA_SHA512_Ed25519 imza türünü
-SHA-512 yerine BLAKE2b-512 ile değiştirilmesi.
-Her kullanım durumu için benzersiz kişiselleştirme dizgileri ekleyin.
-Yeni imza türü, hem kör olmayan hem de kör kiralama setleri için kullanılabilir.
+Mevcut RedDSA_SHA512_Ed25519 imza türünü SHA-512 yerine BLAKE2b-512 kullanacak şekilde değiştirin. Her kullanım durumu için benzersiz kişiselleştirme dizeleri ekleyin. Yeni imza türü hem köreltilmemiş hem de köreltilmiş leaseSet'ler için kullanılabilir.
 
-## Gerekçelendirme
+## Justification
 
-- [BLAKE2b](https://blake2.net/blake2.pdf), LEA'ya karşı savunmasız değildir.
-- BLAKE2b, alan ayrımı için kişiselleştirme dizgileri eklemek için standart bir yol sağlar.
-- BLAKE2b, DMI'yı önlemek için rastgele bir tuz eklemek için standart bir yol sağlar.
-- BLAKE2b, modern donanımda SHA-256 ve SHA-512'den (ve MD5'ten) daha hızlıdır,
-  [BLAKE2 spesifikasyonuna](https://blake2.net/blake2.pdf) göre.
-- Ed25519, Java'da en azından ECDSA'dan daha hızlı olan en hızlı imza türümüzdür.
-- [Ed25519](http://cr.yp.to/papers.html#ed25519) 512 bitlik bir kriptografik karma işlev gerektirir.
-  SHA-512'yi belirtmez. BLAKE2b de hash işlevi için uygundur.
-- BLAKE2b, Noise gibi birçok programlama dili kütüphanesinde yaygın olarak bulunabilir.
+- [BLAKE2b](https://blake2.net/blake2.pdf) LEA'ya karşı savunmasız değildir.
+- BLAKE2b, alan ayrımı için kişiselleştirme dizileri eklemenin standart bir yolunu sağlar
+- BLAKE2b, DMI'yi önlemek için rastgele tuz eklemenin standart bir yolunu sağlar
+- BLAKE2b, [BLAKE2 spesifikasyonuna](https://blake2.net/blake2.pdf) göre modern donanımda SHA-256 ve SHA-512'den (ve MD5'ten) daha hızlıdır.
+- Ed25519 hala en hızlı imza türümüz olup, en azından Java'da ECDSA'dan çok daha hızlıdır.
+- [Ed25519](http://cr.yp.to/papers.html#ed25519) 512 bit kriptografik hash fonksiyonu gerektirir.
+  SHA-512'yi belirtmez. BLAKE2b hash fonksiyonu için aynı derecede uygundur.
+- BLAKE2b, Noise gibi birçok programlama dili için kütüphanelerde yaygın olarak mevcuttur.
 
-## Spesifikasyon
+## Specification
 
-Tuz ve kişiselleştirme ile [BLAKE2 spesifikasyonundaki](https://blake2.net/blake2.pdf) gibi anahtarsız BLAKE2b-512 kullanılacaktır.
-BLAKE2b imzalarının tüm kullanımları 16 karakterlik bir kişiselleştirme dizgisi kullanacaktır.
+[BLAKE2 spesifikasyonunda](https://blake2.net/blake2.pdf) belirtildiği gibi tuz ve kişiselleştirme ile anahtarsız BLAKE2b-512 kullanın. BLAKE2b imzalarının tüm kullanımları 16 karakterlik bir kişiselleştirme dizesi kullanacaktır.
 
-RedDSA_BLAKE2b_Ed25519 imzalamada kullanıldığında,
-rastgele bir tuz kullanmak mümkündür, ancak gerekli değildir, çünkü imza algoritması
-80 bayt rastgele veri ekler (öneri 123'e bakın).
-İstenirse, r hesaplamak için veriyi karma yaparken,
-her imza için yeni bir BLAKE2b 16 bayt rastgele tuz ayarlayın.
-S'yi hesaplarken tuzu sıfır tüm'e ayarlayın.
+RedDSA_BLAKE2b_Ed25519 imzalamasında kullanıldığında, rastgele bir salt'a izin verilir, ancak bu gerekli değildir, çünkü imza algoritması 80 bayt rastgele veri ekler (önerge 123'e bakın). İstenirse, r'yi hesaplamak için veriyi hash'lerken, her imza için yeni bir BLAKE2b 16-bayt rastgele salt ayarlayın. S'yi hesaplarken, salt'ı varsayılan olan tamamı sıfır değerine sıfırlayın.
 
-RedDSA_BLAKE2b_Ed25519 doğrulamada kullanıldığında,
-rastgele bir tuz kullanmayın, sıfır tüm deyimine ayarlayın.
+RedDSA_BLAKE2b_Ed25519 doğrulamasında kullanıldığında, rastgele bir salt kullanmayın, varsayılan olan tamamen sıfırları kullanın.
 
-Tuz ve kişiselleştirme özellikleri [RFC 7693](https://tools.ietf.org/html/rfc7693)'de belirtilmemiştir;
-bu özellikleri [BLAKE2 spesifikasyonunda](https://blake2.net/blake2.pdf) belirtildiği gibi kullanın.
+Salt ve kişiselleştirme özellikleri [RFC 7693](https://tools.ietf.org/html/rfc7693)'te belirtilmemiştir; bu özellikleri [BLAKE2 spesifikasyonu](https://blake2.net/blake2.pdf)'nda belirtildiği şekilde kullanın.
 
-### İmza Türü
+### Yinelenen Mesaj Tanımlama
 
-RedDSA_BLAKE2b_Ed25519 için, RedDSA_SHA512_Ed25519 (öneri 123'te tanımlandığı gibi imza türü 11)
-SHA-512 karma işlevini BLAKE2b-512 ile değiştirin. Başka değişiklik yok.
+RedDSA_BLAKE2b_Ed25519 için, RedDSA_SHA512_Ed25519'daki (teklif 123'te tanımlandığı gibi imza tipi 11) SHA-512 hash fonksiyonunu BLAKE2b-512 ile değiştirin. Başka değişiklik yok.
 
-su3 dosyaları için EdDSA_SHA512_Ed25519ph (imza türü 8) için
-bir yedeğe ihtiyaç duymuyoruz, çünkü EdDSA'nın ön karmalı versiyonu LEA'ya karşı savunmasız değildir.
-EdDSA_SHA512_Ed25519 (imza türü 7) su3 dosyaları için desteklenmez.
+su3 dosyaları için EdDSA_SHA512_Ed25519ph (imza türü 8) yerine bir alternatife ihtiyacımız yok, çünkü EdDSA'nın önceden hash'lenmiş versiyonu LEA'ya karşı savunmasız değil. EdDSA_SHA512_Ed25519 (imza türü 7) su3 dosyaları için desteklenmiyor.
 
 | Type | Type Code | Since | Usage |
 |------|-----------|-------|-------|
-| RedDSA_BLAKE2b_Ed25519 | 12 | TBD | Yönlendirici Kimlikleri, Hedefler ve şifrelenmiş kiralama setleri için yalnızca; Yönlendirici Kimlikleri için asla kullanılmaz |
-
-### Ortak Yapı Veri Uzunlukları
+| RedDSA_BLAKE2b_Ed25519 | 12 | TBD | For Router Identities, Destinations and encrypted leasesets only; never used for Router Identities |
+### Hız
 
 Aşağıdakiler yeni imza türü için geçerlidir.
 
-| Veri Türü | Uzunluk |
-|----------|---------|
-| Karma | 64 |
-| Özel Anahtar | 32 |
-| Açık Anahtar | 32 |
-| İmza | 64 |
+| Data Type | Length |
+|-----------|--------|
+| Hash | 64 |
+| Private Key | 32 |
+| Public Key | 32 |
+| Signature | 64 |
+### Personalizations
 
-### Kişiselleştirmeler
+İmzaların çeşitli kullanımları için domain ayrımı sağlamak amacıyla BLAKE2b kişiselleştirme özelliğini kullanacağız.
 
-İmzaların çeşitli kullanımları için alan ayrımı sağlamak amacıyla,
-BLAKE2b kişiselleştirme özelliğini kullanacağız.
+BLAKE2b imzalarının tüm kullanımları 16 karakterlik bir kişiselleştirme dizesi kullanacaktır. Yeni kullanımlar, benzersiz bir kişiselleştirme ile buradaki tabloya eklenmelidir.
 
-BLAKE2b imzalarının tüm kullanımları 16 karakterlik bir kişiselleştirme dizgisi kullanacaktır.
-Herhangi bir yeni kullanım, benzersiz bir kişiselleştirme ile burada tabloya eklenmelidir.
+Aşağıda kullanılan NTCP 1 ve SSU handshake'i, handshake'in kendisinde tanımlanan imzalı veriler içindir. DatabaseStore Mesajlarındaki imzalı RouterInfo'lar, tıpkı NetDB'de depolanmış gibi NetDb Entry kişiselleştirmesini kullanacaktır.
 
-NTCP 1 ve SSU el sıkışması, el sıkışmasında tanımlandığı gibi imzalanmış veriler içindir.
-DatabaseStore Mesajlarındaki imzalı RouterInfos, NetDB Girişi kişiselleştirmesi kullanacaktır,
-tıpkı NetDB'de saklanıyormuş gibi.
-
-| Kullanım | 16 Bayt Kişiselleştirme |
-|----------|-------------------------|
+| Usage | 16 Byte Personalization |
+|-------|--------------------------|
 | I2CP SessionConfig | "I2CP_SessionConf" |
-| NetDB Girişleri (RI, LS, LS2) | "network_database" |
-| NTCP 1 el sıkışma | "NTCP_1_handshake" |
-| İmzalanmış Veri Akışları | "sign_datagramI2P" |
-| Akış | "streaming_i2psig" |
-| SSU el sıkışma | "SSUHandshakeSign" |
-| SU3 Dosyaları | n/a, desteklenmez |
-| Birim Testleri | "test1234test5678" |
+| NetDB Entries (RI, LS, LS2) | "network_database" |
+| NTCP 1 handshake | "NTCP_1_handshake" |
+| Signed Datagrams | "sign_datagramI2P" |
+| Streaming | "streaming_i2psig" |
+| SSU handshake | "SSUHandshakeSign" |
+| SU3 Files | n/a, not supported |
+| Unit tests | "test1234test5678" |
+## Hedefler
 
-## Notlar
+## Tasarım
 
-## Sorunlar
-
-- Alternatif 1: Öneri 146;
-  LEA direnci sağlar
-- Alternatif 2: Ed25519ctx RFC 8032'de;
-  LEA direnci ve kişiselleştirme sağlar.
-  Standartlaştırılmış, ancak herhangi biri kullanıyor mu?
+- Alternatif 1: Proposal 146;
+  LEA direncini sağlar
+- Alternatif 2: [RFC 8032'de Ed25519ctx](https://tools.ietf.org/html/rfc8032);
+  LEA direncini ve kişiselleştirmeyi sağlar.
+  Standartlaştırılmış, ancak bunu kullanan var mı?
   Bkz. [RFC 8032](https://tools.ietf.org/html/rfc8032) ve [bu tartışma](https://moderncrypto.org/mail-archive/curves/2017/000925.html).
-- "Anahtarlı" karmaşalama bizim için faydalı mı?
+- "Anahtarlı" hash işlemi bizim için yararlı mı?
 
-## Geçiş
+## Gerekçe
 
-Önceki imza türleri için uygulananleştirmede olduğu gibi.
+Önceki imza türlerinin kullanıma sunulmasıyla aynı.
 
-Varsayılan olarak yeni yönlendiricilerde türü 7'den tür 12'ye değiştirmeyi planlıyoruz.
-Varsayılan olarak tür 7'den tür 12'ye mevcut yönlendiricileri sonunda taşımayı planlıyoruz,
-tür 7 tanıtıldıktan sonra kullanılan "anahtar değişim" sürecini kullanarak.
-Varsayılan olarak yeni hedeflerde tür 7'den tür 12'ye değiştirmeyi planlıyoruz.
-Varsayılan olarak yeni şifrelenmiş hedeflerde tür 11'den tür 13'e değiştirmeyi planlıyoruz.
+Yeni router'ları varsayılan olarak tip 7'den tip 12'ye değiştirmeyi planlıyoruz. Mevcut router'ları tip 7'den tip 12'ye geçirmek için tip 7 tanıtıldıktan sonra kullanılan "yeniden anahtarlama" sürecini kullanmayı planlıyoruz. Yeni hedefleri varsayılan olarak tip 7'den tip 12'ye değiştirmeyi planlıyoruz. Yeni şifrelenmiş hedefleri varsayılan olarak tip 11'den tip 13'e değiştirmeyi planlıyoruz.
 
-Türler 7, 11 ve 12'den tür 12'ye körleme desteği sağlayacağız.
-Tür 12'yi tür 11'e körleme desteği sağlamayacağız.
+Tip 7, 11 ve 12'den tip 12'ye blinding desteği sağlayacağız. Tip 12'den tip 11'e blinding desteği sağlamayacağız.
 
-Yeni yönlendiriciler birkaç ay sonra varsayılan olarak yeni imza türünü kullanabilir.
-Yeni hedefler, belki bir yıl sonra varsayılan olarak yeni imza türünü kullanabilir.
+Yeni router'lar birkaç ay sonra varsayılan olarak yeni imza türünü kullanmaya başlayabilir. Yeni hedefler belki bir yıl sonra varsayılan olarak yeni imza türünü kullanmaya başlayabilir.
 
-Minimum yönlendirici sürümü 0.9.TBD için, yönlendiriciler aşağıdaki noktaları sağlamalıdır:
+Minimum router sürümü 0.9.TBD için, router'lar şunları sağlamalıdır:
 
-- 0.9.TBD versiyonundan daha düşük versiyonlardaki yönlendiricilere yeni imza türü içeren bir RI veya LS depolamayın (veya tümleştirmeyin).
-- netdb deposunu doğrularken, 0.9.TBD versiyonundan daha düşük yönlendiricilerden yeni imza türü ile bir RI veya LS almayın.
-- RI'ında yeni imza türü olan yönlendiriciler, 0.9.TBD versiyonundan daha düşük yönlendiricilere NTCP, NTCP2 veya SSU ile bağlantı kuramayabilir.
-- Akış bağlantıları ve imzalı veri akışları 0.9.TBD versiyonundan daha düşük yönlendiriciler için çalışmayabilir,
-  ancak bunu bilmenin bir yolu yoktur, bu yüzden 0.9.TBD yayınlandıktan sonra varsayılan olarak yeni imza türünün birkaç ay veya yıl boyunca kullanılmaması gerekir.
+- Yeni sig türüne sahip bir RI veya LS'yi 0.9.TBD sürümünden düşük router'lara depolamayın (veya flood etmeyin).
+- Bir netDb store doğrulaması yaparken, yeni sig türüne sahip bir RI veya LS'yi 0.9.TBD sürümünden düşük router'lardan almayın.
+- RI'larında yeni sig türü bulunan router'lar, 0.9.TBD sürümünden düşük router'lara
+  NTCP, NTCP2 veya SSU ile bağlanamayabilir.
+- Streaming bağlantıları ve imzalı datagram'lar 0.9.TBD sürümünden düşük router'larda çalışmayacaktır,
+  ancak bunu bilmenin bir yolu yoktur, bu nedenle yeni sig türü 0.9.TBD sürümü yayınlandıktan sonra
+  aylarca veya yıllarca varsayılan olarak kullanılmamalıdır.

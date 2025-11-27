@@ -1,277 +1,231 @@
 ---
-title: "Điều hướng đa điểm ẩn"
+title: "Multihoming Vô Hình"
 number: "140"
 author: "str4d"
 created: "2017-05-22"
 lastupdated: "2017-07-04"
-status: "Open"
+status: "Mở"
 thread: "http://zzz.i2p/topics/2335"
 ---
 
 ## Tổng quan
 
-Đề xuất này phác thảo một thiết kế cho một giao thức cho phép khách hàng I2P, dịch vụ
-hoặc quy trình cân bằng bên ngoài để quản lý nhiều bộ định tuyến lưu trữ một
-[Destination] duy nhất một cách minh bạch.
+Đề xuất này phác thảo một thiết kế cho giao thức cho phép một I2P client, dịch vụ hoặc tiến trình cân bằng tải bên ngoài quản lý nhiều router một cách minh bạch khi lưu trữ một [Destination](http://localhost:63465/en/docs/specs/common-structures/#destination) duy nhất.
 
-Hiện tại đề xuất không chỉ rõ một hiện thực cụ thể. Nó có thể được hiện thực hóa như một phần mở rộng của [I2CP](/en/docs/specs/i2cp/), hoặc như một giao thức mới.
+Đề xuất hiện tại không chỉ định một cách triển khai cụ thể. Nó có thể được triển khai như một phần mở rộng của [I2CP](/en/docs/specs/i2cp/), hoặc như một giao thức mới.
 
+## Động lực
 
-## Động cơ
+Multihoming là việc sử dụng nhiều router để host cùng một Destination. Cách hiện tại để multihome với I2P là chạy cùng một Destination trên mỗi router một cách độc lập; router được sử dụng bởi các client tại bất kỳ thời điểm cụ thể nào là router cuối cùng publish một LeaseSet.
 
-Điều hướng đa điểm là nơi mà nhiều bộ định tuyến được sử dụng để lưu trữ cùng một Destination.
-Cách hiện tại để điều hướng đa điểm với I2P là chạy cùng Destination trên mỗi
-bộ định tuyến độc lập; bộ định tuyến mà khách hàng sử dụng vào bất kỳ thời điểm nào là bộ định tuyến cuối cùng công bố một [LeaseSet](http://localhost:63465/en/docs/specs/common-structures/#leaseset).
+Đây là một giải pháp tạm bợ và có thể sẽ không hoạt động với các trang web lớn ở quy mô rộng. Giả sử chúng ta có 100 router đa kết nối, mỗi router có 16 tunnel. Đó là 1600 lần phát hành LeaseSet mỗi 10 phút, hay gần 3 lần mỗi giây. Các floodfill sẽ bị quprzeciążone và các cơ chế điều tiết sẽ kích hoạt. Và điều đó chưa kể đến lưu lượng tra cứu.
 
-Đây là một cách tạm thời và có lẽ sẽ không hiệu quả cho những trang web lớn có quy mô. Giả sử chúng ta có 100 bộ định tuyến đa điểm, mỗi bộ với 16 đường hầm. Đó là 1600 lần công bố LeaseSet mỗi 10 phút, hoặc gần 3 lần mỗi giây. Các floodfill sẽ bị quá tải và việc giới hạn sẽ bắt đầu. Và đó là trước khi chúng ta thậm chí đề cập đến lưu lượng trông.
+Đề xuất 123 giải quyết vấn đề này bằng một meta-LeaseSet, liệt kê 100 hash LeaseSet thực. Một lần tra cứu trở thành quá trình hai giai đoạn: đầu tiên tra cứu meta-LeaseSet, sau đó tra cứu một trong các LeaseSet được chỉ định. Đây là một giải pháp tốt cho vấn đề lưu lượng tra cứu, nhưng bản thân nó tạo ra một lỗ hổng quyền riêng tư đáng kể: Có thể xác định router multihoming nào đang trực tuyến bằng cách theo dõi meta-LeaseSet được công bố, vì mỗi LeaseSet thực tương ứng với một router duy nhất.
 
-[Proposal 123](/en/proposals/123-new-netdb-entries/) giải quyết vấn đề này với một meta-LeaseSet, liệt kê 100 băm LeaseSet thật. Một lượt trông trở thành một quá trình hai giai đoạn: đầu tiên trông tìm meta-LeaseSet, và sau đó là một trong các LeaseSet được đặt tên. Đây là một giải pháp tốt cho vấn đề lưu lượng trông, nhưng nó tạo ra một rò rỉ quyền riêng tư đáng kể: Có thể xác định những bộ định tuyến đa điểm nào đang trực tuyến bằng cách theo dõi meta-LeaseSet đã công bố, vì mỗi LeaseSet thật có tương ứng với một bộ định tuyến duy nhất.
-
-Chúng ta cần một cách để một khách hàng hoặc dịch vụ I2P phân phối một Destination duy nhất trên nhiều bộ định tuyến, theo cách không thể phân biệt với việc sử dụng một bộ định tuyến duy nhất (từ góc nhìn của LeaseSet).
+Chúng ta cần một cách để một I2P client hoặc dịch vụ có thể phân tán một Destination duy nhất trên nhiều router, theo cách không thể phân biệt được với việc sử dụng một router duy nhất (từ góc độ của chính LeaseSet đó).
 
 ## Thiết kế
 
-### Định nghĩa
+### Definitions
 
-    Người dùng
-        Người hoặc tổ chức muốn điều hướng đa điểm các Destination của họ. Một
-        Destination duy nhất được cân nhắc ở đây mà không mất tính tổng quát.
+    User
+        The person or organisation wanting to multihome their Destination(s). A
+        single Destination is considered here without loss of generality (WLOG).
 
-    Khách hàng
-        Ứng dụng hoặc dịch vụ chạy phía sau Destination. Nó có thể là một
-        ứng dụng phía khách, phía máy chủ, hoặc ngang hàng; chúng ta gọi nó là
-        một khách hàng theo nghĩa nó kết nối với các bộ định tuyến I2P.
+    Client
+        The application or service running behind the Destination. It may be a
+        client-side, server-side, or peer-to-peer application; we refer to it as
+        a client in the sense that it connects to the I2P routers.
 
-        Khách hàng bao gồm ba phần, có thể tất cả nằm trong cùng một quy trình
-        hoặc có thể được chia ra trên các quy trình hoặc máy (trong thiết lập đa khách hàng):
+        The client consists of three parts, which may all be in the same process
+        or may be split across processes or machines (in a multi-client setup):
 
-        Cân bằng
-            Phần của khách hàng quản lý lựa chọn ngang hàng và xây dựng đường hầm.
-            Có một cân bằng duy nhất tại bất kỳ thời điểm nào, và nó giao tiếp
-            với tất cả các bộ định tuyến I2P. Có thể có các cân bằng lí do phụ.
+        Balancer
+            The part of the client that manages peer selection and tunnel
+            building. There is a single balancer at any one time, and it
+            communicates with all I2P routers. There may be failover balancers.
 
-        Giao diện
-            Phần của khách hàng có thể được vận hành song song. Mỗi
-            giao diện giao tiếp với một bộ định tuyến I2P duy nhất.
+        Frontend
+            The part of the client that can be operated in parallel. Each
+            frontend communicates with a single I2P router.
 
         Backend
-            Phần của khách hàng được chia sẻ giữa tất cả các giao diện. Nó không có
-            giao tiếp trực tiếp với bất kỳ bộ định tuyến I2P nào.
+            The part of the client that is shared between all frontends. It has
+            no direct communication with any I2P router.
 
-    Bộ định tuyến
-        Một bộ định tuyến I2P được người dùng chạy, nằm ở ranh giới giữa mạng I2P
-        và mạng của người dùng (giống như một thiết bị biên trong mạng công ty). Nó xây dựng
-        các đường hầm dưới sự chỉ huy của một cân bằng, và định tuyến
-        các gói cho một khách hàng hoặc giao diện.
+    Router
+        An I2P router run by the user that sits at the boundary between the I2P
+        network and the user's network (akin to an edge device in corporate
+        networks). It builds tunnels under the command of a balancer, and routes
+        packets for a client or frontend.
 
+### High-level overview
+
+Hãy tưởng tượng cấu hình mong muốn sau đây:
+
+- Một ứng dụng client với một Destination.
+- Bốn router, mỗi router quản lý ba tunnel đến.
+- Tất cả mười hai tunnel nên được công bố trong một LeaseSet duy nhất.
+
+### Single-client
+
+```
+                -{ [Tunnel 1]===\
+                 |-{ [Tunnel 2]====[Router 1]-----
+                 |-{ [Tunnel 3]===/               \
+                 |                                 \
+                 |-{ [Tunnel 4]===\                 \
+  [Destination]  |-{ [Tunnel 5]====[Router 2]-----   \
+    \            |-{ [Tunnel 6]===/               \   \
+     [LeaseSet]--|                               [Client]
+                 |-{ [Tunnel 7]===\               /   /
+                 |-{ [Tunnel 8]====[Router 3]-----   /
+                 |-{ [Tunnel 9]===/                 /
+                 |                                 /
+                 |-{ [Tunnel 10]==\               /
+                 |-{ [Tunnel 11]===[Router 4]-----
+                  -{ [Tunnel 12]==/
+```
+### Định nghĩa
+
+```
+                -{ [Tunnel 1]===\
+                 |-{ [Tunnel 2]====[Router 1]---------[Frontend 1]
+                 |-{ [Tunnel 3]===/          \                    \
+                 |                            \                    \
+                 |-{ [Tunnel 4]===\            \                    \
+  [Destination]  |-{ [Tunnel 5]====[Router 2]---\-----[Frontend 2]   \
+    \            |-{ [Tunnel 6]===/          \   \                \   \
+     [LeaseSet]--|                         [Balancer]            [Backend]
+                 |-{ [Tunnel 7]===\          /   /                /   /
+                 |-{ [Tunnel 8]====[Router 3]---/-----[Frontend 3]   /
+                 |-{ [Tunnel 9]===/            /                    /
+                 |                            /                    /
+                 |-{ [Tunnel 10]==\          /                    /
+                 |-{ [Tunnel 11]===[Router 4]---------[Frontend 4]
+                  -{ [Tunnel 12]==/
+```
 ### Tổng quan cấp cao
 
-Hãy tưởng tượng cấu hình mong muốn sau:
-
-- Một ứng dụng khách hàng với một Destination.
-- Bốn bộ định tuyến, mỗi bộ quản lý ba đường hầm vào.
-- Tất cả mười hai đường hầm nên được công bố trong một LeaseSet duy nhất.
-
-Khách hàng đơn
-
-```
-                -{ [Đường hầm 1]===\
-                 |-{ [Đường hầm 2]====[Bộ định tuyến 1]-----
-                 |-{ [Đường hầm 3]===/               \
-                 |                                 \
-                 |-{ [Đường hầm 4]===\                 \
-  [Destination]  |-{ [Đường hầm 5]====[Bộ định tuyến 2]-----   \
-    \            |-{ [Đường hầm 6]===/               \   \
-     [LeaseSet]--|                               [Khách hàng]
-                 |-{ [Đường hầm 7]===\               /   /
-                 |-{ [Đường hầm 8]====[Bộ định tuyến 3]-----   /
-                 |-{ [Đường hầm 9]===/                 /
-                 |                                 /
-                 |-{ [Đường hầm 10]==\               /
-                 |-{ [Đường hầm 11]===[Bộ định tuyến 4]-----
-                  -{ [Đường hầm 12]==/
-
-Khách hàng đa
-
-```
-                -{ [Đường hầm 1]===\
-                 |-{ [Đường hầm 2]====[Bộ định tuyến 1]---------[Giao diện 1]
-                 |-{ [Đường hầm 3]===/          \                    \
-                 |                            \                    \
-                 |-{ [Đường hầm 4]===\            \                    \
-  [Destination]  |-{ [Đường hầm 5]====[Bộ định tuyến 2]---\-----[Giao diện 2]   \
-    \            |-{ [Đường hầm 6]===/          \   \                \   \
-     [LeaseSet]--|                         [Cân bằng]            [Backend]
-                 |-{ [Đường hầm 7]===\          /   /                /   /
-                 |-{ [Đường hầm 8]====[Bộ định tuyến 3]---/-----[Giao diện 3]   /
-                 |-{ [Đường hầm 9]===/            /                    /
-                 |                            /                    /
-                 |-{ [Đường hầm 10]==\          /                    /
-                 |-{ [Đường hầm 11]===[Bộ định tuyến 4]---------[Giao diện 4]
-                  -{ [Đường hầm 12]==/
-
-### Quy trình khách hàng tổng quát
 - Tải hoặc tạo một Destination.
 
-- Mở một phiên với mỗi bộ định tuyến, gắn với Destination.
+- Mở một phiên làm việc với mỗi router, được liên kết với Destination.
 
-- Định kỳ (khoảng mỗi mười phút, nhưng nhiều hơn hoặc ít hơn dựa trên
-  độ sống đường hầm):
+- Định kỳ (khoảng mười phút một lần, nhưng có thể nhiều hơn hoặc ít hơn tùy thuộc vào tình trạng hoạt động của tunnel):
 
-  - Lấy danh sách nhanh từ mỗi bộ định tuyến.
+- Lấy fast tier từ mỗi router.
 
-  - Sử dụng danh sách đồng bào để xây dựng các đường hầm đến/từ mỗi bộ định tuyến.
+- Sử dụng tập hợp siêu cấp của các peer để xây dựng tunnel tới/từ mỗi router.
 
-    - Theo mặc định, các đường hầm đến/từ một bộ định tuyến cụ thể sẽ sử dụng
-      các đồng bào từ danh sách nhanh của bộ định tuyến đó, nhưng điều này không bị
-      buộc phải tuân theo giao thức.
+    - By default, tunnels to/from a particular router will use peers from
+      that router's fast tier, but this is not enforced by the protocol.
 
-  - Thu thập các đường hầm vào đang hoạt động từ tất cả các bộ định tuyến đang hoạt động, và tạo một
-    LeaseSet.
+- Thu thập tập hợp các tunnel đến hoạt động từ tất cả các router đang hoạt động, và tạo một LeaseSet.
 
-  - Công bố LeaseSet thông qua một hoặc nhiều bộ định tuyến.
+- Xuất bản LeaseSet thông qua một hoặc nhiều router.
 
-### Sự khác biệt với I2CP
-Để tạo và quản lý cấu hình này, khách hàng cần các chức năng mới sau đây so với những gì hiện tại do [I2CP](/en/docs/specs/i2cp/) cung cấp:
+### Client đơn
 
-- Bảo bộ định tuyến xây dựng đường hầm, mà không tạo LeaseSet cho chúng.
-- Lấy danh sách các đường hầm hiện tại trong bể đường hầm vào.
+Để tạo và quản lý cấu hình này, client cần các chức năng mới sau đây ngoài những gì hiện được cung cấp bởi [I2CP](/en/docs/specs/i2cp/):
 
-Ngoài ra, các chức năng sau đây sẽ cho phép sự linh hoạt đáng kể trong việc khách hàng quản lý các đường hầm của mình:
+- Yêu cầu router xây dựng tunnel mà không tạo LeaseSet cho chúng.
+- Lấy danh sách các tunnel hiện tại trong inbound pool.
 
-- Lấy nội dung của danh sách nhanh của bộ định tuyến.
-- Bảo bộ định tuyến xây dựng một đường hầm vào hoặc ra bằng cách sử dụng danh sách đồng bào được cung cấp.
+Ngoài ra, các chức năng sau đây sẽ cho phép sự linh hoạt đáng kể trong cách client quản lý các tunnel của mình:
 
-### Phác thảo giao thức
+- Lấy nội dung của fast tier của một router.
+- Yêu cầu một router xây dựng tunnel inbound hoặc outbound bằng cách sử dụng một danh sách
+  peer đã cho.
+
+### Đa khách hàng
 
 ```
-         Khách hàng                           Bộ định tuyến
+         Client                           Router
 
-                    --------------------->  Tạo phiên
-   Trạng thái phiên  <---------------------
-                    --------------------->  Lấy danh sách nhanh
-      Danh sách đồng bào  <---------------------
-                    --------------------->  Tạo đường hầm
-    Trạng thái đường hầm  <---------------------
-                    --------------------->  Lấy bể đường hầm
-      Danh sách đường hầm  <---------------------
-                    --------------------->  Công bố LeaseSet
-                    --------------------->  Gửi gói
-      Trạng thái gửi  <---------------------
-  Gói nhận được  <---------------------
+                    --------------------->  Create Session
+   Session Status  <---------------------
+                    --------------------->  Get Fast Tier
+        Peer List  <---------------------
+                    --------------------->  Create Tunnel
+    Tunnel Status  <---------------------
+                    --------------------->  Get Tunnel Pool
+      Tunnel List  <---------------------
+                    --------------------->  Publish LeaseSet
+                    --------------------->  Send Packet
+      Send Status  <---------------------
+  Packet Received  <---------------------
+```
+### Quy trình client tổng quát
 
-### Thông điệp
-    Tạo phiên
-        Tạo một phiên cho Destination được chỉ định.
+**Tạo Session** - Tạo một session cho Destination đã cho.
 
-    Trạng thái phiên
-        Xác nhận rằng phiên đã được thiết lập, và khách hàng có thể bắt đầu
-        xây dựng đường hầm.
+**Trạng thái phiên** - Xác nhận rằng phiên đã được thiết lập và client hiện có thể bắt đầu xây dựng tunnel.
 
-    Lấy danh sách nhanh
-        Yêu cầu danh sách các đồng bào mà bộ định tuyến hiện đang cân nhắc
-        xây dựng đường hầm qua.
+**Get Fast Tier** - Yêu cầu danh sách các peer mà router hiện tại sẽ xem xét để xây dựng tunnel qua.
 
-    Danh sách đồng bào
-        Một danh sách các đồng bào được bộ định tuyến biết đến.
+**Danh sách Peer** - Danh sách các peer được router biết đến.
 
-    Tạo đường hầm
-        Yêu cầu bộ định tuyến xây dựng một đường hầm mới qua các đồng bào được chỉ định.
+**Tạo Tunnel** - Yêu cầu router xây dựng một tunnel mới thông qua các peer được chỉ định.
 
-    Trạng thái đường hầm
-        Kết quả của một xây dựng đường hầm cụ thể, khi nó đã sẵn sàng.
+**Trạng thái Tunnel** - Kết quả của một quá trình xây dựng tunnel cụ thể, khi nó có sẵn.
 
-    Lấy bể đường hầm
-        Yêu cầu danh sách các đường hầm hiện tại trong bể đường hầm vào hoặc ra
-        cho Destination.
+**Get Tunnel Pool** - Yêu cầu danh sách các tunnel hiện tại trong pool đến (inbound) hoặc đi (outbound) cho Destination.
 
-    Danh sách đường hầm
-        Một danh sách đường hầm cho bể được yêu cầu.
+**Danh sách Tunnel** - Danh sách các tunnel cho pool được yêu cầu.
 
-    Công bố LeaseSet
-        Yêu cầu bộ định tuyến công bố LeaseSet được cung cấp qua một trong các
-        đường hầm ra cho Destination. Không cần phản hồi trạng thái; bộ định tuyến
-        nên tiếp tục thử lại cho đến khi nó hài lòng rằng LeaseSet đã được công bố.
+**Publish LeaseSet** - Yêu cầu router xuất bản LeaseSet được cung cấp thông qua một trong các tunnel đi ra cho Destination. Không cần trạng thái phản hồi; router nên tiếp tục thử lại cho đến khi nó hài lòng rằng LeaseSet đã được xuất bản.
 
-    Gửi gói
-        Một gói đi từ khách hàng. Tùy chọn chỉ định một đường hầm ra qua đó
-        gói phải (nên?) được gửi.
+**Send Packet** - Một gói tin đi ra từ client. Tùy chọn chỉ định một outbound tunnel mà qua đó gói tin phải (nên?) được gửi.
 
-    Trạng thái gửi
-        Thông báo cho khách hàng về sự thành công hoặc thất bại của việc gửi gói.
+**Send Status** - Thông báo cho client về việc gửi gói tin thành công hay thất bại.
 
-    Gói nhận được
-        Một gói đến cho khách hàng. Tùy chọn chỉ định đường hầm vào qua đó
-        gói được nhận (?)
+**Gói Tin Nhận Được** - Một gói tin đến cho client. Tùy chọn chỉ định tunnel đến qua đó gói tin đã được nhận(?)
 
+## Security implications
 
-## Các vấn đề bảo mật
+Từ góc độ của các router, thiết kế này về mặt chức năng tương đương với hiện trạng. Router vẫn xây dựng tất cả các tunnel, duy trì hồ sơ peer của riêng mình, và thực thi sự tách biệt giữa các hoạt động của router và client. Trong cấu hình mặc định hoàn toàn giống hệt nhau, bởi vì các tunnel cho router đó được xây dựng từ tầng nhanh của chính nó.
 
-Từ góc độ của các bộ định tuyến, thiết kế này tương đương với
-trạng thái hiện tại. Bộ định tuyến vẫn xây dựng tất cả các đường hầm, duy trì
-các hồ sơ ngang hàng riêng của nó, và thực thi sự tách biệt giữa hoạt động của bộ định tuyến và khách hàng. Trong cấu hình mặc định hoàn toàn giống hệt, vì các đường hầm cho bộ định tuyến đó được xây dựng từ danh sách nhanh của nó.
+Từ góc độ của netDB, một leaseSet duy nhất được tạo thông qua giao thức này là giống hệt với hiện trạng, bởi vì nó tận dụng các chức năng đã tồn tại trước đó. Tuy nhiên, đối với các leaseSet lớn hơn có đến gần 16 Lease, một kẻ quan sát có thể xác định được rằng leaseSet đó là multihomed:
 
-Từ góc độ của netDB, một LeaseSet duy nhất được tạo thông qua giao thức này
-giống hệt với trạng thái hiện tại, vì nó tận dụng chức năng đã có sẵn.
-Tuy nhiên, đối với LeaseSet lớn hơn tiếp cận tới 16 Lease, có thể đối với một
-quan sát viên xác định rằng LeaseSet là nhiều điểm điều hướng:
-
-- Kích thước tối đa hiện tại của danh sách nhanh là 75 đồng bào. Cổng vào Inbound
-  (IBGW, nút được công bố trong một Lease) được chọn từ một phần của danh sách
-  (phân vùng ngẫu nhiên theo bể đường hầm bằng băm, không phải số):
+- Kích thước tối đa hiện tại của tier nhanh là 75 peers. Inbound Gateway
+  (IBGW, node được công bố trong một Lease) được chọn từ một phần của tier
+  (được phân vùng ngẫu nhiên cho mỗi tunnel pool theo hash, không phải theo số lượng):
 
       1 hop
-          Toàn bộ danh sách nhanh
+          The whole fast tier
 
       2 hops
-          Một nửa của danh sách nhanh
-          (mặc định cho đến giữa năm 2014)
+          Half of the fast tier
+          (the default until mid-2014)
 
       3+ hops
-          Một phần tư của danh sách nhanh
-          (3 là mặc định hiện tại)
+          A quarter of the fast tier
+          (3 being the current default)
 
-  Có nghĩa là trung bình các IBGW sẽ từ một tập hợp của 20-30 đồng bào.
+Điều đó có nghĩa là trung bình các IBGW sẽ đến từ một tập hợp gồm 20-30 peer.
 
-- Trong một thiết lập đơn điểm, một LeaseSet 16 đường hầm đầy đủ sẽ có 16 IBGW
-  được chọn ngẫu nhiên từ một tập hợp lên đến (nói) 20 đồng bào.
+- Trong một thiết lập single-homed, một LeaseSet 16-tunnel đầy đủ sẽ có 16 IBGW được chọn ngẫu nhiên từ một tập hợp gồm tối đa (ví dụ) 20 peer.
 
-- Trong một thiết lập đa điểm với 4 bộ định tuyến sử dụng cấu hình mặc định, một
-  LeaseSet 16 đường hầm đầy đủ sẽ có 16 IBGW được chọn ngẫu nhiên từ một
-  tập hợp tối đa 80 đồng bào, mặc dù có khả năng có một phần đồng bào chung
-  giữa các bộ định tuyến.
+- Trong thiết lập multihomed 4-router sử dụng cấu hình mặc định, một LeaseSet 16-tunnel đầy đủ sẽ có 16 IBGW được chọn ngẫu nhiên từ tập hợp tối đa 80 peer, mặc dù có khả năng có một phần peer chung giữa các router.
 
-Với cấu hình mặc định, có thể thông qua phân tích thống kê
-để nhận ra rằng LeaseSet đang được tạo bằng giao thức này.
-Nó cũng có thể tìm ra có bao nhiêu bộ định tuyến, mặc dù
-hiện tượng xoay vòng trên danh sách nhanh sẽ giảm hiệu quả của phân tích này.
+Do đó với cấu hình mặc định, có thể thông qua phân tích thống kê để tìm ra rằng một LeaseSet đang được tạo ra bởi giao thức này. Cũng có thể tìm ra có bao nhiêu router, mặc dù tác động của sự thay đổi trên các tầng nhanh sẽ làm giảm hiệu quả của phân tích này.
 
-Vì khách hàng có toàn quyền kiểm soát đối với việc chọn lựa đồng bào của nó, rò rỉ thông tin này có thể
-được giảm hoặc loại bỏ bằng cách chọn các IBGW từ một danh sách đồng bào đã giảm.
+Vì client có toàn quyền kiểm soát việc lựa chọn các peer, việc rò rỉ thông tin này có thể được giảm thiểu hoặc loại bỏ bằng cách chọn các IBGW từ một tập hợp peer hạn chế.
 
-## Tương thích
+## Compatibility
 
-Thiết kế này hoàn toàn tương thích ngược với mạng, vì không
-có thay đổi nào đối với định dạng [LeaseSet](http://localhost:63465/en/docs/specs/common-structures/#leaseset). Tất cả các bộ định tuyến sẽ cần nhận thức được
-giao thức mới, nhưng điều này không phải là một mối lo ngại vì tất cả bọn chúng sẽ được
-kiểm soát bởi cùng một thực thể.
+Thiết kế này hoàn toàn tương thích ngược với mạng lưới, vì không có thay đổi nào đối với định dạng LeaseSet. Tất cả các router sẽ cần nhận biết giao thức mới, nhưng điều này không phải là mối quan tâm vì chúng sẽ được điều khiển bởi cùng một thực thể.
 
-## Ghi chú về hiệu suất và khả năng mở rộng
+## Performance and scalability notes
 
-Giới hạn trên của 16 [Lease](http://localhost:63465/en/docs/specs/common-structures/#lease) mỗi LeaseSet không bị thay đổi bởi đề xuất này.
-Đối với các Destination yêu cầu nhiều đường hầm hơn, có hai sửa đổi khả thi
-đối với mạng:
+Giới hạn trên là 16 Leases cho mỗi LeaseSet không bị thay đổi bởi đề xuất này. Đối với các Destinations yêu cầu nhiều tunnels hơn mức này, có hai cách sửa đổi mạng có thể thực hiện:
 
-- Tăng giới hạn trên kích thước của LeaseSets. Đây sẽ là đơn giản nhất
-  để thực hiện (mặc dù vẫn yêu cầu hỗ trợ mạng rộng trước khi
-  nó có thể được sử dụng rộng rãi), nhưng có thể dẫn đến trông tìm chậm hơn
-  do kích thước gói lớn hơn. Kích thước tối đa khả thi của LeaseSet được xác định
-  bởi MTU của các phương tiện vận chuyển bên dưới, và vì vậy vào khoảng 16kB.
+- Tăng giới hạn trên về kích thước của LeaseSets. Đây sẽ là cách đơn giản nhất để triển khai (mặc dù vẫn yêu cầu hỗ trợ mạng lưới toàn diện trước khi có thể được sử dụng rộng rãi), nhưng có thể dẫn đến việc tra cứu chậm hơn do kích thước gói tin lớn hơn. Kích thước LeaseSet tối đa khả thi được định nghĩa bởi MTU của các transport bên dưới, và do đó khoảng 16kB.
 
-- Hiện thực hóa [Proposal 123](/en/proposals/123-new-netdb-entries/) cho LeaseSets có từng cấp. Kết hợp với đề xuất này,
-  các Destination cho các sub-LeaseSets có thể được phân phối trên nhiều bộ định tuyến,
-  thực tế hoạt động như nhiều địa chỉ IP cho một dịch vụ trên mạng sạch.
+- Triển khai Proposal 123 cho LeaseSets phân tầng. Kết hợp với proposal này,
+  các Destinations cho sub-LeaseSets có thể được phân bố trên nhiều
+  routers, hoạt động hiệu quả như nhiều địa chỉ IP cho một dịch vụ clearnet.
 
-## Sự công nhận
+## Acknowledgements
 
-Cảm ơn psi vì cuộc thảo luận dẫn đến đề xuất này.
+Cảm ơn psi vì cuộc thảo luận đã dẫn đến đề xuất này.
