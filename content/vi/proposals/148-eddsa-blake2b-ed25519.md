@@ -74,24 +74,20 @@ Các tính năng muối và cá nhân hóa không được chỉ định trong [
 
 Chúng tôi không cần một sự thay thế cho EdDSA_SHA512_Ed25519ph (loại chữ ký 8) cho tệp su3, bởi vì phiên bản đã băm trước của EdDSA không dễ bị ảnh hưởng bởi LEA. EdDSA_SHA512_Ed25519 (loại chữ ký 7) không được hỗ trợ cho tệp su3.
 
-=======================  ===========  ======  =====
-        Loại             Mã Loại       Từ     Sử Dụng
-=======================  ===========  ======  =====
-RedDSA_BLAKE2b_Ed25519       12        TBD    Chỉ cho Định danh Bộ định tuyến, Đích đến và các tập lease mã hóa; không bao giờ được sử dụng cho Định danh Bộ định tuyến
-=======================  ===========  ======  =====
+| Loại | Mã Loại | Từ | Sử Dụng |
+|------|---------|----|---------|
+| RedDSA_BLAKE2b_Ed25519 | 12 | TBD | Chỉ cho Định danh Bộ định tuyến, Đích đến và các tập lease mã hóa; không bao giờ được sử dụng cho Định danh Bộ định tuyến |
 
 ### Chiều Dài Dữ Liệu Cấu Trúc Chung
 
 Điều sau áp dụng cho loại chữ ký mới.
 
-==================================  =============
-            Loại Dữ Liệu               Chiều Dài    
-==================================  =============
-Hàm băm                                  64      
-Khóa Riêng                               32      
-Khóa Công                                32      
-Chữ Ký                                   64      
-==================================  =============
+| Loại Dữ Liệu | Chiều Dài |
+|-------------|----------|
+| Hàm băm | 64 |
+| Khóa Riêng | 32 |
+| Khóa Công | 32 |
+| Chữ Ký | 64 |
 
 ### Cá Nhân Hóa
 
@@ -101,18 +97,16 @@ Tất cả các ứng dụng của chữ ký BLAKE2b sẽ sử dụng chuỗi c�
 
 NTCP 1 và SSU handshake sử dụng dưới đây cho dữ liệu đã ký được định nghĩa trong handshake chính nó. RouterInfos đã ký trong Thông điệp Cơ sở Dữ liệu Lưu trữ sẽ sử dụng cá nhân hóa Mục NetDb, như được lưu trữ trong NetDB.
 
-==================================  ==========================
-         Ứng dụng                   16 Byte Cá Nhân Hóa
-==================================  ==========================
-I2CP SessionConfig                  "I2CP_SessionConf"
-NetDB Entries (RI, LS, LS2)         "network_database"
-NTCP 1 handshake                    "NTCP_1_handshake"
-Signed Datagrams                    "sign_datagramI2P"
-Streaming                           "streaming_i2psig"
-SSU handshake                       "SSUHandshakeSign"
-SU3 Files                           không hỗ trợ, không được hỗ trợ
-Unit tests                          "test1234test5678"
-==================================  ==========================
+| Ứng Dụng | 16 Byte Cá Nhân Hóa |
+|----------|---------------------|
+| I2CP SessionConfig | "I2CP_SessionConf" |
+| NetDB Entries (RI, LS, LS2) | "network_database" |
+| NTCP 1 handshake | "NTCP_1_handshake" |
+| Signed Datagrams | "sign_datagramI2P" |
+| Streaming | "streaming_i2psig" |
+| SSU handshake | "SSUHandshakeSign" |
+| SU3 Files | n/a, không được hỗ trợ |
+| Unit tests | "test1234test5678" |
 
 ## Ghi chú
 

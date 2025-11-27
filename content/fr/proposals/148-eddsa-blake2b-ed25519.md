@@ -74,24 +74,20 @@ Pour RedDSA_BLAKE2b_Ed25519, remplacer la fonction de hachage SHA-512 dans RedDS
 
 Nous n'avons pas besoin d'un remplacement pour EdDSA_SHA512_Ed25519ph (type de signature 8) pour les fichiers su3, car la version préhachée d'EdDSA n'est pas vulnérable à LEA. EdDSA_SHA512_Ed25519 (type de signature 7) n'est pas pris en charge pour les fichiers su3.
 
-=======================  ===========  ======  =====
-        Type             Code Type    Depuis  Usage
-=======================  ===========  ======  =====
-RedDSA_BLAKE2b_Ed25519       12        À déterminer    Pour les identités des routeurs, les destinations et les ensembles de location chiffrés uniquement; jamais utilisé pour les identités de routeur
-=======================  ===========  ======  =====
+| Type | Code Type | Depuis | Usage |
+|------|-----------|--------|-------|
+| RedDSA_BLAKE2b_Ed25519 | 12 | À déterminer | Pour les identités des routeurs, les destinations et les ensembles de location chiffrés uniquement; jamais utilisé pour les identités de routeur |
 
 ### Longueurs des données de structure commune
 
 Ce qui suit s'applique au nouveau type de signature.
 
-==================================  =============
-            Type de données            Longueur  
-==================================  =============
-Hachage                                64      
-Clé privée                             32      
-Clé publique                           32      
-Signature                              64      
-==================================  =============
+| Type de données | Longueur |
+|-----------------|----------|
+| Hachage | 64 |
+| Clé privée | 32 |
+| Clé publique | 32 |
+| Signature | 64 |
 
 ### Personnalisations
 
@@ -101,18 +97,16 @@ Toutes les utilisations des signatures BLAKE2b utiliseront une chaîne de person
 
 Les utilisations de la poignée de main NTCP 1 et SSU ci-dessous sont pour les données signées définies dans la poignée de main elle-même. Les RouterInfos signés dans les messages DatabaseStore utiliseront la personnalisation d'entrée NetDb, tout comme s'ils étaient stockés dans le NetDB.
 
-==================================  ==========================
-         Utilisation                 Personnalisation de 16 octets
-==================================  ==========================
-I2CP SessionConfig                  "I2CP_SessionConf"
-Entrées NetDB (RI, LS, LS2)         "network_database"
-Poignée de main NTCP 1              "NTCP_1_handshake"
-Datagrammes signés                  "sign_datagramI2P"
-Streaming                           "streaming_i2psig"
-Poignée de main SSU                 "SSUHandshakeSign"
-Fichiers SU3                        n/a, non pris en charge
-Tests unitaires                     "test1234test5678"
-==================================  ==========================
+| Utilisation | Personnalisation de 16 octets |
+|-------------|-------------------------------|
+| I2CP SessionConfig | "I2CP_SessionConf" |
+| Entrées NetDB (RI, LS, LS2) | "network_database" |
+| Poignée de main NTCP 1 | "NTCP_1_handshake" |
+| Datagrammes signés | "sign_datagramI2P" |
+| Streaming | "streaming_i2psig" |
+| Poignée de main SSU | "SSUHandshakeSign" |
+| Fichiers SU3 | n/a, non pris en charge |
+| Tests unitaires | "test1234test5678" |
 
 ## Notes
 

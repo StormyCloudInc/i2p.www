@@ -25,12 +25,12 @@ This proposal is for implemention of UDP trackers in I2P.
 
 ### Change History
 
-A preliminary proposal for UDP trackers in I2P was posted on our bittorrent spec page [/en/docs/applications/bittorrent/](/en/docs/applications/bittorrent/)
+A preliminary proposal for UDP trackers in I2P was posted on our [bittorrent spec page](/en/docs/applications/bittorrent/)
 in May 2014; this predated our formal proposal process, and it was never implemented.
 This proposal was created in early 2022 and simplifies the 2014 version.
 
 As this proposal relies on repliable datagrams, it was put on hold once we
-started working on the Datagram2 proposal [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/) in early 2023.
+started working on the [Datagram2 proposal](/en/proposals/163-datagram2/) in early 2023.
 That proposal was approved in April 2025.
 
 The 2023 version of this proposal specified two modes, "compatibility" and "fast".
@@ -166,7 +166,7 @@ and are outside the scope of this proposal.
 
 #### Clients
 External SAM-based torrent clients such as qbittorrent and other libtorrent-based clients
-would require SAM v3.3 [/en/docs/api/samv3/](/en/docs/api/samv3/) which is not supported by i2pd.
+would require [SAM v3.3](/en/docs/api/samv3/) which is not supported by i2pd.
 This is also required for DHT support, and is complex enough that no known
 SAM torrent client has implemented it.
 No SAM-based implementations of this proposal are expected soon.

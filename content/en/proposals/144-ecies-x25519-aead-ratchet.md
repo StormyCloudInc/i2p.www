@@ -1905,19 +1905,18 @@ Summary of tag set and key ID progression is in the table below.
 * indicates that a new key is generated.
 
 
-==============  =============  ===========
-New Tag Set ID  Sender key ID  Rcvr key ID
-==============  =============  ===========
-0               n/a            n/a
-1               0 *            0 *
-2               1 *            0
-3               1              1 *
-4               2 *            1
-5               2              2 *
-...             ...            ...
-65534           32767 *        32766
-65535           32767          32767 *
-==============  =============  ===========
+| New Tag Set ID | Sender key ID | Rcvr key ID |
+|----------------|---------------|-------------|
+| 0              | n/a           | n/a         |
+| 1              | 0 *           | 0 *         |
+| 2              | 1 *           | 0           |
+| 3              | 1             | 1 *         |
+| 4              | 2 *           | 1           |
+| 5              | 2             | 2 *         |
+| ...            | ...           | ...         |
+| 65534          | 32767 *       | 32766       |
+| 65535          | 32767         | 32767 *     |
+
 
 Key and tag set ID numbers must be sequential.
 
@@ -2142,19 +2141,18 @@ Decrypted length is 16 less than the encrypted length.
 All block types are supported.
 Typical contents include the following blocks:
 
-==================================  ============= ============
-       Payload Block Type            Type Number  Block Length
-==================================  ============= ============
-DateTime                                  0            7      
-Termination (TBD)                         4         9 typ.    
-Options (TBD)                             5           21+     
-Message Number (TBD)                      6          TBD      
-Next Key                                  7         3 or 35  
-ACK                                       8         4 typ. 
-ACK Request                               9            3   
-Garlic Clove                             11         varies    
-Padding                                 254         varies    
-==================================  ============= ============
+| Payload Block Type | Type Number | Block Length |
+|--------------------|-------------|--------------|
+| DateTime           | 0           | 7            |
+| Termination (TBD)  | 4           | 9 typ.       |
+| Options (TBD)      | 5           | 21+          |
+| Message Number (TBD) | 6           | TBD          |
+| Next Key           | 7           | 3 or 35      |
+| ACK                | 8           | 4 typ.       |
+| ACK Request        | 9           | 3            |
+| Garlic Clove       | 11          | varies       |
+| Padding            | 254         | varies       |
+
 
 
 

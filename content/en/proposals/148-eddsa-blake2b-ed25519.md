@@ -144,11 +144,9 @@ because the prehashed version of EdDSA is not vulnerable to LEA.
 EdDSA_SHA512_Ed25519 (signature type 7) is not supported for su3 files.
 
 
-=======================  ===========  ======  =====
-        Type             Type Code    Since   Usage
-=======================  ===========  ======  =====
-RedDSA_BLAKE2b_Ed25519       12        TBD    For Router Identities, Destinations and encrypted leasesets only; never used for Router Identities
-=======================  ===========  ======  =====
+| Type | Type Code | Since | Usage |
+|------|-----------|-------|-------|
+| RedDSA_BLAKE2b_Ed25519 | 12 | TBD | For Router Identities, Destinations and encrypted leasesets only; never used for Router Identities |
 
 
 
@@ -157,14 +155,12 @@ RedDSA_BLAKE2b_Ed25519       12        TBD    For Router Identities, Destination
 The following applies to the new signature type.
 
 
-==================================  =============
-            Data Type                  Length    
-==================================  =============
-Hash                                     64      
-Private Key                              32      
-Public Key                               32      
-Signature                                64      
-==================================  =============
+| Data Type | Length |
+|-----------|--------|
+| Hash | 64 |
+| Private Key | 32 |
+| Public Key | 32 |
+| Signature | 64 |
 
 
 
@@ -182,18 +178,16 @@ Signed RouterInfos in DatabaseStore Messages will use the NetDb Entry personaliz
 just as if stored in the NetDB.
 
 
-==================================  ==========================
-         Usage                      16 Byte Personalization
-==================================  ==========================
-I2CP SessionConfig                  "I2CP_SessionConf"
-NetDB Entries (RI, LS, LS2)         "network_database"
-NTCP 1 handshake                    "NTCP_1_handshake"
-Signed Datagrams                    "sign_datagramI2P"
-Streaming                           "streaming_i2psig"
-SSU handshake                       "SSUHandshakeSign"
-SU3 Files                           n/a, not supported
-Unit tests                          "test1234test5678"
-==================================  ==========================
+| Usage | 16 Byte Personalization |
+|-------|--------------------------|
+| I2CP SessionConfig | "I2CP_SessionConf" |
+| NetDB Entries (RI, LS, LS2) | "network_database" |
+| NTCP 1 handshake | "NTCP_1_handshake" |
+| Signed Datagrams | "sign_datagramI2P" |
+| Streaming | "streaming_i2psig" |
+| SSU handshake | "SSUHandshakeSign" |
+| SU3 Files | n/a, not supported |
+| Unit tests | "test1234test5678" |
 
 
 

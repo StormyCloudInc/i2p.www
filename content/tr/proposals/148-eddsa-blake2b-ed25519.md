@@ -129,24 +129,20 @@ su3 dosyaları için EdDSA_SHA512_Ed25519ph (imza türü 8) için
 bir yedeğe ihtiyaç duymuyoruz, çünkü EdDSA'nın ön karmalı versiyonu LEA'ya karşı savunmasız değildir.
 EdDSA_SHA512_Ed25519 (imza türü 7) su3 dosyaları için desteklenmez.
 
-=======================  ===========  ======  =====
-        Type             Type Code    Since   Usage
-=======================  ===========  ======  =====
-RedDSA_BLAKE2b_Ed25519       12        TBD    Yönlendirici Kimlikleri, Hedefler ve şifrelenmiş kiralama setleri için yalnızca; Yönlendirici Kimlikleri için asla kullanılmaz
-=======================  ===========  ======  =====
+| Type | Type Code | Since | Usage |
+|------|-----------|-------|-------|
+| RedDSA_BLAKE2b_Ed25519 | 12 | TBD | Yönlendirici Kimlikleri, Hedefler ve şifrelenmiş kiralama setleri için yalnızca; Yönlendirici Kimlikleri için asla kullanılmaz |
 
 ### Ortak Yapı Veri Uzunlukları
 
 Aşağıdakiler yeni imza türü için geçerlidir.
 
-==================================  =============
-            Veri Türü              Uzunluk    
-==================================  =============
-Karma                                 64      
-Özel Anahtar                          32      
-Açık Anahtar                          32      
-İmza                                  64      
-==================================  =============
+| Veri Türü | Uzunluk |
+|----------|---------|
+| Karma | 64 |
+| Özel Anahtar | 32 |
+| Açık Anahtar | 32 |
+| İmza | 64 |
 
 ### Kişiselleştirmeler
 
@@ -160,18 +156,16 @@ NTCP 1 ve SSU el sıkışması, el sıkışmasında tanımlandığı gibi imzala
 DatabaseStore Mesajlarındaki imzalı RouterInfos, NetDB Girişi kişiselleştirmesi kullanacaktır,
 tıpkı NetDB'de saklanıyormuş gibi.
 
-==================================  ==========================
-         Kullanım                  16 Bayt Kişiselleştirme
-==================================  ==========================
-I2CP SessionConfig                  "I2CP_SessionConf"
-NetDB Girişleri (RI, LS, LS2)      "network_database"
-NTCP 1 el sıkışma                   "NTCP_1_handshake"
-İmzalanmış Veri Akışları            "sign_datagramI2P"
-Akış                                "streaming_i2psig"
-SSU el sıkışma                      "SSUHandshakeSign"
-SU3 Dosyaları                       n/a, desteklenmez
-Birim Testleri                      "test1234test5678"
-==================================  ==========================
+| Kullanım | 16 Bayt Kişiselleştirme |
+|----------|-------------------------|
+| I2CP SessionConfig | "I2CP_SessionConf" |
+| NetDB Girişleri (RI, LS, LS2) | "network_database" |
+| NTCP 1 el sıkışma | "NTCP_1_handshake" |
+| İmzalanmış Veri Akışları | "sign_datagramI2P" |
+| Akış | "streaming_i2psig" |
+| SSU el sıkışma | "SSUHandshakeSign" |
+| SU3 Dosyaları | n/a, desteklenmez |
+| Birim Testleri | "test1234test5678" |
 
 ## Notlar
 

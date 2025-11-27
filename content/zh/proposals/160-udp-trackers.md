@@ -1,446 +1,293 @@
 ---
-title: "UDP跟踪器"
+title: "UDP Trackers"
 number: "160"
 author: "zzz"
 created: "2022-01-03"
 lastupdated: "2025-06-25"
-status: "Closed"
+status: "已关闭"
 thread: "http://zzz.i2p/topics/1634"
 target: "0.9.67"
 ---
 
 ## 状态
 
-在2025-06-24的审查中获得批准。
-规范在[UDP specification](/en/docs/spec/udp-bittorrent-announces/)。
-实现于zzzot 0.20.0-beta2中。
-在i2psnark中作为API 0.9.67实现。
-检查其他实现的文档以获取状态。
-
+已于 2025-06-24 审查通过。规范文档位于 [UDP specification](/en/docs/spec/udp-bittorrent-announces/)。已在 zzzot 0.20.0-beta2 中实现。已在 i2psnark 中实现，自 API 0.9.67 版本起。请查看其他实现的文档了解状态。
 
 ## 概述
 
-该提案是为I2P实现UDP跟踪器。
+该提案是关于在 I2P 中实现 UDP tracker 的。
 
+### Change History
 
-### 变更历史
+一个关于在 I2P 中使用 UDP tracker 的初步提案于 2014 年 5 月发布在我们的 [bittorrent 规范页面](/en/docs/applications/bittorrent/) 上；这早于我们正式的提案流程，且从未实施。本提案创建于 2022 年初，简化了 2014 年版本。
 
-I2P中UDP跟踪器的初步提案在我们的bittorrent规范页面[/en/docs/applications/bittorrent/](/en/docs/applications/bittorrent/)上发布于2014年5月；这早于我们的正式提案流程，并且从未被实现。
-该提案于2022年初创建，简化了2014年的版本。
+由于此提案依赖于可回复的数据报，当我们在2023年初开始研究[Datagram2 提案](/en/proposals/163-datagram2/)时，该提案被暂停。该提案于2025年4月获得批准。
 
-由于此提案依赖于可回复的数据报，当我们在2023年初开始致力于Datagram2提案[/en/proposals/163-datagram2/](/en/proposals/163-datagram2/)时被搁置。
-该提案于2025年4月批准。
+该提案的 2023 版本指定了两种模式："兼容性"和"快速"。进一步分析显示快速模式将是不安全的，并且对于拥有大量种子文件的客户端也会效率低下。此外，BiglyBT 表示偏好兼容性模式。对于任何支持标准 [BEP 15](http://www.bittorrent.org/beps/bep_0015.html) 的 tracker 或客户端来说，这种模式将更容易实现。
 
-2023年的这个提案版本指定了两种模式，“兼容性”和“快速”。
-进一步分析显示，快速模式将是不安全的，对于有大量种子的客户端也会效率低下。
-此外，BiglyBT表示更倾向于兼容性模式。
-这种模式对于支持标准[BEP 15](http://www.bittorrent.org/beps/bep_0015.html)的任何跟踪器或客户端来说将更容易实现。
+虽然兼容模式在客户端从零开始实现起来更加复杂，但我们确实有从2023年开始的初步代码。
 
-虽然对于客户端侧从头开始实现兼容模式更为复杂，但我们确实在2023年开始了初步的代码。
+因此，这里的当前版本进一步简化，移除了快速模式，并删除了"兼容性"这一术语。当前版本切换到新的 Datagram2 格式，并添加了对 UDP 公告扩展协议 [BEP 41](http://www.bittorrent.org/beps/bep_0041.html) 的引用。
 
-因此，这里当前版本进一步简化以移除快速模式，并移除术语“兼容性”。 当前版本切换到新的Datagram2格式，并添加了对UDP宣布扩展协议[BEP 41](http://www.bittorrent.org/beps/bep_0041.html)的参考。
+此外，连接响应中还添加了连接 ID 生存期字段，以扩展此协议的效率收益。
 
-此外，在连接响应中添加了一个连接ID生命周期字段，以扩展该协议的效率增益。
+## Motivation
 
+随着用户基数的总体增长以及 bittorrent 用户数量的持续增加，我们需要让 tracker 和公告更加高效，以免 tracker 不堪重负。
+
+Bittorrent 在 2008 年的 BEP 15 [BEP 15](http://www.bittorrent.org/beps/bep_0015.html) 中提出了 UDP tracker，现在明网上的绝大多数 tracker 都是仅支持 UDP 的。
+
+很难计算数据报与流协议的带宽节省量。可回复请求的大小与流 SYN 大致相同，但有效载荷约小 500 字节，因为 HTTP GET 有一个巨大的 600 字节 URL 参数字符串。原始回复比流 SYN ACK 要小得多，为 tracker 的出站流量提供了显著减少。
+
+此外，还应该有特定于实现的内存减少，因为数据报比流连接需要的内存状态要少得多。
+
+如[/en/proposals/169-pq-crypto/](/en/proposals/169-pq-crypto/)中所设想的后量子加密和签名将大幅增加加密和签名结构的开销，包括destinations、leasesets、streaming SYN和SYN ACK。在I2P采用PQ加密之前，尽可能减少这些开销非常重要。
 
 ## 动机
 
-随着总体上用户基础和特定软件下载用户数量的不断增长，我们需要提高跟踪器和宣布的效率，以免跟踪器不堪重负。
-
-Bittorrent在BEP 15 [BEP 15](http://www.bittorrent.org/beps/bep_0015.html)中于2008年提出了UDP跟踪器，现在绝大多数在清网中的跟踪器都是仅UDP的。
-
-计算数据报与流协议的带宽节省是困难的。 一个可回复的请求与一个流式SYN差不多大小，但由于HTTP GET有一个巨大的600字节的URL参数字符串，载荷要小约500字节。
-原始回复比流式SYN ACK要小得多，显著减少了跟踪器的出站流量。
-
-此外，由于数据报需要的内存状态比流连接少得多，因此应该有特定实现的内存减少。
-
-如[/en/proposals/169-pq-crypto/](/en/proposals/169-pq-crypto/)中设想的后量子加密和签名将大幅增加加密和签名结构（包括目的地、租约集、流式SYN和SYN ACK）的开销。 在I2P中采用PQ加密之前，尽量减少这种开销是很重要的。
-
-
-## 设计
-
-该提案使用可回复的数据报2、可回复的数据报3和原始数据报，如[/en/docs/spec/datagrams/](/en/docs/spec/datagrams/)中定义。
-数据报2和数据报3是可回复的数据报的新变种，在提案163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/)中定义。
-数据报2增加了重放抵抗和离线签名支持。
-数据报3比旧的数据报格式更小，但没有认证。
-
+此提案使用可回复数据报2、可回复数据报3和原始数据报，如[/en/docs/spec/datagrams/](/en/docs/spec/datagrams/)中所定义。数据报2和数据报3是可回复数据报的新变体，在提案163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/)中定义。数据报2添加了重放抵抗和离线签名支持。数据报3比旧的数据报格式更小，但没有身份验证。
 
 ### BEP 15
 
-在[BEP 15](http://www.bittorrent.org/beps/bep_0015.html)中定义的信息流参考如下：
+作为参考，[BEP 15](http://www.bittorrent.org/beps/bep_0015.html) 中定义的消息流程如下：
 
 ```
-客户端                        跟踪器
-    连接请求 ------------->
-      <-------------- 连接响应
-    声明请求 -------------> 
-      <-------------- 声明响应
-    声明请求 ------------->
-      <-------------- 声明响应
+Client                        Tracker
+    Connect Req. ------------->
+      <-------------- Connect Resp.
+    Announce Req. ------------->
+      <-------------- Announce Resp.
+    Announce Req. ------------->
+      <-------------- Announce Resp.
 ```
+连接阶段是防止IP地址欺骗所必需的。tracker返回一个连接ID，客户端在后续的通告中使用该ID。这个连接ID在客户端默认一分钟后过期，在tracker上默认两分钟后过期。
 
-连接阶段是为了防止IP地址欺骗。
-跟踪器返回一个连接ID，客户端在后续的声明中使用该ID。
-默认情况下，该连接ID在客户端过期时间为一分钟，在跟踪器上为两分钟。
-
-I2P将使用与BEP 15相同的信息流，以便在现有的支持UDP的客户端代码库中易于采用：
-出于效率和下面讨论的安全原因：
+I2P 将使用与 BEP 15 相同的消息流，以便在现有支持 UDP 的客户端代码库中易于采用：为了效率，以及出于下面讨论的安全原因：
 
 ```
-客户端                        跟踪器
-    连接请求 ------------->       (可回复数据报2)
-      <-------------- 连接响应   (原始)
-    声明请求 ------------->      (可回复数据报3)
-      <-------------- 声明响应  (原始)
-    声明请求 ------------->      (可回复数据报3)
-      <-------------- 声明响应  (原始)
+Client                        Tracker
+    Connect Req. ------------->       (Repliable Datagram2)
+      <-------------- Connect Resp.   (Raw)
+    Announce Req. ------------->      (Repliable Datagram3)
+      <-------------- Announce Resp.  (Raw)
+    Announce Req. ------------->      (Repliable Datagram3)
+      <-------------- Announce Resp.  (Raw)
              ...
 ```
+这相比流式传输 (TCP) 公告可能节省大量带宽。虽然 Datagram2 与流式传输 SYN 的大小大致相同，但原始响应比流式传输 SYN ACK 要小得多。后续请求使用 Datagram3，后续响应为原始格式。
 
-这潜在地通过流式（TCP）声明提供了大量的带宽节省。
-虽然数据报2的大小与流式SYN相当，但原始响应比流式SYN ACK要小得多。
-后续请求使用数据报3，后续响应为原始。
+announce请求使用Datagram3，这样tracker就无需维护一个从连接ID到announce目标或哈希值的大型映射表。相反，tracker可以通过发送方哈希值、当前时间戳（基于某个时间间隔）和一个秘密值来加密生成连接ID。当收到announce请求时，tracker验证连接ID，然后使用Datagram3发送方哈希值作为发送目标。
 
-声明请求是数据报3，因此跟踪器无需维护大型映射表以标识连接ID和声明目的地或哈希。
-相反，跟踪器可加密地从发送者哈希、当前时间戳（基于某个间隔）和一个密钥生成连接ID。
-当接收到声明请求时，跟踪器验证连接ID，然后使用数据报3发送者哈希作为发送目标。
+### 变更历史
 
+对于集成应用程序（router和客户端在一个进程中，例如i2psnark和ZzzOT Java插件），或基于I2CP的应用程序（例如BiglyBT），实现和单独路由流式传输和数据报流量应该是直接的。预计ZzzOT和i2psnark将成为首批实现此提案的tracker和客户端。
 
-### 跟踪器/客户端支持
+下面将讨论非集成式 tracker 和客户端。
 
-对于集成的应用程序（路由器和客户端在一个进程中，例如i2psnark和ZzzOT Java插件）或基于I2CP的应用程序（例如BiglyBT），应该很容易单独实现和路由流式和数据报流量。
-预计ZzzOT和i2psnark会是该提案的第一个跟踪器和客户端实现。
+#### Trackers
 
-非集成的跟踪器和客户端将在下文中讨论。
+目前已知有四种I2P tracker实现：
 
+- zzzot，一个集成的 Java router 插件，运行在 opentracker.dg2.i2p 和其他几个地址
+- tracker2.postman.i2p，推测运行在 Java router 和 HTTP Server tunnel 后面
+- 旧版 C opentracker，由 zzz 移植，UDP 支持已注释掉
+- 新版 C opentracker，由 r4sas 移植，运行在 opentracker.r4sas.i2p 和可能的其他地址，
+  推测运行在 i2pd router 和 HTTP Server tunnel 后面
 
-跟踪器
-````````
+对于当前使用HTTP服务器tunnel来接收announce请求的外部tracker应用程序，实现可能会相当困难。可以开发一个专门的tunnel来将数据报转换为本地HTTP请求/响应。或者，可以设计一个既处理HTTP请求又处理数据报的专门tunnel，将数据报转发给外部进程。这些设计决策将很大程度上取决于具体的router和tracker实现，超出了本提案的范围。
 
-已知有四种I2P跟踪器实现：
+#### Clients
 
-- zzzot，一个集成的Java路由器插件，在opentracker.dg2.i2p和其他几个地方运行
-- tracker2.postman.i2p，可能在Java路由器和HTTP服务器隧道后面运行
-- 旧版C opentracker，由zzz移植，注释掉了UDP支持
-- 新版C opentracker，由r4sas移植，可能在opentracker.r4sas.i2p和其他地方运行，可能也在i2pd路由器和HTTP服务器隧道后面
+基于SAM的外部torrent客户端（如qbittorrent和其他基于libtorrent的客户端）需要[SAM v3.3](/en/docs/api/samv3/)，但i2pd不支持此版本。DHT支持也需要此版本，而且实现复杂到目前没有已知的SAM torrent客户端实现了它。预计短期内不会有基于SAM的此提案实现。
 
-对于目前使用HTTP服务器隧道接收声明请求的外部跟踪器应用程序，实现可能相当困难。
-可以开发一个专用隧道来将数据报转换为本地HTTP请求/响应。
-或者，可以设计一个能处理HTTP请求和数据报的专用隧道，该隧道会将数据报转发到外部进程。
-这些设计决策在很大程度上取决于具体的路由器和跟踪器实现，并不在此提案的范围之内。
+### Connection Lifetime
 
+[BEP 15](http://www.bittorrent.org/beps/bep_0015.html) 规定连接 ID 在客户端一分钟后过期，在 tracker 两分钟后过期。这是不可配置的。这限制了潜在的效率提升，除非客户端批量处理公告以在一分钟窗口内完成所有操作。i2psnark 目前不批量处理公告；它将公告分散开来，以避免流量突发。据报告，高级用户同时运行数千个 torrent，将如此多的公告在一分钟内突发是不现实的。
 
-客户端
-```````
-如qBittorrent和其他libtorrent基础的外部SAM-based torrent客户端将需要SAM v3.3 [/en/docs/api/samv3/](/en/docs/api/samv3/)，这不被i2pd支持。
-这也需要用于DHT支持，并且复杂度足以至今没有已知的SAM torrent客户端实现它。
-预计近期没有该提案的SAM based实现。
+在这里，我们建议扩展连接响应以添加一个可选的连接生存期字段。如果不存在，默认值为一分钟。否则，客户端应使用以秒为单位指定的生存期，tracker 将多维护连接 ID 一分钟。
 
+### Compatibility with BEP 15
+
+此设计尽可能保持与 [BEP 15](http://www.bittorrent.org/beps/bep_0015.html) 的兼容性，以限制现有客户端和tracker所需的更改。
+
+唯一必需的更改是在宣告响应中对等节点信息的格式。在连接响应中添加生存时间字段不是必需的，但强烈建议添加以提高效率，如上所述。
+
+### BEP 15
+
+UDP 宣告协议的一个重要目标是防止地址欺骗。客户端必须真实存在并捆绑一个真实的 leaseSet。它必须具有入站 tunnel 来接收连接响应。这些 tunnel 可以是零跳并立即构建，但这会暴露创建者。该协议实现了这一目标。
+
+### Tracker/Client 支持
+
+- 此提案不支持盲化目标地址，
+  但可能会扩展以支持此功能。见下文。
+
+## 设计
+
+### Protocols and Ports
+
+Repliable Datagram2 使用 I2CP 协议 19；repliable Datagram3 使用 I2CP 协议 20；原始数据报使用 I2CP 协议 18。请求可以是 Datagram2 或 Datagram3。响应始终是原始格式。使用 I2CP 协议 17 的旧版 repliable datagram（"Datagram1"）格式不得用于请求或回复；如果在请求/回复端口上收到这些数据，必须丢弃。请注意，Datagram1 协议 17 仍用于 DHT 协议。
+
+请求使用来自公告URL的I2CP "to port"；见下文。请求"from port"由客户端选择，但应为非零值，且与DHT使用的端口不同，以便响应可以轻松分类。Tracker应拒绝在错误端口上接收到的请求。
+
+响应使用请求中的 I2CP "to port"。请求的 "from port" 是请求中的 "to port"。
+
+### Announce URL
+
+虽然[BEP 15](http://www.bittorrent.org/beps/bep_0015.html)中没有指定announce URL格式，但与明网一样，UDP announce URL的格式为"udp://host:port/path"。路径会被忽略，可以为空，但在明网上通常是"/announce"。:port部分应该始终存在，但是如果省略了":port"部分，则使用默认的I2CP端口6969，因为这是明网上的常用端口。还可能会附加cgi参数&a=b&c=d，这些参数可能会被处理并在announce请求中提供，请参见[BEP 41](http://www.bittorrent.org/beps/bep_0041.html)。如果没有参数或路径，也可以省略尾随的/，如[BEP 41](http://www.bittorrent.org/beps/bep_0041.html)中所暗示的。
 
 ### 连接生命周期
 
-[BEP 15](http://www.bittorrent.org/beps/bep_0015.html)规定连接ID在客户端过期时间为一分钟，在跟踪器上为两分钟。
-它是不可配置的。
-这限制了潜在的效率增益，除非客户端批量宣布所有操作在一个一分钟窗口内完成。
-i2psnark目前不进行批量宣布；它将它们分散开来，以避免流量高峰。
-报告称高级用户一次可运行成千上万个种子，同时在一分钟内突然爆发那么多次宣布是不现实的。
+所有值都以网络字节顺序（大端序）发送。不要期望数据包具有确切的特定大小。未来的扩展可能会增加数据包的大小。
 
-在此，我们建议扩展连接响应以添加一个可选的连接生命周期字段。
-如果未指定，则默认值为一分钟。否则，客户端应使用以秒为单位指定的生命周期，并且跟踪器将在客户端生命周期的基础上多保持一分钟的连接ID。
+#### Connect Request
 
-
-### 与BEP 15的兼容性
-
-该设计尽可能保持与[BEP 15](http://www.bittorrent.org/beps/bep_0015.html)的兼容，以限制对现有客户端和跟踪器所需的更改。
-
-唯一需要的更改是宣布响应中的对等信息格式。
-为提高效率，强烈建议为连接响应中的生命周期字段添加，但不是必须的，如上所述。
-
-
-
-### 安全分析
-
-UDP宣布协议的重要目标之一是防止地址欺骗。
-客户端必须真实存在并绑定一个真实的lease set。
-它必须有入站隧道以接收连接响应。
-这些隧道可以是零跳并立刻建立，但那将暴露创造者。
-该协议实现了这个目标。
-
-
-
-### 问题
-
-- 该提案不支持盲目的目的地，但可以扩展以支持。见下文。
-
-
-
-
-## 规范
-
-### 协议和端口
-
-可回复数据报2使用I2CP协议19；可回复数据报3使用I2CP协议20；原始数据报使用I2CP协议18。 请求可以是数据报2或数据报3。响应始终是原始的。 不得对请求或回复使用较老的可回复数据报（"数据报1"）格式，该数据报使用I2CP协议17；当在请求/回复端口接收到时必须将其丢弃。 请注意，数据报1协议17仍然用于DHT协议。
-
-请求使用announce URL中的I2CP“to port”；见下文。
-请求"from port"由客户端选择，但应为非零，并与DHT使用的端口不同，以便轻松分类响应。
-跟踪器应该拒绝在错误端口接收到的请求。
-
-响应使用请求中的I2CP“to port”。
-请求“from port”是请求中的“to port”。
-
-
-### 声明URL
-
-声明URL格式未在[BEP 15](http://www.bittorrent.org/beps/bep_0015.html)中指定，但如同在清网中，UDP声明URL的格式为"udp://host:port/path"。
-路径被忽略，可以为空，但在清网中通常为"/announce"。
-:port部分应该始终存在，然而，如果省略了“:port”部分，使用默认I2CP端口6969，因为那是清网中的常用端口。
-可能还有附加的cgi参数&a=b&c=d，可以在宣布请求中处理并提供，请参见[BEP 41](http://www.bittorrent.org/beps/bep_0041.html)。
-如果没有参数或路径，尾随的/可能也可省略，正如[BEP 41](http://www.bittorrent.org/beps/bep_0041.html)所暗示的。
-
-
-### 数据报格式
-
-所有值均以网络字节顺序（大端）发送。 不要期望包的大小确切相等。 将来的扩展可能会增加包的大小。
-
-
-
-连接请求
-```````````````
-
-客户端到跟踪器。
-16字节。必须是可回复的数据报2。与[BEP 15](http://www.bittorrent.org/beps/bep_0015.html)相同。没有变化。
-
+客户端到 tracker。16 字节。必须是可回复的 Datagram2。与 [BEP 15](http://www.bittorrent.org/beps/bep_0015.html) 中的相同。无变化。
 
 ```
-偏移  大小            名称            值
-  0       64-bit integer  protocol_id     0x41727101980 // 魔法常量
-  8       32-bit integer  action          0 // 连接
+Offset  Size            Name            Value
+  0       64-bit integer  protocol_id     0x41727101980 // magic constant
+  8       32-bit integer  action          0 // connect
   12      32-bit integer  transaction_id
 ```
+#### Connect Response
 
-
-
-连接响应
-````````````````
-
-跟踪器到客户端。
-16或18字节。必须是原始的。与[BEP 15](http://www.bittorrent.org/beps/bep_0015.html)相同，除了如下所述。
-
+Tracker 到客户端。16 或 18 字节。必须是原始数据。与 [BEP 15](http://www.bittorrent.org/beps/bep_0015.html) 相同，除了以下注明的部分。
 
 ```
-偏移  大小            名称            值
-  0       32-bit integer  action          0 // 连接
+Offset  Size            Name            Value
+  0       32-bit integer  action          0 // connect
   4       32-bit integer  transaction_id
   8       64-bit integer  connection_id
-  16      16-bit integer  lifetime        可选  // 与BEP 15的变化
+  16      16-bit integer  lifetime        optional  // Change from BEP 15
 ```
+响应必须发送到I2CP的"to port"，该端口是作为请求的"from port"接收到的。
 
-响应必须发送到作为请求“from port”收到的I2CP“to port”。
+lifetime 字段是可选的，表示 connection_id 客户端生存时间，以秒为单位。默认值是 60，如果指定的话最小值是 60。最大值是 65535 或大约 18 小时。tracker 应该维护 connection_id 的时间比客户端生存时间多 60 秒。
 
-lifetime字段是可选的，表示client lifetime中的connection_id秒数。
-默认值是60，如果指定，最小值是60。
-最大值是65535或大约18小时。
-跟踪器保持connection_id比client lifetime多60秒。
+#### Announce Request
 
+客户端到 tracker。最少 98 字节。必须是可回复的 Datagram3。与 [BEP 15](http://www.bittorrent.org/beps/bep_0015.html) 相同，除了下面注明的部分。
 
-声明请求
-````````````````
-
-客户端到跟踪器。
-最少98字节。必须是可回复的数据报3。与[BEP 15](http://www.bittorrent.org/beps/bep_0015.html)相同，除了如下所述。
-
-connection_id与连接响应中接收到的一致。
-
-
+connection_id 是在连接响应中接收到的。
 
 ```
-偏移  大小            名称            值
+Offset  Size            Name            Value
   0       64-bit integer  connection_id
-  8       32-bit integer  action          1     // 声明
+  8       32-bit integer  action          1     // announce
   12      32-bit integer  transaction_id
   16      20-byte string  info_hash
   36      20-byte string  peer_id
   56      64-bit integer  downloaded
   64      64-bit integer  left
   72      64-bit integer  uploaded
-  80      32-bit integer  event           0     // 0: 没有; 1: 完成; 2: 已开始; 3: 已停止
-  84      32-bit integer  IP地址          0     // 默认
+  80      32-bit integer  event           0     // 0: none; 1: completed; 2: started; 3: stopped
+  84      32-bit integer  IP address      0     // default
   88      32-bit integer  key
-  92      32-bit integer  num_want        -1    // 默认
+  92      32-bit integer  num_want        -1    // default
   96      16-bit integer  port
-  98      各种            选项     可选  // 如BEP 41中规定
+  98      varies          options     optional  // As specified in BEP 41
 ```
+与 [BEP 15](http://www.bittorrent.org/beps/bep_0015.html) 的变更：
 
-与[BEP 15](http://www.bittorrent.org/beps/bep_0015.html)的变化：
+- key 被忽略
+- port 可能被忽略
+- options 部分（如果存在）按 [BEP 41](http://www.bittorrent.org/beps/bep_0041.html) 中的定义
 
-- key被忽略
-- port可能被忽略
-- options部分，如存在，按[BEP 41](http://www.bittorrent.org/beps/bep_0041.html)中规定
+响应必须发送到作为请求"from port"接收到的 I2CP "to port"。不要使用来自 announce 请求的端口。
 
-响应必须发送到作为请求“from port”收到的I2CP“to port”。
-请勿使用宣布请求中的端口。
+#### Announce Response
 
-
-
-声明响应
-`````````````````
-
-跟踪器到客户端。
-至少20字节。必须是原始的。与[BEP 15](http://www.bittorrent.org/beps/bep_0015.html)相同，除了如下所述。
-
-
+Tracker 到客户端。最少 20 字节。必须是原始格式。与 [BEP 15](http://www.bittorrent.org/beps/bep_0015.html) 相同，除了以下注明的内容。
 
 ```
-偏移  大小            名称            值
-  0           32-bit integer  action          1 // 声明
+Offset  Size            Name            Value
+  0           32-bit integer  action          1 // announce
   4           32-bit integer  transaction_id
   8           32-bit integer  interval
   12          32-bit integer  leechers
   16          32-bit integer  seeders
-  20   32 * n 32-byte hash    二进制哈希     // 与BEP 15的变化
-  ...                                           // 与BEP 15的变化
+  20   32 * n 32-byte hash    binary hashes     // Change from BEP 15
+  ...                                           // Change from BEP 15
 ```
+与 [BEP 15](http://www.bittorrent.org/beps/bep_0015.html) 的变更：
 
-与[BEP 15](http://www.bittorrent.org/beps/bep_0015.html)的变化：
+- 我们返回32字节"紧凑响应"的倍数，包含SHA-256二进制对等节点哈希，而不是6字节IPv4+端口或18字节IPv6+端口。与TCP紧凑响应一样，我们不包含端口。
 
-- 我们返回的是32字节“精简响应”的SHA-256二进制对等体哈希的倍数，而不是6字节的IPv4+端口或18字节的IPv6+端口。
-  与TCP精简响应一样，我们不包括端口。
+响应必须发送到从请求"发送端口"接收到的I2CP"目标端口"。不要使用来自announce请求的端口。
 
-响应必须发送到作为请求“from port”收到的I2CP“to port”。
-请勿使用宣布请求中的端口。
+I2P 数据报有一个非常大的最大大小，约为 64 KB；然而，为了可靠传输，应避免使用大于 4 KB 的数据报。为了带宽效率，tracker 应该将最大对等节点数限制在大约 50 个，这对应于各层开销前约 1600 字节的数据包，并且应在分片后的双隧道消息负载限制内。
 
-I2P数据报具有非常大的最大大小约为64 KB；然而，为了可靠传输，应避免超过4 KB的数据报。
-为了带宽效率，跟踪器可能应将最大对等体限制在大约50个，这对应于约1600字节包在不同层的开销之前，并应在分片后限制在两个隧道消息负载限制内。
+如在 BEP 15 中一样，没有包含后续对等节点地址数量的计数（BEP 15 中为 IP/端口，这里为哈希值）。虽然在 BEP 15 中未考虑，但可以定义一个全零的对等节点结束标记来表示对等节点信息已完整，后面跟着一些扩展数据。
 
-与BEP 15一样，不包括后续的对等体地址（BEP 15的IP/port，这里的哈希）数量。
-虽然BEP 15中不包含，但经过改革的对等体标记的所有零可以定义为表明对等信息已完成并跟随一些扩展数据。
+为了让未来的扩展成为可能，客户端应该忽略32字节全零哈希值以及其后的任何数据。Tracker应该拒绝来自全零哈希值的通告，尽管该哈希值已经被Java router禁用。
 
-为了将来可能的扩展，客户端应忽略32字节全零哈希，以及其后任何数据。
-跟踪器应拒绝从全零哈希中宣布，尽管Java路由器已经禁止了该哈希。
+#### Scrape
 
+来自 [BEP 15](http://www.bittorrent.org/beps/bep_0015.html) 的 Scrape 请求/响应并非本提议所必需，但如果需要可以实现，无需更改。客户端必须首先获取连接 ID。scrape 请求始终是可回复的 Datagram3。scrape 响应始终是原始格式。
 
-抓取
-``````
+#### 跟踪器
 
-[BEP 15](http://www.bittorrent.org/beps/bep_0015.html)中的抓取请求/响应不是该提案所必需的，但可以根据需要实现，无需更改。
-客户端必须首先获得连接ID。
-抓取请求始终是可回复的数据报3。
-抓取响应始终是原始的。
-
-
-
-错误响应
-````````````````
-
-跟踪器到客户端。
-最少8字节（如果消息为空）。
-必须是原始的。与[BEP 15](http://www.bittorrent.org/beps/bep_0015.html)相同。没有变化。
+Tracker到客户端。最少8字节（如果消息为空）。必须是原始格式。与[BEP 15](http://www.bittorrent.org/beps/bep_0015.html)中相同。无变化。
 
 ```
-偏移  大小            名称            值
+Offset  Size            Name            Value
   0       32-bit integer  action          3 // error
   4       32-bit integer  transaction_id
-  8       string          消息
-
+  8       string          message
 ```
+## Extensions
 
+扩展位或版本字段未包含在内。客户端和tracker不应假设数据包具有特定大小。这样，可以在不破坏兼容性的情况下添加额外字段。如果需要，建议使用[BEP 41](http://www.bittorrent.org/beps/bep_0041.html)中定义的扩展格式。
 
+连接响应被修改以添加可选的连接 ID 生存期。
 
-## 扩展
+如果需要 blinded destination 支持，我们可以将 blinded 35字节地址添加到通告请求的末尾，或者使用 [BEP 41](http://www.bittorrent.org/beps/bep_0041.html) 格式在响应中请求 blinded 哈希（参数待定）。blinded 35字节对等地址集合可以在全零32字节哈希之后添加到通告回复的末尾。
 
-不包括扩展位或版本字段。
-客户端和跟踪器不应假定数据包的大小。
-通过这种方式，可以添加附加字段而不破坏兼容性。
-如果需要，建议使用[BEP 41](http://www.bittorrent.org/beps/bep_0041.html)中定义的扩展格式。
+## Implementation guidelines
 
-连接响应被修改以添加一个可选的连接ID生命周期。
+有关非集成、非I2CP客户端和tracker面临的挑战的讨论，请参见上面的设计部分。
 
-如果需要盲目的目标支持，我们可以添加盲目的35字节地址到宣布请求的末尾，或者请求盲目的响应哈希，使用[BEP 41](http://www.bittorrent.org/beps/bep_0041.html)格式（待定参数）。
-一组盲目的35字节对等地址可以被添加到宣布回复的末尾，在全零32字节哈希之后。
+### 与 BEP 15 的兼容性
 
+对于给定的 tracker 主机名，客户端应优先选择 UDP 而非 HTTP URL，并且不应同时向两者进行 announce。
 
+支持现有 BEP 15 的客户端应该只需要进行少量修改。
 
-## 实施指南
+如果客户端支持 DHT 或其他数据报协议，它应该选择一个不同的端口作为请求的"来源端口"，这样回复就会返回到那个端口，而不会与 DHT 消息混淆。客户端只接收原始数据报作为回复。Tracker 永远不会向客户端发送可回复的数据报2。
 
-看到设计部分以上非集成，非I2CP客户端和跟踪器的实现挑战讨论。
+具有默认 opentracker 列表的客户端应在已知 opentracker 支持 UDP 后更新列表以添加 UDP URL。
 
+客户端可以实现或不实现请求的重传。如果实现重传，应该使用至少 15 秒的初始超时，并且每次重传时将超时时间加倍（指数退避）。
 
-### 客户端
+客户端在收到错误响应后必须退避。
 
-对于给定的跟踪器主机名，客户端应优先选择UDP而非HTTP URL，且不应同时宣布给两者。
+### 安全分析
 
-具有现有BEP 15支持的客户端只需很小的修改。
+支持现有 BEP 15 的 Tracker 应该只需要少量修改。这个提案与 2014 年的提案不同，tracker 必须支持在同一端口上接收可回复的 datagram2 和 datagram3。
 
-如果客户端支持DHT或其他数据报协议，可能应选择不同的端口作为请求“from port”，以便回复返回到该端口并不与DHT消息混淆。
-客户端仅接收原始数据报作为回复。
-跟踪器绝不会发送可回复数据报2到客户端。
+为了最小化 tracker 资源需求，该协议的设计消除了 tracker 存储客户端哈希到连接 ID 映射以供后续验证的任何要求。这是可能的，因为宣告请求数据包是一个可回复的 Datagram3 数据包，所以它包含发送者的哈希值。
 
-具有默认开放跟踪器列表的客户端应更新列表，在已知开放跟踪器支持UDP之后添加UDP URL。
+推荐的实现方式是：
 
-客户端可以实施或不实施请求的重新传输。
-若要实施重新传输，应使用至少15秒的初始超时，并较每次重新传输时间加倍（指数退避）。
+- 将当前纪元定义为以连接生存期为分辨率的当前时间，
+  ``epoch = now / lifetime``。
+- 定义一个加密哈希函数 ``H(secret, clienthash, epoch)``，该函数生成
+  8 字节输出。
+- 生成用于所有连接的随机常量密钥。
+- 对于连接响应，生成 ``connection_id = H(secret,  clienthash, epoch)``
+- 对于通告请求，通过验证以下条件来验证当前纪元中接收到的连接 ID：
+  ``connection_id == H(secret, clienthash, epoch) || connection_id == H(secret, clienthash, epoch - 1)``
 
-客户端接收到错误响应后必须退避。
+## Migration
 
+现有客户端不支持 UDP announce URL 并会忽略它们。
 
-### 跟踪器
+现有的 tracker 不支持接收可回复或原始数据报，这些数据报将被丢弃。
 
-具有现有BEP 15支持的跟踪器需只需进行小的修改。
-该提案不同于2014年的提案，因为此跟踪器必须在同一端口上支持接收可回复数据报2和数据报3。
+此提案完全是可选的。客户端和 tracker 都不需要在任何时候实现它。
 
-为了最小化跟踪器的资源需求，此协议被设计为消除跟踪器必须存储客户端哈希和连接ID映射以供后续验证的任何要求。
-这是可能的，因为宣布请求包是可回复的数据报3包，因此它包含发送者的哈希。
+## Rollout
 
-建议实现是：
+首次实现预计将在 ZzzOT 和 i2psnark 中进行。它们将用于测试和验证此提案。
 
-- 定义当前纪元为当前时间与连接生命周期的分辨率，``epoch = now / lifetime``。
-- 定义一个加密哈希函数``H(secret, clienthash, epoch)``，生成一个8字节的输出。
-- 为所有连接生成使用的随机常数secret。
-- 对于连接响应，生成``connection_id = H(secret, clienthash, epoch)``。
-- 对于宣布请求，验证接收到的连接ID在当前纪元中通过验证
-  ``connection_id == H(secret, clienthash, epoch) || connection_id == H(secret, clienthash, epoch - 1)``。
-
-## 迁移
-
-现有客户端不支持UDP宣布URL并忽略它们。
-
-现有跟踪器不支持接收可回复或原始数据报，它们将被丢弃。
-
-该提案是完全可选的。无论何时，客户端和跟踪器都不要求实现它。
-
-
-
-## 部署
-
-预计第一个实现将是ZzzOT和i2psnark。
-它们将用于测试和验证此提案。
-
-其他实施将根据需要在测试和验证完成后进行。
-
-
-
-## 参考
-
-.. [BEP15]
-    http://www.bittorrent.org/beps/bep_0015.html
-
-.. [BEP41]
-    http://www.bittorrent.org/beps/bep_0041.html
-
-.. [DATAGRAMS]
-    {{ spec_url('datagrams') }}
-
-.. [Prop163]
-    {{ proposal_url('163') }}
-
-.. [Prop169]
-    {{ proposal_url('169') }}
-
-.. [SAMv3]
-    {{ site_url('docs/api/samv3') }}
-
-.. [SPEC]
-    {{ site_url('docs/applications/bittorrent', True) }}
-
-.. [UDP]
-    {{ spec_url('udp-announces') }}
+测试和验证完成后，将根据需要开发其他实现。

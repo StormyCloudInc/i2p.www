@@ -11,167 +11,128 @@ implementedin: "0.9.48"
 ---
 
 ## Hinweis
-Netzwerkbereitstellung und -tests laufen.
-Unterliegt geringfügigen Änderungen.
-Siehe [SPEC](/docs/specs/implementation/) für die offizielle Spezifikation.
 
+Netzwerk-Deployment und Tests laufen. Geringfügige Überarbeitungen vorbehalten. Siehe [SPEC](/docs/specs/implementation/) für die offizielle Spezifikation.
 
-## Übersicht
+## Überblick
 
-Dieses Dokument schlägt Änderungen an der Verschlüsselung von Tunnel-Bau-Nachrichten
-mit kryptographischen Primitiven vor, die in [ECIES-X25519](/docs/specs/ecies/) eingeführt wurden.
-Es ist ein Teil des Gesamtkonzepts
-[Prop156](/proposals/156-ecies-routers/) zur Umstellung von Routern von ElGamal zu ECIES-X25519-Schlüsseln.
+Dieses Dokument schlägt Änderungen an der Tunnel Build-Nachrichtenverschlüsselung unter Verwendung kryptographischer Primitive vor, die von [ECIES-X25519](/docs/specs/ecies/) eingeführt wurden. Es ist ein Teil des Gesamtvorschlags [Proposal 156](/proposals/156-ecies-routers) zur Umstellung von Routern von ElGamal auf ECIES-X25519-Schlüssel.
 
-Für die Übergangsphase des Netzwerks von ElGamal + AES256 zu ECIES + ChaCha20
-sind Tunnel mit gemischten ElGamal- und ECIES-Routern erforderlich.
-Es werden Spezifikationen für den Umgang mit gemischten Tunnelhops bereitgestellt.
-Es werden keine Änderungen am Format, der Verarbeitung oder der Verschlüsselung von ElGamal-Hops vorgenommen.
+Für die Zwecke der Netzwerkumstellung von ElGamal + AES256 zu ECIES + ChaCha20 sind tunnel mit gemischten ElGamal- und ECIES-routern erforderlich. Spezifikationen für die Behandlung gemischter Tunnel-Hops werden bereitgestellt. Es werden keine Änderungen am Format, der Verarbeitung oder der Verschlüsselung von ElGamal-Hops vorgenommen.
 
-ElGamal-Tunnel-Ersteller müssen pro Hop ephemere X25519-Schlüsselpaaren erstellen und
-dieser Spezifikation folgen, um Tunnel mit ECIES-Hops zu erstellen.
+ElGamal-Tunnel-Ersteller müssen ephemere X25519-Schlüsselpaare pro Hop erstellen und dieser Spezifikation für die Erstellung von Tunneln mit ECIES-Hops folgen.
 
-Dieser Vorschlag spezifiziert Änderungen, die für den ECIES-X25519-Tunnelbau erforderlich sind.
-Für einen Überblick über alle Änderungen, die für ECIES-Router erforderlich sind, siehe Vorschlag 156 [Prop156](/proposals/156-ecies-routers/).
+Dieser Vorschlag spezifiziert die Änderungen, die für ECIES-X25519 Tunnel Building benötigt werden. Für eine Übersicht aller erforderlichen Änderungen für ECIES router, siehe Vorschlag 156 [Proposal 156](/proposals/156-ecies-routers).
 
-Dieser Vorschlag behält die gleiche Größe für Tunnel-Bau-Aufzeichnungen bei,
-wie es für die Kompatibilität erforderlich ist. Kleinere Bauaufzeichnungen und Nachrichten werden
-zu einem späteren Zeitpunkt umgesetzt - siehe [Prop157](/proposals/157-new-tbm/).
+Dieser Vorschlag behält die gleiche Größe für tunnel build records bei, wie es für die Kompatibilität erforderlich ist. Kleinere build records und Nachrichten werden später implementiert - siehe [Proposal 157](/proposals/157-new-tbm).
 
+### Cryptographic Primitives
 
-### Kryptographische Primitiven
-
-Es werden keine neuen kryptographischen Primitiven eingeführt. Die für diesen Vorschlag erforderlichen Primitiven sind:
+Es werden keine neuen kryptographischen Primitive eingeführt. Die zur Implementierung dieses Vorschlags erforderlichen Primitive sind:
 
 - AES-256-CBC wie in [Cryptography](/docs/specs/cryptography/)
-- STREAM ChaCha20/Poly1305-Funktionen:
+- STREAM ChaCha20/Poly1305 Funktionen:
   ENCRYPT(k, n, plaintext, ad) und DECRYPT(k, n, ciphertext, ad) - wie in [NTCP2](/docs/specs/ntcp2/) [ECIES-X25519](/docs/specs/ecies/) und [RFC-7539](https://tools.ietf.org/html/rfc7539)
-- X25519 DH-Funktionen - wie in [NTCP2](/docs/specs/ntcp2/) und [ECIES-X25519](/docs/specs/ecies/)
+- X25519 DH Funktionen - wie in [NTCP2](/docs/specs/ntcp2/) und [ECIES-X25519](/docs/specs/ecies/)
 - HKDF(salt, ikm, info, n) - wie in [NTCP2](/docs/specs/ntcp2/) und [ECIES-X25519](/docs/specs/ecies/)
 
-Andere an anderer Stelle definierte Noise-Funktionen:
+Andere Noise-Funktionen, die anderweitig definiert sind:
 
 - MixHash(d) - wie in [NTCP2](/docs/specs/ntcp2/) und [ECIES-X25519](/docs/specs/ecies/)
 - MixKey(d) - wie in [NTCP2](/docs/specs/ntcp2/) und [ECIES-X25519](/docs/specs/ecies/)
 
+### Goals
+
+- Geschwindigkeit von Krypto-Operationen erhöhen
+- ElGamal + AES256/CBC durch ECIES-Primitive für Tunnel BuildRequestRecords und BuildReplyRecords ersetzen
+- Keine Änderung der Größe verschlüsselter BuildRequestRecords und BuildReplyRecords (528 Bytes) für Kompatibilität
+- Keine neuen I2NP-Nachrichten
+- Verschlüsselte Build-Record-Größe für Kompatibilität beibehalten
+- Forward Secrecy für Tunnel Build Messages hinzufügen
+- Authentifizierte Verschlüsselung hinzufügen
+- Neuordnung von BuildRequestRecords durch Hops erkennen
+- Auflösung des Zeitstempels erhöhen, damit die Bloom-Filter-Größe reduziert werden kann
+- Feld für Tunnel-Ablauf hinzufügen, damit variable Tunnel-Lebensdauern möglich werden (nur All-ECIES-Tunnel)
+- Erweiterbares Optionsfeld für zukünftige Features hinzufügen
+- Bestehende kryptographische Primitive wiederverwenden
+- Sicherheit von Tunnel-Build-Messages verbessern, wo möglich, unter Beibehaltung der Kompatibilität
+- Tunnel mit gemischten ElGamal/ECIES-Peers unterstützen
+- Schutz gegen "Tagging"-Angriffe auf Build-Messages verbessern
+- Hops müssen den Verschlüsselungstyp des nächsten Hops nicht vor der Verarbeitung der Build-Message kennen,
+  da sie möglicherweise die RI des nächsten Hops zu diesem Zeitpunkt nicht haben
+- Kompatibilität mit aktuellem Netzwerk maximieren
+- Keine Änderung der Tunnel-Build-AES-Request/Reply-Verschlüsselung für ElGamal-Router
+- Keine Änderung der Tunnel-AES-"Layer"-Verschlüsselung, siehe dafür [Proposal 153](/proposals/153-chacha20-layer-encryption)
+- Unterstützung sowohl für 8-Record TBM/TBRM als auch variable Größe VTBM/VTBRM fortsetzen
+- Kein "Flag Day"-Upgrade des gesamten Netzwerks erforderlich
+
+### Kryptographische Grundbausteine
+
+- Komplette Neugestaltung der Tunnel-Build-Nachrichten, die einen "Flag Day" erfordert.
+- Verkleinerung der Tunnel-Build-Nachrichten (erfordert ausschließlich ECIES-Hops und einen neuen Vorschlag)
+- Verwendung von Tunnel-Build-Optionen wie in [Proposal 143](/proposals/143-build-message-options) definiert, nur für kleine Nachrichten erforderlich
+- Bidirektionale Tunnel - siehe dazu [Proposal 119](/proposals/119-bidirectional-tunnels)
+- Kleinere Tunnel-Build-Nachrichten - siehe dazu [Proposal 157](/proposals/157-new-tbm)
+
+## Threat Model
 
 ### Ziele
 
-- Erhöhung der Geschwindigkeit von kryptographischen Operationen
-- Ersetzung von ElGamal + AES256/CBC durch ECIES-Primitiven für Tunnel-Bau-Anfrage- und -Antwortaufzeichnungen
-- Keine Änderung der Größe der verschlüsselten Bau-Anfrage- und -Antwortaufzeichnungen (528 Bytes) zur Kompatibilität
-- Keine neuen I2NP-Nachrichten
-- Beibehaltung der verschlüsselten Bauaufzeichnungsgröße zur Kompatibilität
-- Hinzufügen von Forward Secrecy für Tunnel-Bau-Nachrichten
-- Hinzufügen von authentifizierter Verschlüsselung
-- Erkennung der Neuanordnung von Hops in Bau-Anfrageaufrufen
-- Erhöhung der Zeitstempelauflösung, damit die Größe des Bloom-Filters reduziert werden kann
-- Hinzufügen eines Feldes für den Tunnelauslauf, um variable Tunnellebensdauern zu ermöglichen (nur All-ECIES-Tunnel)
-- Hinzufügen eines erweiterbaren Optionsfeldes für zukünftige Funktionen
-- Wiederverwendung bestehender kryptographischer Primitiven
-- Verbesserung der Sicherheit von Tunnel-Bau-Nachrichten, wo möglich, unter Beibehaltung der Kompatibilität
-- Unterstützung von Tunneln mit gemischten ElGamal/ECIES-Peers
-- Verbesserung der Verteidigung gegen "Tagging"-Angriffe auf Bau-Nachrichten
-- Hops müssen den Verschlüsselungstyp des nächsten Hops nicht kennen, bevor die Bau-Nachricht verarbeitet wird, da sie zu diesem Zeitpunkt möglicherweise nicht die RI des nächsten Hops haben
-- Maximierung der Kompatibilität mit dem aktuellen Netzwerk
-- Keine Änderung der Tunnel-Bau-AES-Anforderungs-/Antwortverschlüsselung für ElGamal-Router
-- Keine Änderung der Tunnel-AES-"Layer"-Verschlüsselung, siehe dafür [Prop153](/proposals/153-chacha20-layer-encryption/)
-- Weiterhin Unterstützung sowohl für 8-Aufzeichnungs-TBM/TBRM als auch für variable Größe VTBM/VTBRM
-- Kein "Flag Day"-Upgrade des gesamten Netzwerks erforderlich
+- Keine Hops sind in der Lage, den Ursprung des Tunnels zu bestimmen.
 
+- Zwischenhops dürfen nicht in der Lage sein, die Richtung des tunnels
+  oder ihre Position im tunnel zu bestimmen.
+
+- Kein Hop kann Inhalte anderer Anfrage- oder Antwort-Datensätze lesen, außer
+  dem gekürzten Router-Hash und dem ephemeren Schlüssel für den nächsten Hop
+
+- Kein Mitglied des Antwort-Tunnels für ausgehende Builds kann Antwort-Datensätze lesen.
+
+- Kein Mitglied des Outbound-Tunnels für den Inbound-Build kann Anfrage-Datensätze lesen,
+  außer dass OBEP den gekürzten Router-Hash und den ephemeren Schlüssel für IBGW sehen kann
 
 ### Nicht-Ziele
 
-- Vollständige Neugestaltung der Bau-Nachrichten, die einen "Flag Day" erfordern würde
-- Verkürzung von Tunnel-Bau-Nachrichten (erfordert All-ECIES-Hops und einen neuen Vorschlag)
-- Verwendung von Tunnel-Bau-Optionen, wie in [Prop143](/proposals/143-build-message-options/) definiert, nur für kleine Nachrichten erforderlich
-- Bidirektionale Tunnel - siehe dafür [Prop119](/proposals/119-bidirectional-tunnels/)
-- Kleinere Tunnel-Bau-Nachrichten - siehe dafür [Prop157](/proposals/157-new-tbm/)
+Ein Hauptziel des Tunnel-Building-Designs ist es, es für kollaborierende router X und Y schwieriger zu machen zu wissen, dass sie sich in einem einzigen Tunnel befinden. Wenn router X bei Hop m und router Y bei Hop m+1 ist, werden sie es offensichtlich wissen. Aber wenn router X bei Hop m und router Y bei Hop m+n für n>1 ist, sollte dies viel schwieriger sein.
 
-
-## Bedrohungsmodell
-
-### Designziele
-
-- Keine Hops dürfen den Ursprung des Tunnels bestimmen können.
-
-- Mittlere Hops dürfen weder die Richtung des Tunnels noch ihre Position im Tunnel bestimmen können.
-
-- Keine Hops können Inhalte anderer Anfragen- oder Antwortaufrufe lesen, außer
-  den verkürzten Router-Hash und den ephemeren Schlüssel für den nächsten Hop
-
-- Kein Teilnehmer des Antworttunnels eines ausgehenden Baus kann Antwortaufrufe lesen.
-
-- Kein Mitglied des ausgehenden Tunnels eines eingehenden Baus kann Anfragenaufrufe lesen,
-  außer dass OBEP den verkürzten Router-Hash und den ephemeren Schlüssel für IBGW sehen kann
-
-
-
-
-### Tagging-Angriffe
-
-Ein Hauptziel des Tunnel-Bau-Designs ist es, es schwieriger zu machen,
-für kolludierende Router X und Y zu wissen, dass sie sich in einem einzelnen Tunnel befinden.
-Wenn sich Router X bei Hop m und Router Y bei Hop m+1 befindet, werden sie es offensichtlich wissen.
-Aber wenn sich Router X bei Hop m und Router Y bei Hop m+n mit n>1 befindet, sollte dies viel schwieriger sein.
-
-Tagging-Angriffe sind, wenn der Mittel-Hop-Router X die Tunnel-Bau-Nachricht so verändert,
-dass der Router Y die Änderung erkennen kann, wenn die Bau-Nachricht dort ankommt.
-Das Ziel ist, dass jede geänderte Nachricht von einem Hop zwischen X und Y gelöscht wird, bevor sie Router Y erreicht.
-Bei Änderungen, die vor Router Y nicht gelöscht werden, sollte der Tunnel-Ersteller die Beschädigung in der Antwort erkennen
-und den Tunnel verwerfen.
+Tagging-Angriffe sind Angriffe, bei denen der Zwischenhop-router X die Tunnel-Build-Nachricht so verändert, dass router Y die Veränderung erkennen kann, wenn die Build-Nachricht dort ankommt. Das Ziel ist, dass jede veränderte Nachricht von einem router zwischen X und Y verworfen wird, bevor sie router Y erreicht. Für Änderungen, die nicht vor router Y verworfen werden, sollte der Tunnel-Ersteller die Verfälschung in der Antwort erkennen und den Tunnel verwerfen.
 
 Mögliche Angriffe:
 
-- Ändern eines Bauaufzeichnung
-- Ersetzen eines Bauaufzeichnung
-- Hinzufügen oder Entfernen eines Bauaufzeichnung
-- Neuanordnung der Bauaufzeichnungen
+- Einen Build-Datensatz ändern
+- Einen Build-Datensatz ersetzen
+- Einen Build-Datensatz hinzufügen oder entfernen
+- Die Build-Datensätze neu anordnen
 
-
-
-
-
-TODO: Verhindert das aktuelle Design alle diese Angriffe?
-
-
-
-
-
+TODO: Verhindert das aktuelle Design all diese Angriffe?
 
 ## Design
 
-### Noise-Protokoll-Framework
+### Noise Protocol Framework
 
-Dieser Vorschlag enthält die Anforderungen gemäß dem Noise-Protokoll-Framework
-[NOISE](https://noiseprotocol.org/noise.html) (Revision 34, 2018-07-11).
-Im Noise-Jargon ist Alice der Initiator und Bob der Antwortende.
+Dieser Vorschlag stellt die Anforderungen basierend auf dem Noise Protocol Framework [NOISE](https://noiseprotocol.org/noise.html) (Revision 34, 2018-07-11) bereit. In der Noise-Terminologie ist Alice die Initiatorin und Bob der Responder.
 
-Dieser Vorschlag basiert auf dem Noise-Protokoll Noise_N_25519_ChaChaPoly_SHA256.
-Dieses Noise-Protokoll verwendet folgende Primitiven:
+Dieser Vorschlag basiert auf dem Noise-Protokoll Noise_N_25519_ChaChaPoly_SHA256. Dieses Noise-Protokoll verwendet die folgenden Primitive:
 
-- Einweg-Handshake-Muster: N
-  Alice überträgt ihren statischen Schlüssel nicht an Bob (N)
+- One-Way Handshake Pattern: N
+  Alice übermittelt ihren statischen Schlüssel nicht an Bob (N)
 
-- DH-Funktion: X25519
-  X25519 DH mit einer Schlüssellänge von 32 Bytes wie in [RFC-7748](https://tools.ietf.org/html/rfc7748) angegeben.
+- DH Function: X25519
+  X25519 DH mit einer Schlüssellänge von 32 Bytes wie in [RFC-7748](https://tools.ietf.org/html/rfc7748) spezifiziert.
 
-- Cipher-Funktion: ChaChaPoly
-  AEAD_CHACHA20_POLY1305 wie in [RFC-7539](https://tools.ietf.org/html/rfc7539) Abschnitt 2.8 spezifiziert.
-  12-Byte-Nonce, wobei die ersten 4 Bytes auf Null gesetzt werden.
-  Identisch mit dem in [NTCP2](/docs/specs/ntcp2/).
+- Cipher Function: ChaChaPoly
+  AEAD_CHACHA20_POLY1305 wie spezifiziert in [RFC-7539](https://tools.ietf.org/html/rfc7539) Abschnitt 2.8.
+  12 Byte Nonce, wobei die ersten 4 Bytes auf null gesetzt sind.
+  Identisch zu dem in [NTCP2](/docs/specs/ntcp2/).
 
-- Hash-Funktion: SHA256
-  Standard 32-Byte-Hash, bereits umfassend in I2P verwendet.
+- Hash Function: SHA256
+  Standard 32-Byte-Hash, bereits umfangreich in I2P verwendet.
 
-
-Erweiterungen des Frameworks
-``````````````````````````
+#### Additions to the Framework
 
 Keine.
 
-
-### Handshake-Muster
+### Designziele
 
 Handshakes verwenden [Noise](https://noiseprotocol.org/noise.html) Handshake-Muster.
 
@@ -181,613 +142,439 @@ Die folgende Buchstabenzuordnung wird verwendet:
 - s = statischer Schlüssel
 - p = Nachrichten-Payload
 
-Der Bauantrag ist identisch mit dem Noise-N-Muster.
-Dies ist auch identisch mit der ersten (Session Request) Nachricht im XK-Muster, das in [NTCP2](/docs/specs/ntcp2/) verwendet wird.
+Die Build-Anfrage ist identisch zum Noise N-Muster. Dies ist auch identisch zur ersten (Session Request) Nachricht im XK-Muster, das in [NTCP2](/docs/specs/ntcp2/) verwendet wird.
 
-
-  ```text
-
+```text
 <- s
   ...
   e es p ->
+```
+### Tagging-Angriffe
 
+Build-Request-Datensätze werden vom tunnel-Ersteller erstellt und asymmetrisch zu dem jeweiligen Hop verschlüsselt. Diese asymmetrische Verschlüsselung von Request-Datensätzen ist derzeit ElGamal, wie in [Cryptography](/docs/specs/cryptography/) definiert, und enthält eine SHA-256-Prüfsumme. Dieses Design ist nicht forward-secret.
 
+Das neue Design wird das einseitige Noise-Pattern "N" mit ECIES-X25519 ephemeral-static DH, mit einem HKDF und ChaCha20/Poly1305 AEAD für Forward Secrecy, Integrität und Authentifizierung verwenden. Alice ist der Tunnel-Build-Anforderer. Jeder Hop im Tunnel ist ein Bob.
 
+(Payload-Sicherheitseigenschaften)
 
-
-  ```
-
-
-### Anforderungsverschlüsselung
-
-Bauanfrageaufzeichnungen werden vom Tunnel-Ersteller erstellt und asymmetrisch an den individuellen Hop verschlüsselt.
-Diese asymmetrische Verschlüsselung von Anfragenaufzeichnungen ist derzeit ElGamal, wie in [Cryptography](/docs/specs/cryptography/) definiert,
-und enthält eine SHA-256-Prüfsumme. Dieses Design ist nicht vorwärts-geheim.
-
-Das neue Design verwendet das einseitige Noise-Muster "N" mit ephemeren-statischen DH von ECIES-X25519, mit einem HKDF, und
-ChaCha20/Poly1305 AEAD für Vorwärts-Geheimheit, Integrität und Authentifizierung.
-Alice ist die Tunnelbau-Anfrage-Stellerin. Jeder Hop im Tunnel ist ein Bob.
-
-
-(Security-Eigenschaften der Payload)
-
-  ```text
-
-N:                      Authentifizierung   Vertraulichkeit
+```text
+N:                      Authentication   Confidentiality
     -> e, es                  0                2
 
-    Authentifizierung: Keine (0).
-    Diese Payload könnte von jeder Partei, einschließlich eines aktiven Angreifers, gesendet worden sein.
+    Authentication: None (0).
+    This payload may have been sent by any party, including an active attacker.
 
-    Vertraulichkeit: 2.
-    Verschlüsselung an einen bekannten Empfänger, Vorwärts-Geheimnis nur bei Kompromittierung des Senders, anfällig für Wiederholung. Diese Payload ist nur auf der Grundlage von DHs
-    verschlüsselt, die den statischen Schlüsselpaaren des Empfängers involvieren. Wenn der statische
-    private Schlüssel des Empfängers kompromittiert wird, selbst zu einem späteren Zeitpunkt, kann diese Payload
-    entschlüsselt werden. Diese Nachricht kann auch wiederholt werden, da es keinen
-    ephemeren Beitrag vom Empfänger gibt.
+    Confidentiality: 2.
+    Encryption to a known recipient, forward secrecy for sender compromise
+    only, vulnerable to replay.  This payload is encrypted based only on DHs
+    involving the recipient's static key pair.  If the recipient's static
+    private key is compromised, even at a later date, this payload can be
+    decrypted.  This message can also be replayed, since there's no ephemeral
+    contribution from the recipient.
 
-    "e": Alice generiert ein neues ephemeres Schlüsselpaar und speichert es in der e
-         Variable, schreibt den ephemeren öffentlichen Schlüssel als Klartext in den
-         Nachrichtenpuffer und hasht den öffentlichen Schlüssel zusammen mit dem alten h, um einen neuen h abzuleiten.
+    "e": Alice generates a new ephemeral key pair and stores it in the e
+         variable, writes the ephemeral public key as cleartext into the
+         message buffer, and hashes the public key along with the old h to
+         derive a new h.
 
-    "es": Ein DH wird zwischen dem ephemeren Schlüsselpaar von Alice und dem
-          statischen Schlüsselpaar von Bob durchgeführt. Das Ergebnis wird zusammen mit dem alten ck gehasht, um einen neuen ck und k abzuleiten, und n wird auf Null gesetzt.
+    "es": A DH is performed between the Alice's ephemeral key pair and the
+          Bob's static key pair.  The result is hashed along with the old ck to
+          derive a new ck and k, and n is set to zero.
+```
+### Reply encryption
 
-
-
-
-
-  ```
-
-
-
-### Antwortverschlüsselung
-
-Bauantwortaufzeichnungen werden vom Ersteller und symmetrisch an den Ersteller verschlüsselt.
-Diese symmetrische Verschlüsselung von Antwortaufzeichnungen ist derzeit AES mit einer vorangestellten SHA-256-Prüfsumme.
-und enthält eine SHA-256-Prüfsumme. Dieses Design ist nicht vorwärts-geheim.
+Build-Reply-Datensätze werden vom Hop-Ersteller erstellt und symmetrisch zum Ersteller verschlüsselt. Diese symmetrische Verschlüsselung der Reply-Datensätze erfolgt derzeit mit AES und einer vorangestellten SHA-256-Prüfsumme. und enthält eine SHA-256-Prüfsumme. Dieses Design ist nicht forward-secret.
 
 Das neue Design wird ChaCha20/Poly1305 AEAD für Integrität und Authentifizierung verwenden.
 
+### Noise Protocol Framework
 
-### Rechtfertigung
+Der ephemerale öffentliche Schlüssel in der Anfrage muss nicht mit AES oder Elligator2 verschleiert werden. Der vorherige Hop ist der einzige, der ihn sehen kann, und dieser Hop weiß, dass der nächste Hop ECIES ist.
 
-Der ephemere öffentliche Schlüssel in der Anfrage muss nicht mit AES
-oder Elligator2 verschleiert werden. Der vorherige Hop ist der einzige, der ihn sehen kann, und dieser Hop
-weiß, dass der nächste Hop ECIES ist.
+Antwort-Datensätze benötigen keine vollständige asymmetrische Verschlüsselung mit einem weiteren DH.
 
-Antwortaufzeichnungen benötigen keine vollständige asymmetrische Verschlüsselung mit einem weiteren DH.
+## Specification
 
+### Build Request Records
 
+Verschlüsselte BuildRequestRecords sind 528 Bytes sowohl für ElGamal als auch für ECIES, aus Kompatibilitätsgründen.
 
-## Spezifikation
+#### Request Record Unencrypted (ElGamal)
 
-
-
-### Bauanfrageaufzeichnungen
-
-Verschlüsselte Bauanfrageaufzeichnungen sind sowohl für ElGamal als auch für ECIES 528 Bytes groß, um die Kompatibilität sicherzustellen.
-
-
-Antragsruf unverschlüsselt (ElGamal)
-`````````````````````````````````````````
-
-Zum leichteren Verständnis, dies ist die aktuelle Spezifikation der Tunnel-Bauanfrageaufzeichnung für ElGamal-Router, entnommen aus [I2NP](/docs/specs/i2np/).
-Die unverschlüsselten Daten werden mit einem nicht-Null-Byte vorangestellt und dem SHA-256-Hash der Daten vor der Verschlüsselung,
-wie in [Cryptography](/docs/specs/cryptography/) definiert.
+Als Referenz ist dies die aktuelle Spezifikation des tunnel BuildRequestRecord für ElGamal router, entnommen aus [I2NP](/docs/specs/i2np/). Die unverschlüsselten Daten werden mit einem Byte ungleich null und dem SHA-256-Hash der Daten vor der Verschlüsselung vorangestellt, wie in [Cryptography](/docs/specs/cryptography/) definiert.
 
 Alle Felder sind Big-Endian.
 
 Unverschlüsselte Größe: 222 Bytes
 
-  ```text
-
-
-bytes     0-3: tunnel ID zum Empfang von Nachrichten, nicht null
-  bytes    4-35: lokale Router-Identitätshaush
-  bytes   36-39: nächste Tunnel-ID, nicht null
-  bytes   40-71: nächste Router-Identitätshaush
-  bytes  72-103: AES-256-Tunnellage-Schlüssel
-  bytes 104-135: AES-256-Tunnel-IV-Schlüssel
-  bytes 136-167: AES-256-Antwort-Schlüssel
-  bytes 168-183: AES-256-Antwort-IV
+```text
+bytes     0-3: tunnel ID to receive messages as, nonzero
+  bytes    4-35: local router identity hash
+  bytes   36-39: next tunnel ID, nonzero
+  bytes   40-71: next router identity hash
+  bytes  72-103: AES-256 tunnel layer key
+  bytes 104-135: AES-256 tunnel IV key
+  bytes 136-167: AES-256 reply key
+  bytes 168-183: AES-256 reply IV
   byte      184: flags
-  bytes 185-188: Anfragezeit (in Stunden seit dem Epochenbeginn, abgerundet)
-  bytes 189-192: nächste Nachrichten-ID
-  bytes 193-221: nicht interpretierter / zufälliger Puffer
+  bytes 185-188: request time (in hours since the epoch, rounded down)
+  bytes 189-192: next message ID
+  bytes 193-221: uninterpreted / random padding
+```
+#### Request Record Encrypted (ElGamal)
 
-
-
-
-  ```
-
-
-Antragsruf verschlüsselt (ElGamal)
-`````````````````````````````````````
-
-Zum leichteren Verständnis, dies ist die aktuelle Spezifikation der Tunnel-Bauanfrageaufzeichnung für ElGamal-Router, entnommen aus [I2NP](/docs/specs/i2np/).
+Zur Referenz ist hier die aktuelle Spezifikation des tunnel BuildRequestRecord für ElGamal router, entnommen aus [I2NP](/docs/specs/i2np/).
 
 Verschlüsselte Größe: 528 Bytes
 
-  ```text
+```text
+bytes    0-15: Hop's truncated identity hash
+  bytes  16-528: ElGamal encrypted BuildRequestRecord
+```
+#### Request Record Unencrypted (ECIES)
 
+Dies ist die vorgeschlagene Spezifikation des tunnel BuildRequestRecord für ECIES-X25519 router. Zusammenfassung der Änderungen:
 
-bytes    0-15: gekürztes Identitätshaush des Hops
-  bytes  16-528: ElGamal verschlüsselte Bauanfrageaufzeichnung
+- Entferne ungenutzte 32-Byte router hash
+- Ändere Anfrage-Zeit von Stunden zu Minuten
+- Füge Ablauffeld für zukünftige variable tunnel-Zeit hinzu
+- Füge mehr Platz für Flags hinzu
+- Füge Mapping für zusätzliche Build-Optionen hinzu
+- AES-256 Antwortschlüssel und IV werden nicht für den eigenen Antwort-Record des Hops verwendet
+- Unverschlüsselter Record ist länger, da weniger Verschlüsselungs-Overhead vorhanden ist
 
-
-
-
-  ```
-
-
-
-
-Antragsruf unverschlüsselt (ECIES)
-```````````````````````````````````````
-
-Dies ist die vorgeschlagene Spezifikation der Tunnel-Bauanfrageaufzeichnung für ECIES-X25519-Router.
-Zusammenfassung der Änderungen:
-
-- Entfernen des ungenutzten 32-Byte-Router-Hashs
-- Änderungsanfragezeit von Stunden zu Minuten
-- Hinzufügen eines Expirationsfelds für zukünftige variable Tunnelzeit
-- Mehr Platz für Flags hinzufügen
-- Zuordnung für zusätzliche Bauoptionen hinzufügen
-- AES-256-Antwort-Schlüssel und IV werden für die eigene Antwort-Aufzeichnung des Hops nicht verwendet
-- Unverschlüsselte Aufzeichnung ist länger, da es weniger Verschlüsselungsoverhead gibt
-
-
-Die Antragsaufzeichnung enthält keine ChaCha-Antwortschlüssel.
-Diese Schlüssel werden aus einem KDF gewonnen. Siehe unten.
+Der Request-Datensatz enthält keine ChaCha-Antwortschlüssel. Diese Schlüssel werden von einer KDF abgeleitet. Siehe unten.
 
 Alle Felder sind Big-Endian.
 
 Unverschlüsselte Größe: 464 Bytes
 
-  ```text
-
-
-bytes     0-3: tunnel ID zum Empfang von Nachrichten, nicht null
-  bytes     4-7: nächste Tunnel-ID, nicht null
-  bytes    8-39: nächste Router-Identitätshaush
-  bytes   40-71: AES-256-Tunnellage-Schlüssel
-  bytes  72-103: AES-256-Tunnel-IV-Schlüssel
-  bytes 104-135: AES-256-Antwort-Schlüssel
-  bytes 136-151: AES-256-Antwort-IV
+```text
+bytes     0-3: tunnel ID to receive messages as, nonzero
+  bytes     4-7: next tunnel ID, nonzero
+  bytes    8-39: next router identity hash
+  bytes   40-71: AES-256 tunnel layer key
+  bytes  72-103: AES-256 tunnel IV key
+  bytes 104-135: AES-256 reply key
+  bytes 136-151: AES-256 reply IV
   byte      152: flags
-  bytes 153-155: mehr flags, unbenutzt, auf 0 gesetzt für Kompatibilität
-  bytes 156-159: Anfragezeit (in Minuten seit dem Epochenbeginn, abgerundet)
-  bytes 160-163: Anfrageablauf (in Sekunden seit Erstellung)
-  bytes 164-167: nächste Nachrichten-ID
-  bytes   168-x: Tunnel-Bau-Optionen (Zuordnung)
-  bytes     x-x: andere Daten, wie durch Flags oder Optionen impliziert
-  bytes   x-463: zufälliger Puffer
+  bytes 153-155: more flags, unused, set to 0 for compatibility
+  bytes 156-159: request time (in minutes since the epoch, rounded down)
+  bytes 160-163: request expiration (in seconds since creation)
+  bytes 164-167: next message ID
+  bytes   168-x: tunnel build options (Mapping)
+  bytes     x-x: other data as implied by flags or options
+  bytes   x-463: random padding
+```
+Das flags-Feld ist dasselbe wie in [Tunnel Creation](/docs/specs/implementation/) definiert und enthält folgendes::
 
+Bit-Reihenfolge: 76543210 (Bit 7 ist MSB)  Bit 7: falls gesetzt, erlaube Nachrichten von jedem  Bit 6: falls gesetzt, erlaube Nachrichten an jeden und sende die Antwort an das
 
+        specified next hop in a Tunnel Build Reply Message
+Bits 5-0: Undefiniert, muss für Kompatibilität mit zukünftigen Optionen auf 0 gesetzt werden
 
+Bit 7 zeigt an, dass der Hop ein eingehender Gateway (IBGW) sein wird. Bit 6 zeigt an, dass der Hop ein ausgehender Endpunkt (OBEP) sein wird. Wenn keines der Bits gesetzt ist, wird der Hop ein zwischenliegender Teilnehmer sein. Beide können nicht gleichzeitig gesetzt werden.
 
-  ```
+Die Anfrage-Ablaufzeit ist für zukünftige variable Tunneldauer vorgesehen. Derzeit ist der einzige unterstützte Wert 600 (10 Minuten).
 
-Das Flags-Feld ist das gleiche wie in [Tunnel-Creation](/docs/specs/tunnel-creation/) definiert und enthält folgende::
+Die tunnel build options sind eine Mapping-Struktur, wie sie in [Common Structures](/docs/specs/common-structures/) definiert ist. Dies ist für zukünftige Verwendung vorgesehen. Derzeit sind keine Optionen definiert. Wenn die Mapping-Struktur leer ist, sind dies zwei Bytes 0x00 0x00. Die maximale Größe des Mappings (einschließlich des Längenfelds) beträgt 296 Bytes, und der maximale Wert des Mapping-Längenfelds beträgt 294.
 
- Bit-Reihenfolge: 76543210 (Bit 7 ist das MSB)
- bit 7: wenn gesetzt, Nachrichten von jedem zulassen
- bit 6: wenn gesetzt, Nachrichten an jeden zulassen, und die Antwort an den
-        angegebenen nächsten Hop in einer Tunnel-Bau-Antwortnachricht senden
- bits 5-0: undefiniert, muss auf 0 gesetzt werden für Kompatibilität mit zukünftigen Optionen
+#### Request Record Encrypted (ECIES)
 
-Bit 7 zeigt an, dass der Hop ein Eingangsgateway (IBGW) sein wird. Bit 6
-zeigt an, dass der Hop ein Ausgangspunkt (OBEP) sein wird. Wenn weder das eine noch das andere gesetzt ist,
-wird der Hop ein Zwischen-Teilnehmer sein. Beide können nicht gleichzeitig gesetzt sein.
-
-Die Anfrageablauf ist für zukünftige variable Tunneldauer.
-Gegenwärtig wird nur der Wert 600 (10 Minuten) unterstützt.
-
-Die Tunnel-Bau-Optionen sind eine Zuordnung, wie in [Common](/docs/specs/common-structures/) definiert.
-Dies ist für zukünftige Verwendung. Keine Optionen sind derzeit definiert.
-Wenn die Zuordnung leer ist, sind dies zwei Bytes 0x00 0x00.
-Die maximale Größe der Zuordnung (einschließlich der Längenfelder) beträgt 296 Bytes,
-und der maximale Wert des Längenfeldes der Zuordnung beträgt 294.
-
-
-
-Antragsruf verschlüsselt (ECIES)
-`````````````````````````````````````
-
-Alle Felder sind Big-Endian, außer dem ephemeren öffentlichen Schlüssel, der Little-Endian ist.
+Alle Felder sind big-endian, außer dem ephemeral public key, welcher little-endian ist.
 
 Verschlüsselte Größe: 528 Bytes
 
-  ```text
-
-
-bytes    0-15: gekürztes Identitätshaush des Hops
-  bytes   16-47: ephemerer X25519-öffentlicher Schlüssel des Senders
-  bytes  48-511: mit ChaCha20 verschlüsselte Bauanfrageaufzeichnung
+```text
+bytes    0-15: Hop's truncated identity hash
+  bytes   16-47: Sender's ephemeral X25519 public key
+  bytes  48-511: ChaCha20 encrypted BuildRequestRecord
   bytes 512-527: Poly1305 MAC
+```
+### Handshake-Muster
 
+Verschlüsselte BuildReplyRecords sind 528 Bytes sowohl für ElGamal als auch ECIES, aus Kompatibilitätsgründen.
 
+#### Reply Record Unencrypted (ElGamal)
 
-
-  ```
-
-
-
-### Bauantwortaufzeichnungen
-
-Verschlüsselte Bauantwortaufzeichnungen sind sowohl für ElGamal als auch für ECIES 528 Bytes groß, um die Kompatibilität sicherzustellen.
-
-
-Antwortaufzeichnung unverschlüsselt (ElGamal)
-`````````````````````````````````````
 ElGamal-Antworten werden mit AES verschlüsselt.
 
-Alle Felder sind Big-Endian.
+Alle Felder sind big-endian.
 
 Unverschlüsselte Größe: 528 Bytes
 
-  ```text
+```text
+bytes   0-31: SHA-256 Hash of bytes 32-527
+  bytes 32-526: random data
+  byte     527: reply
 
+  total length: 528
+```
+#### Reply Record Unencrypted (ECIES)
 
-bytes   0-31: SHA-256-Hash von Bytes 32-527
-  bytes 32-526: zufällige Daten
-  byte     527: antwort
+Dies ist die vorgeschlagene Spezifikation des tunnel BuildReplyRecord für ECIES-X25519 router. Zusammenfassung der Änderungen:
 
-  Gesamtlänge: 528
-
-
-
-
-  ```
-
-
-Antwortaufzeichnung unverschlüsselt (ECIES)
-`````````````````````````````````````
-Dies ist die vorgeschlagene Spezifikation der Tunnel-Bauantwortaufzeichnung für ECIES-X25519-Router.
-Zusammenfassung der Änderungen:
-
-- Hinzufügen einer Zuordnung für Bauantwortoptionen
-- Unverschlüsselte Aufzeichnung ist länger, da es weniger Verschlüsselungsoverhead gibt
+- Zuordnung für Build-Reply-Optionen hinzufügen
+- Unverschlüsselter Datensatz ist länger, da weniger Verschlüsselungsoverhead vorhanden ist
 
 ECIES-Antworten werden mit ChaCha20/Poly1305 verschlüsselt.
 
-Alle Felder sind Big-Endian.
+Alle Felder sind big-endian.
 
 Unverschlüsselte Größe: 512 Bytes
 
-  ```text
+```text
+bytes    0-x: Tunnel Build Reply Options (Mapping)
+  bytes    x-x: other data as implied by options
+  bytes  x-510: Random padding
+  byte     511: Reply byte
+```
+Die tunnel build reply Optionen sind eine Mapping-Struktur, wie in [Common Structures](/docs/specs/common-structures/) definiert. Diese ist für zukünftige Verwendung vorgesehen. Derzeit sind keine Optionen definiert. Wenn die Mapping-Struktur leer ist, sind dies zwei Bytes 0x00 0x00. Die maximale Größe des Mappings (einschließlich des Längenfelds) beträgt 511 Bytes, und der maximale Wert des Mapping-Längenfelds beträgt 509.
 
-
-bytes    0-x: Tunnel-Bau-Antwortoptionen (Zuordnung)
-  bytes    x-x: andere Daten, wie durch Optionen impliziert
-  bytes  x-510: zufälliger Puffer
-  byte     511: Antwort-Byte
-
-
-
-
-  ```
-
-Die Tunnel-Bau-Antwortoptionen sind eine Zuordnung, wie in [Common](/docs/specs/common-structures/) definiert.
-Dies ist für zukünftige Verwendung. Keine Optionen sind derzeit definiert.
-Wenn die Zuordnung leer ist, sind dies zwei Bytes 0x00 0x00.
-Die maximale Größe der Zuordnung (einschließlich der Längenfelder) beträgt 511 Bytes,
-und der maximale Wert des Längenfeldes der Zuordnung beträgt 509.
-
-Das Antwort-Byte ist einer der folgenden Werte
-wie in [Tunnel-Creation](/docs/specs/tunnel-creation/) definiert, um Fingerabdrücke zu vermeiden:
+Das Antwort-Byte ist einer der folgenden Werte, wie in [Tunnel Creation](/docs/specs/implementation/) definiert, um Fingerprinting zu vermeiden:
 
 - 0x00 (akzeptieren)
 - 30 (TUNNEL_REJECT_BANDWIDTH)
 
-
-Antwortaufzeichnung verschlüsselt (ECIES)
-```````````````````````````````````
+#### Reply Record Encrypted (ECIES)
 
 Verschlüsselte Größe: 528 Bytes
 
-  ```text
-
-
-bytes   0-511: mit ChaCha20 verschlüsselte Bauantwortaufzeichnung
+```text
+bytes   0-511: ChaCha20 encrypted BuildReplyRecord
   bytes 512-527: Poly1305 MAC
+```
+Nach dem vollständigen Übergang zu ECIES-Datensätzen sind die Regeln für bereichsbasierte Auffüllung dieselben wie für Anfrage-Datensätze.
 
+### Anfrage-Verschlüsselung
 
+Gemischte Tunnel sind erlaubt und notwendig für den Übergang von ElGamal zu ECIES. Während der Übergangszeit wird eine steigende Anzahl von Routern unter ECIES-Schlüsseln betrieben werden.
 
-
-  ```
-
-Nach dem vollständigen Übergang zu ECIES-Aufzeichnungen gelten die gleichen Regeln für die Bereichspufferung wie für Anfragenaufzeichnungen.
-
-
-### Symmetrische Verschlüsselung von Aufzeichnungen
-
-Gemischte Tunnel sind zulässig und notwendig für den Übergang von ElGamal zu ECIES.
-Während der Übergangsphase wird eine zunehmende Anzahl von Routern unter ECIES-Schlüsseln sein.
-
-Die symmetrische Kryptographie-Vorverarbeitung wird folgendermaßen ablaufen:
+Die Vorverarbeitung der symmetrischen Kryptographie wird auf die gleiche Weise ablaufen:
 
 - "Verschlüsselung":
 
-  - Cipher im Entschlüsselungsmodus ausführen
-  - Anforderungsaufzeichnungen werden in der Vorverarbeitung proaktiv entschlüsselt (verbergen von verschlüsselten Anforderungsaufzeichnungen)
+- Verschlüsselung im Entschlüsselungsmodus ausgeführt
+- Anfragedatensätze präventiv in der Vorverarbeitung entschlüsselt (Verbergung verschlüsselter Anfragedatensätze)
 
 - "Entschlüsselung":
 
-  - Cipher im Verschlüsselungsmodus ausführen
-  - Anforderungsaufzeichnungen werden durch Teilnehmerhops verschlüsselt (Offenlegung der nächsten Klartext-Anforderungsaufzeichnung)
+- Verschlüsselung läuft im Verschlüsselungsmodus
+- Anfrage-Datensätze verschlüsselt (enthüllen nächsten Klartext-Anfrage-Datensatz) durch Teilnehmer-Hops
 
-- ChaCha20 hat keine "Modi", wird aber einfach dreimal ausgeführt:
+- ChaCha20 hat keine "Modi", daher wird es einfach dreimal ausgeführt:
 
-  - einmal in der Vorverarbeitung
-  - einmal durch den Hop
-  - einmal bei der endgültigen Antwortverarbeitung
+- einmal in der Vorverarbeitung
+- einmal durch den Hop
+- einmal bei der finalen Antwortverarbeitung
 
-Wenn gemischte Tunnel verwendet werden, müssen Tunnel-Ersteller die symmetrische Verschlüsselung
-der Bauanfrageaufzeichnung auf den Verschlüsselungstyp des aktuellen und vorherigen Hops stützen.
+Wenn gemischte Tunnel verwendet werden, müssen Tunnel-Ersteller die symmetrische Verschlüsselung des BuildRequestRecord auf dem Verschlüsselungstyp des aktuellen und vorherigen Hops basieren.
 
-Jeder Hop wird seinen eigenen Verschlüsselungstyp für die Verschlüsselung von Bauantwortaufzeichnungen und den anderen
-Aufzeichnungen in der VariableTunnelBuildMessage (VTBM) verwenden.
+Jeder Hop wird seinen eigenen Verschlüsselungstyp zum Verschlüsseln der BuildReplyRecords und der anderen Records in der VariableTunnelBuildMessage (VTBM) verwenden.
 
-Auf dem Antwortpfad muss der Endpunkt (Sender) die [Multiple-Encryption](https://en.wikipedia.org/wiki/Multiple_encryption) Schritt-für-Schritt-Verschlüsselung rückgängig machen, wobei jeder Hop seinen Antwortschlüssel verwendet.
+Auf dem Antwortpfad muss der Endpunkt (Sender) die [Multiple Encryption](https://en.wikipedia.org/wiki/Multiple_encryption) rückgängig machen, indem er den Antwortschlüssel jedes Hops verwendet.
 
-Als erläuterndes Beispiel, betrachten wir einen ausgehenden Tunnel mit ECIES, umgeben von ElGamal:
+Als verdeutlichendes Beispiel betrachten wir einen ausgehenden Tunnel mit ECIES, umgeben von ElGamal:
 
-- Sender (OBGW) -> ElGamal (H1) -> ECIES (H2) -> ElGamal (H3)
+- Absender (OBGW) -> ElGamal (H1) -> ECIES (H2) -> ElGamal (H3)
 
-Alle Bauanfrageaufzeichnungen sind im verschlüsselten Zustand (mit ElGamal oder ECIES).
+Alle BuildRequestRecords befinden sich in ihrem verschlüsselten Zustand (unter Verwendung von ElGamal oder ECIES).
 
-Der AES256/CBC-Cipher, wenn er verwendet wird, wird weiterhin für jede Aufzeichnung verwendet, ohne dass er über mehrere Aufzeichnungen hinweg verkettet wird.
+AES256/CBC-Verschlüsselung wird, wenn verwendet, weiterhin für jeden Datensatz verwendet, ohne Verkettung über mehrere Datensätze hinweg.
 
-Ebenso wird ChaCha20 verwendet, um jede Aufzeichnung zu verschlüsseln, nicht streaming über die gesamte VTBM.
+Ebenso wird ChaCha20 verwendet, um jeden Datensatz zu verschlüsseln, nicht streaming über die gesamte VTBM.
 
-Die Anforderungsaufzeichnungen werden vom Sender (OBGW) vorverarbeitet:
+Die Anfrage-Datensätze werden vom Sender (OBGW) vorverarbeitet:
 
-- Die Aufzeichnung von H3 wird unter Verwendung von "verschlüsselt":
+- H3s Datensatz wird "verschlüsselt" mit:
 
-  - H2's Antwortschlüssel (ChaCha20)
-  - H1's Antwortschlüssel (AES256/CBC)
+- H2's Antwortschlüssel (ChaCha20)
+- H1's Antwortschlüssel (AES256/CBC)
 
-- Die Aufzeichnung von H2 wird unter Verwendung von "verschlüsselt":
+- H2's Datensatz wird "verschlüsselt" mit:
 
-  - H1's Antwortschlüssel (AES256/CBC)
+- H1's Antwortschlüssel (AES256/CBC)
 
-- Die Aufzeichnung von H1 wird ohne symmetrische Verschlüsselung ausgegeben
+- H1s Datensatz wird ohne symmetrische Verschlüsselung gesendet
 
-Nur H2 überprüft das Antwortverschlüsselungs-Flag und sieht, dass es durch AES256/CBC gefolgt wird.
+Nur H2 überprüft das Reply-Verschlüsselungs-Flag und sieht, dass es von AES256/CBC gefolgt wird.
 
-Nachdem jeder Hop die Aufzeichnungen bearbeitet hat, befinden sich die Aufzeichnungen im entschlüsselten Zustand:
+Nachdem sie von jedem Hop verarbeitet wurden, befinden sich die Datensätze in einem "entschlüsselten" Zustand:
 
-- Die Aufzeichnung von H3 wird unter Verwendung von "entschlüsselt":
+- Der Datensatz von H3 wird "entschlüsselt" mit:
 
-  - H3's Antwortschlüssel (AES256/CBC)
+- H3's Antwortschlüssel (AES256/CBC)
 
-- Die Aufzeichnung von H2 wird unter Verwendung von "entschlüsselt":
+- H2's Datensatz wird "entschlüsselt" mit:
 
-  - H3's Antwortschlüssel (AES256/CBC)
-  - H2's Antwortschlüssel (ChaCha20-Poly1305)
+- H3's Antwortschlüssel (AES256/CBC)
+- H2's Antwortschlüssel (ChaCha20-Poly1305)
 
-- Die Aufzeichnung von H1 wird unter Verwendung von "entschlüsselt":
+- H1s Datensatz wird "entschlüsselt" mit:
 
-  - H3's Antwortschlüssel (AES256/CBC)
-  - H2's Antwortschlüssel (ChaCha20)
-  - H1's Antwortschlüssel (AES256/CBC)
+- Antwortschlüssel von H3 (AES256/CBC)
+- Antwortschlüssel von H2 (ChaCha20)
+- Antwortschlüssel von H1 (AES256/CBC)
 
-Der Tunnel-Ersteller, auch bekannt als Eingangsendpunkt (IBEP), nachbearbeitet die Antwort:
+Der Tunnel-Ersteller, auch bekannt als Inbound Endpoint (IBEP), nachbearbeitet die Antwort:
 
-- Die Aufzeichnung von H3 wird unter Verwendung von "verschlüsselt":
+- H3s Datensatz ist "verschlüsselt" unter Verwendung von:
 
-  - H3's Antwortschlüssel (AES256/CBC)
+- H3's Antwortschlüssel (AES256/CBC)
 
-- Die Aufzeichnung von H2 wird unter Verwendung von "verschlüsselt":
+- H2's record ist "verschlüsselt" mit:
 
-  - H3's Antwortschlüssel (AES256/CBC)
-  - H2's Antwortschlüssel (ChaCha20-Poly1305)
+- H3's Antwortschlüssel (AES256/CBC)
+- H2's Antwortschlüssel (ChaCha20-Poly1305)
 
-- Die Aufzeichnung von H1 wird unter Verwendung von "verschlüsselt":
+- Der Datensatz von H1 ist „verschlüsselt" mit:
 
-  - H3's Antwortschlüssel (AES256/CBC)
-  - H2's Antwortschlüssel (ChaCha20)
-  - H1's Antwortschlüssel (AES256/CBC)
+- H3's Antwortschlüssel (AES256/CBC)
+- H2's Antwortschlüssel (ChaCha20)
+- H1's Antwortschlüssel (AES256/CBC)
 
+### Antwort-Verschlüsselung
 
-### Anforderungsaufzeichnungs-Schlüssel (ECIES)
+Diese Schlüssel sind explizit in ElGamal BuildRequestRecords enthalten. Für ECIES BuildRequestRecords sind die tunnel keys und AES reply keys enthalten, aber die ChaCha reply keys werden aus dem DH-Austausch abgeleitet. Siehe [Proposal 156](/proposals/156-ecies-routers) für Details der statischen ECIES-Schlüssel des routers.
 
-Diese Schlüssel sind explizit in ElGamal-Bauanfrageaufzeichnungen enthalten.
-Für ECIES-Bauanfrageaufzeichnungen sind die Tunnelschlüssel und AES-Antwortschlüssel enthalten,
-aber die ChaCha-Antwortschlüssel werden aus dem DH-Austausch abgeleitet.
-Siehe [Prop156](/proposals/156-ecies-routers/) für Details zu den statischen ECIES-Router-Schlüsseln.
+Nachfolgend ist eine Beschreibung, wie die Schlüssel abgeleitet werden, die zuvor in Anfrage-Datensätzen übertragen wurden.
 
-Unten ist eine Beschreibung, wie die zuvor in Anforderungsaufzeichnungen übertragenen Schlüssel abgeleitet werden.
+#### KDF for Initial ck and h
 
+Dies ist standardmäßiges [NOISE](https://noiseprotocol.org/noise.html) für Muster "N" mit einem Standard-Protokollnamen.
 
-KDF für Initial ck und h
-````````````````````````
+```text
+This is the "e" message pattern:
 
-Dies ist standardmäßiger [NOISE](https://noiseprotocol.org/noise.html) für das Muster "N" mit einem standardisierten Protokollnamen.
-
-  ```text
-
-Dies ist das "e"-Nachrichtenmuster:
-
-  // Protokollname festlegen.
+  // Define protocol_name.
   Set protocol_name = "Noise_N_25519_ChaChaPoly_SHA256"
-  (31 Bytes, US-ASCII-kodiert, keine NULL-Terminierung).
+  (31 bytes, US-ASCII encoded, no NULL termination).
 
-  // Hash h definieren = 32 Bytes
-  // Auf 32 Bytes auffüllen. Nicht hashen, da es nicht mehr als 32 Bytes sind.
+  // Define Hash h = 32 bytes
+  // Pad to 32 bytes. Do NOT hash it, because it is not more than 32 bytes.
   h = protocol_name || 0
 
-  Definiere ck = 32-Byte-Verschlüsselungs-Schlüssel. Kopiere die h-Daten zu ck.
-  Setze chainKey = h
+  Define ck = 32 byte chaining key. Copy the h data to ck.
+  Set chainKey = h
 
-  // MixHash(null-Prolog)
+  // MixHash(null prologue)
   h = SHA256(h);
 
-  // bis hierhin kann alles von allen Routern vorkalkuliert werden.
+  // up until here, can all be precalculated by all routers.
+```
+#### KDF for Request Record
 
+ElGamal tunnel creators generieren ein ephemeres X25519-Schlüsselpaar für jeden ECIES-Hop im tunnel und verwenden das obige Schema zur Verschlüsselung ihres BuildRequestRecord. ElGamal tunnel creators werden das Schema vor dieser Spezifikation für die Verschlüsselung zu ElGamal-Hops verwenden.
 
+ECIES tunnel creators müssen für jeden der ElGamal-Hops mit dessen öffentlichem Schlüssel verschlüsseln, unter Verwendung des in [Tunnel Creation](/docs/specs/implementation/) definierten Schemas. ECIES tunnel creators werden das oben genannte Schema für die Verschlüsselung zu ECIES-Hops verwenden.
 
+Das bedeutet, dass tunnel hops nur verschlüsselte Datensätze von ihrem gleichen Verschlüsselungstyp sehen werden.
 
-  ```
+Für ElGamal- und ECIES-Tunnel-Ersteller werden sie einzigartige ephemerale X25519-Schlüsselpaare pro Hop generieren, um zu ECIES-Hops zu verschlüsseln.
 
+**WICHTIG**: Ephemeral Keys müssen eindeutig pro ECIES-Hop und pro Build Record sein. Die Verwendung nicht eindeutiger Keys eröffnet einen Angriffsvektor für kollaborierende Hops, um zu bestätigen, dass sie sich im selben Tunnel befinden.
 
-KDF für Anwendungsaufzeichnung
-````````````````````````````````
-
-ElGamal-Tunnel-Ersteller generieren ein ephemeres X25519-Schlüsselpaar für jeden
-ECIES-Hop im Tunnel und verwenden das oben beschriebene Schema für die Verschlüsselung ihrer Bauanfrageaufzeichnung.
-ElGamal-Tunnel-Ersteller verwenden das vor dieser Spezifikation definierte Schema für die Verschlüsselung zu ElGamal-Hops.
-
-ECIES-Tunnel-Ersteller müssen zu jedem der ElGamal-Hop-öffentlichen Schlüssel unter Verwendung
-des in [Tunnel-Creation](/docs/specs/tunnel-creation/) definierten Schemas verschlüsseln. ECIES-Tunnel-Ersteller werden das oben beschriebene Schema zur Verschlüsselung an ECIES-Hops verwenden.
-
-Das bedeutet, dass Tunnel-Hops nur verschlüsselte Aufzeichnungen mit ihrem eigenen Verschlüsselungstyp sehen werden.
-
-Für ElGamal- und ECIES-Tunnel-Ersteller werden sie eindeutige ephemere X25519-Schlüsselpaaren
-pro Hop für die Verschlüsselung an ECIES-Hops erzeugen.
-
-**WICHTIG**:
-Ephemere Schlüssel müssen eindeutig pro ECIES-Hop und pro Bauaufzeichnung sein.
-Das Nichtverwendung einzigartiger Schlüssel öffnet einen Angriffsvektor, mit dem kolludierende Hops bestätigen können, dass sie sich im gleichen Tunnel befinden.
-
-
-  ```text
-
-
-// Jedes Hop's X25519 statisches Schlüsselpaar (hesk, hepk) von der Router-Identität
+```text
+// Each hop's X25519 static keypair (hesk, hepk) from the Router Identity
   hesk = GENERATE_PRIVATE()
   hepk = DERIVE_PUBLIC(hesk)
 
   // MixHash(hepk)
-  // || unten bedeutet anhängen
+  // || below means append
   h = SHA256(h || hepk);
 
-  // bis hierhin, kann alles von jedem Router vorkalkuliert werden
-  // für alle eingehenden Bauanfragen
+  // up until here, can all be precalculated by each router
+  // for all incoming build requests
 
-  // Sender generiert ein X25519 ephemeres Schlüsselpaar pro ECIES-Hop in der VTBM (sesk, sepk)
+  // Sender generates an X25519 ephemeral keypair per ECIES hop in the VTBM (sesk, sepk)
   sesk = GENERATE_PRIVATE()
   sepk = DERIVE_PUBLIC(sesk)
 
   // MixHash(sepk)
   h = SHA256(h || sepk);
 
-  Ende des "e"-Nachrichtenmusters.
+  End of "e" message pattern.
 
-  Dies ist das "es"-Nachrichtenmuster:
+  This is the "es" message pattern:
 
   // Noise es
-  // Absender führt ein X25519 DH mit dem statischen öffentlichen Schlüssel des Hops durch.
-  // Jeder Hop sucht die Aufzeichnung mit seinem gekürzten Identitätshaush,
-  // und extrahiert den ephemeren Schlüssel des Senders, der der verschlüsselten Aufzeichnung vorausgeht.
+  // Sender performs an X25519 DH with Hop's static public key.
+  // Each Hop, finds the record w/ their truncated identity hash,
+  // and extracts the Sender's ephemeral key preceding the encrypted record.
   sharedSecret = DH(sesk, hepk) = DH(hesk, sepk)
 
   // MixKey(DH())
   //[chainKey, k] = MixKey(sharedSecret)
-  // ChaChaPoly Parameter verschlüsseln/entschlüsseln
+  // ChaChaPoly parameters to encrypt/decrypt
   keydata = HKDF(chainKey, sharedSecret, "", 64)
-  // Für Antwortaufzeichnungs-KDF speichern
+  // Save for Reply Record KDF
   chainKey = keydata[0:31]
 
-  // AEAD-Parameter
+  // AEAD parameters
   k = keydata[32:63]
   n = 0
-  plaintext = 464-Byte-Bauanfragendaten
+  plaintext = 464 byte build request record
   ad = h
   ciphertext = ENCRYPT(k, n, plaintext, ad)
 
-  Ende des "es"-Nachrichtenmusters.
+  End of "es" message pattern.
 
   // MixHash(ciphertext)
-  // Für Antwortaufzeichnungs-KDF speichern
+  // Save for Reply Record KDF
   h = SHA256(h || ciphertext)
+```
+``replyKey``, ``layerKey`` und ``layerIV`` müssen weiterhin in ElGamal-Records enthalten sein und können zufällig generiert werden.
 
+### Begründung
 
+Wie in [Tunnel Creation](/docs/specs/implementation/) definiert. Es gibt keine Änderungen bei der Verschlüsselung für ElGamal-Hops.
 
+### Reply Record Encryption (ECIES)
 
+Der Antwortdatensatz ist mit ChaCha20/Poly1305 verschlüsselt.
 
-  ```
-
-``replyKey``, ``layerKey`` und ``layerIV`` müssen weiterhin in ElGamal-Aufzeichnungen enthalten sein
-und können zufällig generiert werden.
-
-
-### Anforderungsaufzeichnungs-Verschlüsselung (ElGamal)
-
-Wie in [Tunnel-Creation](/docs/specs/tunnel-creation/) definiert.
-Es gibt keine Änderungen an der Verschlüsselung für ElGamal-Hops.
-
-
-
-
-### Antwortaufzeichnungs-Verschlüsselung (ECIES)
-
-Die Antwortaufzeichnung ist ChaCha20/Poly1305-verschlüsselt.
-
-  ```text
-
-
-// AEAD-Parameter
-  k = chainkey aus der Bauanfrage
+```text
+// AEAD parameters
+  k = chainkey from build request
   n = 0
-  plaintext = 512-Byte-Bauantwortdaten
-  ad = h aus der Bauanfrage
+  plaintext = 512 byte build reply record
+  ad = h from build request
 
   ciphertext = ENCRYPT(k, n, plaintext, ad)
+```
+### Build-Request-Datensätze
 
+Wie in [Tunnel Creation](/docs/specs/implementation/) definiert. Es gibt keine Änderungen bei der Verschlüsselung für ElGamal-Hops.
 
+### Security Analysis
 
+ElGamal bietet keine Forward Secrecy für Tunnel Build Messages.
 
-  ```
+AES256/CBC steht etwas besser da und ist nur anfällig für eine theoretische Schwächung durch einen bekannten Klartext-`biclique`-Angriff.
 
+Der einzige bekannte praktische Angriff gegen AES256/CBC ist ein Padding-Oracle-Angriff, wenn der IV dem Angreifer bekannt ist.
 
+Ein Angreifer müsste die ElGamal-Verschlüsselung des nächsten Hops brechen, um an die AES256/CBC-Schlüsselinformationen (Antwortschlüssel und IV) zu gelangen.
 
-### Antwortaufzeichnungs-Verschlüsselung (ElGamal)
+ElGamal ist deutlich CPU-intensiver als ECIES, was zu potentieller Ressourcenerschöpfung führt.
 
-Wie in [Tunnel-Creation](/docs/specs/tunnel-creation/) definiert.
-Es gibt keine Änderungen an der Verschlüsselung für ElGamal-Hops.
+ECIES, verwendet mit neuen ephemeren Schlüsseln pro BuildRequestRecord oder VariableTunnelBuildMessage, bietet Forward-Secrecy.
 
+ChaCha20Poly1305 bietet AEAD-Verschlüsselung, wodurch der Empfänger die Nachrichtenintegrität vor dem Entschlüsselungsversuch überprüfen kann.
 
+## Bedrohungsmodell
 
-### Sicherheitsanalyse
+Dieses Design maximiert die Wiederverwendung bestehender kryptographischer Primitive, Protokolle und Code. Dieses Design minimiert das Risiko.
 
-ElGamal bietet keine Vorwärtsgeheimnis für Tunnel-Bau-Nachrichten.
+## Implementation Notes
 
-AES256/CBC steht in etwas besserem Ruf, da es nur einem theoretischen Abschwächung durch einen
-bekannten Klartext 'biclique'-Angriff ausgesetzt ist.
+* Ältere Router prüfen nicht den Verschlüsselungstyp des Hops und senden ElGamal-verschlüsselte
+  Datensätze. Einige neuere Router sind fehlerhaft und senden verschiedene Arten von fehlerhaften Datensätzen.
+  Implementierer sollten diese Datensätze vor der DH-Operation erkennen und ablehnen,
+  falls möglich, um die CPU-Nutzung zu reduzieren.
 
-Der einzige bekannte praktische Angriff gegen AES256/CBC ist ein Padding-Orakel-Angriff, wenn der IV dem Angreifer bekannt ist.
+## Issues
 
-Ein Angreifer müsste die ElGamal-Verschlüsselung des nächsten Hops durchbrechen, um die AES256/CBC-Schlüsselinformationen (Antwortschlüssel und IV) zu erhalten.
+## Design
 
-ElGamal ist deutlich CPU-intensiver als ECIES, was zu einer potenziellen Ressourcenauslastung führen kann.
-
-ECIES, verwendet mit neuen ephemeren Schlüsseln pro Bauanfrageaufzeichnung oder VariableTunnelBuildMessage, bietet Vorwärtsgeheimnis.
-
-ChaCha20Poly1305 bietet AEAD-Verschlüsselung, die es dem Empfänger ermöglicht, die Nachrichtenintegrität zu überprüfen, bevor der Versuch der Entschlüsselung unternommen wird.
-
-
-## Begründung
-
-Dieses Design maximiert die Wiederverwendung bestehender kryptographischer Primitiven, Protokolle und Codes.
-Dieses Design minimiert das Risiko.
-
-
-
-
-## Implementierungshinweise
-
-* Ältere Router überprüfen nicht den Verschlüsselungstyp des Hops und werden ElGamal-verschlüsselte
-  Aufzeichnungen senden. Einige neuere Router sind fehlerhaft und werden verschiedene Arten von fehlerhaften Aufzeichnungen senden.
-  Implementierer sollten diese Aufzeichnungen erkennen und vor dem DH-Vorgang ablehnen, wenn möglich, um den CPU-Verbrauch zu reduzieren.
-
-
-## Probleme
-
-
-
-## Migration
-
-Siehe [Prop156](/proposals/156-ecies-routers/).
+Siehe [Proposal 156](/proposals/156-ecies-routers).

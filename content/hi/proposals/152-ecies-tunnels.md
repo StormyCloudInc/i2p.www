@@ -1,819 +1,578 @@
 ---
-title: "ECIES सुरंगें"
+title: "ECIES टनल"
 number: "152"
 author: "chisana, zzz, orignal"
 created: "2019-07-04"
 lastupdated: "2025-03-05"
-status: "Closed"
+status: "बंद"
 thread: "http://zzz.i2p/topics/2737"
 target: "0.9.48"
 implementedin: "0.9.48"
 ---
 
 ## नोट
-नेटवर्क परिनियोजन और परीक्षण जारी है।
-छोटे संशोधनों के अधीन है।
-आधिकारिक विनिर्देश के लिए [SPEC](/docs/specs/implementation/) देखें।
 
+नेटवर्क deployment और testing प्रगति में है। मामूली संशोधनों के अधीन। आधिकारिक specification के लिए [SPEC](/docs/specs/implementation/) देखें।
 
 ## अवलोकन
 
-यह दस्तावेज़ [ECIES-X25519](/docs/specs/ecies/) द्वारा पेश किए गए क्रिप्टो प्रिमिटिव का उपयोग करके सुरंग निर्माण संदेश एन्क्रिप्शन में बदलाव का प्रस्ताव करता है।
-यह ElGamal से ECIES-X25519 कुंजी में राउटर को बदलने के लिए समग्र प्रस्ताव [Prop156](/proposals/156-ecies-routers/) का एक हिस्सा है।
+यह दस्तावेज़ [ECIES-X25519](/docs/specs/ecies/) द्वारा प्रस्तुत crypto primitives का उपयोग करके Tunnel Build message encryption में परिवर्तनों का प्रस्ताव करता है। यह router को ElGamal से ECIES-X25519 keys में परिवर्तित करने के लिए समग्र प्रस्ताव [Proposal 156](/proposals/156-ecies-routers) का एक भाग है।
 
-ElGamal + AES256 से ECIES + ChaCha20 में नेटवर्क को बदलने के उद्देश्य से,
-मिश्रित ElGamal और ECIES राउटर वाली सुरंगों की आवश्यकता है।
-मिश्रित सुरंग हॉप्स के प्रबंधन के लिए विनिर्देश प्रदान किए गए हैं।
-ElGamal हॉप्स के प्रारूप, प्रसंस्करण, या एन्क्रिप्शन में कोई बदलाव नहीं किया जाएगा।
+नेटवर्क को ElGamal + AES256 से ECIES + ChaCha20 में संक्रमित करने के उद्देश्य से, मिश्रित ElGamal और ECIES router वाली tunnel आवश्यक हैं। मिश्रित tunnel hop को संभालने के लिए विशिष्टताएं प्रदान की गई हैं। ElGamal hop के प्रारूप, प्रसंस्करण, या एन्क्रिप्शन में कोई परिवर्तन नहीं किया जाएगा।
 
-ElGamal सुरंग निर्माता को प्रत्येक हॉप के लिए अस्थायी X25519 कीपेयर बनानी होगी, और
-ECIES हॉप्स को शामिल करने वाली सुरंग को बनाने के लिए इस विनिर्देश का पालन करना होगा।
+ElGamal tunnel creators को प्रति-hop अस्थायी X25519 keypairs बनाने होंगे, और ECIES hops वाले tunnels बनाने के लिए इस spec का पालन करना होगा।
 
-यह प्रस्ताव ECIES-X25519 सुरंग निर्माण के लिए आवश्यक बदलावों को निर्दिष्ट करता है।
-ECIES राउटर के लिए आवश्यक सभी परिवर्तनों का अवलोकन करने के लिए, प्रस्ताव 156 [Prop156](/proposals/156-ecies-routers/) देखें।
+यह proposal ECIES-X25519 tunnel building के लिए आवश्यक परिवर्तनों को निर्दिष्ट करता है। ECIES routers के लिए आवश्यक सभी परिवर्तनों के अवलोकन के लिए, proposal 156 [Proposal 156](/proposals/156-ecies-routers) देखें।
 
-यह प्रस्ताव संगतता के लिए सुरंग निर्माण रिकॉर्ड का समान आकार बनाए रखता है।
-छोटे निर्माण रिकॉर्ड और संदेश बाद में लागू किए जाएंगे - [Prop157](/proposals/157-new-tbm/) देखें।
+यह प्रस्ताव tunnel build records के लिए समान आकार बनाए रखता है, जैसा कि compatibility के लिए आवश्यक है। छोटे build records और messages बाद में लागू किए जाएंगे - देखें [Proposal 157](/proposals/157-new-tbm)।
 
+### Cryptographic Primitives
+
+कोई नया cryptographic primitives नहीं शामिल किया गया है। इस प्रस्ताव को लागू करने के लिए आवश्यक primitives हैं:
+
+- AES-256-CBC जैसा कि [Cryptography](/docs/specs/cryptography/) में है
+- STREAM ChaCha20/Poly1305 functions:
+  ENCRYPT(k, n, plaintext, ad) और DECRYPT(k, n, ciphertext, ad) - जैसा कि [NTCP2](/docs/specs/ntcp2/) [ECIES-X25519](/docs/specs/ecies/) और [RFC-7539](https://tools.ietf.org/html/rfc7539) में है
+- X25519 DH functions - जैसा कि [NTCP2](/docs/specs/ntcp2/) और [ECIES-X25519](/docs/specs/ecies/) में है
+- HKDF(salt, ikm, info, n) - जैसा कि [NTCP2](/docs/specs/ntcp2/) और [ECIES-X25519](/docs/specs/ecies/) में है
+
+अन्य Noise functions जो कहीं और परिभाषित हैं:
+
+- MixHash(d) - जैसा कि [NTCP2](/docs/specs/ntcp2/) और [ECIES-X25519](/docs/specs/ecies/) में है
+- MixKey(d) - जैसा कि [NTCP2](/docs/specs/ntcp2/) और [ECIES-X25519](/docs/specs/ecies/) में है
+
+### Goals
+
+- crypto operations की गति बढ़ाना
+- tunnel BuildRequestRecords और BuildReplyRecords के लिए ElGamal + AES256/CBC को ECIES primitives से बदलना
+- संगतता के लिए encrypted BuildRequestRecords और BuildReplyRecords का size (528 bytes) में कोई परिवर्तन नहीं
+- कोई नया I2NP messages नहीं
+- संगतता के लिए encrypted build record size बनाए रखना
+- Tunnel Build Messages के लिए forward secrecy जोड़ना
+- authenticated encryption जोड़ना
+- hops को BuildRequestRecords को reorder करने का पता लगाना
+- timestamp की resolution बढ़ाना ताकि Bloom filter का size कम किया जा सके
+- tunnel expiration के लिए field जोड़ना ताकि विभिन्न tunnel lifetimes संभव हो सकें (केवल all-ECIES tunnels)
+- भविष्य की features के लिए extensible options field जोड़ना
+- मौजूदा cryptographic primitives का पुन: उपयोग
+- संगतता बनाए रखते हुए जहाँ संभव हो tunnel build message security में सुधार
+- mixed ElGamal/ECIES peers के साथ tunnels का समर्थन
+- build messages पर "tagging" attacks के विरुद्ध सुरक्षा में सुधार
+- Hops को build message को process करने से पहले अगली hop के encryption type को जानने की आवश्यकता नहीं है,
+  क्योंकि उस समय उनके पास अगली hop का RI नहीं हो सकता
+- वर्तमान network के साथ अधिकतम संगतता
+- ElGamal routers के लिए tunnel build AES request/reply encryption में कोई परिवर्तन नहीं
+- tunnel AES "layer" encryption में कोई परिवर्तन नहीं, इसके लिए देखें [Proposal 153](/proposals/153-chacha20-layer-encryption)
+- दोनों 8-record TBM/TBRM और variable-size VTBM/VTBRM का समर्थन जारी रखना
+- पूरे network के लिए "flag day" upgrade की आवश्यकता नहीं
 
 ### क्रिप्टोग्राफिक प्रिमिटिव्स
 
-कोई नया क्रिप्टोग्राफिक प्रिमिटिवस पेश नहीं किया गया है। इस प्रस्ताव को लागू करने के लिए आवश्यक प्रिमिटिव्स हैं:
+- tunnel build संदेशों का पूर्ण पुनर्डिज़ाइन जिसके लिए एक "flag day" की आवश्यकता है।
+- tunnel build संदेशों को छोटा करना (सभी ECIES hops और एक नए proposal की आवश्यकता)
+- tunnel build विकल्पों का उपयोग जैसा कि [Proposal 143](/proposals/143-build-message-options) में परिभाषित है, केवल छोटे संदेशों के लिए आवश्यक
+- Bidirectional tunnels - इसके लिए देखें [Proposal 119](/proposals/119-bidirectional-tunnels)
+- छोटे tunnel build संदेश - इसके लिए देखें [Proposal 157](/proposals/157-new-tbm)
 
-- [Cryptography](/docs/specs/cryptography/) में जैसा AES-256-CBC
-- STREAM ChaCha20/Poly1305 फंक्शंस:
-  ENCRYPT(k, n, plaintext, ad) और DECRYPT(k, n, ciphertext, ad) - [NTCP2](/docs/specs/ntcp2/) [ECIES-X25519](/docs/specs/ecies/) और [RFC-7539](https://tools.ietf.org/html/rfc7539) में जैसा
-- X25519 DH फंक्शंस - [NTCP2](/docs/specs/ntcp2/) और [ECIES-X25519](/docs/specs/ecies/) में जैसा
-- HKDF(salt, ikm, info, n) - [NTCP2](/docs/specs/ntcp2/) और [ECIES-X25519](/docs/specs/ecies/) में जैसा
-
-अन्य Noise फंक्शंस जो अन्यत्र परिभाषित हैं:
-
-- MixHash(d) - [NTCP2](/docs/specs/ntcp2/) और [ECIES-X25519](/docs/specs/ecies/) में जैसा
-- MixKey(d) - [NTCP2](/docs/specs/ntcp2/) और [ECIES-X25519](/docs/specs/ecies/) में जैसा
-
+## Threat Model
 
 ### लक्ष्य
 
-- क्रिप्टो ऑपरेशन्स की गति बढ़ाएं
-- ElGamal + AES256/CBC को सुरंग बनाना अनुरोध रिकॉर्ड्स और उत्तर रिकॉर्ड्स के लिए ECIES प्रिमिटिव्स से बदलें।
-- एनक्रिप्टेड निर्माण अनुरोध रिकॉर्ड्स और उत्तर रिकॉर्ड्स के आकार (528 बाइट्स) में कोई बदलाव नहीं, संगतता के लिए
-- कोई नया I2NP संदेश नहीं
-- संगतता के लिए एनक्रिप्टेड निर्माण रिकॉर्ड आकार बनाए रखें
-- सुरंग निर्माण संदेशों के लिए अग्रेषण गोपनीयता जोड़ें।
-- प्रमाणीकृत एनक्रिप्शन जोड़ें
-- हॉप्स के पुन: क्रमबद्ध निर्माण अनुरोध रिकॉर्ड्स का पता लगाएं
-- समय स्टैम्प के रिजॉल्यूशन को बढ़ाएं ताकि ब्लूम फिल्टर का आकार घटाया जा सके
-- सुरंग समाप्ति के लिए फ़ील्ड जोड़ें ताकि विभिन्न सुरंग जीवनकाल संभव हो (सभी-ECIES सुरंगें ही)
-- भविष्य की विशेषताओं के लिए भविष्य उन्मुख विकल्प फ़ील्ड जोड़ें
-- मौजूदा क्रिप्टोग्राफिक प्रिमिटिव्स का पुन: उपयोग करें
-- संगतता बनाए रखते हुए जहाँ संभव हो सुरंग निर्माण संदेश सुरक्षा में सुधार करें
-- मिश्रित ElGamal/ECIES साथियों के साथ सुरंगों का समर्थन करें
-- निर्माण संदेशों पर "टैगिंग" हमलों के खिलाफ बचाव में सुधार करें
-- हॉप्स को अगले हॉप के प्रसंस्करण से पहले एन्क्रिप्शन प्रकार जानने की जरूरत नहीं, क्योंकि वे उस समय अगले हॉप का RI न रख सकते हैं
-- वर्तमान नेटवर्क के साथ अधिकतम संगतता
-- ElGamal राउटर के लिए सुरंग निर्माण AES अनुरोध/उत्तर एन्क्रिप्शन में कोई बदलाव नहीं
-- सुरंग AES "परत" एन्क्रिप्शन में कोई बदलाव नहीं, इसके लिए [Prop153](/proposals/153-chacha20-layer-encryption/) देखें
-- दोनों 8-रिकॉर्ड TBM/TBRM और परिवर्तनीय आकार VTBM/VTBRM का समर्थन जारी रखें
-- पूरे नेटवर्क के लिए "फ्लैग दिवस" उन्नयन की आवश्यकता नहीं है
+- कोई भी hop tunnel के originator को निर्धारित नहीं कर सकता।
 
+- Middle hops को tunnel की दिशा या tunnel में उनकी स्थिति निर्धारित करने में सक्षम नहीं होना चाहिए।
+
+- कोई भी hop अन्य request या reply records की कोई भी contents को पढ़ नहीं सकता, सिवाय अगले hop के लिए truncated router hash और ephemeral key के
+
+- आउटबाउंड बिल्ड के लिए reply tunnel का कोई भी सदस्य किसी भी reply records को नहीं पढ़ सकता।
+
+- आउटबाउंड tunnel का कोई भी सदस्य inbound build के लिए किसी भी request records को नहीं पढ़ सकता,
+  इस अपवाद के साथ कि OBEP truncated router hash और IBGW के लिए ephemeral key देख सकता है
 
 ### गैर-लक्ष्य
 
-- सुरंग निर्माण संदेशों का पूर्ण पुनर्रचना जो "फ्लैग दिवस" की आवश्यकता है।
-- सुरंग निर्माण संदेशों को छोटा करना (सभी-ECIES हॉप्स की आवश्यकता होती है और एक नए प्रस्ताव की आवश्यकता होती है)
-- [Prop143](/proposals/143-build-message-options/) में परिभाषित सुरंग निर्माण विकल्प का उपयोग, केवल छोटे संदेशों के लिए आवश्यक
-- द्विदिश सुरंग - इसके लिए [Prop119](/proposals/119-bidirectional-tunnels/) देखें
-- छोटे सुरंग निर्माण संदेश - इसके लिए [Prop157](/proposals/157-new-tbm/) देखें
+tunnel निर्माण डिज़ाइन का एक मुख्य लक्ष्य सहयोगी routers X और Y के लिए यह जानना कठिन बनाना है कि वे एक ही tunnel में हैं। यदि router X hop m पर है और router Y hop m+1 पर है, तो वे स्पष्ट रूप से जान जाएंगे। लेकिन यदि router X hop m पर है और router Y hop m+n पर है जहाँ n>1 है, तो यह काफी कठिन होना चाहिए।
 
-
-## खतरा मॉडल
-
-### डिज़ाइन लक्ष्य
-
-- कोई हॉप्स सुरंग के जनक को निर्धारित करने में सक्षम नहीं हैं।
-
-- मध्य हॉप्स सुरंग की दिशा या सुरंग में उनकी स्थिति निर्धारित करने में सक्षम नहीं होना चाहिए।
-
-- कोई हॉप्स अन्य अनुरोध या उत्तर रिकॉर्ड के किसी सामग्री को नहीं पढ़ सकता है,
-  अगले हॉप के लिए काटा हुआ राउटर हैश और अस्थायी कुंजी को छोड़कर
-
-- आउटबाउंड निर्माण के लिए उत्तर सुरंग का कोई सदस्य किसी भी उत्तर रिकॉर्ड को नहीं पढ़ सकता।
-
-- इनबाउंड निर्माण के लिए आउटबाउंड सुरंग का कोई सदस्य किसी भी अनुरोध रिकॉर्ड को नहीं पढ़ सकता, सिवाय इसके कि OBEP अगला हॉप के लिए काटा हुआ राउटर हैश और अस्थायी कुंजी देख सकता है
-
-
-
-
-### टैगिंग आक्रमण
-
-सुरंग निर्माण डिज़ाइन का प्रमुख लक्ष्य यह कठिन बनाना है कि
-छलवाली राउटर X और Y ये जान सकें कि वे एक ही सुरंग में हैं।
-यदि राउटर X हॉप m पर है और राउटर Y हॉप m+1 पर है, तो वे स्पष्ट रूप से जानेंगे।
-लेकिन यदि राउटर X हॉप m पर है और राउटर Y हॉप m+n पर है जहाँ n>1, तो यह बहुत कठिन होना चाहिए।
-
-टैगिंग हमले वह हैं जहाँ मध्य-हॉप राउटर X सुरंग निर्माण संदेश को इस तरीके से बदल देता है कि
-राउटर Y संदेश को प्राप्त करते समय परिवर्तन का पता लगा सके।
-लक्ष्य यह है कि X और Y के बीच के राउटर द्वारा कोई परिवर्तन किया गया संदेश राउटर Y तक पहुँचने से पहले गिरा दिया जाए।
-उन संशोधनों के लिए जो राउटर Y तक पहुँचने से पहले नहीं गिराए गए हैं, सुरंग निर्माता को प्रतिक्रिया में भ्रष्टाचार का पता लगाना चाहिए
-और सुरंग को त्याग देना चाहिए।
+Tagging attacks वे हैं जहाँ middle-hop router X tunnel build message को इस तरह बदल देता है कि router Y उस alteration को detect कर सके जब build message वहाँ पहुँचता है। लक्ष्य यह है कि कोई भी altered message को X और Y के बीच किसी router द्वारा drop कर दिया जाए इससे पहले कि वह router Y तक पहुँचे। उन modifications के लिए जो router Y से पहले drop नहीं होतीं, tunnel creator को reply में corruption को detect करना चाहिए और tunnel को discard करना चाहिए।
 
 संभावित हमले:
 
-- एक निर्माण रिकॉर्ड को बदलना
-- एक निर्माण रिकॉर्ड को बदलना
-- एक निर्माण रिकॉर्ड को जोड़ना या हटाना
-- निर्माण रिकॉर्ड्स को पुन: क्रमबद्ध करना
-
-
-
-
+- एक बिल्ड रिकॉर्ड को बदलें
+- एक बिल्ड रिकॉर्ड को बदलें
+- एक बिल्ड रिकॉर्ड जोड़ें या हटाएं
+- बिल्ड रिकॉर्ड्स को पुनः क्रमित करें
 
 TODO: क्या वर्तमान डिज़ाइन इन सभी हमलों को रोकता है?
 
+## Design
 
+### Noise Protocol Framework
 
+यह प्रस्ताव Noise Protocol Framework [NOISE](https://noiseprotocol.org/noise.html) (संशोधन 34, 2018-07-11) पर आधारित आवश्यकताएं प्रदान करता है। Noise की भाषा में, Alice प्रारंभकर्ता है, और Bob उत्तरदाता है।
 
+यह प्रस्ताव Noise protocol Noise_N_25519_ChaChaPoly_SHA256 पर आधारित है। यह Noise protocol निम्नलिखित primitives का उपयोग करता है:
 
+- One-Way Handshake Pattern: N
+  Alice अपनी static key को Bob को transmit नहीं करती है (N)
 
-## डिज़ाइन
+- DH Function: X25519
+  X25519 DH जिसमें 32 बाइट्स की key length है जैसा कि [RFC-7748](https://tools.ietf.org/html/rfc7748) में निर्दिष्ट है।
 
-### शोर प्रोटोकॉल फ्रेमवर्क
+- Cipher Function: ChaChaPoly
+  AEAD_CHACHA20_POLY1305 जैसा कि [RFC-7539](https://tools.ietf.org/html/rfc7539) section 2.8 में निर्दिष्ट है।
+  12 byte nonce, जिसके पहले 4 bytes शून्य पर सेट हैं।
+  [NTCP2](/docs/specs/ntcp2/) के समान।
 
-यह प्रस्ताव शोर प्रोटोकॉल फ्रेमवर्क [NOISE](https://noiseprotocol.org/noise.html) (संशोधन 34, 2018-07-11) के आधार पर आवश्यकताओं को प्रदान करता है।
-शोर के मुहावरे में, एलिस प्रारंभकर्ता होती है, और बॉब प्रत्युत्तरकर्ता।
+- Hash Function: SHA256
+  मानक 32-बाइट hash, जो पहले से ही I2P में व्यापक रूप से उपयोग किया जाता है।
 
-यह प्रस्ताव शोर प्रोटोकॉल Noise_N_25519_ChaChaPoly_SHA256 पर आधारित है।
-यह शोर प्रोटोकॉल निम्न प्रिमिटिव्स का उपयोग करता है:
-
-- एकतरफा हैंडशेक पैटर्न: N
-  एलिस अपनी स्थिर कुंजी बॉब को नहीं भेजती (N)
-
-- DH फंक्शन: X25519
-  X25519 DH 32 बाइट्स की कुंजी लंबाई के साथ जैसा [RFC-7748](https://tools.ietf.org/html/rfc7748) में निर्दिष्ट है।
-
-- साइफर फंक्शन: ChaChaPoly
-  AEAD_CHACHA20_POLY1305 जैसा [RFC-7539](https://tools.ietf.org/html/rfc7539) के खंड 2.8 में निर्दिष्ट है।
-  12 बाइट्स का नॉनस, जिसमें पहले 4 बाइट्स को शून्य पर सेट किया गया है।
-  [NTCP2](/docs/specs/ntcp2/) में जैसा।
-
-- हैश फंक्शन: SHA256
-  मानक 32-बाइट हैश, जो I2P में व्यापक रूप से प्रयोग में है।
-
-
-फ्रेमवर्क में जोड़
-````````````````````````````````````
+#### Additions to the Framework
 
 कोई नहीं।
 
-
-### हैंडशेक पैटर्न
+### डिज़ाइन लक्ष्य
 
 हैंडशेक [Noise](https://noiseprotocol.org/noise.html) हैंडशेक पैटर्न का उपयोग करते हैं।
 
-निम्नलिखित वर्णमाला मानचित्र का उपयोग किया गया है:
+निम्नलिखित अक्षर मैपिंग का उपयोग किया जाता है:
 
-- e = एक-समय अस्थायी कुंजी
-- s = स्थैतिक कुंजी
-- p = संदेश पेलोड
+- e = एक-बार उपयोग की इफेमेरल key
+- s = static key
+- p = संदेश payload
 
-निर्माण अनुरोध शोर N पैटर्न के समान है।
-यह [NTCP2](/docs/specs/ntcp2/) में उपयोग किए गए XK पैटर्न के पहले (सत्र अनुरोध) संदेश के बराबर भी है।
+बिल्ड रिक्वेस्ट Noise N pattern के समान है। यह [NTCP2](/docs/specs/ntcp2/) में उपयोग किए गए XK pattern के पहले (Session Request) संदेश के भी समान है।
 
-
-.. कच्चा:: html
-
-  ```text
-
+```text
 <- s
   ...
   e es p ->
+```
+### टैगिंग अटैक
 
+Build request records tunnel creator द्वारा बनाए जाते हैं और व्यक्तिगत hop के लिए asymmetrically encrypted होते हैं। Request records की यह asymmetric encryption वर्तमान में ElGamal है जैसा कि [Cryptography](/docs/specs/cryptography/) में परिभाषित है और इसमें SHA-256 checksum शामिल है। यह design forward-secret नहीं है।
 
+नया डिज़ाइन one-way Noise pattern "N" का उपयोग करेगा जो ECIES-X25519 ephemeral-static DH के साथ है, एक HKDF के साथ, और forward secrecy, integrity, और authentication के लिए ChaCha20/Poly1305 AEAD के साथ। Alice tunnel build requestor है। tunnel में प्रत्येक hop एक Bob है।
 
+(Payload Security Properties)
 
-  ```
-
-
-### अनुरोध एन्क्रिप्शन
-
-निर्माण अनुरोध रिकॉर्ड्स सुरंग निर्माता द्वारा बनाए जाते हैं और व्यक्तिगत हॉप के लिए विषम रूप से एन्क्रिप्ट किए जाते हैं।
-अनुरोध रिकॉर्ड्स का यह विषम एन्क्रिप्शन वर्तमान में [क्रिप्टोग्राफी](/docs/specs/cryptography/) में परिभाषित ElGamal है
-और इसमें SHA-256 चेकसम शामिल है। यह डिज़ाइन अग्रेषण गोपनीय नहीं है।
-
-नई डिज़ाइन एकतरफा शोर पैटर्न "N" का उपयोग करेगी जिसमें ECIES-X25519 अस्थायी-स्थैतिक DH, के साथ एक HKDF, और
-आगे की गोपनीयता, अखंडता और प्रमाणीकरण के लिए ChaCha20/Poly1305 AEAD।
-एलिस सुरंग निर्माण अनुरोधकर्ता है। सुरंग में प्रत्येक हॉप एक बॉब है।
-
-
-(पेलोड सुरक्षा गुणधर्म)
-
-.. कच्चा:: html
-
-  ```text
-
-N:                      प्रमाणीकरण   गोपनीयता
+```text
+N:                      Authentication   Confidentiality
     -> e, es                  0                2
 
-    प्रमाणीकरण: कोई नहीं (0)।
-    यह पेलोड किसी भी पार्टी द्वारा भेजा गया हो सकता है, जिसमें एक सक्रिय हमलावर भी शामिल है।
+    Authentication: None (0).
+    This payload may have been sent by any party, including an active attacker.
 
-    गोपनीयता: 2।
-    ज्ञात प्राप्तकर्ता को एन्क्रिप्शन, केवल प्रेषक के समझौते के लिए अग्रेषण गोपनीयता,
-    रिप्ले के लिए असुरक्षित। यह पेलोड केवल प्राप्तकर्ता की स्थिर कुंजी जोड़ी के साथ
-    संबंधित DH पर आधारित एन्क्रिप्शन है। यदि प्राप्तकर्ता की स्थिर निजी कुंजी समझौता की गई, 
-    यहां तक कि बाद की तारीख में, इस पेलोड को डिक्रिप्ट किया जा सकता है। यह संदेश 
-    दोहराया भी जा सकता है, क्योंकि इसमें प्राप्तकर्ता का कोई अस्थायी योगदान नहीं है।
+    Confidentiality: 2.
+    Encryption to a known recipient, forward secrecy for sender compromise
+    only, vulnerable to replay.  This payload is encrypted based only on DHs
+    involving the recipient's static key pair.  If the recipient's static
+    private key is compromised, even at a later date, this payload can be
+    decrypted.  This message can also be replayed, since there's no ephemeral
+    contribution from the recipient.
 
-    "e": एलिस एक नई अस्थायी कुंजी जोड़ी बनाती है और इसे e चर में संग्रहीत करती है,
-         संदेश बफर में अस्थायी सार्वजनिक कुंजी को स्पष्ट रूप में लिखती है, और नए h को 
-         प्राप्त करने के लिए पुराने h के साथ सार्वजनिक कुंजी को हैश करती है।
+    "e": Alice generates a new ephemeral key pair and stores it in the e
+         variable, writes the ephemeral public key as cleartext into the
+         message buffer, and hashes the public key along with the old h to
+         derive a new h.
 
-    "es": एलिस की अस्थायी कुंजी जोड़ी और बॉब की स्थैतिक कुंजी जोड़ी के बीच एक DH 
-          प्रदर्शन किया जाता है। परिणाम को नए ck और k को प्राप्त करने के लिए पुराने ck के 
-          साथ हैश किया जाता है, और n को शून्य पर सेट किया जाता है।
+    "es": A DH is performed between the Alice's ephemeral key pair and the
+          Bob's static key pair.  The result is hashed along with the old ck to
+          derive a new ck and k, and n is set to zero.
+```
+### Reply encryption
 
+Build reply records को hops creator द्वारा बनाया जाता है और creator के लिए symmetrically encrypted किया जाता है। Reply records का यह symmetric encryption वर्तमान में AES है जिसमें एक prepended SHA-256 checksum होता है। और इसमें एक SHA-256 checksum शामिल होता है। यह design forward-secret नहीं है।
 
+नया डिज़ाइन integrity और authentication के लिए ChaCha20/Poly1305 AEAD का उपयोग करेगा।
 
+### Noise Protocol Framework
 
+अनुरोध में ephemeral public key को AES या Elligator2 के साथ obfuscate करने की आवश्यकता नहीं है। पिछला hop ही एकमात्र है जो इसे देख सकता है, और वह hop जानता है कि अगला hop ECIES है।
 
-  ```
+Reply records को किसी अन्य DH के साथ पूर्ण asymmetric encryption की आवश्यकता नहीं होती है।
 
+## Specification
 
+### Build Request Records
 
-### उत्तर एन्क्रिप्शन
+एन्क्रिप्टेड BuildRequestRecords संगतता के लिए ElGamal और ECIES दोनों के लिए 528 बाइट्स हैं।
 
-निर्माण उत्तर रिकॉर्ड्स हॉप के निर्माता द्वारा बनाए जाते हैं और निर्माता के लिए सममिति रूप से 
-एन्क्रिप्ट किए जाते हैं।
-उत्तर रिकॉर्ड्स का यह सममिति एन्क्रिप्शन वर्तमान में AES के साथ एक प्रिपेंड SHA-256 चेकसम के साथ है।
-और इसमें एक SHA-256 चेकसम शामिल है। यह डिज़ाइन अग्रेषण गोपनीय नहीं है।
+#### Request Record Unencrypted (ElGamal)
 
-नई डिज़ाइन अखंडता और प्रमाणीकरण के लिए ChaCha20/Poly1305 AEAD का उपयोग करेगी।
+संदर्भ के लिए, यह ElGamal routers के लिए tunnel BuildRequestRecord की वर्तमान specification है, जो [I2NP](/docs/specs/i2np/) से ली गई है। अनएन्क्रिप्टेड डेटा को एक nonzero byte और encryption से पहले डेटा के SHA-256 hash के साथ prepend किया जाता है, जैसा कि [Cryptography](/docs/specs/cryptography/) में परिभाषित है।
 
+सभी फ़ील्ड big-endian हैं।
 
-### औचित्य
+अनएन्क्रिप्टेड आकार: 222 bytes
 
-अनुरोध में अस्थायी सार्वजनिक कुंजी को AES
-या एलिगेटर 2 से अस्पष्ट करने की आवश्यकता नहीं होती। पिछला हॉप ही केवल इसे देख सकता है, 
-और वह हॉप जानता है कि अगला हॉप ECIES है।
+```text
+bytes     0-3: tunnel ID to receive messages as, nonzero
+  bytes    4-35: local router identity hash
+  bytes   36-39: next tunnel ID, nonzero
+  bytes   40-71: next router identity hash
+  bytes  72-103: AES-256 tunnel layer key
+  bytes 104-135: AES-256 tunnel IV key
+  bytes 136-167: AES-256 reply key
+  bytes 168-183: AES-256 reply IV
+  byte      184: flags
+  bytes 185-188: request time (in hours since the epoch, rounded down)
+  bytes 189-192: next message ID
+  bytes 193-221: uninterpreted / random padding
+```
+#### Request Record Encrypted (ElGamal)
 
-उत्तर रिकॉर्ड्स को पूर्ण विषम एन्क्रिप्शन की आवश्यकता नहीं होती है।
+संदर्भ के लिए, यह ElGamal routers के लिए tunnel BuildRequestRecord की वर्तमान specification है, जो [I2NP](/docs/specs/i2np/) से ली गई है।
 
+एन्क्रिप्टेड साइज़: 528 bytes
 
+```text
+bytes    0-15: Hop's truncated identity hash
+  bytes  16-528: ElGamal encrypted BuildRequestRecord
+```
+#### Request Record Unencrypted (ECIES)
 
-## विनिर्देश
+यह ECIES-X25519 routers के लिए tunnel BuildRequestRecord की प्रस्तावित specification है। बदलावों का सारांश:
 
-
-
-### निर्माण अनुरोध रिकॉर्ड्स
-
-एन्क्रिप्टेड निर्माण अनुरोध रिकॉर्ड्स संगतता के लिए दोनों ElGamal और ECIES के लिए 528 बाइट्स हैं।
-
-
-अनुरोध रिकॉर्ड असंप्रेषित (ElGamal)
-`````````````````````````````````````````
-
-संदर्भ के लिए, यह [I2NP](/docs/specs/i2np/) से लिए गए ElGamal राउटरों के लिए सुरंग निर्माण अनुरोध रिकॉर्ड का वर्तमान विनिर्देश है।
-असंप्रेषित डेटा को एक गैर-शून्य बाइट और डेटा के SHA-256 हैश के साथ प्रिपेंड किया जाता है 
-एन्क्रिप्शन से पहले, जैसा कि [क्रिप्टोग्राफी](/docs/specs/cryptography/) में परिभाषित है।
-
-सभी फ़ील्ड्स बिग-एंडियन हैं।
-
-असंप्रेषित आकार: 222 बाइट्स
-
-.. कच्चा:: html
-
-  ```text
-
-
-bytes     0-3: सुरंग आईडी प्राप्त करने के लिए संदेश के रूप में, गैर-शून्य
-  bytes    4-35: स्थानीय राउटर पहचान हैश
-  bytes   36-39: अगली सुरंग आईडी, गैर-शून्य
-  bytes   40-71: अगली राउटर पहचान हैश
-  bytes  72-103: AES-256 सुरंग परत कुंजी
-  bytes 104-135: AES-256 सुरंग IV कुंजी
-  bytes 136-167: AES-256 उत्तर कुंजी
-  bytes 168-183: AES-256 उत्तर IV
-  byte      184: ध्वज
-  bytes 185-188: अनुरोध समय (युग के बाद घंटे, नीचे गोल)
-  bytes 189-192: अगला संदेश आईडी
-  bytes 193-221: अप्रयुक्त / यादृच्छिक पैडिंग
-
-
-
-
-  ```
-
-
-अनुरोध रिकॉर्ड एन्क्रिप्टेड (ElGamal)
-```````````````````````````````````````
-
-संदर्भ के लिए, यह [I2NP](/docs/specs/i2np/) से लिए गए ElGamal राउटरों के लिए सुरंग निर्माण अनुरोध रिकॉर्ड का वर्तमान विनिर्देश है।
-
-एन्क्रिप्टेड आकार: 528 बाइट्स
-
-.. कच्चा:: html
-
-  ```text
-
-
-bytes    0-15: हॉप की छोटी हुई पहचान हैश
-  bytes  16-528: ElGamal एन्क्रिप्टेड निर्माण अनुरोध रिकॉर्ड
-
-
-
-
-  ```
-
-
-
-
-अनुरोध रिकॉर्ड असंप्रेषित (ECIES)
-`````````````````````````````````````````
-
-यह ECIES-X25519 राउटरों के लिए सुरंग निर्माण अनुरोध रिकॉर्ड का प्रस्तावित विनिर्देश है।
-परिवर्तनों का सारांश:
-
-- अप्रयुक्त 32-बाइट राउटर हैश को हटाएं
+- अप्रयुक्त 32-byte router hash को हटाएं
 - अनुरोध समय को घंटों से मिनटों में बदलें
-- भविष्य के परिवर्तनीय सुरंग समय के लिए समाप्ति क्षेत्र जोड़ें
-- ध्वज के लिए अधिक स्थान जोड़ें
-- भविष्य के निर्माण विकल्पों के लिए मैपिंग जोड़ें
-- उत्तर रिकॉर्ड के लिए AES-256 उत्तर कुंजी और IV का उपयोग नहीं किया जाता है
-- असंप्रेषित रिकॉर्ड लंबा होता है क्योंकि इसमें कम एन्क्रिप्शन ओवरहेड होता है
+- भविष्य के variable tunnel time के लिए expiration field जोड़ें
+- flags के लिए अधिक स्थान जोड़ें
+- अतिरिक्त build options के लिए Mapping जोड़ें
+- AES-256 reply key और IV का उपयोग hop के अपने reply record के लिए नहीं किया जाता
+- Unencrypted record लंबा है क्योंकि कम encryption overhead है
 
+अनुरोध रिकॉर्ड में कोई ChaCha reply keys नहीं हैं। वे keys एक KDF से व्युत्पन्न होती हैं। नीचे देखें।
 
-अनुरोध रिकॉर्ड में कोई ChaCha उत्तर कुंजी शामिल नहीं होती है।
-उन कुंजियों को KDF से प्राप्त किया जाता है। नीचे देखें।
+सभी फील्ड big-endian हैं।
 
-सभी फ़ील्ड्स बिग-एंडियन हैं।
+अनएन्क्रिप्टेड आकार: 464 bytes
 
-असंप्रेषित आकार: 464 बाइट्स
+```text
+bytes     0-3: tunnel ID to receive messages as, nonzero
+  bytes     4-7: next tunnel ID, nonzero
+  bytes    8-39: next router identity hash
+  bytes   40-71: AES-256 tunnel layer key
+  bytes  72-103: AES-256 tunnel IV key
+  bytes 104-135: AES-256 reply key
+  bytes 136-151: AES-256 reply IV
+  byte      152: flags
+  bytes 153-155: more flags, unused, set to 0 for compatibility
+  bytes 156-159: request time (in minutes since the epoch, rounded down)
+  bytes 160-163: request expiration (in seconds since creation)
+  bytes 164-167: next message ID
+  bytes   168-x: tunnel build options (Mapping)
+  bytes     x-x: other data as implied by flags or options
+  bytes   x-463: random padding
+```
+flags फील्ड वही है जो [Tunnel Creation](/docs/specs/implementation/) में परिभाषित है और इसमें निम्नलिखित शामिल है::
 
-.. कच्चा:: html
+Bit order: 76543210 (bit 7 MSB है)  bit 7: यदि सेट है, तो किसी से भी संदेश की अनुमति दें  bit 6: यदि सेट है, तो किसी को भी संदेश की अनुमति दें, और उत्तर को भेजें
 
-  ```text
+        specified next hop in a Tunnel Build Reply Message
+bits 5-0: अपरिभाषित, भविष्य के विकल्पों के साथ संगतता के लिए 0 पर सेट करना आवश्यक है
 
+बिट 7 इंगित करता है कि hop एक inbound gateway (IBGW) होगा। बिट 6 इंगित करता है कि hop एक outbound endpoint (OBEP) होगा। यदि कोई भी बिट सेट नहीं है, तो hop एक intermediate participant होगा। दोनों एक साथ सेट नहीं हो सकते।
 
-bytes     0-3: सुरंग आईडी प्राप्त करने के लिए संदेशों के रूप में, गैर-शून्य
-  bytes     4-7: अगली सुरंग आईडी, गैर-शून्य
-  bytes    8-39: अगली राउटर पहचान हैश
-  bytes   40-71: AES-256 सुरंग परत कुंजी
-  bytes  72-103: AES-256 सुरंग IV कुंजी
-  bytes 104-135: AES-256 उत्तर कुंजी
-  bytes 136-151: AES-256 उत्तर IV
-  byte      152: ध्वज
-  bytes 153-155: अधिक ध्वज, अप्रयुक्त, संगतता के लिए 0 पर सेट करें
-  bytes 156-159: अनुरोध समय (युग के बाद मिनट, नीचे गोल)
-  bytes 160-163: अनुरोध समाप्ति (निर्माण के बाद सेकंड में)
-  bytes 164-167: अगला संदेश आईडी
-  bytes   168-x: सुरंग निर्माण विकल्प (मैपिंग)
-  bytes     x-x: ध्वज या विकल्पों द्वारा संकेतित अन्य डेटा
-  bytes   x-463: यादृच्छिक पैडिंग
+अनुरोध की समाप्ति भविष्य के परिवर्तनीय tunnel अवधि के लिए है। अभी के लिए, केवल समर्थित मान 600 (10 मिनट) है।
 
+tunnel build विकल्प एक Mapping संरचना है जैसा कि [Common Structures](/docs/specs/common-structures/) में परिभाषित है। यह भविष्य के उपयोग के लिए है। वर्तमान में कोई विकल्प परिभाषित नहीं हैं। यदि Mapping संरचना खाली है, तो यह दो bytes 0x00 0x00 है। Mapping का अधिकतम आकार (length field सहित) 296 bytes है, और Mapping length field का अधिकतम मान 294 है।
 
+#### Request Record Encrypted (ECIES)
 
+सभी फ़ील्ड big-endian हैं सिवाय ephemeral public key के जो little-endian है।
 
-  ```
+एन्क्रिप्टेड साइज़: 528 bytes
 
-ध्वज फ़ील्ड [Tunnel-Creation](/docs/specs/tunnel-creation/) में परिभाषित के रूप में वही है और इसमें निम्नलिखित शामिल हैं::
-
- बिट क्रम: 76543210 (बिट 7 MSB है)
- bit 7: यदि सेट है, तो किसी से भी संदेश स्वीकार करें
- bit 6: यदि सेट है, तो किसी को भी संदेश भेजने की अनुमति है, और 
-        उत्तर को सुरंग निर्माण उत्तर संदेश में निर्दिष्ट अगली हॉप पर भेजें
- bits 5-0: अपरिभाषित, भविष्य के विकल्पों के साथ संगतता के लिए 0 पर सेट करना आवश्यक है
-
-Bit 7 इंगित करता है कि हॉप एक इनबाउंड गेटवे (IBGW) होगा।  Bit 6
-इंगित करता है कि हॉप एक आउटबाउंड एंडपॉइंट (OBEP) होगा।  यदि कोई भी बिट 
-सेट नहीं किया गया, तो हॉप एक मध्यवर्ती प्रतिभागी होगा।  दोनों को एक साथ सेट नहीं किया जा सकता।
-
-अनुरोध समाप्ति भविष्य के परिवर्तनीय सुरंग अवधि के लिए है।
-अभी के लिए, केवल समर्थित मान 600 (10 मिनट) है।
-
-सुरंग निर्माण विकल्प [Common](/docs/specs/common-structures/) में परिभाषित के रूप में एक मैपिंग संरचना है।
-यह भविष्य के उपयोग के लिए है। वर्तमान में कोई विकल्प परिभाषित नहीं हैं।
-यदि मैपिंग संरचना खाली है, तो यह दो बाइट्स 0x00 0x00 है।
-मैपिंग की अधिकतम लंबाई (लंबाई फ़ील्ड सहित) 296 बाइट्स है,
-और मैपिंग लंबाई फ़ील्ड का अधिकतम मान 294 है।
-
-
-
-अनुरोध रिकॉर्ड एन्क्रिप्टेड (ECIES)
-`````````````````````````````````````
-
-सभी फ़ील्ड्स बिग-एंडियन हैं सिवाय अस्थायी सार्वजनिक कुंजी के, जो लिटिल-एंडियन है।
-
-एन्क्रिप्टेड आकार: 528 बाइट्स
-
-.. कच्चा:: html
-
-  ```text
-
-
-bytes    0-15: हॉप की छोटी हुई पहचान हैश
-  bytes   16-47: प्रेषक की अस्थायी X25519 सार्वजनिक कुंजी
-  bytes  48-511: ChaCha20 एन्क्रिप्टेड निर्माण अनुरोध रिकॉर्ड
+```text
+bytes    0-15: Hop's truncated identity hash
+  bytes   16-47: Sender's ephemeral X25519 public key
+  bytes  48-511: ChaCha20 encrypted BuildRequestRecord
   bytes 512-527: Poly1305 MAC
+```
+### हैंडशेक पैटर्न
 
+एन्क्रिप्टेड BuildReplyRecords ElGamal और ECIES दोनों के लिए संगतता हेतु 528 बाइट्स के होते हैं।
 
+#### Reply Record Unencrypted (ElGamal)
 
-
-  ```
-
-
-
-### निर्माण उत्तर रिकॉर्ड्स
-
-एन्क्रिप्टेड निर्माण उत्तर रिकॉर्ड संगतता के लिए दोनों ElGamal और ECIES के लिए 528 बाइट्स हैं।
-
-
-उत्तर रिकॉर्ड असंप्रेषित (ElGamal)
-`````````````````````````````````````
 ElGamal उत्तर AES के साथ एन्क्रिप्ट किए जाते हैं।
 
-सभी फ़ील्ड्स बिग-एंडियन हैं।
+सभी फील्ड big-endian हैं।
 
-असंप्रेषित आकार: 528 बाइट्स
+अनएन्क्रिप्टेड साइज़: 528 bytes
 
-.. कच्चा:: html
+```text
+bytes   0-31: SHA-256 Hash of bytes 32-527
+  bytes 32-526: random data
+  byte     527: reply
 
-  ```text
+  total length: 528
+```
+#### Reply Record Unencrypted (ECIES)
 
+यह ECIES-X25519 routers के लिए tunnel BuildReplyRecord का प्रस्तावित विनिर्देश है। परिवर्तनों का सारांश:
 
-bytes   0-31: बाइट्स 32-527 का SHA-256 हैश
-  bytes 32-526: यादृच्छिक डेटा
-  byte     527: उत्तर
+- बिल्ड रिप्लाई विकल्पों के लिए मैपिंग जोड़ें
+- अनएन्क्रिप्टेड रिकॉर्ड लंबा है क्योंकि कम एन्क्रिप्शन ओवरहेड होता है
 
-  कुल लंबाई: 528
+ECIES replies ChaCha20/Poly1305 के साथ encrypt किए जाते हैं।
 
+सभी फ़ील्ड big-endian हैं।
 
+अनएन्क्रिप्टेड आकार: 512 bytes
 
+```text
+bytes    0-x: Tunnel Build Reply Options (Mapping)
+  bytes    x-x: other data as implied by options
+  bytes  x-510: Random padding
+  byte     511: Reply byte
+```
+tunnel build reply options एक Mapping structure है जैसा कि [Common Structures](/docs/specs/common-structures/) में परिभाषित है। यह भविष्य के उपयोग के लिए है। वर्तमान में कोई options परिभाषित नहीं हैं। यदि Mapping structure खाली है, तो यह दो bytes 0x00 0x00 है। Mapping का अधिकतम आकार (length field सहित) 511 bytes है, और Mapping length field का अधिकतम मान 509 है।
 
-  ```
-
-
-उत्तर रिकॉर्ड असंप्रेषित (ECIES)
-`````````````````````````````````````
-यह ECIES-X25519 राउटरों के लिए सुरंग निर्माण उत्तर रिकॉर्ड का प्रस्तावित विनिर्देश है।
-परिवर्तनों का सारांश:
-
-- निर्माण उत्तर विकल्पों के लिए मैपिंग जोड़ें
-- असंप्रेषित रिकॉर्ड लंबा होता है क्योंकि इसमें कम एन्क्रिप्शन ओवरहेड होता है
-
-ECIES उत्तर ChaCha20/Poly1305 से एन्क्रिप्ट किए जाते हैं।
-
-सभी फ़ील्ड्स बिग-एंडियन हैं।
-
-असंप्रेषित आकार: 512 बाइट्स
-
-.. कच्चा:: html
-
-  ```text
-
-
-bytes    0-x: सुरंग निर्माण उत्तर विकल्प (मैपिंग)
-  bytes    x-x: विकल्पों द्वारा संकेतित अन्य डेटा
-  bytes  x-510: यादृच्छिक पैडिंग
-  byte     511: उत्तर बाइट
-
-
-
-
-  ```
-
-सुरंग निर्माण उत्तर विकल्प [Common](/docs/specs/common-structures/) में परिभाषित के जैसे एक मैपिंग संरचना है।
-यह भविष्य के उपयोग के लिए है। वर्तमान में कोई विकल्प परिभाषित नहीं हैं।
-यदि मैपिंग संरचना खाली है, तो यह दो बाइट्स 0x00 0x00 है।
-मैपिंग की अधिकतम लंबाई (लंबाई फ़ील्ड सहित) 511 बाइट्स है,
-और मैपिंग लंबाई फ़ील्ड का अधिकतम मान 509 है।
-
-उत्तर बाइट निम्नलिखित मूल्यों में से एक है
-[Tunnel-Creation](/docs/specs/tunnel-creation/) में वर्णित है ताकि फिंगरप्रिंटिंग से बचा जा सके:
+Reply byte निम्नलिखित values में से एक है जो [Tunnel Creation](/docs/specs/implementation/) में defined है fingerprinting से बचने के लिए:
 
 - 0x00 (स्वीकार करें)
 - 30 (TUNNEL_REJECT_BANDWIDTH)
 
+#### Reply Record Encrypted (ECIES)
 
-उत्तर रिकॉर्ड एन्क्रिप्टेड (ECIES)
-`````````````````````````````````````
+एन्क्रिप्टेड साइज़: 528 bytes
 
-एन्क्रिप्टेड आकार: 528 बाइट्स
-
-.. कच्चा:: html
-
-  ```text
-
-
-bytes   0-511: ChaCha20 एनक्रिप्टेड निर्माण उत्तर रिकॉर्ड
+```text
+bytes   0-511: ChaCha20 encrypted BuildReplyRecord
   bytes 512-527: Poly1305 MAC
+```
+ECIES records में पूर्ण संक्रमण के बाद, ranged padding नियम request records के समान ही हैं।
 
+### अनुरोध एन्क्रिप्शन
 
+मिश्रित tunnels की अनुमति है, और ElGamal से ECIES में संक्रमण के लिए आवश्यक हैं। संक्रमणकालीन अवधि के दौरान, बढ़ती संख्या में routers को ECIES keys के तहत keyed किया जाएगा।
 
+सममित क्रिप्टोग्राफी preprocessing उसी तरीके से चलेगी:
 
-  ```
+- "encryption":
 
-सभी-ECIES रिकॉर्ड्स में पूर्ण संक्रमण के बाद, अनुरोध रिकॉर्ड्स के लिए समान रेंज पैडिंग नियम होंगे।
+- cipher डिक्रिप्शन मोड में चलाया जाता है
+- request records को preprocessing में पूर्व-निर्धारित रूप से decrypt किया जाता है (encrypted request records को छुपाते हुए)
 
+- "decryption":
 
-### रिकॉर्ड्स के सममिति एन्क्रिप्शन
+- cipher एन्क्रिप्शन मोड में चलाया जाता है
+- प्रतिभागी hops द्वारा एन्क्रिप्ट किए गए request records (अगले plaintext request record को प्रकट करते हुए)
 
-मिश्रित सुरंगों की अनुमति है, और ElGamal से ECIES में परिवर्तन के लिए आवश्यक है।
-संक्रमणकालीन अवधि के दौरान, ECIES कुंजी के तहत एक बढ़ती हुई संख्या में राउटर होंगे।
+- ChaCha20 में "modes" नहीं होते हैं, इसलिए इसे केवल तीन बार चलाया जाता है:
 
-सममिति कूटलेखन पूर्वप्रसंस्करण उसी तरह चलेगा:
+- एक बार preprocessing में
+- एक बार hop द्वारा
+- एक बार final reply processing पर
 
-- "एन्क्रिप्शन":
+जब mixed tunnels का उपयोग किया जाता है, तो tunnel creators को BuildRequestRecord के symmetric encryption को current और previous hop के encryption type के आधार पर करना होगा।
 
-  - साइफर डीक्रिप्शन मोड में चलाया जाता है
-  - अनुरोध रिकॉर्ड्स पहले से ही प्रसंस्करण में डिक्रिप्ट किए जाते हैं (एन्क्रिप्टेड अनुरोध रिकॉर्ड्स को छुपाना)
+प्रत्येक hop BuildReplyRecords को encrypt करने के लिए अपना स्वयं का encryption type उपयोग करेगा, और VariableTunnelBuildMessage (VTBM) में अन्य records के लिए भी।
 
-- "डीक्रिप्शन":
+जवाबी पथ पर, endpoint (प्रेषक) को [Multiple Encryption](https://en.wikipedia.org/wiki/Multiple_encryption) को पूर्ववत करना होगा, प्रत्येक hop की reply key का उपयोग करते हुए।
 
-  - साइफर एन्क्रिप्शन मोड में चलाया जाता है
-  - प्रतिभागी हॉप्स द्वारा अनुरोध रिकॉर्ड्स को एन्क्रिप्ट किया जाता है (अगला पठ्य अनुरोध रिकॉर्ड प्रकट करना)
+एक स्पष्टीकरण उदाहरण के रूप में, आइए एक outbound tunnel को देखते हैं जो ECIES के साथ ElGamal से घिरा हुआ है:
 
-- ChaCha20 का कोई "मोड" नहीं होता, इसलिए इसे तीन बार चलाया जाता है:
+- भेजने वाला (OBGW) -> ElGamal (H1) -> ECIES (H2) -> ElGamal (H3)
 
-  - पूर्वप्रसंस्करण में एक बार
-  - हॉप द्वारा एक बार
-  - अंतिम उत्तर प्रसंस्करण पर एक बार
+सभी BuildRequestRecords अपनी एन्क्रिप्टेड स्थिति में हैं (ElGamal या ECIES का उपयोग करके)।
 
-जब मिश्रित सुरंगों का उपयोग किया जाता है, सुरंग निर्माता को 
-BuildRequestRecord के सममिति एन्क्रिप्शन को वर्तमान और पिछले हॉप के एन्क्रिप्शन प्रकार पर आधारित करने की आवश्यकता होगी।
+AES256/CBC cipher, जब उपयोग किया जाता है, अभी भी प्रत्येक record के लिए उपयोग किया जाता है, बिना कई records में chaining के।
 
-प्रत्येक हॉप उत्तर रिकॉर्ड्स को एन्क्रिप्ट करने के लिए अपना एन्क्रिप्शन प्रकार का उपयोग करेगा, और 
-वेरिएबल तत्व निर्माण संदेश (VTBM) में अन्य रिकॉर्ड्स को।
+इसी तरह, ChaCha20 का उपयोग प्रत्येक record को encrypt करने के लिए किया जाएगा, पूरे VTBM में streaming के लिए नहीं।
 
-उत्तर पथ पर, अंतिम बिंदु (प्रेषक) को [Multiple-Encryption](https://en.wikipedia.org/wiki/Multiple_encryption) को पूर्ववर्ती करना होगा, प्रत्येक हॉप के उत्तर कुंजी का उपयोग करके।
+अनुरोध रिकॉर्ड्स को Sender (OBGW) द्वारा प्रीप्रोसेस किया जाता है:
 
-एक स्पष्ट उदाहरण के रूप में, चलिए एक आउटबाउंड सुरंग को देखते हैं जिसमें ECIES ElGamal से घिरा हुआ है:
+- H3 का record "encrypted" है इसका उपयोग करके:
 
-- प्रेषक (OBGW) -> ElGamal (H1) -> ECIES (H2) -> ElGamal (H3)
+- H2 की reply key (ChaCha20)
+- H1 की reply key (AES256/CBC)
 
-सभी निर्माण अनुरोध रिकॉर्ड्स उनकी एन्क्रिप्टेड स्थिति में होते हैं (ElGamal या ECIES का उपयोग करके)।
+- H2 का record "encrypted" है इसका उपयोग करके:
 
-AES256/CBC साइफर, जब भी उपयोग किया जाता है, प्रत्येक रिकॉर्ड के लिए उपयोग किया जाता है, 
-बिना कई रिकॉर्ड्स में चेनिंग के।
+- H1 की reply key (AES256/CBC)
 
-इसी प्रकार, ChaCha20 प्रत्येक रिकॉर्ड को एन्क्रिप्ट करने के लिए उपयोग किया जाता है, 
-पूरे VTBM में स्ट्रीमिंग नहीं।
+- H1 का रिकॉर्ड symmetric encryption के बिना बाहर जाता है
 
-अनुरोध रिकॉर्ड्स को प्रेषक (OBGW) द्वारा पूर्वप्रसंस्करण किया जाता है:
+केवल H2 reply encryption flag की जांच करता है, और देखता है कि इसके बाद AES256/CBC है।
 
-- H3 का रिकॉर्ड "एन्क्रिप्टेड" होता है:
+प्रत्येक hop द्वारा प्रोसेस किए जाने के बाद, records "decrypted" स्थिति में होते हैं:
 
-  - H2 की उत्तर कुंजी (ChaCha20)
-  - H1 की उत्तर कुंजी (AES256/CBC)
+- H3 का रिकॉर्ड इसका उपयोग करके "decrypted" किया जाता है:
 
-- H2 का रिकॉर्ड "एन्क्रिप्टेड" होता है:
+- H3 का reply key (AES256/CBC)
 
-  - H1 की उत्तर कुंजी (AES256/CBC)
+- H2 का record निम्नलिखित का उपयोग करके "decrypted" किया जाता है:
 
-- H1 का रिकॉर्ड बिना सममिति एन्क्रिप्शन के बाहर जाता है
+- H3 का reply key (AES256/CBC)
+- H2 का reply key (ChaCha20-Poly1305)
 
-केवल H2 उत्तर एन्क्रिप्शन ध्वज की जांच करता है, और देखता है कि वह AES256/CBC द्वारा अनुसरण किया गया है।
+- H1 का record "decrypt" किया जाता है इसका उपयोग करके:
 
-प्रत्येक हॉप द्वारा संसाधित होने के बाद, रिकॉर्ड्स "डिक्रिप्टेड" स्थिति में होते हैं:
+- H3 की reply key (AES256/CBC)
+- H2 की reply key (ChaCha20)
+- H1 की reply key (AES256/CBC)
 
-- H3 का रिकॉर्ड "डिक्रिप्टेड" होता है:
+tunnel creator, जिसे Inbound Endpoint (IBEP) भी कहा जाता है, reply को postprocess करता है:
 
-  - H3 की उत्तर कुंजी (AES256/CBC)
+- H3 का record "encrypted" किया जाता है इसका उपयोग करके:
 
-- H2 का रिकॉर्ड "डिक्रिप्टेड" होता है:
+- H3 की reply key (AES256/CBC)
 
-  - H3 की उत्तर कुंजी (AES256/CBC)
-  - H2 की उत्तर कुंजी (ChaCha20-Poly1305)
+- H2 का रिकॉर्ड "encrypted" है इसका उपयोग करके:
 
-- H1 का रिकॉर्ड "डिक्रिप्टेड" होता है:
+- H3 की reply key (AES256/CBC)
+- H2 की reply key (ChaCha20-Poly1305)
 
-  - H3 की उत्तर कुंजी (AES256/CBC)
-  - H2 की उत्तर कुंजी (ChaCha20)
-  - H1 की उत्तर कुंजी (AES256/CBC)
+- H1 का रिकॉर्ड निम्नलिखित का उपयोग करके "encrypted" है:
 
-सुरंग निर्माता, इनबाउंड एंडपॉइंट (IBEP), उत्तर को पोस्टप्रोसेस करता है:
+- H3 की reply key (AES256/CBC)
+- H2 की reply key (ChaCha20)
+- H1 की reply key (AES256/CBC)
 
-- H3 का रिकॉर्ड "एन्क्रिप्टेड" होता है:
+### उत्तर एन्क्रिप्शन
 
-  - H3 की उत्तर कुंजी (AES256/CBC)
+ये keys स्पष्ट रूप से ElGamal BuildRequestRecords में शामिल की जाती हैं। ECIES BuildRequestRecords के लिए, tunnel keys और AES reply keys शामिल की जाती हैं, लेकिन ChaCha reply keys DH exchange से derive की जाती हैं। router static ECIES keys के विवरण के लिए [Proposal 156](/proposals/156-ecies-routers) देखें।
 
-- H2 का रिकॉर्ड "एन्क्रिप्टेड" होता है:
+नीचे इस बात का विवरण है कि request records में पहले से भेजी गई keys को कैसे derive किया जाए।
 
-  - H3 की उत्तर कुंजी (AES256/CBC)
-  - H2 की उत्तर कुंजी (ChaCha20-Poly1305)
+#### KDF for Initial ck and h
 
-- H1 का रिकॉर्ड "एन्क्रिप्टेड" होता है:
+यह pattern "N" के लिए मानक प्रोटोकॉल नाम के साथ मानक [NOISE](https://noiseprotocol.org/noise.html) है।
 
-  - H3 की उत्तर कुंजी (AES256/CBC)
-  - H2 की उत्तर कुंजी (ChaCha20)
-  - H1 की उत्तर कुंजी (AES256/CBC)
+```text
+This is the "e" message pattern:
 
+  // Define protocol_name.
+  Set protocol_name = "Noise_N_25519_ChaChaPoly_SHA256"
+  (31 bytes, US-ASCII encoded, no NULL termination).
 
-### अनुरोध रिकॉर्ड कुंजियां (ECIES)
+  // Define Hash h = 32 bytes
+  // Pad to 32 bytes. Do NOT hash it, because it is not more than 32 bytes.
+  h = protocol_name || 0
 
-ये कुंजियां ElGamal निर्माण अनुरोध रिकॉर्ड्स में स्पष्ट रूप से शामिल हैं।
-ECIES निर्माण अनुरोध रिकॉर्ड्स के लिए, सुरंग कुंजियां और AES उत्तर कुंजियां शामिल होती हैं,
-लेकिन ChaCha उत्तर कुंजियां DH विनिमय से प्राप्त की जाती हैं।
-राउटर स्थिर ECIES कुंजियों के विवरण के लिए [Prop156](/proposals/156-ecies-routers/) देखें।
+  Define ck = 32 byte chaining key. Copy the h data to ck.
+  Set chainKey = h
 
-नीचे यह बताया गया है कि कैसे उन कुंजियों को प्राप्त करें जो पहले अनुरोध रिकॉर्ड्स में प्रेषित की गई होती थीं।
-
-
-प्रारंभिक ck और h के लिए KDF
-````````````````````````````
-
-यह "N" पैटर्न के साथ मानक [NOISE](https://noiseprotocol.org/noise.html) है जिसमें मानक प्रोटोकॉल नाम है।
-
-.. कच्चा:: html
-
-  ```text
-
-यह "e" संदेश पैटर्न है:
-
-  // प्रोटोकॉल नाम संदर्भित करें।
-  प्रोटोकॉल नाम को सेट करें = "Noise_N_25519_ChaChaPoly_SHA256"
-  (31 बाइट्स, US-ASCII एन्कोडेड, बिना NULL टर्मिनेशन के)।
-
-  // हाश h = 32 बाइट्स परिभाषित करें
-  // 32 बाइट्स तक पैड करें। इसे हैश न करें, क्योंकि यह 32 बाइट्स से ज्यादा नहीं है
-  h = प्रोटोकॉल नाम || 0
-
-  परिभाषित ck = 32 बाइट्स की चेनिंग कुंजी। h डेटा को ck में कॉपी करें।
-  चेनकी को सेट करें = h
-
-  // MixHash(null प्रोलॉग)
+  // MixHash(null prologue)
   h = SHA256(h);
 
-  // यहां तक की यह सब सभी राउटर्स द्वारा पूर्वगणना की जा सकती है।
+  // up until here, can all be precalculated by all routers.
+```
+#### KDF for Request Record
 
+ElGamal tunnel creators प्रत्येक ECIES hop के लिए tunnel में एक ephemeral X25519 keypair generate करते हैं, और अपने BuildRequestRecord को encrypt करने के लिए उपरोक्त scheme का उपयोग करते हैं। ElGamal tunnel creators ElGamal hops को encrypt करने के लिए इस spec से पूर्व की scheme का उपयोग करेंगे।
 
+ECIES tunnel creators को प्रत्येक ElGamal hop की public key के लिए [Tunnel Creation](/docs/specs/implementation/) में परिभाषित scheme का उपयोग करके encrypt करना होगा। ECIES tunnel creators ECIES hops के लिए encrypt करने हेतु उपरोक्त scheme का उपयोग करेंगे।
 
+इसका मतलब यह है कि tunnel hops केवल अपने समान encryption प्रकार के encrypted records को ही देख पाएंगे।
 
-  ```
+ElGamal और ECIES tunnel creators के लिए, वे ECIES hops को encrypt करने के लिए प्रति-hop अद्वितीय ephemeral X25519 keypairs generate करेंगे।
 
+**महत्वपूर्ण**: Ephemeral keys प्रत्येक ECIES hop के लिए और प्रत्येक build record के लिए अद्वितीय होनी चाहिए। अद्वितीय keys का उपयोग न करना colluding hops के लिए एक attack vector खोलता है ताकि वे पुष्टि कर सकें कि वे एक ही tunnel में हैं।
 
-अनुरोध रिकॉर्ड के लिए KDF
-````````````````````````````
-
-ElGamal सुरंग निर्माता प्रत्येक
-ECIES हॉप के लिए सुरंग में एक अस्थायी X25519 कीपेयर उत्पन्न करते हैं, और अपने निर्माण अनुरोध रिकॉर्ड को एन्क्रिप्ट करने के लिए ऊपर
-दिए गए तरीके का उपयोग करते हैं।
-ElGamal सुरंग निर्माता ElGamal हॉप्स को एन्क्रिप्ट करने के लिए इस विनिर्देशन से पहले परिभाषित योजना का उपयोग करेंगे।
-
-ECIES सुरंग निर्माता ElGamal हॉप के सार्वजनिक कुंजी का उपयोग करके
-[Tunnel-Creation](/docs/specs/tunnel-creation/) में परिभाषित योजना का उपयोग करेंगे।
-ECIES सुरंग निर्माता
-ECIES हॉप्स को एन्क्रिप्ट करने के लिए ऊपर दी गई योजना का उपयोग करेंगे।
-
-इसका मतलब यह है कि सुरंग हॉप्स केवल अपनी समान एन्क्रिप्शन प्रकार की एन्क्रिप्टेड रिकॉर्ड्स देखेंगे।
-
-ElGamal और ECIES सुरंग निर्माताओं के लिए, वे
-ECIES हॉप्स को एन्क्रिप्ट करने के लिए प्रति-हॉप अद्वितीय अस्थायी X25519 कीपेयर उत्पन्न करेंगे।
-
-**महत्वपूर्ण**:
-अस्थायी कुंजियां प्रत्येक ECIES हॉप के लिए अद्वितीय होनी चाहिए, और प्रत्येक निर्माण रिकॉर्ड के लिए।
-अद्वितीय कुंजी का उपयोग न करने से संशयास्पद हॉप्स के लिए एक आक्रमण वेक्टर खुल जाता है जिससे वे पुष्टि कर सकें कि वे एक ही सुरंग में हैं।
-
-
-.. कच्चा:: html
-
-  ```text
-
-
-// प्रत्येक हॉप की X25519 स्थिर कीपियर (hesk, hepk) Router Identity से
+```text
+// Each hop's X25519 static keypair (hesk, hepk) from the Router Identity
   hesk = GENERATE_PRIVATE()
   hepk = DERIVE_PUBLIC(hesk)
 
   // MixHash(hepk)
-  // || का मतलब है जोड़ना
+  // || below means append
   h = SHA256(h || hepk);
 
-  // यहां तक की यह सब प्रत्येक राउटर द्वारा
-  // सभी आने वाले निर्माण अनुरोधों के लिए पूर्वगणना की जा सकती है।
+  // up until here, can all be precalculated by each router
+  // for all incoming build requests
 
-  // प्रेषक प्रत्येक ECIES हॉप में एक अस्थायी X25519 कीपियर उत्पन्न करता है VTBM (sesk, sepk)
+  // Sender generates an X25519 ephemeral keypair per ECIES hop in the VTBM (sesk, sepk)
   sesk = GENERATE_PRIVATE()
   sepk = DERIVE_PUBLIC(sesk)
 
   // MixHash(sepk)
   h = SHA256(h || sepk);
 
-  "e" संदेश पैटर्न का अंत।
+  End of "e" message pattern.
 
-  यह "es" संदेश पैटर्न है:
+  This is the "es" message pattern:
 
   // Noise es
-  // प्रेषक हॉप की स्थिर सार्वजनिक कुंजी के साथ एक X25519 DH प्रदर्शन करता है।
-  // प्रत्येक हॉप, उनके काटे हुए पहचान हैश के साथ रिकॉर्ड पाता है,
-  // और एन्क्रिप्टेड रिकॉर्ड के पहले प्रेषक की अस्थायी कुंजी निकालता है।
+  // Sender performs an X25519 DH with Hop's static public key.
+  // Each Hop, finds the record w/ their truncated identity hash,
+  // and extracts the Sender's ephemeral key preceding the encrypted record.
   sharedSecret = DH(sesk, hepk) = DH(hesk, sepk)
 
   // MixKey(DH())
   //[chainKey, k] = MixKey(sharedSecret)
-  // चाचा पॉली पैरामीटर एन्क्रिप्ट/डिक्रिप्ट करने के लिए
+  // ChaChaPoly parameters to encrypt/decrypt
   keydata = HKDF(chainKey, sharedSecret, "", 64)
-  // उत्तर रिकॉर्ड KDF के लिए सहेजें
+  // Save for Reply Record KDF
   chainKey = keydata[0:31]
 
-  // AEAD पैरामीटर
+  // AEAD parameters
   k = keydata[32:63]
   n = 0
-  plaintext = 464 बाइट्स की निर्माण अनुरोध रिकॉर्ड
+  plaintext = 464 byte build request record
   ad = h
-
   ciphertext = ENCRYPT(k, n, plaintext, ad)
 
-  "es" संदेश पैटर्न का अंत।
+  End of "es" message pattern.
 
   // MixHash(ciphertext)
-  // उत्तर रिकॉर्ड KDF के लिए सहेजें
+  // Save for Reply Record KDF
   h = SHA256(h || ciphertext)
+```
+``replyKey``, ``layerKey`` और ``layerIV`` को अभी भी ElGamal records के अंदर शामिल किया जाना चाहिए, और इन्हें randomly generate किया जा सकता है।
 
+### औचित्य
 
+जैसा कि [Tunnel Creation](/docs/specs/implementation/) में परिभाषित है। ElGamal hops के लिए encryption में कोई बदलाव नहीं है।
 
+### Reply Record Encryption (ECIES)
 
-  ```
+reply record ChaCha20/Poly1305 encrypted है।
 
-``replyKey``, ``layerKey`` और ``layerIV`` को अभी भी ElGamal रिकॉर्ड्स के अंदर शामिल होना चाहिए,
-और यादृच्छिक रूप से उत्पन्न किया जा सकत 
-
-
-### अनुरोध रिकॉर्ड एन्क्रिप्शन (ElGamal)
-
-जैसा [Tunnel-Creation](/docs/specs/tunnel-creation/) में परिभाषित है।
-ElGamal हॉप्स के लिए एन्क्रिप्शन में कोई परिवर्तन नहीं है।
-
-
-
-
-### उत्तर रिकॉर्ड एन्क्रिप्शन (ECIES)
-
-उत्तर रिकॉर्ड ChaCha20/Poly1305 से एन्क्रिप्ट किया जाता है।
-
-.. कच्चा:: html
-
-  ```text
-
-
-// AEAD पैरामीटर
-  k = निर्माण अनुरोध से चेनकी
+```text
+// AEAD parameters
+  k = chainkey from build request
   n = 0
-  plaintext = 512 बाइट्स की निर्माण उत्तर रिकॉर्ड
-  ad = निर्माण अनुरोध से h
+  plaintext = 512 byte build reply record
+  ad = h from build request
 
   ciphertext = ENCRYPT(k, n, plaintext, ad)
+```
+### Build Request Records का निर्माण
 
+जैसा कि [Tunnel Creation](/docs/specs/implementation/) में परिभाषित किया गया है। ElGamal hops के लिए एन्क्रिप्शन में कोई बदलाव नहीं हैं।
 
+### Security Analysis
 
+ElGamal, Tunnel Build Messages के लिए forward secrecy प्रदान नहीं करता है।
 
-  ```
+AES256/CBC की स्थिति थोड़ी बेहतर है, यह केवल एक ज्ञात plaintext `biclique` attack से सैद्धांतिक कमजोरी के लिए संवेदनशील है।
 
+AES256/CBC के विरुद्ध एकमात्र ज्ञात व्यावहारिक हमला padding oracle attack है, जब IV आक्रमणकारी को ज्ञात हो।
 
+एक आक्रमणकारी को AES256/CBC key की जानकारी (reply key और IV) प्राप्त करने के लिए अगले hop के ElGamal encryption को तोड़ना होगा।
 
-### उत्तर रिकॉर्ड एन्क्रिप्शन (ElGamal)
+ElGamal, ECIES की तुलना में काफी अधिक CPU-intensive है, जिससे संभावित resource exhaustion हो सकता है।
 
-जैसा [Tunnel-Creation](/docs/specs/tunnel-creation/) में परिभाषित है।
-ElGamal हॉप्स के लिए एन्क्रिप्शन में कोई परिवर्तन नहीं है।
+ECIES, जो प्रति-BuildRequestRecord या VariableTunnelBuildMessage के लिए नई ephemeral keys के साथ उपयोग किया जाता है, forward-secrecy प्रदान करता है।
 
+ChaCha20Poly1305 AEAD एन्क्रिप्शन प्रदान करता है, जो प्राप्तकर्ता को डिक्रिप्शन का प्रयास करने से पहले संदेश की अखंडता को सत्यापित करने की अनुमति देता है।
 
+## खतरा मॉडल
 
-### सुरक्षा विश्लेषण
+यह डिज़ाइन मौजूदा cryptographic primitives, protocols, और code के पुन: उपयोग को अधिकतम करता है। यह डिज़ाइन जोखिम को न्यूनतम करता है।
 
-ElGamal सुरंग निर्माण संदेशों के लिए अग्रेषण गोपनीयता प्रदान नहीं करता।
+## Implementation Notes
 
-AES256/CBC में थोड़ा बेहतर सुरक्षा है, केवल एक सैद्धांतिक कमजोरता के लिए
-ज्ञात पाठ्य `बिक्लिक` हमले से असंवेदनशील।
+* पुराने router encryption type की जांच नहीं करते और ElGamal-encrypted
+  records भेजते हैं। कुछ हाल के router में bugs हैं और वे विभिन्न प्रकार के malformed records भेजते हैं।
+  Implementers को इन records को DH operation से पहले detect और reject करना चाहिए
+  यदि संभव हो, ताकि CPU usage कम हो सके।
 
-AES256/CBC के खिलाफ एकमात्र ज्ञात व्यावहारिक हमला एक पैडिंग ओरेकल हमला है, जब
-IV हमलावर के लिए ज्ञात होता है।
+## Issues
 
-हमलावर को अगली हॉप के ElGamal एन्क्रिप्शन को तोड़ने की आवश्यकता होगी ताकि AES256/CBC कुंजी जानकारी प्राप्त की जा सके (उत्तर कुंजी और IV)।
+## डिज़ाइन
 
-ElGamal ECIES की तुलना में काफी अधिक CPU-गहन है, जो संभावित संसाधन थकावट की ओर ले जाता है।
-
-ECIES, प्रति-BuildRequestRecord या वेरिएबल तत्व निर्माण संदेश के साथ नए अस्थायी कुंजी के साथ उपयोग की जाती है, अग्रेषण गोपनीयता प्रदान करती है।
-
-ChaCha20Poly1305 AEAD एन्क्रिप्शन प्रदान करता है, जिससे प्राप्तकर्ता संदेश अखंडता को सत्यापित कर सकता है इससे पहले कि वह पहुंच के प्रयास करें।
-
-
-## औचित्य
-
-यह डिज़ाइन मौजूदा क्रिप्टोग्राफिक प्रिमिटिव्स, प्रोटोकॉल्स और कोड के पुन: उपयोग को अधिकतम करता है।
-यह डिज़ाइन खतरे को न्यूनतम करता है।
-
-
-## कार्यान्वयन टिप्पणियाँ
-
-* पुराने राउटर हॉप के एन्क्रिप्शन प्रकार की जांच नहीं करते हैं और ElGamal-एन्क्रिप्टेड
-  रिकॉर्ड्स भेजेंगे। कुछ हाल के राउटर खराबी वाले होते हैं और विभिन्न प्रकार के
-  खराबी वाले रिकॉर्ड्स भेजते हैं।
- कार्यान्वायकों को DH ऑपरेशन से पहले इन रिकॉर्ड्स का पता लगाना और उन्हें अस्वीकार करना चाहिए
-  यदि संभव हो, तो सीपीयू उपयोग को कम करने के लिए।
-
-
-## मुद्दे
-
-
-
-## प्रवास
-
-[Prop156](/proposals/156-ecies-routers/) देखें।
+[Proposal 156](/proposals/156-ecies-routers) देखें।

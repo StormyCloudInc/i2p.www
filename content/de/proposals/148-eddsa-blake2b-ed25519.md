@@ -74,24 +74,20 @@ Für RedDSA_BLAKE2b_Ed25519 ersetzen Sie die SHA-512 Hash-Funktion in RedDSA_SHA
 
 Wir benötigen keinen Ersatz für EdDSA_SHA512_Ed25519ph (Signaturtyp 8) für su3-Dateien, da die vorgehashte Version von EdDSA nicht anfällig für LEA ist. EdDSA_SHA512_Ed25519 (Signaturtyp 7) wird für su3-Dateien nicht unterstützt.
 
-=======================  ===========  ======  =====
-        Typ              Typcode      Seit    Nutzung
-=======================  ===========  ======  =====
-RedDSA_BLAKE2b_Ed25519       12        TBD    Nur für Router-Identitäten, Destinations und verschlüsselte Lease-Sets; wird niemals für Router-Identitäten verwendet
-=======================  ===========  ======  =====
+| Typ | Typcode | Seit | Nutzung |
+|-----|---------|------|---------|
+| RedDSA_BLAKE2b_Ed25519 | 12 | TBD | Nur für Router-Identitäten, Destinations und verschlüsselte Lease-Sets; wird niemals für Router-Identitäten verwendet |
 
 ### Allgemeine Strukturdatenlängen
 
 Das Folgende gilt für den neuen Signaturtyp.
 
-==================================  =============
-            Datentyp                 Länge    
-==================================  =============
-Hash                                     64      
-Privater Schlüssel                       32      
-Öffentlicher Schlüssel                   32      
-Signatur                                64      
-==================================  =============
+| Datentyp | Länge |
+|----------|-------|
+| Hash | 64 |
+| Privater Schlüssel | 32 |
+| Öffentlicher Schlüssel | 32 |
+| Signatur | 64 |
 
 ### Personalisierungen
 
@@ -101,18 +97,16 @@ Alle Verwendungen von BLAKE2b-Signaturen werden einen 16-Zeichen-Personalisierun
 
 Die unten genannten NTCP1 und SSU-Handschläge sind für die signierten Daten definiert, die im Handschlag selbst definiert sind. Signierte RouterInfos in DatabaseStore-Nachrichten verwenden die Netzwerk-Datenbank-Personalisierung, so als ob sie im NetDB gespeichert wären.
 
-==================================  ==========================
-         Nutzung                     16 Zeichen Personalisierung
-==================================  ==========================
-I2CP SessionConfig                   "I2CP_SessionConf"
-NetDB-Einträge (RI, LS, LS2)         "network_database"
-NTCP 1 Handshake                     "NTCP_1_handshake"
-Signierte Datagramme                 "sign_datagramI2P"
-Streaming                            "streaming_i2psig"
-SSU Handshake                        "SSUHandshakeSign"
-SU3-Dateien                          n/a, nicht unterstützt
-Unit-Tests                           "test1234test5678"
-==================================  ==========================
+| Nutzung | 16 Zeichen Personalisierung |
+|---------|-----------------------------|
+| I2CP SessionConfig | "I2CP_SessionConf" |
+| NetDB-Einträge (RI, LS, LS2) | "network_database" |
+| NTCP 1 Handshake | "NTCP_1_handshake" |
+| Signierte Datagramme | "sign_datagramI2P" |
+| Streaming | "streaming_i2psig" |
+| SSU Handshake | "SSUHandshakeSign" |
+| SU3-Dateien | n/a, nicht unterstützt |
+| Unit-Tests | "test1234test5678" |
 
 ## Anmerkungen
 

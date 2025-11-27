@@ -4,159 +4,112 @@ number: "169"
 author: "zzz, orignal, drzed, eyedeekay"
 created: "2025-01-21"
 lastupdated: "2025-06-12"
-status: "Otevřený"
+status: "Otevřít"
 thread: "http://zzz.i2p/topics/3294"
 target: "0.9.80"
 ---
 
 ## Přehled
 
-Zatímco výzkum a soutěž pro vhodnou post-kvantovou (PQ)
-kryptografii pokračují desítku let, možnosti
-nebyly jasné až donedávna.
+Zatímco výzkum a soutěž o vhodnou post-kvantovou (PQ) kryptografii probíhají již celou dekádu, možnosti se staly jasné teprve nedávno.
 
-Začali jsme zkoumat důsledky PQ kryptografie
-v roce 2022 [FORUM](http://zzz.i2p/topics/3294).
+Začali jsme zkoumat důsledky PQ kryptografie v roce 2022 [http://zzz.i2p/topics/3294](http://zzz.i2p/topics/3294).
 
-Standardy TLS přidaly podporu pro hybridní šifrování v posledních dvou letech a nyní jsou používány pro značnou část šifrovaného provozu na internetu díky podpoře v Chrome a Firefox [CLOUDFLARE](https://blog.cloudflare.com/pq-2024/).
+Standardy TLS přidaly podporu hybridního šifrování v posledních dvou letech a nyní se používá pro významnou část šifrovaného provozu na internetu díky podpoře v Chrome a Firefox [https://blog.cloudflare.com/pq-2024/](https://blog.cloudflare.com/pq-2024/).
 
-NIST nedávno finalizoval a zveřejnil doporučené algoritmy
-pro post-kvantovou kryptografii [NIST-PQ](https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards).
-Několik běžných kryptografických knihoven nyní podporuje standardy NIST
-nebo bude podporu brzy vydávat.
+NIST nedávno dokončil a publikoval doporučené algoritmy pro post-kvantovou kryptografii [https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards](https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards). Několik běžných kryptografických knihoven nyní podporuje standardy NIST nebo v blízké budoucnosti vydá tuto podporu.
 
-Oba [CLOUDFLARE](https://blog.cloudflare.com/pq-2024/) a [NIST-PQ](https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards) doporučují, aby migrace začala okamžitě.
-Viz také NSA PQ FAQ z roku 2022 [NSA-PQ](https://media.defense.gov/2022/Sep/07/2003071836/-1/-1/0/CSI_CNSA_2.0_FAQ_.PDF).
-I2P by mělo být lídrem v oblasti bezpečnosti a kryptografie.
-Nyní je čas implementovat doporučené algoritmy.
-Pomocí našeho flexibilního systému typů kryptografií a typů podpisů,
-přidáme typy pro hybridní kryptografii a pro PQ a hybridní podpisy.
+Jak [https://blog.cloudflare.com/pq-2024/](https://blog.cloudflare.com/pq-2024/), tak [https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards](https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards) doporučují, aby migrace začala okamžitě. Viz také NSA PQ FAQ z roku 2022 [https://media.defense.gov/2022/Sep/07/2003071836/-1/-1/0/CSI_CNSA_2.0_FAQ_.PDF](https://media.defense.gov/2022/Sep/07/2003071836/-1/-1/0/CSI_CNSA_2.0_FAQ_.PDF). I2P by měl být lídrem v oblasti bezpečnosti a kryptografie. Nyní je čas implementovat doporučené algoritmy. Pomocí našeho flexibilního systému typů kryptografie a typů podpisů přidáme typy pro hybridní kryptografii a pro PQ a hybridní podpisy.
 
 ## Cíle
 
-- Vybrat algoritmy odolné proti PQ
-- Přidat pouze PQ a hybridní algoritmy do I2P protokolů tam, kde je to vhodné
+- Vybrat algoritmy odolné vůči PQ
+- Přidat PQ-only a hybridní algoritmy do I2P protokolů tam, kde je to vhodné
 - Definovat více variant
 - Vybrat nejlepší varianty po implementaci, testování, analýze a výzkumu
-- Přidávat podporu postupně a s kompatibilitou směrem zpět
+- Přidat podporu postupně a se zpětnou kompatibilitou
 
 ## Necíle
 
-- Neměnit jednosměrné (hluk N) šifrovací protokoly
-- Neměnit SHA256, krátkodobě neohrožené PQ
-- Nevybírat v této době konečné preferované varianty
+- Neměňte jednosměrné (Noise N) šifrovací protokoly
+- Neodcházejte od SHA256, není v blízké budoucnosti ohrožen PQ
+- Nevybírejte konečné preferované varianty v tuto chvíli
 
 ## Model hrozeb
 
-- Směrovače na OBEP nebo IBGW, případně spolupracující,
-  uchovávající česnekové zprávy pro pozdější dešifrování (budoucí tajemství)
-- Pozorovatelé sítě
-  uchovávající zprávy o přepravě pro pozdější dešifrování (budoucí tajemství)
-- Účastníci sítě falšující podpisy pro RI, LS, streamování, datagramy
+- Routery na OBEP nebo IBGW, možná spolupracující,
+  ukládající garlic zprávy pro pozdější dešifrování (forward secrecy)
+- Síťoví pozorovatelé
+  ukládající transportní zprávy pro pozdější dešifrování (forward secrecy)
+- Síťoví účastníci padělající podpisy pro RI, LS, streaming, datagramy,
   nebo jiné struktury
 
-## Dotčené protokoly
+## Ovlivněné protokoly
 
-Změníme následující protokoly, zhruba v pořadí
-vývoje. Celkové zpřístupnění pravděpodobně proběhne od konce roku 2025 do poloviny roku 2027.
-Podrobnosti naleznete v sekci Priorities and Rollout níže.
+Upravíme následující protokoly, zhruba v pořadí vývoje. Celkové nasazení proběhne pravděpodobně od konce roku 2025 do poloviny roku 2027. Podrobnosti najdete v sekci Priority a nasazení níže.
 
+| Protocol / Feature | Status |
+|--------------------|--------|
+| Hybrid MLKEM Ratchet and LS | Approved 2026-06; beta target 2025-08; release target 2025-11 |
+| Hybrid MLKEM NTCP2 | Some details to be finalized |
+| Hybrid MLKEM SSU2 | Some details to be finalized |
+| MLDSA SigTypes 12-14 | Proposal is stable but may not be finalized until 2026 |
+| MLDSA Dests | Tested on live net, requires net upgrade for floodfill support |
+| Hybrid SigTypes 15-17 | Preliminary |
+| Hybrid Dests | |
+## Návrh
 
-| Protokol / Funkce | tav |
-| ----------------- | --- |
-| Hybridní MLKEM Ratchet a LS | Schvál |
-| Hybridní MLKEM NTCP2 | Někter |
-| Hybridní MLKEM SSU2 | Někter |
-| MLDSA SigTypes 12-14 | Návrh |
-| MLDSA Dests | Testov |
-| Hybridní SigTypes 15-17 | Předbě |
-| Hybridní Dests |  |
+Budeme podporovat standardy NIST FIPS 203 a 204 [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf) [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf), které jsou založeny na, ale NEJSOU kompatibilní s, CRYSTALS-Kyber a CRYSTALS-Dilithium (verze 3.1, 3 a starší).
 
-
-
-
-## Design
-
-Budeme podporovat standardy NIST FIPS 203 a 204 [FIPS203](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf) [FIPS204](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf),
-které jsou založeny na, ale nejsou kompatibilní s,
-CRYSTALS-Kyber a CRYSTALS-Dilithium (verze 3.1, 3 a starší).
-
-### Výměna klíčů
+### Key Exchange
 
 Budeme podporovat hybridní výměnu klíčů v následujících protokolech:
 
-| Proto | Typ Noise | Podporuje pouze | ?  Podporuje Hy |
-| ----- | --------- | --------------- | --------------- |
-| NTCP2 | XK | ne | ano |
-| SSU2 | XK | ne | ano |
-| Ratchet | IK | ne | ano |
-| TBM | N | ne | ne |
-| NetDB | N | ne | ne |
+| Proto   | Noise Type | Support PQ only? | Support Hybrid? |
+|---------|------------|------------------|-----------------|
+| NTCP2   | XK         | no               | yes             |
+| SSU2    | XK         | no               | yes             |
+| Ratchet | IK         | no               | yes             |
+| TBM     | N          | no               | no              |
+| NetDB   | N          | no               | no              |
+PQ KEM poskytuje pouze dočasné klíče a přímo nepodporuje handshaky se statickými klíči, jako jsou Noise XK a IK.
 
+Noise N nepoužívá obousměrnou výměnu klíčů, a proto není vhodný pro hybridní šifrování.
 
-PQ KEM poskytuje pouze efemérní klíče, a nepodporuje přímo
-handshake pomocí statických klíčů jako je Noise XK a IK.
-
-Noise N nepoužívá obousměrnou výměnu klíčů a tak není vhodná
-pro hybridní šifrování.
-
-Takže budeme podporovat pouze hybridní šifrování, pro NTCP2, SSU2 a Ratchet.
-Definujeme tři varianty ML-KEM jak je uvedeno v [FIPS203](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf),
-pro celkem 3 nové typy šifrování.
-Hybridní typy budou definovány pouze v kombinaci s X25519.
+Takže budeme podporovat pouze hybridní šifrování pro NTCP2, SSU2 a Ratchet. Definujeme tři varianty ML-KEM podle [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf), celkem pro 3 nové typy šifrování. Hybridní typy budou definovány pouze v kombinaci s X25519.
 
 Nové typy šifrování jsou:
 
-| Typ | Kód |
-| --- | --- |
+| Type | Code |
+|------|------|
 | MLKEM512_X25519 | 5 |
 | MLKEM768_X25519 | 6 |
 | MLKEM1024_X25519 | 7 |
+Režie bude značná. Typické velikosti zpráv 1 a 2 (pro XK a IK) jsou v současnosti kolem 100 bajtů (před jakýmkoli dodatečným payloadem). To se zvýší 8× až 15× v závislosti na algoritmu.
 
-
-Režie bude značná. Typické velikosti zpráv 1 a 2 (pro XK a IK)
-jsou v současnosti kolem 100 bajtů (před jakýmikoli dalšími údaji o zátěži).
-To se zvýší o 8x až 15x v závislosti na algoritmu.
-
-
-### Podpisy
+### Signatures
 
 Budeme podporovat PQ a hybridní podpisy v následujících strukturách:
 
-| Typ | Podporuje pouze | ?  Podporuje Hy |
-| --- | --------------- | --------------- |
-| RouterInfo | ano | ano |
-| LeaseSet | ano | ano |
-| Streamová SYN/SYNACK/Close | ano | ano |
-| Datagramy opakovaného odes | ní    ano | ano |
-| Datagram2 (návrh 163) | ano | ano |
-| I2CP vytváří zprávu o rela | ano | ano |
-| SU3 soubory | ano | ano |
-| X.509 certifikáty | ano | ano |
-| Java keystore | ano | ano |
+| Type | Support PQ only? | Support Hybrid? |
+|------|------------------|-----------------|
+| RouterInfo | yes | yes |
+| LeaseSet | yes | yes |
+| Streaming SYN/SYNACK/Close | yes | yes |
+| Repliable Datagrams | yes | yes |
+| Datagram2 (prop. 163) | yes | yes |
+| I2CP create session msg | yes | yes |
+| SU3 files | yes | yes |
+| X.509 certificates | yes | yes |
+| Java keystores | yes | yes |
+Takže budeme podporovat jak PQ-only, tak hybridní podpisy. Definujeme tři varianty ML-DSA podle [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf), tři hybridní varianty s Ed25519 a tři PQ-only varianty s prehash pouze pro SU3 soubory, celkem tedy 9 nových typů podpisů. Hybridní typy budou definovány pouze v kombinaci s Ed25519. Použijeme standardní ML-DSA, NIKOLI varianty pre-hash (HashML-DSA), kromě SU3 souborů.
 
-
-
-Takže budeme podporovat jak pouze PQ, tak hybridní podpisy.
-Definujeme tři varianty ML-DSA jak je uvedeno v [FIPS204](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf),
-tři hybridní varianty s Ed25519,
-a tři pouze PQ varianty s prehash pro SU3 soubory pouze,
-pro celkem 9 nových typů podpisů.
-Hybridní typy budou definovány pouze v kombinaci s Ed25519.
-Budeme používat standardní ML-DSA, NE předem hašované varianty (HashML-DSA),
-kromě SU3 souborů.
-
-Použijeme variantu "hedged" nebo náhodného podepisování,
-nikoliv variantu "deterministické", jak je definováno v [FIPS204](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf) sekce 3.4.
-Toto zajišťuje, že každý podpis je jiný, i když pro stejná data,
-a poskytuje dodatečnou ochranu proti útokům modelu side-channel.
-Viz sekci implementačních poznámek níže pro další podrobnosti
-o výběru algoritmu včetně kódování a kontextu.
+Použijeme "hedged" neboli randomizovanou variantu podpisování, nikoliv "deterministickou" variantu, jak je definována v [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf) sekce 3.4. Tím je zajištěno, že každý podpis je odlišný, i když se týká stejných dat, a poskytuje dodatečnou ochranu proti útokům postranním kanálem. Další podrobnosti o volbách algoritmů včetně kódování a kontextu naleznete v sekci poznámek k implementaci níže.
 
 Nové typy podpisů jsou:
 
-| Typ | ód |
-| --- | --- |
+| Type | Code |
+|------|------|
 | MLDSA44 | 12 |
 | MLDSA65 | 13 |
 | MLDSA87 | 14 |
@@ -166,301 +119,215 @@ Nové typy podpisů jsou:
 | MLDSA44ph | 18 |
 | MLDSA65ph | 19 |
 | MLDSA87ph | 20 |
+X.509 certifikáty a další DER kódování budou používat kompozitní struktury a OID definované v [https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/](https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/).
 
+Režie bude značná. Typické velikosti Ed25519 destination a router identity jsou 391 bajtů. Tyto se zvýší 3,5x až 6,8x v závislosti na algoritmu. Ed25519 podpisy mají 64 bajtů. Tyto se zvýší 38x až 76x v závislosti na algoritmu. Typické podepsané RouterInfo, LeaseSet, odpovědní datagramy a podepsané streaming zprávy mají asi 1KB. Tyto se zvýší 3x až 8x v závislosti na algoritmu.
 
-X.509 certifikáty a další DER kódování budou používat
-kompozitní struktury a OID definované v [COMPOSITE-SIGS](https://datatracker.ietf.org/doc/draft-ounsworth-pq-composite-sigs/).
+Protože nové typy identit destinací a routerů nebudou obsahovat výplň, nebudou kompresibilní. Velikosti destinací a identit routerů, které jsou gzipovány při přenosu, se zvýší 12x - 38x v závislosti na algoritmu.
 
-Režie bude značná. Typické velikosti cílů a směrovacích identit Ed25519
-jsou 391 bajtů.
-Tyto se zvýší o 3,5x až 6,8x v závislosti na algoritmu.
-Ed25519 podpisy mají 64 bajtů.
-Tyto se zvýší o 38x až 76x v závislosti na algoritmu.
-Typicky podepsaná RouterInfo, LeaseSet, datagramy opakovaného odeslání a podepsané zprávy streamování mají kolem 1 KB.
-Tyto se zvýší o 3x až 8x v závislosti na algoritmu.
+### Legal Combinations
 
-Jelikož nové typy cílů a směrovací identity nebudou obsahovat vycpávky,
-nebudou komprimovatelné. Velikosti cílů a identit routeru,
-které jsou během přepravy gzipovány, se zvýší o 12x - 38x v závislosti na algoritmu.
+Pro Destinations jsou nové typy podpisů podporovány se všemi typy šifrování v leaseset. Nastavte typ šifrování v certifikátu klíče na NONE (255).
+
+Pro RouterIdentities je typ šifrování ElGamal zastaralý. Nové typy podpisů jsou podporovány pouze se šifrováním X25519 (typ 4). Nové typy šifrování budou označeny v RouterAddresses. Typ šifrování v key certificate bude nadále typ 4.
+
+### New Crypto Required
+
+- ML-KEM (dříve CRYSTALS-Kyber) [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf)
+- ML-DSA (dříve CRYSTALS-Dilithium) [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf)
+- SHA3-128 (dříve Keccak-256) [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf) Používá se pouze pro SHAKE128
+- SHA3-256 (dříve Keccak-512) [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf)
+- SHAKE128 a SHAKE256 (XOF rozšíření pro SHA3-128 a SHA3-256) [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf)
+
+Testovací vektory pro SHA3-256, SHAKE128 a SHAKE256 jsou dostupné na [https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values](https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values).
+
+Poznámka: Java bouncycastle knihovna podporuje všechny výše uvedené. Podpora C++ knihovny je v OpenSSL 3.5 [https://openssl-library.org/post/2025-02-04-release-announcement-3.5/](https://openssl-library.org/post/2025-02-04-release-announcement-3.5/).
+
+### Alternatives
+
+Nebudeme podporovat [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf) (Sphincs+), je mnohem mnohem pomalejší a větší než ML-DSA. Nebudeme podporovat nadcházející FIPS206 (Falcon), ještě není standardizován. Nebudeme podporovat NTRU nebo jiné PQ kandidáty, které nebyly standardizovány NIST.
+
+### Rosenpass
+
+Existuje nějaký výzkum [https://eprint.iacr.org/2020/379.pdf](https://eprint.iacr.org/2020/379.pdf) o adaptaci Wireguard (IK) pro čistou PQ kryptografii, ale v tomto článku je několik otevřených otázek. Později byl tento přístup implementován jako Rosenpass [https://rosenpass.eu/](https://rosenpass.eu/) [https://raw.githubusercontent.com/rosenpass/rosenpass/papers-pdf/whitepaper.pdf](https://raw.githubusercontent.com/rosenpass/rosenpass/papers-pdf/whitepaper.pdf) pro PQ Wireguard.
+
+Rosenpass používá handshake podobný Noise KK s předsdílenými statickými klíči Classic McEliece 460896 (každý 500 KB) a efemérními klíči Kyber-512 (v podstatě MLKEM-512). Jelikož šifrotexty Classic McEliece mají pouze 188 bajtů a veřejné klíče a šifrotexty Kyber-512 mají rozumnou velikost, obě handshake zprávy se vejdou do standardního UDP MTU. Výstupní sdílený klíč (osk) z PQ KK handshake se používá jako vstupní předsdílený klíč (psk) pro standardní Wireguard IK handshake. Celkem tak probíhají dva kompletní handshaky, jeden čistě PQ a jeden čistě X25519.
+
+Nemůžeme nic z toho udělat pro nahrazení našich XK a IK handshake, protože:
+
+- Nemůžeme dělat KK, Bob nemá Alicin statický klíč
+- Statické klíče o velikosti 500KB jsou příliš velké
+- Nechceme další round-trip
+
+V whitepaperu je mnoho dobrých informací a my si je projdeme pro nápady a inspiraci. TODO.
+
+## Specification
+
+### Výměna klíčů
+
+Aktualizujte sekce a tabulky v dokumentu běžných struktur [/en/docs/spec/common-structures/](/en/docs/spec/common-structures/) následovně:
+
+### Podpisy
+
+Nové typy veřejných klíčů jsou:
+
+| Type | Public Key Length | Since | Usage |
+|------|-------------------|-------|-------|
+| MLKEM512_X25519 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM768_X25519 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM1024_X25519 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM512 | 800 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| MLKEM768 | 1184 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| MLKEM1024 | 1568 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| MLKEM512_CT | 768 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| MLKEM768_CT | 1088 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| MLKEM1024_CT | 1568 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| NONE | 0 | 0.9.xx | See proposal 169, for destinations with PQ sig types only, not for RIs or Leasesets |
+Hybridní veřejné klíče jsou klíče X25519. Veřejné klíče KEM jsou dočasné PQ klíče odeslané od Alice k Bobovi. Kódování a pořadí bytů jsou definovány v [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf).
+
+MLKEM*_CT klíče nejsou ve skutečnosti veřejné klíče, jsou to "šifrovaný text" odeslaný od Boba k Alici v Noise handshake. Jsou zde uvedeny pro úplnost.
 
 ### Legální kombinace
 
-Pro Cíle jsou nové typy podpisů podporovány se všemi typy šifrování v leasesetu. Nastavte typ šifrování v klíčovém certifikátu na NONE (255).
+Nové typy Private Key jsou:
 
-Pro RouterIdentities, je typ šifrování ElGamal zastaralý.
-Nové typy podpisů jsou podporovány pouze se šifrováním X25519 (typ 4).
-Nové typy šifrování budou označeny v RouterAddresses.
-Typ šifrování v klíčovém certifikátu zůstane typ 4.
+| Type | Private Key Length | Since | Usage |
+|------|---------------------|-------|-------|
+| MLKEM512_X25519 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM768_X25519 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM1024_X25519 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM512 | 1632 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| MLKEM768 | 2400 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+| MLKEM1024 | 3168 | 0.9.xx | See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations |
+Hybridní privátní klíče jsou X25519 klíče. KEM privátní klíče jsou pouze pro Alice. KEM kódování a pořadí bajtů jsou definovány v [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf).
 
 ### Vyžadována nová kryptografie
 
-- ML-KEM (dříve CRYSTALS-Kyber) [FIPS203](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf)
-- ML-DSA (dříve CRYSTALS-Dilithium) [FIPS204](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf)
-- SHA3-128 (dříve Keccak-256) [FIPS202]_ Použito pouze pro SHAKE128
-- SHA3-256 (dříve Keccak-512) [FIPS202]_
-- SHAKE128 a SHAKE256 (XOF rozšíření na SHA3-128 a SHA3-256) [FIPS202]_
+Nové typy podpisových veřejných klíčů jsou:
 
-Testovací vektory pro SHA3-256, SHAKE128 a SHAKE256 jsou k dispozici na [NIST-VECTORS]_.
-
-Poznámka: Java bouncycastle knihovna podporuje vše výše uvedené.
-Podpora C++ knihoven je v OpenSSL 3.5 [OPENSSL]_.
+| Type | Length (bytes) | Since | Usage |
+|------|----------------|-------|-------|
+| MLDSA44 | 1312 | 0.9.xx | See proposal 169 |
+| MLDSA65 | 1952 | 0.9.xx | See proposal 169 |
+| MLDSA87 | 2592 | 0.9.xx | See proposal 169 |
+| MLDSA44_EdDSA_SHA512_Ed25519 | 1344 | 0.9.xx | See proposal 169 |
+| MLDSA65_EdDSA_SHA512_Ed25519 | 1984 | 0.9.xx | See proposal 169 |
+| MLDSA87_EdDSA_SHA512_Ed25519 | 2624 | 0.9.xx | See proposal 169 |
+| MLDSA44ph | 1344 | 0.9.xx | Only for SU3 files, not for netdb structures |
+| MLDSA65ph | 1984 | 0.9.xx | Only for SU3 files, not for netdb structures |
+| MLDSA87ph | 2624 | 0.9.xx | Only for SU3 files, not for netdb structures |
+Hybridní veřejné klíče pro podepisování jsou klíč Ed25519 následovaný PQ klíčem, jak je uvedeno v [https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/](https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/). Kódování a pořadí bajtů jsou definovány v [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf).
 
 ### Alternativy
 
-Nepodporujeme [FIPS205]_ (Sphincs+), je mnohem pomalejší a větší než ML-DSA.
-Nepodporujeme připravovaný FIPS206 (Falcon), ještě není standardizován.
-Nepodporujeme NTRU nebo jiné kandidáty PQ, kteří nebyli standardizováni NIST.
+Nové typy Signing Private Key jsou:
 
-Rosenpass
-`````````
+| Type | Length (bytes) | Since | Usage |
+|------|----------------|-------|-------|
+| MLDSA44 | 2560 | 0.9.xx | See proposal 169 |
+| MLDSA65 | 4032 | 0.9.xx | See proposal 169 |
+| MLDSA87 | 4896 | 0.9.xx | See proposal 169 |
+| MLDSA44_EdDSA_SHA512_Ed25519 | 2592 | 0.9.xx | See proposal 169 |
+| MLDSA65_EdDSA_SHA512_Ed25519 | 4064 | 0.9.xx | See proposal 169 |
+| MLDSA87_EdDSA_SHA512_Ed25519 | 4928 | 0.9.xx | See proposal 169 |
+| MLDSA44ph | 2592 | 0.9.xx | Only for SU3 files, not for netdb structures. See proposal 169 |
+| MLDSA65ph | 4064 | 0.9.xx | Only for SU3 files, not for netdb structures. See proposal 169 |
+| MLDSA87ph | 4928 | 0.9.xx | Only for SU3 files, not for netdb structures. See proposal 169 |
+Hybridní podpisové privátní klíče jsou Ed25519 klíč následovaný PQ klíčem, jak je uvedeno v [https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/](https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/). Kódování a pořadí bajtů jsou definovány v [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf).
 
-Existuje nějaký výzkum [PQ-WIREGUARD]_ na přizpůsobení Wireguarda (IK)
-pro čistě PQ kryptografii, ale v tomto dokumentu je několik otevřených otázek.
-Později byl tento přístup implementován jako Rosenpass [Rosenpass]_ [Rosenpass-Whitepaper]_
-pro PQ Wireguard.
+### Rosenpass
 
-Rosenpass používá handshake podobný Noise KK s předpoužitím statických klíčů Classic McEliece 460896 (každý 500 KB) a efemerními klíči Kyber-512 (prakticky MLKEM-512).
-Jelikož šifrované texty Classic McEliece mají pouze 188 bajtů, a veřejné klíče a šifrové texty Kyber-512 jsou rozumné, obě handshake zprávy se vejdou do standardní UDP MTU.
-Výstupní sdílený klíč (osk) z PQ KK handshaku se použije jako vstupní předpoužitý klíč (psk)
-pro standardní Wireguard IK handshake.
-Takže výsledkem je, že se provádějí dva kompletní handshake, jeden čistě PQ a jeden čistě X25519.
+Nové typy Signature jsou:
 
-Nemůžeme udělat nic z toho, abychom nahradili naše XK a IK handshaky, protože:
+| Type | Length (bytes) | Since | Usage |
+|------|----------------|-------|-------|
+| MLDSA44 | 2420 | 0.9.xx | See proposal 169 |
+| MLDSA65 | 3309 | 0.9.xx | See proposal 169 |
+| MLDSA87 | 4627 | 0.9.xx | See proposal 169 |
+| MLDSA44_EdDSA_SHA512_Ed25519 | 2484 | 0.9.xx | See proposal 169 |
+| MLDSA65_EdDSA_SHA512_Ed25519 | 3373 | 0.9.xx | See proposal 169 |
+| MLDSA87_EdDSA_SHA512_Ed25519 | 4691 | 0.9.xx | See proposal 169 |
+| MLDSA44ph | 2484 | 0.9.xx | Only for SU3 files, not for netdb structures. See proposal 169 |
+| MLDSA65ph | 3373 | 0.9.xx | Only for SU3 files, not for netdb structures. See proposal 169 |
+| MLDSA87ph | 4691 | 0.9.xx | Only for SU3 files, not for netdb structures. See proposal 169 |
+Hybridní podpisy jsou podpis Ed25519 následovaný PQ podpisem, jak je uvedeno v [https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/](https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/). Hybridní podpisy jsou ověřovány ověřením obou podpisů a selhávají, pokud selže kterýkoliv z nich. Kódování a pořadí bajtů jsou definovány v [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf).
 
-- Nemůžeme udělat KK, Bob nemá statický klíč Alice
-- 500 KB statické klíče jsou příliš velké
-- Nechceme další okruh
+### Key Certificates
 
-V dokumentu bílé knihy je mnoho dobrých informací,
-a budeme je přezkoumávat pro nápady a inspiraci. TODO.
+Nové typy Signing Public Key jsou:
 
-## Specifikace
+| Type | Type Code | Total Public Key Length | Since | Usage |
+|------|-----------|-------------------------|-------|-------|
+| MLDSA44 | 12 | 1312 | 0.9.xx | See proposal 169 |
+| MLDSA65 | 13 | 1952 | 0.9.xx | See proposal 169 |
+| MLDSA87 | 14 | 2592 | 0.9.xx | See proposal 169 |
+| MLDSA44_EdDSA_SHA512_Ed25519 | 15 | 1344 | 0.9.xx | See proposal 169 |
+| MLDSA65_EdDSA_SHA512_Ed25519 | 16 | 1984 | 0.9.xx | See proposal 169 |
+| MLDSA87_EdDSA_SHA512_Ed25519 | 17 | 2624 | 0.9.xx | See proposal 169 |
+| MLDSA44ph | 18 | n/a | 0.9.xx | Only for SU3 files |
+| MLDSA65ph | 19 | n/a | 0.9.xx | Only for SU3 files |
+| MLDSA87ph | 20 | n/a | 0.9.xx | Only for SU3 files |
+Nové typy Crypto Public Key jsou:
+
+| Type | Type Code | Total Public Key Length | Since | Usage |
+|------|-----------|-------------------------|-------|-------|
+| MLKEM512_X25519 | 5 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM768_X25519 | 6 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| MLKEM1024_X25519 | 7 | 32 | 0.9.xx | See proposal 169, for Leasesets only, not for RIs or Destinations |
+| NONE | 255 | 0 | 0.9.xx | See proposal 169 |
+Hybridní typy klíčů NIKDY nejsou zahrnuty v certifikátech klíčů; pouze v leaseSetech.
+
+Pro destinace s hybridními nebo PQ typy podpisů použijte NONE (typ 255) pro typ šifrování, ale není zde žádný kryptografický klíč a celá 384-bajtová hlavní sekce je pro podpisový klíč.
 
 ### Běžné struktury
 
-Aktualizujte sekce a tabulky v dokumentu obecných struktur [COMMON](https://geti2p.net/spec/common-structures) takto:
+Zde jsou délky pro nové typy Destination. Typ šifrování pro všechny je NONE (typ 255) a délka šifrovacího klíče je považována za 0. Celá 384-bajtová sekce se používá pro první část veřejného podpisového klíče. POZNÁMKA: To se liší od specifikace pro typy podpisů ECDSA_SHA512_P521 a RSA, kde jsme zachovali 256-bajtový ElGamal klíč v destination, i když byl nepoužívaný.
 
-PublicKey
-````````````````
+Žádné padding. Celková délka je 7 + celková délka klíče. Délka key certificate je 4 + nadměrná délka klíče.
 
-Nové typy veřejného klíče jsou:
-
-| Typ | élka veřejného kl | če Od | Použi |
-| --- | ----------------- | ----- | ----- |
-| MLKEM512_X25519 | 32 | 0.9.xx | Viz n |
-| MLKEM768_X25519 | 32 | 0.9.xx | Viz n |
-| MLKEM1024_X25519 | 32 | 0.9.xx | Viz n |
-| MLKEM512 | 800 | 0.9.xx | Viz n |
-| MLKEM768 | 1184 | 0.9.xx | Viz n |
-| MLKEM1024 | 1568 | 0.9.xx | Viz n |
-| MLKEM512_CT | 768 | 0.9.xx | Viz n |
-| MLKEM768_CT | 1088 | 0.9.xx | Viz n |
-| MLKEM1024_CT | 1568 | 0.9.xx | Viz n |
-| NONE | 0 | 0.9.xx | Viz n |
-
-
-Hybridní veřejné klíče jsou klíče X25519.
-Veřejné klíče KEM jsou efemérní PQ klíče odeslané od Alice k Bobovi.
-Kódování a pořadí bajtů jsou definovány v [FIPS203](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf).
-
-Klíče MLKEM*_CT nejsou pravými veřejnými klíči, jsou "šifrovanými texty" odeslanými od Boba k Alice v Noise handshaku.
-Jsou zde uvedeny pro úplnost.
-
-PrivateKey
-````````````````
-
-Nové typy privátních klíčů jsou:
-
-| Typ | élka privátního kl | če Od | Použi |
-| --- | ------------------ | ----- | ----- |
-| MLKEM512_X25519 | 32 | 0.9.xx | Viz n |
-| MLKEM768_X25519 | 32 | 0.9.xx | Viz n |
-| MLKEM1024_X25519 | 32 | 0.9.xx | Viz n |
-| MLKEM512 | 1632 | 0.9.xx | Viz n |
-| MLKEM768 | 2400 | 0.9.xx | Viz n |
-| MLKEM1024 | 3168 | 0.9.xx | Viz n |
-
-
-Hybridní privátní klíče jsou klíče X25519.
-Privátní klíče KEM jsou pouze pro Alici.
-Kódování KEM a pořadí bajtů jsou definovány v [FIPS203](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf).
-
-SigningPublicKey
-````````````````
-
-Nové typy veřejného klíče pro podepisování jsou:
-
-| Typ | élka (bajty) | d | oužit |
-| --- | ------------ | --- | ----- |
-| MLDSA44 | 1312 | 0.9.xx | Viz n |
-| MLDSA65 | 1952 | 0.9.xx | Viz n |
-| MLDSA87 | 2592 | 0.9.xx | Viz n |
-| MLDSA44_EdDSA_SHA512_Ed25519 | 1344 | 0.9.xx | Viz n |
-| MLDSA65_EdDSA_SHA512_Ed25519 | 1984 | 0.9.xx | Viz n |
-| MLDSA87_EdDSA_SHA512_Ed25519 | 2624 | 0.9.xx | Viz n |
-| MLDSA44ph | 1344 | 0.9.xx | Pouze |
-| MLDSA65ph | 1984 | 0.9.xx | Pouze |
-| MLDSA87ph | 2624 | 0.9.xx | Pouze |
-
-
-Hybridní veřejné klíče pro podepisování jsou klíč Ed25519 následovaný PQ klíčem, jak je uvedeno v [COMPOSITE-SIGS](https://datatracker.ietf.org/doc/draft-ounsworth-pq-composite-sigs/).
-Kódování a pořadí bajtů jsou definovány v [FIPS204](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf).
-
-SigningPrivateKey
-`````````````````
-
-Nové typy privátních klíčů pro podepisování jsou:
-
-| Typ | élka (bajty) | d | oužit |
-| --- | ------------ | --- | ----- |
-| MLDSA44 | 2560 | 0.9.xx | Viz n |
-| MLDSA65 | 4032 | 0.9.xx | Viz n |
-| MLDSA87 | 4896 | 0.9.xx | Viz n |
-| MLDSA44_EdDSA_SHA512_Ed25519 | 2592 | 0.9.xx | Viz n |
-| MLDSA65_EdDSA_SHA512_Ed25519 | 4064 | 0.9.xx | Viz n |
-| MLDSA87_EdDSA_SHA512_Ed25519 | 4928 | 0.9.xx | Viz n |
-| MLDSA44ph | 2592 | 0.9.xx | Pouze |
-| MLDSA65ph | 4064 | 0.9.xx | Pouze |
-| MLDSA87ph | 4928 | 0.9.xx | Pouze |
-
-
-Hybridní privátní klíče pro podepisování jsou klíč Ed25519 následovaný PQ klíčem, jak je uvedeno v [COMPOSITE-SIGS](https://datatracker.ietf.org/doc/draft-ounsworth-pq-composite-sigs/).
-Kódování a pořadí bajtů jsou definovány v [FIPS204](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf).
-
-Signature
-``````````
-
-Nové typy podpisů jsou:
-
-| Typ | élka (bajty) | d | oužit |
-| --- | ------------ | --- | ----- |
-| MLDSA44 | 2420 | 0.9.xx | Viz n |
-| MLDSA65 | 3309 | 0.9.xx | Viz n |
-| MLDSA87 | 4627 | 0.9.xx | Viz n |
-| MLDSA44_EdDSA_SHA512_Ed25519 | 2484 | 0.9.xx | Viz n |
-| MLDSA65_EdDSA_SHA512_Ed25519 | 3373 | 0.9.xx | Viz n |
-| MLDSA87_EdDSA_SHA512_Ed25519 | 4691 | 0.9.xx | Viz n |
-| MLDSA44ph | 2484 | 0.9.xx | Pouze |
-| MLDSA65ph | 3373 | 0.9.xx | Pouze |
-| MLDSA87ph | 4691 | 0.9.xx | Pouze |
-
-
-Hybridní podpisy jsou podpis Ed25519 následovaný PQ podpisem, jak je uvedeno v [COMPOSITE-SIGS](https://datatracker.ietf.org/doc/draft-ounsworth-pq-composite-sigs/).
-Hybridní podpisy se ověřují ověřením obou podpisů, a selžou
-pokud jeden z nich selže.
-Kódování a pořadí bajtů jsou definovány v [FIPS204](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf).
-
-Key Certificates
-````````````````
-
-Nové typy veřejného klíče pro podepisování jsou:
-
-| Typ | ypový kód | elková délka veřejného | íče  O |  |
-| --- | --------- | ---------------------- | ------ | --- |
-| MLDSA44 | 12 | 1312 | 0.9.xx | Viz n |
-| MLDSA65 | 13 | 1952 | 0.9.xx | Viz n |
-| MLDSA87 | 14 | 2592 | 0.9.xx | Viz n |
-| MLDSA44_EdDSA_SHA512_Ed25519 | 15 | 1344 | 0.9.xx | Viz n |
-| MLDSA65_EdDSA_SHA512_Ed25519 | 16 | 1984 | 0.9.xx | Viz n |
-| MLDSA87_EdDSA_SHA512_Ed25519 | 17 | 2624 | 0.9.xx | Viz n |
-| MLDSA44ph | 18 | n/a | 0.9.xx | Pouze |
-| MLDSA65ph | 19 | n/a | 0.9.xx | Pouze |
-| MLDSA87ph | 20 | n/a | 0.9.xx | Pouze |
-
-
-
-
-Nové typy veřejného kryptografického klíče jsou:
-
-| Typ | ypový kód | Celková délka veřejného | klíče |  |
-| --- | --------- | ----------------------- | ----- | --- |
-| MLKEM512_X25519 | 5 | 32 | 0.9.xx | Viz n |
-| MLKEM768_X25519 | 6 | 32 | 0.9.xx | Viz n |
-| MLKEM1024_X25519 | 7 | 32 | 0.9.xx | Viz n |
-| NONE | 255 | 0 | 0.9.xx | Viz n |
-
-
-
-Hybridní typy klíčů NIKDY nejsou zahrnuty v klíčových certifikátech; pouze v leasesetech.
-
-Pro cíle s hybridními nebo PQ typy podpisů,
-používejte NONE (typ 255) pro typ šifrování,
-ale neexistuje žádný kryptografický klíč, a celá hlavní část o délce 384 bajtů je vyhrazena pro klíč podpisu.
-
-Velikosti cílů
-````````````````
-
-Zde jsou délky pro nové typy cílů.
-Typ šifrování pro všechny je NONE (typ 255) a délka šifrovacího klíče je považována za 0.
-Celá část o délce 384 bajtů je použita pro první část veřejného klíče pro podepisování.
-Poznámka: To je odlišné od specifikace pro typy ECDSA_SHA512_P521 a RSA podpis, kde jsme zachovali 256-bajtový ElGamal
-alebo i když nebyl použit.
-
-Žádné vycpávky.
-Celková délka je 7 + celková délka klíče.
-Délka klíčového certifikátu je 4 + nadbytečná délka klíče.
-
-Příklad byte streamu destinace o délce 1319 bajtů pro MLDSA44:
+Příklad 1319-bajtového proudu bajtů destinace pro MLDSA44:
 
 skey[0:383] 5 (932 >> 8) (932 & 0xff) 00 12 00 255 skey[384:1311]
 
-
-
-| Typ | ypový kód | Celková délka veřejného | líče | avní | adbyt |
-| --- | --------- | ----------------------- | ---- | ---- | ----- |
+| Type | Type Code | Total Public Key Length | Main | Excess | Total Dest Length |
+|------|-----------|-------------------------|------|--------|-------------------|
 | MLDSA44 | 12 | 1312 | 384 | 928 | 1319 |
 | MLDSA65 | 13 | 1952 | 384 | 1568 | 1959 |
 | MLDSA87 | 14 | 2592 | 384 | 2208 | 2599 |
 | MLDSA44_EdDSA_SHA512_Ed25519 | 15 | 1344 | 384 | 960 | 1351 |
 | MLDSA65_EdDSA_SHA512_Ed25519 | 16 | 1984 | 384 | 1600 | 1991 |
 | MLDSA87_EdDSA_SHA512_Ed25519 | 17 | 2624 | 384 | 2240 | 2631 |
+### PublicKey
 
+Zde jsou délky pro nové typy Destination. Enc typ pro všechny je X25519 (typ 4). Celá 352-bytová sekce po X25519 veřejném klíči se používá pro první část veřejného klíče pro podpisování. Bez paddingu. Celková délka je 39 + celková délka klíče. Délka key certificate je 4 + přebývající délka klíče.
 
-
-
-Velikosti RouterIdent
-`````````````````````
-
-Zde jsou délky pro nové typy destinací.
-Typ šifrování pro všechny je X25519 (typ 4).
-Celá část o délce 352 bajtů za veřejným klíčem X28819 je použita pro první část veřejného klíče pro podepisování.
-Žádné vycpávky.
-Celková délka je 39 + celková délka klíče.
-Délka klíčového certifikátu je 4 + nadbytečná délka klíče.
-
-Příklad byte streamu router identity o délce 1351 bajtů pro MLDSA44:
+Příklad 1351-bajtového proudu bajtů router identity pro MLDSA44:
 
 enckey[0:31] skey[0:351] 5 (960 >> 8) (960 & 0xff) 00 12 00 4 skey[352:1311]
 
-
-
-| Typ | ypový kód | Celková délka veřejného | líče | avní | adbyt |
-| --- | --------- | ----------------------- | ---- | ---- | ----- |
+| Type | Type Code | Total Public Key Length | Main | Excess | Total RouterIdent Length |
+|------|-----------|-------------------------|------|--------|--------------------------|
 | MLDSA44 | 12 | 1312 | 352 | 960 | 1351 |
 | MLDSA65 | 13 | 1952 | 352 | 1600 | 1991 |
 | MLDSA87 | 14 | 2592 | 352 | 2240 | 2631 |
 | MLDSA44_EdDSA_SHA512_Ed25519 | 15 | 1344 | 352 | 992 | 1383 |
 | MLDSA65_EdDSA_SHA512_Ed25519 | 16 | 1984 | 352 | 1632 | 2023 |
 | MLDSA87_EdDSA_SHA512_Ed25519 | 17 | 2624 | 352 | 2272 | 2663 |
+### PrivateKey
 
+Handshaky používají [https://noiseprotocol.org/noise.html](https://noiseprotocol.org/noise.html) handshake vzory.
 
-### Ruční vzory
+Používá se následující mapování písmen:
 
-Ručně použití vzory používají [Noise]_ ruční vzory.
-
-Použité označení písmen:
-
-- e = jednorázový efemérní klíč
+- e = jednorázový dočasný klíč
 - s = statický klíč
-- p = užitečná zátěž zprávy
-- e1 = jednorázový efemérní PQ klíč, poslaný od Alice k Bobovi
-- ekem1 = šifrovaný text KEM, poslaný od Boba k Alice
+- p = užitečné zatížení zprávy
+- e1 = jednorázový dočasný PQ klíč, poslaný od Alice k Bobovi
+- ekem1 = KEM šifrový text, poslaný od Boba k Alici
 
-Následující úpravy pro XK a IK pro hybridní dopřednou tajnost (hfs) jsou
-definovány v [Noise-Hybrid]_ sekce 5:
+Následující modifikace XK a IK pro hybridní forward secrecy (hfs) jsou specifikovány v [https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf](https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf) sekce 5:
 
-```dataspec
-
+```
 XK:                       XKhfs:
   <- s                      <- s
   ...                       ...
@@ -479,16 +346,13 @@ XK:                       XKhfs:
   <- p                     <- p
   p ->                     p ->
 
-  e1 a ekem1 jsou šifrované. Viz definice vzorů níže.
-  POZNÁMKA: e1 a ekem1 mají různé velikosti (na rozdíl od X25519)
+  e1 and ekem1 are encrypted. See pattern definitions below.
+  NOTE: e1 and ekem1 are different sizes (unlike X25519)
+```
+Vzor e1 je definován následovně, jak je specifikováno v [https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf](https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf) sekci 4:
 
 ```
-
-Vzorec e1 je definován následovně, jak je specifikováno v [Noise-Hybrid]_ sekci 4:
-
-```dataspec
-
-Pro Alici:
+For Alice:
   (encap_key, decap_key) = PQ_KEYGEN()
 
   // EncryptAndHash(encap_key)
@@ -496,21 +360,17 @@ Pro Alici:
   n++
   MixHash(ciphertext)
 
-  Pro Boba:
+  For Bob:
 
   // DecryptAndHash(ciphertext)
   encap_key = DECRYPT(k, n, ciphertext, ad)
   n++
   MixHash(ciphertext)
-
+```
+Vzor ekem1 je definován následovně, jak je specifikováno v [https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf](https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf) sekci 4:
 
 ```
-
-Vzorec ekem1 je definován následovně, jak je specifikováno v [Noise-Hybrid]_ sekci 4:
-
-```dataspec
-
-Pro Boba:
+For Bob:
 
   (kem_ciphertext, kem_shared_key) = ENCAPS(encap_key)
 
@@ -522,7 +382,7 @@ Pro Boba:
   MixKey(kem_shared_key)
 
 
-  Pro Alici:
+  For Alice:
 
   // DecryptAndHash(ciphertext)
   kem_ciphertext = DECRYPT(k, n, ciphertext, ad)
@@ -531,86 +391,70 @@ Pro Boba:
   // MixKey
   kem_shared_key = DECAPS(kem_ciphertext, decap_key)
   MixKey(kem_shared_key)
-
-
 ```
+### SigningPublicKey
 
-### Noise Handshake KDF
+#### Issues
 
-Problémy
-``````
-
-- Měli bychom změnit hašovací funkci handshaku? Viz [Choosing-Hash]_.
-  SHA256 není ohrožena PQ, ale pokud bychom chtěli vylepšit
-  naši hašovací funkci, teď je čas, zatímco měníme i jiné věci.
-  Aktuální návrh IETF SSH [SSH-HYBRID]_ je používat MLKEM768
-  s SHA256, a MLKEM1024 s SHA384. Tento návrh zahrnuje
-  diskusi o bezpečnostních úvahách.
-- Měli bychom přestat odesílat 0-RTT data ratchetu (kromě LS)?
+- Měli bychom změnit hash funkci pro handshake? Viz [https://kerkour.com/fast-secure-hash-function-sha256-sha512-sha3-blake3](https://kerkour.com/fast-secure-hash-function-sha256-sha512-sha3-blake3).
+  SHA256 není zranitelná vůči PQ, ale pokud chceme upgradovat
+  naši hash funkci, nyní je ten správný čas, zatímco měníme další věci.
+  Aktuální IETF SSH návrh [https://datatracker.ietf.org/doc/draft-ietf-sshm-mlkem-hybrid-kex/](https://datatracker.ietf.org/doc/draft-ietf-sshm-mlkem-hybrid-kex/) je používat MLKEM768
+  s SHA256 a MLKEM1024 s SHA384. Tento návrh zahrnuje
+  diskusi bezpečnostních hledisek.
+- Měli bychom přestat odesílat 0-RTT ratchet data (kromě LS)?
 - Měli bychom přepnout ratchet z IK na XK, pokud neodesíláme 0-RTT data?
 
-Přehled
-``````
+#### Overview
 
-Tato sekce se vztahuje na protokoly IK a XK.
+Tato sekce se vztahuje na protokoly IK i XK.
 
-Hybridní handshake je definován v [Noise-Hybrid]_.
-První zpráva, od Alice k Bobovi, obsahuje e1, klíč pro encapsulaci, před užitečnou zátěží zprávy.
-To je považováno za další statický klíč; zavolejte EncryptAndHash() na něj (jako Alice)
-nebo DecryptAndHash() (jako Bob).
-Poté zpracujte užitečnou zátěž zprávy klasicky.
+Hybridní handshake je definován v [https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf](https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf). První zpráva, od Alice k Bobovi, obsahuje e1, enkapsulační klíč, před datovou částí zprávy. Tento je považován za dodatečný statický klíč; zavolejte na něj EncryptAndHash() (jako Alice) nebo DecryptAndHash() (jako Bob). Poté zpracujte datovou část zprávy jako obvykle.
 
-Druhá zpráva, od Boba k Alice, obsahuje ekem1, šifovaný text, před užitečnou zátěží zprávy.
-To je považováno za další statický klíč; zavolejte EncryptAndHash() na něj (jako Bob)
-nebo DecryptAndHash() (jako Alice).
-Poté vypočítejte kem_shared_key a zavolejte MixKey(kem_shared_key).
-Poté zpracujte užitečnou zátěž zprávy klasicky.
+Druhá zpráva, od Boba k Alici, obsahuje ekem1, šifrovaný text, před užitečným obsahem zprávy. To je považováno za dodatečný statický klíč; zavolejte na něj EncryptAndHash() (jako Bob) nebo DecryptAndHash() (jako Alice). Poté vypočítejte kem_shared_key a zavolejte MixKey(kem_shared_key). Následně zpracujte užitečný obsah zprávy jako obvykle.
 
-Definované operace ML-KEM
-`````````````````````````
+#### Defined ML-KEM Operations
 
-Definujeme následující funkce odpovídající kryptografickým stavebním blokům používaným
-jak je definováno v [FIPS203](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf).
+Definujeme následující funkce odpovídající kryptografickým stavebním blokům použitým podle definice v [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf).
 
-(encap_key, dekap_key) = PQ_KEYGEN()
-    Alice vytváří klíče pro encapulaci a dekapulaci
-    Klíč pro encapulaci je poslán ve zprávě 1.
-    Velikosti klíčů encap_key a dekap_key se liší na základě varianty ML-KEM.
+(encap_key, decap_key) = PQ_KEYGEN()
+
+    Alice creates the encapsulation and decapsulation keys
+    The encapsulation key is sent in message 1.
+    encap_key and decap_key sizes vary based on ML-KEM variant.
 
 (ciphertext, kem_shared_key) = ENCAPS(encap_key)
-    Bob vypočítá šifrový text a sdílený klíč,
-    pomocí šifrovaného textu přijatého ve zprávě 1.
-    Šifrový text je poslán ve zprávě 2.
-    Velikost šifrovaného textu se liší na základě varianty ML-KEM.
-    kem_shared_key je vždy 32 bajtů.
 
-kem_shared_key = DECAPS(ciphertext, dekap_key)
-    Alice vypočítá sdílený klíč,
-    pomocí šifrovaného textu přijatého ve zprávě 2.
-    kem_shared_key je vždy 32 bajtů.
+    Bob calculates the ciphertext and shared key,
+    using the ciphertext received in message 1.
+    The ciphertext is sent in message 2.
+    ciphertext size varies based on ML-KEM variant.
+    The kem_shared_key is always 32 bytes.
 
-Poznámka: jak encap_key, tak šifrovaný text jsou šifrovány uvnitř ChaCha/Poly
-bloků v Noise handshake zprávách 1 a 2.
-Budou dešifrovány během handshake procesu.
+kem_shared_key = DECAPS(ciphertext, decap_key)
 
-kem_shared_key je smíchána do řetězecového klíče pomocí MixHash().
-Viz níže pro podrobnosti.
+    Alice calculates the shared key,
+    using the ciphertext received in message 2.
+    The kem_shared_key is always 32 bytes.
 
-Alice KDF pro Zprávu 1
-```````````````````````
+Všimněte si, že jak encap_key, tak ciphertext jsou šifrovány uvnitř ChaCha/Poly bloků ve zprávách 1 a 2 Noise handshake. Budou dešifrovány jako součást procesu handshake.
 
-Pro XK: Po vzoru zprávy 'es' a před užitečnými daty, přidejte:
+kem_shared_key se smíchá do řetězícího klíče pomocí MixHash(). Podrobnosti viz níže.
+
+#### Alice KDF for Message 1
+
+Pro XK: Po vzoru zprávy 'es' a před payload, přidejte:
 
 NEBO
 
-Pro IK: Po vzoru zprávy 'es' a před vzoru zprávy 's', přidejte:
+Pro IK: Po vzoru zprávy 'es' a před vzorem zprávy 's' přidejte:
 
-```text
-To je vzorek zprávy "e1":
-  (encap_key, dekap_key) = PQ_KEYGEN()
+```
+This is the "e1" message pattern:
+  (encap_key, decap_key) = PQ_KEYGEN()
 
   // EncryptAndHash(encap_key)
-  // AEAD parametry
+  // AEAD parameters
   k = keydata[32:63]
   n = 0
   ad = h
@@ -620,28 +464,26 @@ To je vzorek zprávy "e1":
   // MixHash(ciphertext)
   h = SHA256(h || ciphertext)
 
-  Konec vzoru zprávy "e1".
 
-  POZNÁMKA: Pro další sekci (užitečnou zátěž pro XK nebo statický klíč pro IK),
-  keydata a chain key zůstávají stejné,
-  a n nyní rovná 1 (místo 0 pro nehybridní).
+  End of "e1" message pattern.
 
+  NOTE: For the next section (payload for XK or static key for IK),
+  the keydata and chain key remain the same,
+  and n now equals 1 (instead of 0 for non-hybrid).
 ```
+#### Bob KDF for Message 1
 
-Bob KDF pro Zprávu 1
-`````````````````````
-
-Pro XK: Po vzoru zprávy 'es' a před užitečnými daty, přidejte:
+Pro XK: Po message patternu 'es' a před payload, přidat:
 
 NEBO
 
-Pro IK: Po vzoru zprávy 'es' a před vzoru zprávy 's', přidejte:
+Pro IK: Po message patternu 'es' a před message patternem 's' přidejte:
 
-```text
-To je vzorek zprávy "e1":
+```
+This is the "e1" message pattern:
 
   // DecryptAndHash(encap_key_section)
-  // AEAD parametry
+  // AEAD parameters
   k = keydata[32:63]
   n = 0
   ad = h
@@ -651,30 +493,27 @@ To je vzorek zprávy "e1":
   // MixHash(encap_key_section)
   h = SHA256(h || encap_key_section)
 
-  Konec vzoru zprávy "e1".
+  End of "e1" message pattern.
 
-  POZNÁMKA: Pro další sekci (užitečná zátěž pro XK nebo statický klíč pro IK),
-  keydata a chain key zůstávají stejné,
-  a n nyní rovná 1 (místo 0 pro nehybridní).
-
+  NOTE: For the next section (payload for XK or static key for IK),
+  the keydata and chain key remain the same,
+  and n now equals 1 (instead of 0 for non-hybrid).
 ```
+#### Bob KDF for Message 2
 
-Bob KDF pro Zprávu 2
-`````````````````````
-
-Pro XK: Po vzoru zprávy 'ee' a před užitečnými daty, přidejte:
+Pro XK: Po vzoru zprávy 'ee' a před payload, přidej:
 
 NEBO
 
-Pro IK: Po vzoru zprávy 'ee' a před vzorem zprávy 'se', přidejte:
+Pro IK: Po vzoru zprávy 'ee' a před vzorem zprávy 'se' přidejte:
 
-```text
-To je vzorek zprávy "ekem1":
+```
+This is the "ekem1" message pattern:
 
   (kem_ciphertext, kem_shared_key) = ENCAPS(encap_key)
 
   // EncryptAndHash(kem_ciphertext)
-  // AEAD parametry
+  // AEAD parameters
   k = keydata[32:63]
   n = 0
   ad = h
@@ -687,20 +526,17 @@ To je vzorek zprávy "ekem1":
   keydata = HKDF(chainKey, kem_shared_key, "", 64)
   chainKey = keydata[0:31]
 
-  Konec vzoru zprávy "ekem1".
-
+  End of "ekem1" message pattern.
 ```
-
-Alice KDF pro Zprávu 2
-`````````````````````
+#### Alice KDF for Message 2
 
 Po vzoru zprávy 'ee' (a před vzorem zprávy 'ss' pro IK), přidejte:
 
-```text
-To je vzorek zprávy "ekem1":
+```
+This is the "ekem1" message pattern:
 
   // DecryptAndHash(kem_ciphertext_section)
-  // AEAD parametry
+  // AEAD parameters
   k = keydata[32:63]
   n = 0
   ad = h
@@ -710,594 +546,991 @@ To je vzorek zprávy "ekem1":
   h = SHA256(h || kem_ciphertext_section)
 
   // MixKey(kem_shared_key)
-  kem_shared_key = DECAPS(kem_ciphertext, dekap_key)
+  kem_shared_key = DECAPS(kem_ciphertext, decap_key)
   keydata = HKDF(chainKey, kem_shared_key, "", 64)
   chainKey = keydata[0:31]
 
-  Konec vzoru zprávy "ekem1".
-
+  End of "ekem1" message pattern.
 ```
+#### KDF for Message 3 (XK only)
 
-KDF pro Zprávu 3 (pouze XK)
-``````````````
 nezměněno
 
-KDF pro split()
-```````````````
+#### KDF for split()
+
 nezměněno
 
-### Ratchet
+### SigningPrivateKey
 
-Aktualizujte specifikaci ECIES-Ratchet [ECIES](https://geti2p.net/spec/ecies) takto:
+Aktualizujte specifikaci ECIES-Ratchet [/en/docs/spec/ecies/](/en/docs/spec/ecies/) následovně:
 
-Identifikátory Noise
-`````````````````````
+#### Noise identifiers
 
 - "Noise_IKhfselg2_25519+MLKEM512_ChaChaPoly_SHA256"
 - "Noise_IKhfselg2_25519+MLKEM768_ChaChaPoly_SHA256"
 - "Noise_IKhfselg2_25519+MLKEM1024_ChaChaPoly_SHA256"
 
-1b) Nový formát relace (s vazbou)
-```````````````````````````````````
+#### 1b) New session format (with binding)
 
-Změny: Aktuální ratchet obsahoval statický klíč v první ChaCha sekci,
-a užitečná zátěž ve druhé sekci.
-S ML-KEM, jsou nyní tři sekce.
-První sekce obsahuje šifrovaný PQ veřejný klíč.
-Druhá sekce obsahuje statický klíč.
-Třetí sekce obsahuje užitečnou zátěž.
+Změny: Současný ratchet obsahoval statický klíč v první ChaCha sekci a payload ve druhé sekci. S ML-KEM jsou nyní tři sekce. První sekce obsahuje šifrovaný PQ veřejný klíč. Druhá sekce obsahuje statický klíč. Třetí sekce obsahuje payload.
 
 Šifrovaný formát:
 
-```dataspec
+```
 +----+----+----+----+----+----+----+----+
   |                                       |
   +                                       +
-  |   Nový Efemérní Veřejný Klíč relace   |
-  +             32 bajty                  +
-  |     Kódováno s Elligator2             |
+  |   New Session Ephemeral Public Key    |
+  +             32 bytes                  +
+  |     Encoded with Elligator2           |
   +                                       +
   |                                       |
   +----+----+----+----+----+----+----+----+
   |                                       |
-  +           Šifrovaný text ML-KEM       +
-  |       ChaCha20 šifrované data         |
-  +      (viz tabulka níže pro délku)     +
+  +           ML-KEM encap_key            +
+  |       ChaCha20 encrypted data         |
+  +      (see table below for length)     +
   |                                       |
   ~                                       ~
   |                                       |
   +----+----+----+----+----+----+----+----+
-  |  Poly1305 Ověřovací Kód Zprávy        |
-  +    (MAC) pro sekci encap_key           +
-  |             16 bajtů                  |
+  |  Poly1305 Message Authentication Code |
+  +    (MAC) for encap_key Section        +
+  |             16 bytes                  |
   +----+----+----+----+----+----+----+----+
   |                                       |
-  +           Statický Klíč X25519        +
-  |       ChaCha20 šifrované data         |
-  +             32 bajty                  +
+  +           X25519 Static Key           +
+  |       ChaCha20 encrypted data         |
+  +             32 bytes                  +
   |                                       |
   +                                       +
   |                                       |
   +----+----+----+----+----+----+----+----+
-  |  Poly1305 Ověřovací Kód Zprávy        |
-  +    (MAC) pro sekci statického klíče   +
-  |             16 bajtů                  |
+  |  Poly1305 Message Authentication Code |
+  +    (MAC) for Static Key Section       +
+  |             16 bytes                  |
   +----+----+----+----+----+----+----+----+
   |                                       |
-  +            Sekce Užitečné Zátěže      +
-  |       ChaCha20 šifrované data         |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
   ~                                       ~
   |                                       |
   +                                       +
   |                                       |
   +----+----+----+----+----+----+----+----+
-  |  Poly1305 Ověřovací Kód Zprávy        |
-  +         (MAC) pro sekci užitečné zátěže+
-  |             16 bajtů                  |
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for Payload Section     +
+  |             16 bytes                  |
   +----+----+----+----+----+----+----+----+
-
 ```
-
 Dešifrovaný formát:
 
-```dataspec
-Část užitečné zátěže 1:
-
-  +----+----+----+----+----+----+----+----+
-  |                                       |
-  +       Šifrovaný text ML-KEM           +
-  |                                       |
-  +      (viz tabulka níže pro délku)     +
-  |                                       |
-  ~                                       ~
-  |                                       |
-  +----+----+----+----+----+----+----+----+
-
-  Část užitečné zátěže 2:
-
-  +----+----+----+----+----+----+----+----+
-  |                                       |
-  +       Statický Klíč X25519            +
-  |                                       |
-  +      (32 bajty)                       +
-  |                                       |
-  +                                       +
-  |                                       |
-  +----+----+----+----+----+----+----+----+
-
-  Část užitečné zátěže 3:
-
-  +----+----+----+----+----+----+----+----+
-  |                                       |
-  +            Sekce Užitečné Zátěže      +
-  |                                       |
-  ~                                       ~
-  |                                       |
-  +                                       +
-  |                                       |
-  +----+----+----+----+----+----+----+----+
-
 ```
+Payload Part 1:
 
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +       ML-KEM encap_key                +
+  |                                       |
+  +      (see table below for length)     +
+  |                                       |
+  ~                                       ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  Payload Part 2:
+
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +       X25519 Static Key               +
+  |                                       |
+  +      (32 bytes)                       +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  Payload Part 3:
+
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |                                       |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+```
 Velikosti:
 
-| Typ | ód Typu | len | sg 1 len | sg 1 Enc len | sg 1 Dec len | Q key len | l len |
-| --- | ------- | --- | -------- | ------------ | ------------ | --------- | ----- |
+| Type | Type Code | X len | Msg 1 len | Msg 1 Enc len | Msg 1 Dec len | PQ key len | pl len |
+|------|-----------|-------|-----------|---------------|---------------|------------|--------|
 | X25519 | 4 | 32 | 96+pl | 64+pl | pl | -- | pl |
 | MLKEM512_X25519 | 5 | 32 | 912+pl | 880+pl | 800+pl | 800 | pl |
 | MLKEM768_X25519 | 6 | 32 | 1296+pl | 1360+pl | 1184+pl | 1184 | pl |
 | MLKEM1024_X25519 | 7 | 32 | 1680+pl | 1648+pl | 1568+pl | 1568 | pl |
+Všimněte si, že payload musí obsahovat DateTime blok, takže minimální velikost payload je 7. Minimální velikosti zpráv typu 1 mohou být vypočítány odpovídajícím způsobem.
 
+#### 1g) New Session Reply format
 
-Poznámka: Užitečná zátěž musí obsahovat blok DateTime, takže minimální velikost užitečné zátěže je 7.
-Minimální velikosti zprávy 1 lze vypočítat odpovídajícím způsobem.
-
-Podopvěď na Novou relaci
-``````````````````````````
-
-Změny: Aktuální ratchet má prázdnou užitečnou zátěž pro první ChaCha sekci,
-a užitečná zátěž ve druhé sekci.
-S ML-KEM, jsou nyní tři sekce.
-První sekce obsahuje šifrovaný PQ šifrovaný text.
-Druhá sekce má prázdnou užitečnou zátěž.
-Třetí sekce obsahuje užitečnou zátěž.
+Změny: Současný ratchet má prázdný payload pro první ChaCha sekci a payload ve druhé sekci. S ML-KEM jsou nyní tři sekce. První sekce obsahuje zašifrovaný PQ ciphertext. Druhá sekce má prázdný payload. Třetí sekce obsahuje payload.
 
 Šifrovaný formát:
 
-```dataspec
-+----+----+----+----+----+----+----+----+
-  |       Tag relace   8 bajtů             |
-  +----+----+----+----+----+----+----+----+
-  |                                       |
-  +        Efemérní Veřejný Klíč          +
-  |                                       |
-  +            32 bajty                   +
-  |     Kódováno s Elligator2             |
-  +                                       +
-  |                                       |
-  +----+----+----+----+----+----+----+----+
-  |                                       |
-  +                                       +
-  | ChaCha20 šifrovaný ML-KEM šifrovaný text  |
-  +      (viz tabulka níže pro délku)     +
-  ~                                       ~
-  +                                       +
-  |                                       |
-  +----+----+----+----+----+----+----+----+
-  |  Poly1305 Ověřovací Kód Zprávy        |
-  +  (MAC) pro sekci šifrovaného textu     +
-  |             16 bajtů                  |
-  +----+----+----+----+----+----+----+----+
-  |  Poly1305 Ověřovací Kód Zprávy        |
-  +  (MAC) pro sekci klíče (bez dat)      +
-  |             16 bajtů                  |
-  +----+----+----+----+----+----+----+----+
-  |                                       |
-  +            Sekce Užitečné Zátěže      +
-  |       ChaCha20 šifrované data         |
-  ~                                       ~
-  |                                       |
-  +                                       +
-  |                                       |
-  +----+----+----+----+----+----+----+----+
-  |  Poly1305 Ověřovací Kód Zprávy        |
-  +         (MAC) pro sekci užitečné zátěže+
-  |             16 bajtů                  |
-  +----+----+----+----+----+----+----+----+
-
 ```
-
++----+----+----+----+----+----+----+----+
+  |       Session Tag   8 bytes           |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +        Ephemeral Public Key           +
+  |                                       |
+  +            32 bytes                   +
+  |     Encoded with Elligator2           |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  | ChaCha20 encrypted ML-KEM ciphertext  |
+  +      (see table below for length)     +
+  ~                                       ~
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +  (MAC) for ciphertext Section         +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +  (MAC) for key Section (no data)      +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for Payload Section     +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+```
 Dešifrovaný formát:
 
-```dataspec
-Část užitečné zátěže 1:
+```
+Payload Part 1:
+
 
   +----+----+----+----+----+----+----+----+
   |                                       |
-  +       Šifrovaný text ML-KEM           +
+  +       ML-KEM ciphertext               +
   |                                       |
-  +      (viz tabulka níže pro délku)     +
+  +      (see table below for length)     +
   |                                       |
   ~                                       ~
   |                                       |
   +----+----+----+----+----+----+----+----+
 
-  Část užitečné zátěže 2:
+  Payload Part 2:
 
-  prázdná
+  empty
 
-  Část užitečné zátěže 3:
+  Payload Part 3:
 
   +----+----+----+----+----+----+----+----+
   |                                       |
-  +            Sekce Užitečné Zátěže      +
+  +            Payload Section            +
   |                                       |
   ~                                       ~
   |                                       |
   +                                       +
   |                                       |
   +----+----+----+----+----+----+----+----+
-
 ```
-
 Velikosti:
 
-| Typ | ód Typu | len | sg 2 len | sg 2 Enc len | sg 2 Dec len | Q CT len | pt len |
-| --- | ------- | --- | -------- | ------------ | ------------ | -------- | ------ |
+| Type | Type Code | Y len | Msg 2 len | Msg 2 Enc len | Msg 2 Dec len | PQ CT len | opt len |
+|------|-----------|-------|-----------|---------------|---------------|-----------|---------|
 | X25519 | 4 | 32 | 72+pl | 32+pl | pl | -- | pl |
 | MLKEM512_X25519 | 5 | 32 | 856+pl | 816+pl | 768+pl | 768 | pl |
 | MLKEM768_X25519 | 6 | 32 | 1176+pl | 1136+pl | 1088+pl | 1088 | pl |
 | MLKEM1024_X25519 | 7 | 32 | 1656+pl | 1616+pl | 1568+pl | 1568 | pl |
+Upozorňujeme, že zatímco zpráva 2 bude normálně mít nenulový payload, specifikace ratchet [/en/docs/spec/ecies/](/en/docs/spec/ecies/) to nevyžaduje, takže minimální velikost payload je 0. Minimální velikosti zprávy 2 mohou být vypočítány odpovídajícím způsobem.
 
+### Podpis
 
-Poznámka: Zpráva 2 bude mít obvykle nenulovou užitečnou zátěž,
-specifikace ratchetu [ECIES](https://geti2p.net/spec/ecies) to nevyžaduje, takže minimální velikost užitečné zátěže je 0.
-Minimální velikosti zprávy 2 lze vypočítat odpovídajícím způsobem.
+Aktualizujte specifikaci NTCP2 [/en/docs/spec/ntcp2/](/en/docs/spec/ntcp2/) následovně:
 
-
-### NTCP2
-
-Aktualizujte specifikaci NTCP2 [NTCP2](https://geti2p.net/spec/ntcp2) takto:
-
-Identifikátory Noise
-```````````````````
+#### Noise identifiers
 
 - "Noise_XKhfsaesobfse+hs2+hs3_25519+MLKEM512_ChaChaPoly_SHA256"
 - "Noise_XKhfsaesobfse+hs2+hs3_25519+MLKEM768_ChaChaPoly_SHA256"
 - "Noise_XKhfsaesobfse+hs2+hs3_25519+MLKEM1024_ChaChaPoly_SHA256"
 
+#### 1) SessionRequest
 
-1) Relace žádosti
-``````````````````
+Změny: Současný NTCP2 obsahuje pouze možnosti v sekci ChaCha. S ML-KEM bude sekce ChaCha také obsahovat zašifrovaný PQ veřejný klíč.
 
-Změny: Aktuální NTCP2 obsahuje pouze možnosti v ChaCha sekci.
-S ML-KEM, ChaCha sekce také obsahuje šifrovaný PQ veřejný klíč.
-
-Surowý obsah:
-
-```dataspec
-+----+----+----+----+----+----+----+----+
-  |                                       |
-  +        zašifrováno s RH_B             +
-  |       AES-CBC-256 šifrovaný X         |
-  +             (32 bajtů)                +
-  |                                       |
-  +                                       +
-  |                                       |
-  +----+----+----+----+----+----+----+----+
-  |   ChaChaPoly rámec (MLKEM)            |
-  +      (viz tabulka níže pro délku)     +
-  |   k definováno v KDF pro zprávu 1     |
-  +   n = 0                               +
-  |   viz KDF pro související data        |
-  +----+----+----+----+----+----+----+----+
-  |                                       |
-  +                                       +
-  |   ChaChaPoly rámec (možnosti)         +
-  +         32 bajtů                      +
-  |   k definováno v KDF pro zprávu 1     |
-  +   n = 0                               +
-  |   viz KDF pro související data        |
-  +----+----+----+----+----+----+----+----+
-  |     nezašifrované ověřené             |
-  ~         vycpávky (volitelné)          ~
-  |     délka definována v bloku možností |
-  +----+----+----+----+----+----+----+----+
-
-  Stejné jako dříve kromě přidání druhého ChaChaPoly rámce
+Nezpracovaný obsah:
 
 ```
++----+----+----+----+----+----+----+----+
+  |                                       |
+  +        obfuscated with RH_B           +
+  |       AES-CBC-256 encrypted X         |
+  +             (32 bytes)                +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |   ChaChaPoly frame (MLKEM)            |
+  +      (see table below for length)     +
+  |   k defined in KDF for message 1      |
+  +   n = 0                               +
+  |   see KDF for associated data         |
+  ~   n = 0                               ~
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |   ChaChaPoly frame (options)          |
+  +         32 bytes                      +
+  |   k defined in KDF for message 1      |
+  +   n = 0                               +
+  |   see KDF for associated data         |
+  +----+----+----+----+----+----+----+----+
+  |     unencrypted authenticated         |
+  ~         padding (optional)            ~
+  |     length defined in options block   |
+  +----+----+----+----+----+----+----+----+
 
-Nezašifrovaná data (ověřovací tag Poly1305 není zobrazen):
+  Same as before except add a second ChaChaPoly frame
+```
+Nešifrovaná data (Poly1305 autentizační tag není zobrazen):
 
-```dataspec
+```
 +----+----+----+----+----+----+----+----+
   |                                       |
   +                                       +
   |                   X                   |
-  +              (32 bajtů)               +
+  +              (32 bytes)               +
   |                                       |
   +                                       +
   |                                       |
   +----+----+----+----+----+----+----+----+
-  |           Šifrovaný text encap_key   |
-  +      (viz tabulku níže pro délku)     +
+  |           ML-KEM encap_key            |
+  +      (see table below for length)     +
   |                                       |
   +----+----+----+----+----+----+----+----+
-  |               možnosti                |
-  +              (16 bajtů)               +
+  |               options                 |
+  +              (16 bytes)               +
   |                                       |
   +----+----+----+----+----+----+----+----+
-  |     nezašifrované ověřené             |
-  +         vycpávky (volitelné)          +
-  |     délka definována v bloku možností |
+  |     unencrypted authenticated         |
+  +         padding (optional)            +
+  |     length defined in options block   |
   ~               .   .   .               ~
   |                                       |
   +----+----+----+----+----+----+----+----+
-
-
-
 ```
-
 Velikosti:
 
-| Typ | ód Typu | len | sg 1 len | sg 1 Enc len | sg 1 Dec len | Q key len | pt len |
-| --- | ------- | --- | -------- | ------------ | ------------ | --------- | ------ |
+| Type | Type Code | X len | Msg 1 len | Msg 1 Enc len | Msg 1 Dec len | PQ key len | opt len |
+|------|-----------|-------|-----------|---------------|---------------|------------|---------|
 | X25519 | 4 | 32 | 64+pad | 32 | 16 | -- | 16 |
 | MLKEM512_X25519 | 5 | 32 | 880+pad | 848 | 816 | 800 | 16 |
 | MLKEM768_X25519 | 6 | 32 | 1264+pad | 1232 | 1200 | 1184 | 16 |
 | MLKEM1024_X25519 | 7 | 32 | 1648+pad | 1616 | 1584 | 1568 | 16 |
+Poznámka: Kódy typů jsou určeny pouze pro interní použití. Routery zůstanou typ 4 a podpora bude uvedena v adresách routerů.
 
+#### 2) SessionCreated
 
-Poznámka: Kódy typů jsou pro interní použití pouze. Směrovače zůstávají typu 4,
-a podpora bude indikována v adresách směrovačů.
+Změny: Současný NTCP2 obsahuje pouze možnosti v sekci ChaCha. S ML-KEM bude sekce ChaCha také obsahovat šifrovaný PQ veřejný klíč.
 
+Nezpracovaný obsah:
 
-2) Relace vytvořena
-``````````````````
-
-Změny: Aktuální NTCP2 obsahuje pouze možnosti v ChaCha sekci.
-S ML-KEM, ChaCha sekce také obsahuje šifrovaný PQ veřejný klíč.
-
-Surowý obsah:
-
-```dataspec
+```
 +----+----+----+----+----+----+----+----+
   |                                       |
-  +        zašifrováno s RH_B             +
-  |       AES-CBC-256 šifrovaný Y         +
-  +              (32 bajtů)               +
+  +        obfuscated with RH_B           +
+  |       AES-CBC-256 encrypted Y         |
+  +              (32 bytes)               +
   |                                       |
   +                                       +
   |                                       |
   +----+----+----+----+----+----+----+----+
-  |   ChaChaPoly rámec (MLKEM)            +
+  |   ChaChaPoly frame (MLKEM)            |
   +   Encrypted and authenticated data    +
-  -      (viz tabulka níže pro délku)     -
-  +   k definováno v KDF pro zprávu 2     +
-  |   n = 0; viz KDF pro související data  |
+  -      (see table below for length)     -
+  +   k defined in KDF for message 2      +
+  |   n = 0; see KDF for associated data  |
   +                                       +
   |                                       |
   +----+----+----+----+----+----+----+----+
-  |   ChaChaPoly rámec (možnosti)         +
+  |   ChaChaPoly frame (options)          |
   +   Encrypted and authenticated data    +
-  -           32 bajtů                    -
-  +   k definováno v KDF pro zprávu 2     +
-  |   n = 0; viz KDF pro související data  |
+  -           32 bytes                    -
+  +   k defined in KDF for message 2      +
+  |   n = 0; see KDF for associated data  |
   +                                       +
   |                                       |
   +----+----+----+----+----+----+----+----+
-  |     nezašifrované ověřené             +
-  +         vycpávky (volitelné)          +
-  |     délka definována v bloku možností |
+  |     unencrypted authenticated         |
+  +         padding (optional)            +
+  |     length defined in options block   |
   ~               .   .   .               ~
   |                                       |
   +----+----+----+----+----+----+----+----+
 
-  Stejné jako dříve kromě přidání druhého ChaChaPoly rámce
+  Same as before except add a second ChaChaPoly frame
+```
+Nešifrovaná data (Poly1305 auth tag nezobrazeno):
 
 ```
-
-Nezašifrovaná data (ověřovací tag Poly1305 není zobrazen):
-
-```dataspec
 +----+----+----+----+----+----+----+----+
   |                                       |
   +                                       +
   |                  Y                    |
-  +              (32 bajtů)               +
+  +              (32 bytes)               +
   |                                       |
   +                                       +
   |                                       |
   +----+----+----+----+----+----+----+----+
-  |           Šifrovaný text ML-KEM       |
-  +      (viz tabulku níže pro délku)     +
+  |           ML-KEM Ciphertext           |
+  +      (see table below for length)     +
   |                                       |
   +----+----+----+----+----+----+----+----+
-  |               možnosti                |
-  +              (16 bajtů)               +
+  |               options                 |
+  +              (16 bytes)               +
   |                                       |
   +----+----+----+----+----+----+----+----+
-  |     nezašifrované ověřené             +
-  +         vycpávky (volitelné)          +
-  |     délka definována v bloku možností |
+  |     unencrypted authenticated         |
+  +         padding (optional)            +
+  |     length defined in options block   |
   ~               .   .   .               ~
   |                                       |
   +----+----+----+----+----+----+----+----+
-
 ```
-
 Velikosti:
 
-| Typ | ód Typu | len | sg 2 len | sg 2 Enc len | sg 2 Dec len | Q CT len | pt len |
-| --- | ------- | --- | -------- | ------------ | ------------ | -------- | ------ |
+| Type | Type Code | Y len | Msg 2 len | Msg 2 Enc len | Msg 2 Dec len | PQ CT len | opt len |
+|------|-----------|-------|-----------|---------------|---------------|-----------|---------|
 | X25519 | 4 | 32 | 64+pad | 32 | 16 | -- | 16 |
 | MLKEM512_X25519 | 5 | 32 | 848+pad | 816 | 784 | 768 | 16 |
 | MLKEM768_X25519 | 6 | 32 | 1136+pad | 1104 | 1104 | 1088 | 16 |
 | MLKEM1024_X25519 | 7 | 32 | 1616+pad | 1584 | 1584 | 1568 | 16 |
+Poznámka: Kódy typů jsou pouze pro interní použití. Routery zůstanou typ 4 a podpora bude označena v adresách routerů.
 
+#### 3) SessionConfirmed
 
-Poznámka: Kódy typů jsou pro interní použití pouze. Směrovače zůstávají typu 4,
-a podpora bude indikována v adresách směrovačů.
+Nezměněno
 
+#### Key Derivation Function (KDF) (for data phase)
 
+Nezměněno
 
-3) Relace potvrzena
-```````````````````
+### Certifikáty klíčů
 
-Neoáda se
+Aktualizujte specifikaci SSU2 [/en/docs/spec/ssu2/](/en/docs/spec/ssu2/) následovně:
 
-Funkce pro derivaci klíčů (KDF) (pro datovou fázi)
-```````````````````````````````````````````````
-Neoáda se
-
-
-
-
-### SSU2
-
-Aktualizujte specifikaci SSU2 [SSU2](https://geti2p.net/spec/ssu2) takto:
-
-Identifikátory Noise
-```````````````````
+#### Noise identifiers
 
 - "Noise_XKhfschaobfse+hs1+hs2+hs3_25519+MLKEM512_ChaChaPoly_SHA256"
 - "Noise_XKhfschaobfse+hs1+hs2+hs3_25519+MLKEM768_ChaChaPoly_SHA256"
 - "Noise_XKhfschaobfse+hs1+hs2+hs3_25519+MLKEM1024_ChaChaPoly_SHA256"
 
-Dlouhá Hlavička
-```````````````
-Dlouhá hlavička je 32 bajtů dlouhá. Používá se před vytvořením relace, pro Požadavek na Pierre, Vytvoření relace, Vytvoření opakovaný pokus, Požadavek Testování a Hole Punch zprávy.
+#### Long Header
 
-TODO: Můžeme interně použít pole verze a použít 3 pro MLKEM512 a 4 pro MLKEM768.
-Děláme to jenom pro typy 0 a 1 nebo pro všechny 6 typů?
+Dlouhá hlavička má 32 bajtů. Používá se před vytvořením relace, pro Token Request, SessionRequest, SessionCreated a Retry. Používá se také pro zprávy Peer Test a Hole Punch mimo relaci.
+
+TODO: Interně bychom mohli použít pole verze a použít 3 pro MLKEM512 a 4 pro MLKEM768. Děláme to pouze pro typy 0 a 1 nebo pro všech 6 typů?
 
 Před šifrováním hlavičky:
 
-```dataspec
-
-+----+----+----+----+----+----+----+----+
-  |      Identifikátor připojení Cíle    |
-  +----+----+----+----+----+----+----+----+
-  |   Číslo paketu   |typ| ver| id |tag |
-  +----+----+----+----+----+----+----+----+
-  |       Identifikátor připojení Zdroje |
-  +----+----+----+----+----+----+----+----+
-  |               Token                  |
-  +----+----+----+----+----+----+----+----+
-
-  Identifikátor připojení Cíle :: 8 bajtů, bezznaménkový velký-endian integer
-
-  Číslo paketu :: 4 bajtů, bezznaménkový velký-endian integer
-
-  typ :: Typ zprávy = 0, 1, 7, 9, 10 nebo 11
-
-  ver :: Verze protokolu, rovna 2
-         TODO Můžeme interně použít pole verze a použít 3 pro MLKEM512 a 4 pro MLKEM768
-
-  id :: 1 bajt, identifikátor sítě (aktuálně 2, kromě testovacích sítí)
-
-  tag :: 1 bajt, nepoužitý, nastaven na 0 pro budoucí kompatibilitu
-
-  Identifikátor připojení Zdroje :: 8 bajtů, bezznaménkový velký-endian integer
-
-  Token :: 8 bajtů, bezznaménkový velký-endian integer
-
 ```
 
-Krátká hlavička
-`````````````
++----+----+----+----+----+----+----+----+
+  |      Destination Connection ID        |
+  +----+----+----+----+----+----+----+----+
+  |   Packet Number   |type| ver| id |flag|
+  +----+----+----+----+----+----+----+----+
+  |        Source Connection ID           |
+  +----+----+----+----+----+----+----+----+
+  |                 Token                 |
+  +----+----+----+----+----+----+----+----+
+
+  Destination Connection ID :: 8 bytes, unsigned big endian integer
+
+  Packet Number :: 4 bytes, unsigned big endian integer
+
+  type :: The message type = 0, 1, 7, 9, 10, or 11
+
+  ver :: The protocol version, equal to 2
+         TODO We could internally use the version field and use 3 for MLKEM512 and 4 for MLKEM768.
+
+  id :: 1 byte, the network ID (currently 2, except for test networks)
+
+  flag :: 1 byte, unused, set to 0 for future compatibility
+
+  Source Connection ID :: 8 bytes, unsigned big endian integer
+
+  Token :: 8 bytes, unsigned big endian integer
+
+```
+#### Short Header
+
 nezměněno
 
-Relace žádosti (Typ 0)
-`````````````````````
+#### SessionRequest (Type 0)
 
-Změny: Aktuální SSU2 obsahuje pouze bloková data v ChaCha sekci.
-S ML-KEM, ChaCha sekce také obsahuje šifrovaný PQ veřejný klíč.
+Změny: Současné SSU2 obsahuje v sekci ChaCha pouze data bloků. S ML-KEM bude sekce ChaCha také obsahovat zašifrovaný PQ veřejný klíč.
 
-Surowý obsah:
-
-```dataspec
-+----+----+----+----+----+----+----+----+
-  |  Dlouhá hlavička bajty 0-15, ChaCha20|
-  +  šifrováno s úvodním klíčem Boba    +
-  |  Viz KDF pro šifrování hlavičky      |
-  +----+----+----+----+----+----+----+----+
-  |  Dlouhá hlavička bajty 16-31, ChaCha20|
-  +  šifrováno s úvodním klíčem Boba n=0 +
-  |                                      |
-  +----+----+----+----+----+----+----+----+
-  |                                      |
-  +       X, ChaCha20 šifrované          +
-  |      s úvodním klíčem Boba n=0       |
-  +             (32 bajtů)              +
-  |                                      |
-  +                                      +
-  |                                      |
-  +----+----+----+----+----+----+----+----+
-  |                                      |
-  +                                       +
-  |  ChaCha20 šifrovaná data (MLKEM)      |
-  +         (délka liší)                  +
-  |  k definováno v KDF pro Požadavek Relace |
-  +  n = 0                               +
-  |  viz KDF pro související data        |
-  +----+----+----+----+----+----+----+----+
-  |                                      |
-  +                                       +
-  |  ChaCha20 šifrovaná data (užitečná zátěž)|
-  +         (délka liší)                  +
-  |  k definováno v KDF pro Požadavek Relace |
-  +  n = 0                               +
-  |  viz KDF pro související data        |
-  +----+----+----+----+----+----+----+----+
-  |                                      |
-  +      Ověřovací kód Poly1305 (16 bajtů) |
-  |                                      |
-  +----+----+----+----+----+----+----+----+
+Surový obsah:
 
 ```
-
-Nezašifrovaná data (ověřovací tag Poly1305 není zobrazen):
-
-```dataspec
 +----+----+----+----+----+----+----+----+
-  |      Identifikátor připojení Cíle    |
+  |  Long Header bytes 0-15, ChaCha20     |
+  +  encrypted with Bob intro key         +
+  |    See Header Encryption KDF          |
   +----+----+----+----+----+----+----+----+
-  |   Číslo paketu   |typ| ver| id |tag |
+  |  Long Header bytes 16-31, ChaCha20    |
+  +  encrypted with Bob intro key n=0     +
+  |                                       |
   +----+----+----+----+----+----+----+----+
-  |       Identifikátor připojení Zdroje |
-  +----+----+----+----+----+----+----+----+
-  |               Token                  |
-  +----+----+----+----+----+----+----+----+
-  |                                      |
+  |                                       |
+  +       X, ChaCha20 encrypted           +
+  |       with Bob intro key n=0          |
+  +              (32 bytes)               +
+  |                                       |
   +                                       +
-  |                   X                  +
-  +              (32 bajtů)              +
-  |                                      |
-  +                                        +
-  |                                      |
+  |                                       |
   +----+----+----+----+----+----+----+----+
-  |           Šifrovaný text encap_key  |
-  +      (viz tabulku níže pro délku)   +
-  |                                      |
+  |                                       |
+  +                                       +
+  |   ChaCha20 encrypted data (MLKEM)     |
+  +          (length varies)              +
+  |  k defined in KDF for Session Request |
+  +  n = 0                                +
+  |  see KDF for associated data          |
   +----+----+----+----+----+----+----+----+
-  |     Noise užitečná zátěž (bloková data)|
-  +         (délka liší)                 +
-  |     viz níže pro povolené bloky       |
+  |                                       |
+  +                                       +
+  |   ChaCha20 encrypted data (payload)   |
+  +          (length varies)              +
+  |  k defined in KDF for Session Request |
+  +  n = 0                                +
+  |  see KDF for associated data          |
   +----+----+----+----+----+----+----+----+
+  |                                       |
+  +        Poly1305 MAC (16 bytes)        +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
 
 ```
+Nešifrovaná data (Poly1305 autentizační tag není zobrazen):
 
-Velikosti, bez IP režie:
+```
++----+----+----+----+----+----+----+----+
+  |      Destination Connection ID        |
+  +----+----+----+----+----+----+----+----+
+  |   Packet Number   |type| ver| id |flag|
+  +----+----+----+----+----+----+----+----+
+  |        Source Connection ID           |
+  +----+----+----+----+----+----+----+----+
+  |                 Token                 |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |                   X                   |
+  +              (32 bytes)               +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |           ML-KEM encap_key            |
+  +      (see table below for length)     +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |     Noise payload (block data)        |
+  +          (length varies)              +
+  |     see below for allowed blocks      |
+  +----+----+----+----+----+----+----+----+
+```
+Velikosti, nezahrnují IP overhead:
 
-| Typ | ód Typu | len | sg 1 len | sg 1 Enc len | sg 1 Dec len | Q key len | l len |
-| --- | ------- | --- | -------- | ------------ | ------------ | --------- | ----- |
+| Type | Type Code | X len | Msg 1 len | Msg 1 Enc len | Msg 1 Dec len | PQ key len | pl len |
+|------|-----------|-------|-----------|---------------|---------------|------------|--------|
 | X25519 | 4 | 32 | 80+pl | 16+pl | pl | -- | pl |
 | MLKEM512_X25519 | 5 | 32 | 896+pl | 832+pl | 800+pl | 800 | pl |
 | MLKEM768_X25519 | 6 | 32 | 1280+pl | 1216+pl | 1184+pl | 1184 | pl |
-| MLKEM1024_X25519 | 7 | n/a | příliš ve | é |  |  |  |
+| MLKEM1024_X25519 | 7 | n/a | too big | | | | |
+Poznámka: Kódy typů jsou pouze pro interní použití. Routery zůstanou typu 4 a podpora bude uvedena v adresách routerů.
+
+Minimální MTU pro MLKEM768_X25519: Přibližně 1316 pro IPv4 a 1336 pro IPv6.
+
+#### SessionCreated (Type 1)
+
+Změny: Současné SSU2 obsahuje pouze data bloku v sekci ChaCha. S ML-KEM bude sekce ChaCha obsahovat také šifrovaný PQ veřejný klíč.
+
+Surový obsah:
+
+```
++----+----+----+----+----+----+----+----+
+  |  Long Header bytes 0-15, ChaCha20     |
+  +  encrypted with Bob intro key and     +
+  | derived key, see Header Encryption KDF|
+  +----+----+----+----+----+----+----+----+
+  |  Long Header bytes 16-31, ChaCha20    |
+  +  encrypted with derived key n=0       +
+  |  See Header Encryption KDF            |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +       Y, ChaCha20 encrypted           +
+  |       with derived key n=0            |
+  +              (32 bytes)               +
+  |       See Header Encryption KDF       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |   ChaCha20 data (MLKEM)               |
+  +   Encrypted and authenticated data    +
+  |  length varies                        |
+  +  k defined in KDF for Session Created +
+  |  n = 0; see KDF for associated data   |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |   ChaCha20 data (payload)             |
+  +   Encrypted and authenticated data    +
+  |  length varies                        |
+  +  k defined in KDF for Session Created +
+  |  n = 0; see KDF for associated data   |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +        Poly1305 MAC (16 bytes)        +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
 
 
-Poznámka: Kódy typů jsou pro interní použití pouze. Směrovače zůstávají typu 4,
-a podpora bude indik
+```
+Nešifrovaná data (Poly1305 autentizační tag není zobrazen):
+
+```
++----+----+----+----+----+----+----+----+
+  |      Destination Connection ID        |
+  +----+----+----+----+----+----+----+----+
+  |   Packet Number   |type| ver| id |flag|
+  +----+----+----+----+----+----+----+----+
+  |        Source Connection ID           |
+  +----+----+----+----+----+----+----+----+
+  |                 Token                 |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |                  Y                    |
+  +              (32 bytes)               +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |           ML-KEM Ciphertext           |
+  +      (see table below for length)     +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |     Noise payload (block data)        |
+  +          (length varies)              +
+  |      see below for allowed blocks     |
+  +----+----+----+----+----+----+----+----+
+```
+Velikosti, bez započítání IP overhead:
+
+| Type | Type Code | Y len | Msg 2 len | Msg 2 Enc len | Msg 2 Dec len | PQ CT len | pl len |
+|------|-----------|-------|-----------|---------------|---------------|-----------|--------|
+| X25519 | 4 | 32 | 80+pl | 16+pl | pl | -- | pl |
+| MLKEM512_X25519 | 5 | 32 | 864+pl | 800+pl | 768+pl | 768 | pl |
+| MLKEM768_X25519 | 6 | 32 | 1184+pl | 1118+pl | 1088+pl | 1088 | pl |
+| MLKEM1024_X25519 | 7 | n/a | too big | | | | |
+Poznámka: Kódy typů jsou určeny pouze pro interní použití. Routery zůstanou typu 4 a podpora bude uvedena v adresách routerů.
+
+Minimální MTU pro MLKEM768_X25519: Přibližně 1316 pro IPv4 a 1336 pro IPv6.
+
+#### SessionConfirmed (Type 2)
+
+nezměněno
+
+#### KDF for data phase
+
+nezměněno
+
+#### Problémy
+
+Relay bloky, Peer Test bloky a Peer Test zprávy všechny obsahují podpisy. Bohužel PQ podpisy jsou větší než MTU. V současnosti neexistuje žádný mechanismus pro fragmentaci Relay nebo Peer Test bloků či zpráv napříč více UDP pakety. Protokol musí být rozšířen o podporu fragmentace. To bude provedeno v samostatném návrhu TBD. Dokud nebude dokončeno, Relay a Peer Test nebudou podporovány.
+
+#### Přehled
+
+Interně bychom mohli použít pole version a použít 3 pro MLKEM512 a 4 pro MLKEM768.
+
+Pro zprávy 1 a 2 by MLKEM768 zvýšil velikosti paketů nad minimální MTU 1280. Pravděpodobně by se pro takové spojení jednoduše nepodporovalo, pokud by bylo MTU příliš nízké.
+
+Pro zprávy 1 a 2 by MLKEM1024 zvýšilo velikost paketů nad maximální MTU 1500. To by vyžadovalo fragmentaci zpráv 1 a 2 a byla by to velká komplikace. Pravděpodobně se to nebude dělat.
+
+Relay a Peer Test: Viz výše
+
+### Velikosti destinací
+
+TODO: Existuje efektivnější způsob, jak definovat podepisování/ověřování, aby se předešlo kopírování podpisu?
+
+### Velikosti RouterIdent
+
+TODO
+
+[https://datatracker.ietf.org/doc/draft-ietf-lamps-dilithium-certificates/](https://datatracker.ietf.org/doc/draft-ietf-lamps-dilithium-certificates/) sekce 8.1 zakazuje HashML-DSA v X.509 certifikátech a nepřiřazuje OID pro HashML-DSA kvůli implementačním složitostem a snížené bezpečnosti.
+
+Pro PQ-only podpisy SU3 souborů používejte OID definované v [https://datatracker.ietf.org/doc/draft-ietf-lamps-dilithium-certificates/](https://datatracker.ietf.org/doc/draft-ietf-lamps-dilithium-certificates/) pro non-prehash varianty certifikátů. Nedefinujeme hybridní podpisy SU3 souborů, protože bychom mohli muset hashovat soubory dvakrát (ačkoliv HashML-DSA a X2559 používají stejnou hash funkci SHA512). Také by zřetězení dvou klíčů a podpisů v X.509 certifikátu bylo zcela nestandardní.
+
+Upozorňujeme, že zakazujeme Ed25519 podepisování SU3 souborů, a ačkoli jsme definovali Ed25519ph podepisování, nikdy jsme se nedohodli na OID pro něj ani ho nepoužívali.
+
+Normální typy sig jsou pro soubory SU3 zakázané; použijte varianty ph (prehash).
+
+### Vzory handshaku
+
+Nová maximální velikost Destination bude 2599 (3468 v base 64).
+
+Aktualizovat další dokumenty, které poskytují pokyny k velikostem Destination, včetně:
+
+- SAMv3
+- Bittorrent
+- Pokyny pro vývojáře
+- Pojmenování / adresář / jump servery
+- Další dokumentace
+
+## Overhead Analysis
+
+### Noise Handshake KDF
+
+Zvětšení velikosti (bajty):
+
+| Type | Pubkey (Msg 1) | Cipertext (Msg 2) |
+|------|----------------|-------------------|
+| MLKEM512_X25519 | +816 | +784 |
+| MLKEM768_X25519 | +1200 | +1104 |
+| MLKEM1024_X25519 | +1584 | +1584 |
+Rychlost:
+
+Rychlosti podle zprávy [https://blog.cloudflare.com/pq-2024/](https://blog.cloudflare.com/pq-2024/):
+
+| Type | Relative speed |
+|------|----------------|
+| X25519 DH/keygen | baseline |
+| MLKEM512 | 2.25x faster |
+| MLKEM768 | 1.5x faster |
+| MLKEM1024 | 1x (same) |
+| XK | 4x DH (keygen + 3 DH) |
+| MLKEM512_X25519 | 4x DH + 2x PQ (keygen + enc/dec) = 4.9x DH = 22% slower |
+| MLKEM768_X25519 | 4x DH + 2x PQ (keygen + enc/dec) = 5.3x DH = 32% slower |
+| MLKEM1024_X25519 | 4x DH + 2x PQ (keygen + enc/dec) = 6x DH = 50% slower |
+Předběžné výsledky testů v Javě:
+
+| Type | Relative DH/encaps | DH/decaps | keygen |
+|------|-------------------|-----------|--------|
+| X25519 | baseline | baseline | baseline |
+| MLKEM512 | 29x faster | 22x faster | 17x faster |
+| MLKEM768 | 17x faster | 14x faster | 9x faster |
+| MLKEM1024 | 12x faster | 10x faster | 6x faster |
+### Signatures
+
+Velikost:
+
+Typické velikosti klíčů, podpisů, RIdent, Dest nebo zvýšení velikosti (Ed25519 uveden pro referenci) za předpokladu typu šifrování X25519 pro RI. Přidaná velikost pro Router Info, LeaseSet, odpověditelné datagramy a každý ze dvou streaming (SYN a SYN ACK) paketů uvedených. Současné Destinations a Leasesets obsahují opakované vyplnění a jsou kompresovatelné během přenosu. Nové typy neobsahují vyplnění a nebudou kompresovatelné, což má za následek mnohem vyšší zvýšení velikosti během přenosu. Viz sekce návrhu výše.
+
+| Type | Pubkey | Sig | Key+Sig | RIdent | Dest | RInfo | LS/Streaming/Datagram (each msg) |
+|------|--------|-----|---------|--------|------|-------|----------------------------------|
+| EdDSA_SHA512_Ed25519 | 32 | 64 | 96 | 391 | 391 | baseline | baseline |
+| MLDSA44 | 1312 | 2420 | 3732 | 1351 | 1319 | +3316 | +3284 |
+| MLDSA65 | 1952 | 3309 | 5261 | 1991 | 1959 | +5668 | +5636 |
+| MLDSA87 | 2592 | 4627 | 7219 | 2631 | 2599 | +7072 | +7040 |
+| MLDSA44_EdDSA_SHA512_Ed25519 | 1344 | 2484 | 3828 | 1383 | 1351 | +3412 | +3380 |
+| MLDSA65_EdDSA_SHA512_Ed25519 | 1984 | 3373 | 5357 | 2023 | 1991 | +5668 | +5636 |
+| MLDSA87_EdDSA_SHA512_Ed25519 | 2624 | 4691 | 7315 | 2663 | 2631 | +7488 | +7456 |
+Rychlost:
+
+Rychlosti dle zprávy na [https://blog.cloudflare.com/pq-2024/](https://blog.cloudflare.com/pq-2024/):
+
+| Type | Relative speed sign | verify |
+|------|---------------------|--------|
+| EdDSA_SHA512_Ed25519 | baseline | baseline |
+| MLDSA44 | 5x slower | 2x faster |
+| MLDSA65 | ??? | ??? |
+| MLDSA87 | ??? | ??? |
+Předběžné výsledky testů v Javě:
+
+| Type | Relative speed sign | verify | keygen |
+|------|---------------------|--------|--------|
+| EdDSA_SHA512_Ed25519 | baseline | baseline | baseline |
+| MLDSA44 | 4.6x slower | 1.7x faster | 2.6x faster |
+| MLDSA65 | 8.1x slower | same | 1.5x faster |
+| MLDSA87 | 11.1x slower | 1.5x slower | same |
+## Security Analysis
+
+Bezpečnostní kategorie NIST jsou shrnuty v [https://www.nccoe.nist.gov/sites/default/files/2023-08/pqc-light-at-the-end-of-the-tunnel-presentation.pdf](https://www.nccoe.nist.gov/sites/default/files/2023-08/pqc-light-at-the-end-of-the-tunnel-presentation.pdf) slide 10. Předběžná kritéria: Naše minimální bezpečnostní kategorie NIST by měla být 2 pro hybridní protokoly a 3 pro PQ-only.
+
+| Category | As Secure As |
+|----------|--------------|
+| 1 | AES128 |
+| 2 | SHA256 |
+| 3 | AES192 |
+| 4 | SHA384 |
+| 5 | AES256 |
+### Handshakes
+
+Všechny tyto protokoly jsou hybridní. Pravděpodobně je třeba upřednostnit MLKEM768; MLKEM512 není dostatečně bezpečný.
+
+Bezpečnostní kategorie NIST [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf):
+
+| Algorithm | Security Category |
+|-----------|-------------------|
+| MLKEM512 | 1 |
+| MLKEM768 | 3 |
+| MLKEM1024 | 5 |
+### Signatures
+
+Tento návrh definuje jak hybridní, tak čistě PQ typy podpisů. MLDSA44 hybridní je vhodnější než MLDSA65 čistě PQ. Velikosti klíčů a podpisů pro MLDSA65 a MLDSA87 jsou pro nás pravděpodobně příliš velké, alespoň zpočátku.
+
+Bezpečnostní kategorie NIST [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf):
+
+| Algorithm | Security Category |
+|-----------|-------------------|
+| MLDSA44 | 2 |
+| MLKEM67 | 3 |
+| MLKEM87 | 5 |
+## Type Preferences
+
+Zatímco budeme definovat a implementovat 3 krypto a 9 typů podpisů, plánujeme měřit výkon během vývoje a dále analyzovat účinky zvětšených velikostí struktur. Budeme také pokračovat ve výzkumu a sledování vývoje v jiných projektech a protokolech.
+
+Po roce nebo více vývoje se pokusíme usadit na preferovaném typu nebo výchozím nastavení pro každý případ použití. Výběr bude vyžadovat kompromisy mezi šířkou pásma, CPU a odhadovanou úrovní zabezpečení. Ne všechny typy nemusí být vhodné nebo povolené pro všechny případy použití.
+
+Předběžné preference jsou následující, mohou se změnit:
+
+Šifrování: MLKEM768_X25519
+
+Podpisy: MLDSA44_EdDSA_SHA512_Ed25519
+
+Předběžná omezení jsou následující a mohou se změnit:
+
+Šifrování: MLKEM1024_X25519 není povoleno pro SSU2
+
+Podpisy: MLDSA87 a hybridní varianta pravděpodobně příliš velké; MLDSA65 a hybridní varianta mohou být příliš velké
+
+## Implementation Notes
+
+### Library Support
+
+Knihovny Bouncycastle, BoringSSL a WolfSSL nyní podporují MLKEM a MLDSA. Podpora OpenSSL bude v jejich vydání 3.5 dne 8. dubna 2025 [https://openssl-library.org/post/2025-02-04-release-announcement-3.5/](https://openssl-library.org/post/2025-02-04-release-announcement-3.5/).
+
+Noise knihovna ze southernstorm.com adaptovaná pro Java I2P obsahovala předběžnou podporu pro hybridní handshaky, ale odstranili jsme ji jako nepoužívanou; budeme ji muset přidat zpět a aktualizovat tak, aby odpovídala [https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf](https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf).
+
+### Signing Variants
+
+Použijeme variantu "hedged" nebo randomizovaného podepisování, nikoliv "deterministickou" variantu, jak je definováno v [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf) sekce 3.4. Tím je zajištěno, že každý podpis je odlišný, i když je nad stejnými daty, a poskytuje dodatečnou ochranu proti útokům pomocí postranních kanálů. Zatímco [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf) specifikuje, že varianta "hedged" je výchozí, to nemusí být pravda v různých knihovnách. Implementátoři musí zajistit, aby byla pro podepisování použita varianta "hedged".
+
+Používáme normální proces podepisování (nazývaný Pure ML-DSA Signature Generation), který kóduje zprávu interně jako 0x00 || len(ctx) || ctx || message, kde ctx je nějaká volitelná hodnota o velikosti 0x00..0xFF. Nepoužíváme žádný volitelný kontext. len(ctx) == 0. Tento proces je definován v [https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf) Algoritmus 2 krok 10 a Algoritmus 3 krok 5. Upozorňujeme, že některé publikované testovací vektory mohou vyžadovat nastavení režimu, kde zpráva není kódována.
+
+### Reliability
+
+Zvětšení velikosti bude mít za následek mnohem více fragmentace tunelů pro NetDB úložiště, streaming handshake a další zprávy. Zkontrolujte změny výkonu a spolehlivosti.
+
+### Structure Sizes
+
+Najděte a zkontrolujte jakýkoli kód, který omezuje velikost v bajtech router infos a leasesetů.
+
+### NetDB
+
+Zkontrolovat a případně snížit maximum LS/RI uložených v RAM nebo na disku, aby se omezil nárůst úložiště. Zvýšit minimální požadavky na šířku pásma pro floodfilly?
+
+### Ratchet
+
+#### Definované operace ML-KEM
+
+Automatická klasifikace/detekce více protokolů na stejných tunelech by měla být možná na základě kontroly délky zprávy 1 (New Session Message). Při použití MLKEM512_X25519 jako příkladu je délka zprávy 1 o 816 bytů větší než u současného ratchet protokolu a minimální velikost zprávy 1 (pouze s DateTime payloadem) je 919 bytů. Většina velikostí zpráv 1 u současného ratchet má payload menší než 816 bytů, takže mohou být klasifikovány jako nehybridní ratchet. Velké zprávy jsou pravděpodobně POST požadavky, které jsou vzácné.
+
+Doporučená strategie je tedy:
+
+- Pokud je zpráva 1 menší než 919 bajtů, jedná se o současný ratchet protokol.
+- Pokud je zpráva 1 větší nebo rovna 919 bajtům, pravděpodobně se jedná o MLKEM512_X25519.
+  Zkuste nejprve MLKEM512_X25519, a pokud selže, zkuste současný ratchet protokol.
+
+Toto by nám mělo umožnit efektivně podporovat standardní ratchet a hybridní ratchet na stejné destinaci, stejně jako jsme dříve podporovali ElGamal a ratchet na stejné destinaci. Proto můžeme migrovat na MLKEM hybridní protokol mnohem rychleji, než kdybychom nemohli podporovat duální protokoly pro stejnou destinaci, protože můžeme přidat podporu MLKEM do existujících destinací.
+
+Požadované podporované kombinace jsou:
+
+- X25519 + MLKEM512
+- X25519 + MLKEM768
+- X25519 + MLKEM1024
+
+Následující kombinace mohou být složité a NENÍ vyžadováno, aby byly podporovány, ale mohou být, v závislosti na implementaci:
+
+- Více než jeden MLKEM
+- ElG + jeden nebo více MLKEM
+- X25519 + jeden nebo více MLKEM
+- ElG + X25519 + jeden nebo více MLKEM
+
+Nemusíme se pokoušet podporovat více MLKEM algoritmů (například MLKEM512_X25519 a MLKEM_768_X25519) na stejné destinaci. Vyberte pouze jeden; to však závisí na tom, že vybereme preferovanou MLKEM variantu, aby ji mohly používat HTTP klientské tunnely. Závislé na implementaci.
+
+MŮŽEME se pokusit podporovat tři algoritmy (například X25519, MLKEM512_X25519 a MLKEM769_X25519) na stejné destinaci. Klasifikace a strategie opakování mohou být příliš složité. Konfigurace a konfigurační UI mohou být příliš složité. Závislé na implementaci.
+
+Pravděpodobně se NEBUDEME pokoušet podporovat ElGamal a hybridní algoritmy na stejné destinaci. ElGamal je zastaralý a ElGamal + hybridní pouze (bez X25519) nedává velký smysl. Také ElGamal a Hybrid New Session Messages jsou oba velké, takže klasifikační strategie by často musely zkusit oba typy dešifrování, což by bylo neefektivní. Závislé na implementaci.
+
+Klienti mohou používat stejné nebo odlišné X25519 statické klíče pro X25519 a hybridní protokoly na stejných tunnelech, závisí na implementaci.
+
+#### Alice KDF pro Zprávu 1
+
+Specifikace ECIES umožňuje Garlic Messages v datové části New Session Message, což umožňuje 0-RTT doručení počátečního streamovacího paketu, obvykle HTTP GET, společně s leaseset klienta. Avšak datová část New Session Message nemá dopřednou bezpečnost (forward secrecy). Protože tento návrh zdůrazňuje vylepšenou dopřednou bezpečnost pro ratchet, implementace mohou nebo by měly odložit zahrnutí streamovací datové části nebo úplné streamovací zprávy až do první Existing Session Message. To by bylo na úkor 0-RTT doručení. Strategie mohou také záviset na typu provozu nebo typu tunelu, nebo například na GET vs. POST. Závislé na implementaci.
+
+#### Bob KDF pro Zprávu 1
+
+MLKEM, MLDSA, nebo obojí na stejné destinaci dramaticky zvýší velikost New Session Message, jak je popsáno výše. To může významně snížit spolehlivost doručování New Session Message prostřednictvím tunelů, kde musí být fragmentovány do více 1024 bajtových tunelových zpráv. Úspěšnost doručení je úměrná exponenciálnímu počtu fragmentů. Implementace mohou používat různé strategie k omezení velikosti zprávy na úkor 0-RTT doručení. Závislé na implementaci.
+
+### Ratchet
+
+Můžeme nastavit MSB efemérního klíče (key[31] & 0x80) v session request, abychom označili, že se jedná o hybridní spojení. To by nám umožnilo provozovat jak standardní NTCP, tak hybridní NTCP na stejném portu. Podporována by byla pouze jedna hybridní varianta a inzerována v router address. Například v=2,3 nebo v=2,4 nebo v=2,5.
+
+Pokud to neuděláme, potřebujeme jinou transportní adresu/port a nový název protokolu jako "NTCP1PQ1".
+
+Poznámka: Kódy typů jsou pouze pro interní použití. Routery zůstanou typu 4 a podpora bude označena v adresách routerů.
+
+TODO
+
+### SSU2
+
+MOŽNÁ Potřebuje jinou transportní adresu/port, ale doufejme, že ne, máme hlavičku s příznaky pro zprávu 1. Mohli bychom interně použít pole verze a použít 3 pro MLKEM512 a 4 pro MLKEM768. Možná by stačilo jen v=2,3,4 v adrese. Ale potřebujeme identifikátory pro oba nové algoritmy: 3a, 3b?
+
+Zkontrolujte a ověřte, že SSU2 dokáže zpracovat RI fragmentované napříč více pakety (6-8?). i2pd aktuálně podporuje pouze maximum 2 fragmenty?
+
+Poznámka: Kódy typů jsou pouze pro interní použití. Routery zůstanou typu 4 a podpora bude označena v adresách routeru.
+
+TODO
+
+## Router Compatibility
+
+### Transport Names
+
+Pravděpodobně nebudeme potřebovat nové názvy transportů, pokud budeme moci provozovat jak standardní, tak hybridní na stejném portu s version flags.
+
+Pokud budeme potřebovat nové názvy transportů, budou to:
+
+| Transport | Type |
+|-----------|------|
+| NTCP2PQ1 | MLKEM512_X25519 |
+| NTCP2PQ2 | MLKEM768_X25519 |
+| NTCP2PQ3 | MLKEM1024_X25519 |
+| SSU2PQ1 | MLKEM512_X25519 |
+| SSU2PQ2 | MLKEM768_X25519 |
+Všimněte si, že SSU2 nemůže podporovat MLKEM1024, je příliš velký.
+
+### Router Enc. Types
+
+Máme několik alternativ k zvážení:
+
+#### Bob KDF pro zprávu 2
+
+Nedoporučuje se. Používejte pouze nové transporty uvedené výše, které odpovídají typu routeru. Starší routery se nemohou připojit, stavět tunely skrz ně nebo jim posílat netDb zprávy. Trvalo by několik vývojových cyklů ladění a zajištění podpory před povolením jako výchozí. Mohlo by to prodloužit zavádění o rok nebo více oproti alternativám uvedeným níže.
+
+#### Alice KDF pro Message 2
+
+Doporučeno. Protože PQ neovlivňuje statický klíč X25519 ani handshake protokoly N, mohli bychom ponechat routery jako typ 4 a pouze inzerovat nové transporty. Starší routery by se stále mohly připojovat, budovat tunely skrz ně nebo jim posílat netDb zprávy.
+
+#### KDF pro Zprávu 3 (pouze XK)
+
+Routery typu 4 mohou inzerovat jak NTCP2, tak NTCP2PQ* adresy. Ty mohou používat stejný statický klíč a další parametry, nebo ne. Tyto budou pravděpodobně muset být na různých portech; bylo by velmi obtížné podporovat jak NTCP2, tak NTCP2PQ* protokoly na stejném portu, protože neexistuje žádná hlavička nebo rámování, které by Bobovi umožnilo klasifikovat a zarámovat příchozí zprávu Session Request.
+
+Oddělené porty a adresy budou obtížné pro Java, ale jednoduché pro i2pd.
+
+#### KDF pro split()
+
+Type 4 routery by mohly inzerovat jak SSU2, tak SSU2PQ* adresy. S přidanými hlavičkovými příznaky by Bob mohl identifikovat příchozí typ transportu v první zprávě. Proto bychom mohli podporovat jak SSU2, tak SSUPQ* na stejném portu.
+
+Tyto by mohly být publikovány jako samostatné adresy (jak to i2pd dělalo při předchozích přechodech) nebo ve stejné adrese s parametrem indikujícím PQ podporu (jak to Java i2p dělalo při předchozích přechodech).
+
+Pokud se nachází na stejné adrese nebo na stejném portu v různých adresách, použily by stejný statický klíč a další parametry. Pokud se nachází na různých adresách s různými porty, mohly by používat stejný statický klíč a další parametry, nebo nemusí.
+
+Oddělené porty a adresy budou obtížné pro Javu, ale jednoduché pro i2pd.
+
+#### Recommendations
+
+TODO
+
+### NTCP2
+
+#### Identifikátory Noise
+
+Starší routery ověřují RI a proto se nemohou připojit, stavět tunely přes ně, nebo jim posílat netDb zprávy. Vyžadovalo by několik vývojových cyklů na ladění a zajištění podpory před povolením ve výchozím nastavení. Byly by to stejné problémy jako při zavádění enc. typu 5/6/7; mohlo by prodloužit zavádění o rok nebo více oproti alternativě zavádění enc. typu 4 uvedené výše.
+
+Žádné alternativy.
+
+### LS Enc. Types
+
+#### 1b) Nový formát relace (s vazbou)
+
+Tyto mohou být přítomny v LS se staršími klíči typu 4 X25519. Starší routery neznámé klíče ignorují.
+
+Destinations mohou podporovat více typů klíčů, ale pouze prostřednictvím zkušebního dešifrování zprávy 1 s každým klíčem. Režie může být zmírněna udržováním počtu úspěšných dešifrování pro každý klíč a nejprve zkušením nejpoužívanějšího klíče. Java I2P používá tuto strategii pro ElGamal+X25519 na stejné destination.
+
+### Dest. Sig. Types
+
+#### 1g) Formát New Session Reply
+
+Routery ověřují podpisy leaseset a proto se nemohou připojit nebo přijímat leaseset pro destinace typu 12-17. Trvalo by několik cyklů vydání na ladění a zajištění podpory před výchozím povolením.
+
+Žádné alternativy.
+
+## Specifikace
+
+Nejcennější data jsou end-to-end provoz, zašifrovaný pomocí ratchet. Jako externí pozorovatel mezi skoky tunelu je to zašifrováno ještě dvakrát více, pomocí šifrování tunelu a transportního šifrování. Jako externí pozorovatel mezi OBEP a IBGW je to zašifrováno pouze jednou více, pomocí transportního šifrování. Jako účastník OBEP nebo IBGW je ratchet jediné šifrování. Nicméně, protože tunely jsou jednosměrné, zachycení obou zpráv v ratchet handshake by vyžadovalo spolupracující routery, pokud by tunely nebyly postaveny s OBEP a IBGW na stejném routeru.
+
+Nejzávažnějším PQ modelem hrozby je v současnosti ukládání provozu dnes, pro dešifrování za mnoho let (forward secrecy). Hybridní přístup by to chránil.
+
+Model hrozby PQ spočívající v prolomení autentizačních klíčů v rozumném časovém období (řekněme několik měsíců) a následném vydávání se za autentizaci nebo dešifrování v téměř reálném čase, je mnohem vzdálenější? A to je okamžik, kdy bychom chtěli migrovat na PQC statické klíče.
+
+Takže nejčasnější PQ model hrozby je OBEP/IBGW ukládající provoz pro pozdější dešifrování. Měli bychom nejprve implementovat hybridní ratchet.
+
+Ratchet má nejvyšší prioritu. Transporty jsou další. Podpisy mají nejnižší prioritu.
+
+Zavedení podpisů bude také o rok nebo více později než zavedení šifrování, protože zpětná kompatibilita není možná. Také přijetí MLDSA v průmyslu bude standardizováno CA/Browser Forum a certifikačními autoritami. CA nejprve potřebují podporu hardwarového bezpečnostního modulu (HSM), která v současnosti není dostupná [https://cabforum.org/2024/10/10/2024-10-10-minutes-of-the-code-signing-certificate-working-group/](https://cabforum.org/2024/10/10/2024-10-10-minutes-of-the-code-signing-certificate-working-group/). Očekáváme, že CA/Browser Forum bude řídit rozhodnutí o konkrétních parametrických volbách, včetně toho, zda podporovat nebo vyžadovat kompozitní podpisy [https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/](https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/).
+
+| Milestone | Target |
+|-----------|--------|
+| Ratchet beta | Late 2025 |
+| Select best enc type | Early 2026 |
+| NTCP2 beta | Early 2026 |
+| SSU2 beta | Mid 2026 |
+| Ratchet production | Mid 2026 |
+| Ratchet default | Late 2026 |
+| Signature beta | Late 2026 |
+| NTCP2 production | Late 2026 |
+| SSU2 production | Early 2027 |
+| Select best sig type | Early 2027 |
+| NTCP2 default | Early 2027 |
+| SSU2 default | Mid 2027 |
+| Signature production | Mid 2027 |
+## Migration
+
+Pokud nebudeme schopni podporovat staré i nové ratchet protokoly na stejných tunelech, migrace bude mnohem obtížnější.
+
+Měli bychom být schopni zkusit jen jeden-pak-druhý, jak jsme to udělali s X25519, což je třeba dokázat.
+
+## Issues
+
+- Výběr Noise Hash - zůstat u SHA256 nebo upgradovat?
+  SHA256 by měl být dobrý dalších 20-30 let, není ohrožen PQ,
+  Viz [https://csrc.nist.gov/csrc/media/Presentations/2022/update-on-post-quantum-encryption-and-cryptographi/Day%202%20-%20230pm%20Chen%20PQC%20ISPAB.pdf](https://csrc.nist.gov/csrc/media/Presentations/2022/update-on-post-quantum-encryption-and-cryptographi/Day%202%20-%20230pm%20Chen%20PQC%20ISPAB.pdf) a [https://www.nccoe.nist.gov/sites/default/files/2023-08/pqc-light-at-the-end-of-the-tunnel-presentation.pdf](https://www.nccoe.nist.gov/sites/default/files/2023-08/pqc-light-at-the-end-of-the-tunnel-presentation.pdf).
+  Pokud bude SHA256 prolomeno, budeme mít horší problémy (netdb).
+- NTCP2 separátní port, separátní router adresa
+- SSU2 relay / peer test
+- SSU2 pole verze
+- SSU2 router adresa verze

@@ -130,24 +130,20 @@ EdDSA_SHA512_Ed25519ph (tipo de firma 8) para archivos su3,
 porque la versión pre-lleva de EdDSA no es vulnerable a LEA.
 EdDSA_SHA512_Ed25519 (tipo de firma 7) no es compatible con archivos su3.
 
-=======================  ===========  ======  =====
-        Tipo             Código de Tipo  Desde   Uso
-=======================  ===========  ======  =====
-RedDSA_BLAKE2b_Ed25519       12        TBD    Para Identidades de Router, Destinos y conjuntos de arrendamientos cifrados solamente; nunca usado para Identidades de Router
-=======================  ===========  ======  =====
+| Tipo | Código Tipo | Desde | Uso |
+|------|-------------|-------|-----|
+| RedDSA_BLAKE2b_Ed25519 | 12 | TBD | Para Identidades de Router, Destinos y conjuntos de arrendamientos cifrados solamente; nunca usado para Identidades de Router |
 
 ### Longitudes Comunes de Datos de Estructura
 
 Lo siguiente se aplica al nuevo tipo de firma.
 
-==================================  =============
-            Tipo de Datos              Longitud    
-==================================  =============
-Hash                                     64      
-Clave Privada                            32      
-Clave Pública                            32      
-Firma                                    64      
-==================================  =============
+| Tipo de Datos | Longitud |
+|---------------|----------|
+| Hash | 64 |
+| Clave Privada | 32 |
+| Clave Pública | 32 |
+| Firma | 64 |
 
 ### Personalizaciones
 
@@ -162,18 +158,16 @@ apretón de manos en sí.
 Los RouterInfos firmados en Mensajes DatabaseStore usarán la personalización de Entrada NetDb,
 como si fueran almacenados en la NetDB.
 
-==================================  ==========================
-         Uso                        Personalización de 16 Bytes
-==================================  ==========================
-I2CP SessionConfig                  "I2CP_SessionConf"
-Entradas NetDB (RI, LS, LS2)         "network_database"
-Apretón de manos NTCP 1                    "NTCP_1_handshake"
-Datagramas Firmados                    "sign_datagramI2P"
-Transmisión                           "streaming_i2psig"
-Apretón de manos SSU                       "SSUHandshakeSign"
-Archivos SU3                         n/a, no soportado
-Pruebas unitarias                      "test1234test5678"
-==================================  ==========================
+| Uso | Personalización de 16 Bytes |
+|-----|-----------------------------|
+| I2CP SessionConfig | "I2CP_SessionConf" |
+| Entradas NetDB (RI, LS, LS2) | "network_database" |
+| Apretón de manos NTCP 1 | "NTCP_1_handshake" |
+| Datagramas Firmados | "sign_datagramI2P" |
+| Transmisión | "streaming_i2psig" |
+| Apretón de manos SSU | "SSUHandshakeSign" |
+| Archivos SU3 | n/a, no soportado |
+| Pruebas unitarias | "test1234test5678" |
 
 ## Notas
 

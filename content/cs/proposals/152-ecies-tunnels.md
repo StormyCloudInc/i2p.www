@@ -1,793 +1,580 @@
 ---
-title: "Tunely ECIES"
+title: "ECIES tunely"
 number: "152"
 author: "chisana, zzz, orignal"
 created: "2019-07-04"
 lastupdated: "2025-03-05"
-status: "Ukončeno"
+status: "Uzavřeno"
 thread: "http://zzz.i2p/topics/2737"
 target: "0.9.48"
 implementedin: "0.9.48"
 ---
 
 ## Poznámka
-Nasazení a testování sítě probíhá.
-Podléhá drobným úpravám.
-Podívejte se na [SPEC](/docs/specs/implementation/) pro oficiální specifikaci.
 
+Nasazení sítě a testování probíhá. Podléhá drobným revizím. Viz [SPEC](/docs/specs/implementation/) pro oficiální specifikaci.
 
 ## Přehled
 
-Tento dokument navrhuje změny v šifrování zpráv na sestavení tunelů
-používající kryptografické primitivy zavedené v [ECIES-X25519](/docs/specs/ecies/).
-Je to část celkového návrhu
-[Prop156](/proposals/156-ecies-routers/) pro konverzi routerů z ElGamal na ECIES-X25519 klíče.
+Tento dokument navrhuje změny šifrování zpráv Tunnel Build pomocí kryptografických primitiv zavedených v [ECIES-X25519](/docs/specs/ecies/). Je součástí celkového návrhu [Proposal 156](/proposals/156-ecies-routers) pro převod routerů z ElGamal na ECIES-X25519 klíče.
 
-Pro účely přechodu sítě z ElGamal + AES256 na ECIES + ChaCha20 jsou nutné
-tunely s mixem ElGamal a ECIES routerů.
-Poskytují se specifikace pro zpracování smíšených skoků v tunelu.
-Nezmění se formát, zpracování ani šifrování skoků ElGamal.
+Pro účely přechodu sítě z ElGamal + AES256 na ECIES + ChaCha20 jsou nezbytné tunnely se smíšenými ElGamal a ECIES routery. Jsou poskytnuty specifikace pro zpracování smíšených tunnel hopů. Nebudou provedeny žádné změny ve formátu, zpracování nebo šifrování ElGamal hopů.
 
-Tvořitelé tunelů ElGamal budou muset vytvořit efemérní páry klíčů X25519 pro každý skok a
-následovat tuto specifikaci pro vytváření tunelů obsahujících skoky ECIES.
+ElGamal tvůrci tunelů budou muset vytvořit efemérní X25519 klíčové páry pro každý hop a následovat tuto specifikaci pro vytváření tunelů obsahujících ECIES hopy.
 
-Tento návrh specifikuje změny potřebné pro sestavování tunelů ECIES-X25519.
-Pro přehled všech změn potřebných pro routery ECIES se podívejte na návrh 156 [Prop156](/proposals/156-ecies-routers/).
+Tento návrh specifikuje změny potřebné pro ECIES-X25519 Tunnel Building. Pro přehled všech změn vyžadovaných pro ECIES routery viz návrh 156 [Proposal 156](/proposals/156-ecies-routers).
 
-Tento návrh zachovává stejnou velikost záznamů sestavení tunelu,
-jak je požadováno pro kompatibilitu. Menší záznamy a zprávy budou implementovány později - viz [Prop157](/proposals/157-new-tbm/).
+Tento návrh zachovává stejnou velikost pro záznamy budování tunelů, jak je vyžadováno pro kompatibilitu. Menší záznamy budování a zprávy budou implementovány později - viz [Proposal 157](/proposals/157-new-tbm).
 
+### Cryptographic Primitives
 
-### Kryptografické primitivy
+Nejsou zavedeny žádné nové kryptografické primitiva. Primitiva potřebná k implementaci tohoto návrhu jsou:
 
-Nejsou zavedeny žádné nové kryptografické primitivy. Primitivy potřebné k implementaci tohoto návrhu jsou:
-
-- AES-256-CBC jako v [Cryptography](/docs/specs/cryptography/)
+- AES-256-CBC jak v [Cryptography](/docs/specs/cryptography/)
 - STREAM ChaCha20/Poly1305 funkce:
-  ENCRYPT(k, n, plaintext, ad) a DECRYPT(k, n, ciphertext, ad) - jako v [NTCP2](/docs/specs/ntcp2/) [ECIES-X25519](/docs/specs/ecies/) a [RFC-7539](https://tools.ietf.org/html/rfc7539)
-- X25519 DH funkce - jako v [NTCP2](/docs/specs/ntcp2/) a [ECIES-X25519](/docs/specs/ecies/)
-- HKDF(salt, ikm, info, n) - jako v [NTCP2](/docs/specs/ntcp2/) a [ECIES-X25519](/docs/specs/ecies/)
+  ENCRYPT(k, n, plaintext, ad) a DECRYPT(k, n, ciphertext, ad) - jak v [NTCP2](/docs/specs/ntcp2/) [ECIES-X25519](/docs/specs/ecies/) a [RFC-7539](https://tools.ietf.org/html/rfc7539)
+- X25519 DH funkce - jak v [NTCP2](/docs/specs/ntcp2/) a [ECIES-X25519](/docs/specs/ecies/)
+- HKDF(salt, ikm, info, n) - jak v [NTCP2](/docs/specs/ntcp2/) a [ECIES-X25519](/docs/specs/ecies/)
 
-Další funkce Noise definované jinde:
+Další Noise funkce definované jinde:
 
 - MixHash(d) - jako v [NTCP2](/docs/specs/ntcp2/) a [ECIES-X25519](/docs/specs/ecies/)
 - MixKey(d) - jako v [NTCP2](/docs/specs/ntcp2/) a [ECIES-X25519](/docs/specs/ecies/)
 
+### Goals
+
+- Zvýšit rychlost kryptografických operací
+- Nahradit ElGamal + AES256/CBC primitivy ECIES pro tunnel BuildRequestRecords a BuildReplyRecords
+- Žádná změna velikosti šifrovaných BuildRequestRecords a BuildReplyRecords (528 bajtů) kvůli kompatibilitě
+- Žádné nové I2NP zprávy
+- Zachovat velikost šifrovaného build recordu kvůli kompatibilitě
+- Přidat forward secrecy pro Tunnel Build Messages
+- Přidat autentifikované šifrování
+- Detekovat přeuspořádání BuildRequestRecords hopů
+- Zvýšit rozlišení časového razítka, aby mohla být zmenšena velikost Bloom filtru
+- Přidat pole pro vypršení tunnelu, aby byly možné proměnlivé životnosti tunnelů (pouze all-ECIES tunnely)
+- Přidat rozšiřitelné pole možností pro budoucí funkce
+- Znovu použít existující kryptografické primitivy
+- Zlepšit bezpečnost tunnel build zpráv tam, kde je to možné při zachování kompatibility
+- Podporovat tunnely se smíšenými ElGamal/ECIES partnery
+- Zlepšit obranu proti "tagging" útokům na build zprávy
+- Hopy nemusí znát typ šifrování dalšího hopu před zpracováním build zprávy,
+  protože v té době nemusí mít RI dalšího hopu
+- Maximalizovat kompatibilitu se současnou sítí
+- Žádná změna AES šifrování tunnel build request/reply pro ElGamal routery
+- Žádná změna AES "vrstvového" šifrování tunnelu, pro to viz [Proposal 153](/proposals/153-chacha20-layer-encryption)
+- Pokračovat v podpoře jak 8-recordových TBM/TBRM, tak proměnlivě velkých VTBM/VTBRM
+- Nevyžadovat upgrade celé sítě typu "flag day"
+
+### Kryptografické primitiva
+
+- Kompletní redesign zpráv pro stavbu tunnelů vyžadující "flag day".
+- Zmenšování zpráv pro stavbu tunnelů (vyžaduje všechny ECIES hopy a nový návrh)
+- Použití možností stavby tunnelů jak jsou definovány v [Proposal 143](/proposals/143-build-message-options), nutné pouze pro malé zprávy
+- Obousměrné tunnely - pro to viz [Proposal 119](/proposals/119-bidirectional-tunnels)
+- Menší zprávy pro stavbu tunnelů - pro to viz [Proposal 157](/proposals/157-new-tbm)
+
+## Threat Model
 
 ### Cíle
 
-- Zvýšit rychlost kryptografických operací
-- Nahradit ElGamal + AES256/CBC primitivy ECIES pro záznamy BuildRequestRecords a BuildReplyRecords.
-- Nezměnit velikost šifrovaných BuildRequestRecords a BuildReplyRecords (528 bajtů) pro kompatibilitu
-- Nepřidávat nové zprávy I2NP
-- Uchovat velikost šifrovaného záznamu pro kompatibilitu
-- Přidat přechodnou utajitelnost pro zprávy o sestavení tunelu
-- Přidat autentizované šifrování
-- Detekovat přeskupení skoků BuildRequestRecords
-- Zvýšit rozlišení časové značky tak, aby bylo možné zmenšit velikost Bloomova filtru
-- Přidat pole pro dobu expirace tunelu, aby bylo možné mít různé životnosti tunelů (pouze tunely ECIES)
-- Přidat pole s rozšiřitelnými možnostmi pro budoucí funkce
-- Znovu použít existující kryptografické primitivy
-- Zlepšit bezpečnost zpráv o sestavení tunelu, kdykoli je to možné, při zachování kompatibility
-- Podporovat tunely se smíšenými ElGamal/ECIES účastníky
-- Zlepšit obranu proti „tagovacím“ útokům na sestavovací zprávy
-- Skoky nemusí vědět typ šifrování dalšího skoku před zpracováním sestavovací zprávy,
-  protože nemusí mít identitu příjemce dalšího skoku (RI) v ten čas
-- Maximalizovat kompatibilitu se současnou sítí
-- Nezměnit šifrování požadavků/odpovědí s tunel build AES pro ElGamal routery
-- Nezměnit tunel AES „vrstvěnné“ šifrování, pro to viz [Prop153](/proposals/153-chacha20-layer-encryption/)
-- Pokračovat v podpoře obou 8-záznamového TBM/TBRM a proměnné velikosti VTBM/VTBRM
-- Nevyžadovat „flag day“ upgrade na celou síť
+- Žádný hop není schopen určit původce tunelu.
 
-
-### Nicht-Cíle
-
-- Úplný redesign zpráv o sestavení tunelu vyžadující „flag day“.
-- Zmenšování zpráv o sestavení tunelu (vyžaduje všechny skoky ECIES a nový návrh)
-- Použití možností sestavení tunelu, jak je definováno v [Prop143](/proposals/143-build-message-options/), vyžadovány pouze pro malé zprávy
-- Obousměrné tunely - pro to viz [Prop119](/proposals/119-bidirectional-tunnels/)
-- Menší zprávy o sestavení tunelu - pro to viz [Prop157](/proposals/157-new-tbm/)
-
-
-## Model hrozby
-
-### Cíle návrhu
-
-- Žádné skoky nejsou schopny určit autora tunelu.
-
-- Střední skoky nesmí být schopny určit směr tunelu
+- Prostřední uzly nesmí být schopny určit směr tunelu
   nebo svou pozici v tunelu.
 
-- Žádné skoky nemohou číst žádný obsah jiných záznamů požadavků nebo odpovědí, kromě
-  zkráceného hash routeru a efemérního klíče pro další skok
+- Žádný hop nemůže číst jakýkoli obsah jiných záznamů požadavků nebo odpovědí, kromě
+  zkráceného router hash a dočasného klíče pro další hop
 
-- Žádný člen odpovědního tunelu pro odchozí sestavení nemůže číst žádné odpovědní záznamy.
+- Žádný člen reply tunnel pro odchozí build nemůže číst žádné reply záznamy.
 
 - Žádný člen odchozího tunelu pro příchozí sestavení nemůže číst žádné záznamy požadavků,
-  kromě toho, že OBEP může vidět zkrácený hash routeru a efemérní klíč pro IBGW
+  kromě toho, že OBEP může vidět zkrácený hash routeru a dočasný klíč pro IBGW
 
+### Necíle
 
+Hlavním cílem návrhu budování tunelů je ztížit spolupracujícím routerům X a Y poznání, že se nacházejí v jednom tunelu. Pokud je router X na skoku m a router Y na skoku m+1, tak to samozřejmě poznají. Ale pokud je router X na skoku m a router Y na skoku m+n pro n>1, mělo by to být mnohem těžší.
 
-
-### Tagovací útoky
-
-Hlavním cílem návrhu stavby tunelu je ztížit
-koluzním routerům X a Y zjistit, zda jsou v jednom tunelu.
-Pokud je router X na skoku m a router Y na skoku m+1, budou samozřejmě vědět.
-Pokud je však router X na skoku m a router Y na skoku m+n pro n>1, mělo by to být mnohem obtížnější.
-
-Tagovací útoky jsou případy, kdy router uprostřed X změní zprávu o sestavení tunelu tak, aby
-router Y mohl detekovat úpravu, když zpráva o sestavení dorazí.
-Cílem je, aby jakákoliv upravená zpráva byla routerem mezi X a Y zrušena dřív, než dorazí k routeru Y.
-Pro modifikace, které nejsou zrušeny před routerem Y, by měl tvůrce tunelu detekovat poškození v odpovědi
-a tunel odmítnout.
+Útoky označováním (tagging attacks) jsou situace, kdy router X ve střední části tunelu změní zprávu pro stavbu tunelu takovým způsobem, že router Y může detekovat tuto změnu, když se zpráva dostane k němu. Cílem je, aby jakákoliv změněná zpráva byla zahozena routerem mezi X a Y předtím, než se dostane k routeru Y. U modifikací, které nejsou zahozeny před routerem Y, by měl tvůrce tunelu detekovat poškození v odpovědi a tunel zahodit.
 
 Možné útoky:
 
-- Změnění záznamu o stavbě
-- Náhrada záznamu o stavbě
-- Přidání nebo odstranění záznamu o stavbě
-- Přeskupení záznamů o stavbě
-
+- Změnit záznam sestavení
+- Nahradit záznam sestavení
+- Přidat nebo odebrat záznam sestavení
+- Změnit pořadí záznamů sestavení
 
 TODO: Zabraňuje současný návrh všem těmto útokům?
 
-
-
-
-## Návrh
+## Design
 
 ### Noise Protocol Framework
 
-Tento návrh poskytuje požadavky založené na Noise Protocol Framework
-[NOISE](https://noiseprotocol.org/noise.html) (Revize 34, 2018-07-11).
-V řeči Noise je Alice iniciátor a Bob je příjemce.
+Tento návrh poskytuje požadavky založené na Noise Protocol Framework [NOISE](https://noiseprotocol.org/noise.html) (Revize 34, 2018-07-11). V terminologii Noise je Alice iniciátor a Bob je respondent.
 
-Tento návrh je založen na Noise protokolu Noise_N_25519_ChaChaPoly_SHA256.
-Tento Noise protokol používá následující primitivy:
+Tento návrh je založen na protokolu Noise Noise_N_25519_ChaChaPoly_SHA256. Tento protokol Noise používá následující primitiva:
 
-- Vzor jednostranného handshake: N
-  Alice nepředává svůj statický klíč Bobovi (N)
+- One-Way Handshake Pattern: N
+  Alice nepřenáší svůj statický klíč Bobovi (N)
 
-- DH Funkce: X25519
-  X25519 DH s délkou klíče 32 bajtů, jak je specifikováno v [RFC-7748](https://tools.ietf.org/html/rfc7748).
+- DH Function: X25519
+  X25519 DH s délkou klíče 32 bajtů podle specifikace v [RFC-7748](https://tools.ietf.org/html/rfc7748).
 
-- Šifrovací funkce: ChaChaPoly
-  AEAD_CHACHA20_POLY1305, jak je specifikováno v [RFC-7539](https://tools.ietf.org/html/rfc7539) sekce 2.8.
-  12 bajtový nonce, první 4 bajty jsou nastaveny na nulu.
-  Identické tomu v [NTCP2](/docs/specs/ntcp2/).
+- Cipher Function: ChaChaPoly
+  AEAD_CHACHA20_POLY1305 jak je specifikováno v [RFC-7539](https://tools.ietf.org/html/rfc7539) sekce 2.8.
+  12 bajtový nonce, s prvními 4 bajty nastavenými na nulu.
+  Identické s tím v [NTCP2](/docs/specs/ntcp2/).
 
-- Hash funkce: SHA256
-  Standardní hash o délce 32 bajtů, již široce používán v I2P.
+- Hash Function: SHA256
+  Standardní 32bajtový hash, již hojně používaný v I2P.
 
+#### Additions to the Framework
 
-Doplňky k Frameworku
-````````````````````````````````
+Žádný.
 
-Žádné.
+### Cíle návrhu
 
+Handshaky používají [Noise](https://noiseprotocol.org/noise.html) handshake vzory.
 
-### Vzory handshake
+Použije se následující mapování písmen:
 
-Handshaky používají vzory handshake [Noise](https://noiseprotocol.org/noise.html).
-
-Použitá mapování písmen:
-
-- e = efemérní klíč
+- e = jednorázový dočasný klíč
 - s = statický klíč
-- p = payload zprávy
+- p = datová část zprávy
 
-Záznam požadavku je identický vzoru Noise N.
-To je také identické první (požadavek na relaci) zprávě ve vzoru XK používané v [NTCP2](/docs/specs/ntcp2/).
+Build request je identický s Noise N vzorem. To je také identické s první zprávou (Session Request) ve vzoru XK používaném v [NTCP2](/docs/specs/ntcp2/).
 
-
-  ```text
-
+```text
 <- s
   ...
   e es p ->
+```
+### Útoky pomocí značkování
 
+Záznamy požadavků na sestavení jsou vytvořeny tvůrcem tunnelu a asymetricky zašifrovány pro jednotlivé skoky. Toto asymetrické šifrování záznamů požadavků je v současnosti ElGamal jak je definováno v [Kryptografie](/docs/specs/cryptography/) a obsahuje kontrolní součet SHA-256. Tento návrh není forward-secret.
 
+Nový design bude používat jednosměrný Noise pattern "N" s ECIES-X25519 ephemeral-static DH, s HKDF a ChaCha20/Poly1305 AEAD pro forward secrecy, integritu a autentifikaci. Alice je žadatel o vybudování tunelu. Každý hop v tunelu je Bob.
 
+(Vlastnosti zabezpečení užitečného zatížení)
 
-
-  ```
-
-
-### Šifrování požadavku
-
-Záznamy požadavků na sestavení tunelu jsou vytvořeny autorem tunelu a asymetricky šifrovány pro každý skok.
-Toto asymetrické šifrování záznamů požadavků je v současnosti ElGamal, jak je definováno v [Cryptography](/docs/specs/cryptography/)
-a obsahuje SHA-256 kontrolní součet. Tento návrh není přechodně tajný.
-
-Nový návrh použije jednosměrný Noise vzor "N" s ECIES-X25519 efemérně-statickým DH, s HKDF, a
-ChaCha20/Poly1305 AEAD pro přechodnou tajnost, integritu a autentizaci.
-Alice je autor požadavku na sestavení tunelu. Každý skok v tunelu je Bob.
-
-
-(Vlastnosti bezpečnosti Payloadu)
-
-  ```text
-
-N:                      Autentizace   Důvěrnost
+```text
+N:                      Authentication   Confidentiality
     -> e, es                  0                2
 
-    Autentizace: Žádná (0).
-    Tento payload mohl být odeslán jakoukoliv stranou, včetně aktivního útočníka.
+    Authentication: None (0).
+    This payload may have been sent by any party, including an active attacker.
 
-    Důvěrnost: 2.
-    Šifrování pro známého příjemce, přechodná tajnost pouze pro kompromitaci odesílatele,
-    zranitelné vůči opakování. Tento payload je zašifrován na základě DHs
-    zahrnujících statickou klíčovou dvojici příjemce. Pokud by statický
-    soukromý klíč příjemce byl kompromitován, byť i v pozdějším datu, tento
-    payload může být dešifrován. Tato zpráva může být také opakována, protože
-    neexistuje efemérní přispění od příjemce.
+    Confidentiality: 2.
+    Encryption to a known recipient, forward secrecy for sender compromise
+    only, vulnerable to replay.  This payload is encrypted based only on DHs
+    involving the recipient's static key pair.  If the recipient's static
+    private key is compromised, even at a later date, this payload can be
+    decrypted.  This message can also be replayed, since there's no ephemeral
+    contribution from the recipient.
 
-    "e": Alice vygeneruje nový efemérní klíčový pár a uloží jej do proměnné e,
-         zapíše efemérní veřejný klíč jako prostý text do bufferu zprávy, a
-         hašuje veřejný klíč spolu se starým h pro derivaci nového h.
+    "e": Alice generates a new ephemeral key pair and stores it in the e
+         variable, writes the ephemeral public key as cleartext into the
+         message buffer, and hashes the public key along with the old h to
+         derive a new h.
 
-    "es": Provede se DH mezi Aliceiným efemérním klíčovým párem a
-          Bobovým statickým klíčovým párem. Výsledek se hašuje spolu
-          se starým ck pro derivaci nového ck a k, a n je nastaveno na nulu.
+    "es": A DH is performed between the Alice's ephemeral key pair and the
+          Bob's static key pair.  The result is hashed along with the old ck to
+          derive a new ck and k, and n is set to zero.
+```
+### Reply encryption
 
+Build reply záznamy jsou vytvářeny tvůrcem hopů a symetricky šifrovány k tvůrci. Toto symetrické šifrování reply záznamů je v současnosti AES s předřazeným SHA-256 kontrolním součtem. a obsahuje SHA-256 kontrolní součet. Tento návrh není forward-secret.
 
+Nový design bude používat ChaCha20/Poly1305 AEAD pro integritu a autentifikaci.
 
+### Noise Protocol Framework
 
+Efemérní veřejný klíč v požadavku nemusí být zamaskován pomocí AES nebo Elligator2. Předchozí hop je jediný, který ho může vidět, a tento hop ví, že další hop je ECIES.
 
-  ```
+Záznamy odpovědí nepotřebují plné asymetrické šifrování s dalším DH.
 
+## Specification
 
+### Build Request Records
 
-### Šifrování odpovědi
+Šifrované BuildRequestRecords mají 528 bajtů jak pro ElGamal, tak pro ECIES, kvůli kompatibilitě.
 
-Záznamy odpovědí se vytvářejí tvůrcem skoků a symetricky šifrují pro tvůrce.
-Toto symetrické šifrování odpovědí je v současnosti AES s předřazeným SHA-256 kontrolním součtem.
-a obsahuje SHA-256 kontrolní součet. Tento návrh není přechodně tajný.
+#### Request Record Unencrypted (ElGamal)
 
-Nový návrh použije ChaCha20/Poly1305 AEAD pro integritu a autentizaci.
+Pro referenci, toto je současná specifikace tunnel BuildRequestRecord pro ElGamal routery, převzatá z [I2NP](/docs/specs/i2np/). Nešifrovaná data jsou prefixována nenulovým bytem a SHA-256 hashem dat před šifrováním, jak je definováno v [Cryptography](/docs/specs/cryptography/).
 
+Všechna pole jsou ve formátu big-endian.
 
-### Oprávnění
+Nezašifrovaná velikost: 222 bajtů
 
-Efemérní veřejný klíč v požadavku nemusí být skrýván pomocí AES
-nebo Elligator2. Předchozí skok je jediný, kdo jej může vidět, a ten skok
-ví, že další skok je ECIES.
+```text
+bytes     0-3: tunnel ID to receive messages as, nonzero
+  bytes    4-35: local router identity hash
+  bytes   36-39: next tunnel ID, nonzero
+  bytes   40-71: next router identity hash
+  bytes  72-103: AES-256 tunnel layer key
+  bytes 104-135: AES-256 tunnel IV key
+  bytes 136-167: AES-256 reply key
+  bytes 168-183: AES-256 reply IV
+  byte      184: flags
+  bytes 185-188: request time (in hours since the epoch, rounded down)
+  bytes 189-192: next message ID
+  bytes 193-221: uninterpreted / random padding
+```
+#### Request Record Encrypted (ElGamal)
 
-Odpovědní záznamy nevyžadují plné asymetrické šifrování s dalším DH.
+Pro referenci, toto je současná specifikace tunnel BuildRequestRecord pro ElGamal routery, převzatá z [I2NP](/docs/specs/i2np/).
 
+Šifrovaná velikost: 528 bajtů
 
+```text
+bytes    0-15: Hop's truncated identity hash
+  bytes  16-528: ElGamal encrypted BuildRequestRecord
+```
+#### Request Record Unencrypted (ECIES)
 
-## Specifikace
+Toto je navrhovaná specifikace tunnel BuildRequestRecord pro ECIES-X25519 routery. Shrnutí změn:
 
+- Odstranit nepoužívaný 32-bajtový router hash
+- Změnit čas požadavku z hodin na minuty
+- Přidat pole expiration pro budoucí proměnný čas tunelu
+- Přidat více místa pro flags
+- Přidat Mapping pro další možnosti buildu
+- AES-256 reply klíč a IV nejsou používány pro hop's vlastní reply záznam
+- Nezašifrovaný záznam je delší, protože je zde menší overhead šifrování
 
-
-### Záznamy požadavků na sestavení
-
-Šifrované BuildRequestRecords mají 528 bajtů pro ElGamal i ECIES, pro kompatibilitu.
-
-
-Záznam požadavku nešifrovaný (ElGamal)
-`````````````````````````````````````````
-
-Pro referenci, toto je současná specifikace záznamu BuildRequestRecord pro ElGamal routery, převzatá z [I2NP](/docs/specs/i2np/).
-Nešifrovaná data jsou předsuňována nenulovým bajtem a SHA-256 hashem dat před šifrováním,
-jak je definováno v [Cryptography](/docs/specs/cryptography/).
-
-Všechna pole jsou big-endian.
-
-Velikost nešifrovaného: 222 bajtů
-
-  ```text
-
-
-bytes     0-3: ID tunelu ke přijímání zpráv jako, nenulové
-  bytes    4-35: místní hash identity routeru
-  bytes   36-39: ID dalšího tunelu, nenulové
-  bytes   40-71: hash identity dalšího routeru
-  bytes  72-103: AES-256 klíč tunelové vrstvy
-  bytes 104-135: AES-256 klíč IV tunelové vrstvy
-  bytes 136-167: AES-256 klíč odpovědi
-  bytes 168-183: AES-256 IV odpovědi
-  byte      184: příznaky
-  bytes 185-188: čas požadavku (v hodinách od epochy, zaokrouhlen dolů)
-  bytes 189-192: další ID zprávy
-  bytes 193-221: neinterpetovaná / náhodná výplň
-
-
-
-
-  ```
-
-
-Záznam požadavku šifrovaný (ElGamal)
-`````````````````````````````````````
-
-Pro referenci, toto je současná specifikace záznamu BuildRequestRecord pro ElGamal routery, převzatá z [I2NP](/docs/specs/i2np/).
-
-Velikost šifrovaného: 528 bajtů
-
-  ```text
-
-
-bytes    0-15: Zkrácený hash identity skoku
-  bytes  16-528: ElGamal šifrovaný BuildRequestRecord
-
-
-
-
-  ```
-
-
-
-
-Záznam požadavku nešifrovaný (ECIES)
-```````````````````````````````````````
-
-Toto je navrhovaná specifikace záznamu BuildRequestRecord pro routery ECIES-X25519.
-Shrnutí změn:
-
-- Odstranění nepoužívaného 32-bajtového router hash
-- Změna času požadavku z hodin na minuty
-- Přidání pole expirace pro budoucí proměnné časy tunelu
-- Přidání více místa pro příznaky
-- Přidání Mapování pro dodatečné možnosti sestavení
-- AES-256 odpovědní klíč a IV nejsou použity pro odpovědní záznam skoku
-- Nešifrovaný záznam je delší, protože je méně režie šifrování
-
-
-Záznam o požadavku neobsahuje žádné ChaCha odpovědní klíče.
-Ty klíče jsou odvozeny z KDF. Viz níže.
+Záznam požadavku neobsahuje žádné ChaCha klíče pro odpověď. Tyto klíče jsou odvozeny z KDF. Viz níže.
 
 Všechna pole jsou big-endian.
 
-Velikost nešifrovaného: 464 bajtů
+Nezašifrovaná velikost: 464 bajtů
 
-  ```text
+```text
+bytes     0-3: tunnel ID to receive messages as, nonzero
+  bytes     4-7: next tunnel ID, nonzero
+  bytes    8-39: next router identity hash
+  bytes   40-71: AES-256 tunnel layer key
+  bytes  72-103: AES-256 tunnel IV key
+  bytes 104-135: AES-256 reply key
+  bytes 136-151: AES-256 reply IV
+  byte      152: flags
+  bytes 153-155: more flags, unused, set to 0 for compatibility
+  bytes 156-159: request time (in minutes since the epoch, rounded down)
+  bytes 160-163: request expiration (in seconds since creation)
+  bytes 164-167: next message ID
+  bytes   168-x: tunnel build options (Mapping)
+  bytes     x-x: other data as implied by flags or options
+  bytes   x-463: random padding
+```
+Pole flags je stejné jako definované v [Tunnel Creation](/docs/specs/implementation/) a obsahuje následující::
 
+Pořadí bitů: 76543210 (bit 7 je MSB)  bit 7: pokud je nastaven, povolit zprávy od kohokoliv  bit 6: pokud je nastaven, povolit zprávy komukoliv a odeslat odpověď na
 
-bytes     0-3: ID tunelu ke přijímání zpráv jako, nenulové
-  bytes     4-7: ID dalšího tunelu, nenulové
-  bytes    8-39: hash identity dalšího routeru
-  bytes   40-71: AES-256 klíč tunelové vrstvy
-  bytes  72-103: AES-256 klíč IV tunelové vrstvy
-  bytes 104-135: AES-256 klíč odpovědi
-  bytes 136-151: AES-256 IV odpovědi
-  byte      152: příznaky
-  bytes 153-155: více příznaků, nepoužívané, nastavit na 0 pro kompatibilitu
-  bytes 156-159: čas požadavku (v minutách od epochy, zaokrouhlen dolů)
-  bytes 160-163: expirace požadavku (v sekundách od vytvoření)
-  bytes 164-167: další ID zprávy
-  bytes   168-x: možnosti sestavení tunelu (Mapování)
-  bytes     x-x: další data, jak je naznačeno příznaky nebo možnostmi
-  bytes   x-463: náhodná výplň
+        specified next hop in a Tunnel Build Reply Message
+bity 5-0: Nedefinované, musí být nastaveny na 0 pro kompatibilitu s budoucími možnostmi
 
+Bit 7 označuje, že hop bude inbound gateway (IBGW). Bit 6 označuje, že hop bude outbound endpoint (OBEP). Pokud není nastaven žádný z bitů, hop bude intermediate participant. Oba nemohou být nastaveny současně.
 
+Vypršení požadavku je pro budoucí proměnnou délku trvání tunnelu. Prozatím je jedinou podporovanou hodnotou 600 (10 minut).
 
+Možnosti pro budování tunnelu jsou struktura Mapping jak je definována v [Common Structures](/docs/specs/common-structures/). Toto je pro budoucí použití. Žádné možnosti nejsou v současnosti definovány. Pokud je struktura Mapping prázdná, jedná se o dva bajty 0x00 0x00. Maximální velikost Mapping (včetně pole délky) je 296 bajtů a maximální hodnota pole délky Mapping je 294.
 
-  ```
+#### Request Record Encrypted (ECIES)
 
-Pole příznaků je stejné jako je definováno v [Tunnel-Creation](/docs/specs/tunnel-creation/) a obsahuje následující::
+Všechna pole jsou big-endian s výjimkou dočasného veřejného klíče, který je little-endian.
 
- Pořadí bitů: 76543210 (bit 7 je MSB)
- bit 7: pokud je nastaven, dovolit zprávy od kohokoli
- bit 6: pokud je nastaven, dovolit zprávy kdekoli, a odeslat odpověď na
-        specifikovaný další skok v odpovědní zprávě o sestavení tunelu
- bity 5-0: Nedefinováno, musí být nastaveno na 0 pro kompatibilitu s budoucími možnostmi
+Zašifrovaná velikost: 528 bajtů
 
-Bit 7 znamená, že skok bude příchozí bránou (IBGW). Bit 6
-signalizuje, že skok bude výstupním koncovým bodem (OBEP). Pokud není nastaven žádný bit,
-skok bude středním účastníkem. Oba nemohou být nastaveny současně.
-
-Pole expirace požadavku je pro budoucí variabilní trvání tunelu.
-Prozatím je podporovaná hodnota pouze 600 (10 minut).
-
-Možnosti sestavení tunelu jsou Mapování, jak je definováno v [Common](/docs/specs/common-structures/).
-Toto je pro budoucí použití. Žádné možnosti nejsou v současnosti definovány.
-Pokud je struktura Mapování prázdná, jedná se o dva bajty 0x00 0x00.
-Maximální velikost Mapování (včetně délkového pole) je 296 bajtů,
-a maximální hodnota délkového pole Mapování je 294.
-
-
-
-Záznam požadavku šifrovaný (ECIES)
-```````````````````````````````````````
-
-Všechna pole jsou big-endian kromě efemérního veřejného klíče, který je little-endian.
-
-Velikost šifrovaného: 528 bajtů
-
-  ```text
-
-
-bytes    0-15: Zkrácený hash identity skoku
-  bytes   16-47: Odesílatelův efemérní X25519 veřejný klíč
-  bytes  48-511: ChaCha20 šifrovaný BuildRequestRecord
+```text
+bytes    0-15: Hop's truncated identity hash
+  bytes   16-47: Sender's ephemeral X25519 public key
+  bytes  48-511: ChaCha20 encrypted BuildRequestRecord
   bytes 512-527: Poly1305 MAC
+```
+### Vzory handshaku
 
+Šifrované BuildReplyRecords mají 528 bajtů jak pro ElGamal, tak pro ECIES, kvůli kompatibilitě.
 
+#### Reply Record Unencrypted (ElGamal)
 
-
-  ```
-
-
-
-### Záznamy odpovědí na sestavení
-
-Šifrované BuildReplyRecords mají 528 bajtů pro ElGamal i ECIES, pro kompatibilitu.
-
-
-Záznam odpovědi nešifrovaný (ElGamal)
-`````````````````````````````````````
-ElGamal odpovědi jsou šifrovány s AES.
+ElGamal odpovědi jsou šifrovány pomocí AES.
 
 Všechna pole jsou big-endian.
 
-Velikost nešifrovaného: 528 bajtů
+Nezašifrovaná velikost: 528 bytů
 
-  ```text
+```text
+bytes   0-31: SHA-256 Hash of bytes 32-527
+  bytes 32-526: random data
+  byte     527: reply
 
+  total length: 528
+```
+#### Reply Record Unencrypted (ECIES)
 
-bytes   0-31: SHA-256 Hash bajtů 32-527
-  bytes 32-526: náhodná data
-  byte     527: odpověď
+Toto je navrhovaná specifikace tunnel BuildReplyRecord pro ECIES-X25519 routery. Shrnutí změn:
 
-  celková délka: 528
+- Přidat mapování pro možnosti odpovědi sestavení
+- Nešifrovaný záznam je delší, protože je menší režie šifrování
 
+ECIES odpovědi jsou šifrovány pomocí ChaCha20/Poly1305.
 
+Všechna pole jsou ve formátu big-endian.
 
+Nezašifrovaná velikost: 512 bytů
 
-  ```
+```text
+bytes    0-x: Tunnel Build Reply Options (Mapping)
+  bytes    x-x: other data as implied by options
+  bytes  x-510: Random padding
+  byte     511: Reply byte
+```
+Možnosti odpovědi na tunnel build je struktura Mapping jak je definována v [Common Structures](/docs/specs/common-structures/). Toto je pro budoucí použití. Aktuálně nejsou definovány žádné možnosti. Pokud je struktura Mapping prázdná, jedná se o dva bajty 0x00 0x00. Maximální velikost Mapping (včetně pole délky) je 511 bajtů a maximální hodnota pole délky Mapping je 509.
 
-
-Záznam odpovědi nešifrovaný (ECIES)
-`````````````````````````````````````
-Toto je navrhovaná specifikace záznamu BuildReplyRecord pro routery ECIES-X25519.
-Shrnutí změn:
-
-- Přidání Mapování pro možnosti odpovědi
-- Nešifrovaný záznam je delší, protože je méně režie šifrování
-
-ECIES odpovědi jsou šifrovány s ChaCha20/Poly1305.
-
-Všechna pole jsou big-endian.
-
-Velikost nešifrovaného: 512 bajtů
-
-  ```text
-
-
-bytes    0-x: Možnosti odpovědi při sestavení tunelu (Mapování)
-  bytes    x-x: další data, jak je naznačeno možnostmi
-  bytes  x-510: Náhodná výplň
-  byte     511: Bajt odpovědi
-
-
-
-
-  ```
-
-Možnosti odpovědi při sestavení tunelu jsou struktura Mapování, jak je definováno v [Common](/docs/specs/common-structures/).
-Toto je pro budoucí použití. Žádné možnosti nejsou v současnosti definovány.
-Pokud je struktura Mapování prázdná, jedná se o dva bajty 0x00 0x00.
-Maximální velikost Mapování (včetně délkového pole) je 511 bajtů,
-a maximální hodnota délkového pole Mapování je 509.
-
-Odpověď je jedním z následujících hodnot
-jak je definováno v [Tunnel-Creation](/docs/specs/tunnel-creation/) pro zabránění fingerprintingu:
+Odpověď byte je jedna z následujících hodnot definovaných v [Tunnel Creation](/docs/specs/implementation/) k zamezení fingerprintingu:
 
 - 0x00 (přijmout)
 - 30 (TUNNEL_REJECT_BANDWIDTH)
 
+#### Reply Record Encrypted (ECIES)
 
-Záznam odpovědi šifrovaný (ECIES)
-```````````````````````````````````
+Šifrovaná velikost: 528 bajtů
 
-Velikost šifrovaného: 528 bajtů
-
-  ```text
-
-
-bytes   0-511: ChaCha20 šifrovaný BuildReplyRecord
+```text
+bytes   0-511: ChaCha20 encrypted BuildReplyRecord
   bytes 512-527: Poly1305 MAC
+```
+Po úplném přechodu na ECIES záznamy jsou pravidla pro rozsahové padding stejná jako pro záznamy požadavků.
 
+### Šifrování požadavků
 
+Smíšené tunely jsou povolené a nezbytné pro přechod z ElGamal na ECIES. Během přechodného období bude narůstající počet routerů používat ECIES klíče.
 
+Preprocessing symetrické kryptografie bude probíhat stejným způsobem:
 
-  ```
+- "šifrování":
 
-Po plném přechodu na ECIES záznamy zůstávají pravidla distribuce na vyžádání stejná jako pro záznamy požadavků.
+- šifra spuštěná v režimu dešifrování
+- záznamy požadavků preventivně dešifrovány v preprocessing (skrývání šifrovaných záznamů požadavků)
 
+- "dešifrování":
 
-### Symetrické šifrování záznamů
+- šifra spuštěna v režimu šifrování
+- záznamy požadavků zašifrovány (odhalující další plaintext záznam požadavku) účastnickými skoky
 
-Smíšené tunely jsou povoleny a nezbytné pro přechod z ElGamal na ECIES.
-Během přechodného období bude stále více routerů klíčem pod klíči ECIES.
+- ChaCha20 nemá "módy", takže se jednoduše spustí třikrát:
 
-Symetrická kryptografie se bude provádět stejným způsobem:
+- jednou při předzpracování
+- jednou hopem
+- jednou při zpracování finální odpovědi
 
-- „šifrování“:
+Při použití smíšených tunelů budou tvůrci tunelů potřebovat založit symetrické šifrování BuildRequestRecord na typu šifrování aktuálního a předchozího hopu.
 
-  - šifra spuštěná v režimu dešifrování
-  - záznamy požadavků se budou prediktivně dešifrovat v přípravě (skrývání šifrovaných záznamů požadavků)
+Každý hop bude používat svůj vlastní typ šifrování pro šifrování BuildReplyRecords a dalších záznamů ve VariableTunnelBuildMessage (VTBM).
 
-- „dešifrování“:
+Na zpáteční cestě bude koncový bod (odesílatel) muset vrátit [Multiple Encryption](https://en.wikipedia.org/wiki/Multiple_encryption) zpět, pomocí klíče pro odpověď každého přeskoku.
 
-  - šifra spuštěná v režimu šifrování
-  - záznamy požadavků se zašifrují (odkrývání dalšího záznamu prostého textu požadavku) účastnickými skoky
-
-- ChaCha20 nemá „režimy“, takže se jednoduše používá třikrát:
-
-  - jednou v přípravě
-  - jednou skokem
-  - jednou při finálním zpracování odpovědi
-
-Když se používají smíšené tunely, tvůrci tunelů budou muset založit symetrické šifrování
-BuildRequestRecord na současném a předchozím typu šifrování skoku.
-
-Každý skok použije svůj vlastní typ šifrování pro šifrování BuildReplyRecords a ostatních
-záznamů v VariableTunnelBuildMessage (VTBM).
-
-Na cestě odpovědi bude koncový bod (odesílatel) potřebovat zrušit [Multiple-Encryption](https://en.wikipedia.org/wiki/Multiple_encryption), použitím každého odpovědního klíče skoku.
-
-Pro objasňující příklad, podívejme se na výstupní tunel s ECIES obklopený ElGamal:
+Jako objasňující příklad se podívejme na odchozí tunnel s ECIES obklopeným ElGamal:
 
 - Odesílatel (OBGW) -> ElGamal (H1) -> ECIES (H2) -> ElGamal (H3)
 
-Všechny BuildRequestRecords jsou ve svém šifrovaném stavu (používající ElGamal nebo ECIES).
+Všechny BuildRequestRecords jsou ve svém šifrovaném stavu (pomocí ElGamal nebo ECIES).
 
-AES256/CBC šifra, když je použita, je stále použita pro každý záznam, bez řetězení přes více záznamů.
+Šifra AES256/CBC, když je použita, je stále používána pro každý záznam, bez řetězení napříč více záznamy.
 
-Stejně tak ChaCha20 bude použit pro šifrování každého záznamu, ne stream přes celý VTBM.
+Stejně tak bude ChaCha20 použito k šifrování každého záznamu, nikoli ke streamování přes celý VTBM.
 
-Záznamy požadavků jsou předzpracovány Odesílatelem (OBGW):
+Záznamy požadavků jsou předem zpracovány Odesílatelem (OBGW):
 
-- H3's záznam je „šifrován“ použitím:
+- Záznam H3 je "zašifrován" pomocí:
 
-  - H2's odpovědního klíče (ChaCha20)
-  - H1's odpovědního klíče (AES256/CBC)
+- Odpověďový klíč H2 (ChaCha20)
+- Odpověďový klíč H1 (AES256/CBC)
 
-- H2's záznam je „šifrován“ použitím:
+- Záznam H2 je "šifrován" pomocí:
 
-  - H1's odpovědního klíče (AES256/CBC)
+- Odpověďový klíč H1 (AES256/CBC)
 
-- H1's záznam jde ven bez symetrického šifrování
+- Záznam H1 odchází bez symetrického šifrování
 
-Pouze H2 kontroluje příznak šifrování odpovědi a vidí, že záznam následuje AES256/CBC.
+Pouze H2 kontroluje příznak šifrování odpovědi a vidí, že je následován AES256/CBC.
 
-Po zpracování každým skokem jsou záznamy ve „dešifrovaném“ stavu:
+Po zpracování každým hopem jsou záznamy ve stavu "dešifrováno":
 
-- H3's záznam je „dešifrován“ použitím:
+- Záznam H3 je "dešifrován" pomocí:
 
-  - H3's odpovědního klíče (AES256/CBC)
+- H3 odpověďový klíč (AES256/CBC)
 
-- H2's záznam je „dešifrován“ použitím:
+- H2 záznam je "dešifrován" pomocí:
 
-  - H3's odpovědního klíče (AES256/CBC)
-  - H2's odpovědního klíče (ChaCha20-Poly1305)
+- Klíč odpovědi H3 (AES256/CBC)
+- Klíč odpovědi H2 (ChaCha20-Poly1305)
 
-- H1's záznam je „dešifrován“ použitím:
+- Záznam H1 je "dešifrován" pomocí:
 
-  - H3's odpovědního klíče (AES256/CBC)
-  - H2's odpovědního klíče (ChaCha20)
-  - H1's odpovědního klíče (AES256/CBC)
+- Odpovědní klíč H3 (AES256/CBC)
+- Odpovědní klíč H2 (ChaCha20)
+- Odpovědní klíč H1 (AES256/CBC)
 
-Tvůrce tunelu, alias Koncový bod vstupu (IBEP), po zpracování odpovědi:
+Tvůrce tunelu, také známý jako Inbound Endpoint (IBEP), zpracovává odpověď:
 
-- H3's záznam je „šifrován“ použitím:
+- Záznam H3 je "zašifrován" pomocí:
 
-  - H3's odpovědního klíče (AES256/CBC)
+- Odpověďový klíč H3 (AES256/CBC)
 
-- H2's záznam je „šifrován“ použitím:
+- Záznam H2 je "šifrován" pomocí:
 
-  - H3's odpovědního klíče (AES256/CBC)
-  - H2's odpovědního klíče (ChaCha20-Poly1305)
+- Odpověďový klíč H3 (AES256/CBC)
+- Odpověďový klíč H2 (ChaCha20-Poly1305)
 
-- H1's záznam je „šifrován“ použitím:
+- Záznam H1 je "šifrován" pomocí:
 
-  - H3's odpovědního klíče (AES256/CBC)
-  - H2's odpovědního klíče (ChaCha20)
-  - H1's odpovědního klíče (AES256/CBC)
+- Odpovědní klíč H3 (AES256/CBC)
+- Odpovědní klíč H2 (ChaCha20)
+- Odpovědní klíč H1 (AES256/CBC)
 
+### Šifrování odpovědí
 
-### Klíče záznamů požadavků (ECIES)
+Tyto klíče jsou explicitně zahrnuty v ElGamal BuildRequestRecords. Pro ECIES BuildRequestRecords jsou zahrnuty tunnel klíče a AES reply klíče, ale ChaCha reply klíče jsou odvozeny z DH výměny. Podrobnosti o statických ECIES klíčích routeru najdete v [Proposal 156](/proposals/156-ecies-routers).
 
-Tyto klíče jsou explicitně zahrnuty v ElGamal BuildRequestRecords.
-Pro ECIES BuildRequestRecords jsou klíče tunelů a AES odpovědní klíče zahrnuty,
-ale ChaCha odpovědní klíče jsou odvozeny z výměny DH.
-Podívejte se na [Prop156](/proposals/156-ecies-routers/) pro detaily statických ECIES klíčů routerů.
+Níže je popis toho, jak odvodit klíče dříve přenášené v záznamech požadavků.
 
-Níže je popis, jak odvodit klíče, které byly dříve přenášeny v záznamech o požadavcích.
+#### KDF for Initial ck and h
 
+Toto je standardní [NOISE](https://noiseprotocol.org/noise.html) pro vzor "N" se standardním názvem protokolu.
 
-KDF pro počáteční ck a h
-````````````````````````
+```text
+This is the "e" message pattern:
 
-Toto je standardní [NOISE](https://noiseprotocol.org/noise.html) pro vzor "N" se standardním jménem protokolu.
+  // Define protocol_name.
+  Set protocol_name = "Noise_N_25519_ChaChaPoly_SHA256"
+  (31 bytes, US-ASCII encoded, no NULL termination).
 
-  ```text
-
-Toto je „e“ vzor zprávy:
-
-  // Definovat jméno protokolu.
-  Nastavit protocol_name = "Noise_N_25519_ChaChaPoly_SHA256"
-  (31 bajtů, US-ASCII kódováno, bez ukončení NULL).
-
-  // Definovat Hash h = 32 bajty
-  // Vyplnit do 32 bajtů. Nehašovat, protože to není více než 32 bajtů.
+  // Define Hash h = 32 bytes
+  // Pad to 32 bytes. Do NOT hash it, because it is not more than 32 bytes.
   h = protocol_name || 0
 
-  Definovat ck = 32 bajtový propojující klíč. Zkopírovat data z h do ck.
-  Nastavit chainKey = h
+  Define ck = 32 byte chaining key. Copy the h data to ck.
+  Set chainKey = h
 
-  // MixHash(null prolog)
+  // MixHash(null prologue)
   h = SHA256(h);
 
-  // až do této chvíle, to všechno může být předpočítáno všemi routery.
+  // up until here, can all be precalculated by all routers.
+```
+#### KDF for Request Record
 
+ElGamal tvůrci tunelů generují dočasný X25519 klíčový pár pro každý ECIES hop v tunelu a používají výše uvedené schéma pro šifrování svého BuildRequestRecord. ElGamal tvůrci tunelů budou používat schéma předcházející této specifikaci pro šifrování do ElGamal hopů.
 
+ECIES tvůrci tunelů budou muset šifrovat k veřejnému klíči každého ElGamal hopu pomocí schématu definovaného v [Tunnel Creation](/docs/specs/implementation/). ECIES tvůrci tunelů budou používat výše uvedené schéma pro šifrování k ECIES hopům.
 
+To znamená, že hopové uzly tunelů uvidí pouze šifrované záznamy ze stejného typu šifrování.
 
-  ```
+Pro tvůrce tunnelů ElGamal a ECIES budou generovat jedinečné dočasné X25519 páry klíčů pro každý hop při šifrování do ECIES hopů.
 
+**DŮLEŽITÉ**: Ephemeral klíče musí být jedinečné pro každý ECIES hop a pro každý build record. Nepoužívání jedinečných klíčů otevírá vektor útoku pro spolupracující hopy k potvrzení, že jsou ve stejném tunelu.
 
-KDF pro záznam požadavku
-``````````````````````````
-
-Tvůrci tunelů ElGamal generují efemérní klíčový pár X25519 pro každý
-ECIES skok v tunelu, a používají výše uvedený návrh pro šifrování jejich BuildRequestRecord.
-Tvůrci tunelů ElGamal použijí schéma před touto specifikací pro šifrování k ElGamal skokům.
-
-Tvůrci tunelů ECIES budou muset zašifrovat každému ElGamal skoku veřejným klíčem pomocí
-schématu definovaného v [Tunnel-Creation](/docs/specs/tunnel-creation/). Tvůrci tunelů ECIES použijí výše uvedené schéma pro šifrování
-k ECIES skokům.
-
-To znamená, že skoky tunelů uvidí pouze šifrované záznamy svého vlastního typu šifrování.
-
-Pro tvůrce tunelů ElGamal a ECIES, budou generovat unikátní efemérní klíčové páry X25519
-pro každý ECIES skok pro šifrování k ECIES skokům.
-
-**DŮLEŽITÉ**:
-Efemérní klíče musí být unikátní pro každý ECIES skok a pro každý záznam sestavení.
-Neschopnost používat unikátní klíče otevírá vektor útoku pro sestavu skoků, které mohou potvrdit, že jsou ve stejném tunelu.
-
-
-  ```text
-
-
-// Statický klíčový pár X25519 pro každý hop (hesk, hepk) z identity routeru
+```text
+// Each hop's X25519 static keypair (hesk, hepk) from the Router Identity
   hesk = GENERATE_PRIVATE()
   hepk = DERIVE_PUBLIC(hesk)
 
   // MixHash(hepk)
-  // || níže znamená přidat
+  // || below means append
   h = SHA256(h || hepk);
 
-  // až do této chvíle, to všechno může být předpočítáno každým routerem
-  // pro všechny příchozí požadavky sestavení
+  // up until here, can all be precalculated by each router
+  // for all incoming build requests
 
-  // Odesílatel generuje efemérní klíčový pár X25519 pro každý ECIES skok ve VTBM (sesk, sepk)
+  // Sender generates an X25519 ephemeral keypair per ECIES hop in the VTBM (sesk, sepk)
   sesk = GENERATE_PRIVATE()
   sepk = DERIVE_PUBLIC(sesk)
 
   // MixHash(sepk)
   h = SHA256(h || sepk);
 
-  Konec „e“ vzoru zprávy.
+  End of "e" message pattern.
 
-  Toto je „es“ vzor zprávy:
+  This is the "es" message pattern:
 
   // Noise es
-  // Odesílatel provádí X25519 DH s veřejným klíčem Hopu.
-  // Každý Hop, najde záznam s jejich zkráceným hash identitou,
-  // a extrahuje Odesílatelův efemérní klíč předcházející šifrovanému záznamu.
+  // Sender performs an X25519 DH with Hop's static public key.
+  // Each Hop, finds the record w/ their truncated identity hash,
+  // and extracts the Sender's ephemeral key preceding the encrypted record.
   sharedSecret = DH(sesk, hepk) = DH(hesk, sepk)
 
   // MixKey(DH())
   //[chainKey, k] = MixKey(sharedSecret)
-  // Parametry ChaChaPoly pro šifrování/dešifrování
+  // ChaChaPoly parameters to encrypt/decrypt
   keydata = HKDF(chainKey, sharedSecret, "", 64)
-  // Uložit pro KDF odpovědního záznamu
+  // Save for Reply Record KDF
   chainKey = keydata[0:31]
 
-  // Parametry AEAD
+  // AEAD parameters
   k = keydata[32:63]
   n = 0
-  plaintext = 464 bajtový záznam požadavku na sestavení
+  plaintext = 464 byte build request record
   ad = h
   ciphertext = ENCRYPT(k, n, plaintext, ad)
 
-  Konec „es“ vzoru zprávy.
+  End of "es" message pattern.
 
   // MixHash(ciphertext)
-  // Uložit pro KDF odpovědního záznamu
+  // Save for Reply Record KDF
   h = SHA256(h || ciphertext)
+```
+``replyKey``, ``layerKey`` a ``layerIV`` musí být stále zahrnuty uvnitř ElGamal záznamů a mohou být generovány náhodně.
 
+### Odůvodnění
 
+Jak je definováno v [Tunnel Creation](/docs/specs/implementation/). Neexistují žádné změny v šifrování pro ElGamal hopy.
 
+### Reply Record Encryption (ECIES)
 
+Odpověď record je šifrovaná pomocí ChaCha20/Poly1305.
 
-  ```
-
-``replyKey``, ``layerKey`` a ``layerIV`` musí být stále zahrnuty uvnitř ElGamal záznamů,
-a mohou být generovány náhodně.
-
-
-### Šifrování záznamu požadavku (ElGamal)
-
-Jak je definováno v [Tunnel-Creation](/docs/specs/tunnel-creation/).
-Žádné změny v šifrování pro ElGamal skoky.
-
-
-
-
-### Šifrování záznamu odpovědi (ECIES)
-
-Záznam odpovědi je ChaCha20/Poly1305 šifrovaný.
-
-  ```text
-
-
-// Parametry AEAD
-  k = chainkey z požadavku sestavení
+```text
+// AEAD parameters
+  k = chainkey from build request
   n = 0
-  plaintext = 512 bajtový záznam odpovědi na sestavení
-  ad = h z požadavku sestavení
+  plaintext = 512 byte build reply record
+  ad = h from build request
 
   ciphertext = ENCRYPT(k, n, plaintext, ad)
+```
+### Záznamy požadavků na sestavení
 
+Jak je definováno v [Tunnel Creation](/docs/specs/implementation/). Nejsou žádné změny v šifrování pro ElGamal hopy.
 
+### Security Analysis
 
+ElGamal neposkytuje forward secrecy pro Tunnel Build Messages.
 
-  ```
+AES256/CBC je na tom o něco lépe, je zranitelný pouze teoretickým oslabením z útoku známým plaintextem `biclique`.
 
+Jediný známý praktický útok proti AES256/CBC je padding oracle útok, když je IV známé útočníkovi.
 
+Útočník by musel prolomit ElGamal šifrování dalšího skoku, aby získal informace o AES256/CBC klíči (reply key a IV).
 
-### Šifrování záznamu odpovědi (ElGamal)
+ElGamal je výrazně náročnější na CPU než ECIES, což vede k potenciálnímu vyčerpání zdrojů.
 
-Jak je definováno v [Tunnel-Creation](/docs/specs/tunnel-creation/).
-Žádné změny v šifrování pro ElGamal skoky.
+ECIES, používané s novými dočasnými klíči pro každý BuildRequestRecord nebo VariableTunnelBuildMessage, poskytuje forward-secrecy.
 
+ChaCha20Poly1305 poskytuje AEAD šifrování, které umožňuje příjemci ověřit integritu zprávy před pokusem o dešifrování.
 
+## Model hrozeb
 
-### Analýza bezpečnosti
+Tento design maximalizuje opětovné využití existujících kryptografických primitiv, protokolů a kódu. Tento design minimalizuje riziko.
 
-ElGamal neposkytuje přechodnou tajnost pro zprávy o sestavení tunelu.
+## Implementation Notes
 
-AES256/CBC je v mírně lepším stavu, je pouze zranitelné teoretickému oslabování
-známým `biclique` útokem.
+* Starší routery nekontrolují typ šifrování směrování a budou odesílat ElGamal-šifrované
+  záznamy. Některé nedávné routery jsou chybné a budou odesílat různé typy poškozených záznamů.
+  Implementátoři by měli tyto záznamy detekovat a odmítnout před DH operací,
+  pokud je to možné, aby snížili využití CPU.
 
-Jediný známý praktický útok proti AES256/CBC je padding oracle útok, když IV je znám útočníkovi.
+## Issues
 
-Útočník by musel rozlousknout šifrování dalšího skoku ElGamal, aby získal informace o AES256/CBC (odpovědní klíč a IV).
+## Návrh
 
-ElGamal je výrazně více náročný na CPU než ECIES, vedoucí k potenciálnímu vyčerpání zdrojů.
-
-ECIES, v kombinaci s novými efemérními klíči na BuildRequestRecord nebo VariableTunnelBuildMessage, poskytuje přechodnou tajnost.
-
-ChaCha20Poly1305 poskytuje AEAD šifrování, umožňující příjemci ověřit integritu zprávy před pokusem o dešifrování.
-
-
-## Oprávnění
-
-Tento návrh maximalizuje opětovné použití existujících kryptografických primitivů, protokolů a kódu.
-Tento návrh minimalizuje riziko.
-
-
-
-
-## Poznámky k implementaci
-
-* Starší routery nekontrolují typ šifrování skoku a odešlou záznamy šifrované pomocí ElGamal.
-  Některé nedávné routery jsou chybné a mohou odesílat různé typy chybných záznamů.
-  Implementátoři by měli detekovat a odmítnout tyto záznamy před operací DH
-  pokud je to možné, pro snížení využívání CPU.
-
-
-## Problémy
-
-
-
-## Migrace
-
-Viz [Prop156](/proposals/156-ecies-routers/).
+Viz [Návrh 156](/proposals/156-ecies-routers).

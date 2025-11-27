@@ -74,24 +74,20 @@ Para RedDSA_BLAKE2b_Ed25519, substitua a função hash SHA-512 em RedDSA_SHA512_
 
 Não precisamos de um substituto para EdDSA_SHA512_Ed25519ph (tipo de assinatura 8) para arquivos su3, porque a versão pre-hash de EdDSA não é vulnerável ao LEA. EdDSA_SHA512_Ed25519 (tipo de assinatura 7) não é suportado para arquivos su3.
 
-=======================  ===========  ======  =====
-        Tipo             Código Tipo  Desde   Uso
-=======================  ===========  ======  =====
-RedDSA_BLAKE2b_Ed25519       12        TBD    Apenas para Identidades de Roteador, Destinos e conjuntos de locação criptografados; nunca usado para Identidades de Roteador
-=======================  ===========  ======  =====
+| Tipo | Código Tipo | Desde | Uso |
+|------|-------------|-------|-----|
+| RedDSA_BLAKE2b_Ed25519 | 12 | TBD | Apenas para Identidades de Roteador, Destinos e conjuntos de locação criptografados; nunca usado para Identidades de Roteador |
 
 ### Comprimentos Comuns de Estrutura de Dados
 
 O seguinte se aplica ao novo tipo de assinatura.
 
-==================================  =============
-            Tipo de Dados              Comprimento    
-==================================  =============
-Hash                                     64      
-Chave Privada                            32      
-Chave Pública                            32      
-Assinatura                                64      
-==================================  =============
+| Tipo de Dados | Comprimento |
+|---------------|-------------|
+| Hash | 64 |
+| Chave Privada | 32 |
+| Chave Pública | 32 |
+| Assinatura | 64 |
 
 ### Personalizações
 
@@ -101,18 +97,16 @@ Todos os usos de assinaturas BLAKE2b usarão uma cadeia de personalização de 1
 
 Os usos de handshake NTCP 1 e SSU abaixo são para os dados assinados definidos no próprio handshake. RouterInfos assinados em Mensagens DatabaseStore usarão a personalização de Entrada NetDb, assim como se armazenados no NetDB.
 
-==================================  ==========================
-         Uso                      Personalização de 16 Bytes
-==================================  ==========================
-Configuração da Sessão I2CP        "I2CP_SessionConf"
-Entradas NetDB (RI, LS, LS2)       "network_database"
-Handshake NTCP 1                   "NTCP_1_handshake"
-Datagramas Assinados               "sign_datagramI2P"
-Streaming                          "streaming_i2psig"
-Handshake SSU                      "SSUHandshakeSign"
-Arquivos SU3                       n/a, não suportado
-Testes unitários                   "test1234test5678"
-==================================  ==========================
+| Uso | Personalização de 16 Bytes |
+|-----|----------------------------|
+| Configuração da Sessão I2CP | "I2CP_SessionConf" |
+| Entradas NetDB (RI, LS, LS2) | "network_database" |
+| Handshake NTCP 1 | "NTCP_1_handshake" |
+| Datagramas Assinados | "sign_datagramI2P" |
+| Streaming | "streaming_i2psig" |
+| Handshake SSU | "SSUHandshakeSign" |
+| Arquivos SU3 | n/a, não suportado |
+| Testes unitários | "test1234test5678" |
 
 ## Notas
 

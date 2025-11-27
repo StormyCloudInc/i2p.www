@@ -74,24 +74,20 @@ Pro RedDSA_BLAKE2b_Ed25519 nahraďte hashovací funkci SHA-512 v RedDSA_SHA512_E
 
 Nepotřebujeme náhradu za EdDSA_SHA512_Ed25519ph (typ podpisu 8) pro soubory su3, protože předhašovaná verze EdDSA není zranitelná vůči LEA. EdDSA_SHA512_Ed25519 (typ podpisu 7) není podporován pro soubory su3.
 
-=======================  ===========  ======  =====
-        Typ              Typ kód    Od       Použití
-=======================  ===========  ======  =====
-RedDSA_BLAKE2b_Ed25519       12        TBD    Pouze pro Router Identities, Destinations a šifrované lease sety; nikdy se nepoužívá pro Router Identities
-=======================  ===========  ======  =====
+| Typ | Typ kód | Od | Použití |
+|-----|---------|----|---------|
+| RedDSA_BLAKE2b_Ed25519 | 12 | TBD | Pouze pro Router Identities, Destinations a šifrované lease sety; nikdy se nepoužívá pro Router Identities |
 
 ### Společná datová délka struktury
 
 Následující se vztahuje na nový typ podpisu.
 
-==================================  =============
-            Typ dat                  Délka    
-==================================  =============
-Hash                                     64      
-Soukromý klíč                             32      
-Veřejný klíč                              32      
-Podpis                                   64      
-==================================  =============
+| Typ dat | Délka |
+|---------|-------|
+| Hash | 64 |
+| Soukromý klíč | 32 |
+| Veřejný klíč | 32 |
+| Podpis | 64 |
 
 ### Personalizace
 
@@ -101,18 +97,16 @@ Všechna použití BLAKE2b podpisů použijí 16znakový personalizační řetě
 
 NTCP 1 a SSU handshake použití níže jsou pro podepisovaná data definovaná v samotném handshake. Podepsané RouterInfos v DatabaseStore Messages budou používat personalizaci NetDb Entry, stejně jako pokud jsou uloženy v NetDB.
 
-==================================  ==========================
-         Použití                      16 znaková personalizace
-==================================  ==========================
-I2CP SessionConfig                  "I2CP_SessionConf"
-NetDB Entries (RI, LS, LS2)         "network_database"
-NTCP 1 handshake                    "NTCP_1_handshake"
-Podepisované datagramy              "sign_datagramI2P"
-Streaming                           "streaming_i2psig"
-SSU handshake                       "SSUHandshakeSign"
-SU3 Files                           n/a, není podporováno
-Jednotkové testy                    "test1234test5678"
-==================================  ==========================
+| Použití | 16 znaková personalizace |
+|---------|--------------------------|
+| I2CP SessionConfig | "I2CP_SessionConf" |
+| NetDB Entries (RI, LS, LS2) | "network_database" |
+| NTCP 1 handshake | "NTCP_1_handshake" |
+| Podepisované datagramy | "sign_datagramI2P" |
+| Streaming | "streaming_i2psig" |
+| SSU handshake | "SSUHandshakeSign" |
+| SU3 Files | n/a, není podporováno |
+| Jednotkové testy | "test1234test5678" |
 
 ## Poznámky
 
