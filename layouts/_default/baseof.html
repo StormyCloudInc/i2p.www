@@ -17,13 +17,14 @@
     <meta property="og:url" content="{{ .Permalink }}">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/images/i2plogo.png">
+    <link rel="icon" type="image/webp" href="/images/i2plogo.webp">
+    <link rel="icon" type="image/png" href="/images/i2plogo.png" sizes="32x32">
 
     <!-- Styles -->
     {{ $styles := resources.Get "css/main.css" }}
     {{ if $styles }}
-        {{ $styles = $styles | resources.Minify }}
-        <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+        {{ $styles = $styles | resources.Minify | resources.Fingerprint }}
+        <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}">
     {{ end }}
 
     <!-- Mailing List Widget Styles (loaded dynamically based on network) -->
@@ -36,11 +37,11 @@
         })();
     </script>
 
-    <!-- Fundraise Up: the new standard for online giving -->
-    <script>(function(w,d,s,n,a){if(!w[n]){var l='call,catch,on,once,set,then,track,openCheckout'
+    <!-- Fundraise Up: the new standard for online giving (deferred) -->
+    <script defer>(function(w,d,s,n,a){if(!w[n]){var l='call,catch,on,once,set,then,track,openCheckout'
     .split(','),i,o=function(n){return'function'==typeof n?o.l.push([arguments])&&o
     :function(){return o.l.push([n,arguments])&&o}},t=d.getElementsByTagName(s)[0],
-    j=d.createElement(s);j.async=!0;j.src='https://cdn.fundraiseup.com/widget/'+a+'';
+    j=d.createElement(s);j.async=!0;j.defer=!0;j.src='https://cdn.fundraiseup.com/widget/'+a+'';
     t.parentNode.insertBefore(j,t);o.s=Date.now();o.v=5;o.h=w.location.href;o.l=[];
     for(i=0;i<8;i++)o[l[i]]=o(l[i]);w[n]=o}
     })(window,document,'script','FundraiseUp','AAYKECHT');</script>
@@ -64,74 +65,79 @@
     <!-- Scripts -->
     {{ $scripts := resources.Get "js/main.js" }}
     {{ if $scripts }}
-        {{ $scripts = $scripts | resources.Minify }}
-        <script src="{{ $scripts.RelPermalink }}"></script>
+        {{ $scripts = $scripts | resources.Minify | resources.Fingerprint }}
+        <script src="{{ $scripts.RelPermalink }}" integrity="{{ $scripts.Data.Integrity }}"></script>
     {{ end }}
 
-    <!-- Feedback Widgets (loaded dynamically based on network) -->
-    <script>
+    <!-- Feedback Widgets (loaded dynamically based on network - deferred) -->
+    <script defer>
     (function() {
         'use strict';
         
-        // Detect network based on hostname
-        const hostname = window.location.hostname;
-        let baseUrl;
-        
-        // Check for I2P (both .i2p and .b32.i2p addresses)
-        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
-            baseUrl = 'http://feedback.stormycloud.i2p';
-            console.log('[Network Detector] I2P network detected, using:', baseUrl);
-        } else if (hostname.endsWith('.onion')) {
-            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
-            console.log('[Network Detector] Tor network detected, using:', baseUrl);
-        } else {
-            baseUrl = 'https://feedback.i2p.net';
-            console.log('[Network Detector] Clearnet detected, using:', baseUrl);
-        }
-        
-        // Store base URL for use by other scripts
-        window.feedbackBaseUrl = baseUrl;
-        
-        // Load stylesheet
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = baseUrl + '/widgets/styles.css';
-        document.head.appendChild(link);
-        
-        // Load mailing-list.js
-        const mailingListScript = document.createElement('script');
-        mailingListScript.src = baseUrl + '/widgets/mailing-list.js';
-        mailingListScript.async = true;
-        mailingListScript.onerror = function() {
-            console.error('[Network Detector] Failed to load mailing-list.js from:', baseUrl);
-        };
-        document.body.appendChild(mailingListScript);
-        
-        // Load features.js
-        const featuresScript = document.createElement('script');
-        featuresScript.src = baseUrl + '/widgets/features.js';
-        featuresScript.async = true;
-        featuresScript.onerror = function() {
-            console.error('[Network Detector] Failed to load features.js from:', baseUrl);
-        };
-        document.body.appendChild(featuresScript);
-        
-        // Update any existing widgets with data-api-url attributes
-        function updateWidgetApiUrls() {
-            const widgets = document.querySelectorAll('[data-api-url]');
-            widgets.forEach(function(widget) {
-                const currentUrl = widget.getAttribute('data-api-url');
-                // Only update if it's still pointing to the default clearnet URL
-                if (currentUrl === 'https://feedback.i2p.net' || currentUrl.startsWith('https://feedback.i2p.net/')) {
-                    widget.setAttribute('data-api-url', baseUrl);
-                }
-            });
-        }
-        
-        // Update immediately if DOM is ready, otherwise wait
+        // Wait for DOM to be ready before loading widgets
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', updateWidgetApiUrls);
+            document.addEventListener('DOMContentLoaded', loadFeedbackWidgets);
         } else {
+            // DOM already ready, load with slight delay to not block rendering
+            setTimeout(loadFeedbackWidgets, 100);
+        }
+        
+        function loadFeedbackWidgets() {
+            // Detect network based on hostname
+            const hostname = window.location.hostname;
+            let baseUrl;
+            
+            // Check for I2P (both .i2p and .b32.i2p addresses)
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://feedback.stormycloud.i2p';
+                console.log('[Network Detector] I2P network detected, using:', baseUrl);
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+                console.log('[Network Detector] Tor network detected, using:', baseUrl);
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+                console.log('[Network Detector] Clearnet detected, using:', baseUrl);
+            }
+            
+            // Store base URL for use by other scripts
+            window.feedbackBaseUrl = baseUrl;
+            
+            // Load stylesheet
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = baseUrl + '/widgets/styles.css';
+            document.head.appendChild(link);
+            
+            // Load mailing-list.js
+            const mailingListScript = document.createElement('script');
+            mailingListScript.src = baseUrl + '/widgets/mailing-list.js';
+            mailingListScript.async = true;
+            mailingListScript.onerror = function() {
+                console.error('[Network Detector] Failed to load mailing-list.js from:', baseUrl);
+            };
+            document.body.appendChild(mailingListScript);
+            
+            // Load features.js
+            const featuresScript = document.createElement('script');
+            featuresScript.src = baseUrl + '/widgets/features.js';
+            featuresScript.async = true;
+            featuresScript.onerror = function() {
+                console.error('[Network Detector] Failed to load features.js from:', baseUrl);
+            };
+            document.body.appendChild(featuresScript);
+            
+            // Update any existing widgets with data-api-url attributes
+            function updateWidgetApiUrls() {
+                const widgets = document.querySelectorAll('[data-api-url]');
+                widgets.forEach(function(widget) {
+                    const currentUrl = widget.getAttribute('data-api-url');
+                    // Only update if it's still pointing to the default clearnet URL
+                    if (currentUrl === 'https://feedback.i2p.net' || currentUrl.startsWith('https://feedback.i2p.net/')) {
+                        widget.setAttribute('data-api-url', baseUrl);
+                    }
+                });
+            }
+            
             updateWidgetApiUrls();
         }
     })();

@@ -1,0 +1,16 @@
+{{- $image := .Destination -}}
+{{- $alt := .Text | default "" -}}
+{{- $title := .Title | default "" -}}
+
+<figure{{ with $title }} class="image-container"{{ end }}>
+  <img 
+    src="{{ $image | safeURL }}" 
+    alt="{{ $alt }}"
+    {{- if $title }} title="{{ $title }}"{{ end -}}
+    loading="lazy"
+    decoding="async"
+    {{- if strings.HasSuffix $image ".svg" }} role="img"{{ end -}}
+  >
+  {{- with $title }}<figcaption>{{ . }}</figcaption>{{ end -}}
+</figure>
+
