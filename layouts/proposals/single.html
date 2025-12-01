@@ -1,5 +1,7 @@
 {{ define "main" }}
 
+{{ $hasToc := and (.Params.toc) (gt (len .TableOfContents) 100) }}
+
 <div class="proposals-page">
     <div class="container">
         <!-- Breadcrumbs -->
@@ -82,40 +84,44 @@
             </div>
         </header>
 
-        <!-- Table of Contents (if enabled via toc: true in front matter) -->
-        {{ if and (.Params.toc) (gt (len .TableOfContents) 100) }}
-        <details class="toc" open>
-            <summary class="toc-title">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-                On This Page
-                <svg class="toc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </summary>
-            <div class="toc-content">
-                {{ .TableOfContents }}
-            </div>
-        </details>
-        {{ end }}
-
-        <!-- Main Content -->
-        <article class="proposal-content">
-            {{ .Content }}
-        </article>
-
-        <!-- Navigation -->
-        <nav class="page-nav">
-            <a href="{{ relLangURL "proposals/" }}" class="page-nav-link">
-                ← Back to Proposals
-            </a>
-            {{ if .Params.number }}
-            <a href="/proposals/{{ printf "%03d" (.Params.number | int) }}-{{ .Title | strings.ToLower | replaceRE "[^a-z0-9]+" "-" }}.txt" class="page-nav-link" download>
-                📄 Download Source (.txt)
-            </a>
+        <!-- Main Layout: Sidebar TOC + Content -->
+        <div class="proposal-layout{{ if $hasToc }} proposal-layout--with-toc{{ end }}">
+            <!-- Sidebar TOC (if enabled) -->
+            {{ if $hasToc }}
+            <aside class="proposal-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        {{ .TableOfContents }}
+                    </div>
+                </nav>
+            </aside>
             {{ end }}
-        </nav>
+
+            <!-- Main Content -->
+            <div class="proposal-main">
+                <article class="proposal-content">
+                    {{ .Content }}
+                </article>
+
+                <!-- Navigation -->
+                <nav class="page-nav">
+                    <a href="{{ relLangURL "proposals/" }}" class="page-nav-link">
+                        ← Back to Proposals
+                    </a>
+                    {{ if .Params.number }}
+                    <a href="/proposals/{{ printf "%03d" (.Params.number | int) }}-{{ .Title | strings.ToLower | replaceRE "[^a-z0-9]+" "-" }}.txt" class="page-nav-link" download>
+                        Download Source (.txt)
+                    </a>
+                    {{ end }}
+                </nav>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -327,91 +333,101 @@
     color: var(--color-text);
 }
 
-/* Table of Contents */
-.toc {
-    background: var(--color-bg-secondary);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    margin-bottom: var(--spacing-xl);
+/* Two-column Layout */
+.proposal-layout {
+    display: block;
 }
 
-.toc-title {
-    font-weight: 700;
-    padding: var(--spacing-md) var(--spacing-lg);
-    cursor: pointer;
+.proposal-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+/* Sidebar TOC */
+.proposal-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    user-select: none;
-    list-style: none;
-}
-
-.toc-title::-webkit-details-marker {
-    display: none;
-}
-
-.toc-title:hover {
-    background: var(--color-bg-tertiary);
-}
-
-.toc-chevron {
-    margin-left: auto;
-    transition: transform var(--transition-fast);
-}
-
-.toc[open] .toc-chevron {
-    transform: rotate(180deg);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .toc-content {
-    padding: 0 var(--spacing-lg) var(--spacing-md) var(--spacing-lg);
-    max-height: 400px;
+    max-height: calc(100vh - 250px);
     overflow-y: auto;
 }
 
 .toc-content::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
 }
 
 .toc-content::-webkit-scrollbar-track {
-    background: var(--color-bg-secondary);
+    background: transparent;
 }
 
 .toc-content::-webkit-scrollbar-thumb {
     background: var(--color-border);
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
 .toc-content::-webkit-scrollbar-thumb:hover {
     background: var(--color-text-muted);
 }
 
-.toc ul {
+.toc-nav ul {
     list-style: none;
     padding-left: 0;
     margin: 0;
 }
 
-.toc li {
-    margin-bottom: var(--spacing-xs);
+.toc-nav li {
+    margin-bottom: 0.25rem;
 }
 
-.toc ul ul {
+.toc-nav ul ul {
     padding-left: var(--spacing-md);
-    margin-top: var(--spacing-xs);
+    margin-top: 0.25rem;
 }
 
-.toc a {
+.toc-nav a {
     color: var(--color-text-secondary);
     text-decoration: none;
-    font-size: 0.875rem;
-    display: inline-block;
-    padding: 0.125rem 0;
-    transition: color var(--transition-fast);
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
 }
 
-.toc a:hover {
+.toc-nav a:hover {
     color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+/* Main Content Area */
+.proposal-main {
+    min-width: 0;
 }
 
 /* Proposal Content */
@@ -419,25 +435,27 @@
     line-height: 1.8;
     color: var(--color-text);
     max-width: 900px;
-    margin: var(--spacing-2xl) 0;
 }
 
 .proposal-content h2 {
     margin-top: var(--spacing-2xl);
     margin-bottom: var(--spacing-md);
     font-size: 1.75rem;
+    scroll-margin-top: 100px;
 }
 
 .proposal-content h3 {
     margin-top: var(--spacing-xl);
     margin-bottom: var(--spacing-sm);
     font-size: 1.375rem;
+    scroll-margin-top: 100px;
 }
 
 .proposal-content h4 {
     margin-top: var(--spacing-lg);
     margin-bottom: var(--spacing-xs);
     font-size: 1.125rem;
+    scroll-margin-top: 100px;
 }
 
 .proposal-content p {
@@ -530,6 +548,9 @@
     margin-top: var(--spacing-2xl);
     padding-top: var(--spacing-xl);
     border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
 }
 
 .page-nav-link {
@@ -549,6 +570,22 @@
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+    .proposal-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .proposal-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
 @media (max-width: 768px) {
     .proposal-title {
         font-size: 1.75rem;
@@ -559,5 +596,51 @@
     }
 }
 </style>
+
+<!-- Highlight active TOC link on scroll -->
+{{ if $hasToc }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+{{ end }}
 
 {{ end }}
