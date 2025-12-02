@@ -7,6 +7,7 @@ lastupdated: "2016-01-11"
 status: "Rejected"
 thread: "http://zzz.i2p/topics/2045"
 supercededby: "123"
+toc: true
 ---
 
 ## Tổng quan

@@ -7,6 +7,7 @@ lastupdated: "2023-02-01"
 status: "مفتوح"
 thread: "http://zzz.i2p/topics/3516"
 target: "0.9.59"
+toc: true
 ---
 
 ## نظرة عامة

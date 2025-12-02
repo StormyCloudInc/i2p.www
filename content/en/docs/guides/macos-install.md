@@ -5,8 +5,6 @@ lastUpdated: "2025-10"
 accurateFor: "2.10.0"
 ---
 
-This guide walks you through manually installing I2P on macOS by separately installing Java and the I2P router. If you prefer a simpler installation method, check out the [Easy Install Bundle](/en/downloads).
-
 ## What You'll Need
 
 - A Mac running macOS 10.14 (Mojave) or later
@@ -239,7 +237,7 @@ Now that I2P is installed and configured, you can:
 
 If you want to change your bandwidth settings or re-configure I2P later, you can re-run the welcome wizard from the Router Console:
 
-1. Go to [http://127.0.0.1:7657/welcome](http://127.0.0.1:7657/welcome)
+1. Go to [I2P Setup Wizard](http://127.0.0.1:7657/welcome)
 2. Follow the wizard steps again
 
 ## Troubleshooting
@@ -281,4 +279,3 @@ Congratulations! You're now part of the I2P network. Welcome to the invisible in
 
 ---
 
-*This guide was adapted from the original I2P macOS installation documentation.*

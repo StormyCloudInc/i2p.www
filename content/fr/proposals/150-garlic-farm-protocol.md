@@ -6,6 +6,7 @@ created: "2019-05-02"
 lastupdated: "2019-05-20"
 status: "Ouvert"
 thread: "http://zzz.i2p/topics/2234"
+toc: true
 ---
 
 ## Vue d'ensemble

@@ -6,6 +6,7 @@ created: "2016-11-23"
 lastupdated: "2016-11-23"
 status: "Ouvert"
 thread: "http://zzz.i2p/topics/2192"
+toc: true
 ---
 
 ## Vue d'ensemble

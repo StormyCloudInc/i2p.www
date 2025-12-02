@@ -6,6 +6,7 @@ created: "2015-01-21"
 lastupdated: "2015-01-21"
 status: "Vyžaduje-výzkum"
 thread: "http://zzz.i2p/topics/1795"
+toc: true
 ---
 
 ## Přehled

@@ -7,6 +7,7 @@ lastupdated: "2024-08-27"
 status: "Open"
 thread: "http://i2pforum.i2p/viewforum.php?f=13"
 target: "0.9.65"
+toc: true
 ---
 
 ### Host Farkındalığı Olan HTTP Proxy Tünel Türü Önerisi

@@ -7,6 +7,7 @@ lastupdated: "2024-08-27"
 status: "진행 중"
 thread: "http://i2pforum.i2p/viewforum.php?f=13"
 target: "0.9.65"
+toc: true
 ---
 
 ### 호스트 인식 HTTP 프록시 터널 유형 제안

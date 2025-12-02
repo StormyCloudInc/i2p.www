@@ -6,6 +6,7 @@ created: "2017-05-22"
 lastupdated: "2017-07-04"
 status: "Otevřít"
 thread: "http://zzz.i2p/topics/2335"
+toc: true
 ---
 
 ## Přehled

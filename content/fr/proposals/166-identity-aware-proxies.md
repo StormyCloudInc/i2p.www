@@ -7,6 +7,7 @@ lastupdated: "2024-08-27"
 status: "Ouvert"
 thread: "http://i2pforum.i2p/viewforum.php?f=13"
 target: "0.9.65"
+toc: true
 ---
 
 ### Proposition pour un Tunnel Proxy HTTP Sensible à l'Hôte

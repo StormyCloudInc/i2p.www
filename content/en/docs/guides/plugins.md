@@ -38,7 +38,7 @@ The router fetches the signed archive, verifies the signature, and activates the
 
 ## 3. Manage Installed Plugins
 
-Use the controls on [configclients.jsp#plugin](http://127.0.0.1:7657/configclients.jsp#plugin) to:
+Use the controls on [I2P Router Plugin's](http://127.0.0.1:7657/configclients.jsp#plugin) to:
 
 - Check a single plugin for updates
 - Check every plugin at once (triggered automatically after router upgrades)
@@ -49,7 +49,7 @@ Use the controls on [configclients.jsp#plugin](http://127.0.0.1:7657/configclien
 
 ## 4. Build Your Own Plugin
 
-1. Review the [plugin specification](/spec/data/plugin/) for packaging, signing, and metadata requirements.
+1. Review the [plugin specification](/docs/specs/plugin/) for packaging, signing, and metadata requirements.
 2. Use [`makeplugin.sh`](https://github.com/i2p/i2p.scripts/tree/master/plugin/makeplugin.sh) to wrap an existing binary or webapp into an installable archive.
 3. Publish both install and update URLs so the router can distinguish first-time installs from incremental upgrades.
 4. Provide checksums and signing keys prominently on your project page to help users verify authenticity.
@@ -76,6 +76,6 @@ Looking for examples? Browse the source of community plugins on `plugins.i2p` (f
 
 ## 7. Further Reading
 
-- [Plugin specification](/spec/data/plugin/)
+- [Plugin specification](/docs/specs/plugin/)
 - [Client application framework](/docs/applications/managed-clients/)
 - [I2P scripts repository](https://github.com/i2p/i2p.scripts/) for packaging utilities

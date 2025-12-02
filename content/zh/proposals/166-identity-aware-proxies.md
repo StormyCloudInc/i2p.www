@@ -7,6 +7,7 @@ lastupdated: "2024-08-27"
 status: "开放"
 thread: "http://i2pforum.i2p/viewforum.php?f=13"
 target: "0.9.65"
+toc: true
 ---
 
 ### 主机感知的 HTTP 代理隧道类型提案

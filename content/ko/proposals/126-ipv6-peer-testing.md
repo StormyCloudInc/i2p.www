@@ -8,6 +8,7 @@ status: "Closed"
 thread: "http://zzz.i2p/topics/2119"
 target: "0.9.27"
 implementedin: "0.9.27"
+toc: true
 ---
 
 ## 개요

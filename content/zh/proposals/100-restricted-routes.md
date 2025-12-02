@@ -6,6 +6,7 @@ created: "2008-09-14"
 lastupdated: "2008-10-13"
 status: "保留"
 thread: "http://zzz.i2p/topics/114"
+toc: true
 ---
 
 ## 介绍

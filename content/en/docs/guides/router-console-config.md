@@ -11,7 +11,7 @@ This guide provides an overview of the I2P Router Console and its configuration 
 
 ## Accessing the Router Console
 
-The I2P Router Console is the central hub for managing and monitoring your I2P router. By default, it can be accessed at http://127.0.0.1:7657/home once your I2P router is running.
+The I2P Router Console is the central hub for managing and monitoring your I2P router. By default, it can be accessed at the [I2P Router Console](http://127.0.0.1:7657/home) once your I2P router is running.
 
 ![Router Console Home](/images/router-console-home.png)
 
@@ -24,7 +24,7 @@ The home page displays several key sections:
 
 ## Address Book
 
-**URL:** http://127.0.0.1:7657/dns
+**URL:** [Address Book](http://127.0.0.1:7657/dns)
 
 ![Router Console Address Book](/images/router-console-address-book.png)
 
@@ -46,7 +46,7 @@ The address book regularly polls your subscriptions and merges content into your
 
 ## Configuration
 
-**URL:** http://127.0.0.1:7657/configadvanced
+**URL:** [Advanced Configuration](http://127.0.0.1:7657/configadvanced)
 
 The Configuration section provides access to all router settings through multiple specialized tabs.
 
@@ -72,7 +72,7 @@ Most advanced configuration options are not exposed in the user interface becaus
 
 ### Bandwidth
 
-**URL:** http://127.0.0.1:7657/config
+**URL:** [Bandwidth Configuration](http://127.0.0.1:7657/config)
 
 ![Router Console Bandwidth Configuration](/images/router-console-config-bandwidth.png)
 
@@ -96,7 +96,7 @@ The configuration page shows estimated monthly data transfer based on your setti
 
 ### Client Configuration
 
-**URL:** http://127.0.0.1:7657/configclients
+**URL:** [Client Configuration](http://127.0.0.1:7657/configclients)
 
 ![Router Console Client Configuration](/images/router-console-config-clients.png)
 
@@ -121,7 +121,7 @@ Changes to the "Run at Startup?" setting require a router restart to take effect
 
 ### I2CP Configuration
 
-**URL:** http://127.0.0.1:7657/configi2cp
+**URL:** [I2CP Configuration](http://127.0.0.1:7657/configi2cp)
 
 ![Router Console I2CP Configuration](/images/router-console-config-i2cp.png)
 
@@ -148,7 +148,7 @@ The I2CP (I2P Client Protocol) configuration page allows you to configure how ex
 
 ### Network Configuration
 
-**URL:** http://127.0.0.1:7657/confignet
+**URL:** [Network Configuration](http://127.0.0.1:7657/confignet)
 
 ![Router Console Network Configuration](/images/router-console-config-network.png)
 
@@ -199,7 +199,7 @@ The Network Configuration page allows you to configure how your I2P router conne
 
 ### Peer Configuration
 
-**URL:** http://127.0.0.1:7657/configpeer
+**URL:** [Peer Configuration](http://127.0.0.1:7657/configpeer)
 
 ![Router Console Peer Configuration](/images/router-console-config-peer.png)
 
@@ -240,7 +240,7 @@ Profile bonuses affect how peers are selected for tunnel participation. Bonuses 
 
 ### Reseed Configuration
 
-**URL:** http://127.0.0.1:7657/configreseed
+**URL:** [Reseed Configuration](http://127.0.0.1:7657/configreseed)
 
 ![Router Console Reseed Configuration](/images/router-console-config-reseed.png)
 
@@ -288,7 +288,7 @@ The default settings will work for most people. Change these only if HTTPS is bl
 
 ### Router Family Configuration
 
-**URL:** http://127.0.0.1:7657/configfamily
+**URL:** [Router Family Configuration](http://127.0.0.1:7657/configfamily)
 
 ![Router Console Router Family Configuration](/images/router-console-config-family.png)
 
@@ -332,7 +332,7 @@ The page displays your current router family name. If you're not part of a famil
 
 ### Tunnel Configuration
 
-**URL:** http://127.0.0.1:7657/configtunnels
+**URL:** [Tunnel Configuration](http://127.0.0.1:7657/configtunnels)
 
 ![Router Console Tunnel Configuration](/images/router-console-config-tunnels.png)
 
@@ -394,7 +394,7 @@ Configuration options for both Inbound and Outbound:
 
 ### UI Configuration
 
-**URL:** http://127.0.0.1:7657/configui
+**URL:** [UI Configuration](http://127.0.0.1:7657/configui)
 
 ![Router Console UI Configuration](/images/router-console-config-ui.png)
 
@@ -433,11 +433,11 @@ Add username and password authentication to protect access to your router consol
 - Recommended if your router console is accessible on your local network
 - Protects your I2P configuration and privacy settings from tampering
 
-**Security Note:** Password protection only affects access to the router console web interface at http://127.0.0.1:7657. It does not encrypt I2P traffic or prevent applications from using I2P. If you're the only user of your computer and the router console only listens on localhost (default), a password may not be necessary.
+**Security Note:** Password protection only affects access to the router console web interface at the [I2P Router Console](http://127.0.0.1:7657). It does not encrypt I2P traffic or prevent applications from using I2P. If you're the only user of your computer and the router console only listens on localhost (default), a password may not be necessary.
 
 ### WebApp Configuration
 
-**URL:** http://127.0.0.1:7657/configwebapps
+**URL:** [WebApp Configuration](http://127.0.0.1:7657/configwebapps)
 
 ![Router Console WebApp Configuration](/images/router-console-config-webapps.png)
 
@@ -493,7 +493,7 @@ For each webapp:
 
 ## Help
 
-**URL:** http://127.0.0.1:7657/help
+**URL:** [Help](http://127.0.0.1:7657/help)
 
 The Help page provides comprehensive documentation and resources to help you understand and use I2P effectively. It serves as a central hub for troubleshooting, learning, and getting support.
 
@@ -520,7 +520,7 @@ If you're experiencing issues with I2P:
 
 ## Performance Graphs
 
-**URL:** http://127.0.0.1:7657/graphs
+**URL:** [Performance Graphs](http://127.0.0.1:7657/graphs)
 
 ![Router Console Performance Graphs](/images/router-console-graphs.png)
 

@@ -7,6 +7,7 @@ lastupdated: "2021-04-26"
 status: "Fermé"
 thread: "http://zzz.i2p/topics/3060"
 target: "0.9.50"
+toc: true
 ---
 
 ## Remarque

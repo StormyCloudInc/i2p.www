@@ -8,6 +8,7 @@ status: "Closed"
 thread: "http://zzz.i2p/topics/1704"
 target: "0.9.26"
 implementedin: "0.9.26"
+toc: true
 ---
 
 ## Note
@@ -347,4 +348,7 @@ command entries in some fashion, or enable etag support so that routers can
 fetch all past commands.
 
 
+## References
+
+* [SPEC](/docs/specs/subscription/)
 

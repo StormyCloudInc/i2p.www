@@ -7,6 +7,7 @@ lastupdated: "2025-06-25"
 status: "Kapalı"
 thread: "http://zzz.i2p/topics/1634"
 target: "0.9.67"
+toc: true
 ---
 
 ## Durum

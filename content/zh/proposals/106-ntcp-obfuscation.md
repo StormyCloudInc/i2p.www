@@ -7,6 +7,7 @@ lastupdated: "2014-01-03"
 status: "已拒绝"
 thread: "http://zzz.i2p/topics/774"
 supercededby: "111"
+toc: true
 ---
 
 ## 概述

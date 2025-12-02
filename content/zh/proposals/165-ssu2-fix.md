@@ -7,6 +7,7 @@ lastupdated: "2024-11-17"
 status: "开放"
 thread: "http://i2pforum.i2p/viewforum.php?f=13"
 target: "0.9.62"
+toc: true
 ---
 
 由 weko, orignal, the Anonymous 和 zzz 提议。

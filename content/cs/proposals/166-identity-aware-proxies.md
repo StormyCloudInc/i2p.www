@@ -7,6 +7,7 @@ lastupdated: "2024-08-27"
 status: "Otevřený"
 thread: "http://i2pforum.i2p/viewforum.php?f=13"
 target: "0.9.65"
+toc: true
 ---
 
 ### Návrh na Host-Aware HTTP Proxy Tunnel Type

@@ -7,6 +7,7 @@ lastupdated: "2024-11-17"
 status: "Offen"
 thread: "http://i2pforum.i2p/viewforum.php?f=13"
 target: "0.9.62"
+toc: true
 ---
 
 Vorschlag von weko, orignal, the Anonymous und zzz.

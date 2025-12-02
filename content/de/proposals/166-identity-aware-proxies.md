@@ -7,6 +7,7 @@ lastupdated: "2024-08-27"
 status: "Offen"
 thread: "http://i2pforum.i2p/viewforum.php?f=13"
 target: "0.9.65"
+toc: true
 ---
 
 ### Vorschlag für einen Host-bewussten HTTP-Proxy-Tunneltyp

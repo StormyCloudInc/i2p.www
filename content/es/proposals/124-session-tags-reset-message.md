@@ -6,6 +6,7 @@ created: "2016-01-24"
 lastupdated: "2016-01-26"
 status: "Abierto"
 thread: "http://zzz.i2p/topics/2056"
+toc: true
 ---
 
 ## Visión General

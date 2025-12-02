@@ -6,6 +6,7 @@ created: "2016-11-28"
 lastupdated: "2016-12-05"
 status: "Návrh"
 thread: "http://zzz.i2p/topics/2193"
+toc: true
 ---
 
 ## Přehled

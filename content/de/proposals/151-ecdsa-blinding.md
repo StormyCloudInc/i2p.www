@@ -6,6 +6,7 @@ created: "2019-05-21"
 lastupdated: "2019-05-29"
 status: "Offen"
 thread: "http://zzz.i2p/topics/2717"
+toc: true
 ---
 
 ## Motivation

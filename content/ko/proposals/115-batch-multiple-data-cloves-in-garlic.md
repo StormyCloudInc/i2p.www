@@ -6,6 +6,7 @@ created: "2015-01-22"
 lastupdated: "2015-01-22"
 status: "Needs-Research"
 thread: "http://zzz.i2p/topics/1797"
+toc: true
 ---
 
 ## 개요
