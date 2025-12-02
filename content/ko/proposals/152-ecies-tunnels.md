@@ -8,6 +8,7 @@ status: "닫힘"
 thread: "http://zzz.i2p/topics/2737"
 target: "0.9.48"
 implementedin: "0.9.48"
+toc: true
 ---
 
 ## 참고

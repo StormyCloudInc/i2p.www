@@ -7,6 +7,7 @@ lastupdated: "2024-11-17"
 status: "Open"
 thread: "http://i2pforum.i2p/viewforum.php?f=13"
 target: "0.9.62"
+toc: true
 ---
 
 weko, orignal, the Anonymous 그리고 zzz에 의해 제안됨.

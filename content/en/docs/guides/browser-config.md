@@ -150,11 +150,9 @@ Extension‑based configuration (IceRaven):
 3) Install the extension “I2P Proxy for Android and Other Systems”.
 4) The browser will now proxy through I2P.
 
-This extension also works on pre‑Fenix Firefox‑based browsers if installed from AMO:
-https://addons.mozilla.org/en-US/android/addon/i2p-proxy/
+This extension also works on pre‑Fenix Firefox‑based browsers if installed from [AMO](https://addons.mozilla.org/en-US/android/addon/i2p-proxy/).
 
-Enabling wide extension support in Firefox Nightly requires a separate process documented by Mozilla:
-https://blog.mozilla.org/addons/2020/09/29/expanded-extension-support-in-firefox-for-android-nightly/
+Enabling wide extension support in Firefox Nightly requires a separate process [documented by Mozilla](https://blog.mozilla.org/addons/2020/09/29/expanded-extension-support-in-firefox-for-android-nightly/).
 
 ## Internet Explorer / Windows System Proxy
 

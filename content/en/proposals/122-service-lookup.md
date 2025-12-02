@@ -8,6 +8,7 @@ status: "Rejected"
 thread: "http://zzz.i2p/topics/2048"
 supercedes: "102"
 supercededby: "123"
+toc: true
 ---
 
 ## Overview

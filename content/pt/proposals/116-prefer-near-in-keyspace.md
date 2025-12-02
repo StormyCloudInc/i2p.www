@@ -6,6 +6,7 @@ created: "2015-04-25"
 lastupdated: "2015-04-25"
 status: "Needs-Research"
 thread: "http://zzz.i2p/topics/1874"
+toc: true
 ---
 
 ## Visão Geral

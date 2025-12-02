@@ -7,6 +7,7 @@ lastupdated: "2023-02-01"
 status: "Açık"
 thread: "http://zzz.i2p/topics/3516"
 target: "0.9.59"
+toc: true
 ---
 
 ## Genel Bakış

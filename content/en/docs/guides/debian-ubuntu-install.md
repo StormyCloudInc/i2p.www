@@ -309,7 +309,7 @@ After starting I2P for the first time, it will take several minutes to integrate
 
 For optimal performance and network participation, forward the I2P ports through your NAT/firewall:
 
-1. Open the I2P router console at [http://127.0.0.1:7657/](http://127.0.0.1:7657/)
+1. Open the [I2P Router Console](http://127.0.0.1:7657/)
 2. Navigate to the [Network Configuration page](http://127.0.0.1:7657/confignet)
 3. Note the port numbers listed (usually random ports between 9000-31000)
 4. Forward these UDP and TCP ports in your router/firewall

@@ -8,6 +8,7 @@ status: "Uzavřeno"
 thread: "http://zzz.i2p/topics/2886"
 target: "0.9.47"
 implementedin: "0.9.47"
+toc: true
 ---
 
 ## Poznámka

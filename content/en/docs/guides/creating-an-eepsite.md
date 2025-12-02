@@ -19,8 +19,8 @@ This guide will walk you through the process of creating and configuring your fi
 
 The Hidden Services Manager (also called the I2P Tunnel Manager) is where you configure all I2P server and client tunnels, including HTTP servers (eepsites).
 
-1. Open your I2P router console (typically at [http://127.0.0.1:7657](http://127.0.0.1:7657))
-2. Navigate to the **Hidden Services Manager** at [http://127.0.0.1:7657/i2ptunnelmgr](http://127.0.0.1:7657/i2ptunnelmgr)
+1. Open your [I2P Router Console](http://127.0.0.1:7657)
+2. Navigate to the [Hidden Services Manager](http://127.0.0.1:7657/i2ptunnelmgr)
 
 You should see the Hidden Services Manager interface showing:
 - **Status Messages** - Current tunnel and client status
@@ -257,7 +257,7 @@ Now that your eepsite is configured and has content, it's time to start it and m
 
 ### Start the Tunnel
 
-1. **Return to the Hidden Services Manager** at [http://127.0.0.1:7657/i2ptunnelmgr](http://127.0.0.1:7657/i2ptunnelmgr)
+1. **Return to the [Hidden Services Manager](http://127.0.0.1:7657/i2ptunnelmgr)**
 2. Find your **I2P webserver** entry in the list
 3. Click the **Start** button in the Control column
 
@@ -391,7 +391,7 @@ This string contains:
 
 ### Step 2: Register with stats.i2p
 
-1. **Navigate to** [http://stats.i2p/i2p/addkey.html](http://stats.i2p/i2p/addkey.html) (within I2P)
+1. **Navigate to** [stats.i2p Add Key](http://stats.i2p/i2p/addkey.html) (within I2P)
 
 ![stats.i2p Domain Registration](/images/guides/eepsite/stats-i2p-add.png)
 
@@ -409,7 +409,7 @@ If successful, you'll see a confirmation that your domain has been added to the 
 
 To ensure maximum availability, you should also register with the reg.i2p service:
 
-1. **Navigate to** [http://reg.i2p/add](http://reg.i2p/add) (within I2P)
+1. **Navigate to** [reg.i2p Add Domain](http://reg.i2p/add) (within I2P)
 
 ![reg.i2p Domain Registration](/images/guides/eepsite/reg-i2p-add.png)
 

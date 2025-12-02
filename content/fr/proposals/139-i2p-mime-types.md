@@ -6,6 +6,7 @@ created: "2017-05-16"
 lastupdated: "2017-05-16"
 status: "Open"
 thread: "http://zzz.i2p/topics/1957"
+toc: true
 ---
 
 ## Vue d'ensemble

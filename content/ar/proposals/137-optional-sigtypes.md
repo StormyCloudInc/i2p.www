@@ -6,6 +6,7 @@ created: "2017-03-31"
 lastupdated: "2017-11-12"
 status: "مفتوح"
 thread: "http://zzz.i2p/topics/2280"
+toc: true
 ---
 
 ## نظرة عامة

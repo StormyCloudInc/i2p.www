@@ -6,6 +6,7 @@ created: "2015-03-15"
 lastupdated: "2016-10-30"
 status: "Brouillon"
 thread: "http://zzz.i2p/topics/1840"
+toc: true
 ---
 
 ## Aperçu

@@ -7,6 +7,7 @@ lastupdated: "2024-11-17"
 status: "مفتوح"
 thread: "http://i2pforum.i2p/viewforum.php?f=13"
 target: "0.9.62"
+toc: true
 ---
 
 اقتراح مقدم من weko، أوignal، the Anonymous و zzz.

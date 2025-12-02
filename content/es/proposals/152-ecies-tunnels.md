@@ -8,6 +8,7 @@ status: "Cerrado"
 thread: "http://zzz.i2p/topics/2737"
 target: "0.9.48"
 implementedin: "0.9.48"
+toc: true
 ---
 
 ## Nota

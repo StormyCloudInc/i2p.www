@@ -7,6 +7,7 @@ lastupdated: "2024-08-27"
 status: "Open"
 thread: "http://i2pforum.i2p/viewforum.php?f=13"
 target: "0.9.65"
+toc: true
 ---
 
 ### होस्ट-अवेयर HTTP प्रॉक्सी टनल टाइप का प्रस्ताव

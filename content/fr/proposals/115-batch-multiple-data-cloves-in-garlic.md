@@ -6,6 +6,7 @@ created: "2015-01-22"
 lastupdated: "2015-01-22"
 status: "Besoin-de-Recherche"
 thread: "http://zzz.i2p/topics/1797"
+toc: true
 ---
 
 ## Vue d'ensemble

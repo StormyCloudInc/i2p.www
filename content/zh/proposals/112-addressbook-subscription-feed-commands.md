@@ -8,6 +8,7 @@ status: "关闭"
 thread: "http://zzz.i2p/topics/1704"
 target: "0.9.26"
 implementedin: "0.9.26"
+toc: true
 ---
 
 ## 注意

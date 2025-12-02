@@ -7,6 +7,7 @@ lastupdated: "2024-08-27"
 status: "مفتوح"
 thread: "http://i2pforum.i2p/viewforum.php?f=13"
 target: "0.9.65"
+toc: true
 ---
 
 ### اقتراح لنوع نفق وكيل HTTP مستند إلى المضيف

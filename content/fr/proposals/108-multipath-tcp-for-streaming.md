@@ -6,6 +6,7 @@ created: "2012-08-26"
 lastupdated: "2012-08-26"
 status: "Brouillon"
 thread: "http://zzz.i2p/topics/1221"
+toc: true
 ---
 
 ## Aperçu

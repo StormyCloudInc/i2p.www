@@ -7,6 +7,7 @@ lastupdated: "2024-08-27"
 status: "Mở"
 thread: "http://i2pforum.i2p/viewforum.php?f=13"
 target: "0.9.65"
+toc: true
 ---
 
 ### Đề xuất cho Loại Tunnel HTTP Proxy Nhận thức Host

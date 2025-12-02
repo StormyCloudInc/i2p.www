@@ -187,7 +187,7 @@ The menu also shows useful options like:
 Once the I2P browser opens, you need to check which ports I2P is using:
 
 1. **Navigate to the network configuration page**:
-   - Go to [http://127.0.0.1:7657/confignet](http://127.0.0.1:7657/confignet) in your browser
+   - Go to [I2P Router Network Configuration](http://127.0.0.1:7657/confignet) in your browser
    - Or from the router console sidebar: **Configuration → Network**
 
 2. **Scroll down** to the port configuration section

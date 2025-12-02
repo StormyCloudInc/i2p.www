@@ -7,6 +7,7 @@ lastupdated: "2016-01-12"
 status: "Rechazado"
 thread: "http://zzz.i2p/topics/2047"
 supercededby: "123"
+toc: true
 ---
 
 ## Vista general

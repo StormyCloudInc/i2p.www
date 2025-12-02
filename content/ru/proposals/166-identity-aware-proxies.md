@@ -7,6 +7,7 @@ lastupdated: "2024-08-27"
 status: "Открыто"
 thread: "http://i2pforum.i2p/viewforum.php?f=13"
 target: "0.9.65"
+toc: true
 ---
 
 ### Предложение для хост-осведомленного HTTP-прокси туннеля

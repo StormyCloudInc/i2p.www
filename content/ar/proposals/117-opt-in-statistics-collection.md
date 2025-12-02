@@ -6,6 +6,7 @@ created: "2015-11-04"
 lastupdated: "2015-11-04"
 status: "مسودة"
 thread: "http://zzz.i2p/topics/1981"
+toc: true
 ---
 
 ## نظرة عامة

@@ -7,6 +7,7 @@ lastupdated: "2025-04-03"
 status: "已关闭"
 thread: "http://zzz.i2p/topics/3641"
 target: "0.9.66"
+toc: true
 ---
 
 ## 状态
