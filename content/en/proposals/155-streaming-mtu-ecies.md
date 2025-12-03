@@ -204,3 +204,11 @@ This is an existing option and MTU negotiation is already part of the specificat
 Older ECIES destinations will support 1730.
 Any client receiving a higher value will respond with 1730, and the far-end
 will negotiate downward, as usual.
+
+
+## References
+
+* [CALCULATION](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220)
+* [ECIES](/docs/specs/ecies/#overhead)
+* [STREAMING-OPTIONS](/docs/api/streaming/)
+* [STREAMING-SPEC](/docs/specs/streaming/#flags-and-option-data-fields)

@@ -100,3 +100,12 @@ This proposal has various effects on latency, RTT and packet loss:
 
 More research is necessary to investigate these effects, in order to decide
 which standard tunnels would benefit from this mode being enabled by default.
+
+
+## References
+
+* [Destination](/docs/specs/common-structures/#destination)
+* [I2CP-SPEC](/docs/specs/i2cp/)
+* [LeaseSet](/docs/specs/common-structures/#leaseset)
+* [TUNNEL-THROTTLING](/docs/tunnels/implementation/#tunnel.throttling)
+* [VariableTunnelBuild](/docs/specs/common-structures/#variabletunnelbuild)

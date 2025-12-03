@@ -286,3 +286,11 @@ As of release 0.9.xx, any SSU address published with introducers must contain "4
 All old routers should ignore the caps property in NTCP2, and unknown capability characters in the SSU caps property.
 
 Any SSU address with introducers that does not contain a "4" or "6" cap is assumed to be for IPv4 introduction.
+
+
+## References
+
+* [CAPS](http://zzz.i2p/topics/3050)
+* [NTCP2](/docs/specs/ntcp2/)
+* [SSU](/docs/transport/ssu/)
+* [SSU-SPEC](/docs/specs/ssu/)

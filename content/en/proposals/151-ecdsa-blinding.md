@@ -130,3 +130,9 @@ ECDSA's public key is (X,Y) pair, so for P256, for example, it's 64 bytes, rathe
 Either b33 address will be longer, or public key can be stored in compressed format like in bitcoin wallets.
 
 
+## References
+
+* [RFC-2104](https://tools.ietf.org/html/rfc2104)
+* [RFC-5869](https://tools.ietf.org/html/rfc5869)
+
+

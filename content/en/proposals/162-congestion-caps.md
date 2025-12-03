@@ -127,5 +127,10 @@ Publish caps in 0.9.58 (April 2023);
 act on published caps in 0.9.59 (July 2023).
 
 
+## References
+
+* [NETDB](/docs/how/network-database/)
+
+
 
 

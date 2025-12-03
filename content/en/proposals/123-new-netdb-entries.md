@@ -2083,10 +2083,10 @@ which had similar design goals.
 
 ## References
 
-* [ED25519-REFS] "High-speed high-security signatures" by Daniel J. Bernstein, Niels Duif, Tanja Lange, Peter Schwabe, and Bo-Yin Yang. https://ed25519.cr.yp.to/
+* ["High-speed high-security signatures" by Daniel J. Bernstein, Niels Duif, Tanja Lange, Peter Schwabe, and Bo-Yin Yang](https://ed25519.cr.yp.to/)
 * [KEYBLIND-PROOF](https://lists.torproject.org/pipermail/tor-dev/2013-December/005943.html)
-* [KEYBLIND-REFS] https://gitlab.torproject.org/tpo/core/tor/-/issues/8106
-* [PRNG-REFS] http://projectbullrun.org/dual-ec/ext-rand.html
+* [KEYBLIND-REFS](https://gitlab.torproject.org/tpo/core/tor/-/issues/8106)
+* [PRNG-REFS](http://projectbullrun.org/dual-ec/ext-rand.html)
 * [RFC-2104](https://tools.ietf.org/html/rfc2104)
 * [RFC-4880-S5.1](https://tools.ietf.org/html/rfc4880#section-5.1)
 * [RFC-5869](https://tools.ietf.org/html/rfc5869)

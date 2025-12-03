@@ -162,3 +162,15 @@ network by making its use conditional on the target I2P version:
 
 * Peers that advertise the target version must support parsing the new flags,
   and must not reject the instructions as invalid.
+
+
+## References
+
+* [Destination](/docs/specs/common-structures/#destination)
+* [Leases](/docs/specs/common-structures/#lease)
+* [LeaseSet](/docs/specs/common-structures/#leaseset)
+* [RouterIdentity](/docs/specs/common-structures/#routeridentity)
+* [RouterInfo](/docs/specs/common-structures/#routerinfo)
+* [TUNNEL-DELIVERY](/docs/specs/common-structures/#tunnelmessagedeliveryinstructions)
+* [TunnelId](/docs/specs/common-structures/#tunnelid)
+* [VERSIONS](/docs/specs/i2np/#protocol-versions)

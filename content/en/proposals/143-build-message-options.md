@@ -92,3 +92,8 @@ The unused space in the Tunnel Build Records are filled with random data and cur
 The space can be converted to contain options without migration issues.
 In the build message, the presence of options is indicated in the flags byte.
 In the build reply message, the presence of options is indicated by a multi-byte magic number.
+
+
+## References
+
+* [SPEC](/docs/specs/tunnel-creation-ecies/)

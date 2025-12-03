@@ -365,5 +365,20 @@ Streamr: Nobody's using it, no migration planned
 SAM UDP apps: None known
 
 
+## References
+
+* [API](/docs/api/datagrams/)
+* [BT-SPEC](/docs/applications/bittorrent/)
+* [Common](/docs/specs/common-structures/)
+* [DATAGRAMS](/docs/specs/datagrams/)
+* [I2CP](/docs/protocol/i2cp/)
+* [Prop123](/proposals/123-new-netdb-entries/)
+* [Prop160](/proposals/160-udp-trackers/)
+* [Prop164](/proposals/164-streaming/)
+* [Streaming](/docs/specs/streaming/)
+* [TRANSPORT](/docs/transport/)
+* [TUNMSG](/docs/specs/tunnel-message/#notes)
+
+
 
 

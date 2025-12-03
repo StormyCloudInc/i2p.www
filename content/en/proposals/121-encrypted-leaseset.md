@@ -62,3 +62,8 @@ distribute keys to multiple people if you like).
 - Signature
 
 Encrypted data could be prefixed with some enctype specifier, or not.
+
+
+## References
+
+* [RFC-4880-S5.1](https://tools.ietf.org/html/rfc4880#section-5.1)

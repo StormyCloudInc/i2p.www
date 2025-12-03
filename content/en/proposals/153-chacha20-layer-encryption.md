@@ -315,3 +315,8 @@ changed to non-mod-16 lengths, AES256/CBC would still not be vulnerable due to r
 Both attacks are also blocked by disallowing multiple oracle calls using the same IV, since duplicate IVs are rejected.
 
 
+## References
+
+* [Tunnel-Implementation](/docs/tunnels/implementation/)
+
+

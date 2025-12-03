@@ -177,3 +177,8 @@ Implementations may add support at any time, no coordination is needed.
 
 As there is currently no API version defined where support for this proposal is required,
 routers should check for a "b" response to confirm support.
+
+
+## References
+
+* [Tunnel-Creation-ECIES](/docs/specs/tunnel-creation-ecies/)

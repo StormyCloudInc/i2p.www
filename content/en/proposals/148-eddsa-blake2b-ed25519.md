@@ -233,3 +233,15 @@ For the minimum router version 0.9.TBD, routers must ensure:
 - Streaming connections and signed datagrams won't work to routers less than version 0.9.TBD,
   but there's no way to know that, so the new sig type should not be used by default for some period
   of months or years after 0.9.TBD is released.
+
+
+## References
+
+* [BLAKE2](https://blake2.net/blake2.pdf)
+* [ED25519CTX](https://moderncrypto.org/mail-archive/curves/2017/000925.html)
+* ["High-speed high-security signatures" by Daniel J. Bernstein, Niels Duif, Tanja Lange, Peter Schwabe, and Bo-Yin Yang](http://cr.yp.to/papers.html#ed25519)
+* [EDDSA-FAULTS](https://news.ycombinator.com/item?id=15414760)
+* [LEA](https://en.wikipedia.org/wiki/Length_extension_attack)
+* [RFC-7693](https://tools.ietf.org/html/rfc7693)
+* [RFC-8032](https://tools.ietf.org/html/rfc8032)
+* [ZCASH](https://github.com/zcash/zips/tree/master/protocol/protocol.pdf)

@@ -59,3 +59,10 @@ nnnnnnnnnn :: The time in seconds (not ms) since the epoch.
 
 No issues. Implementation is optional.
 Backwards compatibility is assured, as older routers will ignore unknown parameters.
+
+
+## References
+
+* [RouterAddress](/docs/specs/common-structures/#routeraddress)
+* [RouterInfo](/docs/specs/common-structures/#routerinfo)
+* [TRAC-TICKET](http://trac.i2p2.i2p/ticket/1352)

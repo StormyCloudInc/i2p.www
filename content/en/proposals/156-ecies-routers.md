@@ -499,4 +499,22 @@ not be able to build tunnels through most peers.
 Target release: 0.9.53, early 2022.
 
 
+## References
+
+* [Common](/docs/specs/common-structures/)
+* [ECIES](/docs/specs/ecies/)
+* [ECIES-ROUTERS](/docs/specs/ecies-routers/)
+* [I2NP](/docs/specs/i2np/)
+* [NOISE](https://noiseprotocol.org/noise.html)
+* [Prop123](/proposals/123-new-netdb-entries/)
+* [Prop144](/proposals/144-ecies-x25519-aead-ratchet/)
+* [Prop145](/proposals/145-ecies/)
+* [Prop152](/proposals/152-ecies-tunnels/)
+* [Prop153](/proposals/153-chacha20-layer-encryption/)
+* [Prop154](/proposals/154-ecies-lookups/)
+* [Prop157](/proposals/157-new-tbm/)
+* [Tunnel-Creation](/docs/specs/tunnel-creation/)
+* [Tunnel-Creation-ECIES](/docs/specs/tunnel-creation-ecies/)
+
+
 

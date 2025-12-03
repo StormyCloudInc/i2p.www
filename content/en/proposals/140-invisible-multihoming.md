@@ -299,3 +299,12 @@ modifications:
 ## Acknowledgements
 
 Thanks to psi for the discussion that led to this proposal.
+
+
+## References
+
+* [Destination](/docs/specs/common-structures/#destination)
+* [I2CP](/docs/protocol/i2cp/)
+* [Leases](/docs/specs/common-structures/#lease)
+* [LeaseSet](/docs/specs/common-structures/#leaseset)
+* [Prop123](/proposals/123-new-netdb-entries/)

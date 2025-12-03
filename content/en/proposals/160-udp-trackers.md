@@ -493,3 +493,15 @@ The first implementations are expected to be in ZzzOT and i2psnark.
 They will be used for testing and verification of this proposal.
 
 Other implementations will follow as desired after the testing and verification are complete.
+
+
+## References
+
+* [BEP15](http://www.bittorrent.org/beps/bep_0015.html)
+* [BEP41](http://www.bittorrent.org/beps/bep_0041.html)
+* [DATAGRAMS](/docs/specs/datagrams/)
+* [Prop163](/proposals/163-datagram2/)
+* [Prop169](/proposals/169-pq-crypto/)
+* [SAMv3](/docs/api/samv3/)
+* [SPEC](/docs/applications/bittorrent/)
+* [UDP](/docs/specs/udp-announces/)

@@ -105,3 +105,8 @@ during the SYNCHRONIZE handshake and the NACKs would not make any sense.
 
 Implementations may add support at any time, no coordination is needed.
 Java I2P and i2pd routers implemented this in API 0.9.58 (released March 2023).
+
+
+## References
+
+* [STREAMING](/docs/specs/streaming/)

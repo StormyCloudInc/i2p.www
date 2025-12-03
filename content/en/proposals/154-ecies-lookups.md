@@ -398,3 +398,10 @@ a router without support, it will probably ignore the supplied key and tag, and
 sent the reply unencrypted.
 
 
+## References
+
+* [ECIES](/docs/specs/ecies/)
+* [I2NP](/docs/specs/i2np/)
+* [Prop156](/proposals/156-ecies-routers/)
+
+

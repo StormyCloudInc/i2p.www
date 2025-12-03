@@ -375,3 +375,19 @@ No version bump should be necessary.
 Implementations may add support at any time, no coordination is needed,
 except for an agreement on the effective API version for the I2CP changes.
 SAM compatibility versions for each implementation will be documented in the SAM spec.
+
+
+## References
+
+* [DOTWELLKNOWN](http://i2pforum.i2p/viewtopic.php?p=3102)
+* [I2CP](/docs/specs/i2cp/)
+* [I2CP-OPTIONS](/docs/protocol/i2cp/)
+* [LS2](/docs/specs/common-structures/)
+* [GNS](http://zzz.i2p/topcs/1545)
+* [NAMING](/docs/naming/)
+* [Prop123](/proposals/123-new-netdb-entries/)
+* [Prop168](/proposals/168-tunnel-bandwidth/)
+* [REGISTRY](http://www.dns-sd.org/ServiceTypes.html)
+* [RFC2782](https://datatracker.ietf.org/doc/html/rfc2782)
+* [SAMv3](/docs/api/samv3/)
+* [SRV](https://en.wikipedia.org/wiki/SRV_record)

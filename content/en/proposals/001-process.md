@@ -162,4 +162,6 @@ Numbers 000-099 are reserved for special and meta-proposals. 100 and up are used
 
 ## References
 
-- [Tor Proposal Process](https://gitweb.torproject.org/torspec.git/tree/proposals/001-process.txt)
+* [DEV-FORUM-PROPOSAL](http://zzz.i2p/topics/new?forum_id=7-big-topics-ideas-proposals-and-discussion)
+* [TORSPEC-PROCESS](https://gitweb.torproject.org/torspec.git/tree/proposals/001-process.txt)
+* [TRAC-PROPOSAL](http://trac.i2p2.i2p/newticket?summary=New%20proposal:%20&type=enhancement&milestone=n/a&component=www/i2p&keywords=review-needed)

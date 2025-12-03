@@ -619,3 +619,19 @@ because the delivery instructions are LOCAL not ROUTER,
 there's no DATETIME block included, and
 it uses an 8-byte tag rather than the 32-byte ephemeral key for a full 'N' message.
 
+
+## References
+
+* [Common](/docs/specs/common-structures/)
+* [ECIES](/docs/specs/ecies/)
+* [I2NP](/docs/specs/i2np/)
+* [Prop123](/proposals/123-new-netdb-entries/)
+* [Prop144](/proposals/144-ecies-x25519-aead-ratchet/)
+* [Prop145](/proposals/145-ecies/)
+* [Prop152](/proposals/152-ecies-tunnels/)
+* [Prop153](/proposals/153-chacha20-layer-encryption/)
+* [Prop154](/proposals/154-ecies-lookups/)
+* [Prop156](/proposals/156-ecies-routers/)
+* [Tunnel-Creation](/docs/specs/tunnel-creation/)
+* [Tunnel-Creation-ECIES](/docs/specs/tunnel-creation-ecies/)
+
