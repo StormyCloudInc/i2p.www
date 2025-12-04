@@ -19,29 +19,43 @@
     }
 
     var loaded = false;
-    var pendingClick = null;
+    var scriptReady = false;
 
-    function loadFundraiseUp(callback) {
-        if (loaded) {
+    function loadFundraiseUp(campaignCode, callback) {
+        // If script is fully ready, just run callback
+        if (scriptReady) {
             if (callback) callback();
             return;
         }
-        loaded = true;
 
-        // FundraiseUp initialization code
-        (function(w,d,s,n,a){if(!w[n]){var l='call,catch,on,once,set,then,track,openCheckout'
-        .split(','),i,o=function(n){return'function'==typeof n?o.l.push([arguments])&&o
-        :function(){return o.l.push([n,arguments])&&o}},t=d.getElementsByTagName(s)[0],
-        j=d.createElement(s);j.async=!0;j.src='https://cdn.fundraiseup.com/widget/'+a+'';
-        j.onload = function() {
-            if (callback) {
-                // Give FundraiseUp a moment to initialize
-                setTimeout(callback, 100);
-            }
-        };
-        t.parentNode.insertBefore(j,t);o.s=Date.now();o.v=5;o.h=w.location.href;o.l=[];
-        for(i=0;i<8;i++)o[l[i]]=o(l[i]);w[n]=o}
-        })(window,document,'script','FundraiseUp','AAYKECHT');
+        // If not yet started loading, start now
+        if (!loaded) {
+            loaded = true;
+
+            // FundraiseUp initialization code
+            (function(w,d,s,n,a){if(!w[n]){var l='call,catch,on,once,set,then,track,openCheckout'
+            .split(','),i,o=function(n){return'function'==typeof n?o.l.push([arguments])&&o
+            :function(){return o.l.push([n,arguments])&&o}},t=d.getElementsByTagName(s)[0],
+            j=d.createElement(s);j.async=!0;j.src='https://cdn.fundraiseup.com/widget/'+a+'';
+            j.onload = function() {
+                // Give FundraiseUp time to fully initialize
+                setTimeout(function() {
+                    scriptReady = true;
+                    if (callback) callback();
+                }, 300);
+            };
+            t.parentNode.insertBefore(j,t);o.s=Date.now();o.v=5;o.h=w.location.href;o.l=[];
+            for(i=0;i<8;i++)o[l[i]]=o(l[i]);w[n]=o}
+            })(window,document,'script','FundraiseUp','AAYKECHT');
+        } else {
+            // Script is loading, wait for it
+            var checkReady = setInterval(function() {
+                if (scriptReady) {
+                    clearInterval(checkReady);
+                    if (callback) callback();
+                }
+            }, 50);
+        }
     }
 
     // Auto-load on donation-related pages
@@ -50,19 +64,22 @@
         loadFundraiseUp();
     }
 
-    // Load on donate button click, then trigger the modal
+    // Load on donate button click, then open checkout
     document.addEventListener('click', function(e) {
         var link = e.target.closest('a[href^="#X"]');
         if (link && link.href && link.href.match(/#X[A-Z0-9]+$/)) {
-            if (!loaded) {
-                // Prevent default navigation, load script, then re-trigger
+            var campaignCode = link.getAttribute('href').substring(1); // Remove #
+
+            if (!scriptReady) {
+                // Prevent default, load script, then open checkout
                 e.preventDefault();
                 e.stopPropagation();
 
-                var targetHash = link.getAttribute('href');
-                loadFundraiseUp(function() {
-                    // Re-click the link after FundraiseUp is loaded
-                    link.click();
+                loadFundraiseUp(campaignCode, function() {
+                    // Use FundraiseUp API to open checkout
+                    if (window.FundraiseUp && window.FundraiseUp.openCheckout) {
+                        window.FundraiseUp.openCheckout(campaignCode);
+                    }
                 });
             }
             // If already loaded, let FundraiseUp handle the click naturally
