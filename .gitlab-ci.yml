@@ -82,6 +82,22 @@ deploy:
   only:
     - main
 
+deploy_host2:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client rsync sshpass
+    - mkdir -p ~/.ssh
+    - ssh-keyscan -p $DEPLOY_SSH_PORT2 -H $DEPLOY_HOST2 >> ~/.ssh/known_hosts
+  script:
+    - sshpass -p "$DEPLOY_SSH_KEY2" ssh -p $DEPLOY_SSH_PORT2 $DEPLOY_USER2@$DEPLOY_HOST2 "sudo chown -R $DEPLOY_USER2:$DEPLOY_USER2 $DEPLOY_PATH2 || true"
+    - sshpass -p "$DEPLOY_SSH_KEY2" rsync -avz --delete --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r -e "ssh -p $DEPLOY_SSH_PORT2 -o StrictHostKeyChecking=no" public/ $DEPLOY_USER2@$DEPLOY_HOST2:$DEPLOY_PATH2
+    - sshpass -p "$DEPLOY_SSH_KEY2" ssh -p $DEPLOY_SSH_PORT2 $DEPLOY_USER2@$DEPLOY_HOST2 "sudo chown -R www-data:www-data $DEPLOY_PATH2 || true"
+  dependencies:
+    - build
+  only:
+    - main
+
 secret_detection:
   stage: secret-detection
 
