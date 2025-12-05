@@ -52,10 +52,15 @@
 
                     // Re-add onload for safety/debugging
                     j.onload = function () {
-                        console.log("FundraiseUp Loader: Script loaded.");
-                        // Safety check: if pendingCampaign is still set (meaning it wasn't opened), try again?
-                        // But we don't store pendingCampaign globally anymore? 
-                        // Let's just log for now to see order of events.
+                        console.log("FundraiseUp Loader: Script loaded. attempting fallback check...");
+                        // Fallback: If for some reason the proxy call failed (race condition/error),
+                        // try calling it again after a short delay when we are sure the real object is there.
+                        setTimeout(function () {
+                            if (window.FundraiseUp && window.FundraiseUp.openCheckout) {
+                                console.log("FundraiseUp Loader: Executing fallback openCheckout...");
+                                window.FundraiseUp.openCheckout(campaignId);
+                            }
+                        }, 1000);
                     };
 
                     t.parentNode.insertBefore(j, t); o.s = Date.now(); o.v = 5; o.h = w.location.href; o.l = [];
