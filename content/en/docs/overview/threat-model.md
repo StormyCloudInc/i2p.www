@@ -23,7 +23,7 @@ aliases:
 
 ---
 
-## 1  What “Anonymous” Means
+## 1. What "Anonymous" Means
 
 I2P provides *practical anonymity*—not invisibility.  
 Anonymity is defined as the difficulty for an adversary to learn information you wish to keep private: who you are, where you are, or who you talk to.  
@@ -33,7 +33,7 @@ Your anonymity depends on how you configure I2P, how you choose peers and subscr
 
 ---
 
-## 2  Cryptographic and Transport Evolution (2003 → 2025)
+## 2. Cryptographic and Transport Evolution (2003 → 2025)
 
 <table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
   <thead>
@@ -94,7 +94,7 @@ Transport is entirely NTCP2 ( TCP ) and SSU2 ( UDP ); both support IPv4/IPv6, fo
 
 ---
 
-## 3  Network Architecture Summary
+## 3. Network Architecture Summary
 
 - **Free-route mixnet:** Senders and receivers each define their own tunnels.  
 - **No central authority:** Routing and naming are decentralized; each router maintains local trust.  
@@ -106,7 +106,7 @@ Transport is entirely NTCP2 ( TCP ) and SSU2 ( UDP ); both support IPv4/IPv6, fo
 
 ---
 
-## 4  Attack Categories and Current Defenses
+## 4. Attack Categories and Current Defenses
 
 <table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
   <thead>
@@ -172,7 +172,7 @@ Transport is entirely NTCP2 ( TCP ) and SSU2 ( UDP ); both support IPv4/IPv6, fo
 
 ---
 
-## 5  Modern Network Database (NetDB)
+## 5. Modern Network Database (NetDB)
 
 **Core facts (still accurate):**
 - Modified Kademlia DHT stores RouterInfo and LeaseSets.  
@@ -191,7 +191,7 @@ Transport is entirely NTCP2 ( TCP ) and SSU2 ( UDP ); both support IPv4/IPv6, fo
 
 ---
 
-## 6  Hidden Mode and Restricted Routes
+## 6. Hidden Mode and Restricted Routes
 
 - **Hidden Mode:** Implemented (automatic in strict countries per Freedom House scores).  
     Routers don’t publish RouterInfo or route traffic.  
@@ -202,7 +202,7 @@ Trade-off: Better privacy ↔ reduced contribution to network capacity.
 
 ---
 
-## 7  DoS and Floodfill Attacks
+## 7. DoS and Floodfill Attacks
 
 **Historical:** 2013 UCSB research showed Eclipse and Floodfill takeovers possible.  
 **Modern defenses include:**
@@ -217,7 +217,7 @@ Floodfill attacks remain theoretically possible but practically harder.
 
 ---
 
-## 8  Traffic Analysis and Censorship
+## 8. Traffic Analysis and Censorship
 
 I2P traffic is hard to identify: no fixed port, no plaintext handshake, and random padding.  
 NTCP2 and SSU2 packets mimic common protocols and use ChaCha20 header obfuscation.  
@@ -226,7 +226,7 @@ Connections from Tor exit nodes are blocked since 2.6.0 (to protect resources).
 
 ---
 
-## 9  Persistent Limitations (acknowledged)
+## 9. Persistent Limitations (acknowledged)
 
 - Timing correlation for low-latency apps remains a fundamental risk.  
 - Intersection attacks still powerful against known public destinations.  
@@ -237,7 +237,7 @@ Transparency about these limits is intentional — it prevents users from over-e
 
 ---
 
-## 10  Network Statistics (2025)
+## 10. Network Statistics (2025)
 
 - ~55 000 active routers worldwide (↑ from 7 000 in 2013)  
 - ~1 700 floodfill routers (~6 %)  
@@ -248,10 +248,10 @@ Transparency about these limits is intentional — it prevents users from over-e
 
 ---
 
-## 11  Development and Central Resources
+## 11. Development and Central Resources
 
-- Official site: </>  
-- Docs: <//en/docs>  
+- Official site: [geti2p.net](/)
+- Docs: [Documentation](/docs/)  
 - Debian repository: <https://deb.i2pgit.org> ( replaced deb.i2p2.de in Oct 2023 )  
 - Source code: <https://i2pgit.org/I2P_Developers/i2p.i2p> (Gitea) + GitHub mirror  
 - All releases are signed SU3 containers (RSA-4096, zzz/str4d keys)  
@@ -260,7 +260,7 @@ Transparency about these limits is intentional — it prevents users from over-e
 
 ---
 
-## 12  Summary of Security Improvements Since 0.8.x
+## 12. Summary of Security Improvements Since 0.8.x
 
 <table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
   <thead>
@@ -311,7 +311,7 @@ Transparency about these limits is intentional — it prevents users from over-e
 
 ---
 
-## 13  Known Unsolved or Planned Work
+## 13. Known Unsolved or Planned Work
 
 - Comprehensive restricted routes (trusted-peer routing) → planned 3.0.  
 - Non-trivial delay/batching for timing resistance → planned 3.0.  
@@ -321,7 +321,7 @@ Transparency about these limits is intentional — it prevents users from over-e
 
 ---
 
-## 14  Key References
+## 14. Key References
 
 - *Practical Attacks Against the I2P Network* (Egger et al., RAID 2013)  
 - *Privacy Implications of Performance-Based Peer Selection* (Herrmann & Grothoff, PETS 2011)  
@@ -330,7 +330,7 @@ Transparency about these limits is intentional — it prevents users from over-e
 
 ---
 
-## 15  Conclusion
+## 15. Conclusion
 
 I2P’s core anonymity model has stood for two decades: sacrifice global uniqueness for local trust and security.  
 From ElGamal to X25519, NTCP to NTCP2, and from manual reseeds to Sub-DB isolation, the project has evolved while maintaining its philosophy of defense in depth and transparency.
