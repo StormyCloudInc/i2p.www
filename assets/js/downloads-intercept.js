@@ -73,6 +73,12 @@
         // Intercept platform card download buttons
         document.querySelectorAll('.btn-platform').forEach(btn => {
             if (btn.classList.contains('intercepted')) return; // Already intercepted
+            
+            // Skip buttons explicitly marked as non-interceptable (guide/documentation links)
+            if (btn.getAttribute('data-no-intercept') === 'true') {
+                console.log('[I2P Downloads] Skipping button with data-no-intercept attribute:', btn);
+                return;
+            }
 
             const originalHref = btn.getAttribute('href');
             if (!originalHref || originalHref === '#') {
@@ -80,10 +86,36 @@
                 return;
             }
 
-            // Skip interception for internal guide pages and Docker Hub
-            if (originalHref.startsWith('/') ||
-                originalHref.startsWith('http') && originalHref.includes('docker.com')) {
-                console.log('[I2P Downloads] Skipping internal/guide link:', originalHref);
+            // Check button text/content to identify guide links
+            const buttonText = (btn.textContent || btn.innerText || '').toLowerCase().trim();
+            const isGuideButton = buttonText.includes('install guide') || 
+                                 buttonText.includes('guide') ||
+                                 buttonText.includes('installation');
+
+            // Skip interception for guide pages, documentation links, and Docker Hub
+            const hrefLower = originalHref.toLowerCase();
+            
+            // Check if it's a guide/documentation link (case-insensitive patterns)
+            const isGuideLink = hrefLower.includes('docs/guides/') || 
+                               hrefLower.includes('docs/install/') ||
+                               hrefLower.includes('debian-ubuntu-install') ||
+                               hrefLower.includes('installing-i2p-on-debian-and-ubuntu') ||
+                               hrefLower.includes('/guide');
+            
+            // Check if it's an internal link (starts with /) - typically guides/docs, not downloads
+            // Also check for relative URLs (no protocol) that point to guides
+            const isInternalLink = originalHref.startsWith('/');
+            const isRelativeGuideLink = !originalHref.includes('://') && 
+                                       !originalHref.startsWith('#') &&
+                                       (hrefLower.includes('docs/') || hrefLower.includes('guide'));
+            
+            // Check if it's a Docker Hub link
+            const isDockerHub = originalHref.startsWith('http') && originalHref.includes('docker.com');
+            
+            // Skip guide buttons, guide links, internal links, relative guide links, or Docker Hub
+            // Note: Internal links are skipped because actual download files are external URLs
+            if (isGuideButton || isGuideLink || isInternalLink || isRelativeGuideLink || isDockerHub) {
+                console.log('[I2P Downloads] Skipping internal/guide link:', originalHref, 'Button text:', buttonText);
                 return;
             }
 
