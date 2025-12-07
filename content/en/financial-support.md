@@ -243,7 +243,7 @@ hideSidebar: true
   </div>
 
   <div class="info-box">
-    <p><strong>Privacy First:</strong> We recommend cryptocurrency donations for maximum anonymity. All donations support the entire project - no funds go to individual developers unless explicitly designated.</p>
+    <p><strong>Privacy First:</strong> We recommend cryptocurrency donations for maximum anonymity. All donations support the entire project.</p>
     <p style="margin-top: 0.75rem;"><strong>Other Cryptocurrencies:</strong> Want to donate using a different cryptocurrency? Please <a href="/en/contact/">contact us</a> and we'll provide an address for your preferred currency.</p>
   </div>
 </div>
