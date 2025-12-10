@@ -9,60 +9,12 @@
     // ========================================================================
 
     // ========================================================================
-    // Smooth Scroll for Anchor Links
+    // Smooth Scroll for Anchor Links - REMOVED (now CSS-only using scroll-behavior: smooth and scroll-padding-top)
     // ========================================================================
 
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href === '#') return;
-
-            e.preventDefault();
-            const targetId = href.substring(1); // Remove the '#'
-            const target = document.getElementById(targetId);
-
-            if (target) {
-                const headerOffset = 80;
-                const elementPosition = target.offsetTop;
-                const offsetPosition = elementPosition - headerOffset;
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
     // ========================================================================
-    // Active Navigation Highlighting on Scroll
+    // Active Navigation Highlighting on Scroll - REMOVED (now CSS-only using :target pseudo-class for hash-based navigation)
     // ========================================================================
-
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-
-    function highlightNavigation() {
-        let scrollY = window.pageYOffset;
-
-        sections.forEach(section => {
-            const sectionHeight = section.offsetHeight;
-            const sectionTop = section.offsetTop - 100;
-            const sectionId = section.getAttribute('id');
-
-            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${sectionId}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
-    }
-
-    if (sections.length > 0) {
-        window.addEventListener('scroll', highlightNavigation);
-    }
 
     // ========================================================================
     // Header Shadow on Scroll - REMOVED (now CSS-only, shadow always visible on sticky header)
