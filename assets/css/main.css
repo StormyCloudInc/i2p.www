@@ -620,7 +620,11 @@ main {
     display: none;
 }
 
-/* Mobile Menu Toggle */
+/* Mobile Menu Toggle (CSS-only checkbox hack) */
+.mobile-menu-checkbox {
+    display: none;
+}
+
 .mobile-menu-toggle {
     display: none;
     background: none;
@@ -1037,10 +1041,18 @@ main {
         box-shadow: var(--shadow-lg);
     }
 
-    .nav-menu.active {
+    /* Show menu when checkbox is checked (CSS-only) */
+    .mobile-menu-checkbox:checked ~ .nav-menu {
         transform: translateY(0);
         opacity: 1;
         visibility: visible;
+    }
+
+    /* Prevent body scroll when menu is open (using :has() if supported) */
+    @supports selector(:has(*)) {
+        body:has(.mobile-menu-checkbox:checked) {
+            overflow: hidden;
+        }
     }
 
     .nav-links {

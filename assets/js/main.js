@@ -5,52 +5,8 @@
     'use strict';
 
     // ========================================================================
-    // Mobile Menu Toggle
+    // Mobile Menu Toggle - REMOVED (now CSS-only using checkbox hack)
     // ========================================================================
-
-    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-
-    function toggleMobileMenu() {
-        const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
-        mobileMenuToggle.setAttribute('aria-expanded', !isExpanded);
-        navMenu.classList.toggle('active');
-
-        // Prevent body scroll when menu is open
-        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
-    }
-
-    if (mobileMenuToggle) {
-        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
-    }
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function(e) {
-        if (navMenu && navMenu.classList.contains('active')) {
-            if (!navMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-                toggleMobileMenu();
-            }
-        }
-    });
-
-    // Close mobile menu on escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && navMenu && navMenu.classList.contains('active')) {
-            toggleMobileMenu();
-        }
-    });
-
-    // Close mobile menu when clicking on a link
-    if (navMenu) {
-        const navLinks = navMenu.querySelectorAll('a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (navMenu.classList.contains('active')) {
-                    toggleMobileMenu();
-                }
-            });
-        });
-    }
 
     // ========================================================================
     // Smooth Scroll for Anchor Links
@@ -127,52 +83,8 @@
     }
 
     // ========================================================================
-    // Site Banner Dismiss
+    // Site Banner Dismiss - REMOVED (now handled by Cloudflare Worker with cookies)
     // ========================================================================
-
-    function setupBanner() {
-        const banner = document.getElementById('site-banner');
-        if (!banner) return;
-
-        const bannerId = banner.getAttribute('data-banner-id');
-        const dismissBtn = banner.querySelector('.banner-close');
-
-        // Check if banner was previously dismissed
-        const dismissedBanners = JSON.parse(localStorage.getItem('dismissedBanners') || '[]');
-        if (dismissedBanners.includes(bannerId)) {
-            banner.remove();
-            return;
-        }
-
-        // Dismiss banner function
-        function dismissBanner() {
-            // Add hidden class for animation
-            banner.classList.add('banner-hidden');
-
-            // Wait for animation to complete before removing
-            setTimeout(() => {
-                banner.remove();
-            }, 250);
-
-            // Save to localStorage
-            dismissedBanners.push(bannerId);
-            localStorage.setItem('dismissedBanners', JSON.stringify(dismissedBanners));
-        }
-
-        // Dismiss button click handler
-        if (dismissBtn) {
-            dismissBtn.addEventListener('click', dismissBanner);
-        }
-
-        // Dismiss on ESC key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && banner && !banner.classList.contains('banner-hidden')) {
-                dismissBanner();
-            }
-        });
-    }
-
-    setupBanner();
 
     // ========================================================================
     // Poll Modal
