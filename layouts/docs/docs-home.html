@@ -9,12 +9,14 @@
 
             <!-- Search Bar -->
             <div class="docs-search">
-                <input type="search" id="docs-search" placeholder="Search documentation..." autocomplete="off" />
-                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
-                    <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-                <div id="search-results"></div>
+                <form method="GET" action="{{ relLangURL "docs/search" }}">
+                    <input type="search" name="q" placeholder="Search documentation..." autocomplete="off" />
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                        <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <button type="submit" class="search-submit" aria-label="Search">Search</button>
+                </form>
             </div>
         </div>
     </section>
@@ -241,8 +243,14 @@
     position: relative;
 }
 
+.docs-search form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .docs-search input {
-    width: 100%;
+    flex: 1;
     padding: 0.875rem 1rem 0.875rem 3rem;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: var(--radius-lg);
@@ -265,103 +273,48 @@
 .search-icon {
     position: absolute;
     left: 1rem;
-    top: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
     color: rgba(255, 255, 255, 0.7);
     pointer-events: none;
+    z-index: 1;
 }
 
-/* Search Results */
-#search-results {
-    position: absolute;
-    top: calc(100% + 0.5rem);
-    left: 0;
-    right: 0;
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-xl);
-    max-height: 500px;
-    overflow-y: auto;
-    z-index: 1000;
-    display: none;
-}
-
-#search-results.visible {
-    display: block;
-}
-
-.search-loading,
-.search-no-results {
-    padding: var(--spacing-lg);
-    text-align: center;
-    color: var(--color-text-secondary);
-}
-
-.search-results-list {
-    padding: var(--spacing-sm) 0;
-}
-
-.search-result-item {
-    border-bottom: 1px solid var(--color-border);
-}
-
-.search-result-item:last-child {
-    border-bottom: none;
-}
-
-.search-result-item a {
-    display: block;
-    padding: var(--spacing-md) var(--spacing-lg);
-    color: var(--color-text);
-    text-decoration: none;
-    transition: background var(--transition-fast);
-}
-
-.search-result-item a:hover,
-.search-result-item.focused a {
-    background: var(--color-bg-secondary);
-}
-
-.search-result-title {
-    font-weight: 600;
-    margin-bottom: var(--spacing-xs);
-    color: var(--color-text);
-}
-
-.search-result-description {
-    font-size: 0.875rem;
-    color: var(--color-text-secondary);
-    margin-bottom: var(--spacing-xs);
-    line-height: 1.5;
-}
-
-.search-result-url {
-    font-size: 0.75rem;
-    color: var(--color-primary);
-    opacity: 0.8;
-}
-
-.search-result-title mark,
-.search-result-description mark {
-    background: var(--color-accent);
+.search-submit {
+    padding: 0.875rem 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
     color: white;
-    padding: 0.125rem 0.25rem;
-    border-radius: var(--radius-sm);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-lg);
+    font-size: 1rem;
     font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
 }
 
-[data-theme="dark"] .search-result-title mark,
-[data-theme="dark"] .search-result-description mark {
-    background: var(--color-primary);
+.search-submit:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
-.search-results-more {
-    padding: var(--spacing-md) var(--spacing-lg);
-    text-align: center;
-    color: var(--color-text-secondary);
-    font-size: 0.875rem;
-    background: var(--color-bg-secondary);
-    border-top: 1px solid var(--color-border);
+.search-submit:active {
+    transform: translateY(1px);
+}
+
+/* Hide submit button on mobile, rely on Enter key */
+@media (max-width: 480px) {
+    .search-submit {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
 }
 
 /* Docs Main Content */
@@ -576,9 +529,5 @@
 }
 </style>
 
-<!-- Load Lunr.js and search functionality -->
-<script src="{{ "js/lunr.min.js" | relURL }}"></script>
-{{ $docsSearch := resources.Get "js/docs-search.js" | minify }}
-<script src="{{ $docsSearch.RelPermalink }}"></script>
 
 {{ end }}
