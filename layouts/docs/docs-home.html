@@ -7,8 +7,8 @@
             <h1 class="docs-title">{{ .Title }}</h1>
             <p class="docs-subtitle">{{ .Description }}</p>
 
-            <!-- Search Bar -->
-            <div class="docs-search">
+            <!-- Search Bar (hidden on I2P/Tor, requires Cloudflare worker) -->
+            <div class="docs-search" data-search-bar>
                 <form method="GET" action="{{ relLangURL "docs/search" }}">
                     <input type="search" name="q" placeholder="Search documentation..." autocomplete="off" />
                     <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -241,6 +241,18 @@
     max-width: 600px;
     margin: 0 auto;
     position: relative;
+}
+
+/* Hide search bar on I2P/Tor (search requires Cloudflare worker which only works on clearnet) */
+/* Server should add 'clearnet' class to <html> or <body> element for clearnet visitors */
+/* Hide by default, show only when clearnet class is present */
+[data-search-bar] {
+    display: none;
+}
+
+html.clearnet [data-search-bar],
+body.clearnet [data-search-bar] {
+    display: block;
 }
 
 .docs-search form {
@@ -528,6 +540,5 @@
     }
 }
 </style>
-
 
 {{ end }}
