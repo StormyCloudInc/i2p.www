@@ -79,15 +79,13 @@ Meta LS2.
 При проксировании через HTTP-прокси, мы общаемся с
 прокси, как указано в [RFC-2616](https://tools.ietf.org/html/rfc2616).
 
-Учетные данные
-`````````````
+#### Учетные данные
 
 Хотя бы имена пользователей и пароли являются кластерообразующими, или
 сервер-зависимыми, это зависит от реализации.
 
 
-HTTP-запрос 1
-``````````````
+#### HTTP-запрос 1
 
 Инициатор отправит следующее.
 
@@ -106,8 +104,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 ```
 
 
-HTTP-ответ 1
-`````````````
+#### HTTP-ответ 1
 
 Если путь неверный, получатель отправит стандартный ответ "HTTP/1.1 404 Not Found",
 как в [RFC-2616](https://tools.ietf.org/html/rfc2616).
@@ -119,8 +116,7 @@ HTTP-ответ 1
 Обе стороны затем закроют сокет.
 
 
-HTTP-запрос 2
-````````````
+#### HTTP-запрос 2
 
 Инициатор отправит следующее,
 как в [RFC-2617](https://tools.ietf.org/html/rfc2617) и [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket).
@@ -143,8 +139,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 ```
 
 
-HTTP-ответ 2
-`````````````
+#### HTTP-ответ 2
 
 Если аутентификация неверна, получатель отправит еще один стандартный ответ "HTTP/1.1 401 Unauthorized",
 как в [RFC-2617](https://tools.ietf.org/html/rfc2617).
@@ -167,8 +162,7 @@ HTTP/1.1 101 Switching Protocols
 Протокол Raft, как определено ниже, продолжается на том же сокете.
 
 
-Кэширование
-``````````
+#### Кэширование
 
 Учётные данные должны кэшироваться по крайней мере на один час, чтобы
 последующие соединения могли сразу перейти к
@@ -193,27 +187,25 @@ HTTP/1.1 101 Switching Protocols
 в разделе 7 Raft.
 
 
-========================  ======  ===========  =================   =====================================
-Сообщение                 Номер   Отправлено   Кому отправлено      Примечания
-========================  ======  ===========  =================   =====================================
-RequestVoteRequest           1    Candidate    Follower            Стандартное RPC Raft; журнал не должен содержать записи
-RequestVoteResponse          2    Follower     Candidate           Стандартное RPC Raft
-AppendEntriesRequest         3    Leader       Follower            Стандартное RPC Raft
-AppendEntriesResponse        4    Follower     Leader / Client     Стандартное RPC Raft
-ClientRequest                5    Client       Leader / Follower   Ответ — AppendEntriesResponse; должен содержать только записи приложения в журнале
-AddServerRequest             6    Client       Leader              Должен содержать только одну запись ClusterServer в журнале
-AddServerResponse            7    Leader       Client              Лидер также отправит запрос JoinClusterRequest
-RemoveServerRequest          8    Follower     Leader              Должен содержать только одну запись ClusterServer в журнале
-RemoveServerResponse         9    Leader       Follower
-SyncLogRequest              10    Leader       Follower            Должен содержать только одну запись LogPack в журнале
-SyncLogResponse             11    Follower     Leader
-JoinClusterRequest          12    Leader       New Server          Приглашение присоединиться; должен содержать только одну запись Configuration в журнале
-JoinClusterResponse         13    New Server   Leader
-LeaveClusterRequest         14    Leader       Follower            Команда на выход
-LeaveClusterResponse        15    Follower     Leader
-InstallSnapshotRequest      16    Leader       Follower            Раздел 7 Raft; должен содержать только одну запись SnapshotSyncRequest в журнале
-InstallSnapshotResponse     17    Follower     Leader              Раздел 7 Raft
-========================  ======  ===========  =================   =====================================
+| Сообщение | Номер | Отправлено | Кому отправлено | Примечания |
+| :--- | :--- | :--- | :--- | :--- |
+| RequestVoteRequest | 1 | Candidate | Follower | Стандартное RPC Raft; журнал не должен содержать записи |
+| RequestVoteResponse | 2 | Follower | Candidate | Стандартное RPC Raft |
+| AppendEntriesRequest | 3 | Leader | Follower | Стандартное RPC Raft |
+| AppendEntriesResponse | 4 | Follower | Leader / Client | Стандартное RPC Raft |
+| ClientRequest | 5 | Client | Leader / Follower | Ответ — AppendEntriesResponse; должен содержать только записи приложения в журнале |
+| AddServerRequest | 6 | Client | Leader | Должен содержать только одну запись ClusterServer в журнале |
+| AddServerResponse | 7 | Leader | Client | Лидер также отправит запрос JoinClusterRequest |
+| RemoveServerRequest | 8 | Follower | Leader | Должен содержать только одну запись ClusterServer в журнале |
+| RemoveServerResponse | 9 | Leader | Follower | |
+| SyncLogRequest | 10 | Leader | Follower | Должен содержать только одну запись LogPack в журнале |
+| SyncLogResponse | 11 | Follower | Leader | |
+| JoinClusterRequest | 12 | Leader | New Server | Приглашение присоединиться; должен содержать только одну запись Configuration в журнале |
+| JoinClusterResponse | 13 | New Server | Leader | |
+| LeaveClusterRequest | 14 | Leader | Follower | Команда на выход |
+| LeaveClusterResponse | 15 | Follower | Leader | |
+| InstallSnapshotRequest | 16 | Leader | Follower | Раздел 7 Raft; должен содержать только одну запись SnapshotSyncRequest в журнале |
+| InstallSnapshotResponse | 17 | Follower | Leader | Раздел 7 Raft |
 
 
 ### Установление
@@ -288,8 +280,7 @@ Follower Алиса              Лидер Чарли
 Запросы содержат заголовок фиксированного размера и необязательные записи в журнале переменного размера.
 
 
-Заголовок запроса
-`````````````````
+#### Заголовок запроса
 
 Заголовок запроса составляет 45 байт, как показано ниже.
 Все значения — неотрицательные большие-endian.
@@ -317,8 +308,7 @@ Follower Алиса              Лидер Чарли
 
 
 
-Записи в журнале
-````````````
+#### Записи в журнале
 
 Журнал содержит ноль или более записей.
 Каждая запись в журнале следующим образом.
@@ -332,20 +322,17 @@ Follower Алиса              Лидер Чарли
 ```
 
 
-Содержание журнала
-``````````````````
+#### Содержание журнала
 
 Все значения — неотрицательные большие-endian.
 
-========================  ======
-Тип значения журнала      Номер
-========================  ======
-Приложение                  1
-Конфигурация                2
-ClusterServer               3
-LogPack                     4
-SnapshotSyncRequest         5
-========================  ======
+| Тип значения журнала | Номер |
+| :--- | :--- |
+| Приложение | 1 |
+| Конфигурация | 2 |
+| ClusterServer | 3 |
+| LogPack | 4 |
+| SnapshotSyncRequest | 5 |
 
 
 #### Приложение
@@ -437,8 +424,7 @@ ID:                4 байта целое число
 ```
 
 
-Примечания
-`````
+#### Примечания
 
 ID Назначения обычно указан как фактический ID назначения для этого сообщения.
 Однако, для AppendEntriesResponse, AddServerResponse, и RemoveServerResponse,

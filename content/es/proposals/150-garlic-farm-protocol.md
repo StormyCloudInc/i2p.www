@@ -79,14 +79,13 @@ La autenticación básica RFC 2617 NO está soportada.
 Al proxificar a través del proxy HTTP, comunicar con
 el proxy según lo especificado en [RFC-2616](https://tools.ietf.org/html/rfc2616).
 
-Credenciales
-```````````
+#### Credenciales
+
 Si los nombres de usuario y contraseñas son por clúster, o
 por servidor, es dependiente de la implementación.
 
 
-Solicitud HTTP 1
-``````````````
+#### Solicitud HTTP 1
 
 El originador enviará lo siguiente.
 
@@ -105,8 +104,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 ```
 
 
-Respuesta HTTP 1
-``````````````
+#### Respuesta HTTP 1
 
 Si la ruta no es correcta, el destinatario enviará una respuesta estándar "HTTP/1.1 404 Not Found",
 como en [RFC-2616](https://tools.ietf.org/html/rfc2616).
@@ -118,8 +116,7 @@ como en [RFC-2617](https://tools.ietf.org/html/rfc2617).
 Ambas partes cerrarán entonces el socket.
 
 
-Solicitud HTTP 2
-``````````````
+#### Solicitud HTTP 2
 
 El originador enviará lo siguiente,
 como en [RFC-2617](https://tools.ietf.org/html/rfc2617) y [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket).
@@ -142,8 +139,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 ```
 
 
-Respuesta HTTP 2
-``````````````
+#### Respuesta HTTP 2
 
 Si la autenticación no es correcta, el destinatario enviará otra respuesta estándar "HTTP/1.1 401 Unauthorized",
 como en [RFC-2617](https://tools.ietf.org/html/rfc2617).
@@ -166,8 +162,7 @@ Después de que esto es recibido, el socket permanece abierto.
 El protocolo Raft definido a continuación comienza, en el mismo socket.
 
 
-Caching
-```````
+#### Caching
 
 Las credenciales se deben almacenar en caché durante al menos una hora, de modo que
 las conexiones subsecuentes puedan saltar directamente a
@@ -192,27 +187,25 @@ Los tipos de mensajes 16-17 son los mensajes RPC de Compactación de Registro de
 en la sección 7 de Raft.
 
 
-========================  ======  ===========  =================   =====================================
-Mensaje                   Número  Enviado Por  Enviado A           Notas
-========================  ======  ===========  =================   =====================================
-RequestVoteRequest           1    Candidato    Seguidor            RPC estándar de Raft; no debe contener entradas de registro
-RequestVoteResponse          2    Seguidor     Candidato           RPC estándar de Raft
-AppendEntriesRequest         3    Líder        Seguidor            RPC estándar de Raft
-AppendEntriesResponse        4    Seguidor     Líder / Cliente     RPC estándar de Raft
-ClientRequest                5    Cliente      Líder / Seguidor    La respuesta es AppendEntriesResponse; debe contener solo entradas de registro de Aplicación
-AddServerRequest             6    Cliente      Líder               Debe contener una única entrada de registro ClusterServer solamente
-AddServerResponse            7    Líder        Cliente             El líder también enviará un JoinClusterRequest
-RemoveServerRequest          8    Seguidor     Líder               Debe contener una única entrada de registro ClusterServer solamente
-RemoveServerResponse         9    Líder        Seguidor
-SyncLogRequest              10    Líder        Seguidor            Debe contener una única entrada de registro LogPack solamente
-SyncLogResponse             11    Seguidor     Líder
-JoinClusterRequest          12    Líder        Nuevo Servidor      Invitación a unirse; debe contener una única entrada de registro de Configuración solamente
-JoinClusterResponse         13    Nuevo Servidor Líder
-LeaveClusterRequest         14    Líder        Seguidor            Comando para salir
-LeaveClusterResponse        15    Seguidor     Líder
-InstallSnapshotRequest      16    Líder        Seguidor            Sección 7 de Raft; Debe contener una única entrada de registro SnapshotSyncRequest solamente
-InstallSnapshotResponse     17    Seguidor     Líder               Sección 7 de Raft
-========================  ======  ===========  =================   =====================================
+| Mensaje | Número | Enviado Por | Enviado A | Notas |
+| :--- | :--- | :--- | :--- | :--- |
+| RequestVoteRequest | 1 | Candidato | Seguidor | RPC estándar de Raft; no debe contener entradas de registro |
+| RequestVoteResponse | 2 | Seguidor | Candidato | RPC estándar de Raft |
+| AppendEntriesRequest | 3 | Líder | Seguidor | RPC estándar de Raft |
+| AppendEntriesResponse | 4 | Seguidor | Líder / Cliente | RPC estándar de Raft |
+| ClientRequest | 5 | Cliente | Líder / Seguidor | La respuesta es AppendEntriesResponse; debe contener solo entradas de registro de Aplicación |
+| AddServerRequest | 6 | Cliente | Líder | Debe contener una única entrada de registro ClusterServer solamente |
+| AddServerResponse | 7 | Líder | Cliente | El líder también enviará un JoinClusterRequest |
+| RemoveServerRequest | 8 | Seguidor | Líder | Debe contener una única entrada de registro ClusterServer solamente |
+| RemoveServerResponse | 9 | Líder | Seguidor | |
+| SyncLogRequest | 10 | Líder | Seguidor | Debe contener una única entrada de registro LogPack solamente |
+| SyncLogResponse | 11 | Seguidor | Líder | |
+| JoinClusterRequest | 12 | Líder | Nuevo Servidor | Invitación a unirse; debe contener una única entrada de registro de Configuración solamente |
+| JoinClusterResponse | 13 | Nuevo Servidor | Líder | |
+| LeaveClusterRequest | 14 | Líder | Seguidor | Comando para salir |
+| LeaveClusterResponse | 15 | Seguidor | Líder | |
+| InstallSnapshotRequest | 16 | Líder | Seguidor | Sección 7 de Raft; Debe contener una única entrada de registro SnapshotSyncRequest solamente |
+| InstallSnapshotResponse | 17 | Seguidor | Líder | Sección 7 de Raft |
 
 
 ### Establecimiento
@@ -287,8 +280,7 @@ Las solicitudes contienen un encabezado y cero o más entradas de registro.
 Las solicitudes contienen un encabezado de tamaño fijo y Entradas de Registro opcionales de tamaño variable.
 
 
-Encabezado de Solicitud
-``````````````````````
+#### Encabezado de Solicitud
 
 El encabezado de la solicitud es de 45 bytes, como sigue.
 Todos los valores son big-endian sin signo.
@@ -316,8 +308,7 @@ este mensaje es un mensaje de latido (mantenimiento de conexión).
 
 
 
-Entradas de Registro
-```````````````````
+#### Entradas de Registro
 
 El registro contiene cero o más entradas de registro.
 Cada entrada de registro es como sigue.
@@ -331,20 +322,17 @@ Término:           entero de 8 bytes
 ```
 
 
-Contenidos del Registro
-``````````````````````
+#### Contenidos del Registro
 
 Todos los valores son big-endian sin signo.
 
-========================  ======
-Tipo de Valor de Registro            Número
-========================  ======
-Aplicación                  1
-Configuración                2
-Servidor de Clúster                3
-Paquete de Registro                      4
-Solicitud de Sincronización de Instantánea          5
-========================  ======
+| Tipo de Valor de Registro | Número |
+| :--- | :--- |
+| Aplicación | 1 |
+| Configuración | 2 |
+| Servidor de Clúster | 3 |
+| Paquete de Registro | 4 |
+| Solicitud de Sincronización de Instantánea | 5 |
 
 
 #### Aplicación
@@ -438,8 +426,7 @@ Tipo de Mensaje:   1 byte
 ```
 
 
-Notas
-`````
+#### Notas
 
 La ID de Destino es generalmente el destino real para este mensaje.
 Sin embargo, para AppendEntriesResponse, AddServerResponse y RemoveServerResponse,

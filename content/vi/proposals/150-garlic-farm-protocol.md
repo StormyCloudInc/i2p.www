@@ -78,15 +78,13 @@ Xác thực cơ bản RFC 2617 KHÔNG được hỗ trợ.
 Khi proxy thông qua HTTP proxy, giao tiếp với
 proxy như được chỉ định trong [RFC-2616](https://tools.ietf.org/html/rfc2616).
 
-Thông tin đăng nhập
-`````````````
+#### Thông tin đăng nhập
 
 Việc tên người dùng và mật khẩu dựa trên cụm, hoặc
 dựa trên máy chủ, phụ thuộc vào triển khai.
 
 
-Yêu Cầu HTTP 1
-``````````````
+#### Yêu Cầu HTTP 1
 
 Người khởi tạo sẽ gửi những điều sau.
 
@@ -105,8 +103,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 ```
 
 
-Phản Hồi HTTP 1
-```````````````
+#### Phản Hồi HTTP 1
 
 Nếu đường dẫn không chính xác, người nhận sẽ gửi một phản hồi "HTTP/1.1 404 Not Found" tiêu chuẩn,
 như trong [RFC-2616](https://tools.ietf.org/html/rfc2616).
@@ -118,8 +115,7 @@ như trong [RFC-2617](https://tools.ietf.org/html/rfc2617).
 Cả hai bên sau đó sẽ đóng socket.
 
 
-Yêu Cầu HTTP 2
-``````````````
+#### Yêu Cầu HTTP 2
 
 Người khởi tạo sẽ gửi những điều sau,
 như trong [RFC-2617](https://tools.ietf.org/html/rfc2617) và [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket).
@@ -142,8 +138,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 ```
 
 
-Phản Hồi HTTP 2
-```````````````
+#### Phản Hồi HTTP 2
 
 Nếu xác thực không chính xác, người nhận sẽ gửi một phản hồi "HTTP/1.1 401 Unauthorized" tiêu chuẩn khác,
 như trong [RFC-2617](https://tools.ietf.org/html/rfc2617).
@@ -166,8 +161,7 @@ Sau khi nhận được phản hồi này, socket vẫn mở.
 Giao thức Raft như được định nghĩa dưới đây bắt đầu, trên cùng một socket.
 
 
-Bộ Nhớ Đệm
-```````
+#### Bộ Nhớ Đệm
 
 Thông tin đăng nhập sẽ được lưu vào bộ nhớ đệm ít nhất một giờ, để
 các kết nối tiếp theo có thể nhảy trực tiếp đến
@@ -191,27 +185,25 @@ Các loại tin nhắn 16-17 là các tin nhắn RFC Nén Nhật ký được đ
 trong phần 7 của Raft.
 
 
-========================  ======  ===========  =================   =====================================
-Message                   Số lượng  Gửi bởi    Gửi tới            Ghi chú
-========================  ======  ===========  =================   =====================================
-RequestVoteRequest           1    Candidate    Follower            RPC tiêu chuẩn Faft; không được chứa nhật ký đăng nhập
-RequestVoteResponse          2    Follower     Candidate           RPC tiêu chuẩn Faft
-AppendEntriesRequest         3    Leader       Follower            RPC tiêu chuẩn Faft
-AppendEntriesResponse        4    Follower     Leader / Client     RPC tiêu chuẩn Faft
-ClientRequest                5    Client       Leader / Follower   Phản hồi là AppendEntriesResponse; phải chứa các nhật ký ứng dụng chỉ
-AddServerRequest             6    Client       Leader              Phải chứa một mục duy nhất của nhật lý ClusterServer chỉ
-AddServerResponse            7    Leader       Client              Leader cũng sẽ gửi một JoinClusterRequest
-RemoveServerRequest          8    Follower     Leader              Phải chứa một mục duy nhất của nhật lý ClusterServer chỉ
-RemoveServerResponse         9    Leader       Follower
-SyncLogRequest              10    Leader       Follower            Phải chứa một mục duy nhất của nhật lý LogPack chỉ
-SyncLogResponse             11    Follower     Leader
-JoinClusterRequest          12    Leader       New Server          Lời mời tham gia; phải chứa một mục duy nhất của nhật lý Cấu hình chỉ
-JoinClusterResponse         13    New Server   Leader
-LeaveClusterRequest         14    Leader       Follower            Lệnh rời khỏi
-LeaveClusterResponse        15    Follower     Leader
-InstallSnapshotRequest      16    Leader       Follower            Phần 7 Raft; Phải chứa một mục duy nhất của yêu cầu đồng bộ hóa Snapshotsync chỉ
-InstallSnapshotResponse     17    Follower     Leader              Phần 7 Raft
-========================  ======  ===========  =================   =====================================
+| Message | Số lượng | Gửi bởi | Gửi tới | Ghi chú |
+| :--- | :--- | :--- | :--- | :--- |
+| RequestVoteRequest | 1 | Candidate | Follower | RPC tiêu chuẩn Raft; không được chứa nhật ký đăng nhập |
+| RequestVoteResponse | 2 | Follower | Candidate | RPC tiêu chuẩn Raft |
+| AppendEntriesRequest | 3 | Leader | Follower | RPC tiêu chuẩn Raft |
+| AppendEntriesResponse | 4 | Follower | Leader / Client | RPC tiêu chuẩn Raft |
+| ClientRequest | 5 | Client | Leader / Follower | Phản hồi là AppendEntriesResponse; phải chứa các nhật ký ứng dụng chỉ |
+| AddServerRequest | 6 | Client | Leader | Phải chứa một mục duy nhất của nhật lý ClusterServer chỉ |
+| AddServerResponse | 7 | Leader | Client | Leader cũng sẽ gửi một JoinClusterRequest |
+| RemoveServerRequest | 8 | Follower | Leader | Phải chứa một mục duy nhất của nhật lý ClusterServer chỉ |
+| RemoveServerResponse | 9 | Leader | Follower | |
+| SyncLogRequest | 10 | Leader | Follower | Phải chứa một mục duy nhất của nhật lý LogPack chỉ |
+| SyncLogResponse | 11 | Follower | Leader | |
+| JoinClusterRequest | 12 | Leader | New Server | Lời mời tham gia; phải chứa một mục duy nhất của nhật lý Cấu hình chỉ |
+| JoinClusterResponse | 13 | New Server | Leader | |
+| LeaveClusterRequest | 14 | Leader | Follower | Lệnh rời khỏi |
+| LeaveClusterResponse | 15 | Follower | Leader | |
+| InstallSnapshotRequest | 16 | Leader | Follower | Phần 7 Raft; Phải chứa một mục duy nhất của yêu cầu đồng bộ hóa Snapshotsync chỉ |
+| InstallSnapshotResponse | 17 | Follower | Leader | Phần 7 Raft |
 
 
 ### Thiết Lập
@@ -285,8 +277,7 @@ Yêu cầu chứa tiêu đề và không hoặc nhiều nhật ký đăng nhập
 Yêu cầu chứa một tiêu đề có kích thước cố định và Nhật ký Đăng nhập Tùy chọn có kích thước thay đổi.
 
 
-Tiêu đề Yêu cầu
-``````````````
+#### Tiêu đề Yêu cầu
 
 Tiêu đề yêu cầu là 45 byte, như sau.
 Tất cả các giá trị đều là big-endian không dấu.
@@ -313,8 +304,7 @@ Trong AppendEntriesRequest, khi kích thước nhật lý là số không,
 tin nhắn này là tin nhắn duy trì kết nối (keepalive).
 
 
-Nhật ký Đăng nhập
-`````````````
+#### Nhật ký Đăng nhập
 
 Nhật lý chứa không hay nhiều mục nhật lý.
 Mỗi mục nhật lý như sau.
@@ -328,20 +318,17 @@ Thuật ngữ:  8 byte integer
 ```
 
 
-Nội Dung Nhật lý
-``````````````
+#### Nội Dung Nhật lý
 
 Tất cả các giá trị đều là big-endian không dấu.
 
-========================  ======
-Loại Giá Trị Nhật lý      Số
-========================  ======
-Ứng dụng                  1
-Cấu hình                  2
-Máy chủ Cluster           3
-Gói Nhật ký               4
-Yêu cầu Đồng bộ hóa Snapshot   5
-========================  ======
+| Loại Giá Trị Nhật lý | Số |
+| :--- | :--- |
+| Ứng dụng | 1 |
+| Cấu hình | 2 |
+| Máy chủ Cluster | 3 |
+| Gói Nhật ký | 4 |
+| Yêu cầu Đồng bộ hóa Snapshot | 5 |
 
 
 #### Ứng dụng
@@ -431,8 +418,7 @@ Loại tin nhắn:   1 byte
 ```
 
 
-Ghi chú
-`````
+#### Ghi chú
 
 ID Đích thông thường là đích thực sự cho tin nhắn này.
 Nhưng, với AppendEntriesResponse, AddServerResponse, và RemoveServerResponse,

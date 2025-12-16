@@ -56,14 +56,12 @@ Ziele:
 
 Wir werden einen websocket-ähnlichen Handshake [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket) und HTTP-Digest-Authentifizierung [RFC-2617](https://tools.ietf.org/html/rfc2617) verwenden. Die RFC 2617-Basic-Authentifizierung wird NICHT unterstützt. Beim Proxying durch den HTTP-Proxy kommunizieren Sie mit dem Proxy wie in [RFC-2616](https://tools.ietf.org/html/rfc2616) spezifiziert.
 
-Credentials
-```````````
+#### Credentials
 
 Ob Benutzernamen und Passwörter pro Cluster oder pro Server erfolgen, ist implementierungsabhängig.
 
 
-HTTP-Anfrage 1
-``````````````
+#### HTTP-Anfrage 1
 
 Der Absender sendet folgendes.
 
@@ -82,8 +80,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 ```
 
 
-HTTP-Antwort 1
-``````````````
+#### HTTP-Antwort 1
 
 Wenn der Pfad nicht korrekt ist, sendet der Empfänger eine standardmäßige "HTTP/1.1 404 Not Found"-Antwort, wie in [RFC-2616](https://tools.ietf.org/html/rfc2616).
 
@@ -92,8 +89,7 @@ Wenn der Pfad korrekt ist, sendet der Empfänger eine standardmäßige "HTTP/1.1
 Beide Parteien schließen dann den Socket.
 
 
-HTTP-Anfrage 2
-``````````````
+#### HTTP-Anfrage 2
 
 Der Absender sendet folgendes, wie in [RFC-2617](https://tools.ietf.org/html/rfc2617) und [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket).
 
@@ -115,8 +111,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 ```
 
 
-HTTP-Antwort 2
-``````````````
+#### HTTP-Antwort 2
 
 Wenn die Authentifizierung nicht korrekt ist, sendet der Empfänger eine weitere standardmäßige "HTTP/1.1 401 Unauthorized"-Antwort, wie in [RFC-2617](https://tools.ietf.org/html/rfc2617).
 
@@ -136,8 +131,7 @@ HTTP/1.1 101 Switching Protocols
 Nach dieser Empfang bleibt der Socket offen. Das nachstehend definierte Raft-Protokoll wird über denselben Socket gestartet.
 
 
-Caching
-```````
+#### Caching
 
 Anmeldeinformationen sollen mindestens eine Stunde im Cache gespeichert werden, sodass nachfolgende Verbindungen direkt zur "HTTP-Anfrage 2" oben springen können.
 
@@ -154,27 +148,25 @@ Nachrichtentypen 5-15 sind die erweiterten RPC-Nachrichten, die von JRaft defini
 Nachrichtentypen 16-17 sind die Log-Kompressions-RPC-Nachrichten, die in Raft Abschnitt 7 definiert sind.
 
 
-========================  ======  ===========  =================   ================================
-Nachricht                 Nummer  gesendet von gesendet an          Hinweise
-========================  ======  ===========  =================   ================================
-RequestVoteRequest           1    Kandidat     Follower            Standard Raft RPC; darf keine Log-Einträge enthalten
-RequestVoteResponse          2    Follower     Kandidat            Standard Raft RPC
-AppendEntriesRequest         3    Leader       Follower            Standard Raft RPC
-AppendEntriesResponse        4    Follower     Leader / Client     Standard Raft RPC
-ClientRequest                5    Client       Leader / Follower   Antwort ist AppendEntriesResponse; darf nur Anwendungs-Log-Einträge enthalten
-AddServerRequest             6    Client       Leader              Muss nur einen ClusterServer-Log-Eintrag enthalten
-AddServerResponse            7    Leader       Client              Leader wird auch eine JoinClusterRequest senden
-RemoveServerRequest          8    Follower     Leader              Muss nur einen ClusterServer-Log-Eintrag enthalten
-RemoveServerResponse         9    Leader       Follower
-SyncLogRequest              10    Leader       Follower            Muss nur einen LogPack-Log-Eintrag enthalten
-SyncLogResponse             11    Follower     Leader
-JoinClusterRequest          12    Leader       Neuer Server        Einladung zum Beitritt; muss nur einen Konfigurations-Log-Eintrag enthalten
-JoinClusterResponse         13    Neuer Server Leader
-LeaveClusterRequest         14    Leader       Follower            Befehl zum Verlassen
-LeaveClusterResponse        15    Follower     Leader
-InstallSnapshotRequest      16    Leader       Follower            Raft Abschnitt 7; muss nur einen SnapshotSyncRequest-Log-Eintrag enthalten
-InstallSnapshotResponse     17    Follower     Leader              Raft Abschnitt 7
-========================  ======  ===========  =================   ================================
+| Nachricht | Nummer | gesendet von | gesendet an | Hinweise |
+| :--- | :--- | :--- | :--- | :--- |
+| RequestVoteRequest | 1 | Kandidat | Follower | Standard Raft RPC; darf keine Log-Einträge enthalten |
+| RequestVoteResponse | 2 | Follower | Kandidat | Standard Raft RPC |
+| AppendEntriesRequest | 3 | Leader | Follower | Standard Raft RPC |
+| AppendEntriesResponse | 4 | Follower | Leader / Client | Standard Raft RPC |
+| ClientRequest | 5 | Client | Leader / Follower | Antwort ist AppendEntriesResponse; darf nur Anwendungs-Log-Einträge enthalten |
+| AddServerRequest | 6 | Client | Leader | Muss nur einen ClusterServer-Log-Eintrag enthalten |
+| AddServerResponse | 7 | Leader | Client | Leader wird auch eine JoinClusterRequest senden |
+| RemoveServerRequest | 8 | Follower | Leader | Muss nur einen ClusterServer-Log-Eintrag enthalten |
+| RemoveServerResponse | 9 | Leader | Follower | |
+| SyncLogRequest | 10 | Leader | Follower | Muss nur einen LogPack-Log-Eintrag enthalten |
+| SyncLogResponse | 11 | Follower | Leader | |
+| JoinClusterRequest | 12 | Leader | Neuer Server | Einladung zum Beitritt; muss nur einen Konfigurations-Log-Eintrag enthalten |
+| JoinClusterResponse | 13 | Neuer Server | Leader | |
+| LeaveClusterRequest | 14 | Leader | Follower | Befehl zum Verlassen |
+| LeaveClusterResponse | 15 | Follower | Leader | |
+| InstallSnapshotRequest | 16 | Leader | Follower | Raft Abschnitt 7; muss nur einen SnapshotSyncRequest-Log-Eintrag enthalten |
+| InstallSnapshotResponse | 17 | Follower | Leader | Raft Abschnitt 7 |
 
 
 ### Etablierung
@@ -247,8 +239,7 @@ Kandidatin Alice               Follower Bob
 Anfragen enthalten einen Header und null oder mehr Log-Einträge. Anfragen haben einen Header mit fester Größe und optionale Logs-Einträge variabler Größe.
 
 
-Anfrageheader
-`````````````
+#### Anfrageheader
 
 Der Anfrageheader ist 45 Bytes groß, wie folgt. Alle Werte sind unsigned Big-Endian.
 
@@ -273,8 +264,7 @@ Im AppendEntriesRequest, wenn die Log-Eintragsgröße null ist, ist diese Nachri
 
 
 
-Logs-Einträge
-`````````````
+#### Logs-Einträge
 
 Das Log enthält null oder mehr Log-Einträge. Jeder Log-Eintrag ist wie folgt. Alle Werte sind unsigned Big-Endian.
 
@@ -286,20 +276,17 @@ Begriff:        8-Byte-Integer
 ```
 
 
-Log-Inhalt
-````````````
+#### Log-Inhalt
 
 Alle Werte sind unsigned Big-Endian.
 
-========================  ======
-Log-Werttyp               Nummer
-========================  ======
-Anwendung                    1
-Konfiguration                2
-ClusterServer                3
-LogPack                      4
-SnapshotSyncRequest          5
-========================  ======
+| Log-Werttyp | Nummer |
+| :--- | :--- |
+| Anwendung | 1 |
+| Konfiguration | 2 |
+| ClusterServer | 3 |
+| LogPack | 4 |
+| SnapshotSyncRequest | 5 |
 
 
 #### Anwendung
@@ -389,8 +376,7 @@ Nachrichtentyp:  1 Byte
 ```
 
 
-Anmerkungen
-```````````
+#### Anmerkungen
 
 Die Ziel-ID ist normalerweise das tatsächliche Ziel für diese Nachricht. Für AppendEntriesResponse, AddServerResponse und RemoveServerResponse ist es jedoch die ID des aktuellen Leaders.
 

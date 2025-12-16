@@ -56,14 +56,12 @@ JRaft에 의해 정의되지 않음.
 
 우리는 websocket 유사한 핸드셰이크 [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket)와 HTTP Digest 인증을 사용할 것입니다 [RFC-2617](https://tools.ietf.org/html/rfc2617). RFC 2617의 기본 인증은 지원하지 않습니다. HTTP 프록시를 통해 프록시 되는 경우 [RFC-2616](https://tools.ietf.org/html/rfc2616)에 명시된 대로 프록시와 통신합니다.
 
-크리덴셜
-```````````
+#### 크리덴셜
 
 사용자 이름과 비밀번호가 클러스터 별인지, 서버 별인지는 구현에 따라 다릅니다.
 
 
-HTTP 요청 1
-```````````
+#### HTTP 요청 1
 
 발신자는 다음을 전송합니다.
 
@@ -82,8 +80,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 ```
 
 
-HTTP 응답 1
-`````````````
+#### HTTP 응답 1
 
 경로가 정확하지 않으면 수신자는 [RFC-2616](https://tools.ietf.org/html/rfc2616)에 명시된 대로 표준 "HTTP/1.1 404 Not Found" 응답을 전송할 것입니다.
 
@@ -92,8 +89,7 @@ HTTP 응답 1
 양쪽 당사자는 소켓을 닫습니다.
 
 
-HTTP 요청 2
-````````````
+#### HTTP 요청 2
 
 발신자는 [RFC-2617](https://tools.ietf.org/html/rfc2617) 와 [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket) 에서처럼 다음을 전송합니다.
 
@@ -115,8 +111,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 ```
 
 
-HTTP 응답 2
-`````````````
+#### HTTP 응답 2
 
 인증이 정확하지 않으면 수신자는 [RFC-2617](https://tools.ietf.org/html/rfc2617)에 명시된 대로 또 다른 표준 "HTTP/1.1 401 Unauthorized" 응답을 전송할 것입니다.
 
@@ -136,8 +131,7 @@ HTTP/1.1 101 Switching Protocols
 이후 이러한 응답이 수신되면 소켓은 열린 상태로 유지됩니다. 같은 소켓에서 아래에 정의된 Raft 프로토콜이 시작됩니다.
 
 
-캐싱
-```````
+#### 캐싱
 
 크리덴셜은 최소한 한 시간 동안 캐시되어야 하며,
 그 이후의 연결들은 위의 "HTTP 요청 2"로 바로 건너뛸 수 있습니다.
@@ -160,27 +154,25 @@ JRaft가 정의한 확장 RPC 메시지로, 클라이언트, 동적인 서버 �
 메시지 유형 16-17은 Raft 섹션 7에 정의된 로그 압축 RPC 메시지입니다.
 
 
-========================  ======  ===========  =================   =====================================
-메시지                   번호    발신자       수신자                비고
-========================  ======  ===========  =================   =====================================
-RequestVoteRequest           1    후보           팔로워                표준 Raft RPC; 로그 항목을 포함해서는 안 됨
-RequestVoteResponse          2    팔로워         후보                   표준 Raft RPC
-AppendEntriesRequest         3    리더          팔로워                표준 Raft RPC
-AppendEntriesResponse        4    팔로워        리더 / 클라이언트      표준 Raft RPC
-ClientRequest                5    클라이언트      리더 / 팔로워          응답은 AppendEntriesResponse; 애플리케이션 로그 항목만 포함해야 함
-AddServerRequest             6    클라이언트      리더                  단일 ClusterServer 로그 항목만 포함해야 함
-AddServerResponse            7    리더          클라이언트              리더는 또한 JoinClusterRequest를 전송함
-RemoveServerRequest          8    팔로워        리더                  단일 ClusterServer 로그 항목만 포함해야 함
-RemoveServerResponse         9    리더          팔로워
-SyncLogRequest              10    리더          팔로워                단일 LogPack 로그 항목만 포함해야 함
-SyncLogResponse             11    팔로워        리더
-JoinClusterRequest          12    리더          새로운 서버             참여 초대; 단일 Configuration 로그 항목만 포함해야 함
-JoinClusterResponse         13    새로운 서버    리더
-LeaveClusterRequest         14    리더          팔로워                클러스터를 떠나라는 명령
-LeaveClusterResponse        15    팔로워        리더
-InstallSnapshotRequest      16    리더          팔로워                Raft 섹션 7; 단일 SnapshotSyncRequest 로그 항목만 포함해야 함
-InstallSnapshotResponse     17    팔로워        리더                  Raft 섹션 7
-========================  ======  ===========  =================   =====================================
+| 메시지 | 번호 | 발신자 | 수신자 | 비고 |
+| :--- | :--- | :--- | :--- | :--- |
+| RequestVoteRequest | 1 | 후보 | 팔로워 | 표준 Raft RPC; 로그 항목을 포함해서는 안 됨 |
+| RequestVoteResponse | 2 | 팔로워 | 후보 | 표준 Raft RPC |
+| AppendEntriesRequest | 3 | 리더 | 팔로워 | 표준 Raft RPC |
+| AppendEntriesResponse | 4 | 팔로워 | 리더 / 클라이언트 | 표준 Raft RPC |
+| ClientRequest | 5 | 클라이언트 | 리더 / 팔로워 | 응답은 AppendEntriesResponse; 애플리케이션 로그 항목만 포함해야 함 |
+| AddServerRequest | 6 | 클라이언트 | 리더 | 단일 ClusterServer 로그 항목만 포함해야 함 |
+| AddServerResponse | 7 | 리더 | 클라이언트 | 리더는 또한 JoinClusterRequest를 전송함 |
+| RemoveServerRequest | 8 | 팔로워 | 리더 | 단일 ClusterServer 로그 항목만 포함해야 함 |
+| RemoveServerResponse | 9 | 리더 | 팔로워 | |
+| SyncLogRequest | 10 | 리더 | 팔로워 | 단일 LogPack 로그 항목만 포함해야 함 |
+| SyncLogResponse | 11 | 팔로워 | 리더 | |
+| JoinClusterRequest | 12 | 리더 | 새로운 서버 | 참여 초대; 단일 Configuration 로그 항목만 포함해야 함 |
+| JoinClusterResponse | 13 | 새로운 서버 | 리더 | |
+| LeaveClusterRequest | 14 | 리더 | 팔로워 | 클러스터를 떠나라는 명령 |
+| LeaveClusterResponse | 15 | 팔로워 | 리더 | |
+| InstallSnapshotRequest | 16 | 리더 | 팔로워 | Raft 섹션 7; 단일 SnapshotSyncRequest 로그 항목만 포함해야 함 |
+| InstallSnapshotResponse | 17 | 팔로워 | 리더 | Raft 섹션 7 |
 
 
 ### 설정
@@ -255,8 +247,7 @@ HTTP 핸드셰이크 후, 설정 순서는 다음과 같습니다:
 요청은 고정 크기 헤더와 가변 크기의 로그 항목을 포함합니다.
 
 
-요청 헤더
-````````````
+#### 요청 헤더
 
 요청 헤더는 45 바이트로 구성됩니다. 모든 값은 부호 없는 빅 엔디안입니다.
 
@@ -283,8 +274,7 @@ AppendEntriesRequest에서는, 로그 항목 크기가 0일 때,
 
 
 
-로그 항목
-``````````
+#### 로그 항목
 
 로그에는 0개 이상의 로그 항목이 포함되어 있습니다.
 각 로그 항목은 다음과 같습니다. 모든 값은 부호 없는 빅 엔디안입니다.
@@ -297,20 +287,17 @@ AppendEntriesRequest에서는, 로그 항목 크기가 0일 때,
 ```
 
 
-로그 내용
-``````````
+#### 로그 내용
 
 모든 값은 부호 없는 빅 엔디안입니다.
 
-========================  ======
-로그 값 유형             번호
-========================  ======
-애플리케이션               1
-구성                       2
-클러스터 서버              3
-로그팩                      4
-스냅샷동기화요청            5
-========================  ======
+| 로그 값 유형 | 번호 |
+| :--- | :--- |
+| 애플리케이션 | 1 |
+| 구성 | 2 |
+| 클러스터 서버 | 3 |
+| 로그팩 | 4 |
+| 스냅샷동기화요청 | 5 |
 
 
 #### 애플리케이션
@@ -404,8 +391,7 @@ ID:                4 바이트 정수
 ```
 
 
-참고사항
-`````
+#### 참고사항
 
 목적지 ID는 보통 이 메시지의 실제 목적지입니다.
 그러나 AppendEntriesResponse, AddServerResponse, RemoveServerResponse의 경우

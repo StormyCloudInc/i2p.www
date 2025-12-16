@@ -52,13 +52,11 @@ Hedefler:
 
 Bir WebSocket benzeri el sıkışması [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket) ve HTTP Özeti kimlik doğrulaması [RFC-2617](https://tools.ietf.org/html/rfc2617) kullanacağız. RFC 2617 Temel kimlik doğrulaması desteklenmemektedir. HTTP proxy üzerinden yönlendirilirken, [RFC-2616](https://tools.ietf.org/html/rfc2616)'da belirtildiği gibi proxy ile iletişim kurun.
 
-Kimlik Bilgileri
-````````````````
+#### Kimlik Bilgileri
 
 Kullanıcı adları ve parolalar küme başına mı yoksa sunucu başına mı olduğuna uygulamaya bağlıdır.
 
-HTTP İsteği 1
-``````````````
+#### HTTP İsteği 1
 
 Başlatan taraf aşağıdaki gibi gönderir.
 
@@ -77,8 +75,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 ```
 
 
-HTTP Yanıtı 1
-```````````````
+#### HTTP Yanıtı 1
 
 Eğer yol doğru değilse, alıcı [RFC-2616](https://tools.ietf.org/html/rfc2616)'da belirtildiği gibi standart bir "HTTP/1.1 404 Not Found" yanıtı gönderir.
 
@@ -87,8 +84,7 @@ Eğer yol doğruysa, alıcı [RFC-2617](https://tools.ietf.org/html/rfc2617)'da 
 Her iki taraf da daha sonra soketi kapatır.
 
 
-HTTP İsteği 2
-``````````````
+#### HTTP İsteği 2
 
 Başlatan taraf aşağıdaki gibi gönderir,
 [RFC-2617](https://tools.ietf.org/html/rfc2617) ve [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket) gibi.
@@ -110,8 +106,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
   VERSION ise Sarımsak Çiftliği sürümüdür (şimdi "1")
 ```
 
-HTTP Yanıtı 2
-```````````````
+#### HTTP Yanıtı 2
 
 Eğer kimlik doğrulama doğru değilse, alıcı [RFC-2617](https://tools.ietf.org/html/rfc2617)'da belirtildiği gibi başka bir standart "HTTP/1.1 401 Unauthorized" yanıtı gönderir.
 
@@ -130,8 +125,7 @@ HTTP/1.1 101 Switching Protocols
 
 Bu alındıktan sonra, soket açık kalır. Aşağıda tanımlandığı gibi Raft protokolü aynı sokette başlar.
 
-Önbellekleme
-```````````
+#### Önbellekleme
 
 Kimlik bilgilerinin en az bir saat boyunca önbelleğe alınması gerekir, böylece
 ilerleyen bağlantılar doğrudan yukarıdaki
@@ -151,27 +145,25 @@ verimli günlük senkronizasyonunu desteklemek için genişletilmiş RPC mesajla
 
 Mesaj tipleri 16-17, Raft bölüm 7'de tanımlanan Günlük Sıkıştırma RPC mesajlarıdır.
 
-========================  ======  ===========  =================   =====================================
-Mesaj                     Numarası  Gönderen      Gönderilen Taraf       Notlar
-========================  ======  ===========  =================   =====================================
-RequestVoteRequest           1    Aday         Takipçi              Standart Raft RPC; Günlük girdileri içermemelidir
-RequestVoteResponse          2    Takipçi      Aday                 Standart Raft RPC
-AppendEntriesRequest         3    Lider        Takipçi              Standart Raft RPC
-AppendEntriesResponse        4    Takipçi      Lider / İstemci      Standart Raft RPC
-ClientRequest                5    İstemci      Lider / Takipçi      Yanıt AppendEntriesResponse'dir; Sadece Uygulama günlük girdilerini içermelidir
-AddServerRequest             6    İstemci      Lider                Yalnızca tek bir ClusterServer günlük girdisi içermelidir
-AddServerResponse            7    Lider        İstemci              Lider ayrıca JoinClusterRequest gönderir
-RemoveServerRequest          8    Takipçi      Lider                Yalnızca tek bir ClusterServer günlük girdisi içermelidir
-RemoveServerResponse         9    Lider        Takipçi
-SyncLogRequest              10    Lider        Takipçi              Uygulamaya sadece bir LogPack günlük girdisi içermelidir
-SyncLogResponse             11    Takipçi      Lider
-JoinClusterRequest          12    Lider        Yeni Sunucu          Katılma daveti; yalnızca bir Yapılandırma günlük girdisi içermelidir
-JoinClusterResponse         13    Yeni Sunucu  Lider
-LeaveClusterRequest         14    Lider        Takipçi              Ayrılma komutu
-LeaveClusterResponse        15    Takipçi      Lider
-InstallSnapshotRequest      16    Lider        Takipçi              Raft Bölümü 7; Sadece bir SnapshotSyncRequest günlük girdisi içermelidir
-InstallSnapshotResponse     17    Takipçi      Lider                Raft Bölümü 7
-========================  ======  ===========  =================   =====================================
+| Mesaj | Numarası | Gönderen | Gönderilen Taraf | Notlar |
+| :--- | :--- | :--- | :--- | :--- |
+| RequestVoteRequest | 1 | Aday | Takipçi | Standart Raft RPC; Günlük girdileri içermemelidir |
+| RequestVoteResponse | 2 | Takipçi | Aday | Standart Raft RPC |
+| AppendEntriesRequest | 3 | Lider | Takipçi | Standart Raft RPC |
+| AppendEntriesResponse | 4 | Takipçi | Lider / İstemci | Standart Raft RPC |
+| ClientRequest | 5 | İstemci | Lider / Takipçi | Yanıt AppendEntriesResponse'dir; Sadece Uygulama günlük girdilerini içermelidir |
+| AddServerRequest | 6 | İstemci | Lider | Yalnızca tek bir ClusterServer günlük girdisi içermelidir |
+| AddServerResponse | 7 | Lider | İstemci | Lider ayrıca JoinClusterRequest gönderir |
+| RemoveServerRequest | 8 | Takipçi | Lider | Yalnızca tek bir ClusterServer günlük girdisi içermelidir |
+| RemoveServerResponse | 9 | Lider | Takipçi | |
+| SyncLogRequest | 10 | Lider | Takipçi | Uygulamaya sadece bir LogPack günlük girdisi içermelidir |
+| SyncLogResponse | 11 | Takipçi | Lider | |
+| JoinClusterRequest | 12 | Lider | Yeni Sunucu | Katılma daveti; yalnızca bir Yapılandırma günlük girdisi içermelidir |
+| JoinClusterResponse | 13 | Yeni Sunucu | Lider | |
+| LeaveClusterRequest | 14 | Lider | Takipçi | Ayrılma komutu |
+| LeaveClusterResponse | 15 | Takipçi | Lider | |
+| InstallSnapshotRequest | 16 | Lider | Takipçi | Raft Bölümü 7; Sadece bir SnapshotSyncRequest günlük girdisi içermelidir |
+| InstallSnapshotResponse | 17 | Takipçi | Lider | Raft Bölümü 7 |
 
 ### Kurulum
 
@@ -241,8 +233,7 @@ Aday Alice               Takipçi Bob
 
 İstekler bir başlık ve sıfır veya daha fazla günlük girdisi içerir. İstekler sabit boyutlu bir başlık ve değişken boyutlu isteğe bağlı Günlük Girdileri içerir.
 
-İstek Başlığı
-`````````````
+#### İstek Başlığı
 
 İstek başlığı 45 bayttır, aşağıdaki gibi. Tüm değerler işaretsiz big-endian'dir.
 
@@ -265,8 +256,7 @@ RequestVote İsteğinde, Dönem adayın dönemidir. Diğerlerinde, liderin mevcu
 
 AppendEntries İsteğinde, günlük girdileri boyutu sıfır olduğunda, bu mesaj bir kalp atışı (canlı tutma) mesajıdır.
 
-Günlük Girdileri
-``````````````
+#### Günlük Girdileri
 
 Günlük sıfır veya daha fazla günlük girdisi içerir. Her günlük girdisi aşağıdaki gibidir. Tüm değerler işaretsiz big-endian'dir.
 
@@ -277,20 +267,17 @@ Dönem:           8 bayt tamsayı
   Girdi:          belirlenen uzunlukta
 ```
 
-Günlük İçeriği
-````````````
+#### Günlük İçeriği
 
 Tüm değerler işaretsiz big-endian'dir.
 
-========================  ======
-Günlük Değer Türü           Sayı
-========================  ======
-Uygulama                    1
-Yapılandırma                2
-Küme Sunucusu               3
-Günlük Paketi               4
-Anlık Görüntü Eşitleme İsteği 5
-========================  ======
+| Günlük Değer Türü | Sayı |
+| :--- | :--- |
+| Uygulama | 1 |
+| Yapılandırma | 2 |
+| Küme Sunucusu | 3 |
+| Günlük Paketi | 4 |
+| Anlık Görüntü Eşitleme İsteği | 5 |
 
 #### Uygulama
 
@@ -368,8 +355,7 @@ Mesaj tipi:   1 bayt
   Kabul Edildi Mi: Eğer kabul edildiyse 1, değilse 0 (notları inceleyin), 1 bayt
 ```
 
-Notlar
-`````
+#### Notlar
 
 Hedef Kimliği genellikle bu mesajın gerçek hedefidir. Ancak, AppendEntriesResponse, AddServerResponse ve RemoveServerResponse için, mevcut liderin kimliğidir.
 

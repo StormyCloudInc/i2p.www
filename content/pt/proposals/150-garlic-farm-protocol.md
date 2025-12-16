@@ -80,15 +80,13 @@ A autenticação básica do RFC 2617 NÃO é suportada.
 Ao proxy pelo proxy HTTP, comunique-se com
 o proxy como especificado em [RFC-2616](https://tools.ietf.org/html/rfc2616).
 
-Credenciais
-```````````
+#### Credenciais
 
 Se os nomes de usuário e senhas são por cluster ou
 por servidor, depende da implementação.
 
 
-Solicitação HTTP 1
-``````````````````
+#### Solicitação HTTP 1
 
 O originador enviará o seguinte.
 
@@ -107,8 +105,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 ```
 
 
-Resposta HTTP 1
-```````````````
+#### Resposta HTTP 1
 
 Se o caminho não for correto, o destinatário enviará uma resposta padrão "HTTP/1.1 404 Not Found",
 como em [RFC-2616](https://tools.ietf.org/html/rfc2616).
@@ -120,8 +117,7 @@ como em [RFC-2617](https://tools.ietf.org/html/rfc2617).
 Ambas as partes então fecharão o socket.
 
 
-Solicitação HTTP 2
-``````````````````
+#### Solicitação HTTP 2
 
 O originador enviará o seguinte,
 como em [RFC-2617](https://tools.ietf.org/html/rfc2617) e [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket).
@@ -144,8 +140,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 ```
 
 
-Resposta HTTP 2
-```````````````
+#### Resposta HTTP 2
 
 Se a autenticação não for correta, o destinatário enviará outra resposta padrão "HTTP/1.1 401 Unauthorized",
 como em [RFC-2617](https://tools.ietf.org/html/rfc2617).
@@ -168,8 +163,7 @@ Depois que isso for recebido, o socket permanece aberto.
 O protocolo Raft, conforme definido abaixo, começa, no mesmo socket.
 
 
-Cache
-```````
+#### Cache
 
 As credenciais devem ser armazenadas em cache por pelo menos uma hora, para que
 conexões subsequentes possam ir diretamente para
@@ -194,27 +188,25 @@ Os tipos de mensagem 16-17 são as mensagens RPC de Compação de Log definidas
 na seção 7 do Raft.
 
 
-========================  ======  ===========  =================   =====================================
-Mensagem                  Número  Enviado Por  Enviado Para        Notas
-========================  ======  ===========  =================   =====================================
-RequestVoteRequest           1    Candidato   Seguidor             RPC padrão do Raft; não deve conter entradas de log
-RequestVoteResponse          2    Seguidor    Candidato            RPC padrão do Raft
-AppendEntriesRequest         3    Líder       Seguidor             RPC padrão do Raft
-AppendEntriesResponse        4    Seguidor    Líder / Cliente      RPC padrão do Raft
-ClientRequest                5    Cliente     Líder / Seguidor     Resposta é AppendEntriesResponse; deve conter apenas entradas de log de Aplicação
-AddServerRequest             6    Cliente     Líder                Deve conter apenas uma entrada de log ClusterServer
-AddServerResponse            7    Líder       Cliente              O líder também envia um JoinClusterRequest
-RemoveServerRequest          8    Seguidor    Líder                Deve conter apenas uma entrada de log ClusterServer
-RemoveServerResponse         9    Líder       Seguidor
-SyncLogRequest              10    Líder       Seguidor             Deve conter apenas uma entrada de log LogPack
-SyncLogResponse             11    Seguidor    Líder
-JoinClusterRequest          12    Líder       Novo Servidor        Convite para entrar; deve conter apenas uma entrada de log de Configuração
-JoinClusterResponse         13    Novo Servidor Líder
-LeaveClusterRequest         14    Líder       Seguidor             Comando para sair
-LeaveClusterResponse        15    Seguidor    Líder
-InstallSnapshotRequest      16    Líder       Seguidor             Seção 7 do Raft; Deve conter apenas uma entrada de log SnapshotSyncRequest
-InstallSnapshotResponse     17    Seguidor    Líder                Seção 7 do Raft
-========================  ======  ===========  =================   =====================================
+| Mensagem | Número | Enviado Por | Enviado Para | Notas |
+| :--- | :--- | :--- | :--- | :--- |
+| RequestVoteRequest | 1 | Candidato | Seguidor | RPC padrão do Raft; não deve conter entradas de log |
+| RequestVoteResponse | 2 | Seguidor | Candidato | RPC padrão do Raft |
+| AppendEntriesRequest | 3 | Líder | Seguidor | RPC padrão do Raft |
+| AppendEntriesResponse | 4 | Seguidor | Líder / Cliente | RPC padrão do Raft |
+| ClientRequest | 5 | Cliente | Líder / Seguidor | Resposta é AppendEntriesResponse; deve conter apenas entradas de log de Aplicação |
+| AddServerRequest | 6 | Cliente | Líder | Deve conter apenas uma entrada de log ClusterServer |
+| AddServerResponse | 7 | Líder | Cliente | O líder também envia um JoinClusterRequest |
+| RemoveServerRequest | 8 | Seguidor | Líder | Deve conter apenas uma entrada de log ClusterServer |
+| RemoveServerResponse | 9 | Líder | Seguidor | |
+| SyncLogRequest | 10 | Líder | Seguidor | Deve conter apenas uma entrada de log LogPack |
+| SyncLogResponse | 11 | Seguidor | Líder | |
+| JoinClusterRequest | 12 | Líder | Novo Servidor | Convite para entrar; deve conter apenas uma entrada de log de Configuração |
+| JoinClusterResponse | 13 | Novo Servidor | Líder | |
+| LeaveClusterRequest | 14 | Líder | Seguidor | Comando para sair |
+| LeaveClusterResponse | 15 | Seguidor | Líder | |
+| InstallSnapshotRequest | 16 | Líder | Seguidor | Seção 7 do Raft; Deve conter apenas uma entrada de log SnapshotSyncRequest |
+| InstallSnapshotResponse | 17 | Seguidor | Líder | Seção 7 do Raft |
 
 
 ### Estabelecimento
@@ -289,8 +281,7 @@ As solicitações contêm um cabeçalho e zero ou mais entradas de log.
 As solicitações contêm um cabeçalho de tamanho fixo e Entradas de Log opcionais de tamanho variável.
 
 
-Cabeçalho da Solicitação
-````````````````````````
+#### Cabeçalho da Solicitação
 
 O cabeçalho da solicitação tem 45 bytes, como segue.
 Todos os valores são unsigned big-endian.
@@ -318,8 +309,7 @@ esta mensagem é um sinal de vida (mensagem de manutenção).
 
 
 
-Entradas de Log
-```````````````
+#### Entradas de Log
 
 O log contém zero ou mais entradas de log.
 Cada entrada de log é como segue.
@@ -333,20 +323,17 @@ Termo:        inteiro de 8 bytes
 ```
 
 
-Conteúdos do Log
-``````````````
+#### Conteúdos do Log
 
 Todos os valores são unsigned big-endian.
 
-========================  ======
-Tipo de Valor do Log      Number
-========================  ======
-Aplicação                   1
-Configuração                2
-Servidor de Cluster         3
-Pacote de Log               4
-Pedido de Sincronização de Snapshot  5
-========================  ======
+| Tipo de Valor do Log | Número |
+| :--- | :--- |
+| Aplicação | 1 |
+| Configuração | 2 |
+| Servidor de Cluster | 3 |
+| Pacote de Log | 4 |
+| Pedido de Sincronização de Snapshot | 5 |
 
 
 #### Aplicação
@@ -438,8 +425,7 @@ Tipo da mensagem:   1 byte
 ```
 
 
-Notas
-`````
+#### Notas
 
 O ID do Destino é normalmente o destino real para esta mensagem.
 No entanto, para AppendEntriesResponse, AddServerResponse e RemoveServerResponse,

@@ -80,15 +80,13 @@ L'authentification de base RFC 2617 n'est PAS supportée.
 Quand on passe par le proxy HTTP, communiquer avec
 le proxy comme spécifié dans [RFC-2616](https://tools.ietf.org/html/rfc2616).
 
-Identifiants
-`````````````
+#### Identifiants
 
 Que les noms d'utilisateur et les mots de passe soient par cluster, ou
 par serveur, dépend de l'implémentation.
 
 
-Requête HTTP 1
-``````````````
+#### Requête HTTP 1
 
 L'initiateur enverra ce qui suit.
 
@@ -107,8 +105,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 ```
 
 
-Réponse HTTP 1
-```````````````
+#### Réponse HTTP 1
 
 Si le chemin n'est pas correct, le destinataire enverra une réponse standard "HTTP/1.1 404 Not Found",
 comme dans [RFC-2616](https://tools.ietf.org/html/rfc2616).
@@ -120,8 +117,7 @@ comme dans [RFC-2617](https://tools.ietf.org/html/rfc2617).
 Les deux parties fermeront alors le socket.
 
 
-Requête HTTP 2
-``````````````
+#### Requête HTTP 2
 
 L'initiateur enverra ce qui suit,
 comme dans [RFC-2617](https://tools.ietf.org/html/rfc2617) et [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket).
@@ -144,8 +140,7 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 ```
 
 
-Réponse HTTP 2
-```````````````
+#### Réponse HTTP 2
 
 Si l'authentification n'est pas correcte, le destinataire enverra une autre réponse standard "HTTP/1.1 401 Unauthorized",
 comme dans [RFC-2617](https://tools.ietf.org/html/rfc2617).
@@ -168,8 +163,7 @@ Après réception, le socket reste ouvert.
 Le protocole Raft tel que défini ci-dessous commence, sur le même socket.
 
 
-Mise en cache
-`````````````
+#### Mise en cache
 
 Les identifiants doivent être mis en cache pendant au moins une heure, pour que
 les connexions ultérieures puissent passer directement à
@@ -194,27 +188,25 @@ Les types de messages 16-17 sont les messages RPC de compactage de journal défi
 dans la section 7 de Raft.
 
 
-========================  ======  =============  ==================   =====================================
-Message                   Numéro  Envoyé par     Envoyé à             Remarques
-========================  ======  =============  ==================   =====================================
-RequestVoteRequest           1    Candidat       Suiveur              RPC standard Raft; ne doit pas contenir d'entrées de journal
-RequestVoteResponse          2    Suiveur        Candidat             RPC standard Raft
-AppendEntriesRequest         3    Leader         Suiveur              RPC standard Raft
-AppendEntriesResponse        4    Suiveur        Leader / Client      RPC standard Raft
-ClientRequest                5    Client         Leader / Suiveur     La réponse est AppendEntriesResponse; doit contenir uniquement des entrées de journal d'application
-AddServerRequest             6    Client         Leader               Doit contenir une seule entrée de journal ClusterServer uniquement
-AddServerResponse            7    Leader         Client               Le leader enverra également une demande JoinClusterRequest
-RemoveServerRequest          8    Suiveur        Leader               Doit contenir une seule entrée de journal ClusterServer uniquement
-RemoveServerResponse         9    Leader         Suiveur
-SyncLogRequest              10    Leader         Suiveur              Doit contenir une seule entrée de journal LogPack uniquement
-SyncLogResponse             11    Suiveur        Leader
-JoinClusterRequest          12    Leader         Nouveau Serveur      Invitation à rejoindre; doit contenir une seule entrée de journal de configuration uniquement
-JoinClusterResponse         13    Nouveau Serveur Leader
-LeaveClusterRequest         14    Leader         Suiveur              Commande de quitter
-LeaveClusterResponse        15    Suiveur        Leader
-InstallSnapshotRequest      16    Leader         Suiveur              Section 7 de Raft; doit contenir une seule entrée de journal SnapshotSyncRequest uniquement
-InstallSnapshotResponse     17    Suiveur        Leader               Section 7 de Raft
-========================  ======  =============  ==================   =====================================
+| Message | Numéro | Envoyé par | Envoyé à | Remarques |
+| :--- | :--- | :--- | :--- | :--- |
+| RequestVoteRequest | 1 | Candidat | Suiveur | RPC standard Raft; ne doit pas contenir d'entrées de journal |
+| RequestVoteResponse | 2 | Suiveur | Candidat | RPC standard Raft |
+| AppendEntriesRequest | 3 | Leader | Suiveur | RPC standard Raft |
+| AppendEntriesResponse | 4 | Suiveur | Leader / Client | RPC standard Raft |
+| ClientRequest | 5 | Client | Leader / Suiveur | La réponse est AppendEntriesResponse; doit contenir uniquement des entrées de journal d'application |
+| AddServerRequest | 6 | Client | Leader | Doit contenir une seule entrée de journal ClusterServer uniquement |
+| AddServerResponse | 7 | Leader | Client | Le leader enverra également une demande JoinClusterRequest |
+| RemoveServerRequest | 8 | Suiveur | Leader | Doit contenir une seule entrée de journal ClusterServer uniquement |
+| RemoveServerResponse | 9 | Leader | Suiveur | |
+| SyncLogRequest | 10 | Leader | Suiveur | Doit contenir une seule entrée de journal LogPack uniquement |
+| SyncLogResponse | 11 | Suiveur | Leader | |
+| JoinClusterRequest | 12 | Leader | Nouveau Serveur | Invitation à rejoindre; doit contenir une seule entrée de journal de configuration uniquement |
+| JoinClusterResponse | 13 | Nouveau Serveur | Leader | |
+| LeaveClusterRequest | 14 | Leader | Suiveur | Commande de quitter |
+| LeaveClusterResponse | 15 | Suiveur | Leader | |
+| InstallSnapshotRequest | 16 | Leader | Suiveur | Section 7 de Raft; doit contenir une seule entrée de journal SnapshotSyncRequest uniquement |
+| InstallSnapshotResponse | 17 | Suiveur | Leader | Section 7 de Raft |
 
 
 ### Établissement
@@ -289,8 +281,7 @@ Les requêtes contiennent un en-tête et zéro ou plusieurs entrées de journal.
 Les requêtes contiennent un en-tête de taille fixe et des entrées de journal optionnelles de taille variable.
 
 
-En-tête de requête
-``````````````````
+#### En-tête de requête
 
 L'en-tête de requête fait 45 octets, comme suit.
 Toutes les valeurs sont en big-endian non signé.
@@ -318,8 +309,7 @@ ce message est un message de maintien (keepalive).
 
 
 
-Entrées de journal
-`````````````````
+#### Entrées de journal
 
 Le journal contient zéro ou plusieurs entrées de journal.
 Chaque entrée de journal est comme suit.
@@ -333,20 +323,17 @@ Terme :           entier 8 octets
 ```
 
 
-Contenu du journal
-``````````````````
+#### Contenu du journal
 
 Toutes les valeurs sont en big-endian non signé.
 
-========================  ======
-Type de valeur du journal  Numéro
-========================  ======
-Application                  1
-Configuration                2
-ClusterServer                3
-LogPack                      4
-SnapshotSyncRequest          5
-========================  ======
+| Type de valeur du journal | Numéro |
+| :--- | :--- |
+| Application | 1 |
+| Configuration | 2 |
+| ClusterServer | 3 |
+| LogPack | 4 |
+| SnapshotSyncRequest | 5 |
 
 
 #### Application
@@ -439,8 +426,7 @@ Type de message :   1 octet
 ```
 
 
-Remarques
-`````````
+#### Remarques
 
 L'ID de destination est habituellement l'ID de destination réel pour ce message.
 Cependant, pour AppendEntriesResponse, AddServerResponse, et RemoveServerResponse,
