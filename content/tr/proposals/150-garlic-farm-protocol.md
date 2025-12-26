@@ -11,7 +11,7 @@ toc: true
 
 ## Genel Bakış
 
-Bu, JRaft'a dayalı Sarımsak Çiftliği kablo protokolü için spesifikasyondur, TCP üzerinden uygulama için "exts" kodu ve "dmprinter" örnek uygulaması [JRAFT]_. JRaft, Raft protokolünün bir uygulamasıdır [RAFT]_.
+Bu, JRaft'a dayalı Sarımsak Çiftliği kablo protokolü için spesifikasyondur, TCP üzerinden uygulama için "exts" kodu ve "dmprinter" örnek uygulaması [JRAFT](https://github.com/datatechnology/jraft). JRaft, Raft protokolünün bir uygulamasıdır [RAFT](https://ramcloud.stanford.edu/wiki/download/attachments/11370504/raft.pdf).
 
 Belgelenmiş bir kablo protokolü olan bir uygulama bulamadık. Ancak, JRaft uygulaması, kodun incelenebileceği ve ardından protokolün belgelenebileceği kadar basittir. Bu öneri bu çabanın sonucudur.
 
@@ -50,24 +50,19 @@ Hedefler:
 - Tam bir web sunucusu uygulamasının gerekli olmadığı basit protokol
 - Yaygın standartlarla uyumlu, böylece istenirse standart kütüphaneler kullanılabilir
 
-Bir WebSocket benzeri el sıkışması [WEBSOCKET]_ ve HTTP Özeti kimlik doğrulaması [RFC-2617]_ kullanacağız. RFC 2617 Temel kimlik doğrulaması desteklenmemektedir. HTTP proxy üzerinden yönlendirilirken, [RFC-2616]_'da belirtildiği gibi proxy ile iletişim kurun.
+Bir WebSocket benzeri el sıkışması [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket) ve HTTP Özeti kimlik doğrulaması [RFC-2617](https://tools.ietf.org/html/rfc2617) kullanacağız. RFC 2617 Temel kimlik doğrulaması desteklenmemektedir. HTTP proxy üzerinden yönlendirilirken, [RFC-2616](https://tools.ietf.org/html/rfc2616)'da belirtildiği gibi proxy ile iletişim kurun.
 
-Kimlik Bilgileri
-````````````````
+#### Kimlik Bilgileri
 
 Kullanıcı adları ve parolalar küme başına mı yoksa sunucu başına mı olduğuna uygulamaya bağlıdır.
 
-HTTP İsteği 1
-``````````````
+#### HTTP İsteği 1
 
 Başlatan taraf aşağıdaki gibi gönderir.
 
 Tüm satırlar HTTP tarafından gerekli görüldüğü gibi CRLF ile sonlandırılır.
 
-.. raw:: html
-
-  {% highlight %}
-
+```text
 GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
   Host: (ip):(port)
   Cache-Control: no-cache
@@ -77,32 +72,26 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 
   CLUSTER kümenin adıdır (varsayılan "farm")
   VERSION ise Sarımsak Çiftliği sürümüdür (şimdi "1")
+```
 
-{% endhighlight %}
 
+#### HTTP Yanıtı 1
 
-HTTP Yanıtı 1
-```````````````
+Eğer yol doğru değilse, alıcı [RFC-2616](https://tools.ietf.org/html/rfc2616)'da belirtildiği gibi standart bir "HTTP/1.1 404 Not Found" yanıtı gönderir.
 
-Eğer yol doğru değilse, alıcı [RFC-2616]_'da belirtildiği gibi standart bir "HTTP/1.1 404 Not Found" yanıtı gönderir.
-
-Eğer yol doğruysa, alıcı [RFC-2617]_'da belirtildiği gibi standart bir "HTTP/1.1 401 Unauthorized" yanıtı gönderir ve WWW-Authenticate HTTP özeti kimlik doğrulama başlığını içerir.
+Eğer yol doğruysa, alıcı [RFC-2617](https://tools.ietf.org/html/rfc2617)'da belirtildiği gibi standart bir "HTTP/1.1 401 Unauthorized" yanıtı gönderir ve WWW-Authenticate HTTP özeti kimlik doğrulama başlığını içerir.
 
 Her iki taraf da daha sonra soketi kapatır.
 
 
-HTTP İsteği 2
-``````````````
+#### HTTP İsteği 2
 
 Başlatan taraf aşağıdaki gibi gönderir,
-[RFC-2617]_ ve [WEBSOCKET]_ gibi.
+[RFC-2617](https://tools.ietf.org/html/rfc2617) ve [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket) gibi.
 
 Tüm satırlar HTTP tarafından gerekli görüldüğü gibi CRLF ile sonlandırılır.
 
-.. raw:: html
-
-  {% highlight %}
-
+```text
 GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
   Host: (ip):(port)
   Cache-Control: no-cache
@@ -115,35 +104,28 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 
   CLUSTER kümenin adıdır (varsayılan "farm")
   VERSION ise Sarımsak Çiftliği sürümüdür (şimdi "1")
+```
 
-{% endhighlight %}
+#### HTTP Yanıtı 2
 
-HTTP Yanıtı 2
-```````````````
+Eğer kimlik doğrulama doğru değilse, alıcı [RFC-2617](https://tools.ietf.org/html/rfc2617)'da belirtildiği gibi başka bir standart "HTTP/1.1 401 Unauthorized" yanıtı gönderir.
 
-Eğer kimlik doğrulama doğru değilse, alıcı [RFC-2617]_'da belirtildiği gibi başka bir standart "HTTP/1.1 401 Unauthorized" yanıtı gönderir.
-
-Eğer kimlik doğrulama doğruysa, alıcı [WEBSOCKET]_'da olduğu gibi aşağıdaki yanıtı gönderir.
+Eğer kimlik doğrulama doğruysa, alıcı [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket)'da olduğu gibi aşağıdaki yanıtı gönderir.
 
 Tüm satırlar HTTP tarafından gerekli görüldüğü gibi CRLF ile sonlandırılır.
 
-.. raw:: html
-
-  {% highlight %}
-
+```text
 HTTP/1.1 101 Switching Protocols
   Connection: Upgrade
   Upgrade: websocket
   (Sec-Websocket-* başlıkları)
   (diğer başlıklar yok sayılır)
   (boş satır)
-
-{% endhighlight %}
+```
 
 Bu alındıktan sonra, soket açık kalır. Aşağıda tanımlandığı gibi Raft protokolü aynı sokette başlar.
 
-Önbellekleme
-```````````
+#### Önbellekleme
 
 Kimlik bilgilerinin en az bir saat boyunca önbelleğe alınması gerekir, böylece
 ilerleyen bağlantılar doğrudan yukarıdaki
@@ -163,36 +145,31 @@ verimli günlük senkronizasyonunu desteklemek için genişletilmiş RPC mesajla
 
 Mesaj tipleri 16-17, Raft bölüm 7'de tanımlanan Günlük Sıkıştırma RPC mesajlarıdır.
 
-========================  ======  ===========  =================   =====================================
-Mesaj                     Numarası  Gönderen      Gönderilen Taraf       Notlar
-========================  ======  ===========  =================   =====================================
-RequestVoteRequest           1    Aday         Takipçi              Standart Raft RPC; Günlük girdileri içermemelidir
-RequestVoteResponse          2    Takipçi      Aday                 Standart Raft RPC
-AppendEntriesRequest         3    Lider        Takipçi              Standart Raft RPC
-AppendEntriesResponse        4    Takipçi      Lider / İstemci      Standart Raft RPC
-ClientRequest                5    İstemci      Lider / Takipçi      Yanıt AppendEntriesResponse'dir; Sadece Uygulama günlük girdilerini içermelidir
-AddServerRequest             6    İstemci      Lider                Yalnızca tek bir ClusterServer günlük girdisi içermelidir
-AddServerResponse            7    Lider        İstemci              Lider ayrıca JoinClusterRequest gönderir
-RemoveServerRequest          8    Takipçi      Lider                Yalnızca tek bir ClusterServer günlük girdisi içermelidir
-RemoveServerResponse         9    Lider        Takipçi
-SyncLogRequest              10    Lider        Takipçi              Uygulamaya sadece bir LogPack günlük girdisi içermelidir
-SyncLogResponse             11    Takipçi      Lider
-JoinClusterRequest          12    Lider        Yeni Sunucu          Katılma daveti; yalnızca bir Yapılandırma günlük girdisi içermelidir
-JoinClusterResponse         13    Yeni Sunucu  Lider
-LeaveClusterRequest         14    Lider        Takipçi              Ayrılma komutu
-LeaveClusterResponse        15    Takipçi      Lider
-InstallSnapshotRequest      16    Lider        Takipçi              Raft Bölümü 7; Sadece bir SnapshotSyncRequest günlük girdisi içermelidir
-InstallSnapshotResponse     17    Takipçi      Lider                Raft Bölümü 7
-========================  ======  ===========  =================   =====================================
+| Mesaj | Numarası | Gönderen | Gönderilen Taraf | Notlar |
+| :--- | :--- | :--- | :--- | :--- |
+| RequestVoteRequest | 1 | Aday | Takipçi | Standart Raft RPC; Günlük girdileri içermemelidir |
+| RequestVoteResponse | 2 | Takipçi | Aday | Standart Raft RPC |
+| AppendEntriesRequest | 3 | Lider | Takipçi | Standart Raft RPC |
+| AppendEntriesResponse | 4 | Takipçi | Lider / İstemci | Standart Raft RPC |
+| ClientRequest | 5 | İstemci | Lider / Takipçi | Yanıt AppendEntriesResponse'dir; Sadece Uygulama günlük girdilerini içermelidir |
+| AddServerRequest | 6 | İstemci | Lider | Yalnızca tek bir ClusterServer günlük girdisi içermelidir |
+| AddServerResponse | 7 | Lider | İstemci | Lider ayrıca JoinClusterRequest gönderir |
+| RemoveServerRequest | 8 | Takipçi | Lider | Yalnızca tek bir ClusterServer günlük girdisi içermelidir |
+| RemoveServerResponse | 9 | Lider | Takipçi | |
+| SyncLogRequest | 10 | Lider | Takipçi | Uygulamaya sadece bir LogPack günlük girdisi içermelidir |
+| SyncLogResponse | 11 | Takipçi | Lider | |
+| JoinClusterRequest | 12 | Lider | Yeni Sunucu | Katılma daveti; yalnızca bir Yapılandırma günlük girdisi içermelidir |
+| JoinClusterResponse | 13 | Yeni Sunucu | Lider | |
+| LeaveClusterRequest | 14 | Lider | Takipçi | Ayrılma komutu |
+| LeaveClusterResponse | 15 | Takipçi | Lider | |
+| InstallSnapshotRequest | 16 | Lider | Takipçi | Raft Bölümü 7; Sadece bir SnapshotSyncRequest günlük girdisi içermelidir |
+| InstallSnapshotResponse | 17 | Takipçi | Lider | Raft Bölümü 7 |
 
 ### Kurulum
 
 HTTP el sıkışmasının ardından, kurulum sırası şu şekildedir:
 
-.. raw:: html
-
-  {% highlight %}
-
+```text
 Yeni Sunucu Alice              Rastgele Takipçi Bob
 
   İstemci İsteği   ------->
@@ -214,30 +191,22 @@ Yeni Sunucu Alice              Rastgele Takipçi Bob
                        VEYA InstallSnapshot İsteği
   SyncLog Yanıtı  ------->
   VEYA InstallSnapshot Yanıtı
-
-{% endhighlight %}
+```
 
 Bağlantıyı Kesme Sırası:
 
-.. raw:: html
-
-  {% highlight %}
-
+```text
 Takipçi Alice              Lider Charlie
 
   RemoveServer İsteği   ------->
           <---------   RemoveServer Yanıtı
           <---------   LeaveCluster İsteği
   LeaveCluster Yanıtı  ------->
-
-{% endhighlight %}
+```
 
 Seçim Sırası:
 
-.. raw:: html
-
-  {% highlight %}
-
+```text
 Aday Alice               Takipçi Bob
 
   RequestVote İsteği   ------->
@@ -250,8 +219,7 @@ Aday Alice               Takipçi Bob
   AppendEntries İsteği   ------->
   (kalp atışı)
           <---------   AppendEntries Yanıtı
-
-{% endhighlight %}
+```
 
 
 ### Tanımlar
@@ -265,15 +233,11 @@ Aday Alice               Takipçi Bob
 
 İstekler bir başlık ve sıfır veya daha fazla günlük girdisi içerir. İstekler sabit boyutlu bir başlık ve değişken boyutlu isteğe bağlı Günlük Girdileri içerir.
 
-İstek Başlığı
-`````````````
+#### İstek Başlığı
 
 İstek başlığı 45 bayttır, aşağıdaki gibi. Tüm değerler işaretsiz big-endian'dir.
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 Mesaj tipi:      1 bayt
   Kaynak:          Kimlik, 4 bayt tamsayı
   Hedef:           Kimlik, 4 bayt tamsayı
@@ -283,8 +247,7 @@ Mesaj tipi:      1 bayt
   Onaylı İndeks:   8 bayt tamsayı
   Günlük girdileri boyutu:  Toplam bayt cinsinden boyut, 4 bayt tamsayı
   Günlük girdileri:       aşağıda belirtildiği gibi, belirtilen toplam uzunluk
-
-{% endhighlight %}
+```
 
 
 #### Notlar
@@ -293,36 +256,28 @@ RequestVote İsteğinde, Dönem adayın dönemidir. Diğerlerinde, liderin mevcu
 
 AppendEntries İsteğinde, günlük girdileri boyutu sıfır olduğunda, bu mesaj bir kalp atışı (canlı tutma) mesajıdır.
 
-Günlük Girdileri
-``````````````
+#### Günlük Girdileri
 
 Günlük sıfır veya daha fazla günlük girdisi içerir. Her günlük girdisi aşağıdaki gibidir. Tüm değerler işaretsiz big-endian'dir.
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 Dönem:           8 bayt tamsayı
   Değer türü:     1 bayt
   Girdi boyutu:   Bayt olarak, 4 bayt tamsayı
   Girdi:          belirlenen uzunlukta
+```
 
-{% endhighlight %}
-
-Günlük İçeriği
-````````````
+#### Günlük İçeriği
 
 Tüm değerler işaretsiz big-endian'dir.
 
-========================  ======
-Günlük Değer Türü           Sayı
-========================  ======
-Uygulama                    1
-Yapılandırma                2
-Küme Sunucusu               3
-Günlük Paketi               4
-Anlık Görüntü Eşitleme İsteği 5
-========================  ======
+| Günlük Değer Türü | Sayı |
+| :--- | :--- |
+| Uygulama | 1 |
+| Yapılandırma | 2 |
+| Küme Sunucusu | 3 |
+| Günlük Paketi | 4 |
+| Anlık Görüntü Eşitleme İsteği | 5 |
 
 #### Uygulama
 
@@ -332,18 +287,14 @@ Uygulama içeriği, basitlik ve genişletilebilirlik için UTF-8 kodlamalı [JSO
 
 Bu, liderin yeni bir küme yapılandırmasını seri hale getirmesi ve eşlere çoğaltması için kullanılır. Sıfır veya daha fazla ClusterServer yapılandırması içerir.
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 Günlük İndeksi:  8 bayt tamsayı
   Son Günlük İndeksi:  8 bayt tamsayı
   Her sunucu için ClusterServer Verileri:
     Kimlik:                4 bayt tamsayı
     Uç nokta veri boyutu:  Bayt olarak, 4 bayt tamsayı
     Uç nokta verisi:       "tcp://localhost:9001" şeklinde ASCII dizesi, belirtilen uzunlukta
-
-{% endhighlight %}
+```
 
 #### Küme Sunucusu
 
@@ -351,25 +302,17 @@ Bir kümedeki bir sunucu için yapılandırma bilgileri. Bu yalnızca bir AddSer
 
 AddServerRequest Mesajında kullanıldığında:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 Kimlik:                4 bayt tamsayı
   Uç nokta veri boyutu:  Bayt olarak, 4 bayt tamsayı
   Uç nokta verisi:       "tcp://localhost:9001" şeklinde ASCII dizesi, belirtilen uzunlukta
-
-{% endhighlight %}
+```
 
 RemoveServerRequest Mesajında kullanıldığında:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 Kimlik:                4 bayt tamsayı
-
-{% endhighlight %}
+```
 
 #### Günlük Paketi
 
@@ -377,25 +320,18 @@ Bu yalnızca bir SyncLogRequest mesajında dahil edilir.
 
 Aşağıdaki veriler sıkıştırılmış (gzipped) olarak iletilir:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 İndeks veri boyutu: Bayt olarak, 4 bayt tamsayı
   Günlük veri boyutu: Bayt olarak, 4 bayt tamsayı
   İndeks verisi:     Her indeks için 8 bayt, belirtilen uzunlukta
   Günlük veri:       belirtilen uzunlukta
-
-{% endhighlight %}
+```
 
 #### Anlık Görüntü Eşitleme İsteği
 
 Bu yalnızca bir InstallSnapshotRequest mesajında dahil edilir.
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 Son Günlük İndeksi:  8 bayt tamsayı
   Son Günlük Dönemi:   8 bayt tamsayı
   Yapılandırma veri boyutu: Bayt olarak, 4 bayt tamsayı
@@ -404,28 +340,22 @@ Son Günlük İndeksi:  8 bayt tamsayı
   Veri boyutu:        Bayt olarak, 4 bayt tamsayı
   Veri:            belirtilen uzunlukta
   Tamamlandı Mı:         eğer tamamlandıysa 1, değilse 0 (1 bayt)
-
-{% endhighlight %}
+```
 
 ### Yanıtlar
 
 Tüm yanıtlar 26 bayttır, aşağıdaki gibi. Tüm değerler işaretsiz big-endian'dir.
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 Mesaj tipi:   1 bayt
   Kaynak:         Kimlik, 4 bayt tamsayı
   Hedef:          Genellikle gerçek hedef kimliği (notlara bakın), 4 bayt tamsayı
   Dönem:          Mevcut dönem, 8 bayt tamsayı
   Sonraki İndeks: Liderin son günlük indeksi + 1'ye başlanır, 8 bayt tamsayı
   Kabul Edildi Mi: Eğer kabul edildiyse 1, değilse 0 (notları inceleyin), 1 bayt
+```
 
-{% endhighlight %}
-
-Notlar
-`````
+#### Notlar
 
 Hedef Kimliği genellikle bu mesajın gerçek hedefidir. Ancak, AppendEntriesResponse, AddServerResponse ve RemoveServerResponse için, mevcut liderin kimliğidir.
 
@@ -557,20 +487,9 @@ Geriye dönük uyumluluk sorunları yoktur.
 
 ## Referanslar
 
-.. [JRAFT]
-    https://github.com/datatechnology/jraft
-
-.. [JSON]
-    https://json.org/
-
-.. [RAFT]
-    https://ramcloud.stanford.edu/wiki/download/attachments/11370504/raft.pdf
-
-.. [RFC-2616]
-    https://tools.ietf.org/html/rfc2616
-
-.. [RFC-2617]
-    https://tools.ietf.org/html/rfc2617
-
-.. [WEBSOCKET]
-    https://en.wikipedia.org/wiki/WebSocket
+* [JRAFT](https://github.com/datatechnology/jraft)
+* [JSON](https://json.org/)
+* [RAFT](https://ramcloud.stanford.edu/wiki/download/attachments/11370504/raft.pdf)
+* [RFC-2616](https://tools.ietf.org/html/rfc2616)
+* [RFC-2617](https://tools.ietf.org/html/rfc2617)
+* [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket)

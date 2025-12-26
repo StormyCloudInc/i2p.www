@@ -13,8 +13,8 @@ toc: true
 
 Esta é a especificação para o protocolo de rede da Fazenda de Alho,
 baseado no JRaft, seu código "exts" para implementação sobre TCP,
-e seu aplicativo de exemplo "dmprinter" [JRAFT]_.
-JRaft é uma implementação do protocolo Raft [RAFT]_.
+e seu aplicativo de exemplo "dmprinter" [JRAFT](https://github.com/datatechnology/jraft).
+JRaft é uma implementação do protocolo Raft [RAFT](https://ramcloud.stanford.edu/wiki/download/attachments/11370504/raft.pdf).
 
 Não conseguimos encontrar nenhuma implementação com um protocolo de rede documentado.
 No entanto, a implementação do JRaft é simples o suficiente para que pudéssemos
@@ -74,30 +74,25 @@ Objetivos:
 - Compatível com padrões comuns, então implementações podem usar
   bibliotecas padrão se desejado
 
-Usaremos um aperto de mão estilo websocket [WEBSOCKET]_ e
-autenticação HTTP Digest [RFC-2617]_.
+Usaremos um aperto de mão estilo websocket [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket) e
+autenticação HTTP Digest [RFC-2617](https://tools.ietf.org/html/rfc2617).
 A autenticação básica do RFC 2617 NÃO é suportada.
 Ao proxy pelo proxy HTTP, comunique-se com
-o proxy como especificado em [RFC-2616]_.
+o proxy como especificado em [RFC-2616](https://tools.ietf.org/html/rfc2616).
 
-Credenciais
-```````````
+#### Credenciais
 
 Se os nomes de usuário e senhas são por cluster ou
 por servidor, depende da implementação.
 
 
-Solicitação HTTP 1
-``````````````````
+#### Solicitação HTTP 1
 
 O originador enviará o seguinte.
 
 Todas as linhas são terminadas com CRLF conforme requerido pelo HTTP.
 
-.. raw:: html
-
-  {% highlight %}
-
+```text
 GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
   Host: (ip):(port)
   Cache-Control: no-cache
@@ -107,35 +102,29 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 
   CLUSTER é o nome do cluster (padrão "farm")
   VERSION é a versão da Fazenda de Alho (atualmente "1")
+```
 
-{% endhighlight %}
 
-
-Resposta HTTP 1
-```````````````
+#### Resposta HTTP 1
 
 Se o caminho não for correto, o destinatário enviará uma resposta padrão "HTTP/1.1 404 Not Found",
-como em [RFC-2616]_.
+como em [RFC-2616](https://tools.ietf.org/html/rfc2616).
 
 Se o caminho estiver correto, o destinatário enviará uma resposta padrão "HTTP/1.1 401 Unauthorized",
 incluindo o cabeçalho de autenticação HTTP digest WWW-Authenticate,
-como em [RFC-2617]_.
+como em [RFC-2617](https://tools.ietf.org/html/rfc2617).
 
 Ambas as partes então fecharão o socket.
 
 
-Solicitação HTTP 2
-``````````````````
+#### Solicitação HTTP 2
 
 O originador enviará o seguinte,
-como em [RFC-2617]_ e [WEBSOCKET]_.
+como em [RFC-2617](https://tools.ietf.org/html/rfc2617) e [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket).
 
 Todas as linhas são terminadas com CRLF conforme requerido pelo HTTP.
 
-.. raw:: html
-
-  {% highlight %}
-
+```text
 GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
   Host: (ip):(port)
   Cache-Control: no-cache
@@ -148,40 +137,33 @@ GET /GarlicFarm/CLUSTER/VERSION/websocket HTTP/1.1
 
   CLUSTER é o nome do cluster (padrão "farm")
   VERSION é a versão da Fazenda de Alho (atualmente "1")
+```
 
-{% endhighlight %}
 
-
-Resposta HTTP 2
-```````````````
+#### Resposta HTTP 2
 
 Se a autenticação não for correta, o destinatário enviará outra resposta padrão "HTTP/1.1 401 Unauthorized",
-como em [RFC-2617]_.
+como em [RFC-2617](https://tools.ietf.org/html/rfc2617).
 
 Se a autenticação for correta, o destinatário enviará a seguinte resposta,
-como em [WEBSOCKET]_.
+como em [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket).
 
 Todas as linhas são terminadas com CRLF conforme requerido pelo HTTP.
 
-.. raw:: html
-
-  {% highlight %}
-
+```text
 HTTP/1.1 101 Switching Protocols
   Connection: Upgrade
   Upgrade: websocket
   (cabeçalhos Sec-Websocket-*)
   (quaisquer outros cabeçalhos são ignorados)
   (linha em branco)
-
-{% endhighlight %}
+```
 
 Depois que isso for recebido, o socket permanece aberto.
 O protocolo Raft, conforme definido abaixo, começa, no mesmo socket.
 
 
-Cache
-```````
+#### Cache
 
 As credenciais devem ser armazenadas em cache por pelo menos uma hora, para que
 conexões subsequentes possam ir diretamente para
@@ -206,37 +188,32 @@ Os tipos de mensagem 16-17 são as mensagens RPC de Compação de Log definidas
 na seção 7 do Raft.
 
 
-========================  ======  ===========  =================   =====================================
-Mensagem                  Número  Enviado Por  Enviado Para        Notas
-========================  ======  ===========  =================   =====================================
-RequestVoteRequest           1    Candidato   Seguidor             RPC padrão do Raft; não deve conter entradas de log
-RequestVoteResponse          2    Seguidor    Candidato            RPC padrão do Raft
-AppendEntriesRequest         3    Líder       Seguidor             RPC padrão do Raft
-AppendEntriesResponse        4    Seguidor    Líder / Cliente      RPC padrão do Raft
-ClientRequest                5    Cliente     Líder / Seguidor     Resposta é AppendEntriesResponse; deve conter apenas entradas de log de Aplicação
-AddServerRequest             6    Cliente     Líder                Deve conter apenas uma entrada de log ClusterServer
-AddServerResponse            7    Líder       Cliente              O líder também envia um JoinClusterRequest
-RemoveServerRequest          8    Seguidor    Líder                Deve conter apenas uma entrada de log ClusterServer
-RemoveServerResponse         9    Líder       Seguidor
-SyncLogRequest              10    Líder       Seguidor             Deve conter apenas uma entrada de log LogPack
-SyncLogResponse             11    Seguidor    Líder
-JoinClusterRequest          12    Líder       Novo Servidor        Convite para entrar; deve conter apenas uma entrada de log de Configuração
-JoinClusterResponse         13    Novo Servidor Líder
-LeaveClusterRequest         14    Líder       Seguidor             Comando para sair
-LeaveClusterResponse        15    Seguidor    Líder
-InstallSnapshotRequest      16    Líder       Seguidor             Seção 7 do Raft; Deve conter apenas uma entrada de log SnapshotSyncRequest
-InstallSnapshotResponse     17    Seguidor    Líder                Seção 7 do Raft
-========================  ======  ===========  =================   =====================================
+| Mensagem | Número | Enviado Por | Enviado Para | Notas |
+| :--- | :--- | :--- | :--- | :--- |
+| RequestVoteRequest | 1 | Candidato | Seguidor | RPC padrão do Raft; não deve conter entradas de log |
+| RequestVoteResponse | 2 | Seguidor | Candidato | RPC padrão do Raft |
+| AppendEntriesRequest | 3 | Líder | Seguidor | RPC padrão do Raft |
+| AppendEntriesResponse | 4 | Seguidor | Líder / Cliente | RPC padrão do Raft |
+| ClientRequest | 5 | Cliente | Líder / Seguidor | Resposta é AppendEntriesResponse; deve conter apenas entradas de log de Aplicação |
+| AddServerRequest | 6 | Cliente | Líder | Deve conter apenas uma entrada de log ClusterServer |
+| AddServerResponse | 7 | Líder | Cliente | O líder também envia um JoinClusterRequest |
+| RemoveServerRequest | 8 | Seguidor | Líder | Deve conter apenas uma entrada de log ClusterServer |
+| RemoveServerResponse | 9 | Líder | Seguidor | |
+| SyncLogRequest | 10 | Líder | Seguidor | Deve conter apenas uma entrada de log LogPack |
+| SyncLogResponse | 11 | Seguidor | Líder | |
+| JoinClusterRequest | 12 | Líder | Novo Servidor | Convite para entrar; deve conter apenas uma entrada de log de Configuração |
+| JoinClusterResponse | 13 | Novo Servidor | Líder | |
+| LeaveClusterRequest | 14 | Líder | Seguidor | Comando para sair |
+| LeaveClusterResponse | 15 | Seguidor | Líder | |
+| InstallSnapshotRequest | 16 | Líder | Seguidor | Seção 7 do Raft; Deve conter apenas uma entrada de log SnapshotSyncRequest |
+| InstallSnapshotResponse | 17 | Seguidor | Líder | Seção 7 do Raft |
 
 
 ### Estabelecimento
 
 Após o aperto de mão HTTP, a sequência de estabelecimento é como segue:
 
-.. raw:: html
-
-  {% highlight %}
-
+```text
 Novo Servidor Alice              Seguidor Aleatório Bob
 
   ClientRequest   ------->
@@ -258,30 +235,22 @@ Novo Servidor Alice              Seguidor Aleatório Bob
                        OU InstallSnapshotRequest
   SyncLogResponse  ------->
   OU InstallSnapshotResponse
-
-{% endhighlight %}
+```
 
 Sequência de Desconexão:
 
-.. raw:: html
-
-  {% highlight %}
-
+```text
 Seguidor Alice              Líder Charlie
 
   RemoveServerRequest   ------->
           <---------   RemoveServerResponse
           <---------   LeaveClusterRequest
   LeaveClusterResponse  ------->
-
-{% endhighlight %}
+```
 
 Sequência de Eleição:
 
-.. raw:: html
-
-  {% highlight %}
-
+```text
 Candidato Alice               Seguidor Bob
 
   RequestVoteRequest   ------->
@@ -294,8 +263,7 @@ Candidato Alice               Seguidor Bob
   AppendEntriesRequest   ------->
   (sinalização de vida)
           <---------   AppendEntriesResponse
-
-{% endhighlight %}
+```
 
 
 ### Definições
@@ -313,16 +281,12 @@ As solicitações contêm um cabeçalho e zero ou mais entradas de log.
 As solicitações contêm um cabeçalho de tamanho fixo e Entradas de Log opcionais de tamanho variável.
 
 
-Cabeçalho da Solicitação
-````````````````````````
+#### Cabeçalho da Solicitação
 
 O cabeçalho da solicitação tem 45 bytes, como segue.
 Todos os valores são unsigned big-endian.
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 Tipo da mensagem:     1 byte
   Origem:             ID, inteiro de 4 bytes
   Destino:            ID, inteiro de 4 bytes
@@ -332,8 +296,7 @@ Tipo da mensagem:     1 byte
   Índice Comprometido:   8 byte integer
   Tamanho das entradas de log:  Tamanho total em bytes, inteiro de 4 bytes
   Entradas de log:    veja abaixo, comprimento total como especificado
-
-{% endhighlight %}
+```
 
 
 #### Notas
@@ -346,39 +309,31 @@ esta mensagem é um sinal de vida (mensagem de manutenção).
 
 
 
-Entradas de Log
-```````````````
+#### Entradas de Log
 
 O log contém zero ou mais entradas de log.
 Cada entrada de log é como segue.
 Todos os valores são unsigned big-endian.
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 Termo:        inteiro de 8 bytes
   Tipo de valor:   1 byte
   Tamanho da entrada:  Em bytes, inteiro de 4 bytes
   Entrada:         comprimento conforme especificado
+```
 
-{% endhighlight %}
 
-
-Conteúdos do Log
-``````````````
+#### Conteúdos do Log
 
 Todos os valores são unsigned big-endian.
 
-========================  ======
-Tipo de Valor do Log      Number
-========================  ======
-Aplicação                   1
-Configuração                2
-Servidor de Cluster         3
-Pacote de Log               4
-Pedido de Sincronização de Snapshot  5
-========================  ======
+| Tipo de Valor do Log | Número |
+| :--- | :--- |
+| Aplicação | 1 |
+| Configuração | 2 |
+| Servidor de Cluster | 3 |
+| Pacote de Log | 4 |
+| Pedido de Sincronização de Snapshot | 5 |
 
 
 #### Aplicação
@@ -392,19 +347,14 @@ Veja a seção da Camada de Aplicação abaixo.
 Isto é usado para o líder serializar uma nova configuração de cluster e replicar para pares.
 Contém zero ou mais configurações de Servidor de Cluster.
 
-
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 Índice do Log:  inteiro de 8 bytes
   Último Índice do Log:  inteiro de 8 bytes
   Dados do Servidor de Cluster para cada servidor:
     ID:                inteiro de 4 bytes
     Compr. dos dados de endpoint: Em bytes, inteiro de 4 bytes
     Dados de endpoint:  string ASCII da forma "tcp://localhost:9001", comprimento conforme especificado
-
-{% endhighlight %}
+```
 
 
 #### Servidor de Cluster
@@ -414,26 +364,17 @@ Isso é incluído apenas em uma mensagem AddServerRequest ou RemoveServerRequest
 
 Quando usado em uma Mensagem AddServerRequest:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 ID:                inteiro de 4 bytes
   Compr. dos dados de endpoint: Em bytes, inteiro de 4 bytes
   Dados de endpoint:  string ASCII da forma "tcp://localhost:9001", comprimento conforme especificado
-
-{% endhighlight %}
-
+```
 
 Quando usado em uma Mensagem RemoveServerRequest:
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 ID:                inteiro de 4 bytes
-
-{% endhighlight %}
+```
 
 
 #### Pacote de Log
@@ -442,17 +383,12 @@ Este é incluído apenas em uma mensagem SyncLogRequest.
 
 O seguinte é compactado com gzip antes da transmissão:
 
-
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 Compr. dos dados de índice: Em bytes, inteiro de 4 bytes
   Compr. dos dados do log: Em bytes, inteiro de 4 bytes
   Dados do índice: 8 bytes para cada índice, comprimento conforme especificado
   Dados do log:   comprimento conforme especificado
-
-{% endhighlight %}
+```
 
 
 
@@ -460,10 +396,7 @@ Compr. dos dados de índice: Em bytes, inteiro de 4 bytes
 
 Este é incluído apenas em uma mensagem InstallSnapshotRequest.
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 Último Índice do Log:  inteiro de 8 bytes
   Último Termo do Log:  inteiro de 8 bytes
   Compr. dos dados de configuração: Em bytes, inteiro de 4 bytes
@@ -472,8 +405,7 @@ Este é incluído apenas em uma mensagem InstallSnapshotRequest.
   Compr. dos dados: Em bytes, inteiro de 4 bytes
   Dados:            comprimento conforme especificado
   Está concluído:   1 se concluído, 0 se não concluído (1 byte)
-
-{% endhighlight %}
+```
 
 
 
@@ -483,22 +415,17 @@ Este é incluído apenas em uma mensagem InstallSnapshotRequest.
 Todas as respostas têm 26 bytes, como segue.
 Todos os valores são unsigned big-endian.
 
-.. raw:: html
-
-  {% highlight lang='dataspec' %}
-
+```dataspec
 Tipo da mensagem:   1 byte
   Origem:            ID, inteiro de 4 bytes
   Destino:           Normalmente o ID do destino real (veja notas), inteiro de 4 bytes
   Termo:             Termo atual, inteiro de 8 bytes
   Próximo Índice:    Inicializado para o último índice de log do líder + 1, inteiro de 8 bytes
   Aceito:            1 se aceito, 0 se não aceito (veja notas), 1 byte
+```
 
-{% endhighlight %}
 
-
-Notas
-`````
+#### Notas
 
 O ID do Destino é normalmente o destino real para esta mensagem.
 No entanto, para AppendEntriesResponse, AddServerResponse e RemoveServerResponse,
@@ -667,20 +594,9 @@ Sem problemas de compatibilidade retroativa.
 
 ## Referências
 
-.. [JRAFT]
-    https://github.com/datatechnology/jraft
-
-.. [JSON]
-    https://json.org/
-
-.. [RAFT]
-    https://ramcloud.stanford.edu/wiki/download/attachments/11370504/raft.pdf
-
-.. [RFC-2616]
-    https://tools.ietf.org/html/rfc2616
-
-.. [RFC-2617]
-    https://tools.ietf.org/html/rfc2617
-
-.. [WEBSOCKET]
-    https://en.wikipedia.org/wiki/WebSocket
+* [JRAFT](https://github.com/datatechnology/jraft)
+* [JSON](https://json.org/)
+* [RAFT](https://ramcloud.stanford.edu/wiki/download/attachments/11370504/raft.pdf)
+* [RFC-2616](https://tools.ietf.org/html/rfc2616)
+* [RFC-2617](https://tools.ietf.org/html/rfc2617)
+* [WEBSOCKET](https://en.wikipedia.org/wiki/WebSocket)
