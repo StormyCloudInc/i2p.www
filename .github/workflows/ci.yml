@@ -54,6 +54,7 @@ jobs:
         run: hugo --minify --gc
 
       - name: Optimize Images (SVG & WebP Conversion)
+        if: github.ref == 'refs/heads/main'
         run: |
           echo "Optimizing SVG files..."
           find public -name "*.svg" -type f -exec svgo --multipass --quiet {} \;
@@ -74,6 +75,7 @@ jobs:
           find public -name "*.html" -type f -exec sed -i -e 's/\.png/\.webp/g' -e 's/\.jpg/\.webp/g' -e 's/\.jpeg/\.webp/g' {} +
 
       - name: Upload Build Artifact
+        if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
         with:
           name: public-site
@@ -81,11 +83,41 @@ jobs:
           retention-days: 1
 
   # =================================================================================================
+  # TEST JOB
+  # =================================================================================================
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.147.8'
+          extended: true
+
+      - name: Install Dependencies
+        run: |
+          pip install -r tests/requirements.txt
+
+      - name: Run Unit Tests
+        run: |
+          pytest tests/
+
+  # =================================================================================================
   # DEPLOYMENT JOBS
   # =================================================================================================
   
   deploy-cloudflare:
-    needs: build
+    needs: [build, test]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     environment:

@@ -53,7 +53,7 @@ NO_TRANSLATE_KEYS = {
     "aliases", "layout", "slug", "lastUpdated", "lastupdated", "accurateFor",
     "reviewStatus", "date", "author", "categories", "tags",
     "toc", "weight", "draft", "number", "created", "thread", "supercedes",
-    "supersedes", "supersededby", "updated"
+    "supersedes", "supersededby", "updated", "type"
 }
 
 SYSTEM_PROMPT = """You are a professional technical translator specializing in I2P (The Invisible Internet Project) documentation.
@@ -727,15 +727,16 @@ def generate_batch_requests(
             ))
 
         # Body segments
-        heading_count = 0
+        heading_counts = {}  # Count per level: {2: 0, 3: 0, 4: 0, ...}
         paragraph_count = 0
         list_count = 0
         table_count = 0
 
         for token in tokens:
             if token.type == "heading":
-                heading_count += 1
-                custom_id = f"{file_prefix}_h{token.level}_{heading_count:03d}"
+                level = token.level
+                heading_counts[level] = heading_counts.get(level, 0) + 1
+                custom_id = f"{file_prefix}_h{level}_{heading_counts[level]:03d}"
 
                 user_prompt = f"""[{source_lang_name} → {target_lang_name}]
 <source_text>

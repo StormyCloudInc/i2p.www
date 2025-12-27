@@ -1,6 +1,6 @@
 ---
 title: "Preguntas Frecuentes"
-description: "FAQ completo de I2P: ayuda del router, configuración, reseeds, privacidad/seguridad, rendimiento y resolución de problemas"
+description: "Preguntas frecuentes completas sobre I2P: ayuda del router, configuración, reseeds, privacidad/seguridad, rendimiento y solución de problemas"
 slug: "faq"
 lastUpdated: "2025-10"
 accurateFor: "2.10.0"
@@ -9,51 +9,51 @@ type: docs
 
 ## Ayuda del Router I2P
 
-### What systems will I2P run on? {#systems}
+### ¿En qué sistemas funcionará I2P? {#systems}
 
 I2P está escrito en el lenguaje de programación Java. Ha sido probado en Windows, Linux, FreeBSD y OSX. También está disponible una versión para Android.
 
-En términos de uso de memoria, I2P está configurado para usar 128 MB de RAM por defecto. Esto es suficiente para navegar y usar IRC. Sin embargo, otras actividades pueden requerir una mayor asignación de memoria. Por ejemplo, si se desea ejecutar un router de alto ancho de banda, participar en torrents de I2P o servir servicios ocultos de alto tráfico, se requiere una mayor cantidad de memoria.
+En términos de uso de memoria, I2P está configurado para utilizar 128 MB de RAM por defecto. Esto es suficiente para navegación y uso de IRC. Sin embargo, otras actividades pueden requerir una mayor asignación de memoria. Por ejemplo, si se desea ejecutar un router de alto ancho de banda, participar en torrents de I2P o servir hidden services de alto tráfico, se requiere una mayor cantidad de memoria.
 
-En términos de uso de CPU, I2P ha sido probado para funcionar en sistemas modestos como la gama de computadoras de placa única Raspberry Pi. Como I2P hace un uso intensivo de técnicas criptográficas, una CPU más potente estará mejor preparada para manejar la carga de trabajo generada por I2P, así como las tareas relacionadas con el resto del sistema (es decir, sistema operativo, interfaz gráfica, otros procesos como navegación web).
+En términos de uso de CPU, I2P ha sido probado para funcionar en sistemas modestos como la gama de computadoras de placa única Raspberry Pi. Como I2P hace un uso intensivo de técnicas criptográficas, una CPU más potente estará mejor preparada para manejar la carga de trabajo generada por I2P, así como las tareas relacionadas con el resto del sistema (es decir, sistema operativo, interfaz gráfica, otros procesos, por ejemplo, navegación web).
 
 Se recomienda usar Sun/Oracle Java u OpenJDK.
 
-### ¿En qué sistemas funcionará I2P? {#systems}
-
-Sí, se requiere Java para usar I2P Core. Incluimos Java dentro de nuestros instaladores fáciles para Windows, Mac OSX y Linux. Si estás ejecutando la aplicación I2P para Android, también necesitarás un entorno de ejecución Java como Dalvik o ART instalado en la mayoría de los casos.
-
 ### ¿Es necesario instalar Java para usar I2P? {#java}
 
-Un sitio I2P es un sitio web normal excepto que está alojado dentro de I2P. Los sitios I2P tienen direcciones que parecen direcciones de internet normales, terminando en ".i2p" de forma legible para humanos y no criptográfica, en beneficio de las personas. En realidad, conectarse a un sitio I2P requiere criptografía, lo que significa que las direcciones de sitios I2P también son los Destinations largos en "Base64" y las direcciones "B32" más cortas. Es posible que necesite realizar configuraciones adicionales para navegar correctamente. Navegar sitios I2P requerirá activar el proxy HTTP en su instalación de I2P y luego configurar su navegador para usarlo. Para más información, consulte la sección "Navegadores" más abajo o la guía de "Configuración del navegador".
+Sí, se requiere Java para usar I2P Core. Incluimos Java dentro de nuestros instaladores fáciles para Windows, Mac OSX y Linux. Si estás ejecutando la aplicación I2P para Android, también necesitarás un entorno de ejecución de Java como Dalvik o ART instalado en la mayoría de los casos.
 
 ### ¿Qué es un "I2P Site" y cómo configuro mi navegador para poder usarlos? {#I2P-Site}
 
-En la página de Peers en la consola de tu router, puedes ver dos números - Activos x/y. El primer número es la cantidad de peers a los que has enviado o de los que has recibido un mensaje en los últimos minutos. El segundo número es la cantidad de peers vistos recientemente, este siempre será mayor o igual al primer número.
+Un Sitio I2P es un sitio web normal excepto que está alojado dentro de I2P. Los sitios I2P tienen direcciones que parecen direcciones normales de internet, terminando en ".i2p" de una manera legible para humanos y no criptográfica, para el beneficio de las personas. En realidad, conectarse a un Sitio I2P requiere criptografía, lo que significa que las direcciones de Sitios I2P también son los largos Destinations "Base64" y las direcciones "B32" más cortas. Es posible que necesites realizar configuración adicional para navegar correctamente. Navegar Sitios I2P requerirá activar el Proxy HTTP en tu instalación de I2P y luego configurar tu navegador para usarlo. Para más información, consulta la sección "Navegadores" a continuación o la Guía de "Configuración del Navegador".
 
 ### ¿Qué significan los números Activos x/y en la consola del router? {#active}
 
-Sí, esto puede ser normal, especialmente cuando el router se acaba de iniciar. Los routers nuevos necesitarán tiempo para arrancar y conectarse al resto de la red. Para ayudar a mejorar la integración en la red, el tiempo de actividad y el rendimiento, revisa estas configuraciones:
+En la página de Peers en tu consola del router, puedes ver dos números - Activos x/y. El primer número es la cantidad de peers a los que has enviado o de los que has recibido un mensaje en los últimos minutos. El segundo número es la cantidad de peers vistos recientemente, este siempre será mayor o igual que el primer número.
 
-- **Compartir ancho de banda** - Si un router está configurado para compartir ancho de banda, enrutará más tráfico para otros routers, lo cual ayuda a integrarlo con el resto de la red, además de mejorar el rendimiento de la conexión local. Esto se puede configurar en la página [http://localhost:7657/config](http://localhost:7657/config).
-- **Interfaz de red** - Asegúrate de que no haya una interfaz específica configurada en la página [http://localhost:7657/confignet](http://localhost:7657/confignet). Esto puede reducir el rendimiento a menos que tu computadora tenga múltiples conexiones (multi-homed) con varias direcciones IP externas.
-- **Protocolo I2NP** - Asegúrate de que el router esté configurado para esperar conexiones en un protocolo válido para el sistema operativo del host y configuraciones de red vacías (Avanzado). No introduzcas una dirección IP en el campo 'Hostname' en la página de configuración de Red. El Protocolo I2NP que selecciones aquí solo se utilizará si aún no tienes una dirección accesible. La mayoría de las conexiones inalámbricas 4G y 5G de Verizon en Estados Unidos, por ejemplo, bloquean UDP y no se puede acceder a través de él. Otros usarían UDP forzosamente incluso si está disponible para ellos. Elige una configuración razonable de los Protocolos I2NP listados.
+### Mi router tiene muy pocos pares activos, ¿está bien esto? {#peers}
 
-### Mi router tiene muy pocos peers activos, ¿esto está bien? {#peers}
+Sí, esto puede ser normal, especialmente cuando el router acaba de iniciarse. Los routers nuevos necesitarán tiempo para arrancar y conectarse al resto de la red. Para ayudar a mejorar la integración en la red, el tiempo de actividad y el rendimiento, revisa estas configuraciones:
 
-Nada de este material está instalado por defecto. Sin embargo, dado que I2P es una red peer-to-peer (entre pares), es posible que te encuentres con contenido prohibido por accidente. Aquí hay un resumen de cómo I2P te protege de verte involucrado innecesariamente en violaciones de tus creencias.
-
-- **Distribución** - El tráfico es interno a la red I2P, no eres un [nodo de salida](#exit) (referido como outproxy en nuestra documentación).
-- **Almacenamiento** - La red I2P no realiza almacenamiento distribuido de contenido, esto tiene que ser específicamente instalado y configurado por el usuario (con Tahoe-LAFS, por ejemplo). Esa es una característica de una red anónima diferente, [Freenet](http://freenetproject.org/). Al ejecutar un router I2P, no estás almacenando contenido para nadie.
-- **Acceso** - Tu router no solicitará ningún contenido sin tu instrucción específica para hacerlo.
+- **Compartir ancho de banda** - Si un router está configurado para compartir ancho de banda, enrutará más tráfico para otros routers, lo que ayuda a integrarlo con el resto de la red, así como a mejorar el rendimiento de la conexión local. Esto puede configurarse en la página [http://localhost:7657/config](http://localhost:7657/config).
+- **Interfaz de red** - Asegúrate de que no haya una interfaz especificada en la página [http://localhost:7657/confignet](http://localhost:7657/confignet). Esto puede reducir el rendimiento a menos que tu computadora tenga múltiples interfaces con varias direcciones IP externas.
+- **Protocolo I2NP** - Asegúrate de que el router esté configurado para esperar conexiones en un protocolo válido para el sistema operativo del host y configuraciones de red vacías (Avanzado). No ingreses una dirección IP en el campo 'Nombre de host' en la página de configuración de red. El protocolo I2NP que selecciones aquí solo se utilizará si aún no tienes una dirección accesible. La mayoría de las conexiones inalámbricas 4G y 5G de Verizon en Estados Unidos, por ejemplo, bloquean UDP y no se puede acceder a través de él. Otros usarían UDP de manera forzada incluso si está disponible para ellos. Elige una configuración razonable de los protocolos I2NP listados.
 
 ### Me opongo a ciertos tipos de contenido. ¿Cómo evito distribuirlos, almacenarlos o acceder a ellos? {#badcontent}
 
-Sí, la forma más fácil y común es bloqueando el bootstrap, o los servidores de "Reseed". Bloquear completamente todo el tráfico ofuscado también funcionaría (aunque rompería muchas, muchas otras cosas que no son I2P y la mayoría no está dispuesta a llegar tan lejos). En el caso del bloqueo de reseed, hay un paquete de reseed en Github, bloquearlo también bloqueará Github. Puedes hacer reseed a través de un proxy (se pueden encontrar muchos en Internet si no quieres usar Tor) o compartir paquetes de reseed de forma directa entre amigos sin conexión.
+No hay ninguno de estos materiales instalado por defecto. Sin embargo, dado que I2P es una red peer-to-peer (entre pares), es posible que encuentres contenido prohibido por accidente. Aquí hay un resumen de cómo I2P te protege de estar involucrado innecesariamente en violaciones de tus creencias.
+
+- **Distribución** - El tráfico es interno a la red I2P, no eres un [nodo de salida](#exit) (referido como outproxy en nuestra documentación).
+- **Almacenamiento** - La red I2P no realiza almacenamiento distribuido de contenido, esto debe ser instalado y configurado específicamente por el usuario (con Tahoe-LAFS, por ejemplo). Esa es una característica de una red anónima diferente, [Freenet](http://freenetproject.org/). Al ejecutar un router I2P, no estás almacenando contenido para nadie.
+- **Acceso** - Tu router no solicitará ningún contenido sin tu instrucción específica para hacerlo.
 
 ### ¿Es posible bloquear I2P? {#blocking}
 
-A menudo, este error ocurrirá con cualquier software Java habilitado para la red en algunos sistemas que están configurados para usar IPv6 por defecto. Hay algunas maneras de resolver esto:
+Sí, la forma más fácil y común es bloqueando los servidores bootstrap o "Reseed". Bloquear completamente todo el tráfico ofuscado también funcionaría (aunque esto rompería muchas, muchas otras cosas que no son I2P y la mayoría no está dispuesta a llegar tan lejos). En el caso del bloqueo de reseed, hay un paquete de reseed en Github, bloquearlo también bloqueará Github. Puedes realizar reseed a través de un proxy (se pueden encontrar muchos en Internet si no quieres usar Tor) o compartir paquetes de reseed de forma amigo-a-amigo sin conexión.
+
+### En `wrapper.log` veo un error que indica "`Protocol family unavailable`" al cargar la Consola del Router {#protocolfamily}
+
+A menudo este error ocurrirá con cualquier software Java habilitado para red en algunos sistemas que están configurados para usar IPv6 por defecto. Hay algunas formas de resolver esto:
 
 - En sistemas basados en Linux, puedes ejecutar `echo 0 > /proc/sys/net/ipv6/bindv6only`
 - Busca las siguientes líneas en `wrapper.config`:
@@ -61,63 +61,63 @@ A menudo, este error ocurrirá con cualquier software Java habilitado para la re
   #wrapper.java.additional.5=-Djava.net.preferIPv4Stack=true
   #wrapper.java.additional.6=-Djava.net.preferIPv6Addresses=false
   ```
-  Si las líneas están presentes, descoméntalas eliminando los "#". Si las líneas no están presentes, agrégalas sin los "#".
+  Si las líneas están presentes, descoméntalas eliminando los "#". Si las líneas no están presentes, añádelas sin los "#".
 
 Otra opción sería eliminar el `::1` de `~/.i2p/clients.config`
 
-**ADVERTENCIA**: Para que cualquier cambio en `wrapper.config` surta efecto, debes detener completamente el router y el wrapper. ¡Hacer clic en *Reiniciar* en la consola del router NO volverá a leer este archivo! Debes hacer clic en *Apagar*, esperar 11 minutos y luego iniciar I2P.
-
-### En `wrapper.log` veo un error que indica "`Protocol family unavailable`" al cargar la Consola del Router {#protocolfamily}
-
-Si consideras todos los sitios I2P que se han creado alguna vez, sí, la mayoría están caídos. Las personas y los sitios I2P van y vienen. Una buena forma de empezar en I2P es consultar una lista de sitios I2P que están actualmente activos. [identiguy.i2p](http://identiguy.i2p) rastrea los sitios I2P activos.
+**ADVERTENCIA**: Para que cualquier cambio en `wrapper.config` tenga efecto, debe detener completamente el router y el wrapper. ¡Hacer clic en *Reiniciar* en la consola del router NO volverá a leer este archivo! Debe hacer clic en *Apagar*, esperar 11 minutos y luego iniciar I2P.
 
 ### ¿La mayoría de los sitios I2P dentro de I2P están caídos? {#down}
 
-El envoltorio de servicio Java Tanuki que utilizamos abre este puerto — vinculado a localhost — para comunicarse con el software que se ejecuta dentro de la JVM. Cuando se inicia la JVM, se le proporciona una clave para que pueda conectarse al envoltorio. Después de que la JVM establece su conexión con el envoltorio, este rechaza cualquier conexión adicional.
+Si consideras cada sitio I2P que se ha creado alguna vez, sí, la mayoría están caídos. Las personas y los sitios I2P vienen y van. Una buena manera de comenzar en I2P es revisar una lista de sitios I2P que están actualmente activos. [identiguy.i2p](http://identiguy.i2p) rastrea los sitios I2P activos.
+
+### ¿Por qué I2P está escuchando en el puerto 32000? {#port32000}
+
+El wrapper de servicio Java Tanuki que utilizamos abre este puerto — vinculado a localhost — para comunicarse con el software que se ejecuta dentro de la JVM. Cuando se inicia la JVM, se le proporciona una clave para que pueda conectarse al wrapper. Después de que la JVM establece su conexión con el wrapper, el wrapper rechaza cualquier conexión adicional.
 
 Puede encontrar más información en la [documentación del wrapper](http://wrapper.tanukisoftware.com/doc/english/prop-port.html).
 
-### ¿Por qué está I2P escuchando en el puerto 32000? {#port32000}
+### ¿Cómo configuro mi navegador? {#browserproxy}
 
 La configuración del proxy para diferentes navegadores está en una página separada con capturas de pantalla. Son posibles configuraciones más avanzadas con herramientas externas, como el complemento de navegador FoxyProxy o el servidor proxy Privoxy, pero podrían introducir fugas en tu configuración.
 
-### ¿Cómo configuro mi navegador? {#browserproxy}
+### ¿Cómo me conecto a IRC dentro de I2P? {#irc}
 
-Se crea un túnel al servidor IRC principal dentro de I2P, Irc2P, cuando se instala I2P (consulta la [página de configuración de I2PTunnel](http://localhost:7657/i2ptunnel/index.jsp)), y se inicia automáticamente cuando el router I2P se inicia. Para conectarte, configura tu cliente IRC para conectarse a `localhost 6668`. Los usuarios de clientes tipo HexChat pueden crear una nueva red con el servidor `localhost/6668` (recuerda marcar "Bypass proxy server" si tienes un servidor proxy configurado). Los usuarios de Weechat pueden usar el siguiente comando para agregar una nueva red:
+Se crea un túnel al servidor IRC principal dentro de I2P, Irc2P, cuando se instala I2P (consulta la [página de configuración de I2PTunnel](http://localhost:7657/i2ptunnel/index.jsp)), y se inicia automáticamente cuando arranca el router I2P. Para conectarte a él, indica a tu cliente IRC que se conecte a `localhost 6668`. Los usuarios de clientes tipo HexChat pueden crear una nueva red con el servidor `localhost/6668` (recuerda marcar "Bypass proxy server" si tienes un servidor proxy configurado). Los usuarios de Weechat pueden usar el siguiente comando para añadir una nueva red:
 
 ```
 /server add irc2p localhost/6668
 ```
-### ¿Cómo me conecto a IRC dentro de I2P? {#irc}
-
-El método más fácil es hacer clic en el enlace [i2ptunnel](http://127.0.0.1:7657/i2ptunnel/) en la consola del router y crear un nuevo 'Server Tunnel' (túnel de servidor). Puedes servir contenido dinámico configurando el destino del tunnel a un puerto de un servidor web existente, como Tomcat o Jetty. También puedes servir contenido estático. Para esto, configura el destino del tunnel como: `0.0.0.0 port 7659` y coloca el contenido en el directorio `~/.i2p/eepsite/docroot/`. (En sistemas que no sean Linux, esto puede estar en una ubicación diferente. Consulta la consola del router). El software del 'eepsite' viene como parte del paquete de instalación de I2P y está configurado para iniciarse automáticamente cuando se inicia I2P. El sitio predeterminado que esto crea puede ser accedido en http://127.0.0.1:7658. Sin embargo, tu 'eepsite' también es accesible para otros a través de tu archivo de clave del eepsite, ubicado en: `~/.i2p/eepsite/i2p/eepsite.keys`. Para obtener más información, lee el archivo readme en: `~/.i2p/eepsite/README.txt`.
-
 ### ¿Cómo configuro mi propio sitio I2P? {#myI2P-Site}
 
-Depende de tu adversario y tu modelo de amenaza. Si solo te preocupan las violaciones corporativas de "privacidad", los delincuentes comunes y la censura, entonces realmente no es peligroso. Las fuerzas del orden probablemente te encontrarán de todos modos si realmente quieren hacerlo. Solo alojar cuando tienes un navegador normal de usuario doméstico (de internet) ejecutándose hará que sea realmente difícil saber quién está alojando esa parte. Por favor, considera el alojamiento de tu sitio I2P de la misma manera que alojar cualquier otro servicio: es tan peligroso, o seguro, como tú mismo lo configures y gestiones.
+El método más fácil es hacer clic en el enlace [i2ptunnel](http://127.0.0.1:7657/i2ptunnel/) en la consola del router y crear un nuevo 'Server Tunnel' (túnel de servidor). Puedes servir contenido dinámico configurando el destino del tunnel hacia el puerto de un servidor web existente, como Tomcat o Jetty. También puedes servir contenido estático. Para esto, configura el destino del tunnel a: `0.0.0.0 port 7659` y coloca el contenido en el directorio `~/.i2p/eepsite/docroot/`. (En sistemas que no son Linux, esto puede estar en una ubicación diferente. Verifica la consola del router.) El software 'eepsite' viene como parte del paquete de instalación de I2P y está configurado para iniciarse automáticamente cuando I2P se inicia. El sitio predeterminado que esto crea se puede acceder en http://127.0.0.1:7658. Sin embargo, tu 'eepsite' también es accesible para otros a través de tu archivo de claves del eepsite, ubicado en: `~/.i2p/eepsite/i2p/eepsite.keys`. Para obtener más información, lee el archivo readme en: `~/.i2p/eepsite/README.txt`.
+
+### ¿Si alojo un sitio web en I2P en casa, que contenga solo HTML y CSS, es peligroso? {#hosting}
+
+Depende de tu adversario y tu modelo de amenaza. Si solo te preocupan las violaciones de "privacidad" corporativas, delincuentes comunes y la censura, entonces no es realmente peligroso. Las fuerzas del orden probablemente te encontrarán de todos modos si realmente lo desean. Solo alojar cuando tienes un navegador de usuario doméstico normal (de internet) en ejecución hará realmente difícil saber quién está alojando esa parte. Por favor considera el alojamiento de tu sitio I2P igual que alojar cualquier otro servicio - es tan peligroso - o seguro - como tú mismo lo configures y gestiones.
 
 Nota: Ya existe una forma de separar el alojamiento de un servicio i2p (destination) del router i2p. Si [entiendes cómo](/docs/overview/tech-intro#i2pservices) funciona, entonces puedes simplemente configurar una máquina separada como servidor para el sitio web (o servicio) que será públicamente accesible y reenviar eso al servidor web a través de un túnel SSH [muy] seguro o usar un sistema de archivos compartido y seguro.
 
-### Si alojo un sitio web en I2P en casa, que contenga solo HTML y CSS, ¿es peligroso? {#hosting}
-
-La aplicación de Libreta de Direcciones de I2P mapea nombres legibles por humanos a destinos a largo plazo, asociados con servicios, haciéndola más parecida a un archivo hosts o una lista de contactos que a una base de datos de red o un servicio DNS. También es local primero: no existe un espacio de nombres global reconocido, tú decides a qué se mapea cualquier dominio .i2p dado al final. El punto intermedio es algo llamado "Jump Service" (Servicio de Salto) que proporciona un nombre legible por humanos redigiéndote a una página donde se te preguntará "¿Das permiso al router I2P para llamar a $SITE_CRYPTO_KEY con el nombre $SITE_NAME.i2p?" o algo por el estilo. Una vez que esté en tu libreta de direcciones, puedes generar tus propias URL de salto para ayudar a compartir el sitio con otros.
-
 ### ¿Cómo encuentra I2P los sitios web ".i2p"? {#addresses}
 
-No puedes añadir una dirección sin conocer al menos el base32 o base64 del sitio que deseas visitar. El "hostname" que es legible para humanos es solo un alias para la dirección criptográfica, que corresponde al base32 o base64. Sin la dirección criptográfica, no hay forma de acceder a un sitio I2P, esto es por diseño. Distribuir la dirección a personas que aún no la conocen suele ser responsabilidad del proveedor del servicio Jump. Visitar un sitio I2P desconocido activará el uso de un servicio Jump. stats.i2p es el servicio Jump más confiable.
+La aplicación de Libreta de Direcciones de I2P asigna nombres legibles por humanos a destinos a largo plazo, asociados con servicios, lo que la hace más parecida a un archivo hosts o a una lista de contactos que a una base de datos de red o a un servicio DNS. También es local-first (prioriza lo local): no existe un espacio de nombres global reconocido, tú decides a qué se asigna cualquier dominio .i2p dado al final. El punto intermedio es algo llamado "Jump Service" (servicio de salto) que proporciona un nombre legible por humanos al redirigirte a una página donde se te preguntará "¿Le das permiso al router de I2P para llamar a $SITE_CRYPTO_KEY con el nombre $SITE_NAME.i2p?" o algo por el estilo. Una vez que está en tu libreta de direcciones, puedes generar tus propias URL de salto para ayudar a compartir el sitio con otros.
 
-Si estás alojando un sitio a través de i2ptunnel, entonces aún no tendrá un registro con un servicio de saltos. Para asignarle una URL localmente, visita la página de configuración y haz clic en el botón que dice "Add to Local Address Book". Luego ve a http://127.0.0.1:7657/dns para buscar la URL addresshelper y compartirla.
+### ¿Cómo agrego direcciones a la Libreta de Direcciones? {#addressbook}
 
-### ¿Cómo añado direcciones al Libro de Direcciones? {#addressbook}
+No puedes agregar una dirección sin conocer al menos el base32 o base64 del sitio que deseas visitar. El "hostname" que es legible para humanos es solo un alias para la dirección criptográfica, que corresponde al base32 o base64. Sin la dirección criptográfica, no hay forma de acceder a un sitio I2P, esto es por diseño. Distribuir la dirección a personas que aún no la conocen es generalmente responsabilidad del proveedor del servicio Jump. Visitar un sitio I2P que es desconocido activará el uso de un servicio Jump. stats.i2p es el servicio Jump más confiable.
 
-Los puertos que son utilizados por I2P pueden dividirse en 2 secciones:
+Si estás alojando un sitio a través de i2ptunnel, entonces aún no tendrá un registro con un servicio de salto. Para darle una URL localmente, visita la página de configuración y haz clic en el botón que dice "Add to Local Address Book." Luego ve a http://127.0.0.1:7657/dns para buscar la URL del asistente de direcciones y compartirla.
+
+### ¿Qué puertos usa I2P? {#ports}
+
+Los puertos que utiliza I2P se pueden dividir en 2 secciones:
 
 1. Puertos de cara a Internet, que se utilizan para la comunicación con otros routers I2P
 2. Puertos locales, para conexiones locales
 
 Estos se describen en detalle a continuación.
 
-#### 1. Internet-facing ports
+#### 1. Puertos expuestos a Internet
 
 Nota: Desde la versión 0.7.8, las nuevas instalaciones no utilizan el puerto 8887; se selecciona un puerto aleatorio entre 9000 y 31000 cuando el programa se ejecuta por primera vez. El puerto seleccionado se muestra en la [página de configuración](http://127.0.0.1:7657/confignet) del router.
 
@@ -131,11 +131,11 @@ Nota: Desde la versión 0.7.8, las nuevas instalaciones no utilizan el puerto 88
 
 - (Opcional, recomendado) UDP al puerto indicado en la [página de configuración](http://127.0.0.1:7657/confignet) desde ubicaciones arbitrarias
 - (Opcional, recomendado) TCP al puerto indicado en la [página de configuración](http://127.0.0.1:7657/confignet) desde ubicaciones arbitrarias
-- El TCP entrante puede deshabilitarse en la [página de configuración](http://127.0.0.1:7657/confignet)
+- El TCP entrante se puede deshabilitar en la [página de configuración](http://127.0.0.1:7657/confignet)
 
-#### 2. Local I2P ports
+#### 2. Puertos I2P locales
 
-Los puertos I2P locales escuchan solo conexiones locales por defecto, excepto donde se indique:
+Los puertos I2P locales escuchan solo conexiones locales de forma predeterminada, excepto donde se indique:
 
 <table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
   <thead>
@@ -203,20 +203,20 @@ Los puertos I2P locales escuchan solo conexiones locales por defecto, excepto do
     </tr>
   </tbody>
 </table>
-### ¿Qué puertos usa I2P? {#ports}
+### Me faltan muchos hosts en mi libreta de direcciones. ¿Cuáles son algunos buenos enlaces de suscripción? {#subscriptions}
 
 La libreta de direcciones se encuentra en [http://localhost:7657/dns](http://localhost:7657/dns) donde se puede encontrar más información.
 
-**¿Cuáles son algunos buenos enlaces de suscripción de libreta de direcciones?**
+**¿Cuáles son algunos buenos enlaces de suscripción a la libreta de direcciones?**
 
-Puede intentar lo siguiente:
+Puedes intentar lo siguiente:
 
 - [http://stats.i2p/cgi-bin/newhosts.txt](http://stats.i2p/cgi-bin/newhosts.txt)
 - [http://identiguy.i2p/hosts.txt](http://identiguy.i2p/hosts.txt)
 
-### How can I access the web console from my other machines or password protect it? {#remote_webconsole}
+### ¿Cómo puedo acceder a la consola web desde mis otras máquinas o protegerla con contraseña? {#remote_webconsole}
 
-Por razones de seguridad, la consola de administración del router por defecto solo escucha conexiones en la interfaz local.
+Por motivos de seguridad, la consola de administración del router por defecto solo escucha conexiones en la interfaz local.
 
 Existen dos métodos para acceder a la consola de forma remota:
 
@@ -227,21 +227,21 @@ Estos se detallan a continuación:
 
 **Método 1: Túnel SSH**
 
-Si está ejecutando un sistema operativo tipo Unix, este es el método más fácil para acceder remotamente a su consola I2P. (Nota: el software de servidor SSH está disponible para sistemas que ejecutan Windows, por ejemplo [https://github.com/PowerShell/Win32-OpenSSH](https://github.com/PowerShell/Win32-OpenSSH))
+Si estás ejecutando un sistema operativo tipo Unix, este es el método más fácil para acceder remotamente a tu consola I2P. (Nota: El software de servidor SSH está disponible para sistemas que ejecutan Windows, por ejemplo [https://github.com/PowerShell/Win32-OpenSSH](https://github.com/PowerShell/Win32-OpenSSH))
 
 Una vez que hayas configurado el acceso SSH a tu sistema, se pasa la bandera '-L' a SSH con los argumentos apropiados - por ejemplo:
 
 ```
 ssh -L 7657:localhost:7657 (System_IP)
 ```
-donde '(System_IP)' se reemplaza con la dirección IP de tu sistema. Este comando reenvía el puerto 7657 (el número antes de los dos puntos) al puerto 7657 del sistema remoto (según especifica la cadena 'localhost' entre los primeros y segundos dos puntos) (el número después de los segundos dos puntos). Tu consola I2P remota ahora estará disponible en tu sistema local como 'http://localhost:7657' y estará disponible mientras tu sesión SSH esté activa.
+donde '(System_IP)' se reemplaza con la dirección IP de tu sistema. Este comando reenvía el puerto 7657 (el número antes de los dos puntos) al puerto 7657 del sistema remoto (especificado por la cadena 'localhost' entre los primeros y segundos dos puntos) (el número después de los segundos dos puntos). Tu consola I2P remota estará ahora disponible en tu sistema local como 'http://localhost:7657' y estará disponible mientras tu sesión SSH esté activa.
 
-Si deseas iniciar una sesión SSH sin iniciar una shell en el sistema remoto, puedes agregar la bandera '-N':
+Si deseas iniciar una sesión SSH sin iniciar un shell en el sistema remoto, puedes agregar la opción '-N':
 
 ```
 ssh -NL 7657:localhost:7657 (System_IP)
 ```
-**Método 2: Configurar tu consola para que esté disponible en una dirección IP pública con nombre de usuario y contraseña**
+**Método 2: Configurar tu consola para que esté disponible en una dirección IP pública con un nombre de usuario y contraseña**
 
 1. Abre `~/.i2p/clients.config` y reemplaza:
    ```
@@ -253,105 +253,105 @@ ssh -NL 7657:localhost:7657 (System_IP)
    ```
    donde reemplazas (System_IP) con la dirección IP pública de tu sistema
 
-2. Ve a [http://localhost:7657/configui](http://localhost:7657/configui) y añade un nombre de usuario y contraseña para la consola si lo deseas - Se recomienda encarecidamente añadir un nombre de usuario y contraseña para proteger tu consola I2P de manipulaciones, lo cual podría llevar a la desanonimización.
+2. Ve a [http://localhost:7657/configui](http://localhost:7657/configui) y añade un nombre de usuario y contraseña para la consola si lo deseas - Se recomienda encarecidamente añadir un nombre de usuario y contraseña para proteger tu consola I2P de manipulaciones, lo que podría llevar a la des-anonimización.
 
-3. Ve a [http://localhost:7657/index](http://localhost:7657/index) y haz clic en "Graceful restart", lo cual reinicia la JVM y recarga las aplicaciones cliente
+3. Ve a [http://localhost:7657/index](http://localhost:7657/index) y pulsa "Graceful restart", que reinicia la JVM y recarga las aplicaciones cliente
 
-Después de que se inicie, ahora deberías poder acceder a tu consola de forma remota. Carga la consola del router en `http://(IP_del_Sistema):7657` y se te solicitará el nombre de usuario y la contraseña que especificaste en el paso 2 anterior si tu navegador admite la ventana emergente de autenticación.
+Una vez que se inicie, ahora deberías poder acceder a tu consola de forma remota. Carga la consola del router en `http://(IP_del_Sistema):7657` y se te solicitará el nombre de usuario y la contraseña que especificaste en el paso 2 anterior si tu navegador admite la ventana emergente de autenticación.
 
-NOTA: Puedes especificar 0.0.0.0 en la configuración anterior. Esto especifica una interfaz, no una red o máscara de red. 0.0.0.0 significa "vincular a todas las interfaces", por lo que puede ser accesible en 127.0.0.1:7657 así como en cualquier IP de LAN/WAN. Ten cuidado al usar esta opción ya que la consola estará disponible en TODAS las direcciones configuradas en tu sistema.
+NOTA: Puedes especificar 0.0.0.0 en la configuración anterior. Esto especifica una interfaz, no una red o máscara de red. 0.0.0.0 significa "enlazar a todas las interfaces", por lo que puede ser accesible en 127.0.0.1:7657 así como en cualquier IP de LAN/WAN. Ten cuidado al usar esta opción ya que la consola estará disponible en TODAS las direcciones configuradas en tu sistema.
 
-### How can I use applications from my other machines? {#remote_i2cp}
+### ¿Cómo puedo usar aplicaciones desde mis otras máquinas? {#remote_i2cp}
 
-Por favor, consulta la respuesta anterior para obtener instrucciones sobre el uso de SSH Port Forwarding, y también consulta esta página en tu consola: [http://localhost:7657/configi2cp](http://localhost:7657/configi2cp)
+Por favor, consulta la respuesta anterior para obtener instrucciones sobre cómo usar el reenvío de puertos SSH, y también consulta esta página en tu consola: [http://localhost:7657/configi2cp](http://localhost:7657/configi2cp)
 
-### Me faltan muchos hosts en mi libreta de direcciones. ¿Cuáles son algunos buenos enlaces de suscripción? {#subscriptions}
+### ¿Es posible usar I2P como proxy SOCKS? {#socks}
 
-El proxy SOCKS ha estado funcional desde la versión 0.7.1. Se soportan SOCKS 4/4a/5. I2P no tiene un outproxy SOCKS, por lo que está limitado a uso únicamente dentro de I2P.
+El proxy SOCKS ha sido funcional desde la versión 0.7.1. Se admiten SOCKS 4/4a/5. I2P no tiene un outproxy SOCKS, por lo que está limitado solo para uso dentro de I2P.
 
-Muchas aplicaciones filtran información sensible que podría identificarte en Internet y este es un riesgo del que debes ser consciente al usar el proxy SOCKS de I2P. I2P solo filtra los datos de conexión, pero si el programa que pretendes ejecutar envía esta información como contenido, I2P no tiene forma de proteger tu anonimato. Por ejemplo, algunas aplicaciones de correo enviarán la dirección IP de la máquina en la que se ejecutan a un servidor de correo. Recomendamos herramientas o aplicaciones específicas de I2P (como [I2PSnark](http://localhost:7657/i2psnark/) para torrents), o aplicaciones que se sabe que son seguras de usar con I2P que incluyen complementos populares que se encuentran en [Firefox](https://www.mozilla.org/).
+Muchas aplicaciones filtran información sensible que podría identificarte en Internet y este es un riesgo del que debes ser consciente al usar el proxy SOCKS de I2P. I2P solo filtra los datos de conexión, pero si el programa que pretendes ejecutar envía esta información como contenido, I2P no tiene forma de proteger tu anonimato. Por ejemplo, algunas aplicaciones de correo enviarán la dirección IP de la máquina en la que se están ejecutando a un servidor de correo. Recomendamos herramientas o aplicaciones específicas de I2P (como [I2PSnark](http://localhost:7657/i2psnark/) para torrents), o aplicaciones que se sabe que son seguras de usar con I2P que incluyen complementos populares encontrados en [Firefox](https://www.mozilla.org/).
 
-### ¿Cómo puedo acceder a la consola web desde mis otras máquinas o protegerla con contraseña? {#remote_webconsole}
+### ¿Cómo accedo a IRC, BitTorrent u otros servicios en Internet normal? {#proxy_other}
 
-Existen servicios llamados Outproxies que actúan como puente entre I2P e Internet, similar a los nodos de salida de Tor. La funcionalidad de outproxy predeterminada para HTTP y HTTPS es proporcionada por `exit.stormycloud.i2p` y está operada por StormyCloud Inc. Se configura en el Proxy HTTP. Además, para ayudar a proteger el anonimato, I2P no te permite realizar conexiones anónimas a Internet regular de forma predeterminada. Por favor consulta la página de [Socks Outproxy](/docs/api/socks#outproxy) para más información.
+Existen servicios llamados Outproxies que hacen de puente entre I2P e Internet, similar a los Tor Exit Nodes. La funcionalidad de outproxy predeterminada para HTTP y HTTPS es proporcionada por `exit.stormycloud.i2p` y está gestionada por StormyCloud Inc. Se configura en el HTTP Proxy. Además, para ayudar a proteger el anonimato, I2P no permite realizar conexiones anónimas a Internet regular de forma predeterminada. Consulte la página [Socks Outproxy](/docs/api/socks#outproxy) para más información.
 
 ---
 
 ## Reseeds
 
-### ¿Cómo puedo usar aplicaciones desde mis otras máquinas? {#remote_i2cp}
-
-Primero verifica la página [http://127.0.0.1:7657/netdb](http://127.0.0.1:7657/netdb) en la Consola del Router – tu base de datos de red. Si no ves ningún router listado desde dentro de I2P pero la consola indica que deberías estar detrás de un firewall, entonces probablemente no puedes conectarte a los servidores de reseed. Si sí ves otros routers de I2P listados, entonces intenta reducir el número de conexiones máximas en [http://127.0.0.1:7657/config](http://127.0.0.1:7657/config), puede que tu router no pueda manejar muchas conexiones.
-
-### ¿Es posible usar I2P como un proxy SOCKS? {#socks}
-
-En circunstancias normales, I2P te conectará a la red automáticamente usando nuestros enlaces de arranque. Si la interrupción de internet hace que el arranque desde los servidores reseed falle, una manera fácil de arrancar es usando el navegador Tor (por defecto abre localhost), que funciona muy bien con [http://127.0.0.1:7657/configreseed](http://127.0.0.1:7657/configreseed). También es posible hacer reseed de un router I2P manualmente.
-
-Al usar el navegador Tor para recargar (reseed) puedes seleccionar múltiples URLs a la vez y proceder. Aunque el valor predeterminado que es 2 (de las múltiples urls) también funcionará, pero será lento.
-
----
-
-## Privacy-Safety
-
-### ¿Cómo accedo a IRC, BitTorrent u otros servicios en Internet normal? {#proxy_other}
-
-No, tu router participa en el transporte de tráfico cifrado e2e a través de la red i2p hacia un endpoint de tunnel aleatorio, normalmente no un outproxy, pero no se transmite tráfico entre tu router y la Internet sobre la capa de transporte. Como usuario final, no deberías ejecutar un outproxy si no tienes habilidades en administración de sistemas y redes.
-
-### Is it easy to detect the use of I2P by analyzing network traffic? {#detection}
-
-El tráfico I2P generalmente se ve como tráfico UDP, y no mucho más – y hacer que se vea como no mucho más es un objetivo. También soporta TCP. Con algo de esfuerzo, el análisis pasivo de tráfico puede ser capaz de clasificar el tráfico como "I2P", pero esperamos que el desarrollo continuo de ofuscación de tráfico reduzca esto aún más. Incluso una capa de ofuscación de protocolo bastante simple como obfs4 evitará que los censores bloqueen I2P (es un objetivo que I2P implemente).
-
 ### Mi router ha estado activo durante varios minutos y tiene cero o muy pocas conexiones {#reseed}
 
-Depende de tu modelo de amenazas personal. Para la mayoría de las personas, I2P es mucho más seguro que no usar ninguna protección. Algunas otras redes (como Tor, mixminion/mixmaster), probablemente son más seguras contra ciertos adversarios. Por ejemplo, el tráfico de I2P no utiliza TLS/SSL, por lo que no tiene los problemas del "eslabón más débil" que tiene Tor. I2P fue utilizado por muchas personas en Siria durante la "Primavera Árabe", y recientemente el proyecto ha experimentado un mayor crecimiento en instalaciones lingüísticas más pequeñas de I2P en el Medio Oriente y Oriente Próximo. Lo más importante a tener en cuenta aquí es que I2P es una tecnología y necesitas una guía práctica para mejorar tu privacidad/anonimato en Internet. También verifica tu navegador o importa el motor de búsqueda de huellas digitales para bloquear ataques de fingerprinting con un conjunto de datos muy grande (es decir: colas largas típicas / estructura de datos diversa muy precisa) sobre muchos aspectos del entorno, y no uses VPN para reducir todos los riesgos que provienen de sí misma, como el comportamiento de caché TLS propio y la construcción técnica del negocio del proveedor que puede ser hackeado más fácilmente que un sistema de escritorio propio. Quizás usar un navegador Tor aislado con sus excelentes protecciones anti-fingerprinting y una protección general de appguard durante todo el tiempo de ejecución que solo permita las comunicaciones de sistemas necesarias, y un último uso de máquina virtual con scripts de desactivación anti-espía y live-cd para eliminar cualquier "riesgo casi permanente posible" y reducir todos los riesgos mediante una probabilidad decreciente, son una buena opción en redes públicas y modelos de riesgo individual alto, y podría ser lo mejor que puedes hacer con este objetivo para el uso de I2P.
+Primero revisa la página [http://127.0.0.1:7657/netdb](http://127.0.0.1:7657/netdb) en la Consola del Router – tu base de datos de red. Si no ves ningún router listado desde dentro de I2P pero la consola indica que deberías estar detrás de un firewall, entonces probablemente no puedes conectarte a los servidores de reseed. Si ves otros routers de I2P listados, entonces intenta reducir el número de conexiones máximas en [http://127.0.0.1:7657/config](http://127.0.0.1:7657/config) quizás tu router no puede manejar muchas conexiones.
 
-### ¿Cómo realizo un reseed manual? {#manual_reseed}
+### ¿Cómo hago un reseed manualmente? {#manual_reseed}
 
-Sí, para otros nodos I2P que conocen tu router. Utilizamos esto para conectarnos con el resto de la red I2P. Las direcciones están físicamente ubicadas en objetos "routerInfos (clave,valor)", ya sea obtenidos remotamente o recibidos de pares. Los "routerInfos" contienen información (algunos datos oportunistas opcionales agregados), "publicados por el par", sobre el propio router para el arranque inicial. No hay datos en este objeto sobre los clientes. Mirando más de cerca bajo el capó te dirá que todos son contados con el tipo más nuevo de creación de identificadores llamado "SHA-256 Hashes (bajo=Hash positivo(-clave), alto=Hash negativo(+clave))". La red I2P tiene su propia base de datos de routerInfos creados durante la carga e indexación, pero esto depende profundamente de la realización de las tablas clave/valor y la topología de la red y el estado de carga / estado de ancho de banda y las probabilidades de enrutamiento para los almacenamientos en los componentes de la base de datos.
+En circunstancias normales, I2P te conectará a la red automáticamente usando nuestros enlaces de arranque. Si una interrupción de internet hace que falle el arranque desde los servidores reseed, una forma fácil de arrancar es usando el navegador Tor (Por defecto abre localhost), que funciona muy bien con [http://127.0.0.1:7657/configreseed](http://127.0.0.1:7657/configreseed). También es posible hacer reseed de un router I2P manualmente.
 
-### Is using an outproxy safe? {#proxy_safe}
-
-Depende de cuál sea tu definición de "seguro". Los outproxies son excelentes cuando funcionan, pero desafortunadamente son operados voluntariamente por personas que pueden perder interés o pueden no tener los recursos para mantenerlos 24/7 – ten en cuenta que puedes experimentar períodos de tiempo durante los cuales los servicios no estén disponibles, se interrumpan o no sean confiables, y no estamos asociados con este servicio ni tenemos influencia sobre él.
-
-Los outproxys en sí mismos pueden ver tu tráfico entrante y saliente, con la excepción de los datos cifrados de extremo a extremo mediante HTTPS/SSL, de la misma manera que tu ISP puede ver el tráfico que entra y sale de tu computadora. Si confías en tu ISP, no sería peor con el outproxy.
-
-### ¿Mi router es un "nodo de salida" (outproxy) hacia Internet regular? No quiero que lo sea. {#exit}
-
-Para una explicación muy extensa, lee más en nuestros artículos sobre [Modelo de Amenazas](/docs/overview/threat-model). En general, la desanonimización no es trivial, pero es posible si no eres lo suficientemente cauteloso.
+Al usar el navegador Tor para resembrar puedes seleccionar múltiples URLs a la vez y continuar. Aunque el valor predeterminado que es 2 (de las múltiples urls) también funcionará, pero será lento.
 
 ---
 
-## Internet Access/Performance
+## Privacidad-Seguridad
 
-### ¿Es fácil detectar el uso de I2P mediante el análisis del tráfico de red? {#detection}
+### ¿Es mi router un "nodo de salida" (outproxy) hacia Internet normal? No quiero que lo sea. {#exit}
 
-El proxy hacia sitios de Internet (eepsites que salen a Internet) se proporciona como un servicio a los usuarios de I2P por proveedores sin bloqueo. Este servicio no es el enfoque principal del desarrollo de I2P, y se proporciona de forma voluntaria. Los eepsites alojados en I2P siempre deberían funcionar sin un outproxy. Los outproxies son una conveniencia pero por diseño no son perfectos ni una parte importante del proyecto. Ten en cuenta que pueden no ser capaces de proporcionar el servicio de alta calidad que otros servicios de I2P pueden ofrecer.
+No, tu router participa en el transporte de tráfico cifrado de extremo a extremo a través de la red i2p hacia un punto final de tunnel aleatorio, normalmente no un outproxy, pero no se pasa tráfico entre tu router e Internet sobre la capa de transporte. Como usuario final, no deberías ejecutar un outproxy si no tienes experiencia en administración de sistemas y redes.
+
+### ¿Es fácil detectar el uso de I2P analizando el tráfico de red? {#detection}
+
+El tráfico de I2P generalmente parece tráfico UDP, y no mucho más – y hacer que parezca no mucho más es un objetivo. También soporta TCP. Con algo de esfuerzo, el análisis pasivo de tráfico puede ser capaz de clasificar el tráfico como "I2P", pero esperamos que el desarrollo continuo de ofuscación de tráfico reduzca esto aún más. Incluso una capa de ofuscación de protocolo bastante simple como obfs4 evitará que los censores bloqueen I2P (es un objetivo que I2P implementa).
 
 ### ¿Es seguro usar I2P? {#safe}
 
-El proxy HTTP predeterminado soporta outproxying solo de HTTP y HTTPS.
+Depende de tu modelo de amenaza personal. Para la mayoría de las personas, I2P es mucho más seguro que no usar ninguna protección. Algunas otras redes (como Tor, mixminion/mixmaster), probablemente son más seguras contra ciertos adversarios. Por ejemplo, el tráfico de I2P no utiliza TLS/SSL, por lo que no tiene los problemas del "eslabón más débil" que tiene Tor. I2P fue utilizado por muchas personas en Siria durante la "Primavera Árabe", y recientemente el proyecto ha experimentado un mayor crecimiento en instalaciones lingüísticas más pequeñas de I2P en Oriente Próximo y Medio. Lo más importante a tener en cuenta aquí es que I2P es una tecnología y necesitas una guía/tutorial para mejorar tu privacidad/anonimato en Internet. También verifica tu navegador o importa el motor de búsqueda de huellas digitales para bloquear ataques de fingerprinting con un conjunto de datos muy grande (es decir: colas largas típicas / estructura de datos diversa muy precisa) sobre muchas características del entorno y no uses VPN para reducir todos los riesgos que provienen de sí misma, como el comportamiento de la caché TLS propia y la construcción técnica del negocio del proveedor que puede ser hackeado más fácilmente que un sistema de escritorio propio. Tal vez usar un navegador Tor aislado (Tor Browser) con sus excelentes protecciones anti-fingerprint y una protección general de tiempo de ejecución tipo appguard que solo permita las comunicaciones del sistema necesarias, y un último uso de máquina virtual con scripts de desactivación anti-espía y live-cd para eliminar cualquier "riesgo casi permanente posible" y reducir todos los riesgos mediante una probabilidad decreciente, sean una buena opción en redes públicas y modelos de riesgo individuales elevados, y podría ser lo mejor que puedes hacer con este objetivo para el uso de i2p.
 
-### Veo direcciones IP de todos los demás nodos I2P en la consola del router. ¿Significa esto que mi dirección IP es visible para otros? {#netdb_ip}
+### Veo direcciones IP de todos los demás nodos I2P en la consola del router. ¿Significa eso que mi dirección IP es visible para otros? {#netdb_ip}
 
-Primero, asegúrate de tener la última versión de cada componente relacionado con I2P – las versiones antiguas tenían secciones de código que consumían CPU innecesariamente. También existe un [registro de rendimiento](/about/performance) que documenta algunas de las mejoras en el rendimiento de I2P a lo largo del tiempo.
+Sí, para otros nodos I2P que conocen tu router. Utilizamos esto para conectarnos con el resto de la red I2P. Las direcciones están físicamente ubicadas en objetos "routerInfos (clave,valor)", ya sea obtenidos remotamente o recibidos de pares. Los "routerInfos" contienen cierta información (algunas opcionales añadidas de forma oportunista), "publicada por el par", sobre el router mismo para el arranque inicial. No hay datos en este objeto sobre clientes. Mirando más de cerca bajo el capó te dirá que todos son contabilizados con el tipo más reciente de creación de identificadores llamado "SHA-256 Hashes (bajo=hash positivo(-clave), alto=hash negativo(+clave))". La red I2P tiene su propia base de datos de routerInfos creados durante la carga e indexación, pero esto depende profundamente de la realización de las tablas clave/valor y la topología de la red y el estado de carga / estado de ancho de banda y las probabilidades de enrutamiento para almacenamientos en componentes de base de datos.
 
 ### ¿Es seguro usar un outproxy? {#proxy_safe}
 
-La estabilidad general de la red I2P es un área de investigación continua. Una parte considerable de esa investigación se centra en cómo pequeños cambios en la configuración afectan el comportamiento del router. Como I2P es una red peer-to-peer (de par a par), las acciones de otros pares influirán en el rendimiento de tu router.
+Depende de cuál sea tu definición de "seguro". Los outproxies son excelentes cuando funcionan, pero desafortunadamente son operados voluntariamente por personas que pueden perder el interés o no tener los recursos para mantenerlos 24/7 – ten en cuenta que puedes experimentar períodos de tiempo durante los cuales los servicios no están disponibles, están interrumpidos o no son confiables, y no estamos asociados con este servicio ni tenemos influencia sobre él.
 
-### ¿Qué hay sobre los ataques de "Des-anonimización"? {#deanon}
+Los outproxys en sí mismos pueden ver tu tráfico entrar y salir, con la excepción de los datos HTTPS/SSL cifrados de extremo a extremo, tal como tu ISP puede ver tu tráfico entrar y salir de tu computadora. Si te sientes cómodo con tu ISP, no sería peor con el outproxy.
 
-I2P tiene diferentes protecciones que añaden enrutamiento adicional y capas extra de cifrado. También rebota el tráfico a través de otros pares (Tunnels) que tienen su propia velocidad y calidad, algunos son lentos, otros rápidos. Esto suma mucha sobrecarga y tráfico a diferentes ritmos en diferentes direcciones. Por diseño, todas estas cosas lo harán más lento en comparación con una conexión directa en internet, pero mucho más anónimo y aún lo suficientemente rápido para la mayoría de las cosas.
+### ¿Qué hay sobre los ataques de "Desanonimización"? {#deanon}
+
+Para una explicación muy detallada, lee más en nuestros artículos sobre [Modelo de Amenazas](/docs/overview/threat-model). En general, la des-anonimización no es trivial, pero es posible si no eres lo suficientemente cauteloso.
+
+---
+
+## Acceso a Internet/Rendimiento
+
+### No puedo acceder a sitios de Internet regulares a través de I2P. {#outproxy}
+
+El proxy hacia sitios de Internet (eepsites que salen a Internet) se proporciona como un servicio a los usuarios de I2P por proveedores sin bloqueo. Este servicio no es el enfoque principal del desarrollo de I2P, y se proporciona de forma voluntaria. Los eepsites que están alojados en I2P siempre deberían funcionar sin un outproxy (proxy de salida). Los outproxies son una conveniencia pero por diseño no son perfectos ni una parte importante del proyecto. Tenga en cuenta que es posible que no puedan proporcionar el servicio de alta calidad que otros servicios de I2P pueden ofrecer.
+
+### No puedo acceder a sitios https:// o ftp:// a través de I2P. {#https}
+
+El proxy HTTP predeterminado solo admite salida HTTP y HTTPS.
+
+### ¿Por qué mi router está usando demasiada CPU? {#cpu}
+
+Primero, asegúrate de tener la última versión de cada componente relacionado con I2P: las versiones antiguas tenían secciones de código que consumían CPU innecesariamente. También existe un [registro de rendimiento](/about/performance) que documenta algunas de las mejoras en el rendimiento de I2P a lo largo del tiempo.
+
+### ¿Mis pares activos / pares conocidos / túneles participantes / conexiones / ancho de banda varían drásticamente con el tiempo! ¿Hay algo mal? {#vary}
+
+La estabilidad general de la red I2P es un área de investigación continua. Una cantidad particular de esa investigación se centra en cómo pequeños cambios en la configuración modifican el comportamiento del router. Como I2P es una red peer-to-peer (entre pares), las acciones de otros peers influirán en el rendimiento de tu router.
+
+### ¿Qué hace que las descargas, torrents, navegación web y todo lo demás sea más lento en I2P en comparación con la internet regular? {#slow}
+
+I2P tiene diferentes protecciones que añaden enrutamiento adicional y capas extra de cifrado. También rebota el tráfico a través de otros peers (Tunnels) que tienen su propia velocidad y calidad, algunos son lentos, otros rápidos. Esto suma mucha sobrecarga y tráfico a diferentes ritmos en diferentes direcciones. Por diseño, todas estas cosas lo harán más lento en comparación con una conexión directa en internet, pero mucho más anónimo y aún lo suficientemente rápido para la mayoría de las cosas.
 
 A continuación se presenta un ejemplo con una explicación para ayudar a proporcionar contexto sobre las consideraciones de latencia y ancho de banda al usar I2P.
 
-Considere el diagrama a continuación. Muestra una conexión entre un cliente que realiza una solicitud a través de I2P, un servidor que recibe la solicitud a través de I2P y luego responde de vuelta a través de I2P también. El circuito por el que viaja la solicitud también está representado.
+Considere el diagrama a continuación. Representa una conexión entre un cliente que realiza una solicitud a través de I2P, un servidor que recibe la solicitud a través de I2P y luego responde también a través de I2P. El circuito por el cual viaja la solicitud también se muestra.
 
-Del diagrama, considera que las cajas etiquetadas como 'P', 'Q' y 'R' representan un túnel de salida (outbound tunnel) para 'A' y que las cajas etiquetadas como 'X', 'Y' y 'Z' representan un túnel de salida para 'B'. De manera similar, las cajas etiquetadas como 'X', 'Y' y 'Z' representan un túnel de entrada (inbound tunnel) para 'B' mientras que las cajas etiquetadas como 'P_1', 'Q_1' y 'R_1' representan un túnel de entrada para 'A'. Las flechas entre las cajas muestran la dirección del tráfico. El texto encima y debajo de las flechas detalla algunos ejemplos de ancho de banda entre un par de saltos así como latencias de ejemplo.
+Según el diagrama, considere que las cajas etiquetadas como 'P', 'Q' y 'R' representan un túnel de salida (outbound tunnel) para 'A' y que las cajas etiquetadas como 'X', 'Y' y 'Z' representan un túnel de salida para 'B'. De manera similar, las cajas etiquetadas como 'X', 'Y' y 'Z' representan un túnel de entrada (inbound tunnel) para 'B' mientras que las cajas etiquetadas como 'P_1', 'Q_1' y 'R_1' representan un túnel de entrada para 'A'. Las flechas entre las cajas muestran la dirección del tráfico. El texto arriba y abajo de las flechas detalla algunos ejemplos de ancho de banda entre un par de saltos, así como ejemplos de latencias.
 
-Cuando tanto el cliente como el servidor utilizan túneles de 3 saltos en todo momento, un total de 12 routers I2P adicionales participan en la retransmisión del tráfico. 6 peers retransmiten tráfico desde el cliente al servidor, el cual se divide en un túnel de salida de 3 saltos desde 'A' ('P', 'Q', 'R') y un túnel de entrada de 3 saltos hacia 'B' ('X', 'Y', 'Z'). De manera similar, 6 peers retransmiten tráfico desde el servidor de vuelta al cliente.
+Cuando tanto el cliente como el servidor están utilizando túneles de 3 saltos en todo momento, un total de 12 routers I2P adicionales participan en la retransmisión del tráfico. 6 pares retransmiten el tráfico desde el cliente al servidor, el cual se divide en un túnel de salida de 3 saltos desde 'A' ('P', 'Q', 'R') y un túnel de entrada de 3 saltos hacia 'B' ('X', 'Y', 'Z'). De manera similar, 6 pares retransmiten el tráfico desde el servidor de vuelta al cliente.
 
-Primero, podemos considerar la latencia - el tiempo que tarda una solicitud de un cliente en atravesar la red I2P, llegar al servidor y regresar al cliente. Sumando todas las latencias vemos que:
+Primero, podemos considerar la latencia - el tiempo que tarda una solicitud de un cliente en atravesar la red I2P, llegar al servidor y volver al cliente. Sumando todas las latencias vemos que:
 
 ```
     40 + 100 + 20 + 60 + 80 + 10 + 30 ms        (client to server)
@@ -359,36 +359,36 @@ Primero, podemos considerar la latencia - el tiempo que tarda una solicitud de u
   -----------------------------------
   TOTAL:                          740 ms
 ```
-El tiempo total de ida y vuelta en nuestro ejemplo suma 740 ms, ciertamente mucho más alto de lo que uno vería normalmente al navegar por sitios web de internet regulares.
+El tiempo total de ida y vuelta en nuestro ejemplo suma 740 ms, ciertamente mucho mayor que lo que normalmente se vería al navegar sitios web de Internet regulares.
 
-En segundo lugar, podemos considerar el ancho de banda disponible. Esto se determina a través del enlace más lento entre saltos desde el cliente y el servidor, así como cuando el tráfico está siendo transmitido por el servidor al cliente. Para el tráfico que va del cliente al servidor, vemos que el ancho de banda disponible en nuestro ejemplo entre los saltos 'R' y 'X', así como entre los saltos 'X' y 'Y', es de 32 KB/s. A pesar del mayor ancho de banda disponible entre los otros saltos, estos saltos actuarán como un cuello de botella y limitarán el ancho de banda máximo disponible para el tráfico de 'A' a 'B' en 32 KB/s. De manera similar, rastreando la ruta del servidor al cliente se muestra que hay un ancho de banda máximo de 64 KB/s - entre los saltos 'Z_1' y 'Y_1', 'Y_1' y 'X_1', y 'Q_1' y 'P_1'.
+En segundo lugar, podemos considerar el ancho de banda disponible. Esto se determina a través del enlace más lento entre saltos desde el cliente y el servidor, así como cuando el tráfico está siendo transmitido por el servidor al cliente. Para el tráfico que va del cliente al servidor, vemos que el ancho de banda disponible en nuestro ejemplo entre los saltos 'R' y 'X', así como entre los saltos 'X' e 'Y' es de 32 KB/s. A pesar de un ancho de banda disponible mayor entre los otros saltos, estos saltos actuarán como un cuello de botella y limitarán el ancho de banda máximo disponible para el tráfico de 'A' a 'B' a 32 KB/s. De manera similar, rastreando la ruta del servidor al cliente se muestra que hay un ancho de banda máximo de 64 KB/s - entre los saltos 'Z_1' y 'Y_1', 'Y_1' y 'X_1' y 'Q_1' y 'P_1'.
 
-Recomendamos aumentar tus límites de ancho de banda. Esto ayuda a la red al incrementar la cantidad de ancho de banda disponible, lo que a su vez mejorará tu experiencia con I2P. La configuración de ancho de banda se encuentra en la página [http://localhost:7657/config](http://localhost:7657/config). Ten en cuenta los límites de tu conexión a internet según lo determinado por tu ISP, y ajusta tu configuración en consecuencia.
+Recomendamos aumentar tus límites de ancho de banda. Esto ayuda a la red al incrementar la cantidad de ancho de banda disponible, lo cual mejorará tu experiencia con I2P. La configuración de ancho de banda se encuentra en la página [http://localhost:7657/config](http://localhost:7657/config). Ten en cuenta los límites de tu conexión a internet determinados por tu proveedor de servicios de internet (ISP) y ajusta tu configuración en consecuencia.
 
-También recomendamos establecer una cantidad suficiente de ancho de banda compartido - esto permite que los túneles participantes sean enrutados a través de tu router I2P. Permitir tráfico participante mantiene tu router bien integrado en la red y mejora tus velocidades de transferencia.
+También recomendamos configurar una cantidad suficiente de ancho de banda compartido: esto permite que los túneles participantes se enruten a través de tu router I2P. Permitir tráfico participante mantiene tu router bien integrado en la red y mejora tus velocidades de transferencia.
 
-I2P es un trabajo en progreso. Se están implementando muchas mejoras y correcciones y, en términos generales, ejecutar la última versión ayudará a tu rendimiento. Si no lo has hecho, instala la última versión.
+I2P es un trabajo en progreso. Se están implementando muchas mejoras y correcciones, y, en términos generales, ejecutar la versión más reciente ayudará a tu rendimiento. Si no lo has hecho, instala la versión más reciente.
 
-### I think I found a bug, where can I report it? {#bug}
+### Creo que encontré un error, ¿dónde puedo reportarlo? {#bug}
 
-Puede reportar cualquier error o problema que encuentre en nuestro rastreador de errores, que está disponible tanto en internet no privada como en I2P. Tenemos un foro de discusión, también disponible en I2P e internet no privada. También puede unirse a nuestro canal de IRC: ya sea a través de nuestra red IRC, IRC2P, o en Freenode.
+Puedes reportar cualquier error o problema que encuentres en nuestro rastreador de errores, que está disponible tanto en internet no privado como en I2P. Tenemos un foro de discusión, también disponible en I2P e internet no privado. También puedes unirte a nuestro canal de IRC: ya sea a través de nuestra red IRC, IRC2P, o en Freenode.
 
-- **Nuestro Bugtracker:**
+- **Nuestro rastreador de errores:**
   - Internet no privada: [https://i2pgit.org/I2P_Developers/i2p.i2p/issues](https://i2pgit.org/I2P_Developers/i2p.i2p/issues)
   - En I2P: [http://git.idk.i2p/I2P_Developers/i2p.i2p/issues](http://git.idk.i2p/I2P_Developers/i2p.i2p/issues)
 - **Nuestros foros:** [i2pforum.i2p](http://i2pforum.i2p/)
-- **Pegar registros:** Puedes pegar cualquier registro interesante en un servicio de pegado como los servicios de internet no privada listados en el [PrivateBin Wiki](https://github.com/PrivateBin/PrivateBin/wiki/PrivateBin-Directory), o un servicio de pegado I2P como esta [instancia de PrivateBin](http://paste.crypthost.i2p) o este [servicio de pegado sin Javascript](http://pasta-nojs.i2p) y hacer seguimiento en IRC en #i2p
-- **IRC:** Únete a #i2p-dev Discute con los desarrolladores en IRC
+- **Pegar registros:** Puede pegar cualquier registro de interés en un servicio de pegado como los servicios de internet no privada listados en la [Wiki de PrivateBin](https://github.com/PrivateBin/PrivateBin/wiki/PrivateBin-Directory), o un servicio de pegado de I2P como esta [instancia de PrivateBin](http://paste.crypthost.i2p) o este [servicio de pegado sin Javascript](http://pasta-nojs.i2p) y hacer seguimiento en IRC en #i2p
+- **IRC:** Únase a #i2p-dev Para discutir con los desarrolladores en IRC
 
-Por favor, incluya información relevante de la página de registros del router que está disponible en: [http://127.0.0.1:7657/logs](http://127.0.0.1:7657/logs). Solicitamos que comparta todo el texto bajo la sección 'I2P Version and Running Environment' así como cualquier error o advertencia mostrado en los diversos registros que aparecen en la página.
+Por favor incluye información relevante de la página de registros del router que está disponible en: [http://127.0.0.1:7657/logs](http://127.0.0.1:7657/logs). Solicitamos que compartas todo el texto bajo la sección 'I2P Version and Running Environment' así como cualquier error o advertencia que se muestre en los diversos registros mostrados en la página.
 
 ---
 
-### No puedo acceder a sitios regulares de Internet a través de I2P. {#outproxy}
+### ¡Tengo una pregunta! {#question}
 
 ¡Genial! Encuéntranos en IRC:
 
 - en `irc.freenode.net` canal `#i2p`
 - en `IRC2P` canal `#i2p`
 
-o publícalo en [el foro](http://i2pforum.i2p/) y lo publicaremos aquí (con la respuesta, esperamos).
+o publica en [el foro](http://i2pforum.i2p/) y lo publicaremos aquí (con la respuesta, esperamos).
