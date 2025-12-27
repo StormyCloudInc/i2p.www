@@ -1,6 +1,6 @@
 import pytest
 from pathlib import Path
-from utils import validate_sha256_hash
+from .utils import validate_sha256_hash
 import tomllib
 
 def test_hugo_config_valid(hugo_config):
