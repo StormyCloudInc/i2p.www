@@ -28,13 +28,75 @@ jobs:
           pip install -r tests/requirements.txt
       
       - name: Run fast tests
+        id: fast-tests
         run: |
           python -m pytest \
             tests/test_config_validation.py \
             tests/test_downloads.py \
             tests/test_front_matter.py \
             tests/test_i18n_consistency.py \
-            -v -n auto --tb=short
+            -v -n auto --tb=short 2>&1 | tee test-output.txt
+          exit ${PIPESTATUS[0]}
+
+      - name: Extract test failures
+        if: failure() && steps.fast-tests.outcome == 'failure'
+        id: extract-failures
+        run: |
+          # Extract only FAILED lines and error messages
+          {
+            echo 'failures<<EOF'
+            grep -E "^(FAILED|ERROR|E   |>   |    assert)" test-output.txt | head -50
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
+
+      - name: Notify Slack on failure
+        if: failure() && steps.fast-tests.outcome == 'failure'
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{
+              \"blocks\": [
+                {
+                  \"type\": \"header\",
+                  \"text\": {
+                    \"type\": \"plain_text\",
+                    \"text\": \"❌ CI Failed: Validate Meta (Fast)\",
+                    \"emoji\": true
+                  }
+                },
+                {
+                  \"type\": \"section\",
+                  \"fields\": [
+                    {\"type\": \"mrkdwn\", \"text\": \"*Repository:*\n${{ github.repository }}\"},
+                    {\"type\": \"mrkdwn\", \"text\": \"*Branch:*\n${{ github.ref_name }}\"}
+                  ]
+                },
+                {
+                  \"type\": \"section\",
+                  \"fields\": [
+                    {\"type\": \"mrkdwn\", \"text\": \"*Commit:*\n\`${{ github.sha }}\`\"},
+                    {\"type\": \"mrkdwn\", \"text\": \"*Author:*\n${{ github.actor }}\"}
+                  ]
+                },
+                {
+                  \"type\": \"section\",
+                  \"text\": {
+                    \"type\": \"mrkdwn\",
+                    \"text\": \"*Errors:*\n\`\`\`$(echo '${{ steps.extract-failures.outputs.failures }}' | head -c 2500)\`\`\`\"
+                  }
+                },
+                {
+                  \"type\": \"actions\",
+                  \"elements\": [
+                    {
+                      \"type\": \"button\",
+                      \"text\": {\"type\": \"plain_text\", \"text\": \"View Run\", \"emoji\": true},
+                      \"url\": \"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"
+                    }
+                  ]
+                }
+              ]
+            }" \
+            ${{ secrets.SLACK_WEBHOOK }}
 
   validate-site:
     name: Validate Site Integrity
@@ -63,9 +125,71 @@ jobs:
           pip install -r tests/requirements.txt
       
       - name: Run site builds and tests
+        id: site-tests
         run: |
           python -m pytest \
             tests/test_html_output.py \
             tests/test_links.py \
             tests/test_static_assets.py \
-            -v -n auto --tb=short
+            -v -n auto --tb=short 2>&1 | tee test-output.txt
+          exit ${PIPESTATUS[0]}
+
+      - name: Extract test failures
+        if: failure() && steps.site-tests.outcome == 'failure'
+        id: extract-failures
+        run: |
+          # Extract only FAILED lines and error messages
+          {
+            echo 'failures<<EOF'
+            grep -E "^(FAILED|ERROR|E   |>   |    assert)" test-output.txt | head -50
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
+
+      - name: Notify Slack on failure
+        if: failure() && steps.site-tests.outcome == 'failure'
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{
+              \"blocks\": [
+                {
+                  \"type\": \"header\",
+                  \"text\": {
+                    \"type\": \"plain_text\",
+                    \"text\": \"❌ CI Failed: Validate Site Integrity\",
+                    \"emoji\": true
+                  }
+                },
+                {
+                  \"type\": \"section\",
+                  \"fields\": [
+                    {\"type\": \"mrkdwn\", \"text\": \"*Repository:*\n${{ github.repository }}\"},
+                    {\"type\": \"mrkdwn\", \"text\": \"*Branch:*\n${{ github.ref_name }}\"}
+                  ]
+                },
+                {
+                  \"type\": \"section\",
+                  \"fields\": [
+                    {\"type\": \"mrkdwn\", \"text\": \"*Commit:*\n\`${{ github.sha }}\`\"},
+                    {\"type\": \"mrkdwn\", \"text\": \"*Author:*\n${{ github.actor }}\"}
+                  ]
+                },
+                {
+                  \"type\": \"section\",
+                  \"text\": {
+                    \"type\": \"mrkdwn\",
+                    \"text\": \"*Errors:*\n\`\`\`$(echo '${{ steps.extract-failures.outputs.failures }}' | head -c 2500)\`\`\`\"
+                  }
+                },
+                {
+                  \"type\": \"actions\",
+                  \"elements\": [
+                    {
+                      \"type\": \"button\",
+                      \"text\": {\"type\": \"plain_text\", \"text\": \"View Run\", \"emoji\": true},
+                      \"url\": \"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"
+                    }
+                  ]
+                }
+              ]
+            }" \
+            ${{ secrets.SLACK_WEBHOOK }}
