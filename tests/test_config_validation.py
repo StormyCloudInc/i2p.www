@@ -11,8 +11,20 @@ def test_hugo_config_valid(hugo_config):
     """
     assert isinstance(hugo_config, dict), "hugo.toml must be a dictionary"
     assert "baseURL" in hugo_config, "hugo.toml must contain 'baseURL'"
-    assert "languageCode" in hugo_config, "hugo.toml must contain 'languageCode'"
-    assert "title" in hugo_config, "hugo.toml must contain 'title'"
+    assert "baseURL" in hugo_config, "hugo.toml must contain 'baseURL'"
+    # defaultContentLanguage is more standard in recent Hugo than languageCode at root
+    if "languageCode" not in hugo_config:
+        assert "defaultContentLanguage" in hugo_config, "hugo.toml must contain 'languageCode' or 'defaultContentLanguage'"
+    # Title might be at root or inside [languages]
+    has_title = "title" in hugo_config
+    if not has_title and "languages" in hugo_config:
+        # Check if default language has title
+        default_lang = hugo_config.get("defaultContentLanguage", "en")
+        if default_lang in hugo_config["languages"]:
+            if "title" in hugo_config["languages"][default_lang]:
+                has_title = True
+    
+    assert has_title, "hugo.toml must contain 'title' at root or in default language"
 
 def test_downloads_yaml_structure(downloads_config):
     """

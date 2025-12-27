@@ -65,10 +65,16 @@ def test_internal_links_in_html(built_site):
                 # If current file is /foo/bar/index.html, parent is /foo/bar/
                 parent = html_file.parent
                 target = (parent / path).resolve()
-                if not target.suffix and not target.is_dir():
+                try:
+                    is_directory = target.is_dir()
+                except OSError:
+                    # Handle file name too long or other FS errors
+                    is_directory = False
+
+                if not target.suffix and not is_directory:
                      # Assume it might be a directory with index.html
                      target = target / "index.html"
-                elif target.is_dir():
+                elif is_directory:
                      target = target / "index.html"
 
             # Check existence
@@ -103,6 +109,10 @@ def test_markdown_internal_links(all_content_files, project_root):
     for md_file in all_content_files:
         if "node_modules" in str(md_file): 
             continue
+        
+        # Skip documentation guidelines which contain example links
+        if "i2p-documentation-writing-guidelines.md" in md_file.name:
+            continue
             
         try:
             content = md_file.read_text(encoding="utf-8")
@@ -113,6 +123,8 @@ def test_markdown_internal_links(all_content_files, project_root):
             url = match.group(1)
             # Clean up title part "link.md 'Title'"
             url = url.split()[0]
+            # Strip anchor and query
+            url = url.split("#")[0].split("?")[0]
             
             if url.startswith(("http", "mailto", "#", "{{", "<")):
                 continue

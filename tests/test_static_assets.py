@@ -41,6 +41,9 @@ def test_image_references_in_markdown(all_content_files, project_root):
             # Resolve ref
             target = None
             if ref.startswith("/"):
+                # Ignore legacy/router console links
+                if "configservice.jsp" in ref:
+                    continue
                 # Absolute from site root -> static/ or content/
                 # Check static first
                 static_target = project_root / "static" / ref.lstrip("/")
