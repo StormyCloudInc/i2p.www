@@ -13,7 +13,7 @@ toc: true
 ## LƯU Ý
 
 Đề xuất này đã được phê duyệt và hiện nằm trong
-[Tunnel Creation ECIES specification](/en/docs/spec/tunnel-creation-ecies/) từ API 0.9.65.
+[Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/) từ API 0.9.65.
 Chưa có triển khai nào được biết đến; ngày triển khai / phiên bản API là TBD.
 
 
@@ -43,7 +43,7 @@ các thông điệp yêu cầu và trả lời xây dựng đường hầm.
 
 ## Thiết kế
 
-Thêm các tham số băng thông vào các bản ghi trong thông điệp xây dựng đường hầm ECIES (xem [Tunnel Creation ECIES specification](/en/docs/spec/tunnel-creation-ecies/))
+Thêm các tham số băng thông vào các bản ghi trong thông điệp xây dựng đường hầm ECIES (xem [Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/))
 trong trường ánh xạ tùy chọn xây dựng đường hầm. Sử dụng tên tham số ngắn vì không gian có sẵn
 cho trường tùy chọn bị hạn chế.
 Các thông điệp xây dựng đường hầm có kích thước cố định nên điều này không làm tăng
@@ -53,7 +53,7 @@ kích thước của các thông điệp.
 
 ## Đặc tả
 
-Cập nhật [các đặc tả thông điệp xây dựng đường hầm ECIES](/en/docs/spec/tunnel-creation-ecies/)
+Cập nhật [các đặc tả thông điệp xây dựng đường hầm ECIES](/en/docs/specs/tunnel-creation-ecies/)
 như sau:
 
 Đối với cả bản ghi xây dựng dài và ngắn của ECIES:

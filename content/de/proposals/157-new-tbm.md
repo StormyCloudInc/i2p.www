@@ -14,7 +14,7 @@ toc: true
 Implementiert ab API-Version 0.9.51.
 Netzwerkbereitstellung und -test im Gange.
 Unterliegt geringfügigen Überarbeitungen.
-Siehe [I2NP](/en/docs/spec/i2np/) und [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) für die endgültige Spezifikation.
+Siehe [I2NP](/en/docs/specs/i2np/) und [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) für die endgültige Spezifikation.
 
 
 
@@ -27,7 +27,7 @@ Die aktuelle Größe der verschlüsselten Tunnel-Bauanfrage- und Antwortdatensä
 Für typische Variable Tunnel-Bau- und Variable Tunnel-Bau-Antwortnachrichten
 beträgt die Gesamtgröße 2113 Byte. Diese Nachricht wird in drei 1KB-Tunnel-Nachrichten für den Rückweg fragmentiert.
 
-Änderungen des 528-Byte-Datensatzformats für ECIES-X25519-Router sind in [Prop152](/en/proposals/152-ecies-tunnels/) und [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) angegeben.
+Änderungen des 528-Byte-Datensatzformats für ECIES-X25519-Router sind in [Prop152](/en/proposals/152-ecies-tunnels/) und [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) angegeben.
 Für einen Mix aus ElGamal- und ECIES-X25519-Routern in einem Tunnel muss die Datensatzgröße
 bei 528 Byte bleiben. Wenn jedoch alle Router in einem Tunnel ECIES-X25519 sind, ist ein neuer, kleinerer
 Baudatensatz möglich, da die ECIES-X25519-Verschlüsselung erheblich weniger Overhead hat als ElGamal.
@@ -47,10 +47,10 @@ Dies soll bis Ende 2021 geschehen.
 Siehe [Prop152](/en/proposals/152-ecies-tunnels/) und [Prop156](/en/proposals/156-ecies-routers/) für zusätzliche Ziele.
 
 - Kleinere Datensätze und Nachrichten
-- Genügend Platz für zukünftige Optionen bereitstellen, wie in [Prop152](/en/proposals/152-ecies-tunnels/) und [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/)
+- Genügend Platz für zukünftige Optionen bereitstellen, wie in [Prop152](/en/proposals/152-ecies-tunnels/) und [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/)
 - In eine Tunnel-Nachricht für den Rückweg passen
 - Nur ECIES-Hops unterstützen
-- Verbesserungen beibehalten, die in [Prop152](/en/proposals/152-ecies-tunnels/) und [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) implementiert wurden
+- Verbesserungen beibehalten, die in [Prop152](/en/proposals/152-ecies-tunnels/) und [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) implementiert wurden
 - Maximale Kompatibilität mit aktuellem Netzwerk
 - Eingehende Bau-Nachrichten vom OBEP verbergen
 - Ausgehende Bau-Antwortnachrichten vom IBGW verbergen
@@ -80,11 +80,11 @@ Verschlüsselte Anforderungs- und Antwortdatensätze werden 218 Byte groß sein,
 
 Die unverschlüsselten Anforderungssätze werden 154 Byte sein,
 verglichen mit 222 Byte für ElGamal-Datensätze,
-und 464 Byte für ECIES-Datensätze, wie in [Prop152](/en/proposals/152-ecies-tunnels/) und [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) definiert.
+und 464 Byte für ECIES-Datensätze, wie in [Prop152](/en/proposals/152-ecies-tunnels/) und [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) definiert.
 
 Die unverschlüsselten Antwortsätze werden 202 Byte sein,
 verglichen mit 496 Byte für ElGamal-Datensätze,
-und 512 Byte für ECIES-Datensätze, wie in [Prop152](/en/proposals/152-ecies-tunnels/) und [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) definiert.
+und 512 Byte für ECIES-Datensätze, wie in [Prop152](/en/proposals/152-ecies-tunnels/) und [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) definiert.
 
 Die Antwortverschlüsselung wird ChaCha20 (NICHT ChaCha20/Poly1305) sein,
 sodass die Klartextdatensätze nicht ein Vielfaches von 16 Byte sein müssen.
@@ -187,7 +187,7 @@ Ersteller <------ F <------ E <------ D <--/
 
 ### Datensatzverschlüsselung
 
-Anforderungs- und Antwortdatensatzverschlüsselung: wie in [Prop152](/en/proposals/152-ecies-tunnels/) und [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) definiert.
+Anforderungs- und Antwortdatensatzverschlüsselung: wie in [Prop152](/en/proposals/152-ecies-tunnels/) und [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) definiert.
 
 Antwortdatensatzverschlüsselung für andere Slots: ChaCha20.
 
@@ -224,7 +224,7 @@ Dies ist ein Thema für weitere Forschung.
 #### Kurzer Anforderungsdatensatz Unverschlüsselt
 
 Dies ist die vorgeschlagene Spezifikation des Tunnel-Bauanforderungsdatensatzes für ECIES-X25519-Router.
-Zusammenfassung der Änderungen von [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/):
+Zusammenfassung der Änderungen von [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/):
 
 - Unverschlüsselte Länge von 464 auf 154 Bytes ändern
 - Verschlüsselte Länge von 528 auf 218 Bytes ändern
@@ -255,7 +255,7 @@ bytes   x-153: zufällige Auffüllung (siehe unten)
 ```
 
 
-Das Flags-Feld ist dasselbe wie in [Tunnel-Creation](/en/docs/spec/tunnel-creation/) definiert und enthält die folgenden::
+Das Flags-Feld ist dasselbe wie in [Tunnel-Creation](/en/docs/specs/tunnel-creation/) definiert und enthält die folgenden::
 
  Bit-Reihenfolge: 76543210 (Bit 7 ist MSB)
  bit 7: wenn gesetzt, Nachrichten von allen zulassen
@@ -278,7 +278,7 @@ Er wird für das KDF für die IBGW-Schicht und Antwortschlüssel und IVs verwend
 Dies ist nur im unverschlüsselten Datensatz in einer eingehenden Tunnel-Baunachricht enthalten.
 Es ist erforderlich, da es in dieser Schicht für den Baudatensatz keine DH gibt.
 
-Die Tunnel-Bauoptionen sind eine Mapping-Struktur, wie in [Common](/en/docs/spec/common-structures/) definiert.
+Die Tunnel-Bauoptionen sind eine Mapping-Struktur, wie in [Common](/en/docs/specs/common-structures/) definiert.
 Dies ist für zukünftige Nutzung. Derzeit sind keine Optionen definiert.
 Wenn die Mapping-Struktur leer ist, ist dies zwei Bytes 0x00 0x00.
 Die maximale Größe des Mappings (einschließlich des Längenfeldes) beträgt 98 Bytes,
@@ -308,7 +308,7 @@ bytes 202-217: Poly1305-MAC
 #### Kurzer Antwortdatensatz Unverschlüsselt
 
 Dies ist die vorgeschlagene Spezifikation des Tunnel-ShortBuildReplyRecord für ECIES-X25519-Router.
-Zusammenfassung der Änderungen von [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/):
+Zusammenfassung der Änderungen von [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/):
 
 - Unverschlüsselte Länge von 512 auf 202 Bytes ändern
 - Verschlüsselte Länge von 528 auf 218 Bytes ändern
@@ -328,14 +328,14 @@ bytes  x-200: Zufällige Auffüllung (siehe unten)
 byte     201: Antwort-Byte
 ```
 
-Die Tunnel-Bauoptionen sind eine Mapping-Struktur, wie in [Common](/en/docs/spec/common-structures/) definiert.
+Die Tunnel-Bauoptionen sind eine Mapping-Struktur, wie in [Common](/en/docs/specs/common-structures/) definiert.
 Dies ist für zukünftige Nutzung. Derzeit sind keine Optionen definiert.
 Wenn die Mapping-Struktur leer ist, ist dies zwei Bytes 0x00 0x00.
 Die maximale Größe des Mappings (einschließlich des Längenfeldes) beträgt 201 Bytes,
 und der maximale Wert des Längenfeldes des Mappings beträgt 199.
 
 Das Antwort-Byte ist einer der folgenden Werte
-wie in [Tunnel-Creation](/en/docs/spec/tunnel-creation/) definiert, um Fingerprinting zu vermeiden:
+wie in [Tunnel-Creation](/en/docs/specs/tunnel-creation/) definiert, um Fingerprinting zu vermeiden:
 
 - 0x00 (akzeptieren)
 - 30 (TUNNEL_REJECT_BANDWIDTH)

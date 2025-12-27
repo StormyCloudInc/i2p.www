@@ -15,9 +15,9 @@ Implantação de rede e testes em andamento.
 Sujeito a revisões.
 Status:
 
-- Implementação de Roteadores ECIES a partir da versão 0.9.48, veja [Common](/en/docs/spec/common-structures/).
-- Implementação de criação de túneis a partir da versão 0.9.48, veja [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/).
-- Implementação de mensagens criptografadas para roteadores ECIES a partir da versão 0.9.49, veja [ECIES-ROUTERS](/en/docs/spec/ecies-routers/).
+- Implementação de Roteadores ECIES a partir da versão 0.9.48, veja [Common](/en/docs/specs/common-structures/).
+- Implementação de criação de túneis a partir da versão 0.9.48, veja [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/).
+- Implementação de mensagens criptografadas para roteadores ECIES a partir da versão 0.9.49, veja [ECIES-ROUTERS](/en/docs/specs/ecies-routers/).
 - Implementação de novas mensagens de construção de túneis a partir da versão 0.9.51.
 
 
@@ -33,7 +33,7 @@ Este tem sido o padrão desde o início do I2P.
 ElGamal é lento e precisa ser substituído em todos os locais em que é usado.
 
 As propostas para LS2 [Prop123](/en/proposals/123-new-netdb-entries/) e ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/)
-(agora especificadas em [ECIES](/en/docs/spec/ecies/)) definiram a substituição do ElGamal por ECIES
+(agora especificadas em [ECIES](/en/docs/specs/ecies/)) definiram a substituição do ElGamal por ECIES
 para Destinos.
 
 Esta proposta define a substituição do ElGamal por ECIES-X25519 para roteadores.
@@ -73,14 +73,14 @@ Para Destinos, a chave está no conjunto de arrendamentos, não no Destino, e
 suportamos múltiplos tipos de criptografia no mesmo conjunto de arrendamentos.
 
 Nada disso é necessário para roteadores. A chave de criptografia do roteador
-está na sua Identidade de Roteador. Veja a especificação das estruturas comuns [Common](/en/docs/spec/common-structures/).
+está na sua Identidade de Roteador. Veja a especificação das estruturas comuns [Common](/en/docs/specs/common-structures/).
 
 Para roteadores, substituiremos a chave ElGamal de 256 bytes na Identidade de Roteador
 por uma chave X25519 de 32 bytes e 224 bytes de preenchimento.
 Isso será indicado pelo tipo de criptografia no certificado da chave.
 O tipo de criptografia (mesmo usado no LS2) é 4.
 Isso indica uma chave pública X25519 de 32 bytes em little-endian.
-Esta é a construção padrão, conforme definido na especificação de estruturas comuns [Common](/en/docs/spec/common-structures/).
+Esta é a construção padrão, conforme definido na especificação de estruturas comuns [Common](/en/docs/specs/common-structures/).
 
 Isso é idêntico ao método proposto para ECIES-P256
 para tipos de criptografia 1-3 na proposta 145 [Prop145](/en/proposals/145-ecies/).
@@ -91,7 +91,7 @@ locais na base de código. A maior parte deste trabalho foi feita em meados de 2
 
 ### Mensagem de Construção de Túnel
 
-Várias mudanças na especificação de criação de túneis [Tunnel-Creation](/en/docs/spec/tunnel-creation/)
+Várias mudanças na especificação de criação de túneis [Tunnel-Creation](/en/docs/specs/tunnel-creation/)
 são necessárias para usar ECIES em vez de ElGamal.
 Além disso, faremos melhorias na mensagem de construção de túneis
 para aumentar a segurança.
@@ -122,7 +122,7 @@ o remetente enviava apenas chaves efêmeras, não uma chave estática.
 A mensagem não estava ligada à identidade do remetente.
 
 Então, projetamos o ECIES Ratchet SKM em
-ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/), agora especificado em [ECIES](/en/docs/spec/ecies/).
+ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/), agora especificado em [ECIES](/en/docs/specs/ecies/).
 Este design foi especificado usando o padrão Noise "IK", que incluiu a chave
 estática do remetente na primeira mensagem. Este protocolo é usado para Destinos ECIES (tipo 4).
 O padrão IK não permite remetentes anônimos.
@@ -166,26 +166,26 @@ Não-objetivos do caso de uso de Roteador:
 - Não há necessidade de mensagens não-anônimas
 - Não há necessidade de enviar mensagens através de túneis exploratórios de entrada (um roteador não publica conjuntos de arrendamentos exploratórios)
 - Não há necessidade de tráfego de mensagens sustentado usando tags
-- Não há necessidade de executar Gerenciadores de Chave de Sessão "de chave dupla" conforme descrito em [ECIES](/en/docs/spec/ecies/) para Destinos. Roteadores têm apenas uma chave pública.
+- Não há necessidade de executar Gerenciadores de Chave de Sessão "de chave dupla" conforme descrito em [ECIES](/en/docs/specs/ecies/) para Destinos. Roteadores têm apenas uma chave pública.
 
 
 #### Conclusões de Design
 
-O Router SKM ECIES não precisa de um Ratchet SKM completo conforme especificado em [ECIES](/en/docs/spec/ecies/) para Destinos.
+O Router SKM ECIES não precisa de um Ratchet SKM completo conforme especificado em [ECIES](/en/docs/specs/ecies/) para Destinos.
 Não há requisito para mensagens não-anônimas usando o padrão IK.
 O modelo de ameaça não requer chaves efêmeras codificadas em Elligator2.
 
 Portanto, o router SKM usará o padrão Noise "N", mesmo conforme especificado
 em [Prop152](/en/proposals/152-ecies-tunnels/) para construção de túneis.
-Usará o mesmo formato de payload conforme especificado em [ECIES](/en/docs/spec/ecies/) para Destinos.
-O modo de chave estática zero (sem ligação ou sessão) de IKT especificado em [ECIES](/en/docs/spec/ecies/) não será usado.
+Usará o mesmo formato de payload conforme especificado em [ECIES](/en/docs/specs/ecies/) para Destinos.
+O modo de chave estática zero (sem ligação ou sessão) de IKT especificado em [ECIES](/en/docs/specs/ecies/) não será usado.
 
 Respostas a consultas serão criptografadas com uma tag de ratchet se solicitado na consulta.
-Isso é conforme documentado em [Prop154](/en/proposals/154-ecies-lookups/), agora especificado em [I2NP](/en/docs/spec/i2np/).
+Isso é conforme documentado em [Prop154](/en/proposals/154-ecies-lookups/), agora especificado em [I2NP](/en/docs/specs/i2np/).
 
 O design permite que o roteador tenha um único Gerenciador de Chaves de Sessão ECIES.
 Não há necessidade de executar Gerenciadores de Chave de Sessão "de chave dupla" conforme
-descritos em [ECIES](/en/docs/spec/ecies/) para Destinos.
+descritos em [ECIES](/en/docs/specs/ecies/) para Destinos.
 Roteadores têm apenas uma chave pública.
 
 Um roteador ECIES não tem uma chave estática ElGamal.
@@ -207,9 +207,9 @@ Até esta data, aproximadamente 85% da rede é 0.9.46 ou superior.
 
 ## Especificação
 
-X25519: Veja [ECIES](/en/docs/spec/ecies/).
+X25519: Veja [ECIES](/en/docs/specs/ecies/).
 
-Identidade do Roteador e Certificado de Chave: Veja [Common](/en/docs/spec/common-structures/).
+Identidade do Roteador e Certificado de Chave: Veja [Common](/en/docs/specs/common-structures/).
 
 Construção de Túneis: Veja [Prop152](/en/proposals/152-ecies-tunnels/).
 
@@ -218,16 +218,16 @@ Nova Mensagem de Construção de Túnel: Veja [Prop157](/en/proposals/157-new-tb
 
 ### Criptografia de Solicitação
 
-A criptografia de solicitação é a mesma daquela especificada em [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) e [Prop152](/en/proposals/152-ecies-tunnels/),
+A criptografia de solicitação é a mesma daquela especificada em [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) e [Prop152](/en/proposals/152-ecies-tunnels/),
 usando o padrão Noise "N".
 
 Respostas a consultas serão criptografadas com uma tag de ratchet se solicitadas na consulta.
 Mensagens de solicitação de Consulta de Banco de Dados contêm a chave de resposta de 32 bytes e a tag de resposta de 8 bytes
-conforme especificado em [I2NP](/en/docs/spec/i2np/) e [Prop154](/en/proposals/154-ecies-lookups/). A chave e a tag são usadas para criptografar a resposta.
+conforme especificado em [I2NP](/en/docs/specs/i2np/) e [Prop154](/en/proposals/154-ecies-lookups/). A chave e a tag são usadas para criptografar a resposta.
 
 Não são criados conjuntos de tags.
 O esquema de chave estática zero especificado em
-ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/) e [ECIES](/en/docs/spec/ecies/) não será usado.
+ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/) e [ECIES](/en/docs/specs/ecies/) não será usado.
 Chaves efêmeras não serão codificadas como Elligator2.
 
 Geralmente, estas serão mensagens de Nova Sessão e serão enviadas com uma chave estática zero
@@ -237,7 +237,7 @@ Geralmente, estas serão mensagens de Nova Sessão e serão enviadas com uma cha
 #### KDF para ck e h Inicial
 
 Isso é padrão [NOISE](https://noiseprotocol.org/noise.html) para o padrão "N" com um nome de protocolo padrão.
-Isso é o mesmo que especificado em [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) e [Prop152](/en/proposals/152-ecies-tunnels/) para mensagens de construção de túnel.
+Isso é o mesmo que especificado em [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) e [Prop152](/en/proposals/152-ecies-tunnels/) para mensagens de construção de túnel.
 
 
   ```text
@@ -271,7 +271,7 @@ Este é o padrão de mensagem "e":
 
 Criadores de mensagens geram um par de chaves efêmeros X25519 para cada mensagem.
 Chaves efêmeras devem ser únicas por mensagem.
-Isso é o mesmo que especificado em [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) e [Prop152](/en/proposals/152-ecies-tunnels/) para mensagens de construção de túnel.
+Isso é o mesmo que especificado em [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) e [Prop152](/en/proposals/152-ecies-tunnels/) para mensagens de construção de túnel.
 
 
   ```dataspec
@@ -334,7 +334,7 @@ Isso é o mesmo que especificado em [Tunnel-Creation-ECIES](/en/docs/spec/tunnel
 
 #### Payload
 
-O payload é o mesmo formato de bloco definido em [ECIES](/en/docs/spec/ecies/) e [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/).
+O payload é o mesmo formato de bloco definido em [ECIES](/en/docs/specs/ecies/) e [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/).
 Todas as mensagens devem conter um bloco DateTime para prevenção de replay.
 
 
@@ -343,7 +343,7 @@ Todas as mensagens devem conter um bloco DateTime para prevenção de replay.
 Respostas a mensagens de Consulta de Banco de Dados são mensagens de Armazenamento de Banco de Dados ou Resposta de Pesquisa de Banco de Dados.
 Elas são criptografadas como mensagens de Sessão Existente com
 a chave de resposta de 32 bytes e a tag de resposta de 8 bytes
-conforme especificado em [I2NP](/en/docs/spec/i2np/) e [Prop154](/en/proposals/154-ecies-lookups/).
+conforme especificado em [I2NP](/en/docs/specs/i2np/) e [Prop154](/en/proposals/154-ecies-lookups/).
 
 
 Não há respostas explícitas para mensagens de Armazenamento de Banco de Dados. O remetente pode incluir sua

@@ -14,7 +14,7 @@ toc: true
 自 API 版本 0.9.51 起实现。
 网络部署和测试进行中。
 可能会有小的修订。
-最终规范请参见 [I2NP](/en/docs/spec/i2np/) 和 [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/)。
+最终规范请参见 [I2NP](/en/docs/specs/i2np/) 和 [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/)。
 
 
 
@@ -28,7 +28,7 @@ toc: true
 总大小为 2113 字节。此消息在反向路径上分为三个 1KB 的隧道
 消息。
 
-对于 ECIES-X25519 路由器，528 字节的记录格式更改在 [Prop152](/en/proposals/152-ecies-tunnels/) 和 [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) 中指定。
+对于 ECIES-X25519 路由器，528 字节的记录格式更改在 [Prop152](/en/proposals/152-ecies-tunnels/) 和 [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) 中指定。
 对于隧道中混合使用 ElGamal 和 ECIES-X25519 路由器的情况，记录大小必须保持为
 528 字节。然而，如果隧道中的所有路由器都是 ECIES-X25519，则可以使用新的、更小的
 构建记录，因为 ECIES-X25519 加密的开销要小得多
@@ -49,10 +49,10 @@ toc: true
 更多目标请参见 [Prop152](/en/proposals/152-ecies-tunnels/) 和 [Prop156](/en/proposals/156-ecies-routers/)。
 
 - 较小的记录和消息
-- 保留将来选项的足够空间，如在 [Prop152](/en/proposals/152-ecies-tunnels/) 和 [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/)中
+- 保留将来选项的足够空间，如在 [Prop152](/en/proposals/152-ecies-tunnels/) 和 [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/)中
 - 适合反向路径的一个隧道消息
 - 仅支持 ECIES 跳跃
-- 保留在 [Prop152](/en/proposals/152-ecies-tunnels/) 和 [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/)中实现的改进
+- 保留在 [Prop152](/en/proposals/152-ecies-tunnels/) 和 [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/)中实现的改进
 - 最大化与当前网络的兼容性
 - 在 OBEP 中隐藏入站构建消息
 - 在 IBGW 中隐藏出站构建回复消息
@@ -82,11 +82,11 @@ toc: true
 
 明文请求记录将为 154 字节，
 相比之下，ElGamal 记录为 222 字节，
-而根据 [Prop152](/en/proposals/152-ecies-tunnels/) 和 [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/)定义的 ECIES 记录为 464 字节。
+而根据 [Prop152](/en/proposals/152-ecies-tunnels/) 和 [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/)定义的 ECIES 记录为 464 字节。
 
 明文响应记录将为 202 字节，
 相比较，ElGamal 记录为 496 字节，
-而根据 [Prop152](/en/proposals/152-ecies-tunnels/) 和 [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/)定义的 ECIES 记录为 512 字节。
+而根据 [Prop152](/en/proposals/152-ecies-tunnels/) 和 [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/)定义的 ECIES 记录为 512 字节。
 
 回复加密将使用 ChaCha20（不含 ChaCha20/Poly1305），
 因此明文记录不需要是 16 字节的倍数。
@@ -189,7 +189,7 @@ STBM：短隧道构建消息（类型 25）
 
 ### 记录加密
 
-请求和回复记录加密：如 [Prop152](/en/proposals/152-ecies-tunnels/) 和 [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/)中定义。
+请求和回复记录加密：如 [Prop152](/en/proposals/152-ecies-tunnels/) 和 [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/)中定义。
 
 其他槽的回复记录加密：ChaCha20。
 
@@ -225,7 +225,7 @@ STBM：短隧道构建消息（类型 25）
 #### 短请求记录未加密部分
 
 这是 ECIES-X25519 路由器的隧道 BuildRequestRecord 的建议规范。
-与 [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) 的变化摘要：
+与 [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) 的变化摘要：
 
 - 将未加密长度从 464 更改为 154 字节
 - 将加密长度从 528 更改为 218 字节
@@ -256,7 +256,7 @@ bytes 0-3: 接收消息的隧道 ID，非零
 ```
 
 
-标志字段与 [Tunnel-Creation](/en/docs/spec/tunnel-creation/) 中定义相同，包含以下内容::
+标志字段与 [Tunnel-Creation](/en/docs/specs/tunnel-creation/) 中定义相同，包含以下内容::
 
  位序：76543210（位 7 是 MSB）
  位 7：如果设置，允许来自任何人的消息
@@ -279,7 +279,7 @@ bytes 0-3: 接收消息的隧道 ID，非零
 这仅在入站隧道构建消息的明文记录中包含。
 这是必需的，因为此层没有用于构建记录的 DH。
 
-隧道构建选项是一个 Mapping 结构，如 [Common](/en/docs/spec/common-structures/) 中定义。
+隧道构建选项是一个 Mapping 结构，如 [Common](/en/docs/specs/common-structures/) 中定义。
 这是为了将来使用。目前尚未定义任何选项。
 如果 Mapping 结构为空，则为两个字节 0x00 0x00。
 Mapping 的最大大小（包括长度字段）为 98 字节，Mapping 长度字段的最大值为96。
@@ -307,7 +307,7 @@ bytes 0-15: 节点的截断身份哈希
 
 #### 短回复记录未加密部分
 这是 ECIES-X25519 路由器的隧道 ShortBuildReplyRecord 的建议规范。
-与 [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) 的变化摘要：
+与 [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) 的变化摘要：
 
 - 将未加密长度从 512 更改为 202 字节
 - 将加密长度从 528 更改为 218 字节
@@ -327,13 +327,13 @@ bytes 0-x: 隧道构建回复选项（Mapping）
   byte 201: 回复字节
 ```
 
-隧道构建回复选项是一个 Mapping 结构，如 [Common](/en/docs/spec/common-structures/) 中定义。
+隧道构建回复选项是一个 Mapping 结构，如 [Common](/en/docs/specs/common-structures/) 中定义。
 这是为了将来使用。目前尚未定义任何选项。
 如果 Mapping 结构为空，则为两个字节 0x00 0x00。
 Mapping 的最大大小（包括长度字段）为 201 字节，Mapping 长度字段的最大值为199。
 
 回复字节是以下值之一
-如 [Tunnel-Creation](/en/docs/spec/tunnel-creation/) 中定义，以避免指纹：
+如 [Tunnel-Creation](/en/docs/specs/tunnel-creation/) 中定义，以避免指纹：
 
 - 0x00（接受）
 - 30（TUNNEL_REJECT_BANDWIDTH）

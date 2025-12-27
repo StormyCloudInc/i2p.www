@@ -23,7 +23,7 @@ toc: true
 
 ECIES는 기존 세션(ES) 메시지 오버헤드를 약 90바이트 줄입니다.
 따라서 우리는 ECIES 연결을 위해 MTU를 약 90바이트 증가시킬 수 있습니다.
-See the [ECIES specification](/en/docs/spec/ecies/#overhead), [Streaming specification](/en/docs/spec/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/en/docs/api/streaming/)를 참조하세요.
+See the [ECIES specification](/en/docs/specs/ecies/#overhead), [Streaming specification](/en/docs/specs/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/en/docs/api/streaming/)를 참조하세요.
 
 MTU를 증가시키지 않는다면, 많은 경우에 오버헤드 절감이 실제로 '절감되지' 않으며,
 메시지들이 어차피 두 개의 전체 터널 메시지로 패딩될 것입니다.
@@ -72,7 +72,7 @@ the [Streaming API documentation](/en/docs/api/streaming/)에 명시된 것처�
 
 ### 분석
 
-the [ECIES specification](/en/docs/spec/ecies/#overhead)에 설명된 대로, 기존 세션 메시지에 대한 ElGamal 오버헤드는
+the [ECIES specification](/en/docs/specs/ecies/#overhead)에 설명된 대로, 기존 세션 메시지에 대한 ElGamal 오버헤드는
 151바이트이며, Ratchet 오버헤드는 69바이트입니다.
 따라서, 우리는 ratchet 연결에 대해 MTU를 (151 - 69) = 82바이트 증가시킬 수 있으며,
 1730에서 1812로 변경됩니다.
@@ -82,7 +82,7 @@ the [ECIES specification](/en/docs/spec/ecies/#overhead)에 설명된 대로, �
 ## 사양
 
 the [Streaming API documentation](/en/docs/api/streaming/)의 MTU 선택 및 협상 섹션에 다음 변경 사항 및 명확성을 추가하십시오.
-the [Streaming specification](/en/docs/spec/streaming/)에 대한 변경 사항은 없습니다.
+the [Streaming specification](/en/docs/specs/streaming/)에 대한 변경 사항은 없습니다.
 
 
 옵션 i2p.streaming.maxMessageSize의 기본 값은 어떤 키가 사용되든 상관없이 모든 연결에 대해 1730으로 유지됩니다.
@@ -152,7 +152,7 @@ negotiated_mtu를 계산하며, 이는 앨리스와 밥의 MTU 중 최소값으�
 ## 정당성
 
 현재 값이 1730인 이유는 the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220)을 참조하세요.
-ECIES 오버헤드가 ElGamal보다 82바이트 적은 이유는 the [ECIES specification](/en/docs/spec/ecies/#overhead)를 참조하세요.
+ECIES 오버헤드가 ElGamal보다 82바이트 적은 이유는 the [ECIES specification](/en/docs/specs/ecies/#overhead)를 참조하세요.
 
 
 

@@ -23,7 +23,7 @@ toc: true
 
 يقلل ECIES من الحمل الزائد لرسائل الجلسات القائمة (ES) بحوالي 90 بايت.
 لذلك يمكننا زيادة الـ MTU بحوالي 90 بايت للاتصالات بـ ECIES.
-انظر the [ECIES specification](/en/docs/spec/ecies/#overhead), [Streaming specification](/en/docs/spec/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/en/docs/api/streaming/).
+انظر the [ECIES specification](/en/docs/specs/ecies/#overhead), [Streaming specification](/en/docs/specs/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/en/docs/api/streaming/).
 
 دون زيادة الـ MTU، في العديد من الحالات لا يتم "توفير" المدخرات فعليًا،
 حيث سيتم تعبئة الرسائل لاستخدام رسائل النفق الكاملة على أي حال.
@@ -80,7 +80,7 @@ toc: true
 
 ### التحليل
 
-كما هو موضح في the [ECIES specification](/en/docs/spec/ecies/#overhead), فإن الحمل الزائد لـ ElGamal لرسائل الجلسات القائمة هو
+كما هو موضح في the [ECIES specification](/en/docs/specs/ecies/#overhead), فإن الحمل الزائد لـ ElGamal لرسائل الجلسات القائمة هو
 151 بايت، والحمل الزائد لـ Ratchet هو 69 بايت.
 لذلك، يمكننا زيادة الـ MTU لروابط Ratchet بمقدار (151 - 69) = 82 بايت،
 من 1730 إلى 1812.
@@ -90,7 +90,7 @@ toc: true
 ## المواصفات
 
 أضف التغييرات والتوضيحات التالية إلى قسم اختيار وتفاوض الـ MTU في the [Streaming API documentation](/en/docs/api/streaming/).
-لا تغيير في the [Streaming specification](/en/docs/spec/streaming/).
+لا تغيير في the [Streaming specification](/en/docs/specs/streaming/).
 
 
 تظل القيمة الافتراضية للخيار i2p.streaming.maxMessageSize عند 1730 لجميع الاتصالات، بغض النظر عن المفاتيح المستخدمة.
@@ -163,7 +163,7 @@ negotiated_mtu، وهو الحد الأدنى من الـ MTU لدى Alice وBob
 ## التبرير
 
 انظر إلى the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220) لمعرفة لماذا القيمة الحالية هي 1730.
-انظر إلى the [ECIES specification](/en/docs/spec/ecies/#overhead) لمعرفة لماذا الحمل الزائد لـ ECIES أقل بـ 82 بايت من ElGamal.
+انظر إلى the [ECIES specification](/en/docs/specs/ecies/#overhead) لمعرفة لماذا الحمل الزائد لـ ECIES أقل بـ 82 بايت من ElGamal.
 
 
 

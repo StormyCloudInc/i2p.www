@@ -12,7 +12,7 @@ toc: true
 ## 注意
 该提案未按指定实现，
 然而，ECIES 长短构建消息（提案 152 和 157）设计了可扩展的选项字段。
-请参见 [Tunnel Creation ECIES 规范](/en/docs/spec/tunnel-creation-ecies/) 查看官方规范。
+请参见 [Tunnel Creation ECIES 规范](/en/docs/specs/tunnel-creation-ecies/) 查看官方规范。
 
 
 ## 概述

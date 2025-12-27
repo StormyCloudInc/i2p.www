@@ -27,7 +27,7 @@ toc: true
 
 ## المواصفات
 
-تمت إضافة خيار I2CP جديد إلى [مواصفات I2CP](/en/docs/spec/i2cp/):
+تمت إضافة خيار I2CP جديد إلى [مواصفات I2CP](/en/docs/specs/i2cp/):
 
     outbound.matchEndWithTarget
         Boolean

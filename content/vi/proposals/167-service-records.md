@@ -72,7 +72,7 @@ không đơn độc cung cấp một bản ghi tổng quát cho bất kỳ dịc
 
 ## Thiết Kế
 
-Hồ sơ dịch vụ được đặt trong phần tùy chọn trong LS2 [LS2](/en/docs/spec/common-structures/).
+Hồ sơ dịch vụ được đặt trong phần tùy chọn trong LS2 [LS2](/en/docs/specs/common-structures/).
 Phần tùy chọn LS2 hiện đang không được sử dụng.
 Không được hỗ trợ cho LS1.
 Điều này tương tự như đề xuất băng thông đường hầm [Prop168](/en/proposals/168-tunnel-bandwidth/),
@@ -180,14 +180,14 @@ Mỗi dịch vụ được hỗ trợ phải có bản ghi riêng của mình.
 ### Đăng Ký Tên Dịch Vụ
 
 Các định danh không chuẩn mà không được liệt kê trong [REGISTRY](http://www.dns-sd.org/ServiceTypes.html) hoặc Linux /etc/services
-có thể được yêu cầu và thêm vào đặc tả cấu trúc chung [LS2](/en/docs/spec/common-structures/).
+có thể được yêu cầu và thêm vào đặc tả cấu trúc chung [LS2](/en/docs/specs/common-structures/).
 
 Các định dạng appoptions cụ thể cho dịch vụ cũng có thể được thêm vào đó.
 
 
 ### Đặc Tả I2CP
 
-Giao thức [I2CP](/en/docs/spec/i2cp/) phải được mở rộng để hỗ trợ tra cứu dịch vụ.
+Giao thức [I2CP](/en/docs/specs/i2cp/) phải được mở rộng để hỗ trợ tra cứu dịch vụ.
 Các mã lỗi MessageStatusMessage và/hoặc HostReplyMessage liên quan đến tra cứu dịch vụ
 cần thiết.
 Để làm cho cơ sở tra cứu trở nên tổng quát, không chỉ hồ sơ dịch vụ cụ thể,

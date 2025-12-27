@@ -15,9 +15,9 @@ toc: true
 Может быть изменено.
 Статус:
 
-- ECIES роутеры реализованы в 0.9.48, см. [Common](/en/docs/spec/common-structures/).
-- Создание туннелей реализовано в 0.9.48, см. [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/).
-- Зашифрованные сообщения для ECIES роутеров реализованы в 0.9.49, см. [ECIES-ROUTERS](/en/docs/spec/ecies-routers/).
+- ECIES роутеры реализованы в 0.9.48, см. [Common](/en/docs/specs/common-structures/).
+- Создание туннелей реализовано в 0.9.48, см. [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/).
+- Зашифрованные сообщения для ECIES роутеров реализованы в 0.9.49, см. [ECIES-ROUTERS](/en/docs/specs/ecies-routers/).
 - Сообщения о создании новых туннелей реализованы в 0.9.51.
 
 
@@ -33,7 +33,7 @@ toc: true
 ElGamal медленен и требует замены во всех местах использования.
 
 Предложения для LS2 [Prop123](/en/proposals/123-new-netdb-entries/) и ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/)
-(теперь определены в [ECIES](/en/docs/spec/ecies/)) описали замену ElGamal на ECIES
+(теперь определены в [ECIES](/en/docs/specs/ecies/)) описали замену ElGamal на ECIES
 для Destinations.
 
 Это предложение определяет замену ElGamal на ECIES-X25519 для роутеров.
@@ -73,14 +73,14 @@ ElGamal медленен и требует замены во всех места
 мы поддерживаем несколько типов шифрования в одном и том же наборе адресов.
 
 Ничего из этого не требуется для роутеров. Ключ шифрования роутера
-находится в его Идентификаторе роутера. См. спецификацию общих структур [Common](/en/docs/spec/common-structures/).
+находится в его Идентификаторе роутера. См. спецификацию общих структур [Common](/en/docs/specs/common-structures/).
 
 Для роутеров мы заменим 256-байтный ключ ElGamal в Идентификаторе роутера
 на 32-байтный X25519 ключ и 224 байта заполнения.
 Это будет указано типом криптографии в сертификате ключа.
 Тип криптографии (такой же, как использованный в LS2) – 4.
 Это указывает на 32-байтный открытый ключ X25519 с порядком байтов "младший сначала".
-Это стандартное построение, как определено в спецификации общих структур [Common](/en/docs/spec/common-structures/).
+Это стандартное построение, как определено в спецификации общих структур [Common](/en/docs/specs/common-structures/).
 
 Это идентично методу, предложенному для ECIES-P256
 для типов криптографии 1-3 в предложении 145 [Prop145](/en/proposals/145-ecies/).
@@ -91,7 +91,7 @@ ElGamal медленен и требует замены во всех места
 
 ### Сообщение о создании туннеля
 
-Для использования ECIES вместо ElGamal требуется несколько изменений спецификации создания туннелей [Tunnel-Creation](/en/docs/spec/tunnel-creation/).
+Для использования ECIES вместо ElGamal требуется несколько изменений спецификации создания туннелей [Tunnel-Creation](/en/docs/specs/tunnel-creation/).
 Кроме того, мы внесем улучшения в сообщения о создании туннелей
 для повышения безопасности.
 
@@ -122,7 +122,7 @@ ElGamal медленен и требует замены во всех места
 Сообщение не было связано с идентичностью отправителя.
 
 Затем мы разработали ECIES Ratchet SKM в
-ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/),  теперь определено в [ECIES](/en/docs/spec/ecies/).
+ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/),  теперь определено в [ECIES](/en/docs/specs/ecies/).
 Этот дизайн был определен с использованием паттерна Noise "IK", который включал статический ключ отправителя в первом сообщении. Этот протокол используется для ECIES (тип 4) Destinations.
 Паттерн IK не позволяет использовать анонимных отправителей.
 
@@ -165,26 +165,26 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 - Нет необходимости в неанонимных сообщениях
 - Нет необходимости отправлять сообщения через входящие исследовательские туннели (роутер не публикует исследовательские наборы адресов)
 - Нет необходимости в постоянном обмене сообщениями с использованием тегов
-- Нет необходимости в "двойных ключах" для Менеджеров ключей сессий, как описано в [ECIES](/en/docs/spec/ecies/) для Destinations. У роутеров только один открытый ключ.
+- Нет необходимости в "двойных ключах" для Менеджеров ключей сессий, как описано в [ECIES](/en/docs/specs/ecies/) для Destinations. У роутеров только один открытый ключ.
 
 
 #### Выводы дизайна
 
-ECIES Router SKM не требует полного Ratchet SKM как указывается в [ECIES](/en/docs/spec/ecies/) для Destinations.
+ECIES Router SKM не требует полного Ratchet SKM как указывается в [ECIES](/en/docs/specs/ecies/) для Destinations.
 Нет необходимости в неанонимных сообщениях, использующих паттерн IK.
 Модель угроз не требует закодированных эфемерных ключей Elligator2.
 
 Таким образом, SKM роутера будет использовать паттерн Noise "N", такой же, как указано
 в [Prop152](/en/proposals/152-ecies-tunnels/) для создания туннелей.
-Он будет использовать тот же формат нагрузки, как указано в [ECIES](/en/docs/spec/ecies/) для Destinations.
-Режим с нулевым статическим ключом (без связывания или сессии) IK, описанный в [ECIES](/en/docs/spec/ecies/), не будет использоваться.
+Он будет использовать тот же формат нагрузки, как указано в [ECIES](/en/docs/specs/ecies/) для Destinations.
+Режим с нулевым статическим ключом (без связывания или сессии) IK, описанный в [ECIES](/en/docs/specs/ecies/), не будет использоваться.
 
 Ответы на запросы шифруются ратчетным тегом, если запрашивается в поисковом запросе.
-Это задокументировано в [Prop154](/en/proposals/154-ecies-lookups/), теперь указано в [I2NP](/en/docs/spec/i2np/).
+Это задокументировано в [Prop154](/en/proposals/154-ecies-lookups/), теперь указано в [I2NP](/en/docs/specs/i2np/).
 
 Дизайн позволяет роутеру иметь один Менеджер ключей сессий ECIES.
 Нет необходимости иметь "двойные ключи" для Менеджеров ключей сессий, как
-описано в [ECIES](/en/docs/spec/ecies/) для Destinations.
+описано в [ECIES](/en/docs/specs/ecies/) для Destinations.
 У роутеров только один открытый ключ.
 
 Роутер ECIES не имеет статического ключа ElGamal.
@@ -207,9 +207,9 @@ floodfill роутера версии до 0.9.46.
 
 ## Спецификация
 
-X25519: См. [ECIES](/en/docs/spec/ecies/).
+X25519: См. [ECIES](/en/docs/specs/ecies/).
 
-Идентификатор роутера и сертификат ключа: См. [Common](/en/docs/spec/common-structures/).
+Идентификатор роутера и сертификат ключа: См. [Common](/en/docs/specs/common-structures/).
 
 Создание туннелей: См. [Prop152](/en/proposals/152-ecies-tunnels/).
 
@@ -218,16 +218,16 @@ X25519: См. [ECIES](/en/docs/spec/ecies/).
 
 ### Шифрование запросов
 
-Шифрование запросов соответствует тому, что указано в [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) и [Prop152](/en/proposals/152-ecies-tunnels/),
+Шифрование запросов соответствует тому, что указано в [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) и [Prop152](/en/proposals/152-ecies-tunnels/),
 с использованием паттерна Noise "N".
 
 Ответы на запросы шифруются ратчетным тегом, если это запрашивается в поисковом запросе.
 Сообщения запросов на поиск в базе данных содержат 32-байтный ключ для ответа и 8-байтный тег для ответа,
-как указано в [I2NP](/en/docs/spec/i2np/) и [Prop154](/en/proposals/154-ecies-lookups/). Ключ и тег используются для шифрования ответа.
+как указано в [I2NP](/en/docs/specs/i2np/) и [Prop154](/en/proposals/154-ecies-lookups/). Ключ и тег используются для шифрования ответа.
 
 Наборы тегов не создаются.
 Схема с нулевым статическим ключом, указанная в
-ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/) и [ECIES](/en/docs/spec/ecies/), не используется.
+ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/) и [ECIES](/en/docs/specs/ecies/), не используется.
 Эфемерные ключи не будут закодированы с использованием Elligator2.
 
 Как правило, это будут сообщения новой сессии, отправляемые с нулевым статическим ключом
@@ -237,7 +237,7 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 #### KDF для начальных ck и h
 
 Это стандарт [NOISE](https://noiseprotocol.org/noise.html) для паттерна "N" с стандартным именем протокола.
-Это соответствует тому, что указано в [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) и [Prop152](/en/proposals/152-ecies-tunnels/) для сообщений о создании туннелей.
+Это соответствует тому, что указано в [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) и [Prop152](/en/proposals/152-ecies-tunnels/) для сообщений о создании туннелей.
 
 
   ```text
@@ -271,7 +271,7 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 
 Создатели сообщений создают эфемерную ключевую пару X25519 для каждого сообщения.
 Эфемерные ключи должны быть уникальны для каждого сообщения.
-Это соответствует тому, что указано в [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) и [Prop152](/en/proposals/152-ecies-tunnels/) для сообщений о создании туннелей.
+Это соответствует тому, что указано в [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) и [Prop152](/en/proposals/152-ecies-tunnels/) для сообщений о создании туннелей.
 
 
   ```dataspec
@@ -334,7 +334,7 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 
 #### Полезная нагрузка
 
-Полезная нагрузка имеет тот же формат блока, что и определяется в [ECIES](/en/docs/spec/ecies/) и [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/).
+Полезная нагрузка имеет тот же формат блока, что и определяется в [ECIES](/en/docs/specs/ecies/) и [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/).
 Все сообщения должны содержать блок DateTime для предотвращения повторов.
 
 
@@ -343,7 +343,7 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 Ответы на сообщения Database Lookup могут быть сообщениями Database Store или Database Search Reply.
 Они шифруются как сообщения существующей сессии с
 32-байтным ключом ответа и 8-байтным тегом ответа,
-как указано в [I2NP](/en/docs/spec/i2np/) и [Prop154](/en/proposals/154-ecies-lookups/).
+как указано в [I2NP](/en/docs/specs/i2np/) и [Prop154](/en/proposals/154-ecies-lookups/).
 
 
 Явных ответов на сообщения Database Store нет. Отправитель может включить

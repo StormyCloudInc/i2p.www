@@ -31,7 +31,7 @@ Este modo efetivamente significaria que o destinatário está selecionando o OBE
 
 ## Especificação
 
-Uma nova opção I2CP é adicionada à [especificação I2CP](/en/docs/spec/i2cp/):
+Uma nova opção I2CP é adicionada à [especificação I2CP](/en/docs/specs/i2cp/):
 
     outbound.matchEndWithTarget
         Booleano

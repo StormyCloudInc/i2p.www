@@ -31,7 +31,7 @@ Dieser Modus würde effektiv bedeuten, dass der Empfänger den OBEP des Senders 
 
 ## Spezifikation
 
-Eine neue I2CP-Option wird zur [I2CP-Spezifikation](/en/docs/spec/i2cp/) hinzugefügt:
+Eine neue I2CP-Option wird zur [I2CP-Spezifikation](/en/docs/specs/i2cp/) hinzugefügt:
 
     outbound.matchEndWithTarget
         Boolean

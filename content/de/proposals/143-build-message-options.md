@@ -13,7 +13,7 @@ toc: true
 Dieser Vorschlag wurde nicht wie spezifiziert implementiert,
 jedoch wurden die ECIES langen und kurzen Build-Nachrichten (Vorschläge 152 und 157)
 mit erweiterbaren Optionsfeldern entworfen.
-Siehe die [Tunnel Creation ECIES Spezifikation](/en/docs/spec/tunnel-creation-ecies/) für die offizielle Spezifikation.
+Siehe die [Tunnel Creation ECIES Spezifikation](/en/docs/specs/tunnel-creation-ecies/) für die offizielle Spezifikation.
 
 
 ## Übersicht

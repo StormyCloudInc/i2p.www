@@ -72,7 +72,7 @@ alone do not provide a generic record for any service.
 
 ## Design
 
-Service records are placed in the options section in [LS2](/en/docs/spec/common-structures/).
+Service records are placed in the options section in [LS2](/en/docs/specs/common-structures/).
 The LS2 options section is currently unused.
 Not supported for LS1.
 This is similar to the [tunnel bandwidth proposal](/en/proposals/168-tunnel-bandwidth/),
@@ -176,14 +176,14 @@ Each supported service must have its own record.
 ### Service Name Registry
 
 Non-standard identifiers that are not listed in the [DNS-SD Service Types registry](http://www.dns-sd.org/ServiceTypes.html) or Linux /etc/services
-may be requested and added to the [common structures specification](/en/docs/spec/common-structures/).
+may be requested and added to the [common structures specification](/en/docs/specs/common-structures/).
 
 Service-specific appoptions formats may also be added there.
 
 
 ### I2CP Specification
 
-The [I2CP protocol](/en/docs/spec/i2cp/) must be extended to support service lookups.
+The [I2CP protocol](/en/docs/specs/i2cp/) must be extended to support service lookups.
 Additional MessageStatusMessage and/or HostReplyMessage error codes related to service lookup
 are required.
 To make the lookup facility general, not just service record-specific,

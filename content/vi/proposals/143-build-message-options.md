@@ -13,7 +13,7 @@ toc: true
 Đề xuất này không được thực hiện theo chỉ định,
 tuy nhiên, các thông điệp xây dựng dài và ngắn của ECIES (đề xuất 152 và 157)
 được thiết kế với các trường tùy chọn mở rộng.
-Xem [thông số kỹ thuật Tunnel Creation ECIES](/en/docs/spec/tunnel-creation-ecies/) để biết thông số kỹ thuật chính thức.
+Xem [thông số kỹ thuật Tunnel Creation ECIES](/en/docs/specs/tunnel-creation-ecies/) để biết thông số kỹ thuật chính thức.
 
 
 ## Tổng quan

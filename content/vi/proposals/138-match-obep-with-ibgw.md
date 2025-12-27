@@ -31,7 +31,7 @@ Chế độ này có nghĩa là người nhận sẽ lựa chọn OBEP của ng�
 
 ## Đặc tả
 
-Một tùy chọn I2CP mới được thêm vào [đặc tả I2CP](/en/docs/spec/i2cp/):
+Một tùy chọn I2CP mới được thêm vào [đặc tả I2CP](/en/docs/specs/i2cp/):
 
     outbound.matchEndWithTarget
         Boolean

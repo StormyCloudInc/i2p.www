@@ -23,7 +23,7 @@ Küçük revizyonlar yapılabilir.
 
 ECIES, mevcut oturum (ES) mesaj yükünü yaklaşık 90 bayt azaltır.
 Bu nedenle, ECIES bağlantıları için MTU'yu yaklaşık 90 bayt artırabiliriz.
-Bakınız the [ECIES specification](/en/docs/spec/ecies/#overhead), [Streaming specification](/en/docs/spec/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/en/docs/api/streaming/).
+Bakınız the [ECIES specification](/en/docs/specs/ecies/#overhead), [Streaming specification](/en/docs/specs/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/en/docs/api/streaming/).
 
 MTU'yu artırmadan, birçok durumda yük kazanımları gerçekten 'kazanılmış' olmaz,
 çünkü mesajlar yine de iki tam tünel mesajı kullanacak şekilde doldurulacaktır.
@@ -79,7 +79,7 @@ yükü artırabilir.
 
 ### Analiz
 
-the [ECIES specification](/en/docs/spec/ecies/#overhead) 'de açıklandığı üzere, mevcut oturum mesajları için ElGamal yükü
+the [ECIES specification](/en/docs/specs/ecies/#overhead) 'de açıklandığı üzere, mevcut oturum mesajları için ElGamal yükü
 151 bayt, ve Ratchet yükü 69 bayttır.
 Bu nedenle, ratchet bağlantıları için MTU'yu (151 - 69) = 82 bayt artırabiliriz,
 1730'dan 1812'ye.
@@ -88,7 +88,7 @@ Bu nedenle, ratchet bağlantıları için MTU'yu (151 - 69) = 82 bayt artırabil
 ## Spesifikasyon
 
 the [Streaming API documentation](/en/docs/api/streaming/) 'teki MTU Seçimi ve Müzakere bölümüne aşağıdaki değişiklikler ve açıklamalar eklenmiştir.
-the [Streaming specification](/en/docs/spec/streaming/) 'e herhangi bir değişiklik yapılmamıştır.
+the [Streaming specification](/en/docs/specs/streaming/) 'e herhangi bir değişiklik yapılmamıştır.
 
 
 i2p.streaming.maxMessageSize seçeneğinin varsayılan değeri, hangi anahtarların kullanıldığına bakılmaksızın tüm bağlantılar için 1730 olarak kalır.
@@ -157,7 +157,7 @@ Alice ve Bob, Bob'dan Alice'e SYN ACK'deki ve her iki yönde gönderilen tüm so
 ## Gerekçe
 
 Mevcut değerin neden 1730 olduğunu görmek için the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220) 'a bakın.
-ECIES yükünün neden ElGamal'dan 82 bayt daha az olduğunu görmek için the [ECIES specification](/en/docs/spec/ecies/#overhead) 'e bakın.
+ECIES yükünün neden ElGamal'dan 82 bayt daha az olduğunu görmek için the [ECIES specification](/en/docs/specs/ecies/#overhead) 'e bakın.
 
 
 

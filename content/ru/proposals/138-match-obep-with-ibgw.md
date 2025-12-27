@@ -31,7 +31,7 @@ toc: true
 
 ## Спецификация
 
-Добавлена новая опция I2CP в [спецификацию I2CP](/en/docs/spec/i2cp/):
+Добавлена новая опция I2CP в [спецификацию I2CP](/en/docs/specs/i2cp/):
 
     outbound.matchEndWithTarget
         Boolean

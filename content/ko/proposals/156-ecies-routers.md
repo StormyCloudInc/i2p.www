@@ -15,9 +15,9 @@ toc: true
 수정될 수 있음.
 상태:
 
-- ECIES 라우터는 0.9.48에 구현됨, [Common](/en/docs/spec/common-structures/) 참조.
-- 터널 빌딩은 0.9.48에 구현됨, [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) 참조.
-- ECIES 라우터에 암호화된 메시지는 0.9.49에 구현됨, [ECIES-ROUTERS](/en/docs/spec/ecies-routers/) 참조.
+- ECIES 라우터는 0.9.48에 구현됨, [Common](/en/docs/specs/common-structures/) 참조.
+- 터널 빌딩은 0.9.48에 구현됨, [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) 참조.
+- ECIES 라우터에 암호화된 메시지는 0.9.49에 구현됨, [ECIES-ROUTERS](/en/docs/specs/ecies-routers/) 참조.
 - 새로운 터널 빌드 메시지는 0.9.51에 구현됨.
 
 
@@ -34,7 +34,7 @@ ElGamal은 느리기 때문에 사용되는 모든 곳에서 교체가 필요함
 
 LS2 [Prop123](/en/proposals/123-new-netdb-entries/)와 ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/)의 제안은
 목적지를 위해 ElGamal을 ECIES로 교체한다고 정의함
-(현재 [ECIES](/en/docs/spec/ecies/)에 지정됨).
+(현재 [ECIES](/en/docs/specs/ecies/)에 지정됨).
 
 이 제안은 라우터에 대해 ElGamal을 ECIES-X25519로 교체하는 것을 정의함.
 이 제안은 필요한 변경 사항에 대한 개요를 제공함.
@@ -71,13 +71,13 @@ LS2 [Prop123](/en/proposals/123-new-netdb-entries/)와 ECIES-X25519-AEAD-Ratchet
 
 목적지의 경우, 키는 목적지에 있는 것이 아니라 리스셋에 있으며, 동일한 리스셋에서 여러 암호화 유형을 지원함.
 
-라우터에는 이러한 것이 필요하지 않음. 라우터의 암호화 키는 라우터 아이덴티티에 있음. 공통 구조 명세 [Common](/en/docs/spec/common-structures/) 참조.
+라우터에는 이러한 것이 필요하지 않음. 라우터의 암호화 키는 라우터 아이덴티티에 있음. 공통 구조 명세 [Common](/en/docs/specs/common-structures/) 참조.
 
 라우터의 경우, 라우터 아이덴티티의 256바이트 ElGamal 키를 32바이트 X25519 키와 224바이트 패딩으로 교체할 예정임.
 이는 키 인증서의 암호화 유형에 의해 나타남.
 암호화 유형(LS2에서 사용된 것과 동일)은 4임.
 이는 리틀엔디안 32바이트 X25519 공개 키를 나타냄.
-이는 공통 구조 명세 [Common](/en/docs/spec/common-structures/)에서 정의한 표준 구성임.
+이는 공통 구조 명세 [Common](/en/docs/specs/common-structures/)에서 정의한 표준 구성임.
 
 이는 암호화 유형 1-3에 대해 제안 145 [Prop145](/en/proposals/145-ecies/)에서 제안된 ECIES-P256에 대한 방법과 동일함.
 이 제안은 채택되지 않았지만, Java 구현 개발자들은 코드 베이스의 여러 군데에 체크를 추가하여
@@ -111,7 +111,7 @@ ElGamal 설계는 익명의 발신자만을 지원함; 발신자는 불변 키�
 메시지는 발신자의 아이덴티티와 결합되지 않음.
 
 그래서, 우리는 ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/),
-지금은 [ECIES](/en/docs/spec/ecies/)에 지정되어 있는 ECIES Ratchet SKM을 설계함.
+지금은 [ECIES](/en/docs/specs/ecies/)에 지정되어 있는 ECIES Ratchet SKM을 설계함.
 이 설계는 발신자의 고정 키를 첫 메시지에 포함시킨 노이즈 "IK" 패턴을 사용하여 지정되었음.
 이 프로토콜은 ECIES(유형 4) 목적지에 사용됨.
 IK 패턴은 익명의 발신자를 허용하지 않음.
@@ -154,24 +154,24 @@ ECIES 라우터에 대해 제로 키를 사용하는 것이 목적이었음.
 - 비익명 메시지가 필요하지 않음
 - 탐색 리스셋을 게시하지 않으므로 인바운드 탐색 터널을 통해 메시지 전송할 필요 없음
 - 태그를 사용한 지속적인 메시지 트래픽이 필요 없음
-- 목적지를 위한 [ECIES](/en/docs/spec/ecies/)에 설명 된 "이중 키" 세션 키 관리자를 실행할 필요 없음. 라우터는 단일 공개 키만 가짐.
+- 목적지를 위한 [ECIES](/en/docs/specs/ecies/)에 설명 된 "이중 키" 세션 키 관리자를 실행할 필요 없음. 라우터는 단일 공개 키만 가짐.
 
 
 #### 설계 결론
 
-ECIES 라우터 SKM은 목적지에 대해 [ECIES](/en/docs/spec/ecies/)에 지정된 전체 Ratchet SKM을 필요로 하지 않음.
+ECIES 라우터 SKM은 목적지에 대해 [ECIES](/en/docs/specs/ecies/)에 지정된 전체 Ratchet SKM을 필요로 하지 않음.
 IK 패턴을 사용하는 비익명 메시지에 대한 요구 사항이 없음.
 위협 모델은 Elligator2로 인코딩된 일회용 키를 요구하지 않음.
 
 따라서 라우터 SKM은 [Prop152](/en/proposals/152-ecies-tunnels/)에 터널 빌딩을 위해 지정한 것과 동일한 노이즈 "N" 패턴을 사용할 것임.
-목적지에 대해 [ECIES](/en/docs/spec/ecies/)에서 지정한 것과 동일한 페이로드 형식을 사용할 것임.
+목적지에 대해 [ECIES](/en/docs/specs/ecies/)에서 지정한 것과 동일한 페이로드 형식을 사용할 것임.
 IK에서 지정한 제로 고정 키(바인딩 또는 세션 없음) 모드는 사용하지 않을 것임.
 
 탐색에 대한 응답은 탐색에서 요청한 경우 라쳇 태그로 암호화됨.
-이는 [Prop154](/en/proposals/154-ecies-lookups/)에 문서화되어 있으며, 현재는 [I2NP](/en/docs/spec/i2np/)에 지정되어 있음.
+이는 [Prop154](/en/proposals/154-ecies-lookups/)에 문서화되어 있으며, 현재는 [I2NP](/en/docs/specs/i2np/)에 지정되어 있음.
 
 이 설계에서는 라우터가 단일 ECIES 세션 키 관리자를 가지도록 함.
-목적지를 위한 [ECIES](/en/docs/spec/ecies/)에 설명된 "이중 키" 세션 키 관리자를 실행할 필요가 없음.
+목적지를 위한 [ECIES](/en/docs/specs/ecies/)에 설명된 "이중 키" 세션 키 관리자를 실행할 필요가 없음.
 라우터는 단일 공개 키만 가짐.
 
 ECIES 라우터는 ElGamal 고정 키가 없음.
@@ -190,9 +190,9 @@ ElGamal 세션 키 관리자의 일부가 필요할 수 있음,
 
 ## 명세
 
-X25519: [ECIES](/en/docs/spec/ecies/) 참조.
+X25519: [ECIES](/en/docs/specs/ecies/) 참조.
 
-라우터 아이덴티티 및 키 인증서: [Common](/en/docs/spec/common-structures/) 참조.
+라우터 아이덴티티 및 키 인증서: [Common](/en/docs/specs/common-structures/) 참조.
 
 터널 빌딩: [Prop152](/en/proposals/152-ecies-tunnels/) 참조.
 
@@ -201,15 +201,15 @@ X25519: [ECIES](/en/docs/spec/ecies/) 참조.
 
 ### 요청 암호화
 
-요청 암호화는 [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) 및 [Prop152](/en/proposals/152-ecies-tunnels/)에 지정된 것과 동일하며,
+요청 암호화는 [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) 및 [Prop152](/en/proposals/152-ecies-tunnels/)에 지정된 것과 동일하며,
 노이즈 "N" 패턴을 사용함.
 
 탐색에 대한 응답은 탐색에서 요청한 경우 라쳇 태그로 암호화됨.
-데이터베이스 탐색 요청 메시지는 [I2NP](/en/docs/spec/i2np/) 및 [Prop154](/en/proposals/154-ecies-lookups/)에 지정된 대로 32바이트 응답 키와 8바이트 응답 태그를 포함함.
+데이터베이스 탐색 요청 메시지는 [I2NP](/en/docs/specs/i2np/) 및 [Prop154](/en/proposals/154-ecies-lookups/)에 지정된 대로 32바이트 응답 키와 8바이트 응답 태그를 포함함.
 응답을 암호화하는 데 키와 태그가 사용됨.
 
 태그 세트는 생성되지 않음.
-ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/) 및 [ECIES](/en/docs/spec/ecies/)에 지정된
+ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/) 및 [ECIES](/en/docs/specs/ecies/)에 지정된
 제로 고정 키 기법은 사용되지 않음.
 일회용 키는 Elligator2로 인코딩되지 않음.
 
@@ -219,7 +219,7 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 #### 초기 ck 및 h를 위한 KDF
 
 이것은 표준 패턴 "N"에 대한 표준 [NOISE](https://noiseprotocol.org/noise.html)임.
-이는 [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) 및 [Prop152](/en/proposals/152-ecies-tunnels/)에 터널 빌드 메시지에 지정된 것과 동일함.
+이는 [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) 및 [Prop152](/en/proposals/152-ecies-tunnels/)에 터널 빌드 메시지에 지정된 것과 동일함.
 
 
   ```text
@@ -253,7 +253,7 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 
 메시지 생성자는 각 메시지에 대해 일시적인 X25519 키 쌍을 생성함.
 일시적인 키는 메시지마다 고유해야 함.
-이는 [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) 및 [Prop152](/en/proposals/152-ecies-tunnels/)에 터널 빌드 메시지에 지정된 것과 동일함.
+이는 [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) 및 [Prop152](/en/proposals/152-ecies-tunnels/)에 터널 빌드 메시지에 지정된 것과 동일함.
 
 
   ```dataspec
@@ -315,7 +315,7 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 
 #### 페이로드
 
-페이로드는 [ECIES](/en/docs/spec/ecies/) 및 [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/)에 정의된 동일 블록 형식임.
+페이로드는 [ECIES](/en/docs/specs/ecies/) 및 [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/)에 정의된 동일 블록 형식임.
 모든 메시지는 재전송 방지를 위해 DateTime 블록을 포함해야 함.
 
 
@@ -323,7 +323,7 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 
 데이터베이스 탐색 메시지에 대한 응답은 데이터베이스 저장 또는 데이터베이스 검색 응답 메시지임.
 이는
-[I2NP](/en/docs/spec/i2np/) 및 [Prop154](/en/proposals/154-ecies-lookups/)에 지정된 대로
+[I2NP](/en/docs/specs/i2np/) 및 [Prop154](/en/proposals/154-ecies-lookups/)에 지정된 대로
 32바이트 응답 키 및 8바이트 응답 태그로
 기존 세션 메시지로 암호화됨.
 

@@ -12,7 +12,7 @@ toc: true
 
 ## Statut
 
-Approuvé lors de la révision du 24-06-2025. La spécification se trouve à [spécification UDP](/en/docs/spec/udp-bittorrent-announces/). Implémenté dans zzzot 0.20.0-beta2. Implémenté dans i2psnark à partir de l'API 0.9.67. Consultez la documentation des autres implémentations pour connaître leur statut.
+Approuvé lors de la révision du 24-06-2025. La spécification se trouve à [spécification UDP](/en/docs/specs/udp-bittorrent-announces/). Implémenté dans zzzot 0.20.0-beta2. Implémenté dans i2psnark à partir de l'API 0.9.67. Consultez la documentation des autres implémentations pour connaître leur statut.
 
 ## Aperçu
 
@@ -46,7 +46,7 @@ Le chiffrement et les signatures post-quantiques tels qu'envisagés dans [/en/pr
 
 ## Motivation
 
-Cette proposition utilise repliable datagram2, repliable datagram3, et raw datagrams, comme définis dans [/en/docs/spec/datagrams/](/en/docs/spec/datagrams/). Datagram2 et Datagram3 sont de nouvelles variantes de repliable datagrams, définies dans la Proposition 163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/). Datagram2 ajoute une résistance contre la rejouabilité et le support de signature hors ligne. Datagram3 est plus petit que l'ancien format de datagram, mais sans authentification.
+Cette proposition utilise repliable datagram2, repliable datagram3, et raw datagrams, comme définis dans [/en/docs/specs/datagrams/](/en/docs/specs/datagrams/). Datagram2 et Datagram3 sont de nouvelles variantes de repliable datagrams, définies dans la Proposition 163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/). Datagram2 ajoute une résistance contre la rejouabilité et le support de signature hors ligne. Datagram3 est plus petit que l'ancien format de datagram, mais sans authentification.
 
 ### BEP 15
 

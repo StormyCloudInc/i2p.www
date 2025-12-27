@@ -84,10 +84,15 @@ def hugo_bin_path() -> Path:
 
 
 @pytest.fixture(scope="session")
-def hugo_build_dir() -> Generator[Path, None, None]:
-    """Create a temporary directory for Hugo build output."""
-    with tempfile.TemporaryDirectory(prefix="hugo-test-") as tmpdir:
-        yield Path(tmpdir)
+def hugo_build_dir(project_root: Path) -> Generator[Path, None, None]:
+    """Use a local directory for Hugo build output to avoid /tmp space issues."""
+    build_dir = project_root / "tests" / "public_test"
+    if build_dir.exists():
+        shutil.rmtree(build_dir)
+    build_dir.mkdir(parents=True)
+    yield build_dir
+    # Optionally clean up, but keeping it helps debugging
+    # shutil.rmtree(build_dir)
 
 
 @pytest.fixture(scope="session")
@@ -102,13 +107,12 @@ def build_hugo_site(
             str(hugo_bin_path),
             "--destination",
             str(hugo_build_dir),
-            "--quiet",
         ]
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
 
         if result.returncode != 0:
             pytest.fail(
-                f"Hugo build failed:\nSTDOUT: {result.stdout}\nSTDERR: {result.stderr}"
+                f"Hugo build failed (code {result.returncode}):\nSTDOUT: {result.stdout}\nSTDERR: {result.stderr}"
             )
 
         yield hugo_build_dir

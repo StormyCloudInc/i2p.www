@@ -12,7 +12,7 @@ toc: true
 
 ## Durum
 
-2025-06-24 tarihinde incelemede onaylandı. Spesifikasyon [UDP spesifikasyonu](/en/docs/spec/udp-bittorrent-announces/) adresindedir. zzzot 0.20.0-beta2'de uygulandı. API 0.9.67 itibariyle i2psnark'ta uygulandı. Durum için diğer uygulamaların belgelerini kontrol edin.
+2025-06-24 tarihinde incelemede onaylandı. Spesifikasyon [UDP spesifikasyonu](/en/docs/specs/udp-bittorrent-announces/) adresindedir. zzzot 0.20.0-beta2'de uygulandı. API 0.9.67 itibariyle i2psnark'ta uygulandı. Durum için diğer uygulamaların belgelerini kontrol edin.
 
 ## Genel Bakış
 
@@ -46,7 +46,7 @@ Ayrıca, datagramlar streaming bağlantısına göre çok daha az bellek içi du
 
 ## Motivasyon
 
-Bu öneri, [/en/docs/spec/datagrams/](/en/docs/spec/datagrams/) bölümünde tanımlandığı şekliyle repliable datagram2, repliable datagram3 ve raw datagramları kullanır. Datagram2 ve Datagram3, Öneri 163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/) içinde tanımlanan repliable datagramların yeni varyantlarıdır. Datagram2, tekrar saldırısına karşı koruma ve çevrimdışı imza desteği ekler. Datagram3, eski datagram formatından daha küçüktür ancak kimlik doğrulaması içermez.
+Bu öneri, [/en/docs/specs/datagrams/](/en/docs/specs/datagrams/) bölümünde tanımlandığı şekliyle repliable datagram2, repliable datagram3 ve raw datagramları kullanır. Datagram2 ve Datagram3, Öneri 163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/) içinde tanımlanan repliable datagramların yeni varyantlarıdır. Datagram2, tekrar saldırısına karşı koruma ve çevrimdışı imza desteği ekler. Datagram3, eski datagram formatından daha küçüktür ancak kimlik doğrulaması içermez.
 
 ### BEP 15
 

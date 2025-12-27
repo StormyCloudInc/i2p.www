@@ -211,7 +211,7 @@ categories: ["meeting"]
 10:52:00  &lt;iRelay&gt; Title: A Gentle Introduction to How I2P Works - I2P (at geti2p.net)
 10:52:10  &lt;str4d&gt; Kinda sorta what they appear to be now, but properly split
 10:53:12  &lt;dg&gt; hottuna: Where can I find the blogposts?
-10:53:22  &lt;dg&gt; hottuna: I can only see one (http://i2p-projekt.i2p/en/blog/post/2015/11/15/Community-Outreach)
+10:53:22  &lt;dg&gt; hottuna: I can only see one (http://i2p-projekt.i2p/en/blog/2015/11/15/Community-Outreach)
 10:53:25  &lt;iRelay&gt; Title: Community Outreach - Blog - I2P (at i2p-projekt.i2p)
 10:54:38  &lt;lazygravy&gt; dg: they don't exist aside from that
 10:54:55  &lt;lazygravy&gt; and that was mostly a POC IMO. Next one should be published on 10Jan2016 on CCC

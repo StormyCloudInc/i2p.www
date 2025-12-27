@@ -27,7 +27,7 @@ toc: true
 
 ## विनिर्देशन
 
-[I2CP विनिर्देशन](/en/docs/spec/i2cp/) के लिए एक नया I2CP विकल्प जोड़ा गया है:
+[I2CP विनिर्देशन](/en/docs/specs/i2cp/) के लिए एक नया I2CP विकल्प जोड़ा गया है:
 
     outbound.matchEndWithTarget
         बूलियन

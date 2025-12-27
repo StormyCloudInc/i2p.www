@@ -69,7 +69,7 @@ seuls ne fournissent pas un enregistrement générique pour tout service.
 
 ## Conception
 
-Les enregistrements de service sont placés dans la section des options dans LS2 [LS2](/en/docs/spec/common-structures/).
+Les enregistrements de service sont placés dans la section des options dans LS2 [LS2](/en/docs/specs/common-structures/).
 La section des options LS2 est actuellement inutilisée.
 Non supporté pour LS1.
 C'est similaire à la proposition de bande passante de tunnel [Prop168](/en/proposals/168-tunnel-bandwidth/),
@@ -173,13 +173,13 @@ Chaque service pris en charge doit avoir son propre enregistrement.
 ### Registre des noms de service
 
 Les identificateurs non standards qui ne sont pas répertoriés dans [REGISTRY](http://www.dns-sd.org/ServiceTypes.html) ou Linux /etc/services
-peuvent être demandés et ajoutés à la spécification des structures communes [LS2](/en/docs/spec/common-structures/).
+peuvent être demandés et ajoutés à la spécification des structures communes [LS2](/en/docs/specs/common-structures/).
 
 Les formats appoptions spécifiques au service peuvent également être ajoutés là-bas.
 
 ### Spécification I2CP
 
-Le protocole [I2CP](/en/docs/spec/i2cp/) doit être étendu pour supporter les recherches de services.
+Le protocole [I2CP](/en/docs/specs/i2cp/) doit être étendu pour supporter les recherches de services.
 Des codes d'erreur supplémentaires MessageStatusMessage et/ou HostReplyMessage liés à la recherche de services
 sont requis.
 Pour rendre la fonction de recherche générale, et pas seulement spécifique aux enregistrements de service,

@@ -14,7 +14,7 @@ toc: true
 Bu öneri belirtildiği şekilde uygulanmamıştır,
 ancak ECIES uzun ve kısa yapı mesajları (öneriler 152 ve 157)
 genişletilebilir seçenekler alanı ile tasarlanmıştır.
-Resmi spesifikasyon için [Tunnel Creation ECIES spesifikasyonuna](/en/docs/spec/tunnel-creation-ecies/) bakınız.
+Resmi spesifikasyon için [Tunnel Creation ECIES spesifikasyonuna](/en/docs/specs/tunnel-creation-ecies/) bakınız.
 
 
 ## Genel Bakış

@@ -23,7 +23,7 @@ Sujet à des révisions mineures.
 
 ECIES réduit la surcharge des messages de session existants (ES) d'environ 90 octets.
 Par conséquent, nous pouvons augmenter le MTU d'environ 90 octets pour les connexions ECIES.
-Voir the [ECIES specification](/en/docs/spec/ecies/#overhead), [Streaming specification](/en/docs/spec/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/en/docs/api/streaming/).
+Voir the [ECIES specification](/en/docs/specs/ecies/#overhead), [Streaming specification](/en/docs/specs/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/en/docs/api/streaming/).
 
 Sans augmenter le MTU, dans de nombreux cas, les économies de surcharge ne sont pas vraiment 'sauvées',
 car les messages seront remplis pour utiliser deux messages de tunnel complets de toute façon.
@@ -80,7 +80,7 @@ réellement envoyée.
 
 ### Analyse
 
-Comme décrit dans the [ECIES specification](/en/docs/spec/ecies/#overhead), la surcharge ElGamal pour les messages de session existants est
+Comme décrit dans the [ECIES specification](/en/docs/specs/ecies/#overhead), la surcharge ElGamal pour les messages de session existants est
 de 151 octets, et la surcharge Ratchet est de 69 octets.
 Par conséquent, nous pouvons augmenter le MTU pour les connexions ratchet de (151 - 69) = 82 octets,
 passant de 1730 à 1812.
@@ -90,7 +90,7 @@ passant de 1730 à 1812.
 ## Spécification
 
 Ajoutez les modifications et clarifications suivantes à la section Sélection et Négociation du MTU de the [Streaming API documentation](/en/docs/api/streaming/).
-Aucun changement à the [Streaming specification](/en/docs/spec/streaming/).
+Aucun changement à the [Streaming specification](/en/docs/specs/streaming/).
 
 
 La valeur par défaut de l'option i2p.streaming.maxMessageSize reste 1730 pour toutes les connexions, peu importe les clés utilisées.
@@ -163,7 +163,7 @@ dans le SYN ACK de Bob à Alice, et dans tous les paquets suivants envoyés dans
 ## Justification
 
 Voir the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220) pour savoir pourquoi la valeur actuelle est 1730.
-Voir the [ECIES specification](/en/docs/spec/ecies/#overhead) pour savoir pourquoi la surcharge ECIES est de 82 octets de moins que ElGamal.
+Voir the [ECIES specification](/en/docs/specs/ecies/#overhead) pour savoir pourquoi la surcharge ECIES est de 82 octets de moins que ElGamal.
 
 
 

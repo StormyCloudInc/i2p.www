@@ -13,7 +13,7 @@ toc: true
 ## NOT
 
 Bu öneri onaylandı ve şu anda API 0.9.65 itibarıyla
-[Tunnel Creation ECIES specification](/en/docs/spec/tunnel-creation-ecies/) yer alıyor.
+[Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/) yer alıyor.
 Henüz bilinen bir uygulama yok; uygulama tarihleri / API sürümleri TBD.
 
 
@@ -38,7 +38,7 @@ Bu öneri, tünel oluşturma isteği ve yanıt mesajlarına bant genişliği par
 
 ## Tasarım
 
-Bant genişliği parametrelerini, tünel oluşturma seçenekleri haritalama alanındaki ECIES tünel oluşturma mesajlarındaki kayıtlara ekleyin (bkz. [Tunnel Creation ECIES specification](/en/docs/spec/tunnel-creation-ecies/)).
+Bant genişliği parametrelerini, tünel oluşturma seçenekleri haritalama alanındaki ECIES tünel oluşturma mesajlarındaki kayıtlara ekleyin (bkz. [Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/)).
 Çünkü seçenekler alanı için kullanılabilir alan sınırlıdır, kısa parametre isimleri kullanın.
 Tünel oluşturma mesajları sabit boyutlu olduğundan, bu mesajların boyutunu artırmaz.
 
@@ -46,7 +46,7 @@ Tünel oluşturma mesajları sabit boyutlu olduğundan, bu mesajların boyutunu 
 
 ## Spesifikasyon
 
-[ECIES tünel oluşturma mesaj spesifikasyonunu](/en/docs/spec/tunnel-creation-ecies/) güncelleyin
+[ECIES tünel oluşturma mesaj spesifikasyonunu](/en/docs/specs/tunnel-creation-ecies/) güncelleyin
 aşağıdaki gibi:
 
 Hem uzun hem de kısa ECIES oluşturma kayıtları için:

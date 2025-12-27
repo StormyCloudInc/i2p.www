@@ -42,7 +42,7 @@ option (with the final hop possibly being outside the sender's fast tier).
 
 ## Specification
 
-A new I2CP option is added to the [I2CP specification](/en/docs/spec/i2cp/):
+A new I2CP option is added to the [I2CP specification](/en/docs/specs/i2cp/):
 
     outbound.matchEndWithTarget
         Boolean

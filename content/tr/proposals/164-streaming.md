@@ -39,7 +39,7 @@ Alice ve Charlie API 0.9.58 veya daha yeni sürümde ise, Bob tarafından yapıl
 
 ## Spesifikasyon
 
-[Streaming spesifikasyonunu](/en/docs/spec/streaming/) güncelleyin ve aşağıdaki bölümü ekleyin:
+[Streaming spesifikasyonunu](/en/docs/specs/streaming/) güncelleyin ve aşağıdaki bölümü ekleyin:
 
 ### Yeniden Çalma Önleme
 

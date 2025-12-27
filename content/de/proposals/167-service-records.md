@@ -71,7 +71,7 @@ bieten keinen generischen Eintrag für jeden Dienst.
 
 ## Design
 
-Service-Einträge werden im Optionsabschnitt in LS2 [LS2](/en/docs/spec/common-structures/) platziert.
+Service-Einträge werden im Optionsabschnitt in LS2 [LS2](/en/docs/specs/common-structures/) platziert.
 Der LS2-Optionsabschnitt wird derzeit nicht verwendet.
 Nicht unterstützt für LS1.
 Dies ähnelt dem Tunnelbandbreiten-Vorschlag [Prop168](/en/proposals/168-tunnel-bandwidth/),
@@ -180,14 +180,14 @@ Jeder unterstützte Dienst muss seinen eigenen Eintrag haben.
 ### Dienstnamen-Registry
 
 Nicht standardisierte Kennungen, die nicht in [REGISTRY](http://www.dns-sd.org/ServiceTypes.html) oder Linux /etc/services aufgelistet sind,
-können angefordert und zur gemeinsamen Strukturspezifikation [LS2](/en/docs/spec/common-structures/) hinzugefügt werden.
+können angefordert und zur gemeinsamen Strukturspezifikation [LS2](/en/docs/specs/common-structures/) hinzugefügt werden.
 
 Anwendungsspezifische Appoptions-Formate können dort ebenfalls hinzugefügt werden.
 
 
 ### I2CP-Spezifikation
 
-Das [I2CP](/en/docs/spec/i2cp/) Protokoll muss erweitert werden, um Dienstabfragen zu unterstützen.
+Das [I2CP](/en/docs/specs/i2cp/) Protokoll muss erweitert werden, um Dienstabfragen zu unterstützen.
 Zusätzliche MessageStatusMessage und/oder HostReplyMessage-Fehlercodes im Zusammenhang mit Dienstabfragen sind erforderlich.
 Um die Nachschlagefunktion allgemein zu gestalten, nicht nur dienstaufzeichnungsspezifisch,
 ist das Design so ausgelegt, dass der Abruf aller LS2-Optionen unterstützt wird.

@@ -12,7 +12,7 @@ toc: true
 
 ## Trạng thái
 
-Đã được phê duyệt tại đánh giá 2025-06-24. Đặc tả tại [UDP specification](/en/docs/spec/udp-bittorrent-announces/). Đã triển khai trong zzzot 0.20.0-beta2. Đã triển khai trong i2psnark từ API 0.9.67. Kiểm tra tài liệu của các triển khai khác để biết trạng thái.
+Đã được phê duyệt tại đánh giá 2025-06-24. Đặc tả tại [UDP specification](/en/docs/specs/udp-bittorrent-announces/). Đã triển khai trong zzzot 0.20.0-beta2. Đã triển khai trong i2psnark từ API 0.9.67. Kiểm tra tài liệu của các triển khai khác để biết trạng thái.
 
 ## Tổng quan
 
@@ -46,7 +46,7 @@ Mã hóa và chữ ký Post-Quantum như được hình dung trong [/en/proposal
 
 ## Động lực
 
-Đề xuất này sử dụng repliable datagram2, repliable datagram3, và raw datagrams, như được định nghĩa trong [/en/docs/spec/datagrams/](/en/docs/spec/datagrams/). Datagram2 và Datagram3 là các biến thể mới của repliable datagrams, được định nghĩa trong Đề xuất 163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/). Datagram2 bổ sung khả năng chống replay và hỗ trợ chữ ký offline. Datagram3 nhỏ hơn so với định dạng datagram cũ, nhưng không có xác thực.
+Đề xuất này sử dụng repliable datagram2, repliable datagram3, và raw datagrams, như được định nghĩa trong [/en/docs/specs/datagrams/](/en/docs/specs/datagrams/). Datagram2 và Datagram3 là các biến thể mới của repliable datagrams, được định nghĩa trong Đề xuất 163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/). Datagram2 bổ sung khả năng chống replay và hỗ trợ chữ ký offline. Datagram3 nhỏ hơn so với định dạng datagram cũ, nhưng không có xác thực.
 
 ### BEP 15
 

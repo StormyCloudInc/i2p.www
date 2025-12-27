@@ -32,7 +32,7 @@ Tento režim by fakticky znamenal, že příjemce vybírá odesílatelův OBEP. 
 
 ## Specifikace
 
-Pro [specifikaci I2CP](/en/docs/spec/i2cp/) je přidána nová možnost I2CP:
+Pro [specifikaci I2CP](/en/docs/specs/i2cp/) je přidána nová možnost I2CP:
 
     outbound.matchEndWithTarget
         Boolean

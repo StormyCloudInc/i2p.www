@@ -12,7 +12,7 @@ toc: true
 
 ## Stav
 
-Schváleno při kontrole 2025-06-24. Specifikace je na [UDP specification](/en/docs/spec/udp-bittorrent-announces/). Implementováno v zzzot 0.20.0-beta2. Implementováno v i2psnark od API 0.9.67. Zkontrolujte dokumentaci dalších implementací pro stav.
+Schváleno při kontrole 2025-06-24. Specifikace je na [UDP specification](/en/docs/specs/udp-bittorrent-announces/). Implementováno v zzzot 0.20.0-beta2. Implementováno v i2psnark od API 0.9.67. Zkontrolujte dokumentaci dalších implementací pro stav.
 
 ## Přehled
 
@@ -46,7 +46,7 @@ Post-kvantové šifrování a podpisy podle návrhu v [/en/proposals/169-pq-cryp
 
 ## Motivace
 
-Tento návrh používá repliable datagram2, repliable datagram3 a raw datagramy, jak jsou definovány v [/en/docs/spec/datagrams/](/en/docs/spec/datagrams/). Datagram2 a Datagram3 jsou nové varianty repliable datagramů, definované v Návrhu 163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/). Datagram2 přidává ochranu proti replay útokům a podporu offline podpisů. Datagram3 je menší než starý formát datagramu, ale bez autentifikace.
+Tento návrh používá repliable datagram2, repliable datagram3 a raw datagramy, jak jsou definovány v [/en/docs/specs/datagrams/](/en/docs/specs/datagrams/). Datagram2 a Datagram3 jsou nové varianty repliable datagramů, definované v Návrhu 163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/). Datagram2 přidává ochranu proti replay útokům a podporu offline podpisů. Datagram3 je menší než starý formát datagramu, ale bez autentifikace.
 
 ### BEP 15
 

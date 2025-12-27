@@ -43,7 +43,7 @@ Giải pháp là thêm hai "cap" mới hoặc khả năng vào Thông tin Router
 
 ### Người giới thiệu IPv6
 
-Các đặc tả [SSU](/en/docs/transport/ssu/) và [SSU-SPEC](/en/docs/spec/ssu/) của chúng tôi chứa các lỗi và sự không nhất quán về việc liệu
+Các đặc tả [SSU](/en/docs/transport/ssu/) và [SSU-SPEC](/en/docs/specs/ssu/) của chúng tôi chứa các lỗi và sự không nhất quán về việc liệu
 những người giới thiệu IPv6 có được hỗ trợ cho công việc giới thiệu IPv4 hay không.
 Trong mọi trường hợp, điều này chưa bao giờ được triển khai trong Java I2P hay i2pd.
 Điều này cần được sửa chữa.
@@ -51,7 +51,7 @@ Trong mọi trường hợp, điều này chưa bao giờ được triển khai 
 
 ### Giới thiệu IPv6
 
-Các đặc tả [SSU](/en/docs/transport/ssu/) và [SSU-SPEC](/en/docs/spec/ssu/) của chúng tôi làm rõ rằng
+Các đặc tả [SSU](/en/docs/transport/ssu/) và [SSU-SPEC](/en/docs/specs/ssu/) của chúng tôi làm rõ rằng
 giới thiệu IPv6 không được hỗ trợ.
 Điều này được đặt ra dưới giả định rằng IPv6 không bao giờ bị tường lửa bảo vệ.
 Đây là điều không đúng, và chúng ta cần cải thiện hỗ trợ cho các router IPv6 bị tường lửa bảo vệ.
@@ -212,7 +212,7 @@ Do đó, các router chỉ nên tin tưởng khả năng 'C' trên một địa 
 
 
 
-[SSU-SPEC](/en/docs/spec/ssu/) hiện tại nói (Relay Request):
+[SSU-SPEC](/en/docs/specs/ssu/) hiện tại nói (Relay Request):
 
 Địa chỉ IP chỉ được bao gồm nếu nó khác với địa chỉ nguồn của gói tin và cổng.
 Trong triển khai hiện tại, độ dài IP luôn là 0 và cổng luôn là 0,
@@ -244,7 +244,7 @@ Chúng tôi cũng mô tả điều này như "phần 2" của đề xuất.
 
 Giao tiếp Bob-Charlie và Alice-Charlie chỉ qua IPv4.
 
-[SSU-SPEC](/en/docs/spec/ssu/) hiện tại nói (Relay Request):
+[SSU-SPEC](/en/docs/specs/ssu/) hiện tại nói (Relay Request):
 
 Không có kế hoạch triển khai relay cho IPv6.
 
@@ -252,7 +252,7 @@ Thay đổi để nói:
 
 Relay cho IPv6 được hỗ trợ kể từ phiên bản 0.9.xx
 
-[SSU-SPEC](/en/docs/spec/ssu/) hiện tại nói (Relay Response):
+[SSU-SPEC](/en/docs/specs/ssu/) hiện tại nói (Relay Response):
 
 Địa chỉ IP của Charlie phải là IPv4, vì đó là địa chỉ mà Alice sẽ gửi Yêu cầu Phiên tới sau khi thực hiện Hole Punch.
 Không có kế hoạch triển khai relay cho IPv6.
@@ -263,7 +263,7 @@ Thay đổi để nói:
 Đó là địa chỉ mà Alice sẽ gửi Yêu cầu Phiên tới sau khi thực hiện Hole Punch.
 Relay cho IPv6 được hỗ trợ kể từ phiên bản 0.9.xx
 
-[SSU-SPEC](/en/docs/spec/ssu/) hiện tại nói (Relay Intro):
+[SSU-SPEC](/en/docs/specs/ssu/) hiện tại nói (Relay Intro):
 
 Địa chỉ IP của Alice luôn là 4 byte trong triển khai hiện tại, bởi vì Alice đang cố gắng kết nối tới Charlie qua IPv4.
 Thông điệp này phải được gửi qua một kết nối IPv4 đã được thiết lập,

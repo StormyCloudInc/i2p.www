@@ -15,9 +15,9 @@ Síťové nasazení a testování probíhá.
 Podléhá revizi.
 Stav:
 
-- ECIES Routery implementovány od verze 0.9.48, viz [Common](/en/docs/spec/common-structures/).
-- Vytváření tunelů implementováno od verze 0.9.48, viz [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/).
-- Šifrované zprávy pro ECIES routery implementovány od verze 0.9.49, viz [ECIES-ROUTERS](/en/docs/spec/ecies-routers/).
+- ECIES Routery implementovány od verze 0.9.48, viz [Common](/en/docs/specs/common-structures/).
+- Vytváření tunelů implementováno od verze 0.9.48, viz [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/).
+- Šifrované zprávy pro ECIES routery implementovány od verze 0.9.49, viz [ECIES-ROUTERS](/en/docs/specs/ecies-routers/).
 - Nové zprávy pro stavbu tunelů implementovány od verze 0.9.51.
 
 
@@ -33,7 +33,7 @@ Toto je standard od počátků I2P.
 ElGamal je pomalý a je potřeba jej nahradit ve všech místech, kde je používán.
 
 Návrhy na LS2 [Prop123](/en/proposals/123-new-netdb-entries/) a ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/)
-(nyní specifikován v [ECIES](/en/docs/spec/ecies/)) definovaly náhradu ElGamal ECIES
+(nyní specifikován v [ECIES](/en/docs/specs/ecies/)) definovaly náhradu ElGamal ECIES
 pro Destinace.
 
 Tento návrh definuje náhradu ElGamal ECIES-X25519 pro routery.
@@ -73,14 +73,14 @@ Pro Destinace je klíč v leasesetu, nikoliv v Destination, a
 podporujeme více typů šifrování ve stejném leasesetu.
 
 Nic z toho není požadováno pro routery. Šifrovací klíč routeru
-je v jeho Identitě routeru. Viz specifikace běžných struktur [Common](/en/docs/spec/common-structures/).
+je v jeho Identitě routeru. Viz specifikace běžných struktur [Common](/en/docs/specs/common-structures/).
 
 Pro routery nahradíme 256bitový ElGamal klíč v Identitě routeru
 32bitovým X25519 klíčem a 224 bajtů wyplněné.
 Toto bude indikováno typem šifrování v certifikátu klíče.
 Typ šifrování (stejný jako použitý v LS2) je 4.
 To indikuje malý-endian 32-bajtový X25519 veřejný klíč.
-Toto je standardní konstrukce definovaná ve specifikaci běžných struktur [Common](/en/docs/spec/common-structures/).
+Toto je standardní konstrukce definovaná ve specifikaci běžných struktur [Common](/en/docs/specs/common-structures/).
 
 Toto je identické s metodou navrhnutou pro ECIES-P256
 pro typy šifrování 1-3 v návrhu 145 [Prop145](/en/proposals/145-ecies/).
@@ -91,7 +91,7 @@ na několika místech ve zdrojovém kódu. Většina této práce byla dokončen
 
 ### Zpráva pro stavbu tunelu
 
-Pro použití ECIES namísto ElGamal je potřeba několik změn ve specifikaci vytváření tunelu [Tunnel-Creation](/en/docs/spec/tunnel-creation/).
+Pro použití ECIES namísto ElGamal je potřeba několik změn ve specifikaci vytváření tunelu [Tunnel-Creation](/en/docs/specs/tunnel-creation/).
 Kromě toho provedeme zlepšení v zabezpečení zpráv pro stavbu tunelů.
 
 Ve fázi 1 změníme formát a šifrování
@@ -121,7 +121,7 @@ odesílatel posílal pouze efemérní klíče, nikoliv statický klíč.
 Zpráva nebyla svázána s identitou odesílatele.
 
 Poté jsme navrhli ECIES Ratchet SKM v
-ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/), nyní specifikovaném v [ECIES](/en/docs/spec/ecies/).
+ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/), nyní specifikovaném v [ECIES](/en/docs/specs/ecies/).
 Tento návrh byl specifikován pomocí Noise "IK" vzoru, který zahrnoval statický klíč odesílatele v první zprávě. Tento protokol se používá pro ECIES (typ 4) Destinace.
 IK vzor neumožňuje anonymní odesílatele.
 
@@ -164,26 +164,26 @@ Necíle použití routeru:
 - Není potřeba neanonymních zpráv
 - Není potřeba posílat zprávy přes příchozí průzkumné tunely (router nezveřejňuje průzkumné leasesety)
 - Není potřeba pro trvalý provoz zpráv používající značky
-- Není potřeba provozovat "dvojité klíče" Správce klíčů relace, jak je popsáno v [ECIES](/en/docs/spec/ecies/) pro Destinace. Routery mají pouze jeden veřejný klíč.
+- Není potřeba provozovat "dvojité klíče" Správce klíčů relace, jak je popsáno v [ECIES](/en/docs/specs/ecies/) pro Destinace. Routery mají pouze jeden veřejný klíč.
 
 
 #### Závěry návrhu
 
-ECIES Router SKM nepotřebuje plný Ratchet SKM, jak je specifikováno v [ECIES](/en/docs/spec/ecies/) pro Destinace.
+ECIES Router SKM nepotřebuje plný Ratchet SKM, jak je specifikováno v [ECIES](/en/docs/specs/ecies/) pro Destinace.
 Není požadavek na neanonymní zprávy pomocí IK vzoru.
 Model hrozeb nevyžaduje Elligator2 kódované efemérní klíče.
 
 Proto bude router SKM používat Noise "N" vzor, stejný jako specifikovaný
 v [Prop152](/en/proposals/152-ecies-tunnels/) pro stavbu tunelů.
-Bude používat stejný formát dat jako specifikovaný v [ECIES](/en/docs/spec/ecies/) pro Destinace.
-Nulový statický klíč (bez vazby nebo relace) mód IK specifikovaný v [ECIES](/en/docs/spec/ecies/) nebude použit.
+Bude používat stejný formát dat jako specifikovaný v [ECIES](/en/docs/specs/ecies/) pro Destinace.
+Nulový statický klíč (bez vazby nebo relace) mód IK specifikovaný v [ECIES](/en/docs/specs/ecies/) nebude použit.
 
 Odpovědi na dotazy budou šifrovány ratchet tagem, pokud budou vyžádány v dotazu.
-To je dokumentováno v [Prop154](/en/proposals/154-ecies-lookups/), nyní specifikováno v [I2NP](/en/docs/spec/i2np/).
+To je dokumentováno v [Prop154](/en/proposals/154-ecies-lookups/), nyní specifikováno v [I2NP](/en/docs/specs/i2np/).
 
 Návrh umožňuje routeru mít jediného ECIES Správce klíčů relace.
 Není potřeba provozovat "dvojité klíče" Správce klíčů relace, jak
-je popsáno v [ECIES](/en/docs/spec/ecies/) pro Destinace.
+je popsáno v [ECIES](/en/docs/specs/ecies/) pro Destinace.
 Routery mají pouze jeden veřejný klíč.
 
 ECIES router nemá statický klíč ElGamal.
@@ -206,9 +206,9 @@ K dnešnímu datu je přibližně 85% sítě ve verzi 0.9.46 nebo vyšší.
 
 ## Specifikace
 
-X25519: Viz [ECIES](/en/docs/spec/ecies/).
+X25519: Viz [ECIES](/en/docs/specs/ecies/).
 
-Identita routeru a certifikát klíče: Viz [Common](/en/docs/spec/common-structures/).
+Identita routeru a certifikát klíče: Viz [Common](/en/docs/specs/common-structures/).
 
 Výstavba tunelů: Viz [Prop152](/en/proposals/152-ecies-tunnels/).
 
@@ -217,16 +217,16 @@ Nová zpráva o stavbě tunelů: Viz [Prop157](/en/proposals/157-new-tbm/).
 
 ### Šifrování žádostí
 
-Šifrování žádostí je stejné jako specifikováno v [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) a [Prop152](/en/proposals/152-ecies-tunnels/),
+Šifrování žádostí je stejné jako specifikováno v [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) a [Prop152](/en/proposals/152-ecies-tunnels/),
 používající Noise "N" vzor.
 
 Odpovědi na dotazy budou šifrovány ratchet tagem, pokud budou vyžádány v dotazu.
 Zprávy žádosti o databázový dotaz obsahující 32-bajtový odpovědní klíč a 8-bajtový odpovědní tag
-jak je specifikováno v [I2NP](/en/docs/spec/i2np/) a [Prop154](/en/proposals/154-ecies-lookups/). Klíč a tag jsou používány k šifrování odpovědi.
+jak je specifikováno v [I2NP](/en/docs/specs/i2np/) a [Prop154](/en/proposals/154-ecies-lookups/). Klíč a tag jsou používány k šifrování odpovědi.
 
 Tag sety nejsou vytvářeny.
 Nulový statický klíčový schéma specifikovaný v
-ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/) a [ECIES](/en/docs/spec/ecies/) nebude použit.
+ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/) a [ECIES](/en/docs/specs/ecies/) nebude použit.
 Efemérní klíče nebudou Elligator2-kódovány.
 
 Obecně se bude jednat o Nové zprávy relace a budou posílány s nulovým statickým klíčem
@@ -236,7 +236,7 @@ Obecně se bude jednat o Nové zprávy relace a budou posílány s nulovým stat
 #### KDF pro počáteční ck a h
 
 Toto je standard [NOISE](https://noiseprotocol.org/noise.html) pro vzor "N" s běžně používaným názvem protokolu.
-Toto je stejné jako specifikováno v [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) a [Prop152](/en/proposals/152-ecies-tunnels/) pro zprávy o stavbě tunelů.
+Toto je stejné jako specifikováno v [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) a [Prop152](/en/proposals/152-ecies-tunnels/) pro zprávy o stavbě tunelů.
 
 
   ```text
@@ -270,7 +270,7 @@ Toto je "e" vzor zprávy:
 
 Tvořitelé zprávy generují efemérní X25519 klíčový pár pro každou zprávu.
 Efemérní klíče musí být unikátní pro každou zprávu.
-Toto je stejné jako specifikováno v [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) a [Prop152](/en/proposals/152-ecies-tunnels/) pro zprávy o stavbě tunelů.
+Toto je stejné jako specifikováno v [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) a [Prop152](/en/proposals/152-ecies-tunnels/) pro zprávy o stavbě tunelů.
 
 
   ```dataspec
@@ -332,7 +332,7 @@ Toto je stejné jako specifikováno v [Tunnel-Creation-ECIES](/en/docs/spec/tunn
 
 #### Obsah
 
-Obsah má stejný blokový formát jako definován v [ECIES](/en/docs/spec/ecies/) a [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/).
+Obsah má stejný blokový formát jako definován v [ECIES](/en/docs/specs/ecies/) a [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/).
 Všechny zprávy musí obsahovat DateTime blok pro prevenci přehrání.
 
 
@@ -341,7 +341,7 @@ Všechny zprávy musí obsahovat DateTime blok pro prevenci přehrání.
 Odpovědi na zprávy o databázových dotazech jsou Databázové úložiště nebo Databázové vyhledávací odpovědi.
 Jsou šifrovány jako Zprávy o existující relaci se
 32-bajtovým odpovědním klíčem a 8-bajtovým odpovědním tagem
-jak je specifikováno v [I2NP](/en/docs/spec/i2np/) a [Prop154](/en/proposals/154-ecies-lookups/).
+jak je specifikováno v [I2NP](/en/docs/specs/i2np/) a [Prop154](/en/proposals/154-ecies-lookups/).
 
 
 Neexistují žádné explicitní odpovědi na zprávy o Databázovém úložišti. Odesílatel může spojit svou

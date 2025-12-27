@@ -32,7 +32,7 @@ Ce mode signifierait effectivement que le destinataire sélectionne l'OBEP de l'
 
 ## Spécification
 
-Une nouvelle option I2CP est ajoutée à la [spécification I2CP](/en/docs/spec/i2cp/) :
+Une nouvelle option I2CP est ajoutée à la [spécification I2CP](/en/docs/specs/i2cp/) :
 
     outbound.matchEndWithTarget
         Booléen

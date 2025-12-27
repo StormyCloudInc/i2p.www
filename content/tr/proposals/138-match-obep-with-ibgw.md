@@ -31,7 +31,7 @@ Bu mod, alıcının göndericinin OBEP'sini seçtiği anlamına gelir. Mevcut gi
 
 ## Şartname
 
-[I2CP spesifikasyonu](/en/docs/spec/i2cp/)'na yeni bir I2CP seçeneği eklendi:
+[I2CP spesifikasyonu](/en/docs/specs/i2cp/)'na yeni bir I2CP seçeneği eklendi:
 
     outbound.matchEndWithTarget
         Boolean

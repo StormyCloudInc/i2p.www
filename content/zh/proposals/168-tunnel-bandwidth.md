@@ -13,7 +13,7 @@ toc: true
 ## 注意
 
 本提案已被批准并已纳入 API 0.9.65 版本的
-[Tunnel Creation ECIES specification](/en/docs/spec/tunnel-creation-ecies/) 规范中。
+[Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/) 规范中。
 目前尚无已知的实现；实现日期/API 版本待定。
 
 
@@ -38,7 +38,7 @@ toc: true
 
 ## 设计
 
-在隧道构建选项映射字段中的 ECIES 隧道构建消息记录中添加带宽参数 (参见 [Tunnel Creation ECIES specification](/en/docs/spec/tunnel-creation-ecies/))。
+在隧道构建选项映射字段中的 ECIES 隧道构建消息记录中添加带宽参数 (参见 [Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/))。
 因为选项字段可用空间有限，请使用缩短的参数名称。
 隧道构建消息为固定大小，所以这不会增加消息的大小。
 
@@ -46,7 +46,7 @@ toc: true
 
 ## 规范
 
-如以下更新 [ECIES 隧道构建消息规范](/en/docs/spec/tunnel-creation-ecies/)：
+如以下更新 [ECIES 隧道构建消息规范](/en/docs/specs/tunnel-creation-ecies/)：
 
 对于长和短的 ECIES 构建记录：
 

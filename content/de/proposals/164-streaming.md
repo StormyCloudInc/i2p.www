@@ -47,7 +47,7 @@ Wenn Alice und Charlie API 0.9.58 oder neuer sind, wird jeder Wiedergabeversuch 
 
 ## Spezifikation
 
-Aktualisieren Sie die [Streaming-Spezifikation](/en/docs/spec/streaming/) um den folgenden Abschnitt hinzuzufügen:
+Aktualisieren Sie die [Streaming-Spezifikation](/en/docs/specs/streaming/) um den folgenden Abschnitt hinzuzufügen:
 
 ### Wiedergabeverhinderung
 

@@ -72,7 +72,7 @@ neposkytují obecný záznam pro jakoukoli službu.
 
 ## Návrh
 
-Záznamy služeb jsou umístěny v sekci možností v LS2 [LS2](/en/docs/spec/common-structures/).
+Záznamy služeb jsou umístěny v sekci možností v LS2 [LS2](/en/docs/specs/common-structures/).
 Sekce možností LS2 je momentálně nevyužitá.
 Nepodporováno pro LS1.
 To je podobné návrhu šířky pásma tunelu [Prop168](/en/proposals/168-tunnel-bandwidth/),
@@ -180,14 +180,14 @@ Každá podporovaná služba musí mít svůj vlastní záznam.
 ### Registr názvů služeb
 
 Nestandardní identifikátory, které nejsou uvedeny v [REGISTRY](http://www.dns-sd.org/ServiceTypes.html) nebo Linux /etc/services
-mohou být požadovány a přidány do specifikace obecných struktur [LS2](/en/docs/spec/common-structures/).
+mohou být požadovány a přidány do specifikace obecných struktur [LS2](/en/docs/specs/common-structures/).
 
 Formáty appoptions specifické pro služby mohou být také tam přidány.
 
 
 ### Specifikace I2CP
 
-Protokol [I2CP](/en/docs/spec/i2cp/) musí být rozšířen, aby podporoval vyhledávání služeb.
+Protokol [I2CP](/en/docs/specs/i2cp/) musí být rozšířen, aby podporoval vyhledávání služeb.
 Další MessageStatusMessage a/nebo HostReplyMessage chybové kódy související s vyhledáváním služeb
 jsou vyžadovány.
 Aby bylo vyhledávací zařízení obecné, nejen specifické pro záznamy služby,

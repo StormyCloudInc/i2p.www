@@ -13,7 +13,7 @@ toc: true
 ## Status
 
 Approved at review 2025-06-24.
-Specification is at [UDP specification](/en/docs/spec/udp-bittorrent-announces/).
+Specification is at [UDP specification](/en/docs/specs/udp-bittorrent-announces/).
 Implementated in zzzot 0.20.0-beta2.
 Implementated in i2psnark as of API 0.9.67.
 Check documentation of other implementations for status.
@@ -80,7 +80,7 @@ overhead where possible before PQ crypto is adopted in I2P.
 ## Design
 
 This proposal uses repliable datagram2, repliable datagram3, and raw datagrams,
-as defined in [/en/docs/spec/datagrams/](/en/docs/spec/datagrams/).
+as defined in [/en/docs/specs/datagrams/](/en/docs/specs/datagrams/).
 Datagram2 and Datagram3 are new variants of repliable datagrams,
 defined in Proposal 163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/).
 Datagram2 adds replay resistance and offline signature support.

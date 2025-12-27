@@ -15,9 +15,9 @@ Ağ dağıtımı ve test yapılmaktadır.
 Revizyona tabidir.
 Durum:
 
-- ECIES Yönlendiricileri 0.9.48 itibarıyla uygulanmıştır, bkz. [Ortak](/en/docs/spec/common-structures/).
-- Tünel oluşturma 0.9.48 itibarıyla uygulanmıştır, bkz. [Tünel-Oluşumu-ECIES](/en/docs/spec/tunnel-creation-ecies/).
-- ECIES yönlendiricilerine şifrelenmiş mesajlar 0.9.49 itibarıyla uygulanmıştır, bkz. [ECIES-YÖNLENDİRİCİLER](/en/docs/spec/ecies-routers/).
+- ECIES Yönlendiricileri 0.9.48 itibarıyla uygulanmıştır, bkz. [Ortak](/en/docs/specs/common-structures/).
+- Tünel oluşturma 0.9.48 itibarıyla uygulanmıştır, bkz. [Tünel-Oluşumu-ECIES](/en/docs/specs/tunnel-creation-ecies/).
+- ECIES yönlendiricilerine şifrelenmiş mesajlar 0.9.49 itibarıyla uygulanmıştır, bkz. [ECIES-YÖNLENDİRİCİLER](/en/docs/specs/ecies-routers/).
 - Yeni tünel oluşturma mesajları 0.9.51 itibarıyla uygulanmıştır.
 
 
@@ -30,7 +30,7 @@ Yönlendirici Kimlikleri şu anda bir ElGamal şifreleme anahtarı içermektedir
 Bu, I2P'nin başlangıcından beri standart olmuştur.
 ElGamal yavaştır ve kullanıldığı her yerde değiştirilmelidir.
 
-LS2 [Öneri123](/en/proposals/123-new-netdb-entries/) ve ECIES-X25519-AEAD-Ratchet [Öneri144](/en/proposals/144-ecies-x25519-aead-ratchet/) (şimdi [ECIES](/en/docs/spec/ecies/)'de belirtilmiştir) için yapılan öneriler, ElGamal'ın Hedefler için ECIES ile değiştirilmesini tanımlamıştır.
+LS2 [Öneri123](/en/proposals/123-new-netdb-entries/) ve ECIES-X25519-AEAD-Ratchet [Öneri144](/en/proposals/144-ecies-x25519-aead-ratchet/) (şimdi [ECIES](/en/docs/specs/ecies/)'de belirtilmiştir) için yapılan öneriler, ElGamal'ın Hedefler için ECIES ile değiştirilmesini tanımlamıştır.
 
 Bu öneri, ElGamal'ın yönlendiriciler için ECIES-X25519 ile değiştirilmesini tanımlar. Bu öneri, gereken değişikliklerin genel bir özetini sağlar. Detayların çoğu diğer önerilerde ve spesifikasyonlardadır. Bağlantılar için referans bölümüne bakın.
 
@@ -64,16 +64,16 @@ Ek hedef olmayanlar için [Öneri152](/en/proposals/152-ecies-tunnels/)’yı in
 
 Hedefler için, anahtar Hedefte değil leaseset içindedir ve aynı leaseset içinde birden fazla şifreleme türünü destekleriz.
 
-Bu yönlendiriciler için gerekli değildir. Yönlendiricinin şifreleme anahtarı Yönlendirici Kimliğinde yer alır. Ortak yapılar spesifikasyonuna bakın [Ortak](/en/docs/spec/common-structures/).
+Bu yönlendiriciler için gerekli değildir. Yönlendiricinin şifreleme anahtarı Yönlendirici Kimliğinde yer alır. Ortak yapılar spesifikasyonuna bakın [Ortak](/en/docs/specs/common-structures/).
 
-Yönlendiriciler için, Yönlendirici Kimliği'ndeki 256 baytlık ElGamal anahtarını 32 baytlık X25519 anahtarı ve 224 baytlık dolgu ile değiştireceğiz. Bu, anahtar sertifikasındaki kripto türü ile belirtilir. Kripto türü (LS2'de kullanılanla aynı) 4'tür. Bu, küçük uçlu sıralı 32 baytlık X25519 genel anahtarı belirtir. Bu, ortak yapılar spesifikasyonunda tanımlanan standart yapıdır [Ortak](/en/docs/spec/common-structures/).
+Yönlendiriciler için, Yönlendirici Kimliği'ndeki 256 baytlık ElGamal anahtarını 32 baytlık X25519 anahtarı ve 224 baytlık dolgu ile değiştireceğiz. Bu, anahtar sertifikasındaki kripto türü ile belirtilir. Kripto türü (LS2'de kullanılanla aynı) 4'tür. Bu, küçük uçlu sıralı 32 baytlık X25519 genel anahtarı belirtir. Bu, ortak yapılar spesifikasyonunda tanımlanan standart yapıdır [Ortak](/en/docs/specs/common-structures/).
 
 Bu, öneri 145'teki (Öneri145) kripto türleri 1-3 için önerilen ECIES-P256 yöntemine özdeş [Öneri145](/en/proposals/145-ecies/). Bu öneri hiçbir zaman kabul edilmemesine rağmen, Java uygulama geliştiricileri kod tabanının çeşitli yerlerine kontroller ekleyerek Yönlendirici Kimliği anahtar sertifikalarındaki kripto türleri için hazırlanmışlardı. Bu işlerin çoğu 2019 ortasında yapıldı.
 
 
 ### Tünel Oluşturma Mesajı
 
-ECIES yerine ElGamal kullanmak için tünel oluşturma spesifikasyonunda [Tünel-Oluşumu](/en/docs/spec/tunnel-creation/) çeşitli değişiklikler gereklidir. Ayrıca, tünel oluşturma mesajlarının güvenliğini artırmak için geliştirmeler yapacağız.
+ECIES yerine ElGamal kullanmak için tünel oluşturma spesifikasyonunda [Tünel-Oluşumu](/en/docs/specs/tunnel-creation/) çeşitli değişiklikler gereklidir. Ayrıca, tünel oluşturma mesajlarının güvenliğini artırmak için geliştirmeler yapacağız.
 
 Birinci aşamada, ECIES geçişleri için Oluşturma İstek Kaydı ve Oluşturma Yanıt Kaydı'nın formatını ve şifrelemesini değiştireceğiz. Bu değişiklikler mevcut ElGamal yönlendiricilerle uyumlu olacak. Bu değişiklikler öneri 152'de tanımlanmıştır [Öneri152](/en/proposals/152-ecies-tunnels/).
 
@@ -87,7 +87,7 @@ Birinci aşamada, ECIES geçişleri için Oluşturma İstek Kaydı ve Oluşturma
 
 Orijinal Java I2P tasarımında, yönlendirici ve tüm yerel Hedefler tarafından paylaşılan tek bir ElGamal Oturum Anahtarı Yöneticisi (SKM) vardı. Paylaşılan bir SKM bilgi sızdırabilir ve saldırganlar tarafından korelasyona izin verebilir, bu nedenle tasarım yönlendirici ve her Hedef için ayrı ElGamal SKM'leri desteklemek üzere değiştirildi. ElGamal tasarımı yalnızca anonimsiz göndericileri destekliyordu; gönderici yalnızca geçici anahtarlar gönderiyor, statik bir anahtar değil. Mesaj göndericinin kimliğine bağlanmamıştı.
 
-Daha sonra, ECIES-X25519-AEAD-Ratchet [Öneri144](/en/proposals/144-ecies-x25519-aead-ratchet/)'de şimdi [ECIES](/en/docs/spec/ecies/) olarak belirtilen ECIES Ratchet SKM'yi tasarladık. Bu tasarım, göndericinin statik anahtarını ilk mesajda içeren Noise "IK" deseni kullanılarak belirtilmiştir. Bu protokol ECIES (tip 4) Hedefler için kullanılır. IK deseni anonim göndericilere izin vermez.
+Daha sonra, ECIES-X25519-AEAD-Ratchet [Öneri144](/en/proposals/144-ecies-x25519-aead-ratchet/)'de şimdi [ECIES](/en/docs/specs/ecies/) olarak belirtilen ECIES Ratchet SKM'yi tasarladık. Bu tasarım, göndericinin statik anahtarını ilk mesajda içeren Noise "IK" deseni kullanılarak belirtilmiştir. Bu protokol ECIES (tip 4) Hedefler için kullanılır. IK deseni anonim göndericilere izin vermez.
 
 Bu nedenle, öneriye bir Ratchet SKM'ye anonim mesajlar gönderme yolunu da dahil ettik, sıfır dolu bir statik anahtar kullanarak. Bu, bir Noise "N" deseni simülasyonu yaptı, ancak uyumlu bir şekilde, böylece bir ECIES SKM hem anonim hem de anonim olmayan mesajları alabilir. Amacı ECIES yönlendiricileri için sıfır anahtar kullanmaktı.
 
@@ -124,24 +124,24 @@ Yönlendirici kullanım olayı hedef-olmayanlar:
 - Anonim olmayan mesajlar için ihtiyaç yok
 - Giriş araştırma tünelleri yoluyla mesaj göndermek için ihtiyaç yok (bir yönlendirici araştırma leaseset'leri yayınlamaz)
 - Etiket kullanarak sürekli mesaj trafiğine ihtiyaç yok
-- Hedefler için [ECIES](/en/docs/spec/ecies/)de açıklanan "çift anahtar" Oturum Anahtarı Yöneticilerini çalıştırmaya gerek yok. Yönlendiricilerin yalnızca bir genel anahtarı vardır.
+- Hedefler için [ECIES](/en/docs/specs/ecies/)de açıklanan "çift anahtar" Oturum Anahtarı Yöneticilerini çalıştırmaya gerek yok. Yönlendiricilerin yalnızca bir genel anahtarı vardır.
 
 
 #### Tasarım Sonuçları
 
-ECIES Yönlendirici SKM'nin [ECIES](/en/docs/spec/ecies/)de Hedefler için belirtilen tam bir Ratchet SKM'ye ihtiyacı yoktur.
+ECIES Yönlendirici SKM'nin [ECIES](/en/docs/specs/ecies/)de Hedefler için belirtilen tam bir Ratchet SKM'ye ihtiyacı yoktur.
 IK desenini kullanarak anonim olmayan mesajlar için gereklilik yoktur.
 Tehdit modeli, Elligator2 kodlu geçici anahtarlar gerektirmez.
 
 Bu nedenle, yönlendirici SKM, tünel oluşturma için [Öneri152](/en/proposals/152-ecies-tunnels/)de belirtildiği gibi Noise "N" desenini kullanacaktır.
-Hedefler için [ECIES](/en/docs/spec/ecies/)de belirtilen aynı yük formatını kullanacaktır.
-IK'da [ECIES](/en/docs/spec/ecies/)de belirtilen sıfır statik anahtar (bağlantısız veya oturumsuz) modu kullanılmayacaktır.
+Hedefler için [ECIES](/en/docs/specs/ecies/)de belirtilen aynı yük formatını kullanacaktır.
+IK'da [ECIES](/en/docs/specs/ecies/)de belirtilen sıfır statik anahtar (bağlantısız veya oturumsuz) modu kullanılmayacaktır.
 
 Aramalara yanıtlar, aramada istenirse bir ratchet etiketi ile şifrelenecektir.
-Bu, [Öneri154](/en/proposals/154-ecies-lookups/), şimdi [I2NP](/en/docs/spec/i2np/)de belirtilmiştir.
+Bu, [Öneri154](/en/proposals/154-ecies-lookups/), şimdi [I2NP](/en/docs/specs/i2np/)de belirtilmiştir.
 
 Tasarım, yönlendiricinin tek bir ECIES Oturum Anahtarı Yöneticisi'ne sahip olmasını sağlar.
-Hedefler için [ECIES](/en/docs/spec/ecies/)de açıklanan "çift anahtar" Oturum Anahtarı Yöneticilerini çalıştırmaya gerek yoktur.
+Hedefler için [ECIES](/en/docs/specs/ecies/)de açıklanan "çift anahtar" Oturum Anahtarı Yöneticilerini çalıştırmaya gerek yoktur.
 Yönlendiricilerin yalnızca bir genel anahtarı vardır.
 
 Bir ECIES yönlendiricisinin ElGamal statik anahtarı yoktur.
@@ -159,9 +159,9 @@ Bu tarih itibarıyla, ağın yaklaşık %85'i 0.9.46 veya daha yüksek bir sür�
 
 ## Spesifikasyon
 
-X25519: [ECIES](/en/docs/spec/ecies/) 'e bakın.
+X25519: [ECIES](/en/docs/specs/ecies/) 'e bakın.
 
-Yönlendirici Kimliği ve Anahtar Sertifikası: [Ortak](/en/docs/spec/common-structures/) 'a bakın.
+Yönlendirici Kimliği ve Anahtar Sertifikası: [Ortak](/en/docs/specs/common-structures/) 'a bakın.
 
 Tünel Oluşturma: [Öneri152](/en/proposals/152-ecies-tunnels/) 'ye bakın.
 
@@ -170,13 +170,13 @@ Yeni Tünel Oluşturma Mesajı: [Öneri157](/en/proposals/157-new-tbm/) 'ye bak�
 
 ### İstek Şifreleme
 
-İstek şifrelemesi, Noise "N" deseni kullanarak [Tünel-Oluşumu-ECIES](/en/docs/spec/tunnel-creation-ecies/) ve [Öneri152](/en/proposals/152-ecies-tunnels/) 'de belirtilen aynıdır.
+İstek şifrelemesi, Noise "N" deseni kullanarak [Tünel-Oluşumu-ECIES](/en/docs/specs/tunnel-creation-ecies/) ve [Öneri152](/en/proposals/152-ecies-tunnels/) 'de belirtilen aynıdır.
 
 Aramalara yanıtlar, aramada istenirse bir ratchet etiketi ile şifrelenecektir.
-Veritabanı Arama istek mesajları, [I2NP](/en/docs/spec/i2np/) ve [Öneri154](/en/proposals/154-ecies-lookups/) 'de belirtildiği gibi 32 baytlık yanıt anahtarı ve 8 baytlık yanıt etiketi içerir. Anahtar ve etiket yanıtı şifrelemek için kullanılır.
+Veritabanı Arama istek mesajları, [I2NP](/en/docs/specs/i2np/) ve [Öneri154](/en/proposals/154-ecies-lookups/) 'de belirtildiği gibi 32 baytlık yanıt anahtarı ve 8 baytlık yanıt etiketi içerir. Anahtar ve etiket yanıtı şifrelemek için kullanılır.
 
 Etiket setleri oluşturulmaz.
-ECIES-X25519-AEAD-Ratchet [Öneri144](/en/proposals/144-ecies-x25519-aead-ratchet/) ve [ECIES](/en/docs/spec/ecies/) 'de belirtilen sıfır statik anahtar şeması kullanılmayacaktır.
+ECIES-X25519-AEAD-Ratchet [Öneri144](/en/proposals/144-ecies-x25519-aead-ratchet/) ve [ECIES](/en/docs/specs/ecies/) 'de belirtilen sıfır statik anahtar şeması kullanılmayacaktır.
 Geçici anahtarlar Elligator2 ile kodlanmayacaktır.
 
 Genellikle, bunlar Yeni Oturum mesajları olacak ve sıfır statik anahtar ile (bağlantısız veya oturumsuz) gönderilecektir, çünkü mesajın göndericisi anonimdir.
@@ -185,7 +185,7 @@ Genellikle, bunlar Yeni Oturum mesajları olacak ve sıfır statik anahtar ile (
 #### Başlangıç ck ve h için KDF
 
 Bu, standart [NOISE](https://noiseprotocol.org/noise.html) "N" deseni için standart bir protokol adı ile.
-Bu, tünel oluşturma mesajları için [Tünel-Oluşumu-ECIES](/en/docs/spec/tunnel-creation-ecies/) ve [Öneri152](/en/proposals/152-ecies-tunnels/) 'de belirtilen ile aynıdır.
+Bu, tünel oluşturma mesajları için [Tünel-Oluşumu-ECIES](/en/docs/specs/tunnel-creation-ecies/) ve [Öneri152](/en/proposals/152-ecies-tunnels/) 'de belirtilen ile aynıdır.
 
 
   ```text
@@ -219,7 +219,7 @@ Bu, "e" mesaj deseni:
 
 Mesaj yaratıcıları her mesaj için geçici bir X25519 anahtar çifti oluştururlar.
 Geçici anahtarlar mesaj başına benzersiz olmalıdır.
-Bu, tünel oluşturma mesajları için [Tünel-Oluşumu-ECIES](/en/docs/spec/tunnel-creation-ecies/) ve [Öneri152](/en/proposals/152-ecies-tunnels/) 'de belirtilen ile aynıdır.
+Bu, tünel oluşturma mesajları için [Tünel-Oluşumu-ECIES](/en/docs/specs/tunnel-creation-ecies/) ve [Öneri152](/en/proposals/152-ecies-tunnels/) 'de belirtilen ile aynıdır.
 
 
   ```dataspec
@@ -282,14 +282,14 @@ Bu, tünel oluşturma mesajları için [Tünel-Oluşumu-ECIES](/en/docs/spec/tun
 
 #### Yük
 
-Yük, [ECIES](/en/docs/spec/ecies/) ve [Öneri144](/en/proposals/144-ecies-x25519-aead-ratchet/) 'de tanımlanan aynı blok formatıdır.
+Yük, [ECIES](/en/docs/specs/ecies/) ve [Öneri144](/en/proposals/144-ecies-x25519-aead-ratchet/) 'de tanımlanan aynı blok formatıdır.
 Tüm mesajlar, tekrarlamayı önlemek için bir TarihSaat bloğu içermelidir.
 
 
 ### Yanıt Şifreleme
 
 Veritabanı Arama mesajlarına yanıtlar, Veritabanı Mağaza veya Veritabanı Arama Yanıtı mesajlarıdır.
-Bunlar, [I2NP](/en/docs/spec/i2np/) ve [Öneri154](/en/proposals/154-ecies-lookups/) 'de belirtildiği gibi
+Bunlar, [I2NP](/en/docs/specs/i2np/) ve [Öneri154](/en/proposals/154-ecies-lookups/) 'de belirtildiği gibi
 32 baytlık yanıt anahtarı ve 8 baytlık yanıt etiketi ile Mevcut Oturum mesajları olarak şifrelenir.
 
 

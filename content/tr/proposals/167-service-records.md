@@ -73,7 +73,7 @@ herhangi bir hizmet için genel bir kayıt sağlamaz.
 
 ## Tasarım
 
-Servis kayıtları LS2 içinde seçenekler bölümüne yerleştirilir [LS2](/en/docs/spec/common-structures/).
+Servis kayıtları LS2 içinde seçenekler bölümüne yerleştirilir [LS2](/en/docs/specs/common-structures/).
 LS2 seçenekler bölümü şu anda kullanılmamaktadır.
 LS1 için desteklenmemektedir.
 Bu, tünel bant genişliği önerisine [Prop168](/en/proposals/168-tunnel-bandwidth/) benzerdir,
@@ -179,14 +179,14 @@ Her desteklenen hizmetin kendi kaydı olmalıdır.
 ### Servis Adı Kaydı
 
 [REGISTRY](http://www.dns-sd.org/ServiceTypes.html) veya Linux /etc/services'te listelenmeyen standart olmayan tanımlayıcılar
-talep edilebilir ve ortak yapılar belirtimine [LS2](/en/docs/spec/common-structures/) eklenebilir.
+talep edilebilir ve ortak yapılar belirtimine [LS2](/en/docs/specs/common-structures/) eklenebilir.
 
 Hizmete özgü app seçenek formatları da oraya eklenebilir.
 
 
 ### I2CP Belirtimi
 
-[I2CP](/en/docs/spec/i2cp/) protokolü, hizmet aramalarını destekleyecek şekilde genişletilmelidir.
+[I2CP](/en/docs/specs/i2cp/) protokolü, hizmet aramalarını destekleyecek şekilde genişletilmelidir.
 Servis aramasıyla ilgili ek MessageStatusMessage ve / veya HostReplyMessage hata kodları gereklidir.
 Hizmet kaydı özellikli olup olmadığını belirtmek için arama kolaylığının genel olması amaçlanmıştır,
 tüm LS2 seçeneklerinin alınmasını desteklemek için tasarlanmıştır.

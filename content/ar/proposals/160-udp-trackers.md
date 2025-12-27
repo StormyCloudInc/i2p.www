@@ -12,7 +12,7 @@ toc: true
 
 ## الحالة
 
-تمت الموافقة عليه في المراجعة 2025-06-24. المواصفة متوفرة في [مواصفة UDP](/en/docs/spec/udp-bittorrent-announces/). مُنفذ في zzzot 0.20.0-beta2. مُنفذ في i2psnark اعتباراً من API 0.9.67. تحقق من وثائق التنفيذات الأخرى للحالة.
+تمت الموافقة عليه في المراجعة 2025-06-24. المواصفة متوفرة في [مواصفة UDP](/en/docs/specs/udp-bittorrent-announces/). مُنفذ في zzzot 0.20.0-beta2. مُنفذ في i2psnark اعتباراً من API 0.9.67. تحقق من وثائق التنفيذات الأخرى للحالة.
 
 ## نظرة عامة
 
@@ -46,7 +46,7 @@ toc: true
 
 ## الدافع
 
-هذا الاقتراح يستخدم repliable datagram2 و repliable datagram3 و raw datagrams، كما هو محدد في [/en/docs/spec/datagrams/](/en/docs/spec/datagrams/). Datagram2 و Datagram3 هما متغيران جديدان من repliable datagrams، محددان في الاقتراح 163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/). Datagram2 يضيف مقاومة إعادة التشغيل ودعم التوقيع في وضع عدم الاتصال. Datagram3 أصغر من تنسيق datagram القديم، ولكن بدون مصادقة.
+هذا الاقتراح يستخدم repliable datagram2 و repliable datagram3 و raw datagrams، كما هو محدد في [/en/docs/specs/datagrams/](/en/docs/specs/datagrams/). Datagram2 و Datagram3 هما متغيران جديدان من repliable datagrams، محددان في الاقتراح 163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/). Datagram2 يضيف مقاومة إعادة التشغيل ودعم التوقيع في وضع عدم الاتصال. Datagram3 أصغر من تنسيق datagram القديم، ولكن بدون مصادقة.
 
 ### BEP 15
 

@@ -51,7 +51,7 @@ SRV记录只是MX记录的一种通用版本，适用于任何服务。
 
 ## 设计
 
-服务记录位于LS2[LS2](/en/docs/spec/common-structures/)的选项部分。LS2的选项部分目前未使用。
+服务记录位于LS2[LS2](/en/docs/specs/common-structures/)的选项部分。LS2的选项部分目前未使用。
 不支持LS1。
 类似于隧道带宽提案[Prop168](/en/proposals/168-tunnel-bandwidth/)，定义隧道构建记录的选项。
 
@@ -143,13 +143,13 @@ LS2选项中使用的映射数据结构格式将键和值限制为最大255字�
 
 ### 服务名称注册
 
-不在[REGISTRY](http://www.dns-sd.org/ServiceTypes.html)或Linux /etc/services中列出的非标准标识符可以被请求并添加到[LS2](/en/docs/spec/common-structures/)的共同结构说明中。
+不在[REGISTRY](http://www.dns-sd.org/ServiceTypes.html)或Linux /etc/services中列出的非标准标识符可以被请求并添加到[LS2](/en/docs/specs/common-structures/)的共同结构说明中。
 
 特定服务的appoptions格式也可以被添加到那里。
 
 ### I2CP规格
 
-[I2CP](/en/docs/spec/i2cp/)协议必须扩展以支持服务查找。
+[I2CP](/en/docs/specs/i2cp/)协议必须扩展以支持服务查找。
 需要关于服务查找的其他MessageStatusMessage和/或HostReplyMessage错误代码。
 为了使查找功能通用，而不仅仅是特定于服务记录，
 设计是支持所有LS2选项的检索。

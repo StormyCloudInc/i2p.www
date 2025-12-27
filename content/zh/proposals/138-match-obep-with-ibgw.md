@@ -27,7 +27,7 @@ toc: true
 
 ## 规范
 
-新增一个 I2CP 选项到 [I2CP 规范](/en/docs/spec/i2cp/)：
+新增一个 I2CP 选项到 [I2CP 规范](/en/docs/specs/i2cp/)：
 
     outbound.matchEndWithTarget
         Boolean

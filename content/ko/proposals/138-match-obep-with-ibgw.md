@@ -31,7 +31,7 @@ toc: true
 
 ## 명세
 
-[I2CP 명세](/en/docs/spec/i2cp/)에 새로운 I2CP 옵션이 추가됩니다:
+[I2CP 명세](/en/docs/specs/i2cp/)에 새로운 I2CP 옵션이 추가됩니다:
 
     outbound.matchEndWithTarget
         Boolean

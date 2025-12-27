@@ -54,7 +54,7 @@ MX 기록이 있으면 SRV 기록이 필요하지 않으며, MX 기록만으로�
 
 ## 설계
 
-서비스 기록은 LS2의 옵션 섹션에 배치됩니다 [LS2](/en/docs/spec/common-structures/).
+서비스 기록은 LS2의 옵션 섹션에 배치됩니다 [LS2](/en/docs/specs/common-structures/).
 현재 LS2의 옵션 섹션은 사용되지 않고 있습니다.
 LS1에 대해서는 지원되지 않습니다.
 이는 터널 대역폭 제안 [Prop168](/en/proposals/168-tunnel-bandwidth/)과 유사하며, 터널 빌드 기록에 대한 옵션을 정의합니다.
@@ -152,14 +152,14 @@ appoptions 필드가 길면 하나 또는 두 개, 호스트명이 짧으면 최
 
 ### 서비스 이름 등록소
 
-[REGISTRY](http://www.dns-sd.org/ServiceTypes.html) 또는 Linux /etc/services에 나열되지 않은 비표준 식별자는 요청하여 일반 구조 사양 [LS2](/en/docs/spec/common-structures/)에 추가할 수 있습니다.
+[REGISTRY](http://www.dns-sd.org/ServiceTypes.html) 또는 Linux /etc/services에 나열되지 않은 비표준 식별자는 요청하여 일반 구조 사양 [LS2](/en/docs/specs/common-structures/)에 추가할 수 있습니다.
 
 서비스별 appoptions 형식도 추가될 수 있습니다.
 
 
 ### I2CP 사양
 
-[I2CP](/en/docs/spec/i2cp/) 프로토콜은 서비스 조회를 지원하기 위해 확장되어야 합니다.
+[I2CP](/en/docs/specs/i2cp/) 프로토콜은 서비스 조회를 지원하기 위해 확장되어야 합니다.
 서비스 조회와 관련된 추가 MessageStatusMessage 및/또는 HostReplyMessage 오류 코드가 필요합니다.
 조회 시설을 일반화하여 서비스 기록 특정에만 제한되지 않도록 하려면
 모든 LS2 옵션의 검색을 지원하는 설계가 필요합니다.

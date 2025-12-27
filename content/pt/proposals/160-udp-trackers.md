@@ -12,7 +12,7 @@ toc: true
 
 ## Status
 
-Aprovado na revisão de 24-06-2025. A especificação está em [UDP specification](/en/docs/spec/udp-bittorrent-announces/). Implementado no zzzot 0.20.0-beta2. Implementado no i2psnark a partir da API 0.9.67. Verifique a documentação de outras implementações para o status.
+Aprovado na revisão de 24-06-2025. A especificação está em [UDP specification](/en/docs/specs/udp-bittorrent-announces/). Implementado no zzzot 0.20.0-beta2. Implementado no i2psnark a partir da API 0.9.67. Verifique a documentação de outras implementações para o status.
 
 ## Visão Geral
 
@@ -46,7 +46,7 @@ A criptografia e assinaturas pós-quânticas como previstas em [/en/proposals/16
 
 ## Motivação
 
-Esta proposta usa repliable datagram2, repliable datagram3, e raw datagrams, conforme definido em [/en/docs/spec/datagrams/](/en/docs/spec/datagrams/). Datagram2 e Datagram3 são novas variantes de repliable datagrams, definidas na Proposta 163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/). Datagram2 adiciona resistência a replay e suporte a assinatura offline. Datagram3 é menor que o formato antigo de datagrama, mas sem autenticação.
+Esta proposta usa repliable datagram2, repliable datagram3, e raw datagrams, conforme definido em [/en/docs/specs/datagrams/](/en/docs/specs/datagrams/). Datagram2 e Datagram3 são novas variantes de repliable datagrams, definidas na Proposta 163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/). Datagram2 adiciona resistência a replay e suporte a assinatura offline. Datagram3 é menor que o formato antigo de datagrama, mas sem autenticação.
 
 ### BEP 15
 

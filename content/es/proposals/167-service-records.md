@@ -71,7 +71,7 @@ por sí solos no proporcionan un registro genérico para cualquier servicio.
 
 ## Diseño
 
-Los registros de servicio se ubican en la sección de opciones en LS2 [LS2](/en/docs/spec/common-structures/).
+Los registros de servicio se ubican en la sección de opciones en LS2 [LS2](/en/docs/specs/common-structures/).
 La sección de opciones de LS2 está actualmente sin uso.
 No es compatible con LS1.
 Esto es similar a la propuesta de ancho de banda de túnel [Prop168](/en/proposals/168-tunnel-bandwidth/),
@@ -179,14 +179,14 @@ Cada servicio compatible debe tener su propio registro.
 ### Registro de Nombre de Servicio
 
 Los identificadores no estándar que no están listados en [REGISTRY](http://www.dns-sd.org/ServiceTypes.html) o Linux /etc/services
-pueden ser solicitados y añadidos a la especificación de estructuras comunes [LS2](/en/docs/spec/common-structures/).
+pueden ser solicitados y añadidos a la especificación de estructuras comunes [LS2](/en/docs/specs/common-structures/).
 
 Los formatos de appoptions específicas de servicio también pueden ser añadidos allí.
 
 
 ### Especificación I2CP
 
-El protocolo [I2CP](/en/docs/spec/i2cp/) debe ser extendido para soportar búsquedas de servicio.
+El protocolo [I2CP](/en/docs/specs/i2cp/) debe ser extendido para soportar búsquedas de servicio.
 Se requieren códigos de error adicionales de MessageStatusMessage y/o HostReplyMessage relacionados con la búsqueda de servicio.
 Para hacer que la facilidad de búsqueda sea general, no solo específica para registros de servicio,
 el diseño es para soportar la recuperación de todas las opciones de LS2.

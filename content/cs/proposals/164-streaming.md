@@ -47,7 +47,7 @@ Pokud jsou Alice a Charlie na verzi API 0.9.58 nebo novější, jakýkoli pokus 
 
 ## Specifikace
 
-Aktualizujte [specifikaci Streaming](/en/docs/spec/streaming/) a přidejte následující sekci:
+Aktualizujte [specifikaci Streaming](/en/docs/specs/streaming/) a přidejte následující sekci:
 
 ### Prevence opakování
 

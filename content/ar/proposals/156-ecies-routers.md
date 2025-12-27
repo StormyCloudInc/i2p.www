@@ -13,9 +13,9 @@ toc: true
 ## ملاحظة
 نشر الشبكة والاختبار قيد التقدم. قابل للتعديل. الحالة:
 
-- تم تنفيذ موجهات ECIES اعتبارًا من 0.9.48، راجع [Common](/en/docs/spec/common-structures/).
-- تم تنفيذ بناء الأنفاق اعتبارًا من 0.9.48، راجع [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/).
-- تم تنفيذ الرسائل المشفرة للموجهات ECIES اعتبارًا من 0.9.49، راجع [ECIES-ROUTERS](/en/docs/spec/ecies-routers/).
+- تم تنفيذ موجهات ECIES اعتبارًا من 0.9.48، راجع [Common](/en/docs/specs/common-structures/).
+- تم تنفيذ بناء الأنفاق اعتبارًا من 0.9.48، راجع [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/).
+- تم تنفيذ الرسائل المشفرة للموجهات ECIES اعتبارًا من 0.9.49، راجع [ECIES-ROUTERS](/en/docs/specs/ecies-routers/).
 - تم تنفيذ رسائل بناء النفق الجديدة اعتبارًا من 0.9.51.
 
 
@@ -31,7 +31,7 @@ toc: true
 ElGamal بطيء ويحتاج إلى استبداله في جميع الأماكن التي يُستخدم فيها.
 
 تم تحديد الاقتراحات لـ LS2 [Prop123](/en/proposals/123-new-netdb-entries/) وECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/)
-(المحددة الآن في [ECIES](/en/docs/spec/ecies/)) استبدال ElGamal بـ ECIES
+(المحددة الآن في [ECIES](/en/docs/specs/ecies/)) استبدال ElGamal بـ ECIES
 للوجهات.
 
 يقترح هذا الاقتراح استبدال ElGamal بـ ECIES-X25519 للموجهات.
@@ -70,14 +70,14 @@ ElGamal بطيء ويحتاج إلى استبداله في جميع الأماك
 بالنسبة للوجهات، يكون المفتاح في عقدة الإيجار، وليس في الوجهة، وندعم أنواع متعددة من التشفير في نفس عقدة الإيجار.
 
 لا يتطلب أي من ذلك للموجهات. مفتاح تشفير الموجه
-في هويته. راجع مواصفات البنية الشائعة [Common](/en/docs/spec/common-structures/).
+في هويته. راجع مواصفات البنية الشائعة [Common](/en/docs/specs/common-structures/).
 
 بالنسبة للموجهات، سنستبدل مفتاح ElGamal بحجم 256 بايت في هوية الموجه
 بمفتاح X25519 بحجم 32 بايت و224 بايت من الحشو.
 هذا سيمثل نوع التشفير في شهادة المفتاح.
 نوع التشفير (نفس المستخدم في LS2) هو 4.
 هذا يُشير إلى مفتاح عام X25519 بطول 32 بايت بالترتيب الصغير.
-هذا هو التكوين المعياري كما هو محدد في مواصفة البنية الشائعة [Common](/en/docs/spec/common-structures/).
+هذا هو التكوين المعياري كما هو محدد في مواصفة البنية الشائعة [Common](/en/docs/specs/common-structures/).
 
 هذا هو نفس الطريقة المقترحة لـ ECIES-P256
 لأنواع التشفير من 1-3 في الاقتراح 145 [Prop145](/en/proposals/145-ecies/).
@@ -87,7 +87,7 @@ ElGamal بطيء ويحتاج إلى استبداله في جميع الأماك
 
 ### رسالة بناء النفق
 
-تتطلب عدة تغييرات لمواصفات إنشاء النفق [Tunnel-Creation](/en/docs/spec/tunnel-creation/)
+تتطلب عدة تغييرات لمواصفات إنشاء النفق [Tunnel-Creation](/en/docs/specs/tunnel-creation/)
 استخدام ECIES بدلاً من ElGamal.
 بالإضافة إلى ذلك، سنقوم بإجراء تحسينات على رسائل بناء النفق
 لزيادة الأمان.
@@ -119,7 +119,7 @@ ElGamal بطيء ويحتاج إلى استبداله في جميع الأماك
 لم تكن الرسالة مربوطة بهوية المرسل.
 
 ثم، قمنا بتصميم ECIES Ratchet SKM في
-ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/), المحددة الآن في [ECIES](/en/docs/spec/ecies/).
+ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/), المحددة الآن في [ECIES](/en/docs/specs/ecies/).
 تم تحديد هذا التصميم باستخدام نمط "IK" الخاص بـ Noise، الذي شمل المفتاح الثابت للمرسل في الرسالة الأولى. يستخدم هذا البروتوكول لـ ECIES (النوع 4) للوجهات.
 لا يسمح نمط IK بمرسلين مجهولين.
 
@@ -166,28 +166,28 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 - لا حاجة إلى رسائل غير مجهولة
 - لا حاجة لإرسال الرسائل عبر أنفاق استكشافية واردة (الموجه لا ينشر قيد استكشاف لجهات الإيجار)
 - لا حاجة إلى حركة مرور رسائل مستمرة باستخدام العلامات
-- لا حاجة لتشغيل "مدير مفاتيح جلسة مزدوجة" كما هو موضح في [ECIES](/en/docs/spec/ecies/) للوجهات. الموجهات لديها مفتاح عام واحد فقط.
+- لا حاجة لتشغيل "مدير مفاتيح جلسة مزدوجة" كما هو موضح في [ECIES](/en/docs/specs/ecies/) للوجهات. الموجهات لديها مفتاح عام واحد فقط.
 
 
 
 
 #### استنتاجات التصميم
 
-لا يحتاج SKM الخاص بموجهات ECIES إلى SKM ذو حركة بالكامل كما هو محدد في [ECIES](/en/docs/spec/ecies/) للوجهات.
+لا يحتاج SKM الخاص بموجهات ECIES إلى SKM ذو حركة بالكامل كما هو محدد في [ECIES](/en/docs/specs/ecies/) للوجهات.
 لا يوجد حاجة للرسائل غير المجهولة باستخدام نمط IK.
 نموذج التهديد لا يتطلب تشفير المفاتيح المؤقتة بـ Elligator2.
 
 لذلك، سيستخدم SKM الخاص بالموجه نمط "N" الخاص بـ Noise، نفس ما تم تحديده
 في [Prop152](/en/proposals/152-ecies-tunnels/) لبناء النفق.
-سيستخدم نفس صيغة الحمولة كما تم تحديدها في [ECIES](/en/docs/spec/ecies/) للوجهات.
-الوضع الثابت صفر (بدون ارتباطات أو جلسات) لنمط IK المحدد في [ECIES](/en/docs/spec/ecies/) لن يتم استخدامه.
+سيستخدم نفس صيغة الحمولة كما تم تحديدها في [ECIES](/en/docs/specs/ecies/) للوجهات.
+الوضع الثابت صفر (بدون ارتباطات أو جلسات) لنمط IK المحدد في [ECIES](/en/docs/specs/ecies/) لن يتم استخدامه.
 
 ستكون الردود على عمليات البحث مشفرة بعلامة راش إذا طُلبت في عملية البحث.
-هذا كما هو موثق في [Prop154](/en/proposals/154-ecies-lookups/), المحددة الآن في [I2NP](/en/docs/spec/i2np/).
+هذا كما هو موثق في [Prop154](/en/proposals/154-ecies-lookups/), المحددة الآن في [I2NP](/en/docs/specs/i2np/).
 
 يُمكّن التصميم الموجه من الحصول على مدير مفاتيح جلسة ECIES واحد.
 لا توجد حاجة إلى تشغيل "مديري مفاتيح جلسة مزدوجة" كما هو موضح
-في [ECIES](/en/docs/spec/ecies/) للوجهات.
+في [ECIES](/en/docs/specs/ecies/) للوجهات.
 لدى الموجهات مفتاح عام واحد فقط.
 
 الموجهة ECIES لا تمتلك مفتاح ثابت لـ ElGamal.
@@ -210,9 +210,9 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 
 ## المواصفات
 
-X25519: راجع [ECIES](/en/docs/spec/ecies/).
+X25519: راجع [ECIES](/en/docs/specs/ecies/).
 
-هوية الموجه وشهادة المفتاح: راجع [Common](/en/docs/spec/common-structures/).
+هوية الموجه وشهادة المفتاح: راجع [Common](/en/docs/specs/common-structures/).
 
 بناء النفق: راجع [Prop152](/en/proposals/152-ecies-tunnels/).
 
@@ -221,16 +221,16 @@ X25519: راجع [ECIES](/en/docs/spec/ecies/).
 
 ### تشفير الطلب
 
-تشفير الطلب هو نفسه الذي تم تحديده في [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) و [Prop152](/en/proposals/152-ecies-tunnels/),
+تشفير الطلب هو نفسه الذي تم تحديده في [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) و [Prop152](/en/proposals/152-ecies-tunnels/),
 باستخدام نمط "N" الخاص بـ Noise.
 
 ستتم تشفير الردود على الاستفسارات بعلامة راش إذا طُلبت في الاستفسار.
 تحتوي رسائل طلب البحث عن قاعدة البيانات على مفتاح رد بحجم 32 بايت وعلامة رد بحجم 8 بايت 
-كما هو محدد في [I2NP](/en/docs/spec/i2np/) و [Prop154](/en/proposals/154-ecies-lookups/). يتم استخدام المفتاح والعلامة لتشفير الرد.
+كما هو محدد في [I2NP](/en/docs/specs/i2np/) و [Prop154](/en/proposals/154-ecies-lookups/). يتم استخدام المفتاح والعلامة لتشفير الرد.
 
 لا يتم إنشاء مجموعات العلامات.
 لوحة المفاتيح الصفرية المحددة في
-ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/) و[ECIES](/en/docs/spec/ecies/) لن يتم استخدامها.
+ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/) و[ECIES](/en/docs/specs/ecies/) لن يتم استخدامها.
 لن يتم تشفير المفاتيح المؤقتة بـ Elligator2.
 
 بشكل عام، ستكون هذه رسائل جلسة جديدة وستُرسل بمفتاح ثابت صفر
@@ -240,7 +240,7 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 #### KDF للمفتاح الابتدائي ck و h
 
 هذا هو المعيار [NOISE](https://noiseprotocol.org/noise.html) لنمط "N" مع اسم بروتوكول معياري.
-هذا هو نفس ما تم تحديده في [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) و [Prop152](/en/proposals/152-ecies-tunnels/) لرسائل بناء النفق.
+هذا هو نفس ما تم تحديده في [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) و [Prop152](/en/proposals/152-ecies-tunnels/) لرسائل بناء النفق.
 
 
   ```text
@@ -274,7 +274,7 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 
 يقوم منشئو الرسائل بإنشاء زوج مفاتيح مؤقتة X25519 لكل رسالة.
 يجب أن تكون المفاتيح المؤقتة فريدة لكل رسالة.
-هذا هو نفس ما تم تحديده في [Tunnel-Creation-ECIES](/en/docs/spec/tunnel-creation-ecies/) و [Prop152](/en/proposals/152-ecies-tunnels/) لرسائل بناء النفق.
+هذا هو نفس ما تم تحديده في [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) و [Prop152](/en/proposals/152-ecies-tunnels/) لرسائل بناء النفق.
 
 
   ```dataspec
@@ -332,7 +332,7 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 
 #### الحمولة
 
-الحمولة هي نفس صيغة البلوك كما هو معرف في [ECIES](/en/docs/spec/ecies/) و [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/).
+الحمولة هي نفس صيغة البلوك كما هو معرف في [ECIES](/en/docs/specs/ecies/) و [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/).
 يجب أن تحتوي جميع الرسائل على كتلة DateTime لمنع إعادة التشغيل.
 
 
@@ -342,7 +342,7 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 يتم تشفيرها كرسائل جلسة موجودة مع
 
 مفتاح الرد بحجم 32 بايت وعلامة الرد بحجم 8 بايت
-كما هو محدد في [I2NP](/en/docs/spec/i2np/) و [Prop154](/en/proposals/154-ecies-lookups/).
+كما هو محدد في [I2NP](/en/docs/specs/i2np/) و [Prop154](/en/proposals/154-ecies-lookups/).
 
 
 لا توجد ردود صريحة على رسائل تخزين قاعدة البيانات. قد يدمج المرسل

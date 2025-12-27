@@ -12,7 +12,7 @@ toc: true
 
 ## 状态
 
-已于 2025-06-24 审查通过。规范文档位于 [UDP specification](/en/docs/spec/udp-bittorrent-announces/)。已在 zzzot 0.20.0-beta2 中实现。已在 i2psnark 中实现，自 API 0.9.67 版本起。请查看其他实现的文档了解状态。
+已于 2025-06-24 审查通过。规范文档位于 [UDP specification](/en/docs/specs/udp-bittorrent-announces/)。已在 zzzot 0.20.0-beta2 中实现。已在 i2psnark 中实现，自 API 0.9.67 版本起。请查看其他实现的文档了解状态。
 
 ## 概述
 
@@ -46,7 +46,7 @@ Bittorrent 在 2008 年的 BEP 15 [BEP 15](http://www.bittorrent.org/beps/bep_00
 
 ## 动机
 
-此提案使用可回复数据报2、可回复数据报3和原始数据报，如[/en/docs/spec/datagrams/](/en/docs/spec/datagrams/)中所定义。数据报2和数据报3是可回复数据报的新变体，在提案163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/)中定义。数据报2添加了重放抵抗和离线签名支持。数据报3比旧的数据报格式更小，但没有身份验证。
+此提案使用可回复数据报2、可回复数据报3和原始数据报，如[/en/docs/specs/datagrams/](/en/docs/specs/datagrams/)中所定义。数据报2和数据报3是可回复数据报的新变体，在提案163 [/en/proposals/163-datagram2/](/en/proposals/163-datagram2/)中定义。数据报2添加了重放抵抗和离线签名支持。数据报3比旧的数据报格式更小，但没有身份验证。
 
 ### BEP 15
 
