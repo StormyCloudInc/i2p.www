@@ -21,8 +21,6 @@ Trạng thái:
 - Các tin nhắn xây dựng đường hầm mới đã được triển khai từ phiên bản 0.9.51.
 
 
-
-
 ## Tổng Quan
 
 
@@ -107,7 +105,6 @@ Bản Ghi Yêu Cầu Xây Dựng và Bản Ghi Phản Hồi Xây Dựng.
 Kích thước sẽ được giảm để tăng hiệu quả.
 Các thay đổi này phải được hỗ trợ bởi tất cả các điểm dừng trong một đường hầm, và tất cả các điểm dừng phải là ECIES.
 Những thay đổi này được định nghĩa trong kiến nghị 157 [Prop157](/en/proposals/157-new-tbm/).
-
 
 
 ### Mã Hóa Đầu Cuối
@@ -203,7 +200,6 @@ và có thể phụ thuộc vào số lượng mạng đã nâng cấp lên
 Tính đến thời điểm này, khoảng 85% mạng là 0.9.46 hoặc cao hơn.
 
 
-
 ## Đặc Tả
 
 X25519: Xem [ECIES](/en/docs/specs/ecies/).
@@ -258,9 +254,6 @@ Thông thường, đây sẽ là tin nhắn Phiên Mới và sẽ được gửi
   h = SHA256(h);
 
   // đến đây, có thể được tính trước bởi tất cả các thiết bị định tuyến.
-
-
-
 
 
   ```
@@ -324,11 +317,7 @@ Khóa tạm thời phải là duy nhất cho mỗi tin nhắn.
   //h = SHA256(h || ciphertext)
 
 
-
-
-
   ```
-
 
 
 #### Tải
@@ -347,15 +336,11 @@ như đã được quy định trong [I2NP](/en/docs/specs/i2np/) và [Prop154](
 Không có phản hồi rõ ràng cho các tin nhắn Lưu Trữ Cơ Sở Dữ Liệu. Người gửi có thể đóng gói phản hồi của chính nó như một Tin Nhắn Tỏi đến chính nó, chứa một tin nhắn Trạng Thái Giao Hàng.
 
 
-
-
 ## Lý Do
 
 Thiết kế này tối đa hóa việc tái sử dụng các nguyên thủy mật mã, các giao thức, và mã hiện có.
 
 Thiết kế này tối thiểu hóa rủi ro.
-
-
 
 
 ## Ghi Chú Triển Khai
@@ -367,12 +352,10 @@ Nhà triển khai nên phát hiện và từ chối các bản ghi và tin nhắ
 càng sớm càng tốt để giảm việc sử dụng CPU.
 
 
-
 ## Vấn Đề
 
 Đề xuất 145 [Prop145](/en/proposals/145-ecies/) có thể được viết lại để phần lớn tương thích với
 Đề xuất 152 [Prop152](/en/proposals/152-ecies-tunnels/).
-
 
 
 ## Di Cư
@@ -384,7 +367,6 @@ tốc độ phát triển.
 
 Chi tiết của việc triển khai và di cư có thể thay đổi cho
 mỗi triển khai I2P.
-
 
 
 ### Kết Nối Cơ Bản Điểm-Tới-Điểm
@@ -503,7 +485,6 @@ Tại thời điểm này, các thiết bị định tuyến cũ hơn một phi�
 không thể xây dựng đường hầm qua hầu hết các điểm đồng đẳng.
 
 Phiên bản mục tiêu: 0.9.53, đầu 2022.
-
 
 
 ## Tham Khảo

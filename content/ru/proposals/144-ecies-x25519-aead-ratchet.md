@@ -447,7 +447,6 @@ MixKey(d)
                      k = output[32:63]
 
 
-
 ### Тайм-ауты сессий
 
 ### Многоадресная передача
@@ -1337,8 +1336,6 @@ TAGSET_ENTRY
         If there are few TAGSET_ENTRIES remaining, EXTEND(n) is called.
 
 
-
-
 ### 4) Храповики
 
 Ratchets, но не так быстро, как Signal. Мы отделяем подтверждение получения ключа от генерации нового ключа. При обычном использовании Алиса и Боб будут каждый выполнять ratchet (дважды) немедленно в New Session, но больше ratchet выполнять не будут.
@@ -1454,9 +1451,7 @@ Tag Sender                    Tag Receiver
   (reuse key #1, do DH, create IB Tagset #3)
 
 
-
                    ... use tag set #3 ...
-
 
 
        After tag set 3, repeat the above

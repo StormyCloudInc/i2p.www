@@ -25,8 +25,6 @@ SYN paket může obsahovat počáteční data (například GET nebo POST), kter�
 Charlie okamžitě zpracuje.
 
 
-
-
 ## Návrh
 
 Řešení je, aby Alice zahrnula Bobův hash destinace do podepsaných dat SYN.
@@ -42,7 +40,6 @@ Všechna volitelná pole jsou kryta podpisem, jako obvykle, takže Bob nemůže
 přepsat hash.
 
 Pokud jsou Alice a Charlie na verzi API 0.9.58 nebo novější, jakýkoli pokus o opakování od Boba bude odmítnut.
-
 
 
 ## Specifikace
@@ -99,11 +96,9 @@ jako NACKs pro 8 různých zpráv, tyto zprávy by nebyly nevyřešené
 během SYNCHRONIZE handshake a NACKs by nedávaly smysl.
 
 
-
 ## Migrace
 
 Implementace mohou přidat podporu kdykoli, není třeba koordinace.
 Java I2P a i2pd routery to implementovaly v API 0.9.58 (uvolněné v březnu 2023).
-
 
 

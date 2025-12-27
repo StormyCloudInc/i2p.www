@@ -21,8 +21,6 @@ Statut :
 - Nouveaux messages de construction de tunnels implémentés depuis la version 0.9.51.
 
 
-
-
 ## Aperçu
 
 
@@ -107,7 +105,6 @@ Record de demande de construction, et Record de réponse de construction.
 La taille sera réduite pour plus d'efficacité.
 Ces changements doivent être pris en charge par tous les sauts dans un tunnel, et tous les sauts doivent être ECIES.
 Ces changements sont définis dans la proposition 157 [Prop157](/en/proposals/157-new-tbm/).
-
 
 
 ### Chiffrement de bout en bout
@@ -206,7 +203,6 @@ et peut dépendre de la portion du réseau ayant été mise à niveau vers
 À ce jour, environ 85 % du réseau est en version 0.9.46 ou supérieure.
 
 
-
 ## Spécification
 
 X25519 : Voir [ECIES](/en/docs/specs/ecies/).
@@ -261,9 +257,6 @@ C'est le modèle de message "e" :
   h = SHA256(h);
 
   // jusqu'ici, tout peut être précalculé par tous les routeurs.
-
-
-
 
 
   ```
@@ -327,11 +320,7 @@ C'est le même que spécifié dans [Tunnel-Creation-ECIES](/en/docs/specs/tunnel
   //h = SHA256(h || ciphertext)
 
 
-
-
-
   ```
-
 
 
 #### Charge utile
@@ -352,15 +341,11 @@ Il n'y a pas de réponses explicites aux messages de stockage de base de donnée
 propre réponse sous forme de message Garlic à lui-même, contenant un message d'état de livraison.
 
 
-
-
 ## Justification
 
 Cette conception maximise la réutilisation des primitives cryptographiques existantes, des protocoles et du code.
 
 Cette conception minimise le risque.
-
-
 
 
 ## Notes d'implémentation
@@ -372,12 +357,10 @@ Les implémenteurs devraient détecter et rejeter ces enregistrements et message
 dès que possible, pour réduire l'utilisation du processeur.
 
 
-
 ## Problèmes
 
 La proposition 145 [Prop145](/en/proposals/145-ecies/) pourrait ou non être réécrite pour être principalement compatible avec
 la proposition 152 [Prop152](/en/proposals/152-ecies-tunnels/).
-
 
 
 ## Migration
@@ -389,7 +372,6 @@ rythme de développement.
 
 Les détails de l'implémentation et de la migration peuvent varier pour
 chaque implémentation I2P.
-
 
 
 ### Point à point de base
@@ -510,7 +492,6 @@ Version cible : 0.9.52, fin 2021.
 pourront pas construire des tunnels à travers la plupart des pairs.
 
 Version cible : 0.9.53, début 2022.
-
 
 
 ## Références

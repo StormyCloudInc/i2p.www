@@ -94,7 +94,6 @@ bu değişiklikleri desteklemelidir.
 Müşterilerin servis kayıtlarını almasını kolaylaştırmak için küçük I2CP ve SAM uzantıları önerilmektedir.
 
 
-
 ## Belirtim
 
 ### LS2 Seçenek Belirtimi
@@ -175,7 +174,6 @@ Bu yeterli olmalıdır; birden fazla kayıt nadir olmalıdır.
 Her desteklenen hizmetin kendi kaydı olmalıdır.
 
 
-
 ### Servis Adı Kaydı
 
 [REGISTRY](http://www.dns-sd.org/ServiceTypes.html) veya Linux /etc/services'te listelenmeyen standart olmayan tanımlayıcılar
@@ -227,7 +225,6 @@ nnn, 0 ile başlar. Seçenek değeri "anahtar=değer" içerir.
 Görünüm tipi 4 için, öğe 5 bir Destinasyondur.
 
 
-
 ### HostReply Mesajı
 
 
@@ -250,7 +247,6 @@ bulunacaktır.
 
 Bir görünüm türü desteklenmiyorsa,
 yanıt yeni hata kodu 7 (görünüm türü desteklenmiyor) içerecektir.
-
 
 
 ### SAM Beliritimi
@@ -300,7 +296,6 @@ Bu iki nedenle reddedildi:
 Sunucular, en az 86400 ve uygulama için standart portu belirtmelidir.
 
 
-
 ## Gelişmiş Özellikler
 
 ### Özyinelemeli Aramalar
@@ -310,7 +305,6 @@ başka bir kiralama setine işaret eden bir hizmet kaydının, DNS tarzında kon
 Bu, en azından ilk bir uygulamada muhtemelen gerekli değildir.
 
 TODO
-
 
 
 ### Uygulamaya Özgü Alanlar

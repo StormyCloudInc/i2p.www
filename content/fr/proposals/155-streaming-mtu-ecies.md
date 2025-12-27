@@ -86,7 +86,6 @@ Par conséquent, nous pouvons augmenter le MTU pour les connexions ratchet de (1
 passant de 1730 à 1812.
 
 
-
 ## Spécification
 
 Ajoutez les modifications et clarifications suivantes à la section Sélection et Négociation du MTU de the [Streaming API documentation](/en/docs/api/streaming/).
@@ -124,7 +123,6 @@ MTU de 1812 dans tous les paquets.
 - Alice doit envoyer MAX_PACKET_SIZE_INCLUDED dans SYN
 
 
-
 ### 3) Alice Double Clé et sait que Bob est ElGamal
 MTU de 1730 dans tous les paquets.
 
@@ -133,14 +131,12 @@ MTU de 1730 dans tous les paquets.
 - Alice peut envoyer MAX_PACKET_SIZE_INCLUDED dans SYN, non requis sauf si != 1730
 
 
-
 ### 4) Alice Double Clé et sait que Bob est ECIES
 MTU de 1812 dans tous les paquets.
 
 - ALICE_SYN_MAX_DATA = 1812
 - i2cp.streaming.maxMessageSize par défaut : 1812
 - Alice doit envoyer MAX_PACKET_SIZE_INCLUDED dans SYN
-
 
 
 ### 5) Alice Double Clé et Bob clé inconnue
@@ -158,13 +154,10 @@ negotiated_mtu, le minimum du MTU d'Alice et de Bob, à utiliser comme taille ma
 dans le SYN ACK de Bob à Alice, et dans tous les paquets suivants envoyés dans les deux sens.
 
 
-
-
 ## Justification
 
 Voir the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220) pour savoir pourquoi la valeur actuelle est 1730.
 Voir the [ECIES specification](/en/docs/specs/ecies/#overhead) pour savoir pourquoi la surcharge ECIES est de 82 octets de moins que ElGamal.
-
 
 
 ## Notes d'implémentation
@@ -188,12 +181,9 @@ Des stratégies similaires pourraient être utilisées à la taille optimale pou
 et la taille pour trois messages de tunnel (2952), bien que ces tailles devraient être rares en pratique.
 
 
-
 ## Problèmes
 
 La valeur de 1812 est préliminaire. À confirmer et éventuellement ajuster.
-
-
 
 
 ## Migration
@@ -204,6 +194,5 @@ C'est une option existante et la négociation MTU fait déjà partie de la spéc
 Les destinations ECIES plus anciennes prendront en charge 1730.
 Tout client recevant une valeur plus élevée répondra avec 1730, et l'extrémité opposée
 négociera à la baisse, comme d'habitude.
-
 
 

@@ -34,7 +34,6 @@ Definir más campos de opción de manera rígida podría causar problemas más a
 Este documento propone un nuevo esquema de mapeo de opciones, flexible.
 
 
-
 ## Diseño
 
 Necesitamos una representación de opción que sea compacta y al mismo tiempo flexible, para que podamos ajustar múltiples
@@ -82,7 +81,6 @@ Hay 495 bytes libres en el TBRM.
 
 Estos cambios son para los Registros de Construcción de Túnel, y por lo tanto pueden usarse en todas las variantes de Mensajes de Construcción -
 Solicitud de Construcción de Túnel, Solicitud de Construcción de Túnel Variable, Respuesta de Construcción de Túnel, y Respuesta de Construcción de Túnel Variable.
-
 
 
 ## Migración

@@ -107,7 +107,6 @@ Yanıtlanabilir datagramlar için standart I2CP protokol numarası PROTO_DATAGRA
 ```
 
 
-
 ## Tasarım
 
 - Yeni protokol 19 - Seçenekli yanıtlanabilir datagram tanımlayın.
@@ -291,7 +290,6 @@ Aşağıdaki şekilde [DATAGRAMS](/docs/api/datagrams/) 'e Datagram3 ekleyin:
 Toplam uzunluk: minimum 34 + veri yükü uzunluğu.
 
 
-
 ### SAM
 
 SAMv3 spesifikasyonuna STYLE=DATAGRAM2 ve STYLE=DATAGRAM3 ekleyin.
@@ -310,7 +308,6 @@ Hedef hash'i imzaya dahil etmek, tekrar saldırılarını önlemede etkili olmal
 
 Datagram3 formatı imzalar içermez, bu yüzden gönderici doğrulanamaz
 ve tekrar saldırılarına açıktır. Gerekli tüm doğrulama uygulama katmanında veya yönlendirici tarafından tıklama katmanında yapılmalıdır.
-
 
 
 ## Notlar

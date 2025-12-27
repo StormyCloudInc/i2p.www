@@ -21,8 +21,6 @@ Status:
 - Implementação de novas mensagens de construção de túneis a partir da versão 0.9.51.
 
 
-
-
 ## Visão Geral
 
 
@@ -106,7 +104,6 @@ Registro de Solicitação de Construção, Registro de Resposta de Construção.
 O tamanho será reduzido para eficiência.
 Essas mudanças devem ser suportadas por todos os saltos em um túnel, e todos os saltos devem ser ECIES.
 Essas mudanças estão definidas na proposta 157 [Prop157](/en/proposals/157-new-tbm/).
-
 
 
 ### Criptografia de Ponta-a-Ponta
@@ -204,7 +201,6 @@ e pode depender da quantidade da rede que foi atualizada para
 Até esta data, aproximadamente 85% da rede é 0.9.46 ou superior.
 
 
-
 ## Especificação
 
 X25519: Veja [ECIES](/en/docs/specs/ecies/).
@@ -259,9 +255,6 @@ Este é o padrão de mensagem "e":
   h = SHA256(h);
 
   // até aqui, todos os roteadores podem pré-calcular.
-
-
-
 
 
   ```
@@ -325,11 +318,7 @@ Isso é o mesmo que especificado em [Tunnel-Creation-ECIES](/en/docs/specs/tunne
   //h = SHA256(h || ciphertext)
 
 
-
-
-
   ```
-
 
 
 #### Payload
@@ -350,15 +339,11 @@ Não há respostas explícitas para mensagens de Armazenamento de Banco de Dados
 própria resposta como uma Mensagem de Alho para si mesmo, contendo uma mensagem de Status de Entrega.
 
 
-
-
 ## Justificação
 
 Este design maximiza a reutilização de primitivas criptográficas, protocolos e código existentes.
 
 Este design minimiza riscos.
-
-
 
 
 ## Notas de Implementação
@@ -369,12 +354,10 @@ Alguns roteadores recentes podem enviar mensagens netdb não-anônimas (ratchet 
 Os implementadores devem detectar e rejeitar esses registros e mensagens o mais cedo possível, para reduzir o uso da CPU.
 
 
-
 ## Questões
 
 Proposta 145 [Prop145](/en/proposals/145-ecies/) pode ou não ser reescrita para ser principalmente compatível com
 a Proposta 152 [Prop152](/en/proposals/152-ecies-tunnels/).
-
 
 
 ## Migração
@@ -386,7 +369,6 @@ do ritmo de desenvolvimento.
 
 Os detalhes da implementação e migração podem variar para
 cada implementação do I2P.
-
 
 
 ### Ponto-a-Ponto Básico

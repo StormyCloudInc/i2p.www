@@ -440,7 +440,6 @@ MixKey(d)
                      k = output[32:63]
 
 
-
 ### Délais d'expiration de session
 
 ### Multidiffusion
@@ -1330,8 +1329,6 @@ TAGSET
         If there are few TAGSET_ENTRIES remaining, EXTEND(n) is called.
 
 
-
-
 ### 4) Ratchets
 
 Ratchets mais pas aussi rapidement que Signal. Nous séparons l'accusé de réception de la clé reçue de la génération de la nouvelle clé. Dans un usage typique, Alice et Bob vont chacun effectuer un ratchet (deux fois) immédiatement dans une Nouvelle Session, mais n'effectueront plus de ratchet par la suite.
@@ -1447,9 +1444,7 @@ Tag Sender                    Tag Receiver
   (reuse key #1, do DH, create IB Tagset #3)
 
 
-
                    ... use tag set #3 ...
-
 
 
        After tag set 3, repeat the above

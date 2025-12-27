@@ -21,8 +21,6 @@ Stav:
 - Nové zprávy pro stavbu tunelů implementovány od verze 0.9.51.
 
 
-
-
 ## Přehled
 
 
@@ -105,7 +103,6 @@ Záznamu žádosti o stavbu a Záznamu odpovědi o stavbě.
 Velikost bude snížena pro efektivitu.
 Tyto změny musí být podporovány všemi přeskoky v tunelu a všechny přeskoky musí být ECIES.
 Tyto změny jsou definovány v návrhu 157 [Prop157](/en/proposals/157-new-tbm/).
-
 
 
 ### Šifrování End-to-End
@@ -203,7 +200,6 @@ verzi 0.9.46 nebo vyšší.
 K dnešnímu datu je přibližně 85% sítě ve verzi 0.9.46 nebo vyšší.
 
 
-
 ## Specifikace
 
 X25519: Viz [ECIES](/en/docs/specs/ecies/).
@@ -258,9 +254,6 @@ Toto je "e" vzor zprávy:
   h = SHA256(h);
 
   // až do této chvíle, toto může být předpočítáno všemi routery.
-
-
-
 
 
   ```
@@ -324,9 +317,6 @@ Toto je stejné jako specifikováno v [Tunnel-Creation-ECIES](/en/docs/specs/tun
   //h = SHA256(h || ciphertext)
 
 
-
-
-
   ```
 
 
@@ -348,15 +338,11 @@ Neexistují žádné explicitní odpovědi na zprávy o Databázovém úložišt
 vlastní odpověď jako Garlic Message pro sebe, obsahující zprávu o stavu doručení.
 
 
-
-
 ## Zdůvodnění
 
 Tento návrh maximalizuje opětovné použití existujících kryptografických primitiv, protokolů a kódu.
 
 Tento návrh minimalizuje riziko.
-
-
 
 
 ## Implementační poznámky
@@ -369,12 +355,10 @@ Implementátoři by měli detekovat a odmítat tyto záznamy a zprávy
 co nejdříve, aby snížili použití CPU.
 
 
-
 ## Problémy
 
 Návrh 145 [Prop145](/en/proposals/145-ecies/) může nebo nemusí být přepracován, aby byl většinově kompatibilní s
 Návrhem 152 [Prop152](/en/proposals/152-ecies-tunnels/).
-
 
 
 ## Migrace
@@ -386,7 +370,6 @@ rychlosti vývoje.
 
 Podrobnosti o implementaci a migraci se mohou lišit pro
 každou implementaci I2P.
-
 
 
 ### Základní bodované spojení
@@ -505,7 +488,6 @@ V tomto okamžiku nebudou moci routery starší než některá verze TBD
 stavět tunely přes většinu partnerů.
 
 Cílové vydání: 0.9.53, začátek 2022.
-
 
 
 ## Odkazy

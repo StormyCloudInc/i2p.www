@@ -86,7 +86,6 @@ Proto můžeme zvýšit MTU pro ratchet spojení o (151 - 69) = 82 bajtů,
 z 1730 na 1812.
 
 
-
 ## Specifikace
 
 Přidat následující změny a upřesnění do části Výběr a Sjednávání MTU v the [Streaming API documentation](/en/docs/api/streaming/).
@@ -124,7 +123,6 @@ Existuje pět případů, které je třeba zvážit:
 - Alice musí poslat MAX_PACKET_SIZE_INCLUDED v SYN
 
 
-
 ### 3) Dvouklíčová Alice a ví, že Bob je ElGamal
 1730 MTU ve všech paketech.
 
@@ -133,14 +131,12 @@ Existuje pět případů, které je třeba zvážit:
 - Alice může poslat MAX_PACKET_SIZE_INCLUDED v SYN, není požadováno pokud není != 1730
 
 
-
 ### 4) Dvouklíčová Alice a ví, že Bob je ECIES
 1812 MTU ve všech paketech.
 
 - ALICE_SYN_MAX_DATA = 1812
 - i2cp.streaming.maxMessageSize výchozí: 1812
 - Alice musí poslat MAX_PACKET_SIZE_INCLUDED v SYN
-
 
 
 ### 5) Dvouklíčová Alice a Bobův klíč neznámý
@@ -158,13 +154,10 @@ negotiated_mtu, minimum z MTU Alice a Boba, které má být použito jako maxim�
 v SYN ACK od Boba k Alice a ve všech následných paketech posílaných oběma směry.
 
 
-
-
 ## Odůvodnění
 
 Viz the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220) pro vysvětlení, proč je současná hodnota 1730.
 Viz the [ECIES specification](/en/docs/specs/ecies/#overhead) pro vysvětlení, proč je režie ECIES o 82 bajtů menší než u ElGamal.
-
 
 
 ## Poznámky k implementaci
@@ -188,12 +181,9 @@ Podobné strategie by mohly být použity pro optimální velikost jedné tunelo
 a tří tunelových zpráv (2952), i když tyto velikosti by měly být vzácné v praxi.
 
 
-
 ## Otázky
 
 Hodnota 1812 je předběžná. K potvrzení a případnému upravení.
-
-
 
 
 ## Migrace
@@ -204,6 +194,5 @@ To je existující možnost a sjednávání MTU je již součástí specifikace.
 Starší cíle ECIES budou podporovat 1730.
 Jakýkoli klient, který obdržel vyšší hodnotu, odpoví s 1730 a vzdálený konec
 dohodne snížení, jak je obvyklé.
-
 
 

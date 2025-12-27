@@ -17,7 +17,6 @@ Dieser Vorschlag wurde genehmigt und ist nun in der
 Es gibt noch keine bekannten Implementierungen; Implementierungsdaten / API-Versionen sind noch festzulegen.
 
 
-
 ## Überblick
 
 Da wir die Leistung des Netzwerks in den letzten Jahren mit neuen Protokollen, Verschlüsselungsarten und Verbesserungen der Staukontrolle erhöht haben, werden schnellere Anwendungen wie Video-Streaming möglich.
@@ -34,12 +33,10 @@ Dies wäre während Überlastungen oder DDoS-Angriffen auf einen Dienst sehr nü
 Dieser Vorschlag adressiert diese Probleme durch Hinzufügen von Bandbreitenparametern zu den Tunnelaufbauanforderungs- und Antwortnachrichten.
 
 
-
 ## Design
 
 Fügen Sie Bandbreitenparameter zu den Datensätzen in ECIES-Tunnelaufbaunachrichten (siehe [Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/)) im Mapping-Feld für Tunnelaufbauoptionen hinzu. Verwenden Sie kurze Parameternamen, da der verfügbare Platz für das Optionsfeld begrenzt ist.
 Tunnelaufbaunachrichten haben eine feste Größe, sodass die Nachrichten dadurch nicht größer werden.
-
 
 
 ## Spezifikation
@@ -115,7 +112,6 @@ ist das möglicherweise nicht möglich, insbesondere für eingehende Tunnel.
 Dieser Vorschlag betrifft nur Tunnel, die vom Ursprungsrouter erstellt wurden. Es ist keine Methode definiert, um Bandbreite für "entferntere" Tunnel anzufordern oder zuzuweisen, die vom Besitzer des anderen Endes einer End-to-End-Verbindung erstellt wurden.
 
 
-
 ## Sicherheitsanalyse
 
 Client-Fingerprinting oder -Korrelation kann basierend auf Anfragen möglich sein.
@@ -146,6 +142,5 @@ Implementierungen können jederzeit Unterstützung hinzufügen, es ist keine Koo
 
 Da derzeit keine API-Version definiert ist, in der Unterstützung für diesen Vorschlag erforderlich ist,
 sollten Router auf eine "b" Antwort prüfen, um die Unterstützung zu bestätigen.
-
 
 

@@ -95,7 +95,6 @@ Các mở rộng nhỏ I2CP và SAM được đề xuất để hỗ trợ truy 
 hồ sơ dịch vụ bởi khách hàng.
 
 
-
 ## Đặc Tả
 
 ### Đặc Tả Tùy Chọn LS2
@@ -176,7 +175,6 @@ Không cho phép wildcard như (dấu sao), (dấu sao)._tcp, hay _tcp.
 Mỗi dịch vụ được hỗ trợ phải có bản ghi riêng của mình.
 
 
-
 ### Đăng Ký Tên Dịch Vụ
 
 Các định danh không chuẩn mà không được liệt kê trong [REGISTRY](http://www.dns-sd.org/ServiceTypes.html) hoặc Linux /etc/services
@@ -229,7 +227,6 @@ Ví dụ:
 Đối với loại tra cứu 4, mục 5 là một Đích.
 
 
-
 ### Bản Tin HostReply
 
 
@@ -252,7 +249,6 @@ hoặc nếu Đích có mặt trong tin nhắn tra cứu (loại tra cứu 4).
 
 Nếu một loại tra cứu không được hỗ trợ,
 câu trả lời sẽ chứa một mã lỗi mới 7 (lookup type unsupported).
-
 
 
 ### Đặc Tả SAM
@@ -301,7 +297,6 @@ bằng cách cập nhật [NAMING](/en/docs/naming/) để chỉ định cách x
 Máy chủ nên chỉ định TTL ít nhất là 86400, và cổng chuẩn cho ứng dụng.
 
 
-
 ## Các Tính Năng Nâng Cao
 
 ### Tra Cứu Đệ Quy
@@ -311,7 +306,6 @@ Có thể mong muốn hỗ trợ các tra cứu đệ quy, nơi mà mỗi bộ c
 Điều này có lẽ không cần thiết, ít nhất trong một lần triển khai ban đầu.
 
 TODO
-
 
 
 ### Các trường cụ thể theo ứng dụng

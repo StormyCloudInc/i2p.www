@@ -91,7 +91,6 @@ Yukarıdakilerden odaklanacağımız noktalardan biri, sorun bildirmek için zam
 
 ## Yardımınızı çok isteriz!
 
-Yalnızca çeviriyi sağlayın, başka bir şey değil:
 
 Hepsi çok iddialı görünüyor; gerçekten de öyle! Ancak yukarıdaki maddelerin birçoğu örtüşüyor ve dikkatli planlamayla bunlarda ciddi ilerleme kaydedebiliriz.
 

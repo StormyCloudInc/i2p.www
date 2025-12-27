@@ -91,7 +91,6 @@ Một khía cạnh của những điều nêu trên mà chúng tôi sẽ tập t
 
 ## Chúng tôi rất mong nhận được sự giúp đỡ của bạn!
 
-Chỉ cung cấp bản dịch, không thêm gì khác:
 
 Tất cả những điều đó trông rất tham vọng, và đúng là như vậy! Nhưng nhiều hạng mục ở trên chồng chéo nhau, và với việc lập kế hoạch cẩn thận, chúng ta có thể tạo ra bước tiến đáng kể đối với chúng.
 

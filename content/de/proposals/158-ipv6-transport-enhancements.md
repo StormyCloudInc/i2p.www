@@ -27,7 +27,6 @@ müssen wir unsere Unterstützung für IPv6 verbessern und die Annahmen beseitig
 alle Router IPv4-fähig sind.
 
 
-
 ### Konnektivitätsprüfung
 
 Beim Auswählen von Peers für Tunnels oder beim Auswählen von OBEP/IBGW-Pfaden für das Routing von Nachrichten,
@@ -125,7 +124,6 @@ Es gibt drei Änderungen, die implementiert werden sollen.
 - Hinzufügen der Unterstützung für IPv6-Vermittlungen über IPv4- und IPv6-Vermittler
 
 
-
 ## Spezifikation
 
 ### 4/6 Caps
@@ -192,7 +190,6 @@ NTCP2 versteckt: Caps, s, v nur 4/6, mehrere sind erlaubt. Keine Notwendigkeit f
 Beispiel: NTCP2 caps="46" i=... s=... v="2"
 
 
-
 ### IPv6-Vermittler für IPv4
 
 Die folgenden Änderungen sind erforderlich, um Fehler und Inkonsistenzen in den Spezifikationen zu korrigieren.
@@ -212,7 +209,6 @@ obwohl sie tatsächlich nicht als Vermittler über IPv6 fungierten.
 Daher sollten Router der "C"-Fähigkeit auf einer IPv6-Adresse nur vertrauen, wenn die Router-Version 0.9.50 oder höher ist.
 
 
-
 [SSU-SPEC](/en/docs/specs/ssu/) sagt derzeit (Relay-Anfrage):
 
 Die IP-Adresse ist nur enthalten, wenn sie sich von der Quelladresse und dem Port des Pakets unterscheidet.
@@ -224,7 +220,6 @@ Fügen Sie folgendes hinzu:
 
 Die IP und der Port müssen angegeben werden, um eine IPv4-Adresse über IPv6 zu vermitteln, wenn diese Nachricht gesendet wird.
 Dies wird ab Version 0.9.50 unterstützt.
-
 
 
 ### IPv6-Vermittlungen

@@ -121,7 +121,6 @@ Tüm paketlerde 1812 MTU.
 - Alice SYN'de MAX_PACKET_SIZE_INCLUDED göndermelidir
 
 
-
 ### 3) Çifte Anahtar Alice ve Bob'un ElGamal olduğunu biliyor
 Tüm paketlerde 1730 MTU.
 
@@ -130,14 +129,12 @@ Tüm paketlerde 1730 MTU.
 - Alice, SYN'de MAX_PACKET_SIZE_INCLUDED gönderebilir, aksi belirtilmediği sürece gerek yoktur
 
 
-
 ### 4) Çifte Anahtar Alice ve Bob'un ECIES olduğunu biliyor
 Tüm paketlerde 1812 MTU.
 
 - ALICE_SYN_MAX_DATA = 1812
 - i2cp.streaming.maxMessageSize varsayılan: 1812
 - Alice SYN'de MAX_PACKET_SIZE_INCLUDED göndermelidir
-
 
 
 ### 5) Çifte Anahtar Alice ve Bob anahtarı bilinmiyor
@@ -160,7 +157,6 @@ Mevcut değerin neden 1730 olduğunu görmek için the [Java I2P source code](ht
 ECIES yükünün neden ElGamal'dan 82 bayt daha az olduğunu görmek için the [ECIES specification](/en/docs/specs/ecies/#overhead) 'e bakın.
 
 
-
 ## Uygulama Notları
 
 Eğer akış, optimal boyutta mesajlar oluşturuyorsa, ECIES-Ratchet katmanının bu boyutun ötesinde dolgu yapmaması çok önemlidir.
@@ -180,12 +176,9 @@ ECIES'deki önerilen dolgu algoritması şu şekildedir:
 Benzer stratejiler, pratikte nadir olacak olan optimal bir tünel mesajı boyutu (964) ve üç tünel mesajı boyutu (2952) için kullanılabilir.
 
 
-
 ## Sorunlar
 
 1812 değeri ön araştırmadir. Doğrulanması ve olası ayarlamalar gerekebilir.
-
-
 
 
 ## Geçiş
@@ -196,6 +189,5 @@ Bu, mevcut bir seçenek ve MTU müzakeresi zaten spesifikasyonun bir parçası.
 Daha eski ECIES hedefleri 1730'u destekleyecektir.
 Daha yüksek bir değer alan herhangi bir müşteri 1730 ile yanıt verecek ve uzak uç tarafından
 her zamanki gibi aşağı doğru müzakere edilecektir.
-
 
 

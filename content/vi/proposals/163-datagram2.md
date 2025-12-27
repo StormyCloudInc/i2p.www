@@ -18,7 +18,6 @@ Các thay đổi đã được tích hợp vào đặc tả.
 Kiểm tra tài liệu triển khai để biết trạng thái.
 
 
-
 ## Tổng quan
 
 Được tách ra từ [Prop123](/proposals/123-new-netdb-entries/) như một đề xuất riêng biệt.
@@ -109,7 +108,6 @@ Số giao thức I2CP tiêu chuẩn cho các datagram có thể phát lại là 
 
   Tổng chiều dài: Chiều dài tải + 423+
 ```
-
 
 
 ## Thiết kế
@@ -296,7 +294,6 @@ Thêm Datagram3 vào [DATAGRAMS](/docs/api/datagrams/) như sau:
 Tổng chiều dài: tối thiểu 34 + chiều dài tải.
 
 
-
 ### SAM
 
 Thêm STYLE=DATAGRAM2 và STYLE=DATAGRAM3 vào đặc tả SAMv3.
@@ -309,7 +306,6 @@ Thiết kế này thêm 2 byte chi phí bổ sung cho datagram có thể phát l
 Điều này chấp nhận được.
 
 
-
 ## Phân tích Bảo mật
 
 Việc bao gồm băm đích trong chữ ký nên có hiệu quả trong việc ngăn chặn các cuộc tấn công phát lại.
@@ -317,7 +313,6 @@ Việc bao gồm băm đích trong chữ ký nên có hiệu quả trong việc 
 Định dạng Datagram3 thiếu chữ ký, do đó người gửi không thể được xác minh,
 và các cuộc tấn công phát lại là có thể xảy ra. Mọi xác thực cần thiết phải được thực hiện ở lớp ứng dụng,
 hoặc bởi router ở lớp ratchet.
-
 
 
 ## Ghi chú
@@ -328,15 +323,12 @@ hoặc bởi router ở lớp ratchet.
   đạt được kết quả tốt nhất, hãy giới hạn tải khoảng 10 KB hoặc ít hơn.
 
 
-
-
 ## Tương thích
 
 Không có. Các ứng dụng phải được viết lại để chuyển hướng các thông điệp Datagram2 I2CP
 dựa trên giao thức và/hoặc cổng.
 Các thông điệp Datagram2 bị điều hướng sai và được giải thích
 như là datagram có thể phát lại hoặc các thông điệp truyền streaming sẽ thất bại dựa trên chữ ký, định dạng hoặc cả hai.
-
 
 
 ## Di chuyển

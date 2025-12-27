@@ -446,7 +446,6 @@ MixKey(d)
                      k = output[32:63]
 
 
-
 ### Thời Gian Chờ Session
 
 ### Multicast
@@ -1336,8 +1335,6 @@ TAGSET
         If there are few TAGSET_ENTRIES remaining, EXTEND(n) is called.
 
 
-
-
 ### 4) Ratchets
 
 Ratchets nhưng không nhanh gần bằng Signal. Chúng tôi tách việc xác nhận khóa đã nhận khỏi việc tạo khóa mới. Trong sử dụng thông thường, Alice và Bob sẽ mỗi người ratchet (hai lần) ngay lập tức trong New Session, nhưng sẽ không ratchet nữa.
@@ -1453,9 +1450,7 @@ Tag Sender                    Tag Receiver
   (reuse key #1, do DH, create IB Tagset #3)
 
 
-
                    ... use tag set #3 ...
-
 
 
        After tag set 3, repeat the above

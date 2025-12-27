@@ -86,7 +86,6 @@ Daher können wir das MTU für Ratchet-Verbindungen um (151 - 69) = 82 Bytes erh
 von 1730 auf 1812.
 
 
-
 ## Spezifikation
 
 Fügen Sie die folgenden Änderungen und Klarstellungen zum Abschnitt MTU-Auswahl und -Aushandlung von the [Streaming API documentation](/en/docs/api/streaming/) hinzu.
@@ -124,7 +123,6 @@ Keine Änderung, 1730 MTU in allen Paketen.
 - Alice muss MAX_PACKET_SIZE_INCLUDED im SYN senden
 
 
-
 ### 3) Alice Dual-Key und weiß, dass Bob ElGamal ist
 1730 MTU in allen Paketen.
 
@@ -133,14 +131,12 @@ Keine Änderung, 1730 MTU in allen Paketen.
 - Alice kann MAX_PACKET_SIZE_INCLUDED im SYN senden, nicht erforderlich, es sei denn != 1730
 
 
-
 ### 4) Alice Dual-Key und weiß, dass Bob ECIES ist
 1812 MTU in allen Paketen.
 
 - ALICE_SYN_MAX_DATA = 1812
 - i2cp.streaming.maxMessageSize Standard: 1812
 - Alice muss MAX_PACKET_SIZE_INCLUDED im SYN senden
-
 
 
 ### 5) Alice Dual-Key und Bob-Schlüssel ist unbekannt
@@ -158,13 +154,10 @@ negotiated_mtu, das Minimum aus Alice's und Bob's MTU, zu verwenden als Maximal-
 im SYN ACK von Bob zu Alice und in allen nachfolgenden gesendeten Paketen in beide Richtungen.
 
 
-
-
 ## Rechtfertigung
 
 Siehe the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220) für den Grund, warum der aktuelle Wert 1730 ist.
 Siehe the [ECIES specification](/en/docs/specs/ecies/#overhead) für den Grund, warum der ECIES-Overhead 82 Bytes weniger als ElGamal ist.
-
 
 
 ## Implementierungshinweise
@@ -188,12 +181,9 @@ Ein empfohlenes Auffüllungs-Algorithmus in ECIES ist wie folgt:
 und der Drei-Tunnel-Nachricht-Größe (2952) verwendet werden, obwohl diese Größen in der Praxis selten sein sollten.
 
 
-
 ## Probleme
 
 Der Wert 1812 ist vorläufig. Er muss bestätigt und möglicherweise angepasst werden.
-
-
 
 
 ## Migration
@@ -204,6 +194,5 @@ Dies ist eine bestehende Option und MTU-Aushandlung ist bereits Teil der Spezifi
 Ältere ECIES-Ziele unterstützen 1730.
 Jeder Client, der einen höheren Wert erhält, wird mit 1730 antworten, und das ferne Ende
 wird abwärts verhandeln, wie üblich.
-
 
 

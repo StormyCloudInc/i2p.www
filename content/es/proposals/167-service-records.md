@@ -94,7 +94,6 @@ Se proponen extensiones menores a I2CP y SAM para facilitar la recuperación de
 registros de servicio por los clientes.
 
 
-
 ## Especificación
 
 ### Especificación de Opciones LS2
@@ -175,7 +174,6 @@ No se permite el uso de comodines como (asterisco), (asterisco)._tcp, o _tcp.
 Cada servicio compatible debe tener su propio registro.
 
 
-
 ### Registro de Nombre de Servicio
 
 Los identificadores no estándar que no están listados en [REGISTRY](http://www.dns-sd.org/ServiceTypes.html) o Linux /etc/services
@@ -227,7 +225,6 @@ Ejemplo:
 Para el tipo de búsqueda 4, el ítem 5 es un Destino.
 
 
-
 ### Mensaje de Respuesta de Host
 
 
@@ -250,7 +247,6 @@ o si el Destino estaba presente en el mensaje de búsqueda (tipo de búsqueda 4)
 
 Si un tipo de búsqueda no es compatible,
 la respuesta contendrá un nuevo código de error 7 (tipo de búsqueda no compatible).
-
 
 
 ### Especificación SAM
@@ -299,7 +295,6 @@ Esto fue rechazado por dos razones:
 Los servidores deben especificar un TTL de al menos 86400, y el puerto estándar para la aplicación.
 
 
-
 ## Características Avanzadas
 
 ### Búsquedas Recursivas
@@ -309,7 +304,6 @@ es revisado para encontrar un registro de servicio que apunte a otro conjunto de
 Esto probablemente no sea necesario, al menos en una implementación inicial.
 
 TODO
-
 
 
 ### Campos específicos de la aplicación

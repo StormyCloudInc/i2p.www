@@ -95,7 +95,6 @@ Extensões menores de I2CP e SAM são propostas para facilitar a recuperação d
 registros de serviço pelos clientes.
 
 
-
 ## Especificação
 
 ### Especificação de Opção LS2
@@ -176,7 +175,6 @@ Não é permitido curinga como (asterisco), (asterisco)._tcp, ou _tcp.
 Cada serviço suportado deve ter seu próprio registro.
 
 
-
 ### Registro de Nome de Serviço
 
 Identificadores não padrão que não estão listados em [REGISTRY](http://www.dns-sd.org/ServiceTypes.html) ou Linux /etc/services
@@ -229,7 +227,6 @@ Exemplo:
 Para o tipo de busca 4, o item 5 é um Destination.
 
 
-
 ### Mensagem de Resposta de Host
 
 
@@ -252,7 +249,6 @@ ou se o Destination estava presente na mensagem de busca (tipo de busca 4).
 
 Se um tipo de busca não for suportado,
 a resposta conterá um novo código de erro 7 (tipo de busca não suportado).
-
 
 
 ### Especificação SAM
@@ -301,7 +297,6 @@ Isso foi rejeitado por duas razões:
 Os servidores devem especificar um TTL de pelo menos 86400, e a porta padrão para a aplicação.
 
 
-
 ## Recursos Avançados
 
 ### Busca Recursiva
@@ -311,7 +306,6 @@ Pode ser desejável suportar buscas recursivas, onde cada conjunto de leasing su
 Provavelmente isso não é necessário, pelo menos em uma implementação inicial.
 
 TODO
-
 
 
 ### Campos específicos para a aplicação

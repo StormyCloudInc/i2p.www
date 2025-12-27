@@ -80,7 +80,6 @@ Birinci aşamada, ECIES geçişleri için Oluşturma İstek Kaydı ve Oluşturma
 İkinci aşamada, Oluşturma İstek Mesajı, Oluşturma Yanıt Mesajı, Oluşturma İstek Kaydı ve Oluşturma Yanıt Kaydı'nın yeni bir sürümünü ekleyeceğiz. Verimlilik için boyut küçültülecektir. Bu değişikliklerin bir tüneldeki tüm geçişler tarafından desteklenmesi gerekir ve tüm geçişler ECIES olmalıdır. Bu değişiklikler öneri 157'de tanımlanmıştır [Öneri157](/en/proposals/157-new-tbm/).
 
 
-
 ### Uçtan Uca Şifreleme
 
 #### Geçmiş
@@ -156,7 +155,6 @@ ağın ne kadarının 0.9.46 veya daha yüksek bir sürüme yükseltildiğine ba
 Bu tarih itibarıyla, ağın yaklaşık %85'i 0.9.46 veya daha yüksek bir sürümdedir.
 
 
-
 ## Spesifikasyon
 
 X25519: [ECIES](/en/docs/specs/ecies/) 'e bakın.
@@ -207,9 +205,6 @@ Bu, "e" mesaj deseni:
   h = SHA256(h);
 
   // buraya kadar, tüm yönlendiriciler tarafından önceden hesaplanabilir.
-
-
-
 
 
   ```
@@ -273,11 +268,7 @@ Bu, tünel oluşturma mesajları için [Tünel-Oluşumu-ECIES](/en/docs/specs/tu
   //h = SHA256(h || şifreli metin)
 
 
-
-
-
   ```
-
 
 
 #### Yük
@@ -296,15 +287,11 @@ Bunlar, [I2NP](/en/docs/specs/i2np/) ve [Öneri154](/en/proposals/154-ecies-look
 Veritabanı Mağaza mesajlarına doğrudan yanıtlar yoktur. Gönderen, kendine bir Sarımsak Mesajı olarak kendi yanıtını içeren bir Teslim Durumu mesajı olarak ekleyebilir.
 
 
-
-
 ## Gerekçe
 
 Bu tasarım, mevcut kriptografik ilkelere, protokollere ve kodlara yeniden kullanımı maksimize eder.
 
 Bu tasarım riski en aza indirir.
-
-
 
 
 ## Uygulama Notları
@@ -318,13 +305,10 @@ Yarar uygulayıcılar, bu kayıtları ve mesajları mümkün olduğu kadar erken
 ve işlemci kullanımını azaltmalı.
 
 
-
-
 ## Sorunlar
 
 Öneri 145 [Öneri145](/en/proposals/145-ecies/), çoğunlukla Öneri 152 [Öneri152](/en/proposals/152-ecies-tunnels/)
 ile uyumlu olacak şekilde yeniden yazılabilir veya yazılamaz.
-
 
 
 ## Geçiş
@@ -334,7 +318,6 @@ ve yaklaşık bir yıl sürecektir. Aşamalar aşağıdaki gibidir.
 Her aşamanın belirli bir sürüme atanması, geliştirme hızına bağlı olarak belirlenecektir.
 
 Uygulama ve geçişin detayları her I2P uygulaması için farklı olabilir.
-
 
 
 ### Temel Noktadan Noktaya

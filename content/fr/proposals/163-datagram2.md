@@ -18,7 +18,6 @@ Implémenté dans Java I2P à partir de l'API 0.9.66.
 Vérifiez la documentation de l'implémentation pour le statut.
 
 
-
 ## Vue d'ensemble
 
 Extrait de [Prop123](/proposals/123-new-netdb-entries/) en tant que proposition distincte.
@@ -109,7 +108,6 @@ Le numéro de protocole I2CP standard pour les datagrammes réadmettables est PR
 
   Longueur totale : Longueur de la charge utile + 423+
 ```
-
 
 
 ## Conception
@@ -297,7 +295,6 @@ Ajoutez Datagram3 à [DATAGRAMS](/docs/api/datagrams/) comme suit :
 Longueur totale : minimum 34 + longueur de charge utile.
 
 
-
 ### SAM
 
 Ajoutez STYLE=DATAGRAM2 et STYLE=DATAGRAM3 à la spécification SAMv3.
@@ -310,7 +307,6 @@ Cette conception ajoute 2 octets de surcoût aux datagrammes réadmettables pour
 Cela est acceptable.
 
 
-
 ## Analyse de sécurité
 
 Inclure le hachage cible dans la signature devrait être efficace pour prévenir les attaques de replay.
@@ -318,7 +314,6 @@ Inclure le hachage cible dans la signature devrait être efficace pour prévenir
 Le format Datagram3 n'a pas de signatures, donc l'expéditeur ne peut pas être vérifié,
 et les attaques de replay sont possibles. Toute validation requise doit être effectuée au niveau de l'application,
 ou par le routeur au niveau de la gestion des clés.
-
 
 
 ## Notes
@@ -331,15 +326,12 @@ ou par le routeur au niveau de la gestion des clés.
   de meilleurs résultats, limitez la charge utile à environ 10 Ko ou moins.
 
 
-
-
 ## Compatibilité
 
 Aucune. Les applications doivent être réécrites pour acheminer les messages I2CP Datagram2
 basés sur le protocole et/ou le port.
 Les messages Datagram2 qui sont mal acheminés et interprétés comme
 des messages de datagrammes réadmettables ou streaming échoueront basés sur la signature, le format, ou les deux.
-
 
 
 ## Migration

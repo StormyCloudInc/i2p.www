@@ -17,7 +17,6 @@ Esta propuesta fue aprobada y ahora está en la
 Todavía no hay implementaciones conocidas; las fechas de implementación / versiones de la API están por determinar.
 
 
-
 ## Visión General
 
 A medida que hemos aumentado el rendimiento de la red en los últimos años
@@ -40,7 +39,6 @@ Esta propuesta aborda estos problemas añadiendo parámetros de ancho de banda
 a los mensajes de solicitud y respuesta de construcción de túnel.
 
 
-
 ## Diseño
 
 Añadir parámetros de ancho de banda a los registros en mensajes de construcción de túnel ECIES (ver [Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/))
@@ -48,7 +46,6 @@ en el campo de mapeo de opciones de construcción de túnel. Utilizar nombres de
 para el campo de opciones es limitado.
 Los mensajes de construcción de túnel son de tamaño fijo por lo que esto no aumenta el
 tamaño de los mensajes.
-
 
 
 ## Especificación
@@ -141,7 +138,6 @@ método definido para solicitar o asignar ancho de banda para túneles "del otro
 por el propietario del otro extremo de una conexión de extremo a extremo.
 
 
-
 ## Análisis de Seguridad
 
 El fingerprinting o correlación del cliente puede ser posible en función de las solicitudes.
@@ -177,6 +173,5 @@ Las implementaciones pueden añadir soporte en cualquier momento, no se necesita
 
 Como actualmente no hay una versión de la API definida donde se requiera el soporte para esta propuesta,
 los routers deben verificar una respuesta "b" para confirmar el soporte.
-
 
 

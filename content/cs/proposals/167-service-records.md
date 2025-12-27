@@ -95,7 +95,6 @@ Jsou navržena malá rozšíření I2CP a SAM pro usnadnění získání
 záznamů služby klienty.
 
 
-
 ## Specifikace
 
 ### Specifikace možností LS2
@@ -176,7 +175,6 @@ Není povoleno žádné zástupné znakování jako hvězdička, hvězdička._tc
 Každá podporovaná služba musí mít svůj vlastní záznam.
 
 
-
 ### Registr názvů služeb
 
 Nestandardní identifikátory, které nejsou uvedeny v [REGISTRY](http://www.dns-sd.org/ServiceTypes.html) nebo Linux /etc/services
@@ -229,7 +227,6 @@ Příklad:
 Pro typ vyhledávání 4, item 5 je Destinace.
 
 
-
 ### HostReply Message
 
 
@@ -252,7 +249,6 @@ nebo pokud byla Destinace přítomna ve vyhledávací zprávě (typ vyhledáván
 
 Pokud není typ vyhledávání podporován,
 odpověď bude obsahovat nový chybový kód 7 (typ vyhledávání nepodporován).
-
 
 
 ### Specifikace SAM
@@ -301,7 +297,6 @@ To bylo odmítnuto ze dvou důvodů:
 Servery by měly specifikovat TTL alespoň 86400 a standardní port pro aplikaci.
 
 
-
 ## Pokročilé funkce
 
 ### Rekurzivní vyhledávání
@@ -311,7 +306,6 @@ je kontrolován pro záznam služby ukazující na jiný leaseset, ve stylu DNS.
 To pravděpodobně není nutné, alespoň v počáteční implementaci.
 
 TODO
-
 
 
 ### Pole specifická pro aplikaci

@@ -25,7 +25,6 @@ Esta propuesta es para implementar mejoras en los transportes SSU y NTCP2 para I
 A medida que IPv6 crece en todo el mundo y los entornos solo IPv6 (especialmente en móviles) se vuelven más comunes, necesitamos mejorar nuestro soporte para IPv6 y eliminar las suposiciones de que todos los routers son compatibles con IPv4.
 
 
-
 ### Verificación de Conectividad
 
 Al seleccionar pares para túneles, o al seleccionar rutas OBEP/IBGW para dirigir mensajes,
@@ -120,7 +119,6 @@ Hay tres cambios que se implementarán.
 - Añadir soporte para presentaciones IPv6 a través de presentadores IPv4 e IPv6
 
 
-
 ## Especificación
 
 ### Cap 4/6
@@ -185,7 +183,6 @@ NTCP2 oculto: Caps, s, solo v 4/6, se permite múltiple No es necesario tener do
 Ejemplo: NTCP2 caps="46" i=... s=... v="2"
 
 
-
 ### Presentadores IPv6 para IPv4
 
 Se requieren los siguientes cambios para corregir errores e inconsistencias en las especificaciones.
@@ -205,7 +202,6 @@ aunque en realidad no actuaban como un presentador vía IPv6.
 Por lo tanto, los routers solo deberían confiar en la capacidad 'C' en una dirección IPv6 si la versión del router es 0.9.50 o superior.
 
 
-
 [SSU-SPEC](/en/docs/specs/ssu/) dice actualmente (Solicitud de retransmisión):
 
 La dirección IP solo se incluye si es diferente de la dirección y puerto de origen del paquete.
@@ -217,7 +213,6 @@ Añadir lo siguiente:
 
 La IP y el puerto deben incluirse para introducir una dirección IPv4 al enviar este mensaje sobre IPv6.
 Esto es soportado desde la versión 0.9.50.
-
 
 
 ### Presentaciones IPv6

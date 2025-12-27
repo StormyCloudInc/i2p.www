@@ -18,7 +18,6 @@ Implementado en Java I2P a partir de la API 0.9.66.
 Revise la documentación de implementación para el estado.
 
 
-
 ## Resumen
 
 Extraído de [Prop123](/proposals/123-new-netdb-entries/) como una propuesta separada.
@@ -109,7 +108,6 @@ El número de protocolo I2CP estándar para datagramas replicables es PROTO_DATA
 
   Longitud total: Longitud de la carga útil + 423+
 ```
-
 
 
 ## Diseño
@@ -298,7 +296,6 @@ Añadir Datagram3 a [DATAGRAMS](/docs/api/datagrams/) como sigue:
 Longitud total: mínimo 34 + longitud de la carga útil.
 
 
-
 ### SAM
 
 Añadir STYLE=DATAGRAM2 y STYLE=DATAGRAM3 a la especificación SAMv3.
@@ -311,7 +308,6 @@ Este diseño añade 2 bytes de sobrecarga a los datagramas replicables para las 
 Esto es aceptable.
 
 
-
 ## Análisis de Seguridad
 
 Incluir el hash de destino en la firma debería ser efectivo para prevenir ataques de repetición.
@@ -319,7 +315,6 @@ Incluir el hash de destino en la firma debería ser efectivo para prevenir ataqu
 El formato de Datagram3 carece de firmas, por lo que el remitente no puede ser verificado,
 y son posibles ataques de repetición. Cualquier validación requerida debe
 realizarse en la capa de aplicación, o por el router en la capa de ratchet.
-
 
 
 ## Notas
@@ -332,15 +327,12 @@ realizarse en la capa de aplicación, o por el router en la capa de ratchet.
   mejores resultados, limite la carga útil a aproximadamente 10 KB o menos.
 
 
-
-
 ## Compatibilidad
 
 Ninguna. Las aplicaciones deben ser reescritas para enrutar mensajes de I2CP de Datagram2
 basados en protocolo y/o puerto.
 Los mensajes de Datagram2 que se enruten incorrectamente y se interpreten como
 mensajes de datagrama replicable o streaming fallarán basados en firma, formato o ambos.
-
 
 
 ## Migración

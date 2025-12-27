@@ -219,8 +219,6 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
   // यहां तक ​​किया जा सकता है सभी राउटरों द्वारा पहले से ही गणना की जाती है।
 
 
-
-
   ```
 
 #### मैसेज के लिए KDF
@@ -278,8 +276,6 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 
   // MixHash(ciphertext) आवश्यक नहीं है
   //h = SHA256(h || ciphertext)
-
-
 
 
   ```

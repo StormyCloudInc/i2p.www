@@ -21,8 +21,6 @@ Estado:
 - Nuevos mensajes de construcción de túneles implementados desde la versión 0.9.51.
 
 
-
-
 ## Visión general
 
 
@@ -107,7 +105,6 @@ Registro de Solicitud de Construcción y Registro de Respuesta de Construcción.
 El tamaño será reducido para eficiencia.
 Estos cambios deben ser compatibles por todos los saltos en un túnel, y todos los saltos deben ser ECIES.
 Estos cambios están definidos en la propuesta 157 [Prop157](/en/proposals/157-new-tbm/).
-
 
 
 ### Cifrado de extremo a extremo
@@ -205,7 +202,6 @@ y puede depender de la cantidad de la red que se ha actualizado a
 En esta fecha, aproximadamente el 85% de la red está en 0.9.46 o superior.
 
 
-
 ## Especificación
 
 X25519: Ver [ECIES](/en/docs/specs/ecies/).
@@ -260,9 +256,6 @@ Este es el patrón de mensaje "e":
   h = SHA256(h);
 
   // hasta aquí, puede ser precalculado por todos los routers.
-
-
-
 
 
   ```
@@ -326,11 +319,7 @@ Esto es lo mismo que se especifica en [Tunnel-Creation-ECIES](/en/docs/specs/tun
   //h = SHA256(h || ciphertext)
 
 
-
-
-
   ```
-
 
 
 #### Payload
@@ -351,15 +340,11 @@ No hay respuestas explícitas a mensajes de Almacén de Base de Datos. El remite
 propia respuesta como un Mensaje Garlic para sí mismo, conteniendo un mensaje de Estado de Entrega.
 
 
-
-
 ## Justificación
 
 Este diseño maximiza la reutilización de primitivas criptográficas, protocolos y códigos existentes.
 
 Este diseño minimiza el riesgo.
-
-
 
 
 ## Notas de Implementación
@@ -371,12 +356,10 @@ Los implementadores deben detectar y rechazar estos registros y mensajes
 lo antes posible, para reducir el uso de CPU.
 
 
-
 ## Problemas
 
 La propuesta 145 [Prop145](/en/proposals/145-ecies/) puede o no ser reescrita para ser mayormente compatible con
 la Propuesta 152 [Prop152](/en/proposals/152-ecies-tunnels/).
-
 
 
 ## Migración
@@ -388,7 +371,6 @@ la velocidad de desarrollo.
 
 Los detalles de la implementación y migración pueden variar para
 cada implementación de I2P.
-
 
 
 ### Conexiones Básicas Punto a Punto

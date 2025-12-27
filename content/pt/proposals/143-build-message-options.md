@@ -34,7 +34,6 @@ Definir mais campos de opção de forma rígida poderia causar problemas mais ta
 Este documento propõe um novo esquema de mapeamento de opções flexível.
 
 
-
 ## Design
 
 Precisamos de uma representação de opção que seja compacta e ainda assim flexível, para que possamos encaixar múltiplas
@@ -82,7 +81,6 @@ Há 495 bytes sobrando no TBRM.
 
 Estas mudanças são para os Registros de Construção de Túnel, e assim podem ser usadas em todos os sabores de Mensagem de Construção -
 Pedido de Construção de Túnel, Pedido de Construção de Túnel Variável, Resposta de Construção de Túnel e Resposta de Construção de Túnel Variável.
-
 
 
 ## Migração

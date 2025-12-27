@@ -21,8 +21,6 @@ Status:
 - Neue Tunnel-Build-Nachrichten implementiert ab 0.9.51.
 
 
-
-
 ## Übersicht
 
 
@@ -105,7 +103,6 @@ Build-Request-Record und Build-Response-Record hinzu.
 Die Größe wird zur Effizienzreduzierung verkleinert.
 Diese Änderungen müssen von allen Schritten in einem Tunnel unterstützt werden, und alle Schritte müssen ECIES sein.
 Diese Änderungen sind in Vorschlag 157 [Prop157](/en/proposals/157-new-tbm/) definiert.
-
 
 
 ### End-to-End-Verschlüsselung
@@ -202,7 +199,6 @@ unterschiedlich ausfallen und können von der Menge des Netzwerks abhängen, die
 Zum aktuellen Zeitpunkt sind etwa 85% des Netzwerks auf 0.9.46 oder höher.
 
 
-
 ## Spezifikation
 
 X25519: Siehe [ECIES](/en/docs/specs/ecies/).
@@ -257,9 +253,6 @@ Dies ist das "e"-Nachrichtenmuster:
   h = SHA256(h);
 
   // bis hierhin können alle Router vorkalkulieren.
-
-
-
 
 
   ```
@@ -321,11 +314,7 @@ Dies ist dasselbe wie in [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-
   //h = SHA256(h || ciphertext)
 
 
-
-
-
   ```
-
 
 
 #### Nutzlast
@@ -346,15 +335,11 @@ Es gibt keine expliziten Antworten auf Datenbankspeicher-Nachrichten. Der Absend
 eigene Antwort als Knoblauch-Nachricht an sich selbst bündeln, die eine Lieferstatusnachricht enthält.
 
 
-
-
 ## Rechtfertigung
 
 Dieses Design maximiert die Wiederverwendung bestehender kryptografischer Primitive, Protokolle und Codes.
 
 Dieses Design minimiert das Risiko.
-
-
 
 
 ## Implementierungsnotizen
@@ -367,12 +352,10 @@ Implementierer sollten diese Datensätze und Nachrichten
 so früh wie möglich erkennen und zurückweisen, um die CPU-Auslastung zu reduzieren.
 
 
-
 ## Probleme
 
 Vorschlag 145 [Prop145](/en/proposals/145-ecies/) könnte eventuell umgeschrieben werden, um größtenteils
 kompatibel mit Vorschlag 152 [Prop152](/en/proposals/152-ecies-tunnels/) zu sein.
-
 
 
 ## Migration
@@ -384,7 +367,6 @@ Entwicklungstempo ab.
 
 Details der Implementierung und Migration können für
 jede I2P-Implementierung variieren.
-
 
 
 ### Grundlagen Point-to-Point

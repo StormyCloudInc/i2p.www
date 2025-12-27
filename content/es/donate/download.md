@@ -18,7 +18,6 @@ Ahora que tienes I2P, aquí tienes cómo empezar:
 3. **Explore I2P Sites** - Start browsing .i2p sites and discover the I2P network
 4. **Get Support** - Join our [community forums](/en/contact/#forums) or [IRC channels](/en/contact/#irc) if you need help
 
-Proporcione SOLO la traducción, nada más:
 
 ### Próximos Pasos
 

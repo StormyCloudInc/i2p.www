@@ -27,7 +27,6 @@ potřebujeme zlepšit podporu IPv6 a odstranit předpoklady,
 že všechny směrovače podporují IPv4.
 
 
-
 ### Kontrola připojení
 
 Při výběru peerů pro tunely nebo při výběru cest OBEP/IBGW pro směrování zpráv,
@@ -125,7 +124,6 @@ Budou implementovány tři změny.
 - Přidejte podporu pro úvody IPv6 prostřednictvím zavaděčů IPv4 a IPv6
 
 
-
 ## Specifikace
 
 ### 4/6 schopnosti
@@ -192,7 +190,6 @@ Skrytý NTCP2: Caps, s, v pouze 4/6, vícenásobné je povoleno Není potřeba d
 Příklad: NTCP2 caps="46" i=... s=... v="2"
 
 
-
 ### Zavaděči IPv6 pro IPv4
 
 K nápravě chyb a nesrovnalostí ve specifikacích jsou nutné následující změny.
@@ -212,7 +209,6 @@ i když ve skutečnosti nefungovaly jako zavaděči přes IPv6.
 Proto by routery měly důvěřovat schopnosti 'C' na IPv6 adresách pouze, pokud je verze routeru 0.9.50 nebo vyšší.
 
 
-
 [SSU-SPEC](/en/docs/specs/ssu/) momentálně říká (Relay Request):
 
 IP adresa je zahrnuta pouze pokud je odlišná od zdrojové adresy a portu paketu.
@@ -224,7 +220,6 @@ Přidejte následující:
 
 IP a port musí být zahrnuty pro úvod IPv4 při odesílání této zprávy přes IPv6.
 Toto je podporováno od verze 0.9.50.
-
 
 
 ### Úvody IPv6

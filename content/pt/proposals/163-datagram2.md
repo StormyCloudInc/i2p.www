@@ -18,7 +18,6 @@ Implementado em Java I2P a partir da API 0.9.66.
 Verifique a documentação de implementação para status.
 
 
-
 ## Visão Geral
 
 Extraído de [Prop123](/proposals/123-new-netdb-entries/) como uma proposta separada.
@@ -109,7 +108,6 @@ O número padrão de protocolo I2CP para datagramas repliáveis é PROTO_DATAGRA
 
   Comprimento total: Comprimento do payload + 423+
 ```
-
 
 
 ## Design
@@ -296,7 +294,6 @@ Adicione Datagram3 a [DATAGRAMS](/docs/api/datagrams/) como segue:
 Comprimento total: mínimo 34 + comprimento do payload.
 
 
-
 ### SAM
 
 Adicione STYLE=DATAGRAM2 e STYLE=DATAGRAM3 à especificação SAMv3.
@@ -309,7 +306,6 @@ Este design adiciona 2 bytes de sobrecarga para datagramas repliáveis para band
 Isso é aceitável.
 
 
-
 ## Análise de Segurança
 
 Incluir o hash alvo na assinatura deve ser efetivo em prevenir ataques de replay.
@@ -317,7 +313,6 @@ Incluir o hash alvo na assinatura deve ser efetivo em prevenir ataques de replay
 O formato Datagram3 não possui assinaturas, então o remetente não pode ser verificado,
 e ataques de replay são possíveis. Qualquer validação necessária deve ser feita na camada de aplicação,
 ou pelo roteador na camada de ratchet.
-
 
 
 ## Notas
@@ -329,15 +324,12 @@ ou pelo roteador na camada de ratchet.
   melhores resultados, limite o payload a cerca de 10 KB ou menos.
 
 
-
-
 ## Compatibilidade
 
 Nenhuma. As aplicações devem ser reescritas para rotear mensagens I2CP Datagram2
 com base no protocolo e/ou porta.
 Mensagens Datagram2 que são mal roteadas e interpretadas como
 mensagens de datagrama repliáveis ou de streaming falharão com base na assinatura, formato, ou ambos.
-
 
 
 ## Migração

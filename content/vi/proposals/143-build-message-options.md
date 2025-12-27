@@ -35,7 +35,6 @@ Sử dụng cấu trúc 'mapping' sẽ dùng ít nhất 6 byte mỗi tùy chọn
 Tài liệu này đề xuất một lược đồ ánh xạ tùy chọn mới và linh hoạt.
 
 
-
 ## Thiết kế
 
 Chúng ta cần một biểu diễn tùy chọn vừa gọn gàng vừa linh hoạt, để có thể kết hợp nhiều
@@ -83,7 +82,6 @@ Có 495 byte dự phòng trong TBRM.
 
 Những thay đổi này là đối với các Bản ghi Xây dựng Đường hầm, và do đó có thể được sử dụng trong tất cả
 các dạng Thông điệp Xây dựng - Yêu cầu Xây dựng Đường hầm, Yêu cầu Xây dựng Đường hầm Biến, Phản hồi Xây dựng Đường hầm, và Phản hồi Xây dựng Đường hầm Biến.
-
 
 
 ## Di cư

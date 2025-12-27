@@ -21,8 +21,6 @@ toc: true
 - 새로운 터널 빌드 메시지는 0.9.51에 구현됨.
 
 
-
-
 ## 개요
 
 
@@ -97,7 +95,6 @@ LS2 [Prop123](/en/proposals/123-new-netdb-entries/)와 ECIES-X25519-AEAD-Ratchet
 크기를 줄여 효율성을 높일 예정임.
 이 변경 사항은 터널의 모든 홉에서 지원해야 하며, 모든 홉은 ECIES여야 함.
 이 변경 사항은 제안 157 [Prop157](/en/proposals/157-new-tbm/)에 정의됨.
-
 
 
 ### 종단간 암호화
@@ -187,7 +184,6 @@ ElGamal 세션 키 관리자의 일부가 필요할 수 있음,
 현재 이 날짜 기준으로 약 85%의 네트워크가 0.9.46 이상임.
 
 
-
 ## 명세
 
 X25519: [ECIES](/en/docs/specs/ecies/) 참조.
@@ -241,9 +237,6 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
   h = SHA256(h);
 
   // 여기까지는 모든 라우터가 미리 계산할 수 있음.
-
-
-
 
 
   ```
@@ -306,11 +299,7 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
   //h = SHA256(h || ciphertext)
 
 
-
-
-
   ```
-
 
 
 #### 페이로드
@@ -332,15 +321,11 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 전송 상태 메시지를 포함하는 갈릭 메시지로 자신에게 응답을 번들로 보낼 수 있음.
 
 
-
-
 ## 정당화
 
 이 설계는 기존 암호화 기본 요소, 프로토콜 및 코드를 최대한 재사용함.
 
 이 설계는 위험을 최소화함.
-
-
 
 
 ## 구현 노트
@@ -353,12 +338,10 @@ ECIES-X25519-AEAD-Ratchet [Prop144](/en/proposals/144-ecies-x25519-aead-ratchet/
 CPU 사용량을 줄여야 함.
 
 
-
 ## 문제점
 
 제안 145 [Prop145](/en/proposals/145-ecies/)는 제안 152 [Prop152](/en/proposals/152-ecies-tunnels/)와 대부분 호환되게
 다시 작성되거나 그렇지 않을 수 있음.
-
 
 
 ## 마이그레이션
@@ -368,7 +351,6 @@ CPU 사용량을 줄여야 함.
 개발 속도에 따라 다름.
 
 각 I2P 구현에 따라 구현 및 마이그레이션의 세부 사항이 다를 수 있음.
-
 
 
 ### 기본 포인트-투-포인트

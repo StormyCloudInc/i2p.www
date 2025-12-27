@@ -83,7 +83,6 @@ Diese Änderungen betreffen die Tunnel Build Records und können daher in allen 
 Tunnel Build Request, Variable Tunnel Build Request, Tunnel Build Reply und Variable Tunnel Build Reply.
 
 
-
 ## Migration
 
 Der ungenutzte Platz in den Tunnel Build Records wird mit zufälligen Daten gefüllt und derzeit ignoriert.

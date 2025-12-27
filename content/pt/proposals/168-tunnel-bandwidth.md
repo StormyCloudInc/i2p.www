@@ -17,7 +17,6 @@ Esta proposta foi aprovada e agora está na
 Ainda não há implementações conhecidas; datas de implementação / versões da API ainda serão definidas.
 
 
-
 ## Visão Geral
 
 À medida que aumentamos o desempenho da rede nos últimos anos
@@ -40,7 +39,6 @@ Esta proposta aborda essas questões adicionando parâmetros de largura de banda
 mensagens de solicitação e resposta de construção de túnel.
 
 
-
 ## Design
 
 Adicione parâmetros de largura de banda aos registros em mensagens de construção de túnel ECIES (ver [Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/))
@@ -48,7 +46,6 @@ no campo de mapeamento de opções de construção de túnel. Use nomes de parâ
 para o campo de opções é limitado.
 As mensagens de construção de túnel são de tamanho fixo, assim não aumenta o
 tamanho das mensagens.
-
 
 
 ## Especificação
@@ -141,7 +138,6 @@ método definido para solicitar ou alocar largura de banda para túneis de "extr
 pelo proprietário da outra extremidade de uma conexão fim a fim.
 
 
-
 ## Análise de Segurança
 
 A impressão digital ou correlação do cliente pode ser possível com base em solicitações.
@@ -177,6 +173,5 @@ As implementações podem adicionar suporte a qualquer momento, sem necessidade 
 
 Como atualmente não há versão de API definida onde o suporte para esta proposta seja obrigatório,
 os roteadores devem verificar uma resposta "b" para confirmar o suporte.
-
 
 

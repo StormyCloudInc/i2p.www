@@ -17,7 +17,6 @@ Có thể sẽ có sửa đổi nhỏ.
 Xem [I2NP](/en/docs/specs/i2np/) và [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) để biết đặc tả cuối cùng.
 
 
-
 ## Tổng quan
 
 
@@ -114,7 +113,6 @@ Kích thước bản ghi được chọn sao cho một STBM được mã hóa ga
 với một thông điệp đường hầm duy nhất. Xem phụ lục dưới đây.
 
 
-
 #### OutboundTunnelBuildReply: Loại 26
 
 Chúng tôi định nghĩa một thông điệp OutboundTunnelBuildReply mới.
@@ -133,8 +131,6 @@ Sau đó, mã hóa garlic thông điệp đến nguồn với các khóa đối 
 
 Bằng cách mã hóa garlic OTBRM và STBM, chúng tôi cũng tránh các
 vấn đề có thể xảy ra với sự tương thích tại IBGW và OBEP của các đường hầm đôi.
-
-
 
 
 ### Luồng Thông Điệp
@@ -161,7 +157,6 @@ STBM: Thông điệp xây dựng đường hầm ngắn (loại 25)
                                      IBGW
 
 
-
   Xây dựng tuyến vào D-E-F
   Gửi qua tuyến ra hiện có A-B-C
 
@@ -179,9 +174,7 @@ STBM: Thông điệp xây dựng đường hầm ngắn (loại 25)
                                      IBGW
 
 
-
 ```
-
 
 
 ### Mã Hóa Bản Ghi
@@ -199,7 +192,6 @@ Hiện tại không có kế hoạch thay đổi mã hóa tầng cho các đư�
 Thay đổi mã hóa tầng thành ChaCha20 là chủ đề cần nghiên cứu thêm.
 
 
-
 ### Thông Điệp Dữ Liệu Đường Hầm Mới
 
 Hiện tại không có kế hoạch thay đổi Thông Điệp Dữ Liệu Đường Hầm 1KB được sử dụng cho các đường hầm được xây dựng với
@@ -211,13 +203,10 @@ Nó có thể có ích để giới thiệu một thông điệp I2NP mới mà 
 Đây là một chủ đề cần nghiên cứu thêm.
 
 
-
-
 ## Một Số Quy Định
 
 
 ### Bản Ghi Yêu Cầu Ngắn
-
 
 
 #### Bản Ghi Yêu Cầu Ngắn Không Mã Hóa
@@ -285,7 +274,6 @@ Kích thước tối đa của Mapping (bao gồm trường độ dài) là 98 b
 và giá trị tối đa của trường độ dài Mapping là 96.
 
 
-
 #### Bản Ghi Yêu Cầu Ngắn Mã Hóa
 
 Tất cả các trường đều là big-endian, ngoại trừ khóa công khai thểm thời là little-endian.
@@ -300,7 +288,6 @@ bytes    0-15: Hash định danh rút gọn của Hop
   bytes 202-217: Poly1305 MAC
 
 ```
-
 
 
 ### Bản Ghi Trả Lời Ngắn
@@ -355,12 +342,9 @@ bytes   0-201: Bản Ghi Trả Lời Xây Dựng Ngắn mã hóa ChaCha20
 ```
 
 
-
 ### KDF
 
 Xem phần KDF bên dưới.
-
-
 
 
 ### ShortTunnelBuild
@@ -370,7 +354,6 @@ Thông điệp này được gửi đến các bước trung gian, OBEP, và IBE
 Nó không được gửi đến IBGW (sử dụng Xây Dựng Đường Hầm vào mã hóa garlic thay thế).
 Khi được nhận bởi OBEP, nó được chuyển thành một OutboundTunnelBuildReply,
 mã hóa garlic, và gửi đến người tạo.
-
 
 
 ```
@@ -389,8 +372,6 @@ mã hóa garlic, và gửi đến người tạo.
 #### Ghi chú
 
 * Số lượng bản ghi điển hình là 4, cho tổng kích thước là 873.
-
-
 
 
 ### OutboundTunnelBuildReply
@@ -425,7 +406,6 @@ Nó luôn luôn được mã hóa garlic.
 
 * Số lượng bản ghi điển hình là 4, cho tổng kích thước là 873.
 * Thông điệp này nên được mã hóa garlic.
-
 
 
 ### KDF
@@ -468,9 +448,6 @@ keydata = HKDF(ck, ZEROLEN, "SMTunnelReplyKey", 64)
 ```
 
 
-
-
-
 ## Biện Minh
 
 Thiết kế này tối đa hóa tái sử dụng các nguyên tố mã hóa, giao thức và mã hiện có.
@@ -492,9 +469,7 @@ ChaCha20 tránh yêu cầu đối với kích thước dữ liệu là bội s�
   các đường hầm ra cũng nên được xây dựng với 4 bản ghi.
 
 
-
 ## Vấn Đề
-
 
 
 ## Di Cư
@@ -524,14 +499,11 @@ Giai đoạn 2 (phát hành tiếp theo): Bật mặc định
 Không có vấn đề tương thích ngược. Các thông điệp mới chỉ có thể được gửi đến các bộ định tuyến hỗ trợ chúng.
 
 
-
-
 ## Phụ lục
 
 
 Không có độ trễ garlic cho STBM vào chưa mã hóa,
 nếu chúng ta không sử dụng ITBM:
-
 
 
 ```
@@ -560,7 +532,6 @@ Kích thước 4 khe hiện tại: 4 * 528 + độ trễ = 3 thông điệp đư
   - 16 MAC
   ----
   173 kích thước bản ghi xây dựng dạng văn bản tối đa (so với 222 hiện tại)
-
 
 
 ```
@@ -630,7 +601,6 @@ OTBRM bọc garlic sẽ nhỏ hơn một chút so với STBM bọc garlic,
 vì các hướng dẫn giao hàng là LOCAL không phải ROUTER,
 không có khối DATETIME bao gồm, và
 nó sử dụng một tag 8-byte thay vì khóa tạm thời 32-byte cho một thông điệp 'N' đầy đủ.
-
 
 
 ## Tài liệu Tham Khảo

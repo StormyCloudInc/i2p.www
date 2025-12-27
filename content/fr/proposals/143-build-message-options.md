@@ -35,7 +35,6 @@ Définir plus de champs d'options de manière rigide pourrait poser des problèm
 Ce document propose un nouveau schéma de mappage d'options flexible.
 
 
-
 ## Conception
 
 Nous avons besoin d'une représentation d'option qui soit compacte et pourtant flexible, afin que nous puissions insérer plusieurs
@@ -83,7 +82,6 @@ Il y a 495 octets disponibles dans le TBRM.
 
 Ces changements concernent les Enregistrements de Construction de Tunnel, et peuvent donc être utilisés dans toutes les variantes de Message de Construction -
 Demande de Construction de Tunnel, Demande de Construction de Tunnel Variable, Réponse de Construction de Tunnel, et Réponse de Construction de Tunnel Variable.
-
 
 
 ## Migration

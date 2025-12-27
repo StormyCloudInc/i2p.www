@@ -20,7 +20,6 @@ Maintenant que vous avez I2P, voici comment commencer :
 
 ---
 
-Fournissez UNIQUEMENT la traduction, rien d'autre :
 
 ### Étapes suivantes
 

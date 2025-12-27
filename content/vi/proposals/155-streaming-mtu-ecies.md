@@ -86,7 +86,6 @@ Do đó, chúng ta có thể tăng MTU cho các kết nối ratchet lên (151 - 
 từ 1730 lên 1812.
 
 
-
 ## Thông số kỹ thuật
 
 Thêm các thay đổi và làm rõ sau vào phần Lựa chọn và Thương lượng MTU của the [Streaming API documentation](/en/docs/api/streaming/).
@@ -124,7 +123,6 @@ MTU 1812 trong tất cả các gói.
 - Alice phải gửi MAX_PACKET_SIZE_INCLUDED trong SYN
 
 
-
 ### 3) Alice có hai khóa và biết Bob là ElGamal
 MTU 1730 trong tất cả các gói.
 
@@ -133,14 +131,12 @@ MTU 1730 trong tất cả các gói.
 - Alice có thể gửi MAX_PACKET_SIZE_INCLUDED trong SYN, không bắt buộc trừ khi khác 1730
 
 
-
 ### 4) Alice có hai khóa và biết Bob là ECIES
 MTU 1812 trong tất cả các gói.
 
 - ALICE_SYN_MAX_DATA = 1812
 - i2cp.streaming.maxMessageSize mặc định: 1812
 - Alice phải gửi MAX_PACKET_SIZE_INCLUDED trong SYN
-
 
 
 ### 5) Alice có hai khóa và khóa của Bob không rõ
@@ -158,13 +154,10 @@ negotiated_mtu, tối thiểu của MTU của Alice và Bob, được sử dụn
 trong SYN ACK từ Bob đến Alice, và trong tất cả các gói gửi sau đó theo cả hai hướng.
 
 
-
-
 ## Biện minh
 
 Xem the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220) để biết lý do tại sao giá trị hiện tại là 1730.
 Xem the [ECIES specification](/en/docs/specs/ecies/#overhead) để biết tại sao tiêu thụ ECIES thấp hơn ElGamal là 82 byte.
-
 
 
 ## Ghi chú thực hiện
@@ -188,12 +181,9 @@ Chính sách tương tự có thể được sử dụng tại kích thước t�
 và kích thước ba thông điệp đường hầm (2952), mặc dù các kích thước này nên hiếm gặp trong thực tế.
 
 
-
 ## Vấn đề
 
 Giá trị 1812 chỉ là sơ bộ. Cần được xác nhận và có thể điều chỉnh.
-
-
 
 
 ## Di cư
@@ -204,6 +194,5 @@ Không có vấn đề tương thích ngược.
 Điểm đến ECIES cũ sẽ hỗ trợ 1730.
 Bất kỳ khách hàng nào nhận được một giá trị cao hơn sẽ phản hồi với 1730, và đầu xa
 sẽ thương lượng xuống, như thường lệ.
-
 
 

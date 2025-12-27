@@ -34,7 +34,6 @@ Pevné definování více polí možností by mohlo později způsobit problémy
 Tento dokument navrhuje nový, flexibilní systém mapování možností.
 
 
-
 ## Návrh
 
 Potřebujeme reprezentaci možností, která je kompaktní a přesto flexibilní, abychom mohli umístit více
@@ -82,7 +81,6 @@ V TBRM je 495 volných bajtů.
 
 Tyto změny se týkají Záznamů o Výstavbě Tunelu, a tak mohou být použity ve všech typech Zpráv o Výstavbě -
 Žádost o Výstavbu Tunelu, Žádost o Variabilní Výstavbu Tunelu, Odpověď na Výstavbu Tunelu a Odpověď na Variabilní Výstavbu Tunelu.
-
 
 
 ## Migrace

@@ -17,7 +17,6 @@ Sujeto a revisiones menores.
 Ver [I2NP](/en/docs/specs/i2np/) y [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) para la especificación final.
 
 
-
 ## Visión General
 
 
@@ -156,7 +155,6 @@ STBM: Mensaje de construcción de túnel corto (tipo 25)
                                      IBGW
 
 
-
   Construcción de entrada D-E-F
   Enviado a través del túnel de salida existente A-B-C
 
@@ -174,9 +172,7 @@ STBM: Mensaje de construcción de túnel corto (tipo 25)
                                      IBGW
 
 
-
 ```
-
 
 
 ### Cifrado de Registro
@@ -194,7 +190,6 @@ esta especificación; seguiría siendo AES, como se usa actualmente en todos los
 Cambiar el cifrado de capa a ChaCha20 es un tema para más investigación.
 
 
-
 ### Nuevo Mensaje de Datos de Túnel
 
 Actualmente no hay planes para cambiar el Mensaje de Datos de Túnel de 1KB usado para los túneles construidos con
@@ -206,13 +201,10 @@ Esto reduciría la sobrecarga para mensajes grandes.
 Esto es un tema para más investigación.
 
 
-
-
 ## Especificación
 
 
 ### Registro de Solicitud Corto
-
 
 
 #### Registro de Solicitud Corto Sin Cifrar
@@ -279,7 +271,6 @@ El tamaño máximo del Mapping (incluyendo el campo de longitud) es 98 bytes,
 y el valor máximo del campo de longitud de Mapping es 96.
 
 
-
 #### Registro de Solicitud Corto Cifrado
 
 Todos los campos son big-endian excepto la clave pública efímera que es little-endian.
@@ -293,7 +284,6 @@ bytes    0-15: hash truncado de identidad del salto
   bytes  48-201: ShortBuildRequestRecord cifrado con ChaCha20
   bytes 202-217: Poly1305 MAC
 ```
-
 
 
 ### Registro de Respuesta Corto
@@ -345,12 +335,9 @@ bytes   0-201: ShortBuildReplyRecord cifrado con ChaCha20
 ```
 
 
-
 ### KDF
 
 Ver sección KDF abajo.
-
-
 
 
 ### ShortTunnelBuild
@@ -360,7 +347,6 @@ Este mensaje se envía a saltos intermedios, OBEP y IBEP (creador).
 No puede enviarse al IBGW (usar Construcción de Túnel Entrante envuelto con ajo en su lugar).
 Cuando lo recibe el OBEP, se transforma en un OutboundTunnelBuildReply,
 envuelto con ajo, y se envía al originador.
-
 
 
 ```
@@ -379,8 +365,6 @@ envuelto con ajo, y se envía al originador.
 #### Notas
 
 * El número típico de registros es 4, para un tamaño total de 873.
-
-
 
 
 ### OutboundTunnelBuildReply
@@ -415,7 +399,6 @@ Siempre está cifrado con ajo.
 
 * El número típico de registros es 4, para un tamaño total de 873.
 * Este mensaje debe ser cifrado con ajo.
-
 
 
 ### KDF
@@ -457,9 +440,6 @@ keydata = HKDF(ck, ZEROLEN, "SMTunnelReplyKey", 64)
 ```
 
 
-
-
-
 ## Justificación
 
 Este diseño maximiza la reutilización de primitivas criptográficas, protocolos y código existentes.
@@ -481,9 +461,7 @@ ChaCha20 evita un requisito para tamaños de datos múltiplos de 16.
   también deberían construirse túneles salientes con 4 registros.
 
 
-
 ## Problemas
-
 
 
 ## Migración
@@ -513,14 +491,11 @@ Fase 2 (próxima versión): Habilitar por defecto
 No hay problemas de compatibilidad hacia atrás. Los nuevos mensajes solo pueden ser enviados a enrutadores que los soportan.
 
 
-
-
 ## Apéndice
 
 
 Sin sobrecarga de ajo para STBM entrante no cifrado,
 si no usamos ITBM:
-
 
 
 ```
@@ -614,7 +589,5 @@ El OTBRM envuelto con ajo será ligeramente más pequeño que el STBM envuelto c
 porque las instrucciones de entrega son LOCAL no ROUTER,
 no se incluye ningún bloque de DATETIME, y
 usa una etiqueta de 8 bytes en lugar de la clave efímera de 32 bytes para un mensaje completo 'N'.
-
-
 
 

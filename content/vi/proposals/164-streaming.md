@@ -25,8 +25,6 @@ gói SYN có thể chứa dữ liệu ban đầu (như GET hoặc POST) mà
 Charlie sẽ xử lý ngay lập tức.
 
 
-
-
 ## Thiết Kế
 
 Giải pháp là Alice đưa vào hash đích của Bob trong dữ liệu SYN đã ký.
@@ -43,7 +41,6 @@ Tất cả các tùy chọn đều được bảo vệ bởi chữ ký, như th�
 viết lại hash.
 
 Nếu Alice và Charlie sử dụng API 0.9.58 hoặc mới hơn, mọi nỗ lực phát lại của Bob sẽ bị từ chối.
-
 
 
 ## Đặc Tả
@@ -100,11 +97,9 @@ như NACKs cho 8 thông điệp khác nhau, các thông điệp đó sẽ không
 trong quá trình bắt tay SYNCHRONIZE và NACKs sẽ không có nghĩa gì.
 
 
-
 ## Di Cư
 
 Các thực thi có thể thêm hỗ trợ bất cứ lúc nào, không cần phối hợp.
 Các router Java I2P và i2pd đã thực thi điều này trong API 0.9.58 (phát hành tháng 3 năm 2023).
-
 
 

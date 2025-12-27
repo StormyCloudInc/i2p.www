@@ -443,7 +443,6 @@ MixKey(d)
                      k = output[32:63]
 
 
-
 ### 세션 타임아웃
 
 ### 멀티캐스트
@@ -1333,8 +1332,6 @@ TAGSET_ENTRY
         If there are few TAGSET_ENTRIES remaining, EXTEND(n) is called.
 
 
-
-
 ### 4) Ratchets
 
 Ratchet하지만 Signal만큼 빠르지는 않습니다. 우리는 수신된 키의 ack를 새 키 생성과 분리합니다. 일반적인 사용에서 Alice와 Bob은 각각 New Session에서 즉시 ratchet(두 번)하지만, 다시는 ratchet하지 않습니다.
@@ -1450,9 +1447,7 @@ Tag Sender                    Tag Receiver
   (reuse key #1, do DH, create IB Tagset #3)
 
 
-
                    ... use tag set #3 ...
-
 
 
        After tag set 3, repeat the above

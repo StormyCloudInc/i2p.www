@@ -91,7 +91,6 @@ Jedním z aspektů výše uvedeného, na který se zaměříme, je udržování 
 
 ## Budeme rádi za vaši pomoc!
 
-Poskytněte POUZE překlad, nic jiného:
 
 That all looks very ambitious, and it is! But many of the items above overlap, and with careful planning we can make a serious dent in them.
 

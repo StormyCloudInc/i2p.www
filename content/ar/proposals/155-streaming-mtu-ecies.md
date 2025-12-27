@@ -86,7 +86,6 @@ toc: true
 من 1730 إلى 1812.
 
 
-
 ## المواصفات
 
 أضف التغييرات والتوضيحات التالية إلى قسم اختيار وتفاوض الـ MTU في the [Streaming API documentation](/en/docs/api/streaming/).
@@ -124,7 +123,6 @@ toc: true
 - يجب على Alice إرسال MAX_PACKET_SIZE_INCLUDED في SYN
 
 
-
 ### 3) Alice ثنائي المفتاح و تعرف أن Bob هو ElGamal
 1730 MTU في جميع الحزم.
 
@@ -133,14 +131,12 @@ toc: true
 - قد ترسل Alice MAX_PACKET_SIZE_INCLUDED في SYN، ليس مطلوبًا إلا إذا كان != 1730
 
 
-
 ### 4) Alice ثنائي المفتاح و تعرف أن Bob هو ECIES
 1812 MTU في جميع الحزم.
 
 - ALICE_SYN_MAX_DATA = 1812
 - i2cp.streaming.maxMessageSize الافتراضي: 1812
 - يجب على Alice إرسال MAX_PACKET_SIZE_INCLUDED في SYN
-
 
 
 ### 5) Alice ثنائي المفتاح و مفتاح Bob غير معروف
@@ -158,13 +154,10 @@ negotiated_mtu، وهو الحد الأدنى من الـ MTU لدى Alice وBob
 في SYN ACK من Bob إلى Alice، وفي جميع الحزم اللاحقة المرسلة في كلا الاتجاهين.
 
 
-
-
 ## التبرير
 
 انظر إلى the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220) لمعرفة لماذا القيمة الحالية هي 1730.
 انظر إلى the [ECIES specification](/en/docs/specs/ecies/#overhead) لمعرفة لماذا الحمل الزائد لـ ECIES أقل بـ 82 بايت من ElGamal.
-
 
 
 ## ملاحظات التنفيذ
@@ -188,12 +181,9 @@ negotiated_mtu، وهو الحد الأدنى من الـ MTU لدى Alice وBob
 وحجم رسالة النفق الثلاثة (2952)، على الرغم من أن هذه الأحجام ينبغي أن تكون نادرة في الممارسة.
 
 
-
 ## المشكلات
 
 القيمة 1812 أولية. ليتم تأكيدها وربما تعديلها.
-
-
 
 
 ## الهجرة
@@ -203,6 +193,5 @@ negotiated_mtu، وهو الحد الأدنى من الـ MTU لدى Alice وBob
 
 ستدعم الوجهات القديمة لـ ECIES القيمة 1730.
 أي عميل يتلقى قيمة أعلى سيرد بقيمة 1730، وسوف يتفاوض الطرف البعيد للأسفل، كما هو معتاد.
-
 
 

@@ -17,7 +17,6 @@ Předmět drobných úprav.
 Pro konečnou specifikaci vizte [I2NP](/en/docs/specs/i2np/) a [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/).
 
 
-
 ## Přehled
 
 
@@ -115,7 +114,6 @@ Délka záznamu je zvolena tak, aby se STBM zašifrovaný česnekem vešel do
 jedné tunelové zprávy. Viz níže uvedená příloha.
 
 
-
 #### OutboundTunnelBuildReply: Typ 26
 
 Definujeme novou zprávu OutboundTunnelBuildReply.
@@ -134,8 +132,6 @@ Poté zprávu zašifruje česnekem směrem k autorovi s odvozenými symetrickým
 
 Zašifrováním OTBRM a STBM česnekem se také vyhneme jakýmkoli potenciálním
 problémům s kompatibilitou na IBGW a OBEP spárovaných tunelů.
-
-
 
 
 ### Tok zprávy
@@ -162,7 +158,6 @@ STBM: Krátká zpráva o stavbě tunelu (typ 25)
                                      IBGW
 
 
-
   Příchozí Stavba D-E-F
   Odesláno stávajícím odchozím tunelem A-B-C
 
@@ -179,9 +174,7 @@ STBM: Krátká zpráva o stavbě tunelu (typ 25)
                                      IBGW
 
 
-
 ```
-
 
 
 ### Šifrování záznamů
@@ -210,13 +203,10 @@ To by snížilo režii pro velké zprávy.
 Toto je téma pro další výzkum.
 
 
-
-
 ## Specifikace
 
 
 ### Krátký záznam požadavku
-
 
 
 #### Krátký nezakódovaný záznam požadavku
@@ -281,7 +271,6 @@ Maximální velikost Mappingu (včetně pole délky) je 98 bajtů,
 a maximální hodnota pole délky Mappingu je 96.
 
 
-
 #### Zašifrovaný krátký záznam požadavku
 
 Všechna pole jsou big-endian kromě efemérního veřejného klíče, který je little-endian.
@@ -296,7 +285,6 @@ bytes    0-15: Zkrácený hash identity hopa
   bytes 202-217: Poly1305 MAC
 
 ```
-
 
 
 ### Krátký záznam odpovědi
@@ -350,12 +338,9 @@ bytes   0-201: ChaCha20 zašifrovaný ShortBuildReplyRecord
 ```
 
 
-
 ### KDF
 
 Viz níže uvedená sekce KDF.
-
-
 
 
 ### ShortTunnelBuild
@@ -365,7 +350,6 @@ Tato zpráva je odeslána mezi střední přeskoky, OBEP a IBEP (vytvořitel).
 Nesmí být odeslána do IBGW (místo toho použijte zabalenou česnekovým InboundTunnelBuild).
 Při přijetí OBEP se transformuje na OutboundTunnelBuildReply,
 zabalenou česnekem, a odesílá se autorovi.
-
 
 
 ```
@@ -384,8 +368,6 @@ zabalenou česnekem, a odesílá se autorovi.
 #### Poznámky
 
 * Typický počet záznamů je 4, pro celkovou velikost 873.
-
-
 
 
 ### OutboundTunnelBuildReply
@@ -420,7 +402,6 @@ Vždy je zašifrován česnekem.
 
 * Typický počet záznamů je 4, pro celkovou velikost 873.
 * Tato zpráva by měla být šifrována česnekem.
-
 
 
 ### KDF
@@ -463,9 +444,6 @@ keydata = HKDF(ck, ZEROLEN, "SMTunnelReplyKey", 64)
 ```
 
 
-
-
-
 ## Zdůvodnění
 
 Tento návrh maximalizuje opětovné použití stávajících kryptografických primitiv, protokolů a kódu.
@@ -487,9 +465,7 @@ ChaCha20 se vyhýbá požadavku na velikost dat jako násobek 16.
   odchozí tunely by měly být postaveny se 4 záznamy také.
 
 
-
 ## Otázky
-
 
 
 ## Migrace
@@ -519,14 +495,11 @@ Fáze 2 (další vydání): Povolit ve výchozím nastavení
 Neexistují žádné problémy s kompatibilitou zpětně. Nové zprávy mohou být odeslány pouze směrovačům, které je podporují.
 
 
-
-
 ## Příloha
 
 
 Bez režie česnekem pro nešifrovaný příchozí STBM,
 pokud nepoužíváme ITBM:
-
 
 
 ```
@@ -555,7 +528,6 @@ Aktuální velikost pro 4 sloty: 4 * 528 + režie = 3 tunelové zprávy
   - 16 MAC
   ----
   173 maximální velikost otevřeného stavebního záznamu (vs. 222 nyní)
-
 
 
 ```
@@ -625,7 +597,6 @@ Pokud je vše HKDF, požadovaný prostor otevřeného textu je asi 58 bajtů (be
 protože dodací pokyny jsou LOKÁLNÍ, ne ROUTER,
 neexistuje zahrnutý DATETIME blok a
 používá 8-bajtový tag místo 32-bajtového efemérního klíče pro plné 'N' zprávy.
-
 
 
 ## Odkazy

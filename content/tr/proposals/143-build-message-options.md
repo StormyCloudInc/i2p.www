@@ -34,7 +34,6 @@ Daha fazla seçenek alanını katı bir şekilde tanımlamak daha sonra sorunlar
 Bu belge, yeni, esnek bir seçenek haritalama şeması önerir.
 
 
-
 ## Tasarım
 
 29 bayta birden fazla, farklı uzunlukta seçenek sığdırabilmemiz için kompakt ve esnek bir seçenek temsil sistemine ihtiyacımız var.
@@ -82,7 +81,6 @@ TBRM'de 495 boş bayt var.
 
 Bu değişiklikler Tünel Yapı Kayıtlarına yöneliktir ve bu nedenle tüm Yapı Mesajı çeşitlerinde kullanılabilir -
 Tünel Yapı İsteği, Değişken Tünel Yapı İsteği, Tünel Yapı Yanıtı ve Değişken Tünel Yapı Yanıtı.
-
 
 
 ## Geçiş

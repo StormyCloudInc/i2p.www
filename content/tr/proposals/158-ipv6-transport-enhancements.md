@@ -26,7 +26,6 @@ IPv6 dünyada büyüdükçe ve IPv6 destekli yapılandırmalar (özellikle mobil
 IPv6 desteğimizi geliştirmemiz ve tüm yönlendiricilerin IPv4 destekli olduğu varsayımını ortadan kaldırmamız gerekiyor.
 
 
-
 ### Bağlantı Kontrolü
 
 Eşler seçilirken, tüneller veya mesajları yönlendirmek için OBEP/IBGW yolları seçilirken,
@@ -124,7 +123,6 @@ Uygulanacak üç değişiklik bulunmaktadır.
 - IPv4 ve IPv6 tanıtıcıları üzerinden IPv6 tanıtımlarını destekle
 
 
-
 ## Şartname
 
 ### 4/6 Yetenek
@@ -189,7 +187,6 @@ Gizli NTCP2: Yetenekler, s, v sadece 4/6, birden fazla izin verilir. İki adres,
 Örnek: NTCP2 caps="46" i=... s=... v="2"
 
 
-
 ### IPv4 için IPv6 Tanıtıcıları
 
 Hataları ve tutarsızlıkları düzeltmek için aşağıdaki değişiklikler gereklidir.
@@ -209,7 +206,6 @@ ancak bunlar gerçekte IPv6 üzerinden tanıtıcı olarak hareket etmiyorlardı.
 Bu nedenle, yönlendiriciler bir IPv6 adresinde 'C' yeteneğine yalnızca yönlendirici sürümü 0.9.50 veya üstü ise güvenmelidir.
 
 
-
 [SSU-SPEC](/en/docs/specs/ssu/) şu anda (Aktarım İsteği) diyor ki:
 
 IP adresi yalnızca paket kaynağı adresi ve portundan farklı gelmesi durumunda dahil edilir.
@@ -221,7 +217,6 @@ Aşağıdaki ekleyin:
 
 Bu mesajı IPv6 üzerinden gönderirken bir IPv4 adresini tanıtmak için IP ve port eklenmelidir.
 Bu, 0.9.50 sürümünden itibaren desteklenmektedir.
-
 
 
 ### IPv6 Tanıtımları

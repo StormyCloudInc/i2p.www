@@ -17,7 +17,6 @@ Unterliegt geringfügigen Überarbeitungen.
 Siehe [I2NP](/en/docs/specs/i2np/) und [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) für die endgültige Spezifikation.
 
 
-
 ## Übersicht
 
 
@@ -114,7 +113,6 @@ Die Datensatzlänge wird so gewählt, dass ein knoblauchverschlüsseltes STBM
 in eine einzelne Tunnel-Nachricht passt. Siehe den Anhang unten.
 
 
-
 #### OutboundTunnelBuildReply: Typ 26
 
 Wir definieren eine neue OutboundTunnelBuildReply-Nachricht.
@@ -133,8 +131,6 @@ Dann knoblauchverschlüsselt es die Nachricht an den Urheber mit den abgeleitete
 
 Durch das Knoblauchverschlüsseln der OTBRM und STBM vermeiden wir auch potenzielle
 Kompatibilitätsprobleme beim IBGW und OBEP der gepaarten Tunnel.
-
-
 
 
 ### Nachrichtenfluss
@@ -162,7 +158,6 @@ Ersteller <-------F---------E-------- D <--/
                                    IBGW
 
 
-
 Eingehender Aufbau D-E-F
 Gesendet durch bestehenden ausgehenden A-B-C
 
@@ -180,9 +175,7 @@ Ersteller <------ F <------ E <------ D <--/
                                    IBGW
 
 
-
 ```
-
 
 
 ### Datensatzverschlüsselung
@@ -200,7 +193,6 @@ dieser Spezifikation gebaut wurden, zu ändern; sie würde AES bleiben, wie derz
 Eine Änderung der Schichtverschlüsselung zu ChaCha20 ist ein Thema für weitere Forschung.
 
 
-
 ### Neue Tunnel-Daten-Nachricht
 
 Derzeit gibt es keinen Plan, die 1KB-Tunnel-Daten-Nachricht, die für Tunnel gebaut mit
@@ -212,13 +204,10 @@ Dies würde den Overhead für große Nachrichten reduzieren.
 Dies ist ein Thema für weitere Forschung.
 
 
-
-
 ## Spezifikation
 
 
 ### Kurzer Anforderungsdatensatz
-
 
 
 #### Kurzer Anforderungsdatensatz Unverschlüsselt
@@ -285,7 +274,6 @@ Die maximale Größe des Mappings (einschließlich des Längenfeldes) beträgt 9
 und der maximale Wert des Längenfeldes des Mappings beträgt 96.
 
 
-
 #### Kurzer Anforderungsdatensatz Verschlüsselt
 
 Alle Felder sind Big-Endian außer dem ephemeren öffentlichen Schlüssel, der Little-Endian ist.
@@ -299,7 +287,6 @@ bytes   16-47: Ephemerer X25519-Öffentlichschlüssel des Absenders
 bytes  48-201: ChaCha20-verschlüsselter ShortBuildRequestRecord
 bytes 202-217: Poly1305-MAC
 ```
-
 
 
 ### Kurzer Antwortdatensatz
@@ -352,12 +339,9 @@ bytes 202-217: Poly1305-MAC
 ```
 
 
-
 ### KDF
 
 Siehe KDF-Abschnitt unten.
-
-
 
 
 ### ShortTunnelBuild
@@ -367,7 +351,6 @@ Diese Nachricht wird an mittlere Hops, OBEP und IBEP (Ersteller) gesendet.
 Sie darf nicht an den IBGW gesendet werden (verwenden Sie stattdessen Knoblauch eingewickeltes InboundTunnelBuild).
 Wenn sie vom OBEP empfangen wird, wird sie in eine OutboundTunnelBuildReply umgewandelt,
 Knoblauch eingewickelt, und an den Urheber gesendet.
-
 
 
 ```
@@ -386,7 +369,6 @@ Gesamtgröße: 1+$num*218
 #### Hinweise
 
 * Typische Anzahl der Datensätze ist 4, für eine Gesamtgröße von 873.
-
 
 
 ### OutboundTunnelBuildReply
@@ -421,7 +403,6 @@ Gesamtgröße: 1+$num*218
 
 * Typische Anzahl der Datensätze ist 4, für eine Gesamtgröße von 873.
 * Diese Nachricht sollte Knoblauch verschlüsselt werden.
-
 
 
 ### KDF
@@ -462,9 +443,6 @@ replyTag = keydata[0:7]
 ```
 
 
-
-
-
 ## Begründung
 
 Dieses Design maximiert die Wiederverwendung bestehender kryptografischer Primitiven, Protokolle und Codes.
@@ -486,9 +464,7 @@ ChaCha20 vermeidet eine Anforderung an die Datengröße, Vielfache von 16 zu sei
   sollten ausgehende Tunnel auch mit 4 Datensätzen gebaut werden.
 
 
-
 ## Probleme
-
 
 
 ## Migration
@@ -517,14 +493,11 @@ Phase 2 (nächste Veröffentlichung): Standardmäßig aktivieren
 Es gibt keine Rückwärtskompatibilitätsprobleme. Die neuen Nachrichten dürfen nur an Router gesendet werden, die sie unterstützen.
 
 
-
-
 ## Anhang
 
 
 Ohne Knoblauch-Overhead für unverschlüsseltes eingehendes STBM,
 wenn wir kein ITBM verwenden:
-
 
 
 ```
@@ -621,7 +594,5 @@ Der Knoblauch-verpackte OTBRM wird etwas kleiner sein als der Knoblauch-verpackt
 weil die Lieferanweisungen LOKAL statt ROUTER sind,
 kein DATETIME-Block enthalten ist und
 es einen 8-Byte-Tag anstelle des 32-Byte-ephemeren Schlüssels für eine volle 'N'-Nachricht verwendet.
-
-
 
 

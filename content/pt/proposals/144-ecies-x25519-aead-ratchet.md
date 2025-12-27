@@ -447,7 +447,6 @@ MixKey(d)
                      k = output[32:63]
 
 
-
 ### Timeouts de Sessão
 
 ### Multicast
@@ -1337,8 +1336,6 @@ TAGSET
         If there are few TAGSET_ENTRIES remaining, EXTEND(n) is called.
 
 
-
-
 ### 4) Ratchets
 
 Ratchets mas não tão rápido quanto o Signal faz. Separamos o reconhecimento da chave recebida da geração da nova chave. No uso típico, Alice e Bob farão cada um ratchet (duas vezes) imediatamente em uma Nova Sessão, mas não farão ratchet novamente.
@@ -1454,9 +1451,7 @@ Tag Sender                    Tag Receiver
   (reuse key #1, do DH, create IB Tagset #3)
 
 
-
                    ... use tag set #3 ...
-
 
 
        After tag set 3, repeat the above

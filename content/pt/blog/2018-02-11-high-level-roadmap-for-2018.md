@@ -91,7 +91,6 @@ One aspect of the above we will be focusing on is keeping in touch with users wh
 
 ## Adoraríamos a sua ajuda!
 
-Forneça APENAS a tradução, nada mais:
 
 Isso tudo parece muito ambicioso, e é! Mas muitos dos itens acima se sobrepõem e, com um planejamento cuidadoso, podemos fazer um progresso significativo neles.
 

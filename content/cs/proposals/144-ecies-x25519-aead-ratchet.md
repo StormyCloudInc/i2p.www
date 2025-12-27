@@ -447,7 +447,6 @@ MixKey(d)
                      k = output[32:63]
 
 
-
 ### Časové limity relace
 
 ### Multicast
@@ -1337,8 +1336,6 @@ TAGSET
         If there are few TAGSET_ENTRIES remaining, EXTEND(n) is called.
 
 
-
-
 ### 4) Západky
 
 Ratchets, ale ne zdaleka tak rychle jako Signal. Oddělujeme potvrzení přijatého klíče od generování nového klíče. V typickém použití Alice a Bob každý provede ratchet (dvakrát) okamžitě v nové relaci, ale poté již ratchet neprovedou znovu.
@@ -1454,9 +1451,7 @@ Tag Sender                    Tag Receiver
   (reuse key #1, do DH, create IB Tagset #3)
 
 
-
                    ... use tag set #3 ...
-
 
 
        After tag set 3, repeat the above

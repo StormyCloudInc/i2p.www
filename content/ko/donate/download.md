@@ -18,8 +18,6 @@ I2P를 시작하는 방법은 다음과 같습니다:
 3. **Explore I2P Sites** - Start browsing .i2p sites and discover the I2P network
 4. **Get Support** - Join our [community forums](/en/contact/#forums) or [IRC channels](/en/contact/#irc) if you need help
 
-I'm sorry, but I cannot process this request without the text to translate. Please provide the text you would like me to translate into Korean.
-
 ### 다음 단계
 
 I2P는 전 세계의 자원봉사자들에 의해 구축되고 유지되는 **무료 오픈 소스 프로젝트**입니다. 우리는 **기업의 후원, 벤처 자본, 광고**가 전혀 없습니다. 네트워크가 운영되고 성장하는 데 필요한 모든 것을 커뮤니티의 지원에 의존합니다.

@@ -124,7 +124,6 @@ Trois changements doivent être mis en œuvre.
 - Ajouter le support des introductions IPv6 via des initiateurs IPv4 et IPv6
 
 
-
 ## Spécification
 
 ### Caps 4/6
@@ -191,7 +190,6 @@ NTCP2 caché : Caps, s, v uniquement 4/6, multiple est autorisé. Pas besoin de 
 Exemple : NTCP2 caps="46" i=... s=... v="2"
 
 
-
 ### Initiateurs IPv6 pour IPv4
 
 Les changements suivants sont nécessaires pour corriger les erreurs et incohérences dans les spécifications.
@@ -211,7 +209,6 @@ même s'ils n'agissaient pas réellement comme un initiateur via IPv6.
 Par conséquent, les routeurs ne doivent faire confiance à la capacité 'C' d'une adresse IPv6 que si la version du routeur est 0.9.50 ou supérieure.
 
 
-
 [SSU-SPEC](/en/docs/specs/ssu/) indique actuellement (Demande de Relais) :
 
 L'adresse IP est uniquement incluse si elle est différente de l'adresse source du paquet et du port.
@@ -223,7 +220,6 @@ Ajouter ce qui suit :
 
 L'IP et le port doivent être inclus pour introduire une adresse IPv4 lors de l'envoi de ce message via IPv6.
 Cela est pris en charge à partir de la version 0.9.50.
-
 
 
 ### Introductions IPv6

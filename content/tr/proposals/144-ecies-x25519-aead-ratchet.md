@@ -443,7 +443,6 @@ MixKey(d)
                      k = output[32:63]
 
 
-
 ### Oturum Zaman Aşımları
 
 ### Multicast
@@ -1333,8 +1332,6 @@ ETIKET SETİ
         If there are few TAGSET_ENTRIES remaining, EXTEND(n) is called.
 
 
-
-
 ### 4) Ratchet'ler
 
 Ratchet'lar ancak Signal'in yaptığı kadar hızlı değil. Alınan anahtarın onayını yeni anahtar oluşturmaktan ayırıyoruz. Tipik kullanımda, Alice ve Bob her biri Yeni Oturumda hemen (iki kez) ratchet yapacak, ancak tekrar ratchet yapmayacaklar.
@@ -1450,9 +1447,7 @@ Tag Sender                    Tag Receiver
   (reuse key #1, do DH, create IB Tagset #3)
 
 
-
                    ... use tag set #3 ...
-
 
 
        After tag set 3, repeat the above

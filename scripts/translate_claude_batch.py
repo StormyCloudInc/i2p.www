@@ -56,22 +56,212 @@ NO_TRANSLATE_KEYS = {
     "supersedes", "supersededby", "updated"
 }
 
-SYSTEM_PROMPT = """You are a professional technical translator with deep familiarity with internet privacy technologies, I2P (The Invisible Internet Project), and network terminology.
+SYSTEM_PROMPT = """You are a professional technical translator specializing in I2P (The Invisible Internet Project) documentation.
 
-Your task is to translate text segments into the target language while preserving precise meaning, tone, and context.
+INSTRUCTIONS:
+1. Translate the input text inside <source_text> tags to {target_lang}.
+2. Output ONLY the translated text wrapped in <translation> tags.
+3. Do not include any other text, preambles, or explanations.
 
-CRITICAL RULES:
-1. Do NOT translate or modify: code blocks, commands, configuration examples, URLs, file paths, variable names, JSON/YAML structures, Markdown syntax
-2. Keep I2P technical terms in English: router, tunnel, leaseSet, netDb, floodfill, NTCP2, SSU, SAMv3, I2PTunnel, I2CP, I2NP, eepsite, garlic encryption
-3. Preserve ALL Markdown formatting exactly (headings, lists, links, inline code with backticks)
-4. Translate idioms and expressions naturally - prefer meaning over literal translation
-5. For technical terms without perfect equivalents, keep English term + add localized explanation in parentheses (only once per document)
-6. Sound human, fluent, and professional - as if written by a bilingual technical writer
-7. NEVER invent content - if unclear, return the original text unchanged
-8. NEVER ask questions, provide explanations, or add meta-commentary - ONLY provide the translation itself
-9. Even if the text seems incomplete or is just a heading, translate it as-is without commentary
+TRANSLATION RULES:
+1. Keep untranslated: code blocks, commands, URLs, file paths, variable names, JSON/YAML, Markdown syntax
+2. Keep I2P terms in English: router, tunnel, leaseSet, netDb, floodfill, NTCP2, SSU, SAMv3, I2PTunnel, I2CP, I2NP, eepsite, garlic encryption
+3. Preserve ALL Markdown formatting exactly (headings, lists, links, inline code)
+4. Translate naturally for meaning, not literally
+5. For technical terms without equivalents: keep English + add localized explanation in parentheses (once per document)
 
-Context: These are official I2P documentation pages for a technical audience. Maintain consistency with standard I2P terminology."""
+EXAMPLE INPUT:
+<source_text>
+Hello world
+</source_text>
+
+EXAMPLE OUTPUT:
+<translation>
+Hola mundo
+</translation>
+"""
+
+# Patterns that indicate the model included instruction text in its output
+# These are common across many languages
+ARTIFACT_PATTERNS = [
+    # English instruction artifacts
+    r"^IMPORTANT:.*(?:translation|Translation|provide|Provide).*$",
+    r"^Provide ONLY.*translation.*$",
+    r"^Do NOT ask questions.*$",
+    r"^Even if the text.*translate.*$",
+    r"^Translation:$",
+    r"^Translated text:$",
+    r"^I don't see any text to translate.*$",
+    r"^I notice that you haven't included.*$",
+    r"^Please provide the.*text.*translate.*$",
+    r"^The section marked.*appears to be empty.*$",
+    r"^You've provided the instructions but not.*$",
+    r"^I will translate.*$",
+    r"^I'll translate.*$",
+    r"^Sure, I will translate.*$",
+    r"^Sure, I'll translate.*$",
+    r"^I will provide only the translation.*$",
+    r"^I'll provide only the translation.*$",
+
+    # Chinese artifacts
+    r"^我会直接提供翻译.*$",
+    r"^请提供需要翻译的.*$",
+    r"^我没有看到需要翻译的文本.*$",
+    r"^IMPORTANT:.*仅提供翻译.*$",
+    r"^只提供翻译.*$",
+    r"^翻译如下.*$",
+    r"^这是翻译.*$",
+    r"^以下是翻译.*$",
+
+    # Korean artifacts
+    r"^IMPORTANT:.*번역만 제공.*$",
+    r"^번역만 제공.*$",
+    r"^이 텍스트에는 번역할 내용이 없습니다.*$",
+    r"^번역:?$",
+    r"^다음은 번역입니다.*$",
+
+    # Arabic artifacts
+    r"^مهم:.*لا تطرح أسئلة.*$",
+    r"^مهم:.*قم بترجمته كما هو.*$",
+    r"^قدم الترجمة فقط.*$",
+    r"^الترجمة:?$",
+    r"^هذه هي الترجمة.*$",
+
+    # Turkish artifacts
+    r"^ÖNEMLİ:.*YALNIZCA çeviriyi.*$",
+    r"^ÖNEMLI:.*YALNIZCA çeviriyi.*$",
+    r"^SADECE çeviriyi.*$",
+    r"^Çeviri:?$",
+    r"^İşte çeviri.*$",
+
+    # Spanish artifacts
+    r"^IMPORTANTE:.*proporcione ÚNICAMENTE.*$",
+    r"^Proporcione ÚNICAMENTE.*$",
+    r"^Aquí está la traducción:?$",
+    r"^No veo ningún texto para traducir.*$",
+
+    # French artifacts
+    r"^IMPORTANT:.*Fournissez UNIQUEMENT.*$",
+    r"^Fournissez UNIQUEMENT.*$",
+    r"^Voici la traduction:?$",
+    r"^Je ne vois pas de texte à traduire.*$",
+
+    # German artifacts
+    r"^WICHTIG:.*Geben Sie NUR.*$",
+    r"^Geben Sie NUR.*$",
+    r"^Hier ist die Übersetzung:?$",
+    r"^Ich sehe keinen Text zum Übersetzen.*$",
+
+    # Russian artifacts
+    r"^ВАЖНО:.*Предоставьте ТОЛЬКО.*$",
+    r"^Предоставьте ТОЛЬКО.*$",
+    r"^Вот перевод:?$",
+    r"^Я не вижу текста для перевода.*$",
+
+    # Portuguese artifacts
+    r"^IMPORTANTE:.*Forneça APENAS.*$",
+    r"^Forneça APENAS.*$",
+    r"^Tradução:?$",
+    r"^Aqui está a tradução.*$",
+
+    # Vietnamese artifacts
+    r"^QUAN TRỌNG:.*Chỉ cung cấp.*$",
+    r"^Chỉ cung cấp.*$",
+    r"^Bản dịch:?$",
+    r"^Đây là bản dịch.*$",
+
+    # Hindi artifacts
+    r"^महत्वपूर्ण:.*केवल अनुवाद.*$",
+    r"^केवल अनुवाद.*$",
+    r"^अनुवाद:?$",
+    r"^यहाँ अनुवाद है.*$",
+
+    # Czech artifacts
+    r"^DŮLEŽITÉ:.*překlad.*$",
+    r"^Poskytněte POUZE.*$",
+    r"^Překlad:?$",
+    r"^Zde je překlad.*$",
+
+    # General prompt echoing patterns
+    r"^Translate the following.*$",
+    r"^Text to translate:?$",
+    r"^Follow all formatting.*$",
+    r"^\[English →.*\]$",
+    r"^\[.*→.*\]$",  # Language direction markers
+]
+
+
+def clean_translation_artifacts(text: str) -> str:
+    """Extract translation from XML tags or clean up artifacts."""
+    import re
+    
+    # 1. Try to extract content from <translation> tags
+    match = re.search(r'<translation>\s*(.*?)\s*</translation>', text, re.DOTALL)
+    if match:
+        return match.group(1).strip()
+    
+    # 2. Fallback: Clean up artifacts using regex patterns
+    # This handles legacy batches or cases where model forgot tags
+    lines = text.split('\n')
+    cleaned_lines = []
+
+    for line in lines:
+        skip_line = False
+        stripped = line.strip()
+
+        # Check against artifact patterns
+        for pattern in ARTIFACT_PATTERNS:
+            if re.match(pattern, stripped, re.IGNORECASE):
+                skip_line = True
+                break
+
+        # Also check for common prefixes that indicate meta-commentary
+        if not skip_line:
+            lower = stripped.lower()
+
+            # Meta-commentary prefixes to skip entirely
+            skip_prefixes = [
+                "translation:", "übersetzung:", "traducción:", "traduction:",
+                "tradução:", "перевод:", "翻译:", "번역:", "çeviri:", "překlad:",
+                "here is", "below is", "aquí está", "voici", "hier ist",
+                "i don't see", "i notice", "please provide", "you've provided",
+                "i will translate", "i'll translate", "sure, i",
+            ]
+
+            for prefix in skip_prefixes:
+                if lower.startswith(prefix):
+                    # For "translation:" style, try to extract remainder
+                    if ":" in prefix and ":" in stripped:
+                        remainder = stripped.split(":", 1)[1].strip()
+                        if remainder and len(remainder) > 20:  # Only keep if substantial
+                            cleaned_lines.append(remainder)
+                    skip_line = True
+                    break
+
+            # Also check for lines that look like instruction artifacts
+            if not skip_line:
+                # Lines that start with common instruction phrases
+                instruction_markers = [
+                    "important:", "note:", "注意:", "주의:", "ملاحظة:",
+                    "önemli:", "importante:", "remarque:", "hinweis:",
+                ]
+                for marker in instruction_markers:
+                    if lower.startswith(marker) and any(kw in lower for kw in ["translat", "provid", "翻译", "번역", "ترجم"]):
+                        skip_line = True
+                        break
+
+        if not skip_line:
+            cleaned_lines.append(line)
+
+    result = '\n'.join(cleaned_lines).strip()
+    
+    # Remove any stray tags if regex failed to capture full block
+    result = result.replace("<translation>", "").replace("</translation>", "").strip()
+
+    # Clean up multiple consecutive blank lines
+    result = re.sub(r'\n{3,}', '\n\n', result)
+
+    return result
 
 
 @dataclass
@@ -363,6 +553,33 @@ def tokenize_markdown(text: str) -> List[Token]:
             tokens.append(Token(type="table", lines=table_lines))
             continue
 
+        # HTML block (table, div, details, etc.) - DO NOT translate
+        # HTML tables get corrupted if sent for translation
+        stripped = line.strip().lower()
+        if stripped.startswith("<table") or stripped.startswith("<div") or stripped.startswith("<details") or stripped.startswith("<figure"):
+            html_lines = []
+            tag_name = stripped.split()[0][1:].rstrip(">")  # Extract tag name
+            
+            depth = 0
+            while i < len(lines):
+                current = lines[i]
+                html_lines.append(current)
+                current_lower = current.strip().lower()
+                
+                # Count opening and closing tags
+                if f"<{tag_name}" in current_lower:
+                    depth += current_lower.count(f"<{tag_name}")
+                if f"</{tag_name}" in current_lower:
+                    depth -= current_lower.count(f"</{tag_name}")
+                
+                i += 1
+                
+                if depth <= 0:
+                    break
+                    
+            tokens.append(Token(type="code", lines=html_lines))  # Treat as code (no translation)
+            continue
+
         # Indented code block (4+ spaces or tab at start of line)
         # This handles RST-style code blocks and indented code in markdown
         # Markdown spec: code blocks are lines indented with 4+ spaces or a tab
@@ -482,14 +699,11 @@ def generate_batch_requests(
 
             custom_id = f"{file_prefix}_fm_{entry.key}"
 
-            user_prompt = f"""Translate the following text from {source_lang_name} to {target_lang_name}.
-
-Follow all formatting and technical term rules from the system message.
-
-Text to translate:
+            # Wrapper for robust XML parsing
+            user_prompt = f"""[{source_lang_name} → {target_lang_name}]
+<source_text>
 {entry.text}
-
-Provide ONLY the translation, nothing else:"""
+</source_text>"""
 
             # Claude Message Batches API format
             request = {
@@ -497,9 +711,10 @@ Provide ONLY the translation, nothing else:"""
                 "params": {
                     "model": model,
                     "max_tokens": 4096,
-                    "system": SYSTEM_PROMPT,
+                    "system": SYSTEM_PROMPT.replace("{target_lang}", target_lang_name),
                     "messages": [
-                        {"role": "user", "content": user_prompt}
+                        {"role": "user", "content": user_prompt},
+                        {"role": "assistant", "content": "<translation>"}
                     ]
                 }
             }
@@ -515,29 +730,27 @@ Provide ONLY the translation, nothing else:"""
         heading_count = 0
         paragraph_count = 0
         list_count = 0
+        table_count = 0
 
         for token in tokens:
             if token.type == "heading":
                 heading_count += 1
                 custom_id = f"{file_prefix}_h{token.level}_{heading_count:03d}"
 
-                user_prompt = f"""Translate the following text from {source_lang_name} to {target_lang_name}.
-
-Follow all formatting and technical term rules from the system message.
-
-Text to translate:
+                user_prompt = f"""[{source_lang_name} → {target_lang_name}]
+<source_text>
 {token.text}
-
-IMPORTANT: Provide ONLY the translation. Do NOT ask questions, provide explanations, or add any commentary. Even if the text is just a heading or seems incomplete, translate it as-is."""
+</source_text>"""
 
                 request = {
                     "custom_id": custom_id,
                     "params": {
                         "model": model,
                         "max_tokens": 4096,
-                        "system": SYSTEM_PROMPT,
+                        "system": SYSTEM_PROMPT.replace("{target_lang}", target_lang_name),
                         "messages": [
-                            {"role": "user", "content": user_prompt}
+                            {"role": "user", "content": user_prompt},
+                            {"role": "assistant", "content": "<translation>"}
                         ]
                     }
                 }
@@ -553,23 +766,20 @@ IMPORTANT: Provide ONLY the translation. Do NOT ask questions, provide explanati
                 paragraph_count += 1
                 custom_id = f"{file_prefix}_p_{paragraph_count:03d}"
 
-                user_prompt = f"""Translate the following text from {source_lang_name} to {target_lang_name}.
-
-Follow all formatting and technical term rules from the system message.
-
-Text to translate:
+                user_prompt = f"""[{source_lang_name} → {target_lang_name}]
+<source_text>
 {token.text}
-
-IMPORTANT: Provide ONLY the translation. Do NOT ask questions, provide explanations, or add any commentary. Even if the text is just a heading or seems incomplete, translate it as-is."""
+</source_text>"""
 
                 request = {
                     "custom_id": custom_id,
                     "params": {
                         "model": model,
                         "max_tokens": 4096,
-                        "system": SYSTEM_PROMPT,
+                        "system": SYSTEM_PROMPT.replace("{target_lang}", target_lang_name),
                         "messages": [
-                            {"role": "user", "content": user_prompt}
+                            {"role": "user", "content": user_prompt},
+                            {"role": "assistant", "content": "<translation>"}
                         ]
                     }
                 }
@@ -587,24 +797,20 @@ IMPORTANT: Provide ONLY the translation. Do NOT ask questions, provide explanati
                 # Join list lines for translation, preserving structure
                 list_text = "\n".join(token.lines)
 
-                user_prompt = f"""Translate the following markdown list from {source_lang_name} to {target_lang_name}.
-
-IMPORTANT: Preserve the exact list structure (bullet points, indentation, numbering).
-Follow all formatting and technical term rules from the system message.
-
-List to translate:
+                user_prompt = f"""[{source_lang_name} → {target_lang_name}] [list - preserve structure]
+<source_text>
 {list_text}
-
-Provide ONLY the translated list, nothing else:"""
+</source_text>"""
 
                 request = {
                     "custom_id": custom_id,
                     "params": {
                         "model": model,
                         "max_tokens": 4096,
-                        "system": SYSTEM_PROMPT,
+                        "system": SYSTEM_PROMPT.replace("{target_lang}", target_lang_name),
                         "messages": [
-                            {"role": "user", "content": user_prompt}
+                            {"role": "user", "content": user_prompt},
+                            {"role": "assistant", "content": "<translation>"}
                         ]
                     }
                 }
@@ -613,6 +819,36 @@ Provide ONLY the translated list, nothing else:"""
                 file_mapping.segments.append(SegmentMapping(
                     custom_id=custom_id,
                     type="list"
+                ))
+
+            elif token.type == "table":
+                table_count += 1
+                custom_id = f"{file_prefix}_table_{table_count:03d}"
+                
+                table_text = "\n".join(token.lines)
+
+                user_prompt = f"""[{source_lang_name} → {target_lang_name}] [table - preserve Markdown structure exactly]
+<source_text>
+{table_text}
+</source_text>"""
+
+                request = {
+                    "custom_id": custom_id,
+                    "params": {
+                        "model": model,
+                        "max_tokens": 4096,
+                        "system": SYSTEM_PROMPT.replace("{target_lang}", target_lang_name),
+                        "messages": [
+                            {"role": "user", "content": user_prompt},
+                            {"role": "assistant", "content": "<translation>"}
+                        ]
+                    }
+                }
+
+                requests.append(request)
+                file_mapping.segments.append(SegmentMapping(
+                    custom_id=custom_id,
+                    type="table"
                 ))
 
         file_mappings.append(file_mapping)
@@ -780,6 +1016,19 @@ def reconstruct_files(
                             token.lines = translation.split("\n")
                             break
 
+            elif segment.type == "table":
+                table_count = 0
+                for token in tokens:
+                    if token.type == "table":
+                        table_count += 1
+                        # Extract table number from custom_id
+                        id_parts = segment.custom_id.split("_")
+                        expected_num = int(id_parts[-1])
+                        if table_count == expected_num:
+                            # Replace table lines with translated content
+                            token.lines = translation.split("\n")
+                            break
+
         # Reconstruct markdown
         output_lines = ["---"]
         for entry in fm_entries:
@@ -869,13 +1118,10 @@ def check_batch(batch_id: str, wait: bool = False) -> None:
                         message = result.result.message
                         if message.content and len(message.content) > 0:
                             translation = message.content[0].text.strip()
-                            
-                            # Clean up common artifacts from translation output
-                            if translation.startswith("Translation:"):
-                                translation = translation[12:].strip()
-                            if translation.startswith("Übersetzung:"):
-                                translation = translation[12:].strip()
-                            
+
+                            # Clean up translation artifacts
+                            translation = clean_translation_artifacts(translation)
+
                             results[custom_id] = translation
                     else:
                         error_msg = ""

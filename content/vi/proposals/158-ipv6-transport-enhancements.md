@@ -27,7 +27,6 @@ chúng ta cần cải thiện hỗ trợ cho IPv6 và loại bỏ các giả đ�
 tất cả các router đều có khả năng IPv4.
 
 
-
 ### Kiểm tra Khả năng Kết nối
 
 Khi chọn đối tượng ngang hàng cho các đường hầm, hoặc chọn các đường OBEP/IBGW để định tuyến thông điệp,
@@ -125,7 +124,6 @@ Có ba thay đổi cần được thực hiện.
 - Thêm hỗ trợ giới thiệu IPv6 qua người giới thiệu IPv4 và IPv6
 
 
-
 ## Đặc tả
 
 ### 4/6 Caps
@@ -191,7 +189,6 @@ NTCP2 ẩn: Chỉ có Caps, s, v, 4/6, nhiều là cho phép. Không cần có h
 Ví dụ: NTCP2 caps="46" i=... s=... v="2"
 
 
-
 ### Người giới thiệu IPv6 cho IPv4
 
 Các thay đổi sau là cần thiết để điều chỉnh các lỗi và sự không nhất quán trong các đặc tả.
@@ -211,7 +208,6 @@ mặc dù chúng không thực sự hoạt động như một người giới th
 Do đó, các router chỉ nên tin tưởng khả năng 'C' trên một địa chỉ IPv6 nếu phiên bản router là 0.9.50 hoặc cao hơn.
 
 
-
 [SSU-SPEC](/en/docs/specs/ssu/) hiện tại nói (Relay Request):
 
 Địa chỉ IP chỉ được bao gồm nếu nó khác với địa chỉ nguồn của gói tin và cổng.
@@ -223,7 +219,6 @@ Thêm vào điều sau:
 
 IP và cổng phải được bao gồm để giới thiệu một địa chỉ IPv4 khi gửi thông điệp này qua IPv6.
 Điều này được hỗ trợ kể từ phiên bản 0.9.50.
-
 
 
 ### Giới thiệu IPv6

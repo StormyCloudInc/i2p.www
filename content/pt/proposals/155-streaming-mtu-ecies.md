@@ -86,7 +86,6 @@ Portanto, podemos aumentar o MTU para conexões ratchet em (151 - 69) = 82 bytes
 de 1730 para 1812.
 
 
-
 ## Especificação
 
 Adicione as seguintes mudanças e esclarecimentos à seção de Seleção e Negociação de MTU de the [Streaming API documentation](/en/docs/api/streaming/).
@@ -124,7 +123,6 @@ Sem alteração, 1730 MTU em todos os pacotes.
 - Alice deve enviar MAX_PACKET_SIZE_INCLUDED no SYN
 
 
-
 ### 3) Alice Chave Dupla e sabe que Bob é ElGamal
 1730 MTU em todos os pacotes.
 
@@ -133,14 +131,12 @@ Sem alteração, 1730 MTU em todos os pacotes.
 - Alice pode enviar MAX_PACKET_SIZE_INCLUDED no SYN, não é necessário a menos que != 1730
 
 
-
 ### 4) Alice Chave Dupla e sabe que Bob é ECIES
 1812 MTU em todos os pacotes.
 
 - ALICE_SYN_MAX_DATA = 1812
 - i2cp.streaming.maxMessageSize padrão: 1812
 - Alice deve enviar MAX_PACKET_SIZE_INCLUDED no SYN
-
 
 
 ### 5) Alice Chave Dupla e chave de Bob é desconhecida
@@ -158,13 +154,10 @@ negotiated_mtu, o mínimo do MTU de Alice e Bob, a ser usado como o tamanho máx
 no SYN ACK de Bob para Alice, e em todos os pacotes subsequentes enviados em ambas as direções.
 
 
-
-
 ## Justificação
 
 Veja the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220) por que o valor atual é 1730.
 Veja the [ECIES specification](/en/docs/specs/ecies/#overhead) por que a sobrecarga do ECIES é 82 bytes a menos que o ElGamal.
-
 
 
 ## Notas de Implementação
@@ -188,12 +181,9 @@ Estratégias semelhantes poderiam ser usadas no tamanho ideal de uma mensagem de
 e três mensagens de túnel (2952), embora esses tamanhos devessem ser raros na prática.
 
 
-
 ## Problemas
 
 O valor 1812 é preliminar. Para ser confirmado e possivelmente ajustado.
-
-
 
 
 ## Migração
@@ -204,6 +194,5 @@ Esta é uma opção existente e a negociação de MTU já faz parte da especific
 Destinos ECIES mais antigos suportarão 1730.
 Qualquer cliente que receber um valor mais alto responderá com 1730, e o outro extremo
 negociará para baixo, como de costume.
-
 
 

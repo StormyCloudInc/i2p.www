@@ -25,8 +25,6 @@ das SYN-Paket kann anfängliche Daten enthalten (wie ein GET oder POST), die
 Charlie sofort verarbeiten wird.
 
 
-
-
 ## Design
 
 Die Lösung besteht darin, dass Alice den Ziel-Hash von Bob in die signierten SYN-Daten einfügt.
@@ -42,7 +40,6 @@ Alle Optionen sind wie üblich durch die Signatur abgedeckt, sodass Bob den Hash
 nicht umschreiben kann.
 
 Wenn Alice und Charlie API 0.9.58 oder neuer sind, wird jeder Wiedergabeversuch von Bob abgelehnt.
-
 
 
 ## Spezifikation
@@ -99,11 +96,9 @@ als NACKs für 8 verschiedene Nachrichten zu interpretieren, wären diese Nachri
 während des SYNCHRONIZE-Handshakes und die NACKs würden keinen Sinn ergeben.
 
 
-
 ## Migration
 
 Implementierungen können jederzeit Unterstützung hinzufügen, es ist keine Koordination erforderlich.
 Java I2P- und i2pd-Router implementierten dies in API 0.9.58 (veröffentlicht im März 2023).
-
 
 

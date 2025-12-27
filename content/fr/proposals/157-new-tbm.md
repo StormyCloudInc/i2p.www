@@ -17,7 +17,6 @@ Sujet à des révisions mineures.
 Voir [I2NP](/en/docs/specs/i2np/) et [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) pour la spécification finale.
 
 
-
 ## Vue d'ensemble
 
 
@@ -113,7 +112,6 @@ La longueur de l'enregistrement est choisie de sorte qu'un STBM chiffré à l'ai
 dans un seul message de tunnel. Voir l'annexe ci-dessous.
 
 
-
 #### OutboundTunnelBuildReply: Type 26
 
 Nous définissons un nouveau message de réponse de construction de tunnel sortant.
@@ -132,8 +130,6 @@ Il chiffre ensuite à l'ail le message à l'initiateur avec les clés symétriqu
 
 En chiffrant à l'ail le OTBRM et le STBM, nous évitons également tout problème potentiel
 de compatibilité à l'IBGW et à l'OBEP des tunnels jumelés.
-
-
 
 
 ### Flux de Message
@@ -161,7 +157,6 @@ Créateur <-------F---------E-------- D <--/
                                    IBGW
 
 
-
 Construction Entrante D-E-F
 Envoyé via le tunnel sortant existant A-B-C
 
@@ -179,9 +174,7 @@ Créateur <------ F <------ E <------ D <--/
                                    IBGW
 
 
-
 ```
-
 
 
 ### Chiffrement des Enregistrements
@@ -199,7 +192,6 @@ cette spécification ; il resterait AES, comme actuellement utilisé pour tous l
 Changer le chiffrement de couche en ChaCha20 est un sujet de recherche supplémentaire.
 
 
-
 ### Nouveau Message de Données de Tunnel
 
 Actuellement, il n'y a pas de plan pour changer le message de données de tunnel de 1 Ko utilisé pour les tunnels construits avec
@@ -211,13 +203,10 @@ Cela réduirait le surcoût pour les gros messages.
 C'est un sujet de recherche supplémentaire.
 
 
-
-
 ## Spécification
 
 
 ### Enregistrement de Courte Requête
-
 
 
 #### Enregistrement de Courte Requête Non Chiffré
@@ -284,7 +273,6 @@ La taille maximum du Mapping (incluant le champ de longueur) est de 98 octets,
 et la valeur maximum du champ de longueur du Mapping est de 96.
 
 
-
 #### Enregistrement de Courte Requête Chiffré
 
 Tous les champs sont en big-endian sauf pour la clé publique éphémère qui est en little-endian.
@@ -298,7 +286,6 @@ octets   16-47: clé publique X25519 éphémère de l'expéditeur
 octets  48-201: Enregistrement de Courte Requête Chiffré par ChaCha20
 octets 202-217: MAC Poly1305
 ```
-
 
 
 ### Enregistrement de Courte Réponse
@@ -351,12 +338,9 @@ octets 202-217: MAC Poly1305
 ```
 
 
-
 ### KDF
 
 Voir la section KDF ci-dessous.
-
-
 
 
 ### ShortTunnelBuild
@@ -366,7 +350,6 @@ Ce message est envoyé aux sauts intermédiaires, OBEP, et IBEP (créateur).
 Il ne peut pas être envoyé à l'IBGW (utilisez plutôt le InboundTunnelBuild enveloppé à l'ail).
 Lorsqu'il est reçu par l'OBEP, il est transformé en un OutboundTunnelBuildReply,
 enveloppé à l'ail, et envoyé à l'initiateur.
-
 
 
 ```
@@ -385,7 +368,6 @@ taille totale : 1+$nombre*218
 #### Notes
 
 * Nombre typique d'enregistrements est 4, pour une taille totale de 873.
-
 
 
 ### OutboundTunnelBuildReply
@@ -420,7 +402,6 @@ taille totale : 1+$nombre*218
 
 * Nombre typique d'enregistrements est 4, pour une taille totale de 873.
 * Ce message doit être enveloppé à l'ail.
-
 
 
 ### KDF
@@ -462,9 +443,6 @@ replyTag = keydata[0:7]
 ```
 
 
-
-
-
 ## Justification
 
 Cette conception maximise la réutilisation des primitives cryptographiques, protocoles et codes existants.
@@ -486,9 +464,7 @@ ChaCha20 évite une exigence de taille de données multiples de 16.
   les tunnels sortants devraient également être construits avec 4 enregistrements.
 
 
-
 ## Problèmes
-
 
 
 ## Migration
@@ -518,14 +494,11 @@ Phase 2 (version suivante) : Activation par défaut
 Il n'y a pas de problèmes de compatibilité descendante. Les nouveaux messages ne peuvent être envoyés qu'aux routeurs qui les supportent.
 
 
-
-
 ## Annexe
 
 
 Sans surcharge d'ail pour un STBM entrant non chiffré,
 si nous n'utilisons pas ITBM :
-
 
 
 ```
@@ -622,7 +595,6 @@ Le OTBRM enveloppé à l'ail sera légèrement plus petit que le STBM enveloppé
 car les instructions de livraison sont LOCALE et non ROUTER,
 il n'y a pas de bloc DATETIME inclus, et
 il utilise une étiquette de 8 octets plutôt que la clé éphémère de 32 octets pour un message 'N' complet.
-
 
 
 ## Références

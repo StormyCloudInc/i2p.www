@@ -95,7 +95,6 @@ Kleine I2CP- und SAM-Erweiterungen werden vorgeschlagen, um den Abruf von
 Service-Einträgen durch Clients zu erleichtern.
 
 
-
 ## Spezifikation
 
 ### LS2-Option-Spezifikation
@@ -176,7 +175,6 @@ Kein Wildcarding wie (Sternchen), (Sternchen)._tcp oder _tcp ist erlaubt.
 Jeder unterstützte Dienst muss seinen eigenen Eintrag haben.
 
 
-
 ### Dienstnamen-Registry
 
 Nicht standardisierte Kennungen, die nicht in [REGISTRY](http://www.dns-sd.org/ServiceTypes.html) oder Linux /etc/services aufgelistet sind,
@@ -228,7 +226,6 @@ Beispiel:
 Für Nachschlagetyp 4 ist Element 5 ein Ziel.
 
 
-
 ### HostReply-Nachricht
 
 Für Nachschlagetypen 2-4 muss der Router das Lease-Set abrufen,
@@ -249,7 +246,6 @@ oder wenn das Ziel im Lookup-Messag vorhanden war (Nachschlagetyp 4).
 
 Wenn ein Nachschlagetyp nicht unterstützt wird,
 enthält die Antwort einen neuen Fehlercode 7 (Nachschlagetyp nicht unterstützt).
-
 
 
 ### SAM-Spezifikation
@@ -298,7 +294,6 @@ Dies wurde aus zwei Gründen abgelehnt:
 Server sollten eine TTL von mindestens 86400 angeben und den Standard-Port für die Anwendung.
 
 
-
 ## Erweiterte Funktionen
 
 ### Rekursive Nachschlagen
@@ -308,7 +303,6 @@ auf einen Service-Eintrag überprüft wird, der auf ein anderes Lease-Set verwei
 Dies ist wahrscheinlich nicht notwendig, zumindest in einer ersten Implementierung.
 
 TODO
-
 
 
 ### Anwendungsspezifische Felder

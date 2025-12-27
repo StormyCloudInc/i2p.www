@@ -445,7 +445,6 @@ MixKey(d)
                      k = output[32:63]
 
 
-
 ### 会话超时
 
 ### 组播
@@ -1335,8 +1334,6 @@ TAGSET
         If there are few TAGSET_ENTRIES remaining, EXTEND(n) is called.
 
 
-
-
 ### 4) 棘轮机制
 
 棘轮机制，但速度远不如 Signal。我们将接收密钥的确认与生成新密钥分开处理。在典型使用中，Alice 和 Bob 在新会话中会立即各自棘轮（两次），但之后不会再次棘轮。
@@ -1452,9 +1449,7 @@ Tag Sender                    Tag Receiver
   (reuse key #1, do DH, create IB Tagset #3)
 
 
-
                    ... use tag set #3 ...
-
 
 
        After tag set 3, repeat the above

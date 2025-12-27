@@ -445,7 +445,6 @@ MixKey(d)
                      k = output[32:63]
 
 
-
 ### مهلات انتهاء الجلسة
 
 ### البث المتعدد
@@ -1335,8 +1334,6 @@ TAGSET_ENTRY
         If there are few TAGSET_ENTRIES remaining, EXTEND(n) is called.
 
 
-
-
 ### 4) Ratchets
 
 Ratchets ولكن ليس بنفس سرعة Signal. نحن نفصل إقرار المفتاح المستلم عن توليد المفتاح الجديد. في الاستخدام النموذجي، ستقوم Alice وBob كلاهما بعمل ratchet (مرتين) فوراً في جلسة جديدة، ولكن لن يقوما بعمل ratchet مرة أخرى.
@@ -1452,9 +1449,7 @@ Tag Sender                    Tag Receiver
   (reuse key #1, do DH, create IB Tagset #3)
 
 
-
                    ... use tag set #3 ...
-
 
 
        After tag set 3, repeat the above
