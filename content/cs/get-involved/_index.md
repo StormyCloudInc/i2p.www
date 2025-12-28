@@ -36,7 +36,7 @@ Pomozte novým uživatelům připojit se k síti provozováním infrastrukturní
 ### Zlepšování dokumentace
 Jasná dokumentace pomáhá všem pochopit a lépe používat I2P.
 
-- **Pokyny pro psaní**: Řiďte se našimi [pokyny k psaní dokumentace](/docs/writing-guidelines/)
+- **Pokyny pro psaní**: Řiďte se našimi [pokyny k psaní dokumentace](/docs/writing-guidelines)
 - **Centrum dokumentace**: Procházejte a přispívejte do [sekce dokumentace](/docs/)
 - **Návrhy na obsah**: Máte nápady? [Kontaktujte nás](/en/contact/)
 

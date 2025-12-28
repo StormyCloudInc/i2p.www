@@ -182,7 +182,7 @@ Ačkoli tunnels připomínají okruhy, routers s nimi zacházejí jako s frontam
 - Účastníci uvažují fragmenty pevné velikosti; brány/koncové body zahazují podle souhrnné velikosti fragmentů a přednostně zahazují velká užitečná data.
 - Výstupní koncové body zahazují dříve než jiné role, aby se co nejméně plýtvalo síťovými prostředky.
 
-Zaručené doručování je ponecháno vyšším vrstvám, jako je [Streaming library (knihovna pro streamování)](/docs/specs/streaming/). Aplikace, které vyžadují spolehlivost, si musí samy zajišťovat retransmise a potvrzování.
+Zaručené doručování je ponecháno vyšším vrstvám, jako je [Streaming library (knihovna pro streamování)](/spec/api/streaming/). Aplikace, které vyžadují spolehlivost, si musí samy zajišťovat retransmise a potvrzování.
 
 ---
 

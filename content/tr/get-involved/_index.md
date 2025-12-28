@@ -36,7 +36,7 @@ Yeni kullanıcıların ağa katılmasına yardımcı olmak için altyapı hizmet
 ### Dokümantasyonu İyileştirin
 Açık dokümantasyon, herkesin I2P'yi anlamasına ve kullanmasına yardımcı olur.
 
-- **Yazım Kuralları**: [Dokümantasyon yazım kurallarımıza](/docs/writing-guidelines/) uyun
+- **Yazım Kuralları**: [Dokümantasyon yazım kurallarımıza](/docs/writing-guidelines) uyun
 - **Dokümantasyon Merkezi**: [Docs bölümünü](/docs/) göz atın ve katkıda bulunun
 - **İçerik Önerileri**: Fikirleriniz mi var? [Bize ulaşın](/en/contact/)
 
