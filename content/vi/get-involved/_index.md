@@ -36,7 +36,7 @@ Giúp người dùng mới tham gia mạng bằng cách chạy các dịch vụ 
 ### Cải Thiện Tài Liệu
 Tài liệu rõ ràng giúp mọi người hiểu và sử dụng I2P tốt hơn.
 
-- **Nguyên tắc viết**: Tuân theo [nguyên tắc viết tài liệu](/docs/writing-guidelines/)
+- **Nguyên tắc viết**: Tuân theo [nguyên tắc viết tài liệu](/docs/writing-guidelines)
 - **Hub tài liệu**: Duyệt và đóng góp vào [phần tài liệu](/docs/)
 - **Gợi ý nội dung**: Có ý tưởng? [Liên hệ với chúng tôi](/en/contact/)
 

@@ -182,7 +182,7 @@ Her ne kadar tunnels devrelere benzese de, routers onları mesaj kuyrukları ola
 - Katılımcılar sabit boyutlu parçaları dikkate alır; ağ geçitleri/uç noktaları birleşik parça boyutuna göre düşürür, önce büyük yükleri düşürür.
 - En az ağ çabası boşa gitsin diye, giden uç noktalar diğer rollerden önce düşürür.
 
-Garantili teslimat, [Streaming library](/docs/specs/streaming/) (akış kütüphanesi) gibi daha üst katmanlara bırakılmıştır. Güvenilirlik gerektiren uygulamalar, yeniden iletim ve onayları kendileri yönetmelidir.
+Garantili teslimat, [Streaming library](/spec/api/streaming/) (akış kütüphanesi) gibi daha üst katmanlara bırakılmıştır. Güvenilirlik gerektiren uygulamalar, yeniden iletim ve onayları kendileri yönetmelidir.
 
 ---
 

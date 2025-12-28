@@ -36,7 +36,7 @@ Helfen Sie neuen Nutzern, dem Netzwerk beizutreten, indem Sie Infrastrukturdiens
 ### Dokumentation Verbessern
 Klar formulierte Dokumentation hilft jedem, I2P besser zu verstehen und zu nutzen.
 
-- **Schreibrichtlinien**: Befolgen Sie unsere [Schreibrichtlinien für Dokumentationen](/docs/writing-guidelines/)
+- **Schreibrichtlinien**: Befolgen Sie unsere [Schreibrichtlinien für Dokumentationen](/docs/writing-guidelines)
 - **Dokumentations-Hub**: Durchstöbern und tragen Sie zum [Dokumentenbereich](/docs/) bei
 - **Inhaltvorschläge**: Haben Sie Ideen? [Kontaktieren Sie uns](/en/contact/)
 

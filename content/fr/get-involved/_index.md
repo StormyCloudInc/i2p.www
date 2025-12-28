@@ -36,7 +36,7 @@ Aidez les nouveaux utilisateurs à rejoindre le réseau en exécutant des servic
 ### Améliorer la documentation
 Une documentation claire aide tout le monde à mieux comprendre et utiliser I2P.
 
-- **Directives de rédaction** : Suivez nos [directives de rédaction de documentation](/docs/writing-guidelines/)
+- **Directives de rédaction** : Suivez nos [directives de rédaction de documentation](/docs/writing-guidelines)
 - **Hub de documentation** : Parcourez et contribuez à la [section des docs](/docs/)
 - **Suggestions de contenu** : Des idées ? [Contactez-nous](/en/contact/)
 

@@ -36,7 +36,7 @@ Ajude novos usuários a se conectarem à rede executando serviços de infraestru
 ### Melhorar Documentação
 Documentação clara ajuda todos a entenderem e utilizarem melhor o I2P.
 
-- **Diretrizes de Escrita**: Siga nossas [diretrizes de escrita de documentação](/docs/writing-guidelines/)
+- **Diretrizes de Escrita**: Siga nossas [diretrizes de escrita de documentação](/docs/writing-guidelines)
 - **Hub de Documentação**: Navegue e contribua na seção [docs](/docs/)
 - **Sugestões de Conteúdo**: Tem ideias? [Entre em contato](/en/contact/)
 
