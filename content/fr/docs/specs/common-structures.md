@@ -15,7 +15,7 @@ Ce document spécifie les structures de données fondamentales utilisées dans l
 - ElGamal et DSA-SHA1 déconseillés pour les identités du router (utiliser X25519 + EdDSA)
 - Prise en charge post-quantique de ML-KEM en test bêta (opt-in, activation facultative, à partir de la 2.10.0)
 - Options des enregistrements de service normalisées ([Proposition 167](/proposals/167-service-records/), implémentées depuis 0.9.66)
-- Spécifications de bourrage compressible finalisées ([Proposition 161](/proposals/161-ri-dest-padding/), implémentées depuis 0.9.57)
+- Spécifications de bourrage compressible finalisées ([Proposition 161](/proposals/161-padding-generation/), implémentées depuis 0.9.57)
 
 ---
 
@@ -673,7 +673,7 @@ For Key Certificate (EdDSA + X25519):
 For larger keys (e.g., RSA_4096):
   Total = 384 + 3 + 4 + excess_key_data_length
 ```
-### Directives de génération de bourrage ([Proposition 161](/proposals/161-ri-dest-padding/))
+### Directives de génération de bourrage ([Proposition 161](/proposals/161-padding-generation/))
 
 **Version de l'implémentation:** 0.9.57 (janvier 2023, sortie 2.1.0)
 
@@ -752,7 +752,7 @@ Compression savings: ~320 bytes when compressed
 3. **Taille typique:**
    - X25519 + EdDSA avec certificat de clé = 391 octets
    - 32 octets de clé publique X25519
-   - remplissage de 320 octets (compressible selon la [Proposition 161](/proposals/161-ri-dest-padding/))
+   - remplissage de 320 octets (compressible selon la [Proposition 161](/proposals/161-padding-generation/))
    - 32 octets de clé publique EdDSA
    - certificat de 7 octets (en-tête de 3 octets + 4 octets pour les types de clés)
 
@@ -760,7 +760,7 @@ Compression savings: ~320 bytes when compressed
 
 **Clé de la base de données réseau:** - RouterInfo (informations du router) indexé par le hachage SHA-256 de la RouterIdentity (identité du router) complète - Hachage calculé sur la structure complète de 391+ octets (y compris le bourrage)
 
-**Voir aussi :** - Recommandations pour la génération du bourrage ([Proposition 161](/proposals/161-ri-dest-padding/)) - Spécification du certificat de clé ci-dessus
+**Voir aussi :** - Recommandations pour la génération du bourrage ([Proposition 161](/proposals/161-padding-generation/)) - Spécification du certificat de clé ci-dessus
 
 **JavaDoc :** [RouterIdentity](http://docs.i2p-projekt.de/javadoc/net/i2p/data/router/RouterIdentity.html)
 
@@ -783,7 +783,7 @@ Compression savings: ~320 bytes when compressed
 
 2. **Clé de chiffrement :**
    - Le champ est inutilisé mais doit être présent
-   - **Recommandé :** Remplir avec des données aléatoires conformément à [Proposal 161](/proposals/161-ri-dest-padding/) (compressibles)
+   - **Recommandé :** Remplir avec des données aléatoires conformément à [Proposal 161](/proposals/161-padding-generation/) (compressibles)
    - Taille : toujours 256 octets (emplacement ElGamal, même s’il n’est pas utilisé pour ElGamal)
 
 3. **Certificat:**
@@ -2433,7 +2433,7 @@ Authorization: Per-client encryption keys
 
 ### Notes de compatibilité
 
-**Rétrocompatibilité:** - ElGamal et DSA_SHA1 toujours pris en charge pour les routers historiques - Les types de clés dépréciés restent fonctionnels mais sont déconseillés - Bourrage compressible ([Proposal 161](/proposals/161-ri-dest-padding/)) rétrocompatible jusqu'à la version 0.6
+**Rétrocompatibilité:** - ElGamal et DSA_SHA1 toujours pris en charge pour les routers historiques - Les types de clés dépréciés restent fonctionnels mais sont déconseillés - Bourrage compressible ([Proposal 161](/proposals/161-padding-generation/)) rétrocompatible jusqu'à la version 0.6
 
 **Compatibilité ascendante :** - Les types de clés inconnus peuvent être analysés à l'aide des champs de longueur - Les types de certificats inconnus peuvent être ignorés à l'aide du champ de longueur - Les types de signatures inconnus doivent être gérés de manière robuste - Les implémenteurs ne doivent pas échouer en présence de fonctionnalités optionnelles inconnues
 
@@ -2477,7 +2477,7 @@ Authorization: Per-client encryption keys
 - [Proposition 136: Types de signature expérimentaux](/proposals/136-experimental-sigtypes/)
 - [Proposition 145: ECIES-P256](/proposals/145-ecies-p256/)
 - [Proposition 156: ECIES Routers](/proposals/156-ecies-routers/)
-- [Proposition 161: Génération du bourrage](/proposals/161-ri-dest-padding/)
+- [Proposition 161: Génération du bourrage](/proposals/161-padding-generation/)
 - [Proposition 167: Enregistrements de service](/proposals/167-service-records/)
 - [Proposition 169: Cryptographie post-quantique](/proposals/169-pq-crypto/)
 - [Index de toutes les propositions](/proposals/)

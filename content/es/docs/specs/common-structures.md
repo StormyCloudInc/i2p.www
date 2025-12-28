@@ -15,7 +15,7 @@ Este documento especifica las estructuras de datos fundamentales utilizadas en t
 - ElGamal y DSA-SHA1 en desuso para las identidades del router (usar X25519 + EdDSA)
 - Compatibilidad con ML-KEM poscuántico en pruebas beta (opt-in [activación opcional] desde la 2.10.0)
 - Opciones de registros de servicio estandarizadas ([Proposal 167](/proposals/167-service-records/), implementado en 0.9.66)
-- Especificaciones de relleno compresible finalizadas ([Proposal 161](/proposals/161-ri-dest-padding/), implementado en 0.9.57)
+- Especificaciones de relleno compresible finalizadas ([Proposal 161](/proposals/161-padding-generation/), implementado en 0.9.57)
 
 ---
 
@@ -673,7 +673,7 @@ For Key Certificate (EdDSA + X25519):
 For larger keys (e.g., RSA_4096):
   Total = 384 + 3 + 4 + excess_key_data_length
 ```
-### Directrices para la generación de relleno ([Propuesta 161](/proposals/161-ri-dest-padding/))
+### Directrices para la generación de relleno ([Propuesta 161](/proposals/161-padding-generation/))
 
 **Versión de implementación:** 0.9.57 (enero de 2023, lanzamiento 2.1.0)
 
@@ -752,7 +752,7 @@ Compression savings: ~320 bytes when compressed
 3. **Tamaño típico:**
    - X25519 + EdDSA con certificado de clave = 391 bytes
    - 32 bytes de clave pública X25519
-   - 320 bytes de relleno (compresible según [Propuesta 161](/proposals/161-ri-dest-padding/))
+   - 320 bytes de relleno (compresible según [Propuesta 161](/proposals/161-padding-generation/))
    - 32 bytes de clave pública EdDSA
    - 7 bytes de certificado (encabezado de 3 bytes + tipos de clave de 4 bytes)
 
@@ -760,7 +760,7 @@ Compression savings: ~320 bytes when compressed
 
 **Clave de la base de datos de red:** - RouterInfo (información del router) indexado por el hash SHA-256 de la RouterIdentity (identidad del router) completa - Hash calculado sobre la estructura completa de 391+ bytes (incluyendo el relleno)
 
-**Véase también:** - Directrices para la generación de relleno ([Proposal 161](/proposals/161-ri-dest-padding/)) - Especificación del certificado de clave más arriba
+**Véase también:** - Directrices para la generación de relleno ([Proposal 161](/proposals/161-padding-generation/)) - Especificación del certificado de clave más arriba
 
 **JavaDoc:** [RouterIdentity](http://docs.i2p-projekt.de/javadoc/net/i2p/data/router/RouterIdentity.html)
 
@@ -783,7 +783,7 @@ Compression savings: ~320 bytes when compressed
 
 2. **Clave de cifrado:**
    - El campo no se utiliza, pero debe estar presente
-   - **Recomendado:** Rellenar con datos aleatorios según [Proposal 161](/proposals/161-ri-dest-padding/) (compresible)
+   - **Recomendado:** Rellenar con datos aleatorios según [Proposal 161](/proposals/161-padding-generation/) (compresible)
    - Tamaño: Siempre 256 bytes (ranura de ElGamal, aunque no se use para ElGamal)
 
 3. **Certificado:**
@@ -2436,7 +2436,7 @@ Authorization: Per-client encryption keys
 
 ### Notas de compatibilidad
 
-**Retrocompatibilidad:** - ElGamal y DSA_SHA1 siguen siendo compatibles para routers heredados - Los tipos de clave obsoletos siguen siendo funcionales, pero se desaconsejan - Relleno compresible ([Proposal 161](/proposals/161-ri-dest-padding/)) retrocompatible hasta la versión 0.6
+**Retrocompatibilidad:** - ElGamal y DSA_SHA1 siguen siendo compatibles para routers heredados - Los tipos de clave obsoletos siguen siendo funcionales, pero se desaconsejan - Relleno compresible ([Proposal 161](/proposals/161-padding-generation/)) retrocompatible hasta la versión 0.6
 
 **Compatibilidad con versiones futuras:** - Los tipos de clave desconocidos pueden analizarse utilizando campos de longitud - Los tipos de certificado desconocidos pueden omitirse usando la longitud - Los tipos de firma desconocidos deben manejarse de forma adecuada - Los implementadores no deben fallar ante características opcionales desconocidas
 
@@ -2480,7 +2480,7 @@ Authorization: Per-client encryption keys
 - [Propuesta 136: Tipos de firma experimentales](/proposals/136-experimental-sigtypes/)
 - [Propuesta 145: ECIES-P256](/proposals/145-ecies-p256/)
 - [Propuesta 156: Routers ECIES](/proposals/156-ecies-routers/)
-- [Propuesta 161: Generación de relleno](/proposals/161-ri-dest-padding/)
+- [Propuesta 161: Generación de relleno](/proposals/161-padding-generation/)
 - [Propuesta 167: Registros de servicio](/proposals/167-service-records/)
 - [Propuesta 169: Criptografía poscuántica](/proposals/169-pq-crypto/)
 - [Índice de todas las propuestas](/proposals/)

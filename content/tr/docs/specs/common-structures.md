@@ -15,7 +15,7 @@ Bu belge, [I2NP](/docs/specs/i2np/), [I2CP](/docs/specs/i2cp/), [SSU2](/docs/spe
 - Router Kimlikleri için ElGamal ve DSA-SHA1 kullanımdan kaldırıldı (X25519 + EdDSA kullanın)
 - Kuantum-sonrası ML-KEM desteği beta testinde (2.10.0 itibarıyla isteğe bağlı)
 - Service record seçenekleri standartlaştırıldı ([Proposal 167](/proposals/167-service-records/), 0.9.66'da uygulandı)
-- Sıkıştırılabilir dolgu spesifikasyonları kesinleştirildi ([Proposal 161](/proposals/161-ri-dest-padding/), 0.9.57'de uygulandı)
+- Sıkıştırılabilir dolgu spesifikasyonları kesinleştirildi ([Proposal 161](/proposals/161-padding-generation/), 0.9.57'de uygulandı)
 
 ---
 
@@ -673,7 +673,7 @@ For Key Certificate (EdDSA + X25519):
 For larger keys (e.g., RSA_4096):
   Total = 384 + 3 + 4 + excess_key_data_length
 ```
-### Dolgu Üretimi Yönergeleri ([Öneri 161](/proposals/161-ri-dest-padding/))
+### Dolgu Üretimi Yönergeleri ([Öneri 161](/proposals/161-padding-generation/))
 
 **Uygulama Sürümü:** 0.9.57 (Ocak 2023, sürüm 2.1.0)
 
@@ -752,7 +752,7 @@ Compression savings: ~320 bytes when compressed
 3. **Tipik Boyut:**
    - X25519 + EdDSA, Anahtar Sertifikası ile = 391 bayt
    - 32 bayt X25519 açık anahtarı
-   - 320 bayt dolgu ([Proposal 161](/proposals/161-ri-dest-padding/)'e göre sıkıştırılabilir)
+   - 320 bayt dolgu ([Proposal 161](/proposals/161-padding-generation/)'e göre sıkıştırılabilir)
    - 32 bayt EdDSA açık anahtarı
    - 7 bayt sertifika (3 baytlık başlık + 4 baytlık anahtar türleri)
 
@@ -760,7 +760,7 @@ Compression savings: ~320 bytes when compressed
 
 **Ağ Veritabanı Anahtarı:** - RouterInfo, tam RouterIdentity'nin SHA-256 özeti ile anahtarlanır - Özet, 391+ baytlık tam yapı üzerinde (doldurma dahil) hesaplanır
 
-**Ayrıca bakınız:** - Dolgu (padding) oluşturma yönergeleri ([Öneri 161](/proposals/161-ri-dest-padding/)) - Yukarıdaki Anahtar Sertifikası belirtimi
+**Ayrıca bakınız:** - Dolgu (padding) oluşturma yönergeleri ([Öneri 161](/proposals/161-padding-generation/)) - Yukarıdaki Anahtar Sertifikası belirtimi
 
 **JavaDoc:** [RouterIdentity](http://docs.i2p-projekt.de/javadoc/net/i2p/data/router/RouterIdentity.html)
 
@@ -783,7 +783,7 @@ Compression savings: ~320 bytes when compressed
 
 2. **Şifreleme Anahtarı:**
    - Alan kullanılmıyor ancak mevcut olmalıdır
-   - **Önerilir:** [Proposal 161](/proposals/161-ri-dest-padding/) uyarınca rastgele verilerle doldurun (sıkıştırılabilir)
+   - **Önerilir:** [Proposal 161](/proposals/161-padding-generation/) uyarınca rastgele verilerle doldurun (sıkıştırılabilir)
    - Boyut: Her zaman 256 bayt (ElGamal yuvası, ElGamal için kullanılmasa da)
 
 3. **Sertifika:**
@@ -2436,7 +2436,7 @@ Authorization: Per-client encryption keys
 
 ### Uyumluluk Notları
 
-**Geriye Dönük Uyumluluk:** - ElGamal ve DSA_SHA1 hâlâ eski router'lar için destekleniyor - Kullanımdan kaldırılmış anahtar türleri işlevsel kalır ancak kullanımı önerilmez - Sıkıştırılabilir padding (doldurma) ([Proposal 161](/proposals/161-ri-dest-padding/)) 0.6'ya kadar geriye dönük uyumludur
+**Geriye Dönük Uyumluluk:** - ElGamal ve DSA_SHA1 hâlâ eski router'lar için destekleniyor - Kullanımdan kaldırılmış anahtar türleri işlevsel kalır ancak kullanımı önerilmez - Sıkıştırılabilir padding (doldurma) ([Proposal 161](/proposals/161-padding-generation/)) 0.6'ya kadar geriye dönük uyumludur
 
 **İleriye Dönük Uyumluluk:** - Bilinmeyen anahtar türleri, uzunluk alanları kullanılarak ayrıştırılabilir - Bilinmeyen sertifika türleri, uzunluk kullanılarak atlanabilir - Bilinmeyen imza türleri, sorunsuz şekilde ele alınmalıdır - Uygulayıcılar, bilinmeyen isteğe bağlı özellikler karşısında başarısız olmamalıdır
 
@@ -2480,7 +2480,7 @@ Authorization: Per-client encryption keys
 - [Öneri 136: Deneysel İmza Türleri](/proposals/136-experimental-sigtypes/)
 - [Öneri 145: ECIES-P256](/proposals/145-ecies-p256/)
 - [Öneri 156: ECIES Routers](/proposals/156-ecies-routers/)
-- [Öneri 161: Dolgu Üretimi](/proposals/161-ri-dest-padding/)
+- [Öneri 161: Dolgu Üretimi](/proposals/161-padding-generation/)
 - [Öneri 167: Hizmet Kayıtları](/proposals/167-service-records/)
 - [Öneri 169: Kuantum Sonrası Kriptografi](/proposals/169-pq-crypto/)
 - [Tüm Öneriler Dizini](/proposals/)

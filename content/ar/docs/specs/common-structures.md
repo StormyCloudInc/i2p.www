@@ -15,7 +15,7 @@ accurateFor: "2.10.0"
 - أُعلِن تقادم ElGamal و DSA-SHA1 لهويات Router (استخدم X25519 + EdDSA)
 - دعم ML-KEM لما بعد الكم في مرحلة الاختبار التجريبي (اختياري اعتبارًا من 2.10.0)
 - تم توحيد خيارات سجل الخدمة ([Proposal 167](/proposals/167-service-records/), تم تنفيذها في 0.9.66)
-- تم إقرار مواصفات الحشو القابل للضغط نهائيًا ([Proposal 161](/proposals/161-ri-dest-padding/), تم تنفيذها في 0.9.57)
+- تم إقرار مواصفات الحشو القابل للضغط نهائيًا ([Proposal 161](/proposals/161-padding-generation/), تم تنفيذها في 0.9.57)
 
 ---
 
@@ -673,7 +673,7 @@ For Key Certificate (EdDSA + X25519):
 For larger keys (e.g., RSA_4096):
   Total = 384 + 3 + 4 + excess_key_data_length
 ```
-### إرشادات توليد الحشو ([المقترح 161](/proposals/161-ri-dest-padding/))
+### إرشادات توليد الحشو ([المقترح 161](/proposals/161-padding-generation/))
 
 **إصدار التنفيذ:** 0.9.57 (يناير 2023، الإصدار 2.1.0)
 
@@ -752,7 +752,7 @@ Compression savings: ~320 bytes when compressed
 3. **الحجم النموذجي:**
    - X25519 + EdDSA مع شهادة المفتاح = 391 بايت
    - 32 بايت لمفتاح عام X25519
-   - 320 بايت حشو (قابل للضغط حسب [Proposal 161](/proposals/161-ri-dest-padding/))
+   - 320 بايت حشو (قابل للضغط حسب [Proposal 161](/proposals/161-padding-generation/))
    - 32 بايت لمفتاح عام EdDSA
    - 7 بايت شهادة (ترويسة 3 بايت + أنواع المفاتيح 4 بايت)
 
@@ -760,7 +760,7 @@ Compression savings: ~320 bytes when compressed
 
 **مفتاح قاعدة البيانات الشبكية:** - RouterInfo مفهرس بواسطة تجزئة SHA-256 لـ RouterIdentity الكامل - التجزئة محسوبة على البنية كاملة المؤلفة من 391+ بايت (بما في ذلك الحشو)
 
-**انظر أيضًا:** - إرشادات توليد الحشو ([المقترح 161](/proposals/161-ri-dest-padding/)) - مواصفة شهادة المفتاح أعلاه
+**انظر أيضًا:** - إرشادات توليد الحشو ([المقترح 161](/proposals/161-padding-generation/)) - مواصفة شهادة المفتاح أعلاه
 
 **JavaDoc (توثيق Java):** [RouterIdentity](http://docs.i2p-projekt.de/javadoc/net/i2p/data/router/RouterIdentity.html)
 
@@ -783,7 +783,7 @@ Compression savings: ~320 bytes when compressed
 
 2. **مفتاح التشفير:**
    - الحقل غير مستخدَم لكنه يجب أن يكون موجودًا
-   - **موصى به:** املأه ببيانات عشوائية وفقًا لـ [Proposal 161](/proposals/161-ri-dest-padding/) (قابلة للضغط)
+   - **موصى به:** املأه ببيانات عشوائية وفقًا لـ [Proposal 161](/proposals/161-padding-generation/) (قابلة للضغط)
    - الحجم: دائمًا 256 بايت (فتحة ElGamal (خوارزمية التشفير ElGamal)، على الرغم من أنه لا يُستَخدَم لـ ElGamal)
 
 3. **الشهادة:**
@@ -2433,7 +2433,7 @@ Authorization: Per-client encryption keys
 
 ### ملاحظات التوافق
 
-**التوافق مع الإصدارات السابقة:** - لا يزال دعم ElGamal و DSA_SHA1 قائماً لـ routers القديمة - تظل أنواع المفاتيح المهملة تعمل، لكن غير مستحسنة - الحشو القابل للضغط ([المقترح 161](/proposals/161-ri-dest-padding/)) متوافق رجوعياً حتى الإصدار 0.6
+**التوافق مع الإصدارات السابقة:** - لا يزال دعم ElGamal و DSA_SHA1 قائماً لـ routers القديمة - تظل أنواع المفاتيح المهملة تعمل، لكن غير مستحسنة - الحشو القابل للضغط ([المقترح 161](/proposals/161-padding-generation/)) متوافق رجوعياً حتى الإصدار 0.6
 
 **التوافق المستقبلي:** - يمكن تحليل أنواع المفاتيح غير المعروفة باستخدام حقول الطول - يمكن تجاوز أنواع الشهادات غير المعروفة باستخدام الطول - يجب التعامل مع أنواع التواقيع غير المعروفة بسلاسة - لا ينبغي أن يفشل المنفذون عند مواجهة ميزات اختيارية غير معروفة
 
@@ -2477,7 +2477,7 @@ Authorization: Per-client encryption keys
 - [المقترح 136: أنواع تواقيع تجريبية](/proposals/136-experimental-sigtypes/)
 - [المقترح 145: ECIES-P256](/proposals/145-ecies-p256/)
 - [المقترح 156: ECIES Routers](/proposals/156-ecies-routers/)
-- [المقترح 161: توليد الحشو](/proposals/161-ri-dest-padding/)
+- [المقترح 161: توليد الحشو](/proposals/161-padding-generation/)
 - [المقترح 167: سجلات الخدمة](/proposals/167-service-records/)
 - [المقترح 169: التشفير ما بعد الكمّي](/proposals/169-pq-crypto/)
 - [فهرس جميع المقترحات](/proposals/)

@@ -15,7 +15,7 @@ Tento dokument specifikuje základní datové struktury používané napříč v
 - ElGamal a DSA-SHA1 jsou pro Router Identities zastaralé (použijte X25519 + EdDSA)
 - Podpora postkvantového ML-KEM je v beta testování (opt-in (volitelné zapnutí) od verze 2.10.0)
 - Možnosti záznamu služby byly standardizovány ([Proposal 167](/proposals/167-service-records/), implementováno ve verzi 0.9.66)
-- Specifikace komprimovatelné výplně byly finalizovány ([Proposal 161](/proposals/161-ri-dest-padding/), implementováno ve verzi 0.9.57)
+- Specifikace komprimovatelné výplně byly finalizovány ([Proposal 161](/proposals/161-padding-generation/), implementováno ve verzi 0.9.57)
 
 ---
 
@@ -672,7 +672,7 @@ For Key Certificate (EdDSA + X25519):
 For larger keys (e.g., RSA_4096):
   Total = 384 + 3 + 4 + excess_key_data_length
 ```
-### Pokyny pro generování vycpávky ([Návrh 161](/proposals/161-ri-dest-padding/))
+### Pokyny pro generování vycpávky ([Návrh 161](/proposals/161-padding-generation/))
 
 **Verze implementace:** 0.9.57 (leden 2023, vydání 2.1.0)
 
@@ -751,7 +751,7 @@ Compression savings: ~320 bytes when compressed
 3. **Typická velikost:**
    - X25519 + EdDSA s certifikátem klíče = 391 bajtů
    - 32 bajtů veřejného klíče X25519
-   - 320 bajtů výplně (komprimovatelná podle [Proposal 161](/proposals/161-ri-dest-padding/))
+   - 320 bajtů výplně (komprimovatelná podle [Proposal 161](/proposals/161-padding-generation/))
    - 32 bajtů veřejného klíče EdDSA
    - 7 bajtů certifikátu (3bajtová hlavička + 4 bajty typů klíčů)
 
@@ -759,7 +759,7 @@ Compression savings: ~320 bytes when compressed
 
 **Klíč síťové databáze:** - RouterInfo (záznam s informacemi o routeru v I2P) je indexován pomocí SHA-256 hashe úplného RouterIdentity - Hash je vypočten nad celou strukturou o 391+ bajtech (včetně výplně)
 
-**Viz také:** - Pokyny pro generování paddingu (vycpávky) ([Proposal 161](/proposals/161-ri-dest-padding/)) - Specifikace Key Certificate výše
+**Viz také:** - Pokyny pro generování paddingu (vycpávky) ([Proposal 161](/proposals/161-padding-generation/)) - Specifikace Key Certificate výše
 
 **JavaDoc:** [RouterIdentity](http://docs.i2p-projekt.de/javadoc/net/i2p/data/router/RouterIdentity.html)
 
@@ -782,7 +782,7 @@ Compression savings: ~320 bytes when compressed
 
 2. **Šifrovací klíč:**
    - Pole se nepoužívá, ale musí být přítomné
-   - **Doporučeno:** Vyplňte náhodnými daty dle [Proposal 161](/proposals/161-ri-dest-padding/) (komprimovatelná)
+   - **Doporučeno:** Vyplňte náhodnými daty dle [Proposal 161](/proposals/161-padding-generation/) (komprimovatelná)
    - Velikost: vždy 256 bajtů (slot pro ElGamal, i když se ElGamal nepoužívá)
 
 3. **Certifikát:**
@@ -2435,7 +2435,7 @@ Authorization: Per-client encryption keys
 
 ### Poznámky ke kompatibilitě
 
-**Zpětná kompatibilita:** - ElGamal a DSA_SHA1 jsou stále podporovány pro starší routers - Zastaralé typy klíčů zůstávají funkční, ale jejich používání se nedoporučuje - Komprimovatelný padding (komprimovatelná vycpávka) ([Proposal 161](/proposals/161-ri-dest-padding/)) zpětně kompatibilní až k verzi 0.6
+**Zpětná kompatibilita:** - ElGamal a DSA_SHA1 jsou stále podporovány pro starší routers - Zastaralé typy klíčů zůstávají funkční, ale jejich používání se nedoporučuje - Komprimovatelný padding (komprimovatelná vycpávka) ([Proposal 161](/proposals/161-padding-generation/)) zpětně kompatibilní až k verzi 0.6
 
 **Dopředná kompatibilita:** - Neznámé typy klíčů lze parsovat pomocí délkových polí - Neznámé typy certifikátů lze přeskočit pomocí délky - Neznámé typy podpisů by měly být zpracovány korektně - Implementace by neměly selhávat kvůli neznámým volitelným funkcím
 
@@ -2479,7 +2479,7 @@ Authorization: Per-client encryption keys
 - [Návrh 136: Experimentální typy podpisů](/proposals/136-experimental-sigtypes/)
 - [Návrh 145: ECIES-P256](/proposals/145-ecies-p256/)
 - [Návrh 156: ECIES routery](/proposals/156-ecies-routers/)
-- [Návrh 161: Generování vycpávky](/proposals/161-ri-dest-padding/)
+- [Návrh 161: Generování vycpávky](/proposals/161-padding-generation/)
 - [Návrh 167: Záznamy služeb](/proposals/167-service-records/)
 - [Návrh 169: Postkvantová kryptografie](/proposals/169-pq-crypto/)
 - [Rejstřík všech návrhů](/proposals/)

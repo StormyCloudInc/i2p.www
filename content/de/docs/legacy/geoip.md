@@ -1,23 +1,23 @@
 ---
 title: "GeoIP-Dateiformate"
-description: "Spezifikationen des veralteten GeoIP-Dateiformats für IP-zu-Land-Abfragen"
+description: "Spezifikationen des veralteten GeoIP-Dateiformats zur Zuordnung von IP-Adressen zu Ländern"
 lastUpdated: "2025-05"
 accurateFor: "0.9.66"
 ---
 
-## Überblick
+## Übersicht
 
-**HINWEIS: VERALTET** - Wir unterstützen jetzt drei Formate, in der bevorzugten Reihenfolge:
+**HINWEIS: VERALTET** - Wir unterstützen jetzt drei Formate, in bevorzugter Reihenfolge:
 
-- Maxmind geoip2 (GeoLite2-Country.mmdb) wird mit allen Installationen gebündelt, außer bei Debian-Paketen und Android
+- Maxmind geoip2 (GeoLite2-Country.mmdb) in allen Installationen enthalten, außer bei den Debian-Paketen und Android
 - Maxmind geoip1 (GeoIP.dat) im Debian-Paket geoip-database
-- Das IPv4-Tor-Format (geoip.txt) und das benutzerdefinierte IPv6-Format (geoipv6.dat.gz), unten dokumentiert, werden weiterhin unterstützt, aber nicht verwendet.
+- Das IPv4-Tor-Format (geoip.txt) und das benutzerdefinierte IPv6-Format (geoipv6.dat.gz) sind unten dokumentiert, werden weiterhin unterstützt, aber nicht verwendet.
 
-Diese Seite legt das Format der verschiedenen GeoIP-Dateien fest, die vom router verwendet werden, um für eine IP-Adresse das Land nachzuschlagen.
+Diese Seite gibt das Format der verschiedenen GeoIP-Dateien an, die vom router verwendet werden, um das Land zu einer IP-Adresse zu ermitteln.
 
 ## Format des Ländernamens (countries.txt)
 
-Dieses Format lässt sich leicht aus Datendateien generieren, die bei vielen öffentlichen Quellen erhältlich sind. Zum Beispiel:
+Dieses Format lässt sich leicht aus Datendateien generieren, die aus zahlreichen öffentlichen Quellen erhältlich sind. Zum Beispiel:
 
 ```bash
 $ wget http://geolite.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip
@@ -26,15 +26,15 @@ $ cut -d, -f5,6 < GeoIPCountryWhois.csv | sed 's/"//g' | sort | uniq > countries
 ```
 **Formatspezifikationen:**
 
-- Die Zeichenkodierung ist UTF-8
+- Die Kodierung ist UTF-8
 - '#' in Spalte 1 kennzeichnet eine Kommentarzeile
-- Eintragszeilen sind CountryCode,CountryName
-- CountryCode ist der ISO-Zweibuchstabencode, in Großbuchstaben
+- Eintragszeilen bestehen aus CountryCode,CountryName
+- CountryCode ist der ISO-Zwei-Buchstaben-Code, in Großbuchstaben
 - CountryName ist auf Englisch
 
 ## IPv4 (geoip.txt) Format
 
-Dieses Format wurde von Tor übernommen und kann leicht aus Datendateien generiert werden, die von vielen öffentlichen Quellen verfügbar sind. Zum Beispiel:
+Dieses Format wurde von Tor übernommen und lässt sich leicht aus Datendateien erzeugen, die von vielen öffentlichen Quellen bereitgestellt werden. Zum Beispiel:
 
 ```bash
 $ wget http://geolite.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip
@@ -46,14 +46,14 @@ $ cut -d, -f5,6 < GeoIPCountryWhois.csv | sed 's/"//g' | sort | uniq > countries
 
 - Die Kodierung ist ASCII
 - '#' in Spalte 1 kennzeichnet eine Kommentarzeile
-- Eintragszeilen haben das Format FromIP,ToIP,CountryCode
+- Eintragszeilen haben die Form FromIP,ToIP,CountryCode
 - FromIP und ToIP sind vorzeichenlose Ganzzahl-Darstellungen der 4-Byte-IP-Adresse
-- CountryCode ist der zweibuchstabige ISO-Code, in Großbuchstaben
-- Eintragszeilen müssen nach dem numerischen FromIP sortiert sein
+- CountryCode ist der ISO-Zwei-Buchstaben-Code, in Großbuchstaben
+- Eintragszeilen müssen nach dem numerischen FromIP-Wert sortiert sein
 
 ## IPv6 (geoipv6.dat.gz) Format
 
-Dies ist ein komprimiertes Binärformat, das für I2P entwickelt wurde. Die Datei ist gzip-komprimiert. Dekomprimiertes Format:
+Dies ist ein komprimiertes binäres Format, das für I2P entwickelt wurde. Die Datei ist gzip-komprimiert. Dekomprimiertes Format:
 
 ```
   Bytes 0-9: Magic number "I2PGeoIPv6"
@@ -69,6 +69,6 @@ Dies ist ein komprimiertes Binärformat, das für I2P entwickelt wurde. Die Date
 ```
 **HINWEISE:**
 
-- Die Daten müssen sortiert sein (SIGNIERTER long-Wert im Zweierkomplement), keine Überschneidungen. Die Reihenfolge ist also 80000000 ... FFFFFFFF 00000000 ... 7FFFFFFF.
-- Die Klasse GeoIPv6.java enthält ein Programm, um dieses Format aus öffentlichen Quellen wie den Maxmind-GeoLite-Daten zu generieren.
-- Die IPv6-GeoIP-Abfrage wird seit Version 0.9.8 unterstützt.
+- Daten müssen sortiert sein (vorzeichenbehaftetes long im Zweierkomplement), keine Überschneidungen. Die Reihenfolge ist also 80000000 ... FFFFFFFF 00000000 ... 7FFFFFFF.
+- Die Klasse GeoIPv6.java enthält ein Programm, um dieses Format aus öffentlichen Quellen wie den Maxmind-GeoLite-Daten zu erzeugen.
+- IPv6-GeoIP-Abfrage wird ab Version 0.9.8 unterstützt.

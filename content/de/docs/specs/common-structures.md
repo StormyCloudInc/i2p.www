@@ -15,7 +15,7 @@ Dieses Dokument definiert die grundlegenden Datenstrukturen, die in allen I2P-Pr
 - ElGamal und DSA-SHA1 für Router-Identitäten als veraltet markiert (verwenden Sie X25519 + EdDSA)
 - Unterstützung für Post-Quanten-ML-KEM (Mechanismus zur Schlüsselkapselung) im Beta-Test (per Opt-in ab 2.10.0)
 - Service-Record-Optionen (Service Record = Dienst-Eintrag) standardisiert ([Proposal 167](/proposals/167-service-records/), implementiert in 0.9.66)
-- Spezifikationen für komprimierbares Padding (Auffüllung) finalisiert ([Proposal 161](/proposals/161-ri-dest-padding/), implementiert in 0.9.57)
+- Spezifikationen für komprimierbares Padding (Auffüllung) finalisiert ([Proposal 161](/proposals/161-padding-generation/), implementiert in 0.9.57)
 
 ---
 
@@ -673,7 +673,7 @@ For Key Certificate (EdDSA + X25519):
 For larger keys (e.g., RSA_4096):
   Total = 384 + 3 + 4 + excess_key_data_length
 ```
-### Richtlinien zur Generierung von Padding ([Vorschlag 161](/proposals/161-ri-dest-padding/))
+### Richtlinien zur Generierung von Padding ([Vorschlag 161](/proposals/161-padding-generation/))
 
 **Implementierungsversion:** 0.9.57 (Januar 2023, Release 2.1.0)
 
@@ -752,7 +752,7 @@ Compression savings: ~320 bytes when compressed
 3. **Typische Größe:**
    - X25519 + EdDSA mit Schlüsselzertifikat = 391 Bytes
    - 32 Bytes X25519-öffentlicher Schlüssel
-   - 320 Bytes Padding (Auffüllung) (komprimierbar gemäß [Proposal 161](/proposals/161-ri-dest-padding/))
+   - 320 Bytes Padding (Auffüllung) (komprimierbar gemäß [Proposal 161](/proposals/161-padding-generation/))
    - 32 Bytes EdDSA-öffentlicher Schlüssel
    - 7 Bytes Zertifikat (3-Byte-Header + 4-Byte-Schlüsseltypen)
 
@@ -760,7 +760,7 @@ Compression savings: ~320 bytes when compressed
 
 **Schlüssel der Netzwerkdatenbank:** - RouterInfo (Router-Informationsstruktur) indiziert durch den SHA-256-Hash der vollständigen RouterIdentity (Router-Identität) - Hash über die gesamte 391+ Byte große Struktur berechnet (einschließlich Padding)
 
-**Siehe auch:** - Richtlinien zur Padding-Generierung ([Proposal 161](/proposals/161-ri-dest-padding/)) - Spezifikation des Schlüsselzertifikats oben
+**Siehe auch:** - Richtlinien zur Padding-Generierung ([Proposal 161](/proposals/161-padding-generation/)) - Spezifikation des Schlüsselzertifikats oben
 
 **JavaDoc:** [RouterIdentity](http://docs.i2p-projekt.de/javadoc/net/i2p/data/router/RouterIdentity.html)
 
@@ -783,7 +783,7 @@ Compression savings: ~320 bytes when compressed
 
 2. **Verschlüsselungsschlüssel:**
    - Feld ist ungenutzt, muss aber vorhanden sein
-   - **Empfohlen:** Mit Zufallsdaten gemäß [Proposal 161](/proposals/161-ri-dest-padding/) füllen (komprimierbar)
+   - **Empfohlen:** Mit Zufallsdaten gemäß [Proposal 161](/proposals/161-padding-generation/) füllen (komprimierbar)
    - Größe: Immer 256 Byte (ElGamal-Slot, obwohl nicht für ElGamal verwendet)
 
 3. **Zertifikat:**
@@ -2433,7 +2433,7 @@ Authorization: Per-client encryption keys
 
 ### Kompatibilitätshinweise
 
-**Abwärtskompatibilität:** - ElGamal und DSA_SHA1 werden weiterhin für ältere routers unterstützt - Veraltete Schlüsseltypen bleiben funktionsfähig, werden jedoch nicht empfohlen - Komprimierbares Padding ([Proposal 161](/proposals/161-ri-dest-padding/)) abwärtskompatibel bis Version 0.6
+**Abwärtskompatibilität:** - ElGamal und DSA_SHA1 werden weiterhin für ältere routers unterstützt - Veraltete Schlüsseltypen bleiben funktionsfähig, werden jedoch nicht empfohlen - Komprimierbares Padding ([Proposal 161](/proposals/161-padding-generation/)) abwärtskompatibel bis Version 0.6
 
 **Vorwärtskompatibilität:** - Unbekannte Schlüsseltypen können anhand von Längenfeldern geparst werden - Unbekannte Zertifikatstypen können anhand der Länge übersprungen werden - Unbekannte Signaturtypen sollten fehlertolerant behandelt werden - Implementierungen sollten bei unbekannten optionalen Funktionen nicht fehlschlagen
 
@@ -2477,7 +2477,7 @@ Authorization: Per-client encryption keys
 - [Vorschlag 136: Experimentelle Signaturtypen](/proposals/136-experimental-sigtypes/)
 - [Vorschlag 145: ECIES-P256](/proposals/145-ecies-p256/)
 - [Vorschlag 156: ECIES Routers](/proposals/156-ecies-routers/)
-- [Vorschlag 161: Padding-Generierung](/proposals/161-ri-dest-padding/)
+- [Vorschlag 161: Padding-Generierung](/proposals/161-padding-generation/)
 - [Vorschlag 167: Service-Einträge](/proposals/167-service-records/)
 - [Vorschlag 169: Post-Quanten-Kryptografie](/proposals/169-pq-crypto/)
 - [Index aller Vorschläge](/proposals/)
