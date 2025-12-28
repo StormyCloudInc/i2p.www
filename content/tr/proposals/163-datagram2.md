@@ -107,7 +107,6 @@ Yanıtlanabilir datagramlar için standart I2CP protokol numarası PROTO_DATAGRA
 ```
 
 
-
 ## Tasarım
 
 - Yeni protokol 19 - Seçenekli yanıtlanabilir datagram tanımlayın.
@@ -129,10 +128,10 @@ Yanıtlanabilir datagramlar için standart I2CP protokol numarası PROTO_DATAGRA
 ### Protokol
 
 Datagram2 için yeni I2CP protokol numarası 19'dur.
-Bunu [I2CP](/docs/protocol/i2cp/) 'ye PROTO_DATAGRAM2 olarak ekleyin.
+Bunu [I2CP](/docs/specs/i2cp/) 'ye PROTO_DATAGRAM2 olarak ekleyin.
 
 Datagram3 için yeni I2CP protokol numarası 20'dir.
-Bunu [I2CP](/docs/protocol/i2cp/) 'ye PROTO_DATAGRAM2 olarak ekleyin.
+Bunu [I2CP](/docs/specs/i2cp/) 'ye PROTO_DATAGRAM2 olarak ekleyin.
 
 
 ### Datagram2 Formatı
@@ -291,7 +290,6 @@ Aşağıdaki şekilde [DATAGRAMS](/docs/api/datagrams/) 'e Datagram3 ekleyin:
 Toplam uzunluk: minimum 34 + veri yükü uzunluğu.
 
 
-
 ### SAM
 
 SAMv3 spesifikasyonuna STYLE=DATAGRAM2 ve STYLE=DATAGRAM3 ekleyin.
@@ -310,7 +308,6 @@ Hedef hash'i imzaya dahil etmek, tekrar saldırılarını önlemede etkili olmal
 
 Datagram3 formatı imzalar içermez, bu yüzden gönderici doğrulanamaz
 ve tekrar saldırılarına açıktır. Gerekli tüm doğrulama uygulama katmanında veya yönlendirici tarafından tıklama katmanında yapılmalıdır.
-
 
 
 ## Notlar
@@ -359,8 +356,8 @@ SAM UDP uygulamaları: Bilinen yok
 * [API](/docs/api/datagrams/)
 * [BT-SPEC](/docs/applications/bittorrent/)
 * [Common](/docs/specs/common-structures/)
-* [DATAGRAMS](/docs/specs/datagrams/)
-* [I2CP](/docs/protocol/i2cp/)
+* [DATAGRAMS](/docs/api/datagrams/)
+* [I2CP](/docs/specs/i2cp/)
 * [Prop123](/proposals/123-new-netdb-entries/)
 * [Prop160](/proposals/160-udp-trackers/)
 * [Prop164](/proposals/164-streaming/)

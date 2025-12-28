@@ -513,8 +513,8 @@ Target release: 0.9.53, early 2022.
 * [Prop153](/proposals/153-chacha20-layer-encryption/)
 * [Prop154](/proposals/154-ecies-lookups/)
 * [Prop157](/proposals/157-new-tbm/)
-* [Tunnel-Creation](/docs/specs/tunnel-creation/)
-* [Tunnel-Creation-ECIES](/docs/specs/tunnel-creation-ecies/)
+* [Tunnel-Creation](/docs/specs/implementation/#tunnel-creation-ecies)
+* [Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies)
 
 
 

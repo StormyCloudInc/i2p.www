@@ -18,7 +18,6 @@ toc: true
 查看实现文档了解状态。
 
 
-
 ## 概述
 
 从 [Prop123](/proposals/123-new-netdb-entries/) 中单独提取为一个独立提案。
@@ -111,7 +110,6 @@ bittorrent UDP 通告，已在 i2psnark 和 zzzot 中实现，
 ```
 
 
-
 ## 设计
 
 - 定义新协议19 - 带选项的可回复数据报。
@@ -134,10 +132,10 @@ bittorrent UDP 通告，已在 i2psnark 和 zzzot 中实现，
 ### 协议
 
 Datagram2 的新 I2CP 协议编号为19。
-将其添加为 PROTO_DATAGRAM2 到 [I2CP](/docs/protocol/i2cp/)。
+将其添加为 PROTO_DATAGRAM2 到 [I2CP](/docs/specs/i2cp/)。
 
 Datagram3 的新 I2CP 协议编号为20。
-将其添加为 PROTO_DATAGRAM2 到 [I2CP](/docs/protocol/i2cp/)。
+将其添加为 PROTO_DATAGRAM2 到 [I2CP](/docs/specs/i2cp/)。
 
 
 ### Datagram2 格式
@@ -297,7 +295,6 @@ Datagram3 的新 I2CP 协议编号为20。
 总长度：最低34 + 有效负载长度。
 
 
-
 ### SAM
 
 将 STYLE=DATAGRAM2 和 STYLE=DATAGRAM3 添加到 SAMv3 规范。
@@ -310,7 +307,6 @@ Datagram3 的新 I2CP 协议编号为20。
 这是可以接受的。
 
 
-
 ## 安全分析
 
 在签名中包含目标哈希应该能够有效地防止重播攻击。
@@ -318,7 +314,6 @@ Datagram3 的新 I2CP 协议编号为20。
 Datagram3 格式缺乏签名，因此无法验证发送者，
 并可能发生重播攻击。任何所需的验证必须在应用程序层完成，
 或者由路由器在棘轮层完成。
-
 
 
 ## 备注
@@ -330,13 +325,10 @@ Datagram3 格式缺乏签名，因此无法验证发送者，
   获得最佳效果，将有效负载限制在约 10 KB 或更少。
 
 
-
-
 ## 兼容性
 
 无。应用程序必须被重写以根据协议和/或端口路由 Datagram2 I2CP 消息。
 错误路由为可回复数据报或流消息的 Datagram2 消息将基于签名、格式或两者失败。
-
 
 
 ## 迁移
@@ -366,8 +358,8 @@ SAM UDP 应用：未知
 * [API](/docs/api/datagrams/)
 * [BT-SPEC](/docs/applications/bittorrent/)
 * [Common](/docs/specs/common-structures/)
-* [DATAGRAMS](/docs/specs/datagrams/)
-* [I2CP](/docs/protocol/i2cp/)
+* [DATAGRAMS](/docs/api/datagrams/)
+* [I2CP](/docs/specs/i2cp/)
 * [Prop123](/proposals/123-new-netdb-entries/)
 * [Prop160](/proposals/160-udp-trackers/)
 * [Prop164](/proposals/164-streaming/)

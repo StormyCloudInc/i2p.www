@@ -20,7 +20,7 @@ IBGWs from the LeaseSet for the target Destination.
 
 Most I2P routers employ a form of packet-dropping for congestion management. The
 reference implementation uses a WRED strategy that takes both message size and
-travel distance into account (see [tunnel throttling documentation](/en/docs/tunnels/implementation/#tunnelthrottling)). Due to this strategy, the
+travel distance into account (see [tunnel throttling documentation](/docs/tunnels/implementation/#tunnelthrottling)). Due to this strategy, the
 primary source of packet loss is the OBEP.
 
 
@@ -42,7 +42,7 @@ option (with the final hop possibly being outside the sender's fast tier).
 
 ## Specification
 
-A new I2CP option is added to the [I2CP specification](/en/docs/spec/i2cp/):
+A new I2CP option is added to the [I2CP specification](/docs/specs/i2cp/):
 
     outbound.matchEndWithTarget
         Boolean
