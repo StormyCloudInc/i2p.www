@@ -12,7 +12,7 @@ toc: true
 
 ## नोट
 
-यह प्रस्ताव स्वीकृत कर लिया गया है और अब यह [Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/) में API 0.9.65 के अनुसार शामिल है।
+यह प्रस्ताव स्वीकृत कर लिया गया है और अब यह [Tunnel Creation ECIES specification](/docs/specs/implementation/#tunnel-creation-ecies) में API 0.9.65 के अनुसार शामिल है।
 वर्तमान में कोई भी ज्ञात कार्यान्वयन नहीं हैं; कार्यान्वयन की तिथियाँ / API संस्करण TBD हैं।
 
 
@@ -35,14 +35,14 @@ toc: true
 
 ## डिज़ाइन
 
-ECIES टनल बिल्ड संदेशों के रिकॉर्ड्स में बैंडविड्थ पैरामीटर जोड़ें (देखें [Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/))
+ECIES टनल बिल्ड संदेशों के रिकॉर्ड्स में बैंडविड्थ पैरामीटर जोड़ें (देखें [Tunnel Creation ECIES specification](/docs/specs/implementation/#tunnel-creation-ecies))
 टनल बिल्ड विकल्प मैपिंग क्षेत्र में। छोटे पैरामीटर्स का उपयोग करें क्योंकि विकल्प क्षेत्र के लिए उपलब्ध स्थान सीमित है।
 टनल बिल्ड संदेशों का आकार स्थिर होता है इसलिए यह संदेशों के आकार में वृद्धि नहीं करता।
 
 
 ## विशिष्टता
 
-[ECIES टनल बिल्ड संदेश विशिष्टता](/en/docs/specs/tunnel-creation-ecies/) को अपडेट करें के रूप में:
+[ECIES टनल बिल्ड संदेश विशिष्टता](/docs/specs/implementation/#tunnel-creation-ecies) को अपडेट करें के रूप में:
 
 लंबे और छोटे दोनों ECIES बिल्ड रिकॉर्ड्स के लिए:
 

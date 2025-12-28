@@ -121,7 +121,7 @@ Konfigurationsvariablen: - Basisverzeichnis: `i2p.dir.base` - Konfigurationsverz
     </tr>
   </tbody>
 </table>
-Alle offiziellen Dokumentationen befinden sich unter `/en/docs/api/` — der alte Pfad `/spec/samv3/` existiert **nicht**.
+Alle offiziellen Dokumentationen befinden sich unter `/docs/api/` — der alte Pfad `/spec/samv3/` existiert **nicht**.
 
 ## 6. Netzwerk und Ports
 

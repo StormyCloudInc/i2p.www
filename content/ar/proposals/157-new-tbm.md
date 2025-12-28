@@ -14,7 +14,7 @@ toc: true
 تم تنفيذها اعتبارًا من الإصدار API 0.9.51.
 جاري نشرها واختبارها على الشبكة.
 عرضة للمراجعة الطفيفة.
-انظر [I2NP](/en/docs/specs/i2np/) و[Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) للمواصفات النهائية.
+انظر [I2NP](/docs/specs/i2np/) و[Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies) للمواصفات النهائية.
 
 
 ## نظرة عامة
@@ -26,7 +26,7 @@ toc: true
 بالنسبة لرسائل بناء النفق المتغيرة والردود على بناء النفق، يكون الحجم الإجمالي 2113 بايت.
 يتم تقسيم هذه الرسالة إلى ثلاثة رسائل أنفاق لكل منها 1 كيلوبايت للمسار العكسي.
 
-التغييرات على سجل بحجم 528 بايت لأجهزة التوجيه ECIES-X25519 محددة في [Prop152](/en/proposals/152-ecies-tunnels/) و[Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/).
+التغييرات على سجل بحجم 528 بايت لأجهزة التوجيه ECIES-X25519 محددة في [Prop152](/proposals/152-ecies-tunnels/) و[Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies).
 بالنسبة لمزيج من أجهزة التوجيه ElGamal وECIES-X25519 في نفق، يجب أن يظل حجم السجل 528 بايت.
 ومع ذلك، إذا كانت جميع أجهزة التوجيه في نفق هي ECIES-X25519، فمن الممكن إنشاء سجل بناء أصغر، لأن تشفير ECIES-X25519 لديه عبء منخفض كثيرا مقارنة بـ ElGamal.
 
@@ -41,13 +41,13 @@ toc: true
 
 ### الأهداف
 
-انظر [Prop152](/en/proposals/152-ecies-tunnels/) و[Prop156](/en/proposals/156-ecies-routers/) للحصول على أهداف إضافية.
+انظر [Prop152](/proposals/152-ecies-tunnels/) و[Prop156](/proposals/156-ecies-routers/) للحصول على أهداف إضافية.
 
 - سجلات أصغر ورسائل
-- الحفاظ على مساحة كافية للخيارات المستقبلية، كما هو الحال في [Prop152](/en/proposals/152-ecies-tunnels/) و[Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/)
+- الحفاظ على مساحة كافية للخيارات المستقبلية، كما هو الحال في [Prop152](/proposals/152-ecies-tunnels/) و[Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies)
 - التناسب مع رسالة نفق واحدة للمسار العكسي
 - دعم العُقد ECIES فقط
-- الحفاظ على التحسينات التي تم تنفيذها في [Prop152](/en/proposals/152-ecies-tunnels/) و[Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/)
+- الحفاظ على التحسينات التي تم تنفيذها في [Prop152](/proposals/152-ecies-tunnels/) و[Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies)
 - تحقيق أقصى قدر من التوافق مع الشبكة الحالية
 - إخفاء رسائل البناء الواردة من OBEP
 - إخفاء رسائل الردود على البناء الصادرة من IBGW
@@ -58,10 +58,10 @@ toc: true
 
 ### الأهداف غير المطلوبة
 
-انظر [Prop156](/en/proposals/156-ecies-routers/) لأهداف إضافية غير مطلوبة.
+انظر [Prop156](/proposals/156-ecies-routers/) لأهداف إضافية غير مطلوبة.
 
 - لا يوجد متطلبات لإنشاء أنفاق مختلطة بين ElGamal/ECIES
-- تغييرات في تشفير الطبقات، لهذا راجع [Prop153](/en/proposals/153-chacha20-layer-encryption/)
+- تغييرات في تشفير الطبقات، لهذا راجع [Prop153](/proposals/153-chacha20-layer-encryption/)
 - ليس هناك تسريع لعمليات التشفير. يفترض أن ChaCha20 وAES متشابهتان،
   حتى مع AESNI، على الأقل بالنسبة للأحجام الصغيرة للبيانات المعنية.
 
@@ -77,11 +77,11 @@ toc: true
 
 سجلات الطلبات النصية ستكون 154 بايت،
 مقارنة بـ 222 بايت لسجلات ElGamal،
-و464 بايت لسجلات ECIES كما هو محدد في [Prop152](/en/proposals/152-ecies-tunnels/) و[Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/).
+و464 بايت لسجلات ECIES كما هو محدد في [Prop152](/proposals/152-ecies-tunnels/) و[Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies).
 
 سجلات الردود النصية ستكون 202 بايت،
 مقارنة بـ 496 بايت لسجلات ElGamal،
-و512 بايت لسجلات ECIES كما هو محدد في [Prop152](/en/proposals/152-ecies-tunnels/) و[Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/).
+و512 بايت لسجلات ECIES كما هو محدد في [Prop152](/proposals/152-ecies-tunnels/) و[Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies).
 
 تشفير الردود سيكون ChaCha20 (ليس ChaCha20/Poly1305)،
 لذلك لا تحتاج السجلات النصية أن تكون مضاعفات لـ 16 بايت.
@@ -178,7 +178,7 @@ STBM: رسالة بناء النفق القصير (النوع 25)
 
 ### تشفير السجلات
 
-تشفير سجل الطلبات والردود: كما هو محدد في [Prop152](/en/proposals/152-ecies-tunnels/) و[Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/).
+تشفير سجل الطلبات والردود: كما هو محدد في [Prop152](/proposals/152-ecies-tunnels/) و[Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies).
 
 تشفير سجل الردود للفتح الأخرى: ChaCha20.
 
@@ -213,7 +213,7 @@ STBM: رسالة بناء النفق القصير (النوع 25)
 #### سجل الطلب القصير غير مشفر
 
 هذا هو المواصفات المقترحة لسجل بناء النفق ECIES-X25519.
-ملخص التغييرات من [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/):
+ملخص التغييرات من [Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies):
 
 - تغيير الطول غير المشفر من 464 إلى 154 بايت
 - تغيير الطول المشفر من 528 إلى 218 بايت
@@ -245,7 +245,7 @@ bytes     0-3: المعرف النفق لتلقي الرسائل كما، غير
 ```
 
 
-حقل الأعلام هو نفس التعريف في [Tunnel-Creation](/en/docs/specs/tunnel-creation/) ويحتوي على ما يلي::
+حقل الأعلام هو نفس التعريف في [Tunnel-Creation](/docs/specs/tunnel-creation/) ويحتوي على ما يلي::
 
 ترتيب البتات: 76543210 (البت 7 هو MSB)
  البت 7: إذا تمت المجموعة، السماح للرسائل من أي شخص
@@ -268,7 +268,7 @@ bytes     0-3: المعرف النفق لتلقي الرسائل كما، غير
 هذا فقط مضمن في سجل النص العادي في رسالة بناء النفق الوارد.
 ضروري لأنه لا يوجد DH في هذه الطبقة لسجل البناء.
 
-خيارات بناء النفق هو هيكل خرائط كما هو معرف في [Common](/en/docs/specs/common-structures/).
+خيارات بناء النفق هو هيكل خرائط كما هو معرف في [Common](/docs/specs/common-structures/).
 هذا للاستخدام المستقبلي. لا توجد خيارات معرفة حاليا.
 إذا كان هيكل الخرائط فارغًا، فهذا هو بايتين 0x00 0x00.
 الحد الأقصى لحجم الخرائط (بما في ذلك حقل الطول) هو 98 بايت،
@@ -297,7 +297,7 @@ bytes    0-15: تجزئة هوية القفزة المُختصرة
 #### سجل الردود القصيرة غير مشفر
 
 هذا هو المواصفات المقترحة لبناء سجل الردود القصيرة للأنفاق ECIES-X25519.
-ملخص التغييرات من [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/):
+ملخص التغييرات من [Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies):
 
 - تغيير الطول غير المشفر من 512 إلى 202 بايت
 - تغيير الطول المشفر من 528 إلى 218 بايت
@@ -318,14 +318,14 @@ bytes    0-x: خيارات الردود على بناء النفق (خرائط)
 
 ```
 
-خيارات الردود على بناء النفق هو هيكل خرائط كما هو معرف في [Common](/en/docs/specs/common-structures/).
+خيارات الردود على بناء النفق هو هيكل خرائط كما هو معرف في [Common](/docs/specs/common-structures/).
 هذا للاستخدام المستقبلي. لا توجد خيارات معرفة حاليا.
 إذا كان هيكل الخرائط فارغًا، فهذا هو بايتين 0x00 0x00.
 الحد الأقصى لحجم الخرائط (بما في ذلك حقل الطول) هو 201 بايت،
 والحد الأقصى لقيمة حقل طول الخرائط هو 199.
 
 بايت الرد هو واحد من القيم التالية
-كما هو معرف في [Tunnel-Creation](/en/docs/specs/tunnel-creation/) لتجنب استخراج البصمة:
+كما هو معرف في [Tunnel-Creation](/docs/specs/tunnel-creation/) لتجنب استخراج البصمة:
 
 - 0x00 (قبول)
 - 30 (TUNNEL_REJECT_BANDWIDTH)

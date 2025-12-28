@@ -222,7 +222,7 @@ Ihr I2P-Router ist jetzt konfiguriert und läuft! Die Router-Konsole zeigt Ihren
 Nachdem I2P installiert und konfiguriert ist, können Sie:
 
 1. **I2P-Seiten durchsuchen**: Besuchen Sie die [I2P-Homepage](http://127.0.0.1:7657/home), um Links zu beliebten I2P-Diensten zu sehen
-2. **Browser konfigurieren**: Richten Sie ein [Browser-Profil](/en/docs/guides/browser-config) ein, um auf `.i2p`-Seiten zuzugreifen
+2. **Browser konfigurieren**: Richten Sie ein [Browser-Profil](/docs/guides/browser-config) ein, um auf `.i2p`-Seiten zuzugreifen
 3. **Dienste erkunden**: Entdecken Sie I2P-E-Mail, Foren, Filesharing und mehr
 4. **Router überwachen**: Die [Konsole](http://127.0.0.1:7657/console) zeigt Ihren Netzwerkstatus und Statistiken an
 

@@ -13,7 +13,7 @@ toc: true
 Tento návrh nebyl implementován tak, jak bylo specifikováno,
 nicméně dlouhé a krátké zprávy o výstavbě ECIES (návrhy 152 a 157)
 byly navrženy s rozšiřitelnými poli možností.
-Viz [specifikace Tunnel Creation ECIES](/en/docs/specs/tunnel-creation-ecies/) pro oficiální specifikaci.
+Viz [specifikace Tunnel Creation ECIES](/docs/specs/implementation/#tunnel-creation-ecies) pro oficiální specifikaci.
 
 
 ## Přehled

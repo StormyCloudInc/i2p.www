@@ -324,7 +324,7 @@ La página de Configuración de Túneles te permite ajustar la configuración pr
 
 ⚠️ **Compensación entre Anonimato y Rendimiento:** Existe una compensación fundamental entre el anonimato y el rendimiento. Los túneles de más de 3 saltos (por ejemplo, 2 saltos + 0-2 saltos, 3 saltos + 0-1 saltos, 3 saltos + 0-2 saltos), o una cantidad alta + cantidad de respaldo, pueden reducir gravemente el rendimiento o la fiabilidad. Esto puede resultar en un uso elevado de CPU y/o ancho de banda saliente. Modifique estos ajustes con precaución y ajústelos si tiene problemas.
 
-⚠️ **Persistencia:** Los cambios en la configuración de túneles exploratorios se almacenan en el archivo router.config. Los cambios en túneles de cliente son temporales y no se guardan. Para realizar cambios permanentes en túneles de cliente, consulta la [página de I2PTunnel](/en/docs/api/i2ptunnel).
+⚠️ **Persistencia:** Los cambios en la configuración de túneles exploratorios se almacenan en el archivo router.config. Los cambios en túneles de cliente son temporales y no se guardan. Para realizar cambios permanentes en túneles de cliente, consulta la [página de I2PTunnel](/docs/api/i2ptunnel).
 
 **Túneles Exploratorios:**
 

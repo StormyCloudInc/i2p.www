@@ -321,7 +321,7 @@ Reseed 설정 페이지에서는 자동 reseed가 실패할 경우 router를 수
 
 ⚠️ **익명성 대 성능 트레이드오프:** 익명성과 성능 사이에는 근본적인 트레이드오프가 존재합니다. 3홉보다 긴 tunnel(예: 2 hops + 0-2 hops, 3 hops + 0-1 hops, 3 hops + 0-2 hops) 또는 높은 수량 + 백업 수량은 성능이나 안정성을 심각하게 저하시킬 수 있습니다. 높은 CPU 및/또는 높은 아웃바운드 대역폭 사용이 발생할 수 있습니다. 이러한 설정은 신중하게 변경하고, 문제가 발생하면 조정하십시오.
 
-⚠️ **지속성:** 탐색 tunnel 설정 변경사항은 router.config 파일에 저장됩니다. 클라이언트 tunnel 변경사항은 임시적이며 저장되지 않습니다. 클라이언트 tunnel 변경사항을 영구적으로 적용하려면 [I2PTunnel 페이지](/en/docs/api/i2ptunnel)를 참조하세요.
+⚠️ **지속성:** 탐색 tunnel 설정 변경사항은 router.config 파일에 저장됩니다. 클라이언트 tunnel 변경사항은 임시적이며 저장되지 않습니다. 클라이언트 tunnel 변경사항을 영구적으로 적용하려면 [I2PTunnel 페이지](/docs/api/i2ptunnel)를 참조하세요.
 
 **탐색 터널(Exploratory Tunnels):**
 

@@ -42,7 +42,7 @@ takže předpokládáme, že je schopný IPv4, ale ne schopný IPv6.
 
 ### IPv6 Introductors
 
-Naše specifikace [SSU](/en/docs/transport/ssu/) a [SSU-SPEC](/en/docs/specs/ssu/) obsahují chyby a nesrovnalosti ohledně toho,
+Naše specifikace [SSU](/docs/specs/ssu2/) a [SSU-SPEC](/docs/specs/ssu/) obsahují chyby a nesrovnalosti ohledně toho,
 zda jsou podpůrci IPv6 podporovány pro úvody IPv4.
 V každém případě to nikdy nebylo implementováno v Java I2P ani i2pd.
 To je třeba napravit.
@@ -50,7 +50,7 @@ To je třeba napravit.
 
 ### IPv6 Introductory
 
-Naše specifikace [SSU](/en/docs/transport/ssu/) a [SSU-SPEC](/en/docs/specs/ssu/) jasně uvádějí, že
+Naše specifikace [SSU](/docs/specs/ssu2/) a [SSU-SPEC](/docs/specs/ssu/) jasně uvádějí, že
 Úvody IPv6 nejsou podporovány.
 To bylo pod předpokladem, že IPv6 není nikdy za firewallem.
 Což zjevně není pravda, a potřebujeme zlepšit podporu pro směrovače IPv6, které jsou za firewallem.
@@ -197,7 +197,7 @@ Toto jsme také popsali jako "část 1" návrhu.
 
 #### Změny specifikace
 
-[SSU](/en/docs/transport/ssu/) momentálně říká (poznámky k IPv6):
+[SSU](/docs/specs/ssu2/) momentálně říká (poznámky k IPv6):
 
 IPv6 je podporováno od verze 0.9.8. Publikované adresy relé mohou být IPv4 nebo IPv6, a komunikace Alice-Bob může probíhat přes IPv4 nebo IPv6.
 
@@ -209,7 +209,7 @@ i když ve skutečnosti nefungovaly jako zavaděči přes IPv6.
 Proto by routery měly důvěřovat schopnosti 'C' na IPv6 adresách pouze, pokud je verze routeru 0.9.50 nebo vyšší.
 
 
-[SSU-SPEC](/en/docs/specs/ssu/) momentálně říká (Relay Request):
+[SSU-SPEC](/docs/specs/ssu/) momentálně říká (Relay Request):
 
 IP adresa je zahrnuta pouze pokud je odlišná od zdrojové adresy a portu paketu.
 V aktuální implementaci je délka IP vždy 0 a port je vždy 0,
@@ -236,11 +236,11 @@ Toto jsme také popsali jako "část 2" návrhu.
 
 #### Změny specifikace
 
-[SSU](/en/docs/transport/ssu/) momentálně říká (poznámky k IPv6):
+[SSU](/docs/specs/ssu2/) momentálně říká (poznámky k IPv6):
 
 Komunikace Bob-Charlie a Alice-Charlie probíhá pouze přes IPv4.
 
-[SSU-SPEC](/en/docs/specs/ssu/) momentálně říká (Relay Request):
+[SSU-SPEC](/docs/specs/ssu/) momentálně říká (Relay Request):
 
 Neexistují žádné plány na implementaci přenosu pro IPv6.
 
@@ -248,7 +248,7 @@ Změňte na:
 
 Přenos pro IPv6 je podporován od verze 0.9.xx
 
-[SSU-SPEC](/en/docs/specs/ssu/) momentálně říká (Relay Response):
+[SSU-SPEC](/docs/specs/ssu/) momentálně říká (Relay Response):
 
 Adresa Charlieho musí být IPv4, protože to je adresa, na kterou Alice pošle SessionRequest po Hole Punch.
 Neexistují žádné plány na implementaci přenosu pro IPv6.
@@ -259,7 +259,7 @@ Adresa Charlieho může být IPv4 nebo, od verze 0.9.xx, IPv6.
 To je adresa, na kterou Alice pošle SessionRequest po Hole Punch.
 Přenos pro IPv6 je podporován od verze 0.9.xx
 
-[SSU-SPEC](/en/docs/specs/ssu/) momentálně říká (Relay Intro):
+[SSU-SPEC](/docs/specs/ssu/) momentálně říká (Relay Intro):
 
 Adresa Alice má v aktuální implementaci vždy 4 byty, protože Alice se snaží připojit k Charliemu přes IPv4.
 Tato zpráva musí být odeslána přes etablované připojení IPv4,

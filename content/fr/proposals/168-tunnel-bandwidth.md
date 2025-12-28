@@ -13,7 +13,7 @@ toc: true
 ## REMARQUE
 
 Cette proposition a été approuvée et est maintenant incluse dans la
-[Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/) depuis l'API 0.9.65.
+[Tunnel Creation ECIES specification](/docs/specs/implementation/#tunnel-creation-ecies) depuis l'API 0.9.65.
 Il n'existe aucune implémentation connue pour le moment; les dates d'implémentation / versions de l'API sont à déterminer.
 
 
@@ -41,7 +41,7 @@ messages de demande et de réponse de construction de tunnel.
 
 ## Conception
 
-Ajouter des paramètres de bande passante aux enregistrements dans les messages de construction de tunnel ECIES (voir [Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/))
+Ajouter des paramètres de bande passante aux enregistrements dans les messages de construction de tunnel ECIES (voir [Tunnel Creation ECIES specification](/docs/specs/implementation/#tunnel-creation-ecies))
 dans le champ de mappage des options de construction de tunnel. Utiliser des noms de paramètres courts puisque l'espace disponible
 pour le champ des options est limité.
 Les messages de construction de tunnel sont de taille fixe, donc cela n'augmente pas la
@@ -50,7 +50,7 @@ taille des messages.
 
 ## Spécification
 
-Mettre à jour la [spécification du message de construction de tunnel ECIES](/en/docs/specs/tunnel-creation-ecies/)
+Mettre à jour la [spécification du message de construction de tunnel ECIES](/docs/specs/implementation/#tunnel-creation-ecies)
 comme suit :
 
 Pour les enregistrements de construction ECIES longs et courts :

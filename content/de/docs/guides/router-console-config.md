@@ -321,7 +321,7 @@ Die Tunnel-Konfigurationsseite ermöglicht es Ihnen, die Standardeinstellungen f
 
 ⚠️ **Anonymität vs. Leistung - Kompromiss:** Es gibt einen grundlegenden Kompromiss zwischen Anonymität und Leistung. Tunnel, die länger als 3 Hops sind (zum Beispiel 2 Hops + 0-2 Hops, 3 Hops + 0-1 Hops, 3 Hops + 0-2 Hops), oder eine hohe Anzahl + Backup-Anzahl, können die Leistung oder Zuverlässigkeit erheblich reduzieren. Eine hohe CPU- und/oder hohe ausgehende Bandbreitennutzung kann die Folge sein. Ändern Sie diese Einstellungen mit Vorsicht und passen Sie sie an, wenn Sie Probleme haben.
 
-⚠️ **Persistenz:** Änderungen an den Exploratory Tunnel-Einstellungen werden in der Datei router.config gespeichert. Client Tunnel-Änderungen sind temporär und werden nicht gespeichert. Um permanente Client Tunnel-Änderungen vorzunehmen, siehe die [I2PTunnel-Seite](/en/docs/api/i2ptunnel).
+⚠️ **Persistenz:** Änderungen an den Exploratory Tunnel-Einstellungen werden in der Datei router.config gespeichert. Client Tunnel-Änderungen sind temporär und werden nicht gespeichert. Um permanente Client Tunnel-Änderungen vorzunehmen, siehe die [I2PTunnel-Seite](/docs/api/i2ptunnel).
 
 **Exploratorische Tunnel:**
 

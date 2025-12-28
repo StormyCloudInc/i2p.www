@@ -321,7 +321,7 @@ Trang Cấu hình Tunnel cho phép bạn điều chỉnh cài đặt tunnel mặ
 
 ⚠️ **Đánh đổi giữa Tính ẩn danh và Hiệu suất:** Có một sự đánh đổi cơ bản giữa tính ẩn danh và hiệu suất. Các tunnel dài hơn 3 hops (ví dụ 2 hops + 0-2 hops, 3 hops + 0-1 hops, 3 hops + 0-2 hops), hoặc số lượng + số lượng dự phòng cao, có thể làm giảm nghiêm trọng hiệu suất hoặc độ tin cậy. Việc sử dụng CPU cao và/hoặc băng thông đầu ra cao có thể xảy ra. Thay đổi các cài đặt này một cách cẩn thận và điều chỉnh chúng nếu bạn gặp vấn đề.
 
-⚠️ **Tính bền vững:** Các thay đổi cài đặt exploratory tunnel được lưu trong file router.config. Các thay đổi client tunnel chỉ là tạm thời và không được lưu lại. Để thực hiện thay đổi client tunnel vĩnh viễn, xem [trang I2PTunnel](/en/docs/api/i2ptunnel).
+⚠️ **Tính bền vững:** Các thay đổi cài đặt exploratory tunnel được lưu trong file router.config. Các thay đổi client tunnel chỉ là tạm thời và không được lưu lại. Để thực hiện thay đổi client tunnel vĩnh viễn, xem [trang I2PTunnel](/docs/api/i2ptunnel).
 
 **Exploratory Tunnels:**
 

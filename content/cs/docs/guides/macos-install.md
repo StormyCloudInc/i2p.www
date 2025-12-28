@@ -224,7 +224,7 @@ Váš I2P router je nyní nakonfigurován a běží! Konzole routeru zobrazí st
 Nyní, když je I2P nainstalováno a nakonfigurováno, můžete:
 
 1. **Procházejte I2P stránky**: Navštivte [domovskou stránku I2P](http://127.0.0.1:7657/home) a prohlédněte si odkazy na populární I2P služby
-2. **Nakonfigurujte svůj prohlížeč**: Nastavte [profil prohlížeče](/en/docs/guides/browser-config) pro přístup ke stránkám `.i2p`
+2. **Nakonfigurujte svůj prohlížeč**: Nastavte [profil prohlížeče](/docs/guides/browser-config) pro přístup ke stránkám `.i2p`
 3. **Prozkoumejte služby**: Vyzkoušejte I2P e-mail, fóra, sdílení souborů a další
 4. **Sledujte svůj router**: [Konzole](http://127.0.0.1:7657/console) zobrazuje stav vaší sítě a statistiky
 

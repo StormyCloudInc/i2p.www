@@ -230,7 +230,7 @@ tag :: 8 Byte reply_tag
 ECIES-Ziel oder -Router sendet eine Abfrage an einen ECIES-Router, mit gebündelten Antwortschlüsseln.
 Unterstützt ab 0.9.49.
 
-ECIES-Router wurden in 0.9.48 eingeführt, siehe [Prop156](/en/proposals/156-ecies-routers/).
+ECIES-Router wurden in 0.9.48 eingeführt, siehe [Prop156](/proposals/156-ecies-routers/).
 Ab 0.9.49 können ECIES-Ziele und -Router dasselbe Format wie im
 Abschnitt "ECIES zu ElG" oben verwenden, mit Antwortschlüsseln, die in der Anfrage enthalten sind.
 Die Abfrage wird das "one time format" in [ECIES](/docs/specs/ecies/) verwenden,

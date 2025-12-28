@@ -321,7 +321,7 @@ A página de Configuração de Túneis permite ajustar as configurações padrã
 
 ⚠️ **Compensação entre Anonimato e Desempenho:** Existe uma compensação fundamental entre anonimato e desempenho. Tunnels com mais de 3 hops (por exemplo, 2 hops + 0-2 hops, 3 hops + 0-1 hops, 3 hops + 0-2 hops), ou uma quantidade alta + quantidade de backup, podem reduzir severamente o desempenho ou a confiabilidade. Pode resultar em alto uso de CPU e/ou alta largura de banda de saída. Altere essas configurações com cuidado e ajuste-as se tiver problemas.
 
-⚠️ **Persistência:** As alterações nas configurações de túneis exploratórios são armazenadas no arquivo router.config. As alterações em túneis de cliente são temporárias e não são salvas. Para fazer alterações permanentes em túneis de cliente, consulte a [página I2PTunnel](/en/docs/api/i2ptunnel).
+⚠️ **Persistência:** As alterações nas configurações de túneis exploratórios são armazenadas no arquivo router.config. As alterações em túneis de cliente são temporárias e não são salvas. Para fazer alterações permanentes em túneis de cliente, consulte a [página I2PTunnel](/docs/api/i2ptunnel).
 
 **Túneis Exploratórios:**
 

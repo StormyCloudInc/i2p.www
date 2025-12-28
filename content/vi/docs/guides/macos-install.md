@@ -222,7 +222,7 @@ Router I2P của bạn hiện đã được cấu hình và đang chạy! Bảng
 Bây giờ I2P đã được cài đặt và cấu hình, bạn có thể:
 
 1. **Duyệt các trang I2P**: Truy cập [trang chủ I2P](http://127.0.0.1:7657/home) để xem liên kết đến các dịch vụ I2P phổ biến
-2. **Cấu hình trình duyệt**: Thiết lập [profile trình duyệt](/en/docs/guides/browser-config) để truy cập các trang `.i2p`
+2. **Cấu hình trình duyệt**: Thiết lập [profile trình duyệt](/docs/guides/browser-config) để truy cập các trang `.i2p`
 3. **Khám phá dịch vụ**: Tìm hiểu email I2P, diễn đàn, chia sẻ file và nhiều hơn nữa
 4. **Giám sát router**: [Console](http://127.0.0.1:7657/console) hiển thị trạng thái mạng và thống kê của bạn
 

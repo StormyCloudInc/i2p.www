@@ -324,7 +324,7 @@ Tunnel Configuration 页面允许您调整探索性隧道(用于路由器通信)
 
 ⚠️ **匿名性与性能权衡:** 匿名性和性能之间存在根本性的权衡。超过3跳的tunnel(例如2跳 + 0-2跳、3跳 + 0-1跳、3跳 + 0-2跳),或者过高的数量+备份数量,可能会严重降低性能或可靠性。可能导致高CPU占用和/或高出站带宽使用。请谨慎修改这些设置,如果遇到问题请进行调整。
 
-⚠️ **持久性：** 探索性 tunnel 设置更改会存储在 router.config 文件中。客户端 tunnel 更改是临时的，不会被保存。要进行永久性的客户端 tunnel 更改，请参阅 [I2PTunnel 页面](/en/docs/api/i2ptunnel)。
+⚠️ **持久性：** 探索性 tunnel 设置更改会存储在 router.config 文件中。客户端 tunnel 更改是临时的，不会被保存。要进行永久性的客户端 tunnel 更改，请参阅 [I2PTunnel 页面](/docs/api/i2ptunnel)。
 
 **探索性隧道 (Exploratory Tunnels):**
 

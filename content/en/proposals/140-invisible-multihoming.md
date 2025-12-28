@@ -13,10 +13,10 @@ toc: true
 
 This proposal outlines a design for a protocol enabling an I2P client, service
 or external balancer process to manage multiple routers transparently hosting a
-single [Destination](http://localhost:63465/en/docs/specs/common-structures/#destination).
+single [Destination](http://localhost:63465/docs/specs/common-structures/#destination).
 
 The proposal currently does not specify a concrete implementation. It could be
-implemented as an extension to [I2CP](/en/docs/specs/i2cp/), or as a new protocol.
+implemented as an extension to [I2CP](/docs/specs/i2cp/), or as a new protocol.
 
 
 ## Motivation
@@ -152,7 +152,7 @@ Imagine the following desired configuration:
 ### Differences to I2CP
 
 To create and manage this configuration, the client needs the following new
-functionality beyond what is currently provided by [I2CP](/en/docs/specs/i2cp/):
+functionality beyond what is currently provided by [I2CP](/docs/specs/i2cp/):
 
 - Tell a router to build tunnels, without creating a LeaseSet for them.
 - Get a list of the current tunnels in the inbound pool.

@@ -13,7 +13,7 @@ toc: true
 यह प्रस्ताव वैसा लागू नहीं किया गया था,
 हालांकि, ECIES लंबे और छोटे निर्माण संदेश (प्रस्ताव 152 और 157)
 विस्तारशील विकल्प क्षेत्रों के साथ डिज़ाइन किए गए थे।
-आधिकारिक विनिर्देश के लिए [Tunnel Creation ECIES विनिर्देश](/en/docs/specs/tunnel-creation-ecies/) देखें।
+आधिकारिक विनिर्देश के लिए [Tunnel Creation ECIES विनिर्देश](/docs/specs/implementation/#tunnel-creation-ecies) देखें।
 
 
 ## अवलोकन

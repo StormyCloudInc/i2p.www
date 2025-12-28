@@ -121,7 +121,7 @@ accurateFor: "2.10.0"
     </tr>
   </tbody>
 </table>
-所有官方文档位于 `/en/docs/api/` 目录下 — 旧的 `/spec/samv3/` 路径**不**存在。
+所有官方文档位于 `/docs/api/` 目录下 — 旧的 `/spec/samv3/` 路径**不**存在。
 
 ## 6. 网络和端口
 

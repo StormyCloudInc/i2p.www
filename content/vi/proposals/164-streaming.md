@@ -45,7 +45,7 @@ Nếu Alice và Charlie sử dụng API 0.9.58 hoặc mới hơn, mọi nỗ l�
 
 ## Đặc Tả
 
-Cập nhật [đặc tả Streaming](/en/docs/specs/streaming/) để thêm phần sau:
+Cập nhật [đặc tả Streaming](/docs/specs/streaming/) để thêm phần sau:
 
 ### Phòng Ngừa Phát Lại
 

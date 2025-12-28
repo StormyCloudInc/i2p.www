@@ -732,7 +732,7 @@ See [Proposal 156](/proposals/156-ecies-routers).
 * [Prop153](/proposals/153-chacha20-layer-encryption/)
 * [Prop156](/proposals/156-ecies-routers/)
 * [Prop157](/proposals/157-new-tbm/)
-* [SPEC](/docs/specs/tunnel-creation-ecies/)
+* [SPEC](/docs/specs/implementation/#tunnel-creation-ecies)
 * [Tunnel-Creation](/docs/specs/tunnel-creation/)
 * [Multiple-Encryption](https://en.wikipedia.org/wiki/Multiple_encryption)
 * [RFC-7539](https://tools.ietf.org/html/rfc7539)

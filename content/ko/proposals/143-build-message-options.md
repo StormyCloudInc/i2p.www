@@ -12,7 +12,7 @@ toc: true
 ## 노트
 이 제안은 지정된 대로 구현되지 않았습니다.
 하지만, ECIES 긴 및 짧은 빌드 메시지(제안서 152 및 157)는 확장 가능한 옵션 필드로 설계되었습니다.
-공식 사양은 [Tunnel Creation ECIES 사양](/en/docs/specs/tunnel-creation-ecies/)을 참조하세요.
+공식 사양은 [Tunnel Creation ECIES 사양](/docs/specs/implementation/#tunnel-creation-ecies)을 참조하세요.
 
 
 ## 개요

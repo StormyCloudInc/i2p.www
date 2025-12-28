@@ -342,7 +342,7 @@ The Tunnel Configuration page allows you to adjust default tunnel settings for b
 
 ⚠️ **Anonymity vs Performance Tradeoff:** There is a fundamental tradeoff between anonymity and performance. Tunnels longer than 3 hops (for example 2 hops + 0-2 hops, 3 hops + 0-1 hops, 3 hops + 0-2 hops), or a high quantity + backup quantity, may severely reduce performance or reliability. High CPU and/or high outbound bandwidth usage may result. Change these settings with care, and adjust them if you have problems.
 
-⚠️ **Persistence:** Exploratory tunnel setting changes are stored in the router.config file. Client tunnel changes are temporary and are not saved. To make permanent client tunnel changes, see the [I2PTunnel page](/en/docs/api/i2ptunnel).
+⚠️ **Persistence:** Exploratory tunnel setting changes are stored in the router.config file. Client tunnel changes are temporary and are not saved. To make permanent client tunnel changes, see the [I2PTunnel page](/docs/api/i2ptunnel).
 
 **Exploratory Tunnels:**
 

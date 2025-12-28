@@ -321,7 +321,7 @@ La page de Configuration des Tunnels vous permet d'ajuster les paramètres par d
 
 ⚠️ **Compromis Anonymat vs Performance :** Il existe un compromis fondamental entre l'anonymat et la performance. Des tunnels de plus de 3 hops (par exemple 2 hops + 0-2 hops, 3 hops + 0-1 hops, 3 hops + 0-2 hops), ou une quantité élevée + quantité de secours, peuvent réduire considérablement la performance ou la fiabilité. Une utilisation élevée du CPU et/ou de la bande passante sortante peut en résulter. Modifiez ces paramètres avec prudence et ajustez-les si vous rencontrez des problèmes.
 
-⚠️ **Persistance :** Les modifications des paramètres des tunnels exploratoires sont enregistrées dans le fichier router.config. Les modifications des tunnels clients sont temporaires et ne sont pas sauvegardées. Pour effectuer des modifications permanentes des tunnels clients, consultez la [page I2PTunnel](/en/docs/api/i2ptunnel).
+⚠️ **Persistance :** Les modifications des paramètres des tunnels exploratoires sont enregistrées dans le fichier router.config. Les modifications des tunnels clients sont temporaires et ne sont pas sauvegardées. Pour effectuer des modifications permanentes des tunnels clients, consultez la [page I2PTunnel](/docs/api/i2ptunnel).
 
 **Tunnels exploratoires :**
 

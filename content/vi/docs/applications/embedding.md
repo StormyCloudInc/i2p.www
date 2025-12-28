@@ -121,7 +121,7 @@ Các biến cấu hình: - Thư mục gốc: `i2p.dir.base` - Thư mục cấu h
     </tr>
   </tbody>
 </table>
-Tất cả tài liệu chính thức được đặt tại `/en/docs/api/` — đường dẫn cũ `/spec/samv3/` **không** tồn tại.
+Tất cả tài liệu chính thức được đặt tại `/docs/api/` — đường dẫn cũ `/spec/samv3/` **không** tồn tại.
 
 ## 6. Mạng và Cổng
 

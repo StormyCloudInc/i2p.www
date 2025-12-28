@@ -14,7 +14,7 @@ toc: true
 Implémenté à partir de la version API 0.9.51.
 Déploiement et tests réseau en cours.
 Sujet à des révisions mineures.
-Voir [I2NP](/en/docs/specs/i2np/) et [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/) pour la spécification finale.
+Voir [I2NP](/docs/specs/i2np/) et [Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies) pour la spécification finale.
 
 
 ## Vue d'ensemble
@@ -26,7 +26,7 @@ La taille actuelle des enregistrements chiffrés de requête et de réponse de c
 Pour les messages typiques de construction de tunnel variable et de réponse de construction de tunnel variable,
 la taille totale est de 2113 octets. Ce message est fragmenté en trois messages tunnel de 1 Ko pour le chemin inverse.
 
-Les modifications du format d'enregistrement de 528 octets pour les routeurs ECIES-X25519 sont spécifiées dans [Prop152](/en/proposals/152-ecies-tunnels/) et [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/).
+Les modifications du format d'enregistrement de 528 octets pour les routeurs ECIES-X25519 sont spécifiées dans [Prop152](/proposals/152-ecies-tunnels/) et [Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies).
 Pour un mix de routeurs ElGamal et ECIES-X25519 dans un tunnel, la taille de l'enregistrement doit rester
 à 528 octets. Cependant, si tous les routeurs dans un tunnel sont ECIES-X25519, un nouvel enregistrement de construction plus petit est possible, car le chiffrement ECIES-X25519 a beaucoup moins de surcharge
 qu'ElGamal.
@@ -42,13 +42,13 @@ Cela devrait se produire d'ici à fin 2021.
 
 ### Objectifs
 
-Voir [Prop152](/en/proposals/152-ecies-tunnels/) et [Prop156](/en/proposals/156-ecies-routers/) pour des objectifs supplémentaires.
+Voir [Prop152](/proposals/152-ecies-tunnels/) et [Prop156](/proposals/156-ecies-routers/) pour des objectifs supplémentaires.
 
 - Enregistrements et messages plus petits
-- Maintenir un espace suffisant pour les options futures, comme dans [Prop152](/en/proposals/152-ecies-tunnels/) et [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/)
+- Maintenir un espace suffisant pour les options futures, comme dans [Prop152](/proposals/152-ecies-tunnels/) et [Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies)
 - Tenir dans un message tunnel pour le chemin inverse
 - Supporter uniquement les sauts ECIES
-- Maintenir les améliorations mises en œuvre dans [Prop152](/en/proposals/152-ecies-tunnels/) et [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/)
+- Maintenir les améliorations mises en œuvre dans [Prop152](/proposals/152-ecies-tunnels/) et [Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies)
 - Maximiser la compatibilité avec le réseau actuel
 - Cacher les messages de construction entrants de l'OBEP
 - Cacher les messages de réponse de construction sortants de l'IBGW
@@ -59,10 +59,10 @@ Voir [Prop152](/en/proposals/152-ecies-tunnels/) et [Prop156](/en/proposals/156-
 
 ### Non-Objectifs
 
-Voir [Prop156](/en/proposals/156-ecies-routers/) pour des non-objectifs supplémentaires.
+Voir [Prop156](/proposals/156-ecies-routers/) pour des non-objectifs supplémentaires.
 
 - Pas de nécessité de tunnels mixtes ElGamal/ECIES
-- Changements de chiffrement de couche, pour cela voir [Prop153](/en/proposals/153-chacha20-layer-encryption/)
+- Changements de chiffrement de couche, pour cela voir [Prop153](/proposals/153-chacha20-layer-encryption/)
 - Pas d'accélération des opérations cryptographiques. On suppose que ChaCha20 et AES sont similaires,
   même avec AESNI, du moins pour les petites tailles de données en question.
 
@@ -78,11 +78,11 @@ Les enregistrements de requête et de réponse chiffrés feront 218 octets, par 
 
 Les enregistrements de requête en clair feront 154 octets,
 par rapport à 222 octets pour les enregistrements ElGamal,
-et 464 octets pour les enregistrements ECIES tels que définis dans [Prop152](/en/proposals/152-ecies-tunnels/) et [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/).
+et 464 octets pour les enregistrements ECIES tels que définis dans [Prop152](/proposals/152-ecies-tunnels/) et [Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies).
 
 Les enregistrements de réponse en clair feront 202 octets,
 par rapport à 496 octets pour les enregistrements ElGamal,
-et 512 octets pour les enregistrements ECIES tels que définis dans [Prop152](/en/proposals/152-ecies-tunnels/) et [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/).
+et 512 octets pour les enregistrements ECIES tels que définis dans [Prop152](/proposals/152-ecies-tunnels/) et [Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies).
 
 Le chiffrement de réponse sera ChaCha20 (PAS ChaCha20/Poly1305),
 donc les enregistrements en clair n'ont pas besoin d'être un multiple de 16 octets.
@@ -179,7 +179,7 @@ Créateur <------ F <------ E <------ D <--/
 
 ### Chiffrement des Enregistrements
 
-Chiffrement des enregistrements de requête et de réponse : comme défini dans [Prop152](/en/proposals/152-ecies-tunnels/) et [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/).
+Chiffrement des enregistrements de requête et de réponse : comme défini dans [Prop152](/proposals/152-ecies-tunnels/) et [Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies).
 
 Chiffrement des enregistrements de réponse pour les autres emplacements : ChaCha20.
 
@@ -212,7 +212,7 @@ C'est un sujet de recherche supplémentaire.
 #### Enregistrement de Courte Requête Non Chiffré
 
 Ceci est la spécification proposée de l'enregistrement de requête de construction de tunnel pour les routeurs ECIES-X25519.
-Résumé des changements par rapport à [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/):
+Résumé des changements par rapport à [Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies):
 
 - Modifier la longueur non chiffrée de 464 à 154 octets
 - Modifier la longueur chiffrée de 528 à 218 octets
@@ -243,7 +243,7 @@ octets   x-153: remplissage aléatoire (voir ci-dessous)
 ```
 
 
-Le champ de drapeaux est le même que celui défini dans [Tunnel-Creation](/en/docs/specs/tunnel-creation/) et contient ce qui suit :
+Le champ de drapeaux est le même que celui défini dans [Tunnel-Creation](/docs/specs/tunnel-creation/) et contient ce qui suit :
 
  Ordre des bits : 76543210 (bit 7 est le MSB)
  bit 7 : si défini, autoriser les messages de n'importe qui
@@ -266,7 +266,7 @@ Elle est utilisée pour le KDF pour les couches d'IBGW et les clés de réponse 
 Cela n'est inclus que dans l'enregistrement en clair dans un message de construction de tunnel entrant.
 Elle est requise car il n'y a pas de DH à cette couche pour l'enregistrement de construction.
 
-Les options de construction de tunnel est une structure de Mapping telle que définie dans [Common](/en/docs/specs/common-structures/).
+Les options de construction de tunnel est une structure de Mapping telle que définie dans [Common](/docs/specs/common-structures/).
 C'est pour une utilisation future. Aucune option n'est actuellement définie.
 Si la structure de Mapping est vide, elle est de deux octets 0x00 0x00.
 La taille maximum du Mapping (incluant le champ de longueur) est de 98 octets,
@@ -294,7 +294,7 @@ octets 202-217: MAC Poly1305
 #### Enregistrement de Courte Réponse Non Chiffré
 
 Ceci est la spécification proposée de l'enregistrement de courte réponse de construction de tunnel pour les routeurs ECIES-X25519.
-Résumé des changements par rapport à [Tunnel-Creation-ECIES](/en/docs/specs/tunnel-creation-ecies/):
+Résumé des changements par rapport à [Tunnel-Creation-ECIES](/docs/specs/implementation/#tunnel-creation-ecies):
 
 - Modifier la longueur non chiffrée de 512 à 202 octets
 - Modifier la longueur chiffrée de 528 à 218 octets
@@ -314,14 +314,14 @@ octets  x-200: Remplissage Aléatoire (voir ci-dessous)
 octet     201: Octet de Réponse
 ```
 
-Les options de réponse de construction de tunnel est une structure de Mapping telle que définie dans [Common](/en/docs/specs/common-structures/).
+Les options de réponse de construction de tunnel est une structure de Mapping telle que définie dans [Common](/docs/specs/common-structures/).
 C'est pour une utilisation future. Aucune option n'est actuellement définie.
 Si la structure de Mapping est vide, elle est de deux octets 0x00 0x00.
 La taille maximum du Mapping (incluant le champ de longueur) est de 201 octets,
 et la valeur maximum du champ de longueur du Mapping est de 199.
 
 L'octet de réponse est une des valeurs suivantes
-telles que définies dans [Tunnel-Creation](/en/docs/specs/tunnel-creation/) pour éviter la collecte d'empreintes :
+telles que définies dans [Tunnel-Creation](/docs/specs/tunnel-creation/) pour éviter la collecte d'empreintes :
 
 - 0x00 (acceptation)
 - 30 (TUNNEL_REJECT_BANDWIDTH)

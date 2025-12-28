@@ -12,7 +12,7 @@ toc: true
 
 ## 참고
 
-이 제안서는 승인되었으며 API 0.9.65부터 [Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/)에 포함되어 있습니다.
+이 제안서는 승인되었으며 API 0.9.65부터 [Tunnel Creation ECIES specification](/docs/specs/implementation/#tunnel-creation-ecies)에 포함되어 있습니다.
 아직 구현된 것은 없으며, 구현 날짜/API 버전은 미정입니다.
 
 
@@ -34,13 +34,13 @@ toc: true
 
 ## 설계
 
-ECIES 터널 빌드 메시지 (참조: [Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/))의 터널 빌드 옵션 매핑 필드에 대역폭 매개변수를 추가합니다. 옵션 필드의 공간이 제한되어 있기 때문에 짧은 매개변수 이름을 사용하십시오.
+ECIES 터널 빌드 메시지 (참조: [Tunnel Creation ECIES specification](/docs/specs/implementation/#tunnel-creation-ecies))의 터널 빌드 옵션 매핑 필드에 대역폭 매개변수를 추가합니다. 옵션 필드의 공간이 제한되어 있기 때문에 짧은 매개변수 이름을 사용하십시오.
 터널 빌드 메시지는 고정 크기이므로 메시지의 크기는 증가하지 않습니다.
 
 
 ## 사양
 
-[ECIES 터널 빌드 메시지 사양](/en/docs/specs/tunnel-creation-ecies/)을 다음과 같이 업데이트합니다:
+[ECIES 터널 빌드 메시지 사양](/docs/specs/implementation/#tunnel-creation-ecies)을 다음과 같이 업데이트합니다:
 
 긴 ECIES 빌드 레코드와 짧은 ECIES 빌드 레코드 모두에 대해:
 

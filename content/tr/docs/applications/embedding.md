@@ -121,7 +121,7 @@ Yapılandırma değişkenleri: - Temel dizin: `i2p.dir.base` - Yapılandırma di
     </tr>
   </tbody>
 </table>
-Tüm resmi belgeler `/en/docs/api/` altında bulunur — eski `/spec/samv3/` yolu **mevcut değildir**.
+Tüm resmi belgeler `/docs/api/` altında bulunur — eski `/spec/samv3/` yolu **mevcut değildir**.
 
 ## 6. Ağ ve Portlar
 

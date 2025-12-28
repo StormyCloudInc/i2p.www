@@ -222,7 +222,7 @@ Haz clic en **Siguiente** para guardar tu configuración.
 Ahora que I2P está instalado y configurado, puedes:
 
 1. **Navega sitios I2P**: Visita la [página principal de I2P](http://127.0.0.1:7657/home) para ver enlaces a servicios populares de I2P
-2. **Configura tu navegador**: Configura un [perfil de navegador](/en/docs/guides/browser-config) para acceder a sitios `.i2p`
+2. **Configura tu navegador**: Configura un [perfil de navegador](/docs/guides/browser-config) para acceder a sitios `.i2p`
 3. **Explora servicios**: Descubre correo electrónico I2P, foros, compartición de archivos y más
 4. **Monitorea tu router**: La [consola](http://127.0.0.1:7657/console) muestra el estado de tu red y estadísticas
 

@@ -45,7 +45,7 @@ Si Alice et Charlie disposent de l'API 0.9.58 ou plus récent, toute tentative d
 
 ## Spécification
 
-Mettre à jour la [spécification Streaming](/en/docs/specs/streaming/) pour ajouter la section suivante :
+Mettre à jour la [spécification Streaming](/docs/specs/streaming/) pour ajouter la section suivante :
 
 ### Prévention de la relecture
 

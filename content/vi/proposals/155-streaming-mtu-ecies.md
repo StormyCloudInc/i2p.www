@@ -23,7 +23,7 @@ Có thể chỉnh sửa nhỏ.
 
 ECIES giảm mức tiêu thụ thông điệp phiên hiện tại (ES) khoảng 90 byte.
 Do đó, chúng ta có thể tăng MTU lên khoảng 90 byte cho các kết nối ECIES.
-Xem the [ECIES specification](/en/docs/specs/ecies/#overhead), [Streaming specification](/en/docs/specs/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/en/docs/api/streaming/).
+Xem the [ECIES specification](/docs/specs/ecies/#overhead), [Streaming specification](/docs/specs/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/docs/api/streaming/).
 
 Nếu không tăng MTU, trong nhiều trường hợp tiết kiệm không thực sự 'tiết kiệm',
 vì các thông điệp sẽ được đệm để sử dụng hết hai thông điệp đường hầm đầy đủ.
@@ -69,7 +69,7 @@ tuy nhiên, không có quy định cho việc thương lượng lên trong luồ
 nên MTU nên duy trì ở mức 1730.
 
 
-Như đã nêu trong the [Streaming API documentation](/en/docs/api/streaming/),
+Như đã nêu trong the [Streaming API documentation](/docs/api/streaming/),
 dữ liệu trong các gói SYN được gửi từ Alice đến Bob có thể vượt quá MTU của Bob.
 Đây là một điểm yếu trong giao thức truyền trực tuyến.
 Do đó, khách hàng hai khóa phải giới hạn dữ liệu trong các gói SYN gửi
@@ -80,7 +80,7 @@ tải trọng thực tế được gửi.
 
 ### Phân tích
 
-Như mô tả trong the [ECIES specification](/en/docs/specs/ecies/#overhead), mức tiêu thụ của ElGamal cho các thông điệp phiên hiện tại là
+Như mô tả trong the [ECIES specification](/docs/specs/ecies/#overhead), mức tiêu thụ của ElGamal cho các thông điệp phiên hiện tại là
 151 byte, và mức tiêu thụ Ratchet là 69 byte.
 Do đó, chúng ta có thể tăng MTU cho các kết nối ratchet lên (151 - 69) = 82 byte,
 từ 1730 lên 1812.
@@ -88,8 +88,8 @@ từ 1730 lên 1812.
 
 ## Thông số kỹ thuật
 
-Thêm các thay đổi và làm rõ sau vào phần Lựa chọn và Thương lượng MTU của the [Streaming API documentation](/en/docs/api/streaming/).
-Không có thay đổi nào với the [Streaming specification](/en/docs/specs/streaming/).
+Thêm các thay đổi và làm rõ sau vào phần Lựa chọn và Thương lượng MTU của the [Streaming API documentation](/docs/api/streaming/).
+Không có thay đổi nào với the [Streaming specification](/docs/specs/streaming/).
 
 
 Giá trị mặc định của tùy chọn i2p.streaming.maxMessageSize vẫn là 1730 cho tất cả các kết nối, dù sử dụng khóa nào.
@@ -157,7 +157,7 @@ trong SYN ACK từ Bob đến Alice, và trong tất cả các gói gửi sau đ
 ## Biện minh
 
 Xem the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220) để biết lý do tại sao giá trị hiện tại là 1730.
-Xem the [ECIES specification](/en/docs/specs/ecies/#overhead) để biết tại sao tiêu thụ ECIES thấp hơn ElGamal là 82 byte.
+Xem the [ECIES specification](/docs/specs/ecies/#overhead) để biết tại sao tiêu thụ ECIES thấp hơn ElGamal là 82 byte.
 
 
 ## Ghi chú thực hiện

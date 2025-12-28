@@ -121,7 +121,7 @@ Variables de configuration : - Répertoire de base : `i2p.dir.base` - Répertoir
     </tr>
   </tbody>
 </table>
-Toute la documentation officielle se trouve sous `/en/docs/api/` — l'ancien chemin `/spec/samv3/` n'existe **pas**.
+Toute la documentation officielle se trouve sous `/docs/api/` — l'ancien chemin `/spec/samv3/` n'existe **pas**.
 
 ## 6. Réseau et Ports
 

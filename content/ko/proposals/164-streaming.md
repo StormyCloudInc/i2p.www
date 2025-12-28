@@ -33,7 +33,7 @@ Alice와 Charlie가 API 0.9.58 이상 버전인 경우, Bob의 재연 시도는 
 
 ## 사양
 
-[Streaming 사양](/en/docs/specs/streaming/)을 업데이트하여 다음 섹션을 추가합니다:
+[Streaming 사양](/docs/specs/streaming/)을 업데이트하여 다음 섹션을 추가합니다:
 
 ### 재연 방지
 

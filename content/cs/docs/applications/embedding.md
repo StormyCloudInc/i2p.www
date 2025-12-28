@@ -121,7 +121,7 @@ Konfigurační proměnné: - Základní adresář: `i2p.dir.base` - Konfiguračn
     </tr>
   </tbody>
 </table>
-Veškerá oficiální dokumentace se nachází v `/en/docs/api/` — stará cesta `/spec/samv3/` **neexistuje**.
+Veškerá oficiální dokumentace se nachází v `/docs/api/` — stará cesta `/spec/samv3/` **neexistuje**.
 
 ## 6. Síťové připojení a porty
 

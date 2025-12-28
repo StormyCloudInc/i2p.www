@@ -13,7 +13,7 @@ toc: true
 ## NOTA
 
 Esta propuesta fue aprobada y ahora está en la
-[Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/) desde la API 0.9.65.
+[Tunnel Creation ECIES specification](/docs/specs/implementation/#tunnel-creation-ecies) desde la API 0.9.65.
 Todavía no hay implementaciones conocidas; las fechas de implementación / versiones de la API están por determinar.
 
 
@@ -41,7 +41,7 @@ a los mensajes de solicitud y respuesta de construcción de túnel.
 
 ## Diseño
 
-Añadir parámetros de ancho de banda a los registros en mensajes de construcción de túnel ECIES (ver [Tunnel Creation ECIES specification](/en/docs/specs/tunnel-creation-ecies/))
+Añadir parámetros de ancho de banda a los registros en mensajes de construcción de túnel ECIES (ver [Tunnel Creation ECIES specification](/docs/specs/implementation/#tunnel-creation-ecies))
 en el campo de mapeo de opciones de construcción de túnel. Utilizar nombres de parámetros cortos ya que el espacio disponible
 para el campo de opciones es limitado.
 Los mensajes de construcción de túnel son de tamaño fijo por lo que esto no aumenta el
@@ -50,7 +50,7 @@ tamaño de los mensajes.
 
 ## Especificación
 
-Actualizar la [especificación de mensajes de construcción de túnel ECIES](/en/docs/specs/tunnel-creation-ecies/)
+Actualizar la [especificación de mensajes de construcción de túnel ECIES](/docs/specs/implementation/#tunnel-creation-ecies)
 como sigue:
 
 Para ambos registros de construcción ECIES largos y cortos:

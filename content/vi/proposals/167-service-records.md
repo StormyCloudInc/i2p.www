@@ -34,7 +34,7 @@ bittorrent, tiền điện tử, các ứng dụng ngang hàng khác.
 
 ### Danh Sách Dịch Vụ
 
-Đề xuất LS2 123 [Prop123](/en/proposals/123-new-netdb-entries/) đã định nghĩa 'hồ sơ dịch vụ' mà biểu thị một đích đến
+Đề xuất LS2 123 [Prop123](/proposals/123-new-netdb-entries/) đã định nghĩa 'hồ sơ dịch vụ' mà biểu thị một đích đến
 đang tham gia vào một dịch vụ toàn cầu. Các floodfill sẽ tổng hợp các hồ sơ này
 thành các 'danh sách dịch vụ' toàn cầu.
 Điều này chưa từng được triển khai vì độ phức tạp, thiếu xác thực,
@@ -72,10 +72,10 @@ không đơn độc cung cấp một bản ghi tổng quát cho bất kỳ dịc
 
 ## Thiết Kế
 
-Hồ sơ dịch vụ được đặt trong phần tùy chọn trong LS2 [LS2](/en/docs/specs/common-structures/).
+Hồ sơ dịch vụ được đặt trong phần tùy chọn trong LS2 [LS2](/docs/specs/common-structures/).
 Phần tùy chọn LS2 hiện đang không được sử dụng.
 Không được hỗ trợ cho LS1.
-Điều này tương tự như đề xuất băng thông đường hầm [Prop168](/en/proposals/168-tunnel-bandwidth/),
+Điều này tương tự như đề xuất băng thông đường hầm [Prop168](/proposals/168-tunnel-bandwidth/),
 định nghĩa các tùy chọn cho các bản ghi dịch xây dựng đường hầm.
 
 Để tra cứu địa chỉ dịch vụ cho một hostname cụ thể hoặc b32, router lấy
@@ -123,7 +123,7 @@ Các tùy chọn của LS2 PHẢI được sắp xếp theo khóa, để chữ k
   Chỉ hữu ích nếu có nhiều hơn một bản ghi, nhưng vẫn cần ngay cả khi chỉ có một bản ghi.
 - port := Cổng I2CP mà dịch vụ được tìm thấy. Số nguyên không âm. Ví dụ: "25"
   Cổng 0 được hỗ trợ nhưng không được khuyến nghị.
-- target := Hostname hoặc b32 của đích cung cấp dịch vụ. Một hostname hợp lệ như trong [NAMING](/en/docs/naming/). Phải viết bằng chữ thường.
+- target := Hostname hoặc b32 của đích cung cấp dịch vụ. Một hostname hợp lệ như trong [NAMING](/docs/naming/). Phải viết bằng chữ thường.
   Ví dụ: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.b32.i2p" hoặc "example.i2p".
   b32 được khuyến khích trừ khi hostname là "rất quen thuộc", ví dụ trong sổ địa chỉ chính thức hoặc mặc định.
 - appoptions := văn bản tùy ý cụ thể cho ứng dụng, không được chứa " " hoặc ",". Mã hóa là UTF-8.
@@ -178,14 +178,14 @@ Mỗi dịch vụ được hỗ trợ phải có bản ghi riêng của mình.
 ### Đăng Ký Tên Dịch Vụ
 
 Các định danh không chuẩn mà không được liệt kê trong [REGISTRY](http://www.dns-sd.org/ServiceTypes.html) hoặc Linux /etc/services
-có thể được yêu cầu và thêm vào đặc tả cấu trúc chung [LS2](/en/docs/specs/common-structures/).
+có thể được yêu cầu và thêm vào đặc tả cấu trúc chung [LS2](/docs/specs/common-structures/).
 
 Các định dạng appoptions cụ thể cho dịch vụ cũng có thể được thêm vào đó.
 
 
 ### Đặc Tả I2CP
 
-Giao thức [I2CP](/en/docs/specs/i2cp/) phải được mở rộng để hỗ trợ tra cứu dịch vụ.
+Giao thức [I2CP](/docs/specs/i2cp/) phải được mở rộng để hỗ trợ tra cứu dịch vụ.
 Các mã lỗi MessageStatusMessage và/hoặc HostReplyMessage liên quan đến tra cứu dịch vụ
 cần thiết.
 Để làm cho cơ sở tra cứu trở nên tổng quát, không chỉ hồ sơ dịch vụ cụ thể,
@@ -253,7 +253,7 @@ câu trả lời sẽ chứa một mã lỗi mới 7 (lookup type unsupported).
 
 ### Đặc Tả SAM
 
-Giao thức [SAMv3](/en/docs/api/samv3/) phải được mở rộng để hỗ trợ tra cứu dịch vụ.
+Giao thức [SAMv3](/docs/api/samv3/) phải được mở rộng để hỗ trợ tra cứu dịch vụ.
 
 Mở rộng NAMING LOOKUP như sau:
 
@@ -284,7 +284,7 @@ Nếu OPTIONS=true có trong tra cứu, và bộ cho thuê không được tìm 
 
 Một thiết kế thay thế đã được xem xét, để hỗ trợ tra cứu các dịch vụ
 như một hostname đầy đủ, ví dụ: _smtp._tcp.example.i2p,
-bằng cách cập nhật [NAMING](/en/docs/naming/) để chỉ định cách xử lý các hostname bắt đầu với '_'.
+bằng cách cập nhật [NAMING](/docs/naming/) để chỉ định cách xử lý các hostname bắt đầu với '_'.
 Điều này đã bị từ chối vì hai lý do:
 
 - Các thay đổi I2CP và SAM vẫn cần thiết để truyền qua thông tin TTL và cổng cho khách hàng.

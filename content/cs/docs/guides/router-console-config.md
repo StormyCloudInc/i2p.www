@@ -321,7 +321,7 @@ Stránka Konfigurace tunelů umožňuje upravit výchozí nastavení tunelů jak
 
 ⚠️ **Kompromis mezi anonymitou a výkonem:** Existuje základní kompromis mezi anonymitou a výkonem. Tunnely delší než 3 hopy (například 2 hopy + 0-2 hopy, 3 hopy + 0-1 hopy, 3 hopy + 0-2 hopy), nebo vysoké množství + záložní množství, mohou výrazně snížit výkon nebo spolehlivost. Může dojít k vysokému využití CPU a/nebo velké šířce odchozího pásma. Tato nastavení měňte opatrně a upravte je, pokud budete mít problémy.
 
-⚠️ **Trvalost:** Změny nastavení průzkumných tunnelů jsou uloženy v souboru router.config. Změny klientských tunnelů jsou dočasné a nejsou ukládány. Pro trvalé změny klientských tunnelů viz [stránka I2PTunnel](/en/docs/api/i2ptunnel).
+⚠️ **Trvalost:** Změny nastavení průzkumných tunnelů jsou uloženy v souboru router.config. Změny klientských tunnelů jsou dočasné a nejsou ukládány. Pro trvalé změny klientských tunnelů viz [stránka I2PTunnel](/docs/api/i2ptunnel).
 
 **Průzkumné tunely:**
 

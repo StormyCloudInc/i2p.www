@@ -13,7 +13,7 @@ toc: true
 Esta propuesta no fue implementada como se especificó,
 sin embargo, los mensajes de construcción largos y cortos de ECIES (propuestas 152 y 157)
 fueron diseñados con campos de opciones extensibles.
-Véase la [especificación de Tunnel Creation ECIES](/en/docs/specs/tunnel-creation-ecies/) para la especificación oficial.
+Véase la [especificación de Tunnel Creation ECIES](/docs/specs/implementation/#tunnel-creation-ecies) para la especificación oficial.
 
 
 ## Resumen

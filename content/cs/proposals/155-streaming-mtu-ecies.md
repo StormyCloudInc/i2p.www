@@ -23,7 +23,7 @@ Může dojít k drobným úpravám.
 
 ECIES snižuje režii stávajících zpráv relace (ES) o přibližně 90 bajtů.
 Proto můžeme zvýšit MTU o přibližně 90 bajtů pro ECIES spojení.
-Viz the [ECIES specification](/en/docs/specs/ecies/#overhead), [Streaming specification](/en/docs/specs/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/en/docs/api/streaming/).
+Viz the [ECIES specification](/docs/specs/ecies/#overhead), [Streaming specification](/docs/specs/streaming/#flags-and-option-data-fields), and [Streaming API documentation](/docs/api/streaming/).
 
 Bez zvýšení MTU se v mnoha případech úspory režie příliš neprojeví,
 protože zprávy budou i tak doplněny tak, aby využívaly dvě plné tunelové zprávy.
@@ -69,7 +69,7 @@ nicméně, neexistuje ustanovení pro sjednávání směrem nahoru během stream
 takže MTU by mělo zůstat na 1730.
 
 
-Jak je uvedeno v the [Streaming API documentation](/en/docs/api/streaming/),
+Jak je uvedeno v the [Streaming API documentation](/docs/api/streaming/),
 data v SYN paketech posílaných od Alice k Bobovi mohou překročit Bobovo MTU.
 To je slabina streamovacího protokolu.
 Proto musí dvouklíčoví klienti omezit data v odesílaných SYN paketech
@@ -80,7 +80,7 @@ užitečnou zátěž odesílaných dat.
 
 ### Analýza
 
-Jak je popsáno v the [ECIES specification](/en/docs/specs/ecies/#overhead), režie ElGamal pro stávající zprávy relace je
+Jak je popsáno v the [ECIES specification](/docs/specs/ecies/#overhead), režie ElGamal pro stávající zprávy relace je
 151 bajtů a Ratchet režie je 69 bajtů.
 Proto můžeme zvýšit MTU pro ratchet spojení o (151 - 69) = 82 bajtů,
 z 1730 na 1812.
@@ -88,8 +88,8 @@ z 1730 na 1812.
 
 ## Specifikace
 
-Přidat následující změny a upřesnění do části Výběr a Sjednávání MTU v the [Streaming API documentation](/en/docs/api/streaming/).
-Žádné změny v the [Streaming specification](/en/docs/specs/streaming/).
+Přidat následující změny a upřesnění do části Výběr a Sjednávání MTU v the [Streaming API documentation](/docs/api/streaming/).
+Žádné změny v the [Streaming specification](/docs/specs/streaming/).
 
 
 Výchozí hodnota možnosti i2p.streaming.maxMessageSize zůstává 1730 pro všechna spojení, bez ohledu na použité klíče.
@@ -157,7 +157,7 @@ v SYN ACK od Boba k Alice a ve všech následných paketech posílaných oběma 
 ## Odůvodnění
 
 Viz the [Java I2P source code](https://github.com/i2p/i2p.i2p/blob/master/apps/streaming/java/src/net/i2p/client/streaming/impl/ConnectionOptions.java#L220) pro vysvětlení, proč je současná hodnota 1730.
-Viz the [ECIES specification](/en/docs/specs/ecies/#overhead) pro vysvětlení, proč je režie ECIES o 82 bajtů menší než u ElGamal.
+Viz the [ECIES specification](/docs/specs/ecies/#overhead) pro vysvětlení, proč je režie ECIES o 82 bajtů menší než u ElGamal.
 
 
 ## Poznámky k implementaci

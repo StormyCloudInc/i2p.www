@@ -207,7 +207,7 @@ categories: ["meeting"]
 10:51:16  &lt;str4d&gt; I've wanted to merge the various intro pages, but we could actually leverage them separately
 10:51:36  &lt;str4d&gt; Turn https://geti2p.net/en/about/intro into a brief overview of I2P, both the network and the project
 10:51:38  &lt;iRelay&gt; Title: Intro - I2P (at geti2p.net)
-10:51:59  &lt;str4d&gt; Then make https://geti2p.net/en/docs/how/intro the *actual* "how does I2P work" page
+10:51:59  &lt;str4d&gt; Then make https://geti2p.net/docs/how/intro the *actual* "how does I2P work" page
 10:52:00  &lt;iRelay&gt; Title: A Gentle Introduction to How I2P Works - I2P (at geti2p.net)
 10:52:10  &lt;str4d&gt; Kinda sorta what they appear to be now, but properly split
 10:53:12  &lt;dg&gt; hottuna: Where can I find the blogposts?

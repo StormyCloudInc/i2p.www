@@ -222,7 +222,7 @@ I2P router'ınız artık yapılandırılmış ve çalışıyor! Router konsolu b
 I2P kurulup yapılandırıldığına göre, artık şunları yapabilirsiniz:
 
 1. **I2P sitelerini gezin**: Popüler I2P hizmetlerine bağlantıları görmek için [I2P ana sayfasını](http://127.0.0.1:7657/home) ziyaret edin
-2. **Tarayıcınızı yapılandırın**: `.i2p` sitelerine erişmek için bir [tarayıcı profili](/en/docs/guides/browser-config) oluşturun
+2. **Tarayıcınızı yapılandırın**: `.i2p` sitelerine erişmek için bir [tarayıcı profili](/docs/guides/browser-config) oluşturun
 3. **Hizmetleri keşfedin**: I2P e-posta, forum, dosya paylaşımı ve daha fazlasını inceleyin
 4. **Router'ınızı izleyin**: [Konsol](http://127.0.0.1:7657/console) ağ durumunuzu ve istatistiklerinizi gösterir
 

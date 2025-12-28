@@ -13,7 +13,7 @@ toc: true
 Cette proposition n'a pas été mise en œuvre telle que spécifiée,
 cependant, les messages de construction long et court ECIES (propositions 152 et 157)
 ont été conçus avec des champs d'options extensibles.
-Voir la [spécification Tunnel Creation ECIES](/en/docs/specs/tunnel-creation-ecies/) pour la spécification officielle.
+Voir la [spécification Tunnel Creation ECIES](/docs/specs/implementation/#tunnel-creation-ecies) pour la spécification officielle.
 
 
 ## Vue d'ensemble

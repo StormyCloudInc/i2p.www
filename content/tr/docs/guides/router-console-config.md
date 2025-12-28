@@ -321,7 +321,7 @@ Tünel Yapılandırması sayfası, hem keşif tünelleri (router iletişimi içi
 
 ⚠️ **Anonimlik ile Performans Dengesi:** Anonimlik ve performans arasında temel bir denge vardır. 3 hop'tan uzun tüneller (örneğin 2 hop + 0-2 hop, 3 hop + 0-1 hop, 3 hop + 0-2 hop) veya yüksek miktar + yedek miktar, performansı veya güvenilirliği ciddi şekilde azaltabilir. Yüksek CPU ve/veya yüksek giden bant genişliği kullanımı ortaya çıkabilir. Bu ayarları dikkatle değiştirin ve sorun yaşarsanız ayarlayın.
 
-⚠️ **Kalıcılık:** Keşif tüneli ayar değişiklikleri router.config dosyasında saklanır. İstemci tüneli değişiklikleri geçicidir ve kaydedilmez. Kalıcı istemci tüneli değişiklikleri yapmak için [I2PTunnel sayfasına](/en/docs/api/i2ptunnel) bakın.
+⚠️ **Kalıcılık:** Keşif tüneli ayar değişiklikleri router.config dosyasında saklanır. İstemci tüneli değişiklikleri geçicidir ve kaydedilmez. Kalıcı istemci tüneli değişiklikleri yapmak için [I2PTunnel sayfasına](/docs/api/i2ptunnel) bakın.
 
 **Keşif Tünelleri:**
 
