@@ -1,0 +1,38 @@
+name: Lighthouse CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.147.8'
+          extended: true
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Serve site
+        run: |
+          npm install -g serve
+          serve -s public -l 5000 &
+          sleep 3
+
+      - name: Run Lighthouse
+        run: |
+          npm install -g lighthouse
+          lighthouse http://localhost:5000/en/ --quiet --no-update-notifier --output json --output html --output-path ./lhreport
+
+      - name: Upload Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: ./lhreport*
