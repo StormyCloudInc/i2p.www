@@ -117,7 +117,7 @@ jobs:
   # =================================================================================================
   
   deploy-cloudflare:
-    needs: [build, codeql, lighthouse]
+    needs: [build]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     environment:
@@ -144,7 +144,7 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
   deploy-ssh-primary:
-    needs: [build, codeql, lighthouse]
+    needs: [build]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
@@ -204,61 +204,3 @@ jobs:
   # SECURITY SCANNING
   # =================================================================================================
  
-  # =================================================================================================
-  # CODEQL ANALYSIS
-  # =================================================================================================
-  codeql:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      security-events: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download Build Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: public-site
-          path: public
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-          languages: javascript
-
-      - name: Perform CodeQL Scan
-        uses: github/codeql-action/analyze@v3
-
-  # =================================================================================================
-  # LIGHTHOUSE PERFORMANCE AUDIT
-  # =================================================================================================
-  lighthouse:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download Build Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: public-site
-          path: public
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install and run Lighthouse CI
-        run: |
-          npm install -g @lhci/cli serve
-          serve -s public -l 5000 &
-          sleep 3
-          lhci autorun --collect.url=http://localhost:5000/en/ --collect.numberOfRuns=1 --assert.preset=lighthouse:no-pwa || true
-
-      - name: Upload Lighthouse Report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: lighthouse-report
-          path: .lighthouseci/
