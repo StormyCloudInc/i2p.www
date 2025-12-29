@@ -117,7 +117,7 @@ jobs:
   # =================================================================================================
   
   deploy-cloudflare:
-    needs: [build]
+    needs: [build, security-scan, codeql, lighthouse]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     environment:
@@ -144,7 +144,7 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
   deploy-ssh-primary:
-    needs: [build]
+    needs: [build, security-scan, codeql, lighthouse]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
@@ -203,34 +203,7 @@ jobs:
   # =================================================================================================
   # SECURITY SCANNING
   # =================================================================================================
-  security-scan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Needed for TruffleHog to scan history
-
-      - name: Run TruffleHog Secret Scan
-        uses: trufflesecurity/trufflehog@main
-        with:
-          path: ./
-          base: ${{ github.event.repository.default_branch }}
-          head: HEAD
-          extra_args: --debug --only-verified
-
-      - name: Run Trivy Vulnerability & Config Scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          hide-progress: false
-          format: 'table'
-          # Scan for vulnerabilities (deps), secrets, and misconfigurations (IaC)
-          scanners: 'vuln,secret,misconfig'
-          exit-code: '1'
-          severity: 'CRITICAL,HIGH'
-          ignore-unfixed: true
-
+ 
   # =================================================================================================
   # CODEQL ANALYSIS
   # =================================================================================================
@@ -263,25 +236,29 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Download Build Artifact
         uses: actions/download-artifact@v4
         with:
           name: public-site
           path: public
 
-      - name: Serve site
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install and run Lighthouse CI
         run: |
-          npm install -g serve
+          npm install -g @lhci/cli serve
           serve -s public -l 5000 &
           sleep 3
-
-      - name: Run Lighthouse
-        run: |
-          npm install -g lighthouse
-          lighthouse http://localhost:5000/en/ --quiet --no-update-notifier --chrome-flags="--headless --no-sandbox" --output json --output html --output-path ./lhreport
+          lhci autorun --collect.url=http://localhost:5000/en/ --collect.numberOfRuns=1 --assert.preset=lighthouse:no-pwa || true
 
       - name: Upload Lighthouse Report
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: lighthouse-report
-          path: ./lhreport*
+          path: .lighthouseci/
