@@ -1,0 +1,2949 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Síťový protokol I2P (I2NP) | I2P - Projekt neviditelného internetu</title>
+
+    <meta name="description" content="Formáty zpráv mezi routery, priority a limity velikosti v rámci I2P.">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Síťový protokol I2P (I2NP) | I2P - Projekt neviditelného internetu">
+    <meta property="og:description" content="Formáty zpráv mezi routery, priority a limity velikosti v rámci I2P.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/cs/docs/specs/i2np/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P Beta stránky jsou nyní spuštěny. Problémy s e-mailem hlaste na stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Zavřít banner" title="Zavřít banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../cs/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../cs/about/" class="">O aplikaci</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../cs/about/">Přehled</a></li>
+                            <li><a href="../../../../cs/papers/">Výzkumné práce</a></li>
+                            <li><a href="../../../../cs/about/media/">Pro média</a></li>
+                            <li><a href="../../../../cs/contact/">Kontaktujte nás</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../cs/docs/" class="active">Dokumentace</a></li>
+                    <li><a href="../../../../cs/downloads/" class="">Ke stažení</a></li>
+                    <li><a href="../../../../cs/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../cs/get-involved/" class="">Zapojte se</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../cs/get-involved/">Přehled</a></li>
+                            <li><a href="../../../../cs/feedback/">Návrhy funkcí</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">cs</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/i2np/"
+                                class="lang-option">Angličtina</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/i2np/"
+                                class="lang-option">Španělština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/i2np/"
+                                class="lang-option">Korejština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/i2np/"
+                                class="lang-option">Čínština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/i2np/"
+                                class="lang-option">Ruština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/i2np/"
+                                class="lang-option active">Čeština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/i2np/"
+                                class="lang-option">Němčina</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/i2np/"
+                                class="lang-option">Francouzština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/i2np/"
+                                class="lang-option">Turečtina</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/i2np/"
+                                class="lang-option">Vietnamština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/i2np/"
+                                class="lang-option">Hindština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/i2np/"
+                                class="lang-option">Arabština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/i2np/"
+                                class="lang-option">Portugalština</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../cs/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../cs/downloads/" class="btn btn-primary">Získat I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#přehled">Přehled</a>
+      <ul>
+        <li><a href="#současné-transportní-protokoly">Současné transportní protokoly</a></li>
+      </ul>
+    </li>
+    <li><a href="#systém-číslování-verzí">Systém číslování verzí</a>
+      <ul>
+        <li><a href="#verze-vydání-určené-pro-uživatele">Verze vydání (určené pro uživatele)</a></li>
+        <li><a href="#verze-api-kompatibilita-protokolů">Verze API (kompatibilita protokolů)</a></li>
+        <li><a href="#tabulka-mapování-verzí">Tabulka mapování verzí</a></li>
+      </ul>
+    </li>
+    <li><a href="#verze-protokolů">Verze protokolů</a>
+      <ul>
+        <li><a href="#přehled-funkcí-podle-verze-api">Přehled funkcí podle verze API</a></li>
+      </ul>
+    </li>
+    <li><a href="#hlavička-zprávy">Hlavička zprávy</a>
+      <ul>
+        <li><a href="#srovnání-formátu-hlavičky">Srovnání formátu hlavičky</a></li>
+        <li><a href="#podrobnosti-o-polích-hlavičky">Podrobnosti o polích hlavičky</a></li>
+      </ul>
+    </li>
+    <li><a href="#omezení-velikosti">Omezení velikosti</a>
+      <ul>
+        <li><a href="#historický-kontext">Historický kontext</a></li>
+        <li><a href="#úvahy-týkající-se-dat-aplikací">Úvahy týkající se dat aplikací</a></li>
+        <li><a href="#technické-podrobnosti-fragmentace">Technické podrobnosti fragmentace</a></li>
+      </ul>
+    </li>
+    <li><a href="#běžné-typy-zpráv">Běžné typy zpráv</a>
+      <ul>
+        <li><a href="#poznámky-k-typům-zpráv">Poznámky k typům zpráv</a></li>
+      </ul>
+    </li>
+    <li><a href="#šifrování-a-zapouzdřování-zpráv">Šifrování a zapouzdřování zpráv</a>
+      <ul>
+        <li><a href="#šifrovací-algoritmy">Šifrovací algoritmy</a></li>
+        <li><a href="#označení-elgamal-routeru-za-zastaralý">Označení ElGamal routeru za zastaralý</a></li>
+        <li><a href="#podrobnosti-o-ecies-x25519-aead-ratchet-kryptografický-mechanismus">Podrobnosti o ECIES-X25519-AEAD-Ratchet (kryptografický mechanismus)</a></li>
+      </ul>
+    </li>
+    <li><a href="#společné-struktury">Společné struktury</a>
+      <ul>
+        <li><a href="#buildrequestrecord-záznam-požadavku-na-sestavení-elgamal">BuildRequestRecord (záznam požadavku na sestavení) (ElGamal)</a></li>
+        <li><a href="#buildrequestrecord-ecies-x25519-dlouhý">BuildRequestRecord (ECIES-X25519 dlouhý)</a></li>
+        <li><a href="#buildrequestrecord-ecies-x25519-short-záznam-požadavku-na-sestavení">BuildRequestRecord (ECIES-X25519 Short) (záznam požadavku na sestavení)</a></li>
+        <li><a href="#buildresponserecord-elgamal-záznam-odpovědi-pro-sestavení">BuildResponseRecord (ElGamal) (záznam odpovědi pro sestavení)</a></li>
+        <li><a href="#buildresponserecord-záznam-odpovědi-na-sestavení-ecies-x25519">BuildResponseRecord (záznam odpovědi na sestavení) (ECIES-X25519)</a></li>
+        <li><a href="#garlicclove-vnitřní-část-zprávy-v-rámci-garlic-encryption-elgamalaes">GarlicClove (vnitřní část zprávy v rámci garlic encryption, ElGamal/AES)</a></li>
+        <li><a href="#garlicclove-ecies-x25519-aead-ratchet">GarlicClove (ECIES-X25519-AEAD-Ratchet)</a></li>
+        <li><a href="#instrukce-pro-doručení-garlic-clove-podzpráva-v-rámci-garlic-encryption">Instrukce pro doručení Garlic Clove (podzpráva v rámci garlic encryption)</a></li>
+      </ul>
+    </li>
+    <li><a href="#zprávy-i2np">Zprávy I2NP</a>
+      <ul>
+        <li><a href="#přehled-typů-zpráv">Přehled typů zpráv</a></li>
+        <li><a href="#databasestore-uložení-do-databáze-typ-1">DatabaseStore (uložení do databáze; Typ 1)</a></li>
+        <li><a href="#databaselookup-vyhledávání-v-databázi-typ-2">DatabaseLookup (vyhledávání v databázi) (Typ 2)</a></li>
+        <li><a href="#databasesearchreply-typ-3">DatabaseSearchReply (Typ 3)</a></li>
+        <li><a href="#deliverystatus-stav-doručení-typ-10">DeliveryStatus (stav doručení, typ 10)</a></li>
+        <li><a href="#garlicmessage-typ-11">GarlicMessage (Typ 11)</a></li>
+        <li><a href="#tunneldata-typ-18">TunnelData (Typ 18)</a></li>
+        <li><a href="#tunnelgateway-typ-19">TunnelGateway (Typ 19)</a></li>
+        <li><a href="#datamessage-typ-20">DataMessage (typ 20)</a></li>
+        <li><a href="#tunnelbuild-typ-21">TunnelBuild (typ 21)</a></li>
+        <li><a href="#tunnelbuildreply-typ-22">TunnelBuildReply (Typ 22)</a></li>
+        <li><a href="#variabletunnelbuild-typ-23">VariableTunnelBuild (Typ 23)</a></li>
+        <li><a href="#variabletunnelbuildreply-typ-24">VariableTunnelBuildReply (Typ 24)</a></li>
+        <li><a href="#shorttunnelbuild-typ-25">ShortTunnelBuild (Typ 25)</a></li>
+        <li><a href="#outboundtunnelbuildreply-typ-26">OutboundTunnelBuildReply (Typ 26)</a></li>
+      </ul>
+    </li>
+    <li><a href="#reference">Reference</a>
+      <ul>
+        <li><a href="#oficiální-specifikace">Oficiální specifikace</a></li>
+        <li><a href="#návrhy">Návrhy</a></li>
+        <li><a href="#dokumentace">Dokumentace</a></li>
+        <li><a href="#zdrojový-kód">Zdrojový kód</a></li>
+        <li><a href="#klíčová-umístění-zdrojového-kódu">Klíčová umístění zdrojového kódu</a></li>
+      </ul>
+    </li>
+    <li><a href="#příloha-a-statistiky-sítě-a-aktuální-stav">Příloha A: Statistiky sítě a aktuální stav</a>
+      <ul>
+        <li><a href="#složení-sítě-stav-k-říjnu-2025">Složení sítě (stav k říjnu 2025)</a></li>
+        <li><a href="#minimální-požadavky-na-router">Minimální požadavky na router</a></li>
+        <li><a href="#požadavky-na-šířku-pásma">Požadavky na šířku pásma</a></li>
+        <li><a href="#statistiky-tunnelů">Statistiky tunnelů</a></li>
+        <li><a href="#metriky-výkonu">Metriky výkonu</a></li>
+      </ul>
+    </li>
+    <li><a href="#příloha-b-zastaralé-a-odstraněné-funkce">Příloha B: Zastaralé a odstraněné funkce</a>
+      <ul>
+        <li><a href="#zcela-odstraněno-již-není-podporováno">Zcela odstraněno (již není podporováno)</a></li>
+        <li><a href="#zastaralé-podporováno-ale-nedoporučuje-se">Zastaralé (podporováno, ale nedoporučuje se)</a></li>
+        <li><a href="#časová-osa-podpory-starších-verzí">Časová osa podpory starších verzí</a></li>
+      </ul>
+    </li>
+    <li><a href="#příloha-c-budoucí-vývoj">Příloha C: Budoucí vývoj</a>
+      <ul>
+        <li><a href="#postkvantová-kryptografie">Postkvantová kryptografie</a></li>
+        <li><a href="#plánované-funkce">Plánované funkce</a></li>
+        <li><a href="#výzkumné-oblasti">Výzkumné oblasti</a></li>
+      </ul>
+    </li>
+    <li><a href="#příloha-d-pokyny-k-implementaci">Příloha D: Pokyny k implementaci</a>
+      <ul>
+        <li><a href="#pro-nové-implementace">Pro nové implementace</a></li>
+        <li><a href="#testování-a-validace">Testování a validace</a></li>
+        <li><a href="#častá-úskalí-implementace">Častá úskalí implementace</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../cs/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../cs/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../cs/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Síťový protokol I2P (I2NP)</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Tento překlad byl vytvořen pomocí strojového učení a nemusí být 100% přesný.</span>
+    
+    
+    <a href="../../../../en/docs/specs/i2np/" class="disclaimer-link">Zobrazit anglickou verzi</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Síťový protokol I2P (I2NP)</h1>
+                    
+                        <p class="article-description">Formáty zpráv mezi routery, priority a limity velikosti v rámci I2P.</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="přehled">Přehled</h2>
+<p>Síťový protokol I2P (I2NP) definuje, jak routers vyměňují zprávy, volí transportní protokoly a mísí provoz při zachování anonymity. Funguje mezi <strong>I2CP</strong> (klientské API) a transportními protokoly (<strong>NTCP2</strong> a <strong>SSU2</strong>).</p>
+<p>I2NP je vrstva nad transportními protokoly I2P. Je to protokol router-to-router (komunikace přímo mezi routery) používaný pro: - Vyhledávání v síťové databázi a odpovědi - Vytváření tunnelů - Šifrované datové zprávy routeru a klienta</p>
+<p>Zprávy I2NP lze posílat bod-bod na jiný router nebo anonymně přes tunnels na tentýž router.</p>
+<p>Routers řadí odchozí úlohy do fronty podle lokálních priorit. Vyšší čísla priority se zpracovávají dříve. Cokoli nad standardní prioritu dat pro tunnel (400) se považuje za naléhavé.</p>
+<h3 id="současné-transportní-protokoly">Současné transportní protokoly</h3>
+<p>I2P nyní používá <strong>NTCP2</strong> (TCP) a <strong>SSU2</strong> (UDP) pro IPv4 i IPv6. Oba transporty používají: - <strong>X25519</strong> pro výměnu klíčů (rámec protokolu Noise) - <strong>ChaCha20/Poly1305</strong> pro autentizované šifrování s přidruženými daty (AEAD) - <strong>SHA-256</strong> pro hashování</p>
+<p><strong>Zastaralé transporty odstraněny:</strong> - NTCP (původní TCP) byl odstraněn z Java routeru ve verzi 0.9.50 (květen 2021) - SSU v1 (původní UDP) byl odstraněn z Java routeru ve verzi 2.4.0 (prosinec 2023) - SSU v1 byl odstraněn z i2pd ve verzi 2.44.0 (listopad 2022)</p>
+<p>Od roku 2025 síť zcela přešla na transportní protokoly založené na Noise (sada kryptografických handshake protokolů) bez jakékoli podpory starších transportů.</p>
+<hr>
+<h2 id="systém-číslování-verzí">Systém číslování verzí</h2>
+<p><strong>DŮLEŽITÉ:</strong> I2P používá dvojí systém verzování, kterému je nutné jasně rozumět:</p>
+<h3 id="verze-vydání-určené-pro-uživatele">Verze vydání (určené pro uživatele)</h3>
+<p>Toto jsou verze, které uživatelé vidí a stahují: - 0.9.50 (květen 2021) - Poslední vydání řady 0.9.x - <strong>1.5.0</strong> (srpen 2021) - První vydání řady 1.x - 1.6.0, 1.7.0, 1.8.0, 1.9.0 (v letech 2021-2022) - <strong>2.0.0</strong> (listopad 2022) - První vydání řady 2.x - 2.1.0 až 2.9.0 (v letech 2023-2025) - <strong>2.10.0</strong> (8. září 2025) - Aktuální vydání</p>
+<h3 id="verze-api-kompatibilita-protokolů">Verze API (kompatibilita protokolů)</h3>
+<p>Toto jsou interní čísla verzí zveřejněná v poli &ldquo;router.version&rdquo; ve vlastnostech RouterInfo: - 0.9.50 (květen 2021) - <strong>0.9.51</strong> (srpen 2021) - Verze API pro vydání 1.5.0 - 0.9.52 až 0.9.66 (pokračuje napříč vydáními 2.x) - <strong>0.9.67</strong> (září 2025) - Verze API pro vydání 2.10.0</p>
+<p><strong>Klíčový bod:</strong> Nevyšla ŽÁDNÁ vydání s označením 0.9.51 až 0.9.67. Tato čísla existují pouze jako identifikátory verzí API. I2P přeskočilo z vydání 0.9.50 přímo na 1.5.0.</p>
+<h3 id="tabulka-mapování-verzí">Tabulka mapování verzí</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Release Version</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">API Version</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Date</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Key Features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">0.9.50</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.50</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">May 2021</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Last 0.9.x release, removed NTCP1</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1.5.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.51</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">August 2021</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Short tunnel build messages (218 bytes)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1.6.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.52</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">November 2021</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Various improvements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1.7.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.53</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">January 2022</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Performance enhancements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1.8.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.54</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">May 2022</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SSU2 introduced</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1.9.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.55</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">August 2022</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SSU2 improvements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.0.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.56</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">November 2022</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SSU2 enabled by default</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.1.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.57</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">January 2023</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Stability improvements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.2.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.58</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">March 2023</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>ElGamal routers deprecated</strong></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.3.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.59</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">May 2023</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Various improvements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.4.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.61</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">December 2023</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Removed SSU1 support</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.5.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.62</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">February 2024</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Performance improvements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.6.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.63</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">May 2024</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Network optimizations</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.7.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.64</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">October 2024</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Post-quantum preparation work</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.8.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.65</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">February 2025</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Tunnel bandwidth parameters</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.9.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.66</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">June 2025</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">LeaseSet service records</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.10.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.67</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">September 2025</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Post-quantum hybrid cryptography (beta)</td>
+    </tr>
+  </tbody>
+</table>
+**Nadcházející:** Verze 2.11.0 (plánováno na prosinec 2025) bude vyžadovat Javu 17+ a ve výchozím nastavení povolí postkvantovou kryptografii.
+<hr>
+<h2 id="verze-protokolů">Verze protokolů</h2>
+<p>Všechny routery musí uvádět svou verzi protokolu I2NP v poli &ldquo;router.version&rdquo; ve vlastnostech RouterInfo (informační záznam o routeru). Tato verze je verzí API, která udává úroveň podpory různých funkcí protokolu I2NP, a nemusí nutně odpovídat skutečné verzi routeru.</p>
+<p>Pokud alternativní (non-Java) routers chtějí zveřejnit jakékoli informace o verzi samotné implementace routeru, musejí tak učinit v jiné vlastnosti. Jsou povoleny i jiné verze než ty uvedené níže. Podpora bude určena číselným porovnáním; například 0.9.13 implikuje podporu funkcí verze 0.9.12.</p>
+<p><strong>Poznámka:</strong> Vlastnost &ldquo;coreVersion&rdquo; se již v informacích o routeru nezveřejňuje a nikdy se nepoužívala k určení verze protokolu I2NP.</p>
+<h3 id="přehled-funkcí-podle-verze-api">Přehled funkcí podle verze API</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">API Version</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Required I2NP Features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.67</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Post-quantum hybrid cryptography (MLKEM ratchet) support (beta), UDP tracker support</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.66</td><td style="border:1px solid var(--color-border); padding:0.5rem;">LeaseSet2 service record options (see proposal 167)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.65</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Tunnel build bandwidth parameters (see proposal 168)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.59</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Minimum peers will build tunnels through (as of 0.9.63), minimum floodfill peers will send DSM to (as of 0.9.63)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.58</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Minimum peers will build tunnels through (as of 0.9.62), <strong>ElGamal routers deprecated</strong></td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.55</td><td style="border:1px solid var(--color-border); padding:0.5rem;">SSU2 transport support (if published in router info)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.51</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Short tunnel build messages for ECIES-X25519 routers, minimum peers will build tunnels through (as of 0.9.58), minimum floodfill peers will send DSM to (as of 0.9.58)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.49</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Garlic messages to ECIES-X25519 routers</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.48</td><td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES-X25519 routers, ECIES-X25519 build request/response records</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.46</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DatabaseLookup flag bit 4 for AEAD reply</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.44</td><td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES-X25519 keys in LeaseSet2</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.40</td><td style="border:1px solid var(--color-border); padding:0.5rem;">MetaLeaseSet may be sent in a DSM</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.39</td><td style="border:1px solid var(--color-border); padding:0.5rem;">EncryptedLeaseSet may be sent in a DSM, RedDSA_SHA512_Ed25519 signature type supported</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.38</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DSM type bits 3-0 now contain the type; LeaseSet2 may be sent in a DSM</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.36</td><td style="border:1px solid var(--color-border); padding:0.5rem;">NTCP2 transport support (if published in router info), minimum peers will build tunnels through (as of 0.9.46)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.28</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RSA signature types disallowed, minimum floodfill peers will send DSM to (as of 0.9.34)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.18</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DSM type bits 7-1 ignored</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.16</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RI key certs / ECDSA and EdDSA signature types, DLM lookup types (flag bits 3-2), minimum version compatible with the current network</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.15</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Destination/LeaseSet key certificates with EdDSA Ed25519 signature type (if floodfill)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Destination/LeaseSet key certificates with ECDSA P-256, P-384, and P-521 signature types (if floodfill); non-zero expiration allowed in RouterAddress</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.7</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Encrypted DSM/DSRM replies supported (DLM flag bit 1) for floodfill routers</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.6</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Non-zero DLM flag bits 7-1 allowed</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Requires zero expiration in RouterAddress</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Supports up to 16 leases in a DSM LeaseSet store (previously 6)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">VTBM and VTBRM message support</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Floodfill supports encrypted DSM stores</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">TBM and TBRM messages introduced; minimum version compatible with the current network</td></tr>
+  </tbody>
+</table>
+**Poznámka:** Existují také funkce související s transportem a problémy s kompatibilitou. Podrobnosti viz dokumentaci k transportům NTCP2 a SSU2.
+<hr>
+<h2 id="hlavička-zprávy">Hlavička zprávy</h2>
+<p>I2NP používá logickou strukturu hlavičky o velikosti 16 bajtů, zatímco moderní transporty (NTCP2 a SSU2) používají zkrácenou 9bajtovou hlavičku, která vynechává redundantní pole velikosti a kontrolního součtu. Pole zůstávají koncepčně shodná.</p>
+<h3 id="srovnání-formátu-hlavičky">Srovnání formátu hlavičky</h3>
+<p><strong>Standardní formát (16 bajtů):</strong></p>
+<p>Používá se v zastaralém transportu NTCP a když jsou zprávy I2NP vnořeny do jiných zpráv (TunnelData, TunnelGateway, GarlicClove).</p>
+<pre tabindex="0"><code>Bytes 0-15:
++----+----+----+----+----+----+----+----+
+|type|      msg_id       |  expiration
++----+----+----+----+----+----+----+----+
+                         |  size   |chks|
++----+----+----+----+----+----+----+----+
+
+type :: Integer (1 byte)
+        Identifies the message type (see message type table)
+
+msg_id :: Integer (4 bytes)
+          Uniquely identifies this message (for some time at least)
+          Usually a locally-generated random number, but for outgoing
+          tunnel build messages may be derived from the incoming message
+
+expiration :: Date (8 bytes)
+              Unix timestamp in milliseconds when this message expires
+
+size :: Integer (2 bytes)
+        Length of the payload (0 to ~61.2 KB for tunnel messages)
+
+chks :: Integer (1 byte)
+        SHA256 hash of payload truncated to first byte
+        Deprecated - NTCP2/SSU2 use ChaCha20/Poly1305 AEAD for integrity
+</code></pre><p><strong>Krátký formát pro SSU (zastaralý, 5 bajtů):</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+
+|type| short_expiration  |
++----+----+----+----+----+
+
+type :: Integer (1 byte)
+short_expiration :: Integer (4 bytes, seconds since epoch)
+</code></pre><p><strong>Krátký formát pro NTCP2, SSU2 a ECIES-Ratchet (postupný klíčový mechanismus ECIES) Garlic Cloves (podsložky zprávy v garlic encryption) (9 bajtů):</strong></p>
+<p>Používá se v moderních transportech a v garlic messages (garlicových zprávách) šifrovaných pomocí ECIES.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|type|      msg_id       | short_expira-
++----+----+----+----+----+----+----+----+
+ tion|
++----+
+
+type :: Integer (1 byte)
+msg_id :: Integer (4 bytes)
+short_expiration :: Integer (4 bytes, seconds since epoch, unsigned)
+</code></pre><h3 id="podrobnosti-o-polích-hlavičky">Podrobnosti o polích hlavičky</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Field</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Bytes</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Type</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Identifies the message class (0&ndash;255, see message types below)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Unique ID</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Locally unique identifier for matching replies</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Expiration</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">8 (standard) / 4 (short)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Timestamp when the message expires. Routers discard expired messages. Short format uses seconds since epoch (unsigned, wraps February 7, 2106)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Payload Length</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Size in bytes (0 to ~61.2 KB for tunnel messages). NTCP2 and SSU2 encode this in their frame headers</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Checksum</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated. First byte of SHA-256 hash of the payload. NTCP2/SSU2 use ChaCha20/Poly1305 AEAD for integrity</td>
+    </tr>
+  </tbody>
+</table>
+### Poznámky k implementaci
+<ul>
+<li>Při přenosu přes SSU (zastaralé) byly zahrnuty pouze typ a 4bajtová doba platnosti</li>
+<li>Při přenosu přes NTCP2 nebo SSU2 se používá 9bajtový krátký formát</li>
+<li>Pro zprávy I2NP obsažené v jiných zprávách (Data, TunnelData, TunnelGateway, GarlicClove) je vyžadována standardní 16bajtová hlavička</li>
+<li>Od verze 0.8.12 je na některých místech v zásobníku protokolů z důvodu efektivity ověřování kontrolního součtu vypnuto, ale generování kontrolního součtu je kvůli kompatibilitě stále vyžadováno</li>
+<li>Krátká doba platnosti je bez znaménka a 7. února 2106 dojde k přetočení. Po tomto datu je nutné přičíst offset (posun), aby se získal správný čas</li>
+<li>Pro kompatibilitu se staršími verzemi vždy generujte kontrolní součty, i když nemusí být ověřovány</li>
+</ul>
+<hr>
+<h2 id="omezení-velikosti">Omezení velikosti</h2>
+<p>Zprávy tunnel fragmentují užitečná data I2NP na části pevné velikosti:</p>
+<ul>
+<li><strong>První fragment:</strong> přibližně 956 bajtů</li>
+<li><strong>Následující fragmenty:</strong> přibližně 996 bajtů každý</li>
+<li><strong>Maximální počet fragmentů:</strong> 64 (očíslované 0–63)</li>
+<li><strong>Maximální velikost užitečných dat:</strong> přibližně 61 200 bajtů (61,2 KB)</li>
+</ul>
+<p><strong>Výpočet:</strong> 956 + (63 × 996) = 63,704 bajtů jako teoretické maximum, s praktickým limitem kolem 61,200 bajtů kvůli režii.</p>
+<h3 id="historický-kontext">Historický kontext</h3>
+<p>Starší transporty měly přísnější limity velikosti rámců: - NTCP: rámce o velikosti 16 KB - SSU: rámce o velikosti přibližně 32 KB</p>
+<p>NTCP2 podporuje rámce o velikosti přibližně 65 KB, ale limit fragmentace pro tunnel stále platí.</p>
+<h3 id="úvahy-týkající-se-dat-aplikací">Úvahy týkající se dat aplikací</h3>
+<p>Garlic messages (typ zpráv používaný v rámci garlic encryption) mohou zahrnovat LeaseSets, značky relace, nebo šifrované varianty LeaseSet2, čímž se snižuje prostor pro užitečná data.</p>
+<p><strong>Doporučení:</strong> Datagramy by měly zůstat ≤ 10 KB pro zajištění spolehlivého doručení. Zprávy blížící se limitu 61 KB mohou zaznamenat: - Zvýšenou latenci kvůli opětovnému sestavení fragmentů - Vyšší pravděpodobnost selhání doručení - Větší vystavení analýze provozu</p>
+<h3 id="technické-podrobnosti-fragmentace">Technické podrobnosti fragmentace</h3>
+<p>Každá zpráva tunnelu má přesně 1,024 bajtů (1 KB) a obsahuje: - 4bajtové tunnel ID - 16bajtový inicializační vektor (IV) - 1,004 bajtů šifrovaných dat</p>
+<p>V rámci šifrovaných dat zprávy tunnelu přenášejí fragmentované zprávy I2NP s hlavičkami fragmentů, které uvádějí:</p>
+<ul>
+<li>Číslo fragmentu (0-63)</li>
+<li>Zda se jedná o první, nebo navazující fragment</li>
+<li>ID celé zprávy pro opětovné sestavení</li>
+</ul>
+<p>První fragment obsahuje úplnou hlavičku zprávy I2NP (16 bajtů), takže pro užitečná data zbývá přibližně 956 bajtů. Následující fragmenty hlavičku zprávy neobsahují, což umožňuje přibližně 996 bajtů užitečných dat na fragment.</p>
+<hr>
+<h2 id="běžné-typy-zpráv">Běžné typy zpráv</h2>
+<p>Routers používají typ zprávy a prioritu k plánování odchozí práce. Vyšší hodnoty priority jsou zpracovány jako první. Hodnoty níže odpovídají aktuálním výchozím hodnotám Java I2P (k verzi API 0.9.67).</p>
+<p><strong>Poznámka:</strong> Priority závisejí na implementaci. Pro závazné hodnoty priorit nahlédněte do dokumentace třídy <code>OutNetMessage</code> ve zdrojovém kódu Java I2P.</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Message</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Priority</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Typical Size</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>DatabaseStore</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">460</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Varies (LeaseSet ≈ 898&nbsp;B, RouterInfo ≈ 2&ndash;4&nbsp;KB compressed)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Publishes RouterInfo or LeaseSet objects. Supports LeaseSet2, EncryptedLeaseSet, and MetaLeaseSet</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>DatabaseLookup</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">500</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Varies</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Queries the network database for RouterInfo or LeaseSet entries</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>DatabaseSearchReply</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">300</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">≈161&nbsp;B (5 hashes)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Returns candidate floodfill router hashes (typically 3&ndash;16 hashes, recommended maximum 16)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>DeliveryStatus</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">10</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Varies</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">12&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Receipts for tunnel tests or acknowledgements inside GarlicMessages</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>GarlicMessage</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">11</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">100 (local)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Varies</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bundles multiple message cloves (e.g., DataMessage, LeaseSets). Supports ElGamal/AES (deprecated) and ECIES-X25519-AEAD-Ratchet encryption</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>TunnelData</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">18</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">400</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1,028&nbsp;B (fixed)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Encrypted tunnel message exchanged between hops. Contains a 4-byte tunnel ID, 16-byte IV, and 1,004 bytes of encrypted data</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>TunnelGateway</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">19</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">300&ndash;400</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Varies</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Encapsulates messages at the tunnel gateway before fragmentation</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>DataMessage</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">20</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">425</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">4&ndash;62&nbsp;KB</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Carries end-to-end garlic payloads (application traffic)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>TunnelBuild</strong> <em>(deprecated)</em></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">21</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">500</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">4,224&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Requests tunnel participation from routers (8 × 528-byte records). Replaced by VariableTunnelBuild for ECIES</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>TunnelBuildReply</strong> <em>(deprecated)</em></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">22</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">300</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">4,224&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Replies to TunnelBuild with accept/reject status per hop</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>VariableTunnelBuild</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">23</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">500</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1,057&ndash;4,225&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Variable-length tunnel build for ElGamal or ECIES-X25519 routers (1&ndash;8 records, API 0.9.12+)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>VariableTunnelBuildReply</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">24</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">300</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1,057&ndash;4,225&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Replies to VariableTunnelBuild</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>ShortTunnelBuild</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">25</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">500</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">873&ndash;1,745&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Short tunnel build messages for ECIES-X25519 routers only (1&ndash;8 × 218-byte records, API 0.9.51+)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>OutboundTunnelBuildReply</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">26</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">300</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">873&ndash;1,745&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Sent from outbound endpoint to originator for ECIES-X25519 routers (API 0.9.51+)</td>
+    </tr>
+  </tbody>
+</table>
+**Vyhrazené typy zpráv:** - Typ 0: Vyhrazeno - Typy 4-9: Vyhrazeno pro budoucí použití - Typy 12-17: Vyhrazeno pro budoucí použití - Typy 224-254: Vyhrazeno pro experimentální zprávy - Typ 255: Vyhrazeno pro budoucí rozšíření
+<h3 id="poznámky-k-typům-zpráv">Poznámky k typům zpráv</h3>
+<ul>
+<li>Zprávy řídicí roviny (DatabaseLookup, TunnelBuild apod.) obvykle putují přes <strong>průzkumné tunnels</strong> (virtuální okruhy v I2P), nikoli klientské tunnels, což umožňuje nezávislé určování priority</li>
+<li>Hodnoty priorit jsou přibližné a mohou se lišit podle implementace</li>
+<li>TunnelBuild (21) a TunnelBuildReply (22) jsou zastaralé, ale stále implementované kvůli kompatibilitě s velmi dlouhými tunnels (&gt;8 skoků)</li>
+<li>Standardní priorita dat pro tunnel je 400; cokoli nad tímto je považováno za naléhavé</li>
+<li>Typická délka tunnel v dnešní síti je 3–4 skoky, takže většina sestavení tunnel používá ShortTunnelBuild (záznamy o velikosti 218 bajtů) nebo VariableTunnelBuild (záznamy o velikosti 528 bajtů)</li>
+</ul>
+<hr>
+<h2 id="šifrování-a-zapouzdřování-zpráv">Šifrování a zapouzdřování zpráv</h2>
+<p>Routers často zapouzdřují zprávy I2NP před přenosem, čímž vytvářejí více vrstev šifrování. Zpráva DeliveryStatus může být: 1. Vložená do GarlicMessage (zašifrovaná) 2. Uvnitř DataMessage 3. Uvnitř zprávy TunnelData (znovu zašifrovaná)</p>
+<p>Každý skok dešifruje pouze svou vrstvu; koncový cíl odhalí nejvnitřnější užitečná data.</p>
+<h3 id="šifrovací-algoritmy">Šifrovací algoritmy</h3>
+<p><strong>Zastaralé (postupně vyřazováno):</strong> - ElGamal/AES + SessionTags (značky relace) - ElGamal-2048 pro asymetrické šifrování - AES-256 pro symetrické šifrování - 32bajtové session tags</p>
+<p><strong>Aktuální (standard od API 0.9.48):</strong> - ECIES-X25519 + ChaCha20/Poly1305 AEAD s ratcheting forward secrecy (průběžně obnovované dopředné utajení) - rámec protokolu Noise (Noise_IK_25519_ChaChaPoly_SHA256 pro destinace) - 8bajtové značky relace (zmenšeno z 32 bajtů) - algoritmus Signal Double Ratchet pro dopředné utajení - Zavedeno ve verzi API 0.9.46 (2020) - Povinné pro všechny routers od verze API 0.9.58 (2023)</p>
+<p><strong>Budoucnost (Beta od verze 2.10.0):</strong> - Postkvantová hybridní kryptografie používající MLKEM (ML-KEM-768) v kombinaci s X25519 - Hybridní ratchet (kryptografický krokovací mechanismus) kombinující klasické i postkvantové vyjednávání klíče - Zpětně kompatibilní s ECIES-X25519 - Stane se výchozí ve vydání 2.11.0 (prosinec 2025)</p>
+<h3 id="označení-elgamal-routeru-za-zastaralý">Označení ElGamal routeru za zastaralý</h3>
+<p><strong>KRITICKÉ:</strong> ElGamal routery byly označeny jako zastaralé od verze API 0.9.58 (vydání 2.2.0, březen 2023). Jelikož doporučená minimální verze floodfill pro dotazování je nyní 0.9.58, implementace nemusejí implementovat šifrování pro ElGamal floodfill routery.</p>
+<p><strong>Nicméně:</strong> Cíle ElGamal jsou stále podporovány kvůli zpětné kompatibilitě. Klienti používající šifrování ElGamal mohou nadále komunikovat prostřednictvím ECIES routers.</p>
+<h3 id="podrobnosti-o-ecies-x25519-aead-ratchet-kryptografický-mechanismus">Podrobnosti o ECIES-X25519-AEAD-Ratchet (kryptografický mechanismus)</h3>
+<p>Toto je crypto type 4 (typ kryptografie číslo 4) v kryptografické specifikaci I2P. Poskytuje:</p>
+<p><strong>Klíčové vlastnosti:</strong> - Dopředné utajení pomocí ratcheting (nové klíče pro každou zprávu) - Snížené nároky na ukládání značek relací (8 bajtů vs. 32 bajtů) - Více typů relací (New Session, Existing Session, One-Time) - Založeno na protokolu Noise Noise_IK_25519_ChaChaPoly_SHA256 - Integrované s algoritmem Double Ratchet od Signalu</p>
+<p><strong>Kryptografická primitiva:</strong> - X25519 pro dohodu o klíči Diffie-Hellman - ChaCha20 pro proudové šifrování - Poly1305 pro autentizaci zpráv (AEAD, autentizované šifrování s přidruženými daty) - SHA-256 pro hašování - HKDF pro odvozování klíčů</p>
+<p><strong>Správa relací:</strong> - Nová relace: Počáteční spojení s použitím statického klíče cíle - Stávající relace: Následné zprávy s využitím značek relace - Jednorázová relace: Relace s jedinou zprávou pro nižší režii</p>
+<p>Viz <a href="../../../../cs/docs/specs/ecies/">Specifikace ECIES</a>
+ a <a href="../../../../cs/proposals/144-ecies-x25519-aead-ratchet/">Návrh 144</a>
+ pro úplné technické podrobnosti.</p>
+<hr>
+<h2 id="společné-struktury">Společné struktury</h2>
+<p>Následující struktury jsou součástí více zpráv I2NP. Nejedná se o úplné zprávy.</p>
+<h3 id="buildrequestrecord-záznam-požadavku-na-sestavení-elgamal">BuildRequestRecord (záznam požadavku na sestavení) (ElGamal)</h3>
+<p><strong>ZASTARALÉ.</strong> Používá se v současné síti pouze tehdy, když tunnel obsahuje ElGamal router. Viz <a href="../../../../cs/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ pro moderní formát.</p>
+<p><strong>Účel:</strong> Jeden záznam v sadě více záznamů k vyžádání vytvoření jednoho skoku v rámci tunnel.</p>
+<p><strong>Formát:</strong></p>
+<p>Zašifrováno pomocí ElGamal a AES (celkem 528 bajtů):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| encrypted data (528 bytes)            |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+</code></pre><p>ElGamalem šifrovaná struktura (528 bajtů):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| toPeer (16 bytes)                     |
++----+----+----+----+----+----+----+----+
+| ElGamal encrypted data (512 bytes)    |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+
+toPeer :: First 16 bytes of SHA-256 hash of peer&#39;s RouterIdentity
+
+encrypted_data :: ElGamal-2048 encrypted (bytes 1-256 and 258-513
+                  of the 514-byte ElGamal block, with padding bytes
+                  at positions 0 and 257 removed)
+</code></pre><p>Struktura otevřeného textu (222 bajtů před šifrováním):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| receive_tunnel (4) | our_ident (32)   |
++----+----+----+----+                   +
+|                                       |
++                   +----+----+----+----+
+|                   | next_tunnel (4)   |
++----+----+----+----+----+----+----+----+
+| next_ident (32 bytes)                 |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| layer_key (32 bytes)                  |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| iv_key (32 bytes)                     |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| reply_key (32 bytes)                  |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| reply_iv (16 bytes)                   |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|flag| request_time (4) | send_msg_id  |
++----+----+----+----+----+----+----+----+
+     (4)                | padding (29)  |
++----+----+----+----+----+              +
+|                                       |
++                             +----+----+
+|                             |
++----+----+----+----+----+----+
+
+receive_tunnel :: TunnelId (4 bytes, nonzero)
+our_ident :: Hash (32 bytes)
+next_tunnel :: TunnelId (4 bytes, nonzero)
+next_ident :: Hash (32 bytes)
+layer_key :: SessionKey (32 bytes)
+iv_key :: SessionKey (32 bytes)
+reply_key :: SessionKey (32 bytes)
+reply_iv :: 16 bytes
+flag :: Integer (1 byte)
+request_time :: Integer (4 bytes, hours since epoch = time / 3600)
+send_message_id :: Integer (4 bytes)
+padding :: 29 bytes random data
+</code></pre><p><strong>Poznámky:</strong> - Šifrování ElGamal-2048 vytváří 514bajtový blok, ale dva vycpávkové bajty (na pozicích 0 a 257) jsou odstraněny, takže výsledkem je 512 bajtů - Viz <a href="../../../../cs/docs/specs/implementation/">Specifikace vytváření Tunnelu</a>
+ pro podrobnosti o polích - Zdrojový kód: <code>net.i2p.data.i2np.BuildRequestRecord</code> - Konstanta: <code>EncryptedBuildRecord.RECORD_SIZE = 528</code></p>
+<h3 id="buildrequestrecord-ecies-x25519-dlouhý">BuildRequestRecord (ECIES-X25519 dlouhý)</h3>
+<p>Pro ECIES-X25519 routers, uvedené ve verzi API 0.9.48. Používá 528 bajtů pro zpětnou kompatibilitu se smíšenými tunnels.</p>
+<p><strong>Formát:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| toPeer (16 bytes)                     |
++----+----+----+----+----+----+----+----+
+| ephemeral_key (32 bytes)              |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| ChaCha20 encrypted data (464 bytes)   |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Poly1305 MAC (16 bytes)               |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+
+toPeer :: First 16 bytes of SHA-256 hash of peer&#39;s RouterIdentity
+ephemeral_key :: X25519 ephemeral public key (32 bytes)
+encrypted_data :: ChaCha20 encrypted (464 bytes)
+mac :: Poly1305 message authentication code (16 bytes)
+</code></pre><p><strong>Celková velikost:</strong> 528 bajtů (stejná jako u ElGamalu kvůli kompatibilitě)</p>
+<p>Viz <a href="../../../../cs/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ pro podrobnosti o struktuře nešifrovaných dat a šifrování.</p>
+<h3 id="buildrequestrecord-ecies-x25519-short-záznam-požadavku-na-sestavení">BuildRequestRecord (ECIES-X25519 Short) (záznam požadavku na sestavení)</h3>
+<p>Pouze pro ECIES-X25519 routers, od verze API 0.9.51 (vydání 1.5.0). Toto je aktuální standardní formát.</p>
+<p><strong>Formát:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| toPeer (16 bytes)                     |
++----+----+----+----+----+----+----+----+
+| ephemeral_key (32 bytes)              |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| ChaCha20 encrypted data (154 bytes)   |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Poly1305 MAC (16 bytes)               |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+
+toPeer :: First 16 bytes of SHA-256 hash of peer&#39;s RouterIdentity
+ephemeral_key :: X25519 ephemeral public key (32 bytes)
+encrypted_data :: ChaCha20 encrypted (154 bytes)
+mac :: Poly1305 message authentication code (16 bytes)
+</code></pre><p><strong>Celková velikost:</strong> 218 bajtů (snížení o 59 % oproti 528 bajtům)</p>
+<p><strong>Klíčový rozdíl:</strong> Krátké záznamy odvozují VŠECHNY klíče pomocí HKDF (funkce pro odvozování klíčů), místo aby je do záznamu explicitně zahrnovaly. To zahrnuje: - Klíče vrstvy (pro šifrování tunnelu) - IV klíče (pro šifrování tunnelu) - Reply klíče (pro build reply) - Reply IVs (pro build reply)</p>
+<p>Všechny klíče jsou odvozeny pomocí mechanismu HKDF protokolu Noise na základě sdíleného tajemství z výměny klíčů X25519.</p>
+<p><strong>Výhody:</strong> - 4 krátké záznamy se vejdou do jedné zprávy pro tunnel (873 bajtů) - 3 zprávové tunnel builds (sestavení tunnelu) místo samostatných zpráv pro každý záznam - Snížené nároky na šířku pásma a latenci - Stejné bezpečnostní vlastnosti jako dlouhý formát</p>
+<p>Viz <a href="../../../../cs/proposals/157-new-tbm/">Návrh 157</a>
+ pro odůvodnění a <a href="../../../../cs/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ pro úplnou specifikaci.</p>
+<p><strong>Zdrojový kód:</strong> - <code>net.i2p.data.i2np.ShortEncryptedBuildRecord</code> - Konstanta: <code>ShortEncryptedBuildRecord.RECORD_SIZE = 218</code></p>
+<h3 id="buildresponserecord-elgamal-záznam-odpovědi-pro-sestavení">BuildResponseRecord (ElGamal) (záznam odpovědi pro sestavení)</h3>
+<p><strong>ZASTARALÉ.</strong> Používá se pouze, pokud tunnel obsahuje ElGamal router.</p>
+<p><strong>Účel:</strong> Jeden záznam v sadě více záznamů obsahujících odpovědi na požadavek na sestavení.</p>
+<p><strong>Formát:</strong></p>
+<p>Šifrované (528 bajtů, stejná velikost jako BuildRequestRecord (záznam požadavku na sestavení tunnelu)):</p>
+<pre tabindex="0"><code>bytes 0-527 :: AES-encrypted record
+</code></pre><p>Nešifrovaná struktura:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| SHA-256 hash (32 bytes)               |
++                                       +
+|        (hash of bytes 32-527)         |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| random data (495 bytes)               |
+~                                       ~
+|                                  |ret |
++----+----+----+----+----+----+----+----+
+
+bytes 0-31 :: SHA-256 hash of bytes 32-527
+bytes 32-526 :: Random data (could be used for congestion info)
+byte 527 :: Reply code (0 = accept, 30 = reject)
+</code></pre><p><strong>Kódy odpovědí:</strong> - <code>0</code> - Přijmout - <code>30</code> - Odmítnout (kvůli překročení šířky pásma)</p>
+<p>Viz <a href="../../../../cs/docs/specs/implementation/">Tunnel Creation Specification</a>
+ pro podrobnosti o poli odpovědi.</p>
+<h3 id="buildresponserecord-záznam-odpovědi-na-sestavení-ecies-x25519">BuildResponseRecord (záznam odpovědi na sestavení) (ECIES-X25519)</h3>
+<p>Pro ECIES-X25519 routers, verze API 0.9.48+. Stejná velikost jako u odpovídajícího požadavku (528 pro dlouhý, 218 pro krátký).</p>
+<p><strong>Formát:</strong></p>
+<p>Dlouhý formát (528 bajtů):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| ChaCha20 encrypted data (512 bytes)   |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Poly1305 MAC (16 bytes)               |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+</code></pre><p>Krátký formát (218 bajtů):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| ChaCha20 encrypted data (202 bytes)   |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Poly1305 MAC (16 bytes)               |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Struktura otevřeného textu (pro oba formáty):</strong></p>
+<p>Obsahuje mapovací strukturu (formát klíč–hodnota I2P) s: - Kód stavu odpovědi (povinný) - Parametr dostupné šířky pásma (&ldquo;b&rdquo;) (volitelný, přidán v API 0.9.65) - Další volitelné parametry pro budoucí rozšíření</p>
+<p><strong>Stavové kódy odpovědi:</strong> - <code>0</code> - Úspěch - <code>30</code> - Odmítnuto: překročen limit šířky pásma</p>
+<p>Viz <a href="../../../../cs/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ pro úplnou specifikaci.</p>
+<h3 id="garlicclove-vnitřní-část-zprávy-v-rámci-garlic-encryption-elgamalaes">GarlicClove (vnitřní část zprávy v rámci garlic encryption, ElGamal/AES)</h3>
+<p><strong>UPOZORNĚNÍ:</strong> Toto je formát používaný pro garlic cloves (části garlic zpráv) uvnitř ElGamalem šifrovaných garlic messages. Formát pro ECIES-AEAD-X25519-Ratchet garlic messages a garlic cloves je výrazně odlišný. Moderní formát viz <a href="../../../../cs/docs/specs/ecies/">Specifikace ECIES</a>
+.</p>
+<p><strong>Zastaralé pro routers (API 0.9.58+), stále podporováno pro cíle.</strong></p>
+<p><strong>Formát:</strong></p>
+<p>Nešifrované:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Delivery Instructions (variable)      |
+~                                       ~
++----+----+----+----+----+----+----+----+
+| I2NP Message (variable)               |
+~                                       ~
++----+----+----+----+----+----+----+----+
+| Clove ID (4)  | Expiration (8)   |Cert|
++----+----+----+----+----+----+----+----+
+                                    (3) |
++----+----+----+----+----+----+----+----+
+
+Delivery Instructions :: Variable length (typically 1, 33, or 37 bytes)
+I2NP Message :: Any I2NP message
+Clove ID :: 4-byte Integer (random, checked for duplicates)
+Expiration :: Date (8 bytes)
+Certificate :: Always NULL (3 bytes total, all zeroes)
+</code></pre><p><strong>Poznámky:</strong> - Cloves (podzpráva v garlic routingu) se nikdy nefragmentují - Když je první bit bajtu příznaků Delivery Instructions 0, clove není šifrován - Když je první bit 1, clove je šifrován (neimplementovaná funkce) - Maximální délka je funkcí součtu délek všech clove a maximální délky GarlicMessage - Certifikát by bylo možné použít s HashCash k &ldquo;placení&rdquo; za směrování (možná budoucí funkcionalita) - V praxi používané zprávy: DataMessage, DeliveryStatusMessage, DatabaseStoreMessage - GarlicMessage může obsahovat GarlicMessage (vnořený garlic), ale to se v praxi nepoužívá</p>
+<p>Pro koncepční přehled viz <a href="../../../../cs/docs/overview/garlic-routing/">Garlic Routing</a>
+ (způsob směrování v I2P).</p>
+<h3 id="garlicclove-ecies-x25519-aead-ratchet">GarlicClove (ECIES-X25519-AEAD-Ratchet)</h3>
+<p>Pro ECIES-X25519 routers a destinace, verze API 0.9.46+. Toto je aktuální standardní formát.</p>
+<p><strong>ZÁSADNÍ ROZDÍL:</strong> ECIES garlic používá zcela odlišnou strukturu založenou na blocích protokolu Noise, nikoli na explicitních strukturách clove (podzprávy v rámci garlic v I2P).</p>
+<p><strong>Formát:</strong></p>
+<p>ECIES garlic messages (zprávy typu garlic) obsahují sérii bloků:</p>
+<pre tabindex="0"><code>Block structure:
++----+----+----+----+----+----+----+----+
+|type| length    | data ...
++----+----+----+----+----+-//-
+
+type :: 1 byte block type
+length :: 2 bytes block length
+data :: variable length data
+</code></pre><p><strong>Typy bloků:</strong> - <code>0</code> - Garlic Clove Block (blok „stroužku“ v rámci garlic encryption; obsahuje zprávu I2NP) - <code>1</code> - Blok data a času (časové razítko) - <code>2</code> - Blok možností (parametry doručení) - <code>3</code> - Vycpávkový blok - <code>254</code> - Ukončovací blok (neimplementováno)</p>
+<p><strong>Garlic Clove Block (blok stroužku v garlic encryption) (typ 0):</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|  0 | length    | Delivery Instructions |
++----+----+----+----+                    +
+~                                       ~
++----+----+----+----+----+----+----+----+
+| I2NP Message                          |
+~                                       ~
++----+----+----+----+----+----+----+----+
+| Clove ID (4)  | Expiration (4)        |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Klíčové rozdíly oproti formátu ElGamal:</strong> - Používá 4bajtové vypršení platnosti (sekundy od epochy) místo 8bajtového Date - Bez pole certificate - Zabalené do blokové struktury s typem a délkou - Celá zpráva šifrovaná pomocí ChaCha20/Poly1305 AEAD - Správa relace pomocí ratcheting (postupné posouvání klíčů)</p>
+<p>Pro úplné podrobnosti o rámci protokolu Noise a strukturách bloků viz <a href="../../../../cs/docs/specs/ecies/">specifikaci ECIES</a>
+.</p>
+<h3 id="instrukce-pro-doručení-garlic-clove-podzpráva-v-rámci-garlic-encryption">Instrukce pro doručení Garlic Clove (podzpráva v rámci garlic encryption)</h3>
+<p>Tento formát se používá pro garlic cloves (stroužky) u ElGamal i ECIES. Určuje, jak doručit obsaženou zprávu.</p>
+<p><strong>KRITICKÉ VAROVÁNÍ:</strong> Tato specifikace je určena POUZE pro Pokyny k doručení uvnitř Garlic Cloves (v I2P: jednotlivé vnořené části tzv. garlicové zprávy). &ldquo;Pokyny k doručení&rdquo; se používají také uvnitř zpráv Tunnel, kde je formát výrazně odlišný. Viz <a href="../../../../cs/docs/specs/implementation/">Specifikace zprávy Tunnel</a>
+ pro pokyny k doručení týkající se Tunnel. NEZAMĚŇUJTE tyto dva formáty.</p>
+<p><strong>Formát:</strong></p>
+<p>Klíč relace a zpoždění se nepoužívají a nikdy nejsou přítomny, takže tři možné délky jsou: - 1 bajt (LOCAL) - 33 bajtů (ROUTER a DESTINATION) - 37 bajtů (TUNNEL)</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|flag|                                  |
++----+                                  +
+|       Session Key (optional, 32)     |
++                                       +
+|                                       |
++    +----+----+----+----+--------------+
+|    |                                  |
++----+                                  +
+|       To Hash (optional, 32)         |
++                                       +
+|                                       |
++    +----+----+----+----+--------------+
+|    | Tunnel ID (4, opt)| Delay (4, opt)|
++----+----+----+----+----+----+----+----+
+
+flag :: 1 byte
+        Bit order: 76543210
+        bit 7: encrypted? (Unimplemented, always 0)
+               If 1, a 32-byte encryption session key follows
+        bits 6-5: delivery type
+               0x0 = LOCAL (0)
+               0x1 = DESTINATION (1)
+               0x2 = ROUTER (2)
+               0x3 = TUNNEL (3)
+        bit 4: delay included? (Not fully implemented, always 0)
+               If 1, four delay bytes are included
+        bits 3-0: reserved, set to 0 for compatibility
+
+Session Key :: 32 bytes (Optional, unimplemented)
+               Present if encrypt flag bit is set
+
+To Hash :: 32 bytes (Optional)
+           Present if delivery type is DESTINATION, ROUTER, or TUNNEL
+           - DESTINATION: SHA256 hash of the destination
+           - ROUTER: SHA256 hash of the router identity
+           - TUNNEL: SHA256 hash of the gateway router identity
+
+Tunnel ID :: 4 bytes (Optional)
+             Present if delivery type is TUNNEL
+             The destination tunnel ID (nonzero)
+
+Delay :: 4 bytes (Optional, unimplemented)
+         Present if delay included flag is set
+         Specifies delay in seconds
+</code></pre><p><strong>Typické délky:</strong> - LOKÁLNÍ doručení: 1 bajt (pouze příznak) - ROUTER / DESTINATION doručení: 33 bajtů (příznak + hash) - TUNNEL doručení: 37 bajtů (příznak + hash + tunnel ID)</p>
+<p><strong>Popisy typů doručení:</strong></p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Value</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">LOCAL</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deliver to the local router (this router)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">DESTINATION</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deliver to a destination (client) identified by hash</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ROUTER</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deliver to another router identified by hash</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">TUNNEL</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deliver to a tunnel gateway router</td>
+    </tr>
+  </tbody>
+</table>
+**Poznámky k implementaci:** - Šifrování klíče relace není implementováno a příznakový bit je vždy 0 - Zpoždění není plně implementováno a příznakový bit je vždy 0 - U doručení TUNNEL hash identifikuje vstupní router a tunnel ID určuje, který příchozí tunnel - U doručení DESTINATION je hash SHA-256 veřejného klíče cíle - U doručení ROUTER je hash SHA-256 identity routeru
+<hr>
+<h2 id="zprávy-i2np">Zprávy I2NP</h2>
+<p>Úplné specifikace zpráv pro všechny typy zpráv I2NP.</p>
+<h3 id="přehled-typů-zpráv">Přehled typů zpráv</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Message</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Since</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">DatabaseStore</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">DatabaseLookup</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">DatabaseSearchReply</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">DeliveryStatus</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">10</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Garlic</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">11</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">TunnelData</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">18</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">TunnelGateway</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">19</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">20</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">TunnelBuild</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">21</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">TunnelBuildReply</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">22</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">VariableTunnelBuild</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">23</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">VariableTunnelBuildReply</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">24</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">ShortTunnelBuild</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">25</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.51</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">OutboundTunnelBuildReply</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">26</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.51</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+  </tbody>
+</table>
+**Vyhrazeno:** - Typ 0: Vyhrazeno - Typy 4-9: Vyhrazeno pro budoucí použití - Typy 12-17: Vyhrazeno pro budoucí použití - Typy 224-254: Vyhrazeno pro experimentální zprávy - Typ 255: Vyhrazeno pro budoucí rozšíření
+<hr>
+<h3 id="databasestore-uložení-do-databáze-typ-1">DatabaseStore (uložení do databáze; Typ 1)</h3>
+<p><strong>Účel:</strong> Nevyžádané uložení do databáze nebo odpověď na úspěšnou zprávu DatabaseLookup.</p>
+<p><strong>Obsah:</strong> Nekomprimovaný LeaseSet, LeaseSet2, MetaLeaseSet nebo EncryptedLeaseSet, případně komprimovaný RouterInfo.</p>
+<p><strong>Formát s reply token (token pro odpověď):</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| SHA256 Hash as key (32 bytes)        |
++                                       +
+|                                       |
++                                       +
+|                                       |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|type| reply token (4)   | reply_tunnelId
++----+----+----+----+----+----+----+----+
+     (4)               | reply gateway  |
++----+----+----+----+----+              +
+|       SHA256 hash (32 bytes)          |
++                                       +
+|                                       |
++                                  +----+
+|                                  |
++----+----+----+----+----+----+----+
+| data ...
++----+-//
+
+key :: 32 bytes
+       SHA256 hash (the &#34;real&#34; hash, not routing key)
+
+type :: 1 byte
+        Type identifier
+        bit 0:
+            0 = RouterInfo
+            1 = LeaseSet or variants
+        bits 3-1: (as of 0.9.38)
+            0: RouterInfo or LeaseSet (types 0 or 1)
+            1: LeaseSet2 (type 3)
+            2: EncryptedLeaseSet (type 5)
+            3: MetaLeaseSet (type 7)
+            4-7: Unsupported, invalid
+        bits 7-4:
+            Reserved, set to 0
+
+reply token :: 4 bytes
+               If greater than zero, a DeliveryStatusMessage is
+               requested with the Message ID set to the reply token
+               A floodfill router is also expected to flood the data
+               to the closest floodfill peers
+
+reply_tunnelId :: 4 bytes (only if reply token &gt; 0)
+                  TunnelId of the inbound gateway of the tunnel
+                  for the response
+                  If 0, reply is sent directly to reply gateway
+
+reply gateway :: 32 bytes (only if reply token &gt; 0)
+                 SHA256 hash of the RouterInfo
+                 If reply_tunnelId is nonzero: inbound gateway router
+                 If reply_tunnelId is zero: router to send reply to
+
+data :: Variable length
+        If type == 0: 2-byte Integer length + gzip-compressed RouterInfo
+        If type == 1: Uncompressed LeaseSet
+        If type == 3: Uncompressed LeaseSet2
+        If type == 5: Uncompressed EncryptedLeaseSet
+        If type == 7: Uncompressed MetaLeaseSet
+</code></pre><p><strong>Formát s tokenem odpovědi == 0:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| SHA256 Hash as key (32 bytes)        |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|type|         0         | data ...
++----+----+----+----+----+-//
+</code></pre><p><strong>Poznámky:</strong> - Z bezpečnostních důvodů se pole pro odpověď ignorují, pokud je zpráva přijata přes tunnel - Klíč je „skutečný“ hash RouterIdentity nebo Destination, NE směrovací klíč - Typy 3, 5 a 7 (varianty LeaseSet2) byly přidány ve verzi 0.9.38 (API 0.9.38). Podrobnosti viz <a href="../../../../cs/proposals/123-new-netdb-entries/">Návrh 123</a>
+ - Tyto typy by se měly posílat pouze routerům s verzí API 0.9.38 nebo vyšší - Jako optimalizaci ke snížení počtu spojení, pokud je typ LeaseSet, je přiložen odpovědní token, reply tunnel ID je nenulové a dvojice reply gateway/tunnelID je v LeaseSetu nalezena jako lease (záznam v LeaseSetu), může příjemce přesměrovat odpověď na libovolný jiný lease v daném LeaseSetu - <strong>Formát RouterInfo gzip:</strong> Aby se skryl OS routeru a implementace, slaďte se s implementací Java routeru nastavením času změny na 0 a bajtu OS na 0xFF a nastavte XFL na 0x02 (maximální komprese, nejpomalejší algoritmus) dle RFC 1952. Prvních 10 bajtů: <code>1F 8B 08 00 00 00 00 00 02 FF</code></p>
+<p><strong>Zdrojový kód:</strong> - <code>net.i2p.data.i2np.DatabaseStoreMessage</code> - <code>net.i2p.data.RouterInfo</code> (pro strukturu RouterInfo) - <code>net.i2p.data.LeaseSet</code> (pro strukturu LeaseSet)</p>
+<hr>
+<h3 id="databaselookup-vyhledávání-v-databázi-typ-2">DatabaseLookup (vyhledávání v databázi) (Typ 2)</h3>
+<p><strong>Účel:</strong> Požadavek na vyhledání položky v síťové databázi (netDb). Odpovědí je buď DatabaseStore, nebo DatabaseSearchReply.</p>
+<p><strong>Formát:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| SHA256 hash as the key (32 bytes)    |
++                                       +
+|                                       |
++                                       +
+|                                       |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| SHA256 hash of the from router (32)  |
++    or reply tunnel gateway            +
+|                                       |
++                                       +
+|                                       |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|flag| reply_tunnelId (4)| size (2)|   |
++----+----+----+----+----+----+----+    +
+| SHA256 of key1 to exclude (32 bytes) |
++                                       +
+|                                       |
++                                  +----+
+|                                  |    |
++----+----+----+----+----+----+----+    +
+| SHA256 of key2 to exclude (32)       |
++                                       +
+~                                       ~
+|                                       |
++                                  +----+
+|                                  |    |
++----+----+----+----+----+----+----+    +
+|   Session key if reply encryption     |
++       requested (32 bytes)             +
+|                                       |
++                                  +----+
+|                                  |tags|
++----+----+----+----+----+----+----+----+
+|   Session tags if reply encryption    |
++       requested (variable)             +
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+
+key :: 32 bytes
+       SHA256 hash of the object to lookup
+
+from :: 32 bytes
+        If deliveryFlag == 0: SHA256 hash of RouterInfo (sender)
+        If deliveryFlag == 1: SHA256 hash of reply tunnel gateway
+
+flags :: 1 byte
+         Bit order: 76543210
+         bit 0: deliveryFlag
+             0 = send reply directly
+             1 = send reply to some tunnel
+         bit 1: encryptionFlag
+             Through 0.9.5: must be 0
+             As of 0.9.6: ignored
+             As of 0.9.7:
+                 0 = send unencrypted reply
+                 1 = send AES encrypted reply using key and tag
+         bits 3-2: lookup type flags
+             Through 0.9.5: must be 00
+             As of 0.9.6: ignored
+             As of 0.9.16:
+                 00 = ANY (deprecated, use LS or RI as of 0.9.16)
+                 01 = LS lookup (LeaseSet or variants)
+                 10 = RI lookup (RouterInfo)
+                 11 = exploration lookup (RouterInfo, non-floodfill)
+         bit 4: ECIESFlag
+             Before 0.9.46: ignored
+             As of 0.9.46:
+                 0 = send unencrypted or ElGamal reply
+                 1 = send ChaCha/Poly encrypted reply using key
+         bits 7-5:
+             Reserved, set to 0
+
+reply_tunnelId :: 4 bytes (only if deliveryFlag == 1)
+                  TunnelId of the tunnel to send reply to (nonzero)
+
+size :: 2 bytes
+        Integer (valid range: 0-512)
+        Number of peers to exclude from DatabaseSearchReply
+
+excludedPeers :: $size SHA256 hashes of 32 bytes each
+                 If lookup fails, exclude these peers from the reply
+                 If includes a hash of all zeroes, the request is
+                 exploratory (return non-floodfill routers only)
+
+reply_key :: 32 bytes (conditional, see encryption modes below)
+reply_tags :: 1 byte count + variable length tags (conditional)
+</code></pre><p><strong>Režimy šifrování odpovědí:</strong></p>
+<p><strong>POZNÁMKA:</strong> ElGamal routery jsou od API 0.9.58 označeny jako zastaralé. Jelikož je nyní doporučená minimální verze floodfill pro dotazování 0.9.58, implementace nemusejí implementovat šifrování pro ElGamal floodfill routery. ElGamal destinace jsou stále podporovány.</p>
+<p>Příznakový bit 4 (ECIESFlag) se používá v kombinaci s bitem 1 (encryptionFlag) k určení režimu šifrování odpovědi:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Flag bits 4,1</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">From</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">To Router</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Reply</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">DH?</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0 0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">No encryption</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">n/a</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">No encryption</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0 1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElG</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElG</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">AES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">No</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">As of 0.9.7, deprecated 0.9.58</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1 0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElG</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">AEAD</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">No</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">As of 0.9.46, deprecated 0.9.58</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1 0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">AEAD</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">No</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">As of 0.9.49, current standard</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1 1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElG</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">AES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Yes</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">TBD, future</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1 1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">AEAD</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Yes</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">TBD, future</td>
+    </tr>
+  </tbody>
+</table>
+**Bez šifrování (příznaky 0,0):**
+<p>reply_key, tags a reply_tags nejsou k dispozici.</p>
+<p><strong>ElG na ElG (příznaky 0,1) - ZASTARALÉ:</strong></p>
+<p>Podporováno od verze 0.9.7, zastaralé od verze 0.9.58.</p>
+<pre tabindex="0"><code>reply_key :: 32 byte SessionKey (big-endian)
+             CSRNG(32) random data
+
+tags :: 1 byte Integer (1-32, typically 1)
+        Number of reply tags that follow
+
+reply_tags :: One or more 32-byte SessionTags
+              Each is CSRNG(32) random data
+</code></pre><p><strong>ECIES na ElG (příznaky 1,0) - ZASTARALÉ:</strong></p>
+<p>Podporováno od verze 0.9.46, zastaralé od verze 0.9.58.</p>
+<pre tabindex="0"><code>reply_key :: 32 byte ECIES SessionKey (big-endian)
+             CSRNG(32) random data
+
+tags :: 1 byte Integer (required value: 1)
+        Number of reply tags that follow
+
+reply_tags :: One 8-byte ECIES SessionTag
+              CSRNG(8) random data
+</code></pre><p>Odpověď je zpráva ECIES Existing Session (zpráva pro existující relaci), jak je definována ve <a href="../../../../cs/docs/specs/ecies/">Specifikaci ECIES</a>
+:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Session Tag (8 bytes)                 |
++----+----+----+----+----+----+----+----+
+| ChaCha20 encrypted payload            |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Poly1305 MAC (16 bytes)               |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+
+tag :: 8 byte reply_tag
+k :: 32 byte session key (the reply_key)
+n :: 0 (nonce)
+ad :: The 8 byte reply_tag
+payload :: Plaintext data (DSM or DSRM)
+ciphertext = ENCRYPT(k, n, payload, ad)
+</code></pre><p><strong>ECIES (šifrovací schéma založené na eliptických křivkách) na ECIES (příznaky 1,0) - AKTUÁLNÍ STANDARD:</strong></p>
+<p>ECIES destinace nebo router odešle požadavek na vyhledání k ECIES routeru. Podporováno od verze 0.9.49.</p>
+<p>Stejný formát jako &ldquo;ECIES to ElG&rdquo; výše. Šifrování vyhledávací zprávy je specifikováno v <a href="../../../../cs/docs/specs/ecies/#routers">ECIES Routers</a>
+. Žadatel je anonymní.</p>
+<p><strong>ECIES (integrované šifrování na eliptických křivkách) na ECIES s DH (výměna klíčů Diffie–Hellman) (příznaky 1,1) - BUDOUCNOST:</strong></p>
+<p>Zatím není plně definováno. Viz <a href="../../../../cs/proposals/156-ecies-routers/">Návrh 156</a>
+.</p>
+<p><strong>Poznámky:</strong> - Před verzí 0.9.16 mohl klíč patřit k RouterInfo nebo LeaseSet (stejný prostor klíčů, bez příznaku k rozlišení) - Šifrované odpovědi jsou užitečné pouze tehdy, když odpověď jde přes tunnel - Počet zahrnutých tagů může být více než jeden, pokud jsou implementovány alternativní strategie vyhledávání v DHT (distribuovaná hašovací tabulka) - Vyhledávací klíč a vylučovací klíče jsou &ldquo;skutečné&rdquo; hashe, NIKOLI směrovací klíče - Typy 3, 5 a 7 (varianty LeaseSet2) mohou být od verze 0.9.38 vráceny. Viz <a href="../../../../cs/proposals/123-new-netdb-entries/">Návrh 123</a>
+ - <strong>Poznámky k průzkumnému vyhledávání:</strong> Průzkumné vyhledávání je definováno tak, že vrací seznam ne-floodfill hashů blízkých danému klíči. Implementace se však liší: Java skutečně vyhledá hledaný klíč pro RI (RouterInfo) a vrátí DatabaseStore (záznam v netDb), pokud existuje; i2pd nikoli. Proto se nedoporučuje používat průzkumné vyhledávání pro dříve přijaté hashe</p>
+<p><strong>Zdrojový kód:</strong> - <code>net.i2p.data.i2np.DatabaseLookupMessage</code> - Šifrování: <code>net.i2p.crypto.SessionKeyManager</code></p>
+<hr>
+<h3 id="databasesearchreply-typ-3">DatabaseSearchReply (Typ 3)</h3>
+<p><strong>Účel:</strong> Odpověď na neúspěšnou zprávu DatabaseLookup (dotaz do databáze).</p>
+<p><strong>Obsah:</strong> Seznam router hashů nejbližších k požadovanému klíči.</p>
+<p><strong>Formát:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| SHA256 hash as query key (32 bytes)  |
++                                       +
+|                                       |
++                                       +
+|                                       |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| num| peer_hashes (variable)           |
++----+                                  +
+|                                       |
+~                                       ~
+|                                       |
++    +----+----+----+----+----+----+----+
+|    | from (32 bytes)                  |
++----+                                  +
+|                                       |
++                                       +
+|                                       |
++                                       +
+|                                       |
++    +----+----+----+----+----+----+----+
+|    |
++----+
+
+key :: 32 bytes
+       SHA256 of the object being searched
+
+num :: 1 byte Integer
+       Number of peer hashes that follow (0-255)
+
+peer_hashes :: $num SHA256 hashes of 32 bytes each (total $num*32 bytes)
+               SHA256 of the RouterIdentity that the sender thinks is
+               close to the key
+
+from :: 32 bytes
+        SHA256 of the RouterInfo of the router this reply was sent from
+</code></pre><p><strong>Zdrojový kód:</strong> - <code>net.i2p.data.i2np.DatabaseSearchReplyMessage</code></p>
+<hr>
+<h3 id="deliverystatus-stav-doručení-typ-10">DeliveryStatus (stav doručení, typ 10)</h3>
+<p><strong>Účel:</strong> Jednoduché potvrzení přijetí zprávy. Toto potvrzení obvykle vytváří odesílatel zprávy a spolu se samotnou zprávou je zabaleno do Garlic Message (speciální typ zprávy v I2P), aby je příjemce vrátil.</p>
+<p><strong>Obsah:</strong> ID doručené zprávy a čas vytvoření nebo přijetí.</p>
+<p><strong>Formát:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+----+----+----+----+
+| msg_id (4)            | time_stamp (8)                    |
++----+----+----+----+----+----+----+----+----+----+----+----+
+
+msg_id :: Integer (4 bytes)
+          Unique ID of the message we deliver the DeliveryStatus for
+          (see I2NP Message Header for details)
+
+time_stamp :: Date (8 bytes)
+              Time the message was successfully created or delivered
+</code></pre><p><strong>Poznámky:</strong> - Časové razítko je vždy nastaveno tvůrcem na aktuální čas. V kódu však existuje několik použití a v budoucnu mohou přibýt další - Tato zpráva se také používá jako potvrzení o navázání relace v SSU. V tomto případě je ID zprávy nastaveno na náhodné číslo a &ldquo;arrival time&rdquo; je nastaven na aktuální síťové ID platné pro celou síť, které je 2 (tj., <code>0x0000000000000002</code>) - DeliveryStatus (zpráva potvrzení doručení) se obvykle zapouzdřuje do GarlicMessage a posílá se přes tunnel, aby poskytla potvrzení bez odhalení odesílatele - Používá se pro testování tunnel k měření latence a spolehlivosti</p>
+<p><strong>Zdrojový kód:</strong> - <code>net.i2p.data.i2np.DeliveryStatusMessage</code> - Použito v: <code>net.i2p.router.tunnel.InboundEndpointProcessor</code> pro testování tunnelu</p>
+<hr>
+<h3 id="garlicmessage-typ-11">GarlicMessage (Typ 11)</h3>
+<p><strong>UPOZORNĚNÍ:</strong> Toto je formát používaný pro garlic messages (zprávy typu garlic) šifrované pomocí ElGamalu. Formát pro ECIES-AEAD-X25519-Ratchet garlic messages je výrazně odlišný. Podívejte se na <a href="../../../../cs/docs/specs/ecies/">ECIES Specification</a>
+ pro moderní formát.</p>
+<p><strong>Účel:</strong> Slouží k zapouzdření více šifrovaných zpráv I2NP.</p>
+<p><strong>Obsah:</strong> Po dešifrování se jedná o sérii Garlic Cloves (jednotlivé části garlic zprávy) a doplňkových dat, která se také nazývá Clove Set (sada těchto částí).</p>
+<p><strong>Šifrovaný formát:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| length (4)            | data          |
++----+----+----+----+----+              +
+|                                       |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+
+length :: 4 byte Integer
+          Number of bytes that follow (0 to 64 KB)
+
+data :: $length bytes
+        ElGamal encrypted data
+</code></pre><p><strong>Dešifrovaná data (Clove Set – sada dílčích zpráv):</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| num| clove 1 (variable)               |
++----+                                  +
+|                                       |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| clove 2 (variable)                    |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Certificate (3) | Message_ID (4)  |
++----+----+----+----+----+----+----+----+
+    Expiration (8)                  |
++----+----+----+----+----+----+----+----+
+
+num :: 1 byte Integer
+       Number of GarlicCloves to follow
+
+clove :: GarlicClove (see GarlicClove structure above)
+
+Certificate :: Always NULL (3 bytes total, all zeroes)
+
+Message_ID :: 4 byte Integer
+
+Expiration :: Date (8 bytes)
+</code></pre><p><strong>Pro formát ECIES-X25519-AEAD-Ratchet (aktuální standard pro routers):</strong></p>
+<p>Viz <a href="../../../../cs/docs/specs/ecies/">Specifikaci ECIES</a>
+ a <a href="../../../../cs/proposals/144-ecies-x25519-aead-ratchet/">Návrh 144</a>
+.</p>
+<p><strong>Zdrojový kód:</strong> - <code>net.i2p.data.i2np.GarlicMessage</code> - Šifrování: <code>net.i2p.crypto.elgamal.ElGamalAESEngine</code> (zastaralé) - Moderní šifrování: <code>net.i2p.crypto.ECIES</code> balíčky</p>
+<hr>
+<h3 id="tunneldata-typ-18">TunnelData (Typ 18)</h3>
+<p><strong>Účel:</strong> Zpráva odeslaná ze vstupní brány nebo účastníka tunnelu k dalšímu účastníkovi nebo koncovému bodu. Data mají pevnou délku a obsahují zprávy I2NP, které jsou fragmentované, sdružované do dávek, doplněné vycpávkou a šifrované.</p>
+<p><strong>Formát:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| tunnelID (4)          | data (1024)   |
++----+----+----+----+----+              +
+|                                       |
+~                                       ~
+|                                       |
++                   +----+----+----+----+
+|                   |
++----+----+----+----+
+
+tunnelId :: 4 bytes
+            TunnelId identifying the tunnel this message is directed at
+            Nonzero
+
+data :: 1024 bytes
+        Payload data, fixed to 1024 bytes
+</code></pre><p><strong>Struktura užitečných dat (1024 bajtů):</strong></p>
+<pre tabindex="0"><code>Bytes 0-15: Initialization Vector (IV) for AES encryption
+Bytes 16-1023: Encrypted tunnel message data (1008 bytes)
+</code></pre><p><strong>Poznámky:</strong> - ID zprávy I2NP pro TunnelData je na každém skoku nastaveno na nové náhodné číslo - Formát zprávy tunnel (uvnitř šifrovaných dat) je specifikován v <a href="../../../../cs/docs/specs/implementation/">Specifikaci zprávy tunnel</a>
+ - Každý skok dešifruje jednu vrstvu pomocí AES-256 v režimu CBC - IV se na každém skoku aktualizuje pomocí dešifrovaných dat - Celková velikost je přesně 1,028 bajtů (4 tunnelId + 1024 data) - Toto je základní jednotka provozu v tunnel - Zprávy TunnelData přenášejí fragmentované zprávy I2NP (GarlicMessage, DatabaseStore atd.)</p>
+<p><strong>Zdrojový kód:</strong> - <code>net.i2p.data.i2np.TunnelDataMessage</code> - Konstanta: <code>TunnelDataMessage.DATA_LENGTH = 1024</code> - Zpracování: <code>net.i2p.router.tunnel.InboundGatewayProcessor</code></p>
+<hr>
+<h3 id="tunnelgateway-typ-19">TunnelGateway (Typ 19)</h3>
+<p><strong>Účel:</strong> Zapouzdřuje další zprávu I2NP, která má být odeslána do tunnelu na jeho vstupní bráně.</p>
+<p><strong>Formát:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+-//
+| tunnelId (4)          | length (2)| data...
++----+----+----+----+----+----+----+-//
+
+tunnelId :: 4 bytes
+            TunnelId identifying the tunnel this message is directed at
+            Nonzero
+
+length :: 2 byte Integer
+          Length of the payload
+
+data :: $length bytes
+        Actual payload of this message
+</code></pre><p><strong>Poznámky:</strong> - Užitečná data jsou zpráva I2NP se standardní 16bajtovou hlavičkou - Používá se k vkládání zpráv do tunnels z místního routeru - Brána podle potřeby fragmentuje vloženou zprávu - Po fragmentaci jsou fragmenty zapouzdřeny do zpráv TunnelData - TunnelGateway se nikdy neposílá po síti; jde o interní typ zprávy používaný před zpracováním tunnelu</p>
+<p><strong>Zdrojový kód:</strong> - <code>net.i2p.data.i2np.TunnelGatewayMessage</code> - Zpracování: <code>net.i2p.router.tunnel.OutboundGatewayProcessor</code></p>
+<hr>
+<h3 id="datamessage-typ-20">DataMessage (typ 20)</h3>
+<p><strong>Účel:</strong> Používá se v Garlic Messages (struktura zpráv v I2P) a Garlic Cloves (vložené podzprávy v rámci Garlic Messages) k zapouzdření libovolných dat (typicky end-to-end šifrovaných aplikačních dat).</p>
+<p><strong>Formát:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+-//-+
+| length (4)            | data...    |
++----+----+----+----+----+----+-//-+
+
+length :: 4 bytes
+          Length of the payload
+
+data :: $length bytes
+        Actual payload of this message
+</code></pre><p><strong>Poznámky:</strong> - Tato zpráva neobsahuje žádné směrovací informace a nikdy nebude odeslána &ldquo;neobalená&rdquo; - Používá se pouze uvnitř Garlic messages (garlic zprávy) - Typicky obsahuje end-to-end šifrovaná aplikační data (HTTP, IRC, email atd.) - Data jsou obvykle šifrována pomocí ElGamal/AES nebo ECIES - Maximální praktická délka je přibližně 61,2 KB kvůli omezením fragmentace zpráv v tunnelu</p>
+<p><strong>Zdrojový kód:</strong> - <code>net.i2p.data.i2np.DataMessage</code></p>
+<hr>
+<h3 id="tunnelbuild-typ-21">TunnelBuild (typ 21)</h3>
+<p><strong>ZASTARALÉ.</strong> Použijte VariableTunnelBuild (typ 23) nebo ShortTunnelBuild (typ 25).</p>
+<p><strong>Účel:</strong> Požadavek na sestavení tunnelu pevné délky pro 8 skoků.</p>
+<p><strong>Formát:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Record 0 (528 bytes)                  |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Record 1 (528 bytes)                  |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Record 7 (528 bytes)                  |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+
+Just 8 BuildRequestRecords attached together
+Record size: 528 bytes
+Total size: 8 × 528 = 4,224 bytes
+</code></pre><p><strong>Zdrojový kód:</strong> - <code>net.i2p.data.i2np.TunnelBuildMessage</code> - Konstanta: <code>TunnelBuildMessageBase.MAX_RECORD_COUNT = 8</code></p>
+<hr>
+<h3 id="tunnelbuildreply-typ-22">TunnelBuildReply (Typ 22)</h3>
+<p><strong>ZASTARALÉ.</strong> Použijte VariableTunnelBuildReply (typ 24) nebo OutboundTunnelBuildReply (typ 26).</p>
+<p><strong>Účel:</strong> Odpověď pro sestavení tunnelu s pevnou délkou pro 8 skoků.</p>
+<p><strong>Formát:</strong></p>
+<p>Stejný formát jako u TunnelBuildMessage, s BuildResponseRecords namísto BuildRequestRecords.</p>
+<pre tabindex="0"><code>Total size: 8 × 528 = 4,224 bytes
+</code></pre><p><strong>Poznámky:</strong> - Od verze 0.9.48 může obsahovat ECIES-X25519 BuildResponseRecords (záznamy odpovědí pro sestavení pomocí ECIES-X25519). Viz <a href="../../../../cs/docs/specs/implementation/">Vytváření ECIES tunnelu</a>
+ - Podrobnosti viz <a href="../../../../cs/docs/specs/implementation/">Specifikace vytváření tunnelu</a>
+ - ID zprávy I2NP pro tuto zprávu musí být nastaveno podle specifikace vytváření tunnelu - Ačkoli se v dnešní síti vyskytuje zřídka (nahrazeno VariableTunnelBuildReply), může být stále použito pro velmi dlouhé tunnely a nebylo formálně označeno jako zastaralé - Routers to stále musí implementovat kvůli kompatibilitě</p>
+<p><strong>Zdrojový kód:</strong> - <code>net.i2p.data.i2np.TunnelBuildReplyMessage</code></p>
+<hr>
+<h3 id="variabletunnelbuild-typ-23">VariableTunnelBuild (Typ 23)</h3>
+<p><strong>Účel:</strong> Sestavení tunnelu s proměnnou délkou pro 1-8 skoků. Podporuje jak routery ElGamal, tak ECIES-X25519.</p>
+<p><strong>Formát:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| num| BuildRequestRecords (variable)   |
++----+----+----+----+----+----+----+----+
+
+num :: 1 byte Integer
+       Valid values: 1-8
+
+BuildRequestRecords :: $num records of 528 bytes each
+
+Record size: 528 bytes
+Total size: 1 + ($num × 528) bytes
+</code></pre><p><strong>Poznámky:</strong> - Od verze 0.9.48 může obsahovat ECIES-X25519 (schéma ECIES s křivkou X25519) BuildRequestRecords (záznamy požadavku na sestavení). Viz <a href="../../../../cs/docs/specs/implementation/">Vytváření ECIES tunnelů</a>
+ - Zavedeno ve verzi routeru 0.7.12 (2009) - Nemá být posíláno účastníkům tunnelu s verzí starší než 0.7.12 - Podrobnosti viz <a href="../../../../cs/docs/specs/implementation/">Specifikace vytváření tunnelů</a>
+ - ID zprávy I2NP musí být nastaveno podle specifikace vytváření tunnelu - <strong>Obvyklý počet záznamů:</strong> 4 (pro 4-hopový tunnel) - <strong>Obvyklá celková velikost:</strong> 1 + (4 × 528) = 2,113 bajtů - Toto je standardní zpráva pro sestavení tunnelu pro ElGamal routery - ECIES routery obvykle místo toho používají ShortTunnelBuild (zpráva pro krátkou výstavbu tunnelu; typ 25)</p>
+<p><strong>Zdrojový kód:</strong> - <code>net.i2p.data.i2np.VariableTunnelBuildMessage</code></p>
+<hr>
+<h3 id="variabletunnelbuildreply-typ-24">VariableTunnelBuildReply (Typ 24)</h3>
+<p><strong>Účel:</strong> Odpověď na sestavení tunnel s proměnnou délkou pro 1-8 skoků. Podporuje jak ElGamal, tak ECIES-X25519 routers.</p>
+<p><strong>Formát:</strong></p>
+<p>Stejný formát jako VariableTunnelBuildMessage, s BuildResponseRecords namísto BuildRequestRecords.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| num| BuildResponseRecords (variable)  |
++----+----+----+----+----+----+----+----+
+
+num :: 1 byte Integer
+       Valid values: 1-8
+
+BuildResponseRecords :: $num records of 528 bytes each
+
+Record size: 528 bytes
+Total size: 1 + ($num × 528) bytes
+</code></pre><p><strong>Poznámky:</strong> - Od verze 0.9.48 může obsahovat ECIES-X25519 BuildResponseRecords. Viz <a href="../../../../cs/docs/specs/implementation/">Vytváření tunnelu ECIES</a>
+ - Zavedeno ve verzi routeru 0.7.12 (2009) - Nesmí být odesíláno účastníkům tunnelu s verzí starší než 0.7.12 - Podrobnosti viz <a href="../../../../cs/docs/specs/implementation/">Specifikace vytváření tunnelu</a>
+ - ID zprávy I2NP musí být nastaveno podle specifikace vytváření tunnelu - <strong>Typický počet záznamů:</strong> 4 - <strong>Typická celková velikost:</strong> 2,113 bajtů</p>
+<p><strong>Zdrojový kód:</strong> - <code>net.i2p.data.i2np.VariableTunnelBuildReplyMessage</code></p>
+<hr>
+<h3 id="shorttunnelbuild-typ-25">ShortTunnelBuild (Typ 25)</h3>
+<p><strong>Účel:</strong> Krátké zprávy pro sestavení tunnelů pouze pro ECIES-X25519 routers. Zavedeno ve verzi API 0.9.51 (vydání 1.5.0, srpen 2021). Toto je aktuální standard pro ECIES sestavování tunnelů.</p>
+<p><strong>Formát:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| num| ShortBuildRequestRecords (var)   |
++----+----+----+----+----+----+----+----+
+
+num :: 1 byte Integer
+       Valid values: 1-8
+
+ShortBuildRequestRecords :: $num records of 218 bytes each
+
+Record size: 218 bytes
+Total size: 1 + ($num × 218) bytes
+</code></pre><p><strong>Poznámky:</strong> - Zavedeno ve verzi routeru 0.9.51 (vydání 1.5.0, srpen 2021) - Nesmí být odesíláno účastníkům tunnelu dříve než od verze API 0.9.51 - Viz <a href="../../../../cs/docs/specs/implementation/">Vytváření ECIES Tunnel</a>
+ pro úplnou specifikaci - Viz <a href="../../../../cs/proposals/157-new-tbm/">Návrh 157</a>
+ pro zdůvodnění - <strong>Typický počet záznamů:</strong> 4 - <strong>Typická celková velikost:</strong> 1 + (4 × 218) = 873 bajtů - <strong>Úspora šířky pásma:</strong> o 59% menší než VariableTunnelBuild (873 vs 2,113 bajtů) - <strong>Výkonnostní přínos:</strong> 4 krátké záznamy se vejdou do jedné tunnel zprávy; VariableTunnelBuild vyžaduje 3 tunnel zprávy - Toto je nyní standardní formát sestavení tunnelu pro čisté ECIES-X25519 tunnely - Záznamy odvozují klíče pomocí HKDF místo jejich explicitního zahrnutí</p>
+<p><strong>Zdrojový kód:</strong> - <code>net.i2p.data.i2np.ShortTunnelBuildMessage</code> - Konstanta: <code>ShortEncryptedBuildRecord.RECORD_SIZE = 218</code></p>
+<hr>
+<h3 id="outboundtunnelbuildreply-typ-26">OutboundTunnelBuildReply (Typ 26)</h3>
+<p><strong>Účel:</strong> Odesláno z výstupního koncového bodu nového tunnel iniciátorovi. Pouze pro ECIES-X25519 routers. Zavedeno v API verzi 0.9.51 (vydání 1.5.0, srpen 2021).</p>
+<p><strong>Formát:</strong></p>
+<p>Stejný formát jako ShortTunnelBuildMessage, s ShortBuildResponseRecords namísto ShortBuildRequestRecords.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| num| ShortBuildResponseRecords (var)  |
++----+----+----+----+----+----+----+----+
+
+num :: 1 byte Integer
+       Valid values: 1-8
+
+ShortBuildResponseRecords :: $num records of 218 bytes each
+
+Record size: 218 bytes
+Total size: 1 + ($num × 218) bytes
+</code></pre><p><strong>Poznámky:</strong> - Zavedeno ve verzi router 0.9.51 (vydání 1.5.0, srpen 2021) - Viz <a href="../../../../cs/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ pro úplnou specifikaci - <strong>Typický počet záznamů:</strong> 4 - <strong>Typická celková velikost:</strong> 873 bajtů - Tato odpověď je odeslána z odchozího koncového bodu (OBEP) zpět k tvůrci tunnel přes nově vytvořený odchozí tunnel - Poskytuje potvrzení, že všechny skoky přijaly sestavení tunnel</p>
+<p><strong>Zdrojový kód:</strong> - <code>net.i2p.data.i2np.OutboundTunnelBuildReplyMessage</code></p>
+<hr>
+<h2 id="reference">Reference</h2>
+<h3 id="oficiální-specifikace">Oficiální specifikace</h3>
+<ul>
+<li><strong><a href="../../../../cs/docs/specs/i2np/">Specifikace I2NP</a>
+</strong> - Kompletní specifikace formátu zpráv I2NP</li>
+<li><strong><a href="../../../../cs/docs/specs/common-structures/">Společné struktury</a>
+</strong> - Datové typy a struktury používané napříč I2P</li>
+<li><strong><a href="../../../../cs/docs/specs/implementation/">Vytváření tunnel</a>
+</strong> - Vytváření tunnel pomocí ElGamal (zastaralé)</li>
+<li><strong><a href="../../../../cs/docs/specs/implementation/">Vytváření tunnel ECIES</a>
+</strong> - Vytváření tunnel s ECIES-X25519 (aktuální)</li>
+<li><strong><a href="../../../../cs/docs/specs/implementation/">Zpráva pro tunnel</a>
+</strong> - Formát zprávy pro tunnel a pokyny k doručení</li>
+<li><strong><a href="../../../../cs/docs/specs/ntcp2/">Specifikace NTCP2</a>
+</strong> - Transportní protokol TCP</li>
+<li><strong><a href="../../../../cs/docs/specs/ssu2/">Specifikace SSU2</a>
+</strong> - Transportní protokol UDP</li>
+<li><strong><a href="../../../../cs/docs/specs/ecies/">Specifikace ECIES</a>
+</strong> - Šifrování ECIES-X25519-AEAD-Ratchet (krokovací mechanismus)</li>
+<li><strong><a href="../../../../cs/docs/specs/cryptography/">Specifikace kryptografie</a>
+</strong> - Nízkoúrovňová kryptografická primitiva</li>
+<li><strong><a href="../../../../cs/docs/specs/i2cp/">Specifikace I2CP</a>
+</strong> - Specifikace klientského protokolu</li>
+<li><strong><a href="../../../../cs/docs/api/datagrams/">Specifikace datagramů</a>
+</strong> - Formáty Datagram2 a Datagram3</li>
+</ul>
+<h3 id="návrhy">Návrhy</h3>
+<ul>
+<li><strong><a href="../../../../cs/proposals/123-new-netdb-entries/">Návrh 123</a>
+</strong> - Nové záznamy netDB (LeaseSet2, EncryptedLeaseSet, MetaLeaseSet)</li>
+<li><strong><a href="../../../../cs/proposals/144-ecies-x25519-aead-ratchet/">Návrh 144</a>
+</strong> - Šifrování ECIES-X25519-AEAD-Ratchet</li>
+<li><strong><a href="../../../../cs/proposals/154-ecies-lookups/">Návrh 154</a>
+</strong> - Šifrované vyhledávání v databázi</li>
+<li><strong><a href="../../../../cs/proposals/156-ecies-routers/">Návrh 156</a>
+</strong> - ECIES routery</li>
+<li><strong><a href="../../../../cs/proposals/157-new-tbm/">Návrh 157</a>
+</strong> - Menší zprávy pro sestavení tunnel (krátký formát)</li>
+<li><strong><a href="../../../../cs/proposals/159-ssu2/">Návrh 159</a>
+</strong> - Transport SSU2</li>
+<li><strong><a href="../../../../cs/proposals/161-ri-dest-padding/">Návrh 161</a>
+</strong> - Komprimovatelná výplň</li>
+<li><strong><a href="../../../../cs/proposals/163-datagram2/">Návrh 163</a>
+</strong> - Datagram2 a Datagram3</li>
+<li><strong><a href="../../../../cs/proposals/167-service-records/">Návrh 167</a>
+</strong> - Parametry záznamu služby LeaseSet</li>
+<li><strong><a href="../../../../cs/proposals/168-tunnel-bandwidth/">Návrh 168</a>
+</strong> - Parametry šířky pásma pro sestavení tunnel</li>
+<li><strong><a href="../../../../cs/proposals/169-pq-crypto/">Návrh 169</a>
+</strong> - Postkvantová hybridní kryptografie</li>
+</ul>
+<h3 id="dokumentace">Dokumentace</h3>
+<ul>
+<li><strong><a href="../../../../cs/docs/overview/garlic-routing/">Garlic Routing</a>
+</strong> - Vrstvené seskupování zpráv</li>
+<li><strong><a href="../../../../cs/docs/legacy/elgamal-aes/">ElGamal/AES</a>
+</strong> - Zastaralé šifrovací schéma</li>
+<li><strong><a href="../../../../cs/docs/specs/implementation/">Implementace tunnelu</a>
+</strong> - Fragmentace a zpracování</li>
+<li><strong><a href="../../../../cs/docs/specs/common-structures/">Síťová databáze</a>
+</strong> - Distribuovaná hašovací tabulka</li>
+<li><strong><a href="../../../../cs/docs/specs/ntcp2/">Transport NTCP2</a>
+</strong> - Specifikace transportu TCP</li>
+<li><strong><a href="../../../../cs/docs/specs/ssu2/">Transport SSU2</a>
+</strong> - Specifikace transportu UDP</li>
+<li><strong><a href="../../../../cs/docs/overview/tech-intro/">Technický úvod</a>
+</strong> - Přehled architektury I2P</li>
+</ul>
+<h3 id="zdrojový-kód">Zdrojový kód</h3>
+<ul>
+<li><strong><a href="https://i2pgit.org/I2P_Developers/i2p.i2p">Repozitář Java I2P</a>
+</strong> - Oficiální implementace v jazyce Java</li>
+<li><strong><a href="https://github.com/i2p/i2p.i2p">Zrcadlo na GitHubu</a>
+</strong> - GitHubové zrcadlo Java I2P</li>
+<li><strong><a href="https://github.com/PurpleI2P/i2pd">Repozitář i2pd</a>
+</strong> - Implementace v C++</li>
+</ul>
+<h3 id="klíčová-umístění-zdrojového-kódu">Klíčová umístění zdrojového kódu</h3>
+<p><strong>Java I2P (i2pgit.org/I2P_Developers/i2p.i2p):</strong> - <code>core/java/src/net/i2p/data/i2np/</code> - implementace zpráv I2NP - <code>core/java/src/net/i2p/crypto/</code> - kryptografické implementace - <code>router/java/src/net/i2p/router/tunnel/</code> - zpracování tunnelu - <code>router/java/src/net/i2p/router/transport/</code> - implementace transportu</p>
+<p><strong>Konstanty a hodnoty:</strong> - <code>I2NPMessage.MAX_SIZE = 65536</code> - Maximální velikost zprávy I2NP - <code>I2NPMessageImpl.HEADER_LENGTH = 16</code> - Standardní velikost hlavičky - <code>TunnelDataMessage.DATA_LENGTH = 1024</code> - Užitečná data zprávy Tunnel - <code>EncryptedBuildRecord.RECORD_SIZE = 528</code> - Dlouhý záznam sestavení - <code>ShortEncryptedBuildRecord.RECORD_SIZE = 218</code> - Krátký záznam sestavení - <code>TunnelBuildMessageBase.MAX_RECORD_COUNT = 8</code> - Max. počet záznamů na jedno sestavení</p>
+<hr>
+<h2 id="příloha-a-statistiky-sítě-a-aktuální-stav">Příloha A: Statistiky sítě a aktuální stav</h2>
+<h3 id="složení-sítě-stav-k-říjnu-2025">Složení sítě (stav k říjnu 2025)</h3>
+<ul>
+<li><strong>Celkový počet routers:</strong> Přibližně 60,000-70,000 (liší se)</li>
+<li><strong>Floodfill routers:</strong> Přibližně 500-700 aktivních</li>
+<li><strong>Typy šifrování:</strong>
+<ul>
+<li>ECIES-X25519: &gt;95% routerů</li>
+<li>ElGamal: &lt;5% routerů (zastaralé, pouze pro zpětnou kompatibilitu)</li>
+</ul>
+</li>
+<li><strong>Rozšíření transportů:</strong>
+<ul>
+<li>SSU2: &gt;60% jako primární transport</li>
+<li>NTCP2: ~40% jako primární transport</li>
+<li>Zastaralé transporty (SSU1, NTCP): 0% (odstraněno)</li>
+</ul>
+</li>
+<li><strong>Typy podpisů:</strong>
+<ul>
+<li>EdDSA (Ed25519): drtivá většina</li>
+<li>ECDSA: malé procento</li>
+<li>RSA: nepovoleno (odstraněno)</li>
+</ul>
+</li>
+</ul>
+<h3 id="minimální-požadavky-na-router">Minimální požadavky na router</h3>
+<ul>
+<li><strong>Verze API:</strong> 0.9.16+ (pro kompatibilitu EdDSA se sítí)</li>
+<li><strong>Doporučené minimum:</strong> API 0.9.51+ (sestavení krátkých tunnelů ECIES)</li>
+<li><strong>Aktuální minimum pro floodfills (uzly udržující netDb):</strong> API 0.9.58+ (zastarání routerů ElGamal)</li>
+<li><strong>Nadcházející požadavek:</strong> Java 17+ (od vydání 2.11.0, prosinec 2025)</li>
+</ul>
+<h3 id="požadavky-na-šířku-pásma">Požadavky na šířku pásma</h3>
+<ul>
+<li><strong>Minimální:</strong> 128 KBytes/sec (příznak N nebo vyšší) pro floodfill</li>
+<li><strong>Doporučeno:</strong> 256 KBytes/sec (příznak O) nebo vyšší</li>
+<li><strong>Požadavky floodfill:</strong>
+<ul>
+<li>Minimálně 128 KB/sec šířky pásma</li>
+<li>Stabilní doba běhu (&gt;95% doporučeno)</li>
+<li>Nízká latence (&lt;500ms k peerům)</li>
+<li>Splnit testy kondice (doba ve frontě, zpoždění úloh)</li>
+</ul>
+</li>
+</ul>
+<h3 id="statistiky-tunnelů">Statistiky tunnelů</h3>
+<ul>
+<li><strong>Typická délka tunnelu:</strong> 3-4 skoky</li>
+<li><strong>Maximální délka tunnelu:</strong> 8 skoků (teoretická, zřídka používaná)</li>
+<li><strong>Typická životnost tunnelu:</strong> 10 minut</li>
+<li><strong>Úspěšnost sestavení tunnelu:</strong> &gt;85% u dobře propojených routerů</li>
+<li><strong>Formát zprávy pro sestavení tunnelu:</strong>
+<ul>
+<li>ECIES routery: ShortTunnelBuild (záznamy o velikosti 218 bajtů)</li>
+<li>Smíšené tunnely: VariableTunnelBuild (záznamy o velikosti 528 bajtů)</li>
+</ul>
+</li>
+</ul>
+<h3 id="metriky-výkonu">Metriky výkonu</h3>
+<ul>
+<li><strong>Doba sestavení tunnelu:</strong> 1-3 sekundy (typicky)</li>
+<li><strong>End-to-end latence:</strong> 0.5-2 sekundy (typicky, celkem 6-8 skoků)</li>
+<li><strong>Propustnost:</strong> Omezená šířkou pásma tunnelu (typicky 10-50 KB/sec na tunnel)</li>
+<li><strong>Maximální velikost datagramu:</strong> 10 KB doporučeno (teoretické maximum 61.2 KB)</li>
+</ul>
+<hr>
+<h2 id="příloha-b-zastaralé-a-odstraněné-funkce">Příloha B: Zastaralé a odstraněné funkce</h2>
+<h3 id="zcela-odstraněno-již-není-podporováno">Zcela odstraněno (již není podporováno)</h3>
+<ul>
+<li><strong>NTCP transport</strong> - Odstraněno ve verzi 0.9.50 (květen 2021)</li>
+<li><strong>SSU v1 transport</strong> - Odstraněno z Java I2P ve verzi 2.4.0 (prosinec 2023)</li>
+<li><strong>SSU v1 transport</strong> - Odstraněno z i2pd ve verzi 2.44.0 (listopad 2022)</li>
+<li><strong>Typy podpisů RSA</strong> - Nepovoleno od API 0.9.28</li>
+</ul>
+<h3 id="zastaralé-podporováno-ale-nedoporučuje-se">Zastaralé (podporováno, ale nedoporučuje se)</h3>
+<ul>
+<li><strong>ElGamal routers</strong> - Zastaralé od API 0.9.58 (březen 2023)
+<ul>
+<li>ElGamal destinace jsou nadále podporovány kvůli zpětné kompatibilitě</li>
+<li>Nové routers by měly používat výhradně ECIES-X25519</li>
+</ul>
+</li>
+<li><strong>TunnelBuild (typ 21)</strong> - Zastaralé ve prospěch VariableTunnelBuild a ShortTunnelBuild
+<ul>
+<li>Stále implementováno pro velmi dlouhé tunnels (&gt;8 skoků)</li>
+</ul>
+</li>
+<li><strong>TunnelBuildReply (typ 22)</strong> - Zastaralé ve prospěch VariableTunnelBuildReply a OutboundTunnelBuildReply</li>
+<li><strong>Šifrování ElGamal/AES</strong> - Zastaralé ve prospěch ECIES-X25519-AEAD-Ratchet
+<ul>
+<li>Stále používáno pro starší destinace</li>
+</ul>
+</li>
+<li><strong>Dlouhé ECIES BuildRequestRecords (528 bajtů)</strong> - Zastaralé ve prospěch krátkého formátu (218 bajtů)
+<ul>
+<li>Stále používáno pro smíšené tunnels s ElGamal skoky</li>
+</ul>
+</li>
+</ul>
+<h3 id="časová-osa-podpory-starších-verzí">Časová osa podpory starších verzí</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Feature</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Introduced</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Deprecated</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Removed</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">NTCP</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2003</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2018 (0.9.36)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2021 (0.9.50)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Replaced by NTCP2</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SSU v1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2004</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2022 (0.9.54)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2023 (Java) / 2022 (i2pd)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Replaced by SSU2</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElGamal routers</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2003</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2023 (0.9.58)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">TBD</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Destinations still supported</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">RSA signatures</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2015</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2017</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2017 (0.9.28)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Never widely used</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">TunnelBuild</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2004</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2009 (0.7.12)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Not removed</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Still supported for long tunnels</td>
+    </tr>
+  </tbody>
+</table>
+---
+<h2 id="příloha-c-budoucí-vývoj">Příloha C: Budoucí vývoj</h2>
+<h3 id="postkvantová-kryptografie">Postkvantová kryptografie</h3>
+<p><strong>Stav:</strong> Beta od vydání 2.10.0 (září 2025), stane se výchozí ve vydání 2.11.0 (prosinec 2025)</p>
+<p><strong>Implementace:</strong> - Hybridní přístup kombinující klasické X25519 a postkvantové MLKEM (ML-KEM-768) - Zpětně kompatibilní se stávající infrastrukturou ECIES-X25519 - Používá Signal Double Ratchet (mechanismus postupné výměny klíčů) s klasickým i postkvantovým klíčovým materiálem - Podrobnosti viz <a href="../../../../cs/proposals/169-pq-crypto/">Návrh 169</a>
+</p>
+<p><strong>Migrační postup:</strong> 1. Verze 2.10.0 (září 2025): K dispozici jako volitelná beta 2. Verze 2.11.0 (prosinec 2025): Povoleno ve výchozím nastavení 3. Budoucí verze: Nakonec povinné</p>
+<h3 id="plánované-funkce">Plánované funkce</h3>
+<ul>
+<li><strong>Vylepšení pro IPv6</strong> - Lepší podpora IPv6 a přechodové mechanismy</li>
+<li><strong>Omezování na úrovni tunnel</strong> - Jemně odstupňované řízení šířky pásma pro každý tunnel</li>
+<li><strong>Vylepšené metriky</strong> - Lepší monitoring výkonu a diagnostika</li>
+<li><strong>Optimalizace protokolů</strong> - Snížená režie a vyšší efektivita</li>
+<li><strong>Vylepšený výběr floodfill</strong> - Lepší distribuce síťové databáze</li>
+</ul>
+<h3 id="výzkumné-oblasti">Výzkumné oblasti</h3>
+<ul>
+<li><strong>Optimalizace délky tunnelu</strong> - Dynamická délka tunnelu na základě modelu hrozeb</li>
+<li><strong>Pokročilý padding (výplň dat)</strong> - Vylepšení odolnosti proti analýze provozu</li>
+<li><strong>Nová šifrovací schémata</strong> - Příprava na hrozby kvantového výpočetnictví</li>
+<li><strong>Řízení zahlcení</strong> - Lepší zvládání zátěže sítě</li>
+<li><strong>Podpora mobilních zařízení</strong> - Optimalizace pro mobilní zařízení a sítě</li>
+</ul>
+<hr>
+<h2 id="příloha-d-pokyny-k-implementaci">Příloha D: Pokyny k implementaci</h2>
+<h3 id="pro-nové-implementace">Pro nové implementace</h3>
+<p><strong>Minimální požadavky:</strong> 1. Podporovat funkce API ve verzi 0.9.51+ 2. Implementovat šifrování ECIES-X25519-AEAD-Ratchet 3. Podporovat transporty NTCP2 a SSU2 4. Implementovat zprávy ShortTunnelBuild (záznamy o velikosti 218 bajtů) 5. Podporovat varianty LeaseSet2 (typy 3, 5, 7) 6. Používat podpisy EdDSA (Ed25519)</p>
+<p><strong>Doporučeno:</strong> 1. Podporovat postkvantovou hybridní kryptografii (od verze 2.11.0) 2. Implementovat parametry šířky pásma pro každý tunnel 3. Podporovat formáty Datagram2 a Datagram3 4. Implementovat možnosti záznamu služby v LeaseSets 5. Dodržovat oficiální specifikace na /docs/specs/</p>
+<p><strong>Není vyžadováno:</strong> 1. Podpora routeru ElGamal (zastaralé) 2. Podpora staršího transportu (SSU1, NTCP) 3. Dlouhé ECIES BuildRequestRecords (528 bajtů pro čisté ECIES tunnels) 4. Zprávy TunnelBuild/TunnelBuildReply (použijte varianty Variable nebo Short)</p>
+<h3 id="testování-a-validace">Testování a validace</h3>
+<p><strong>Soulad s protokolem:</strong> 1. Otestujte interoperabilitu s oficiální Java I2P router 2. Otestujte interoperabilitu s i2pd C++ router 3. Ověřte formáty zpráv podle specifikací 4. Otestujte cykly sestavení/zrušení tunnel 5. Ověřte šifrování/dešifrování pomocí testovacích vektorů</p>
+<p><strong>Testování výkonu:</strong> 1. Změřte míru úspěšnosti sestavování tunnel (měla by být &gt;85%) 2. Testujte s různými délkami tunnel (2-8 hopů) 3. Ověřte správnou fragmentaci a znovusestavení 4. Testujte pod zátěží (více současných tunnel) 5. Změřte end-to-end latenci</p>
+<p><strong>Testování zabezpečení:</strong> 1. Ověřit implementaci šifrování (použít testovací vektory) 2. Otestovat prevenci útoků typu replay 3. Ověřit zpracování vypršení platnosti zpráv 4. Testovat proti nesprávně formátovaným zprávám 5. Ověřit správnou generaci náhodných čísel</p>
+<h3 id="častá-úskalí-implementace">Častá úskalí implementace</h3>
+<ol>
+<li><strong>Matoucí formáty pokynů k doručení</strong> - garlic clove (jednotlivá část v garlic zprávě) vs tunnel message</li>
+<li><strong>Nesprávné odvozování klíčů</strong> - použití HKDF pro krátké záznamy sestavení</li>
+<li><strong>Zpracování ID zprávy</strong> - Není správně nastavováno pro tunnel builds</li>
+<li><strong>Problémy s fragmentací</strong> - Nerespektování praktického limitu 61,2 KB</li>
+<li><strong>Chyby endianness (pořadí bajtů)</strong> - Java používá big-endian pro všechna celá čísla</li>
+<li><strong>Zpracování expirace</strong> - Krátký formát se přetočí 7. února 2106</li>
+<li><strong>Generování kontrolního součtu</strong> - Pořád vyžadováno, i když se neověřuje</li>
+</ol>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../cs/docs/specs/updates/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">Specifikace aktualizace softwaru</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../cs/docs/specs/subscription/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">Příkazy pro kanál odběru adres</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/cs/docs/specs/i2np.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Zůstaňte informováni o novinkách I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Zadejte svůj email" required>
+                            <button type="submit">Odebírat</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Rychlé odkazy</h3>
+                <ul>
+                    <li><a href="../../../../cs/financial-support/">Darovat</a></li>
+                    <li><a href="../../../../cs/docs/overview/intro/">Úvod do I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Komunita</h3>
+                <ul>
+                    <li><a href="../../../../cs/get-involved/">Zapojte se</a></li>
+                    <li><a href="../../../../cs/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Oficiální fóra</a></li>
+                    <li><a href="../../../../cs/contact/">Kontaktujte nás</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Zdroje</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P Metriky</a></li>
+                    <li><a href="../../../../cs/papers/">Výzkum</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Projekt Neviditelný Internet. Licencováno pod Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../cs/privacy/">Ochrana soukromí</a>
+                <a href="../../../../cs/terms/">Podmínky</a>
+                <a href="../../../../cs/about/media/">Tisk</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Zavřít">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Komunitní anketa</h2>
+            <p class="modal-subtitle">Rádi bychom o vás slyšeli</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Váš hlas pomáhá utvářet budoucnost I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

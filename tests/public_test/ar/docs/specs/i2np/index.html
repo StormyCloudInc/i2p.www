@@ -1,0 +1,2914 @@
+<!DOCTYPE html>
+<html lang="ar" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>بروتوكول شبكة I2P (I2NP) | I2P - مشروع الإنترنت غير المرئي</title>
+
+    <meta name="description" content="تنسيقات الرسائل وأولوياتها وحدود أحجامها بين Router وRouter داخل I2P.">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="بروتوكول شبكة I2P (I2NP) | I2P - مشروع الإنترنت غير المرئي">
+    <meta property="og:description" content="تنسيقات الرسائل وأولوياتها وحدود أحجامها بين Router وRouter داخل I2P.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/ar/docs/specs/i2np/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">موقع I2P التجريبي متاح الآن - أرسل المشاكل إلى stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="إغلاق الشريط" title="إغلاق الشريط">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../ar/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../ar/about/" class="">حول</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ar/about/">نظرة عامة</a></li>
+                            <li><a href="../../../../ar/papers/">أبحاث</a></li>
+                            <li><a href="../../../../ar/about/media/">الصحافة</a></li>
+                            <li><a href="../../../../ar/contact/">اتصل بنا</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../ar/docs/" class="active">المستندات</a></li>
+                    <li><a href="../../../../ar/downloads/" class="">التنزيلات</a></li>
+                    <li><a href="../../../../ar/blog/" class="">مدونة</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../ar/get-involved/" class="">شارك معنا</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ar/get-involved/">نظرة عامة</a></li>
+                            <li><a href="../../../../ar/feedback/">اقتراحات الميزات</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">ar</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/i2np/"
+                                class="lang-option">الإنجليزية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/i2np/"
+                                class="lang-option">الإسبانية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/i2np/"
+                                class="lang-option">الكورية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/i2np/"
+                                class="lang-option">الصينية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/i2np/"
+                                class="lang-option">الروسية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/i2np/"
+                                class="lang-option">التشيكية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/i2np/"
+                                class="lang-option">الألمانية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/i2np/"
+                                class="lang-option">الفرنسية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/i2np/"
+                                class="lang-option">التركية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/i2np/"
+                                class="lang-option">الفيتنامية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/i2np/"
+                                class="lang-option">الهندية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/i2np/"
+                                class="lang-option active">العربية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/i2np/"
+                                class="lang-option">البرتغالية</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../ar/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../ar/downloads/" class="btn btn-primary">احصل على I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#نظرة-عامة">نظرة عامة</a>
+      <ul>
+        <li><a href="#بروتوكولات-النقل-الحالية">بروتوكولات النقل الحالية</a></li>
+      </ul>
+    </li>
+    <li><a href="#نظام-ترقيم-الإصدارات">نظام ترقيم الإصدارات</a>
+      <ul>
+        <li><a href="#الإصدارات-الموجهة-للمستخدم">الإصدارات (الموجّهة للمستخدم)</a></li>
+        <li><a href="#إصدارات-واجهة-برمجة-التطبيقات-توافق-البروتوكول">إصدارات واجهة برمجة التطبيقات (توافق البروتوكول)</a></li>
+        <li><a href="#جدول-تعيين-الإصدارات">جدول تعيين الإصدارات</a></li>
+      </ul>
+    </li>
+    <li><a href="#إصدارات-البروتوكول">إصدارات البروتوكول</a>
+      <ul>
+        <li><a href="#ملخص-ميزات-إصدار-واجهة-برمجة-التطبيقات">ملخص ميزات إصدار واجهة برمجة التطبيقات</a></li>
+      </ul>
+    </li>
+    <li><a href="#رأس-الرسالة">رأس الرسالة</a>
+      <ul>
+        <li><a href="#مقارنة-تنسيق-الترويسة">مقارنة تنسيق الترويسة</a></li>
+        <li><a href="#تفاصيل-حقل-الرأس">تفاصيل حقل الرأس</a></li>
+      </ul>
+    </li>
+    <li><a href="#قيود-الحجم">قيود الحجم</a>
+      <ul>
+        <li><a href="#السياق-التاريخي">السياق التاريخي</a></li>
+        <li><a href="#اعتبارات-بيانات-التطبيق">اعتبارات بيانات التطبيق</a></li>
+        <li><a href="#التفاصيل-التقنية-للتجزئة">التفاصيل التقنية للتجزئة</a></li>
+      </ul>
+    </li>
+    <li><a href="#أنواع-الرسائل-الشائعة">أنواع الرسائل الشائعة</a>
+      <ul>
+        <li><a href="#ملاحظات-حول-نوع-الرسالة">ملاحظات حول نوع الرسالة</a></li>
+      </ul>
+    </li>
+    <li><a href="#التشفير-وتغليف-الرسائل">التشفير وتغليف الرسائل</a>
+      <ul>
+        <li><a href="#خوارزميات-التشفير">خوارزميات التشفير</a></li>
+        <li><a href="#إلغاء-الاعتماد-التدريجي-لـ-elgamal-router">إلغاء الاعتماد التدريجي لـ ElGamal Router</a></li>
+        <li><a href="#تفاصيل-ecies-x25519-aead-ratchet">تفاصيل ECIES-X25519-AEAD-Ratchet</a></li>
+      </ul>
+    </li>
+    <li><a href="#البنى-الشائعة">البنى الشائعة</a>
+      <ul>
+        <li><a href="#buildrequestrecord-elgamal">BuildRequestRecord (ElGamal)</a></li>
+        <li><a href="#buildrequestrecord-سجل-طلب-البناء-ecies-x25519-المطول">BuildRequestRecord (سجل طلب البناء) (ECIES-X25519 المطوّل)</a></li>
+        <li><a href="#buildrequestrecord-ecies-x25519-قصير">BuildRequestRecord (ECIES-X25519 قصير)</a></li>
+        <li><a href="#buildresponserecord-elgamal">BuildResponseRecord (ElGamal)</a></li>
+        <li><a href="#سجل-استجابة-البناء-ecies-x25519">سجل استجابة البناء (ECIES-X25519)</a></li>
+        <li><a href="#garlicclove-مكون-رسالة-ضمن-garlic-encryption-elgamalaes">GarlicClove (مكوّن رسالة ضمن garlic encryption) (ElGamal/AES)</a></li>
+        <li><a href="#garlicclove-ecies-x25519-aead-ratchet-عنصر-رسالة-ضمن-garlic-encryption-في-i2p">GarlicClove (ECIES-X25519-AEAD-Ratchet) (عنصر رسالة ضمن garlic encryption في I2P)</a></li>
+        <li><a href="#تعليمات-تسليم-garlic-clove-رسالة-فرعية-ضمن-garlic-encryption">تعليمات تسليم Garlic Clove (رسالة فرعية ضمن garlic encryption)</a></li>
+      </ul>
+    </li>
+    <li><a href="#رسائل-i2np">رسائل I2NP</a>
+      <ul>
+        <li><a href="#ملخص-أنواع-الرسائل">ملخص أنواع الرسائل</a></li>
+        <li><a href="#databasestore-رسالة-تخزين-قاعدة-البيانات-النوع-1">DatabaseStore (رسالة تخزين قاعدة البيانات) (النوع 1)</a></li>
+        <li><a href="#databaselookup-استعلام-قاعدة-البيانات-النوع-2">DatabaseLookup (استعلام قاعدة البيانات) (النوع 2)</a></li>
+        <li><a href="#databasesearchreply-رد-بحث-قاعدة-البيانات-النوع-3">DatabaseSearchReply (ردّ بحث قاعدة البيانات) (النوع 3)</a></li>
+        <li><a href="#حالة-التسليم-النوع-10">حالة التسليم (النوع 10)</a></li>
+        <li><a href="#garlicmessage-النوع-11">GarlicMessage (النوع 11)</a></li>
+        <li><a href="#tunneldata-النوع-18">TunnelData (النوع 18)</a></li>
+        <li><a href="#tunnelgateway-بوابة-الـ-tunnel-النوع-19">TunnelGateway (بوابة الـ tunnel) (النوع 19)</a></li>
+        <li><a href="#datamessage-رسالة-بيانات-النوع-20">DataMessage (رسالة بيانات) (النوع 20)</a></li>
+        <li><a href="#tunnelbuild-النوع-21">TunnelBuild (النوع 21)</a></li>
+        <li><a href="#tunnelbuildreply-النوع-22">TunnelBuildReply (النوع 22)</a></li>
+        <li><a href="#variabletunnelbuild-النوع-23">VariableTunnelBuild (النوع 23)</a></li>
+        <li><a href="#variabletunnelbuildreply-النوع-24">VariableTunnelBuildReply (النوع 24)</a></li>
+        <li><a href="#shorttunnelbuild-النوع-25">ShortTunnelBuild (النوع 25)</a></li>
+        <li><a href="#outboundtunnelbuildreply-النوع-26">OutboundTunnelBuildReply (النوع 26)</a></li>
+      </ul>
+    </li>
+    <li><a href="#المراجع">المراجع</a>
+      <ul>
+        <li><a href="#المواصفات-الرسمية">المواصفات الرسمية</a></li>
+        <li><a href="#المقترحات">المقترحات</a></li>
+        <li><a href="#التوثيق">التوثيق</a></li>
+        <li><a href="#الشفرة-المصدرية">الشفرة المصدرية</a></li>
+        <li><a href="#المواقع-الرئيسية-للشيفرة-المصدرية">المواقع الرئيسية للشيفرة المصدرية</a></li>
+      </ul>
+    </li>
+    <li><a href="#الملحق-أ-إحصاءات-الشبكة-والحالة-الراهنة">الملحق أ: إحصاءات الشبكة والحالة الراهنة</a>
+      <ul>
+        <li><a href="#تركيبة-الشبكة-اعتبارا-من-أكتوبر-2025">تركيبة الشبكة (اعتبارًا من أكتوبر 2025)</a></li>
+        <li><a href="#الحد-الأدنى-لمتطلبات-router-الموجه">الحد الأدنى لمتطلبات Router (الموجّه)</a></li>
+        <li><a href="#متطلبات-عرض-النطاق-الترددي">متطلبات عرض النطاق الترددي</a></li>
+        <li><a href="#إحصائيات-tunnel">إحصائيات Tunnel</a></li>
+        <li><a href="#مقاييس-الأداء">مقاييس الأداء</a></li>
+      </ul>
+    </li>
+    <li><a href="#الملحق-ب-الميزات-المهملة-والمحذوفة">الملحق ب: الميزات المهملة والمحذوفة</a>
+      <ul>
+        <li><a href="#تمت-إزالته-بالكامل-لم-يعد-مدعوما">تمت إزالته بالكامل (لم يعد مدعومًا)</a></li>
+        <li><a href="#مهمل-مدعوم-ولكن-غير-موصى-به">مهمل (مدعوم ولكن غير موصى به)</a></li>
+        <li><a href="#الجدول-الزمني-لدعم-الإصدارات-القديمة">الجدول الزمني لدعم الإصدارات القديمة</a></li>
+      </ul>
+    </li>
+    <li><a href="#الملحق-ج-التطورات-المستقبلية">الملحق ج: التطورات المستقبلية</a>
+      <ul>
+        <li><a href="#التشفير-ما-بعد-الكمي">التشفير ما بعد الكمّي</a></li>
+        <li><a href="#الميزات-المخطط-لها">الميزات المخطط لها</a></li>
+        <li><a href="#مجالات-البحث">مجالات البحث</a></li>
+      </ul>
+    </li>
+    <li><a href="#الملحق-د-إرشادات-التنفيذ">الملحق د: إرشادات التنفيذ</a>
+      <ul>
+        <li><a href="#للتنفيذات-الجديدة">للتنفيذات الجديدة</a></li>
+        <li><a href="#الاختبار-والتحقق-من-الصحة">الاختبار والتحقق من الصحة</a></li>
+        <li><a href="#مزالق-التنفيذ-الشائعة">مزالق التنفيذ الشائعة</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../ar/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../ar/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../ar/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">بروتوكول شبكة I2P (I2NP)</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">تم إنشاء هذه الترجمة باستخدام التعلم الآلي وقد لا تكون دقيقة بنسبة 100%.</span>
+    
+    
+    <a href="../../../../en/docs/specs/i2np/" class="disclaimer-link">عرض النسخة الإنجليزية</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">بروتوكول شبكة I2P (I2NP)</h1>
+                    
+                        <p class="article-description">تنسيقات الرسائل وأولوياتها وحدود أحجامها بين Router وRouter داخل I2P.</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="نظرة-عامة">نظرة عامة</h2>
+<p>يحدد بروتوكول شبكة I2P (I2NP) كيف تقوم routers بتبادل الرسائل، واختيار بروتوكولات النقل، ومزج حركة المرور مع الحفاظ على إخفاء الهوية. يعمل بين <strong>I2CP</strong> (واجهة برمجة تطبيقات العميل) وبروتوكولات النقل (<strong>NTCP2</strong> و<strong>SSU2</strong>).</p>
+<p>I2NP (بروتوكول شبكة I2P) هو الطبقة الواقعة فوق بروتوكولات النقل الخاصة بـ I2P. إنه بروتوكول من router (الموجّه) إلى router يُستخدم من أجل: - عمليات البحث في قاعدة بيانات الشبكة والردود - إنشاء tunnels (أنفاق) - رسائل بيانات router والعميل المشفّرة</p>
+<p>قد تُرسَل رسائل I2NP من نقطة إلى نقطة إلى router آخر، أو تُرسَل بشكلٍ مجهول عبر tunnels إلى ذلك router.</p>
+<p>Routers تضع الأعمال الصادرة في طابور باستخدام أولويات محلية. تُعالَج الأرقام ذات الأولوية الأعلى أولاً. يُعامَل أي شيء أعلى من أولوية بيانات tunnel القياسية (400) على أنه عاجل.</p>
+<h3 id="بروتوكولات-النقل-الحالية">بروتوكولات النقل الحالية</h3>
+<p>يستخدم I2P الآن <strong>NTCP2</strong> (TCP) و<strong>SSU2</strong> (UDP) لكل من IPv4 وIPv6. يستخدم كلا بروتوكولي النقل: - <strong>X25519</strong> لتبادل المفاتيح (Noise protocol framework، إطار عمل بروتوكول Noise) - <strong>ChaCha20/Poly1305</strong> للتشفير المصادق عليه (AEAD) - <strong>SHA-256</strong> للتجزئة</p>
+<p><strong>تمت إزالة بروتوكولات النقل القديمة:</strong> - تمت إزالة NTCP (TCP الأصلي) من Java router في الإصدار 0.9.50 (مايو 2021) - تمت إزالة SSU v1 (UDP الأصلي) من Java router في الإصدار 2.4.0 (ديسمبر 2023) - تمت إزالة SSU v1 من i2pd في الإصدار 2.44.0 (نوفمبر 2022)</p>
+<p>اعتبارًا من عام 2025، تكون الشبكة قد أتمّت الانتقال بالكامل إلى نواقل مبنية على Noise (إطار عمل للمصافحات التشفيرية)، من دون أي دعم للنواقل القديمة.</p>
+<hr>
+<h2 id="نظام-ترقيم-الإصدارات">نظام ترقيم الإصدارات</h2>
+<p><strong>مهم:</strong> يستخدم I2P نظام ترقيم الإصدارات مزدوجًا يجب فهمه بوضوح:</p>
+<h3 id="الإصدارات-الموجهة-للمستخدم">الإصدارات (الموجّهة للمستخدم)</h3>
+<p>هذه هي الإصدارات التي يراها المستخدمون ويقومون بتنزيلها: - 0.9.50 (مايو 2021) - آخر إصدار من سلسلة 0.9.x - <strong>1.5.0</strong> (أغسطس 2021) - أول إصدار من سلسلة 1.x - 1.6.0, 1.7.0, 1.8.0, 1.9.0 (خلال 2021-2022) - <strong>2.0.0</strong> (نوفمبر 2022) - أول إصدار من سلسلة 2.x - من 2.1.0 حتى 2.9.0 (خلال 2023-2025) - <strong>2.10.0</strong> (8 سبتمبر 2025) - الإصدار الحالي</p>
+<h3 id="إصدارات-واجهة-برمجة-التطبيقات-توافق-البروتوكول">إصدارات واجهة برمجة التطبيقات (توافق البروتوكول)</h3>
+<p>هذه أرقام الإصدارات الداخلية التي تُنشر في الحقل &ldquo;router.version&rdquo; ضمن خصائص RouterInfo: - 0.9.50 (مايو 2021) - <strong>0.9.51</strong> (أغسطس 2021) - نسخة واجهة برمجة التطبيقات (API) للإصدار 1.5.0 - من 0.9.52 حتى 0.9.66 (مستمرة عبر إصدارات 2.x) - <strong>0.9.67</strong> (سبتمبر 2025) - نسخة API للإصدار 2.10.0</p>
+<p><strong>نقطة أساسية:</strong> لم تكن هناك أي إصدارات مرقّمة من 0.9.51 وحتى 0.9.67. هذه الأرقام موجودة فقط كمُعرِّفات لإصدارات API (واجهة برمجة التطبيقات). قفز I2P من الإصدار 0.9.50 مباشرةً إلى 1.5.0.</p>
+<h3 id="جدول-تعيين-الإصدارات">جدول تعيين الإصدارات</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Release Version</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">API Version</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Date</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Key Features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">0.9.50</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.50</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">May 2021</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Last 0.9.x release, removed NTCP1</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1.5.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.51</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">August 2021</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Short tunnel build messages (218 bytes)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1.6.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.52</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">November 2021</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Various improvements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1.7.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.53</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">January 2022</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Performance enhancements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1.8.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.54</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">May 2022</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SSU2 introduced</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1.9.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.55</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">August 2022</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SSU2 improvements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.0.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.56</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">November 2022</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SSU2 enabled by default</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.1.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.57</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">January 2023</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Stability improvements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.2.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.58</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">March 2023</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>ElGamal routers deprecated</strong></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.3.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.59</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">May 2023</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Various improvements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.4.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.61</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">December 2023</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Removed SSU1 support</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.5.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.62</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">February 2024</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Performance improvements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.6.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.63</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">May 2024</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Network optimizations</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.7.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.64</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">October 2024</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Post-quantum preparation work</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.8.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.65</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">February 2025</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Tunnel bandwidth parameters</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.9.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.66</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">June 2025</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">LeaseSet service records</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.10.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.67</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">September 2025</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Post-quantum hybrid cryptography (beta)</td>
+    </tr>
+  </tbody>
+</table>
+**قريبًا:** إصدار 2.11.0 (مخطط له في ديسمبر 2025) سيتطلب Java 17+ ويفعّل التشفير ما بعد الكم افتراضيًا.
+<hr>
+<h2 id="إصدارات-البروتوكول">إصدارات البروتوكول</h2>
+<p>يجب على جميع routers نشر إصدار بروتوكول I2NP الخاص بهم في الحقل &ldquo;router.version&rdquo; ضمن خصائص RouterInfo (معلومات الـ router). يمثّل هذا الحقل إصدار واجهة برمجة التطبيقات (API)، إذ يبيّن مستوى الدعم لمختلف مزايا بروتوكول I2NP، وليس بالضرورة الإصدار الفعلي للـ router.</p>
+<p>إذا رغبت routers بديلة (غير Java) في نشر أي معلومات عن إصدار التنفيذ الفعلي للـ router، فيجب أن يتم ذلك ضمن خاصية أخرى. يُسمح بإصدارات غير تلك المدرجة أدناه. سيتم تحديد الدعم عبر مقارنة رقمية؛ على سبيل المثال، 0.9.13 يعني دعم ميزات 0.9.12.</p>
+<p><strong>ملاحظة:</strong> لم تعد الخاصية &ldquo;coreVersion&rdquo; تُنشر في معلومات الـ router، ولم تُستخدم مطلقًا لتحديد إصدار بروتوكول I2NP.</p>
+<h3 id="ملخص-ميزات-إصدار-واجهة-برمجة-التطبيقات">ملخص ميزات إصدار واجهة برمجة التطبيقات</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">API Version</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Required I2NP Features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.67</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Post-quantum hybrid cryptography (MLKEM ratchet) support (beta), UDP tracker support</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.66</td><td style="border:1px solid var(--color-border); padding:0.5rem;">LeaseSet2 service record options (see proposal 167)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.65</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Tunnel build bandwidth parameters (see proposal 168)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.59</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Minimum peers will build tunnels through (as of 0.9.63), minimum floodfill peers will send DSM to (as of 0.9.63)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.58</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Minimum peers will build tunnels through (as of 0.9.62), <strong>ElGamal routers deprecated</strong></td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.55</td><td style="border:1px solid var(--color-border); padding:0.5rem;">SSU2 transport support (if published in router info)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.51</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Short tunnel build messages for ECIES-X25519 routers, minimum peers will build tunnels through (as of 0.9.58), minimum floodfill peers will send DSM to (as of 0.9.58)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.49</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Garlic messages to ECIES-X25519 routers</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.48</td><td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES-X25519 routers, ECIES-X25519 build request/response records</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.46</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DatabaseLookup flag bit 4 for AEAD reply</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.44</td><td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES-X25519 keys in LeaseSet2</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.40</td><td style="border:1px solid var(--color-border); padding:0.5rem;">MetaLeaseSet may be sent in a DSM</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.39</td><td style="border:1px solid var(--color-border); padding:0.5rem;">EncryptedLeaseSet may be sent in a DSM, RedDSA_SHA512_Ed25519 signature type supported</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.38</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DSM type bits 3-0 now contain the type; LeaseSet2 may be sent in a DSM</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.36</td><td style="border:1px solid var(--color-border); padding:0.5rem;">NTCP2 transport support (if published in router info), minimum peers will build tunnels through (as of 0.9.46)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.28</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RSA signature types disallowed, minimum floodfill peers will send DSM to (as of 0.9.34)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.18</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DSM type bits 7-1 ignored</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.16</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RI key certs / ECDSA and EdDSA signature types, DLM lookup types (flag bits 3-2), minimum version compatible with the current network</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.15</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Destination/LeaseSet key certificates with EdDSA Ed25519 signature type (if floodfill)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Destination/LeaseSet key certificates with ECDSA P-256, P-384, and P-521 signature types (if floodfill); non-zero expiration allowed in RouterAddress</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.7</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Encrypted DSM/DSRM replies supported (DLM flag bit 1) for floodfill routers</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.6</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Non-zero DLM flag bits 7-1 allowed</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Requires zero expiration in RouterAddress</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Supports up to 16 leases in a DSM LeaseSet store (previously 6)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">VTBM and VTBRM message support</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Floodfill supports encrypted DSM stores</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">TBM and TBRM messages introduced; minimum version compatible with the current network</td></tr>
+  </tbody>
+</table>
+**ملاحظة:** هناك أيضًا ميزات متعلقة بالنقل ومشكلات في التوافق. راجع وثائق النقل الخاصة بـ NTCP2 وSSU2 للاطّلاع على التفاصيل.
+<hr>
+<h2 id="رأس-الرسالة">رأس الرسالة</h2>
+<p>يستخدم I2NP بنية ترويسة منطقية بطول 16 بايت، بينما تستخدم وسائط النقل الحديثة (NTCP2 وSSU2) ترويسة مختصرة بطول 9 بايت مع حذف حقول الحجم والمجموع الاختباري الزائدة عن الحاجة. تظل الحقول متماثلة من الناحية المفاهيمية.</p>
+<h3 id="مقارنة-تنسيق-الترويسة">مقارنة تنسيق الترويسة</h3>
+<p><strong>التنسيق القياسي (16 بايت):</strong></p>
+<p>يُستخدم في نقل NTCP القديم وعندما تُضمَّن رسائل I2NP داخل رسائل أخرى (TunnelData، TunnelGateway، GarlicClove).</p>
+<pre tabindex="0"><code>Bytes 0-15:
++----+----+----+----+----+----+----+----+
+|type|      msg_id       |  expiration
++----+----+----+----+----+----+----+----+
+                         |  size   |chks|
++----+----+----+----+----+----+----+----+
+
+type :: Integer (1 byte)
+        Identifies the message type (see message type table)
+
+msg_id :: Integer (4 bytes)
+          Uniquely identifies this message (for some time at least)
+          Usually a locally-generated random number, but for outgoing
+          tunnel build messages may be derived from the incoming message
+
+expiration :: Date (8 bytes)
+              Unix timestamp in milliseconds when this message expires
+
+size :: Integer (2 bytes)
+        Length of the payload (0 to ~61.2 KB for tunnel messages)
+
+chks :: Integer (1 byte)
+        SHA256 hash of payload truncated to first byte
+        Deprecated - NTCP2/SSU2 use ChaCha20/Poly1305 AEAD for integrity
+</code></pre><p><strong>الصيغة القصيرة لـ SSU (مهجورة، 5 بايتات):</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+
+|type| short_expiration  |
++----+----+----+----+----+
+
+type :: Integer (1 byte)
+short_expiration :: Integer (4 bytes, seconds since epoch)
+</code></pre><p><strong>الصيغة القصيرة لـ NTCP2 و SSU2، وفصوص الثوم الخاصة بـ ECIES-Ratchet (آلية السقاطة الخاصة بـ ECIES) (9 بايت):</strong></p>
+<p>يُستخدم في وسائط النقل الحديثة وفي رسائل garlic (أسلوب تجميع رسائل متعددة في I2P) المشفّرة بـ ECIES.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|type|      msg_id       | short_expira-
++----+----+----+----+----+----+----+----+
+ tion|
++----+
+
+type :: Integer (1 byte)
+msg_id :: Integer (4 bytes)
+short_expiration :: Integer (4 bytes, seconds since epoch, unsigned)
+</code></pre><h3 id="تفاصيل-حقل-الرأس">تفاصيل حقل الرأس</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Field</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Bytes</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Type</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Identifies the message class (0&ndash;255, see message types below)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Unique ID</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Locally unique identifier for matching replies</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Expiration</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">8 (standard) / 4 (short)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Timestamp when the message expires. Routers discard expired messages. Short format uses seconds since epoch (unsigned, wraps February 7, 2106)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Payload Length</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Size in bytes (0 to ~61.2 KB for tunnel messages). NTCP2 and SSU2 encode this in their frame headers</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Checksum</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated. First byte of SHA-256 hash of the payload. NTCP2/SSU2 use ChaCha20/Poly1305 AEAD for integrity</td>
+    </tr>
+  </tbody>
+</table>
+### ملاحظات التنفيذ
+<ul>
+<li>عند الإرسال عبر SSU (متقادم)، كان يتم تضمين النوع ووقت الانقضاء المكوَّن من 4 بايت فقط</li>
+<li>عند الإرسال عبر NTCP2 أو SSU2 (الإصدار 2 من SSU)، يُستخدم التنسيق القصير بحجم 9 بايت</li>
+<li>يلزم وجود الترويسة القياسية بحجم 16 بايت لرسائل I2NP المُضمَّنة داخل رسائل أخرى (Data, TunnelData, TunnelGateway, GarlicClove)</li>
+<li>اعتباراً من الإصدار 0.8.12، تم تعطيل التحقق من المجموع الاختباري في بعض المواضع ضمن مكدس البروتوكولات من أجل الكفاءة، لكن ما يزال توليد المجموع الاختباري مطلوباً للتوافق</li>
+<li>إن وقت الانقضاء القصير غير موقَّع وسيلتفّ في 7 فبراير 2106. بعد ذلك التاريخ، يجب إضافة إزاحة للحصول على الوقت الصحيح</li>
+<li>للتوافق مع الإصدارات الأقدم، قم دائماً بتوليد المجاميع الاختبارية حتى وإن لم تُتحقق منها</li>
+</ul>
+<hr>
+<h2 id="قيود-الحجم">قيود الحجم</h2>
+<p>رسائل Tunnel تقسّم حمولات I2NP إلى قطع ثابتة الحجم: - <strong>القطعة الأولى:</strong> حوالي 956 بايت - <strong>القطع اللاحقة:</strong> كل منها حوالي 996 بايت - <strong>الحد الأقصى للقطع:</strong> 64 (مرقمة من 0 إلى 63) - <strong>الحد الأقصى للحمولة:</strong> حوالي 61,200 بايت (61.2 KB)</p>
+<p><strong>الحساب:</strong> 956 + (63 × 996) = 63,704 بايت كحد أقصى نظري، مع حد عملي يقارب 61,200 بايت بسبب الكلفة الإضافية.</p>
+<h3 id="السياق-التاريخي">السياق التاريخي</h3>
+<p>كانت وسائط النقل القديمة تفرض حدوداً أكثر صرامة لحجم الإطارات: - NTCP: إطارات بحجم 16 KB - SSU: إطارات بحجم يقارب 32 KB</p>
+<p>يدعم NTCP2 إطارات بحجم يقارب 65 KB، لكن حدّ التجزئة الخاص بـ tunnel ما زال سارياً.</p>
+<h3 id="اعتبارات-بيانات-التطبيق">اعتبارات بيانات التطبيق</h3>
+<p>قد تقوم رسائل Garlic (رسائل مركبة في I2P) بتجميع LeaseSets أو وسوم الجلسة أو متغيرات LeaseSet2 المشفّرة، مما يقلل المساحة المتاحة لبيانات الحمولة.</p>
+<p><strong>التوصية:</strong> ينبغي أن تبقى Datagrams (رزم بيانات عديمة الاتصال) ≤ 10 KB لضمان تسليم موثوق. قد تواجه الرسائل التي تقترب من حد 61 KB: - ازدياد زمن الاستجابة بسبب إعادة تجميع الأجزاء بعد التجزئة - ارتفاع احتمال فشل التسليم - تعرّض أكبر لتحليل حركة المرور</p>
+<h3 id="التفاصيل-التقنية-للتجزئة">التفاصيل التقنية للتجزئة</h3>
+<p>كل رسالة tunnel يبلغ حجمها بالضبط 1,024 بايت (1 كيلوبايت) وتحتوي على: - tunnel ID بطول 4 بايت - متجه التهيئة (IV) بطول 16 بايت - 1,004 بايت من البيانات المشفّرة</p>
+<p>ضمن البيانات المُشفّرة، تحمل رسائل tunnel رسائل I2NP مُجزأة مع رؤوس أجزاء تشير إلى: - رقم الجزء (0-63) - ما إذا كان هذا هو الجزء الأول أم جزء لاحق - معرّف الرسالة الكلي لإعادة التجميع</p>
+<p>يتضمن الجزء الأول كامل ترويسة رسالة I2NP (16 بايت)، مما يترك حوالي 956 بايتاً للحمولة. الأجزاء اللاحقة لا تتضمن ترويسة الرسالة، ما يتيح نحو 996 بايتاً من الحمولة لكل جزء.</p>
+<hr>
+<h2 id="أنواع-الرسائل-الشائعة">أنواع الرسائل الشائعة</h2>
+<p>تستخدم Routers نوع الرسالة والأولوية لجدولة المهام الصادرة. تُعالج القيم ذات الأولوية الأعلى أولاً. تطابق القيم أدناه الإعدادات الافتراضية الحالية في Java I2P (اعتباراً من إصدار واجهة برمجة التطبيقات 0.9.67).</p>
+<p><strong>ملاحظة:</strong> تعتمد قيم الأولوية على التنفيذ. للحصول على قيم الأولوية المرجعية، راجع توثيق الصنف <code>OutNetMessage</code> في الشيفرة المصدرية لـ Java I2P.</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Message</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Priority</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Typical Size</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>DatabaseStore</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">460</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Varies (LeaseSet ≈ 898&nbsp;B, RouterInfo ≈ 2&ndash;4&nbsp;KB compressed)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Publishes RouterInfo or LeaseSet objects. Supports LeaseSet2, EncryptedLeaseSet, and MetaLeaseSet</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>DatabaseLookup</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">500</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Varies</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Queries the network database for RouterInfo or LeaseSet entries</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>DatabaseSearchReply</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">300</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">≈161&nbsp;B (5 hashes)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Returns candidate floodfill router hashes (typically 3&ndash;16 hashes, recommended maximum 16)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>DeliveryStatus</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">10</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Varies</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">12&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Receipts for tunnel tests or acknowledgements inside GarlicMessages</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>GarlicMessage</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">11</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">100 (local)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Varies</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bundles multiple message cloves (e.g., DataMessage, LeaseSets). Supports ElGamal/AES (deprecated) and ECIES-X25519-AEAD-Ratchet encryption</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>TunnelData</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">18</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">400</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1,028&nbsp;B (fixed)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Encrypted tunnel message exchanged between hops. Contains a 4-byte tunnel ID, 16-byte IV, and 1,004 bytes of encrypted data</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>TunnelGateway</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">19</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">300&ndash;400</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Varies</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Encapsulates messages at the tunnel gateway before fragmentation</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>DataMessage</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">20</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">425</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">4&ndash;62&nbsp;KB</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Carries end-to-end garlic payloads (application traffic)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>TunnelBuild</strong> <em>(deprecated)</em></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">21</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">500</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">4,224&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Requests tunnel participation from routers (8 × 528-byte records). Replaced by VariableTunnelBuild for ECIES</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>TunnelBuildReply</strong> <em>(deprecated)</em></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">22</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">300</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">4,224&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Replies to TunnelBuild with accept/reject status per hop</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>VariableTunnelBuild</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">23</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">500</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1,057&ndash;4,225&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Variable-length tunnel build for ElGamal or ECIES-X25519 routers (1&ndash;8 records, API 0.9.12+)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>VariableTunnelBuildReply</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">24</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">300</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1,057&ndash;4,225&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Replies to VariableTunnelBuild</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>ShortTunnelBuild</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">25</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">500</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">873&ndash;1,745&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Short tunnel build messages for ECIES-X25519 routers only (1&ndash;8 × 218-byte records, API 0.9.51+)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>OutboundTunnelBuildReply</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">26</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">300</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">873&ndash;1,745&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Sent from outbound endpoint to originator for ECIES-X25519 routers (API 0.9.51+)</td>
+    </tr>
+  </tbody>
+</table>
+**أنواع الرسائل المحجوزة:** - النوع 0: محجوز - الأنواع 4-9: محجوزة للاستخدام المستقبلي - الأنواع 12-17: محجوزة للاستخدام المستقبلي - الأنواع 224-254: محجوزة للرسائل التجريبية - النوع 255: محجوز للتوسّع المستقبلي
+<h3 id="ملاحظات-حول-نوع-الرسالة">ملاحظات حول نوع الرسالة</h3>
+<ul>
+<li>رسائل مستوى التحكم (DatabaseLookup, TunnelBuild, إلخ.) عادةً تنتقل عبر <strong>exploratory tunnels</strong>، وليس عبر client tunnels، مما يتيح تحديد الأولوية بشكل مستقل</li>
+<li>قيم الأولوية تقريبية وقد تختلف حسب التنفيذ</li>
+<li>TunnelBuild (21) و TunnelBuildReply (22) مُهملة لكنها ما تزال مُنفّذة لأغراض التوافق مع tunnels طويلة جداً (&gt;8 قفزات)</li>
+<li>أولوية بيانات tunnel القياسية هي 400؛ وكل ما هو أعلى من ذلك يُعامل كعاجل</li>
+<li>الطول المعتاد لـ tunnel في شبكة اليوم هو 3-4 قفزات، لذا فإن معظم عمليات إنشاء tunnel تستخدم ShortTunnelBuild (سجلات بحجم 218 بايت) أو VariableTunnelBuild (سجلات بحجم 528 بايت)</li>
+</ul>
+<hr>
+<h2 id="التشفير-وتغليف-الرسائل">التشفير وتغليف الرسائل</h2>
+<p>غالبًا ما تقوم routers بتغليف رسائل I2NP قبل الإرسال، مما يخلق طبقات متعددة من التشفير. قد تكون رسالة DeliveryStatus: 1. ملفوفة داخل GarlicMessage (مشفّرة) 2. داخل DataMessage 3. ضمن رسالة TunnelData (مشفّرة مرة أخرى)</p>
+<p>كل hop (قفزة) يفك تشفير طبقته فقط؛ تكشف الوجهة النهائية عن الحمولة الأعمق في الداخل.</p>
+<h3 id="خوارزميات-التشفير">خوارزميات التشفير</h3>
+<p><strong>قديمة (يجري التخلص منها تدريجياً):</strong> - ElGamal/AES + SessionTags (وسوم الجلسة) - ElGamal-2048 للتشفير غير المتماثل - AES-256 للتشفير المتماثل - وسوم الجلسة بطول 32 بايت</p>
+<p><strong>الوضع الحالي (المعيار ابتداءً من API 0.9.48):</strong> - ECIES-X25519 + ChaCha20/Poly1305 AEAD (تشفير موثق مع بيانات إضافية) مع سرية أمامية متدرجة - إطار عمل بروتوكول Noise (Noise_IK_25519_ChaChaPoly_SHA256 للوجهات) - وسوم جلسة بحجم 8 بايت (مخفضة من 32 بايت) - Signal Double Ratchet (خوارزمية السقاطة المزدوجة الخاصة ببروتوكول سيغنال) للسرية الأمامية - تم تقديمه في إصدار API 0.9.46 (2020) - إلزامي لجميع routers اعتباراً من إصدار API 0.9.58 (2023)</p>
+<p><strong>المستقبل (بيتا اعتباراً من 2.10.0):</strong> - تشفير هجين مقاوم لما بعد الكم باستخدام MLKEM (خوارزمية تبادل مفاتيح مقاومة للكم، ML-KEM-768) مقترناً بـ X25519 - آلية سقاطة هجينة تجمع بين اتفاق المفاتيح الكلاسيكي واتفاق المفاتيح لما بعد الكم - متوافق رجعياً مع ECIES-X25519 - سيصبح الإعداد الافتراضي في الإصدار 2.11.0 (ديسمبر 2025)</p>
+<h3 id="إلغاء-الاعتماد-التدريجي-لـ-elgamal-router">إلغاء الاعتماد التدريجي لـ ElGamal Router</h3>
+<p><strong>هام للغاية:</strong> تم إهمال ElGamal routers بدءًا من إصدار API 0.9.58 (الإصدار 2.2.0، مارس 2023). وبما أن الحد الأدنى الموصى به لإصدار floodfill المراد الاستعلام عنه أصبح الآن 0.9.58، فلا حاجة لأن تقوم عمليات التنفيذ بتنفيذ التشفير لـ ElGamal floodfill routers.</p>
+<p><strong>مع ذلك:</strong> لا تزال وجهات ElGamal مدعومة للتوافق مع الإصدارات السابقة. لا يزال بإمكان العملاء الذين يستخدمون تشفير ElGamal التواصل عبر ECIES routers.</p>
+<h3 id="تفاصيل-ecies-x25519-aead-ratchet">تفاصيل ECIES-X25519-AEAD-Ratchet</h3>
+<p>هذا هو نوع التشفير 4 في مواصفة التشفير الخاصة بـ I2P. يوفّر:</p>
+<p><strong>أهم الميزات:</strong> - سرّية أمامية عبر ratcheting (آلية تدوير مفاتيح تدريجية؛ مفاتيح جديدة لكل رسالة) - تقليل مساحة تخزين وسم الجلسة (8 بايت مقابل 32 بايت) - أنواع جلسات متعددة (جلسة جديدة، جلسة قائمة، لمرة واحدة) - قائم على بروتوكول Noise Noise_IK_25519_ChaChaPoly_SHA256 - متكامل مع خوارزمية Double Ratchet الخاصة بـ Signal</p>
+<p><strong>البدائيات التشفيرية:</strong> - X25519 لاتفاق تبادل المفاتيح Diffie-Hellman - ChaCha20 لتشفير الدفق - Poly1305 لمصادقة الرسائل (AEAD) - SHA-256 للتجزئة - HKDF لاشتقاق المفاتيح</p>
+<p><strong>إدارة الجلسات:</strong> - جلسة جديدة: اتصال أولي باستخدام مفتاح وجهة ثابت - جلسة قائمة: رسائل لاحقة باستخدام علامات الجلسة - جلسة لمرة واحدة: جلسات برسالة واحدة بعبء بروتوكولي أقل</p>
+<p>راجع <a href="../../../../ar/docs/specs/ecies/">مواصفة ECIES</a>
+ و<a href="../../../../ar/proposals/144-ecies-x25519-aead-ratchet/">الاقتراح 144</a>
+ للحصول على التفاصيل التقنية الكاملة.</p>
+<hr>
+<h2 id="البنى-الشائعة">البنى الشائعة</h2>
+<p>البُنى التالية هي عناصر في عدة رسائل I2NP. وهي ليست رسائل كاملة.</p>
+<h3 id="buildrequestrecord-elgamal">BuildRequestRecord (ElGamal)</h3>
+<p><strong>مهمل.</strong> يُستخدَم فقط في الشبكة الحالية عندما يحتوي tunnel على router من نوع ElGamal. راجع <a href="../../../../ar/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ للتنسيق الحديث.</p>
+<p><strong>الغرض:</strong> سجل واحد ضمن مجموعة تضم عدة سجلات لطلب إنشاء قفزة واحدة داخل الـ tunnel.</p>
+<p><strong>التنسيق:</strong></p>
+<p>مشفّر بـ ElGamal وAES (إجمالي 528 بايت):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| encrypted data (528 bytes)            |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+</code></pre><p>بنية مشفّرة بـ ElGamal (خوارزمية تشفير بالمفتاح العام) (528 بايت):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| toPeer (16 bytes)                     |
++----+----+----+----+----+----+----+----+
+| ElGamal encrypted data (512 bytes)    |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+
+toPeer :: First 16 bytes of SHA-256 hash of peer&#39;s RouterIdentity
+
+encrypted_data :: ElGamal-2048 encrypted (bytes 1-256 and 258-513
+                  of the 514-byte ElGamal block, with padding bytes
+                  at positions 0 and 257 removed)
+</code></pre><p>بنية النص الواضح (222 بايت قبل التشفير):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| receive_tunnel (4) | our_ident (32)   |
++----+----+----+----+                   +
+|                                       |
++                   +----+----+----+----+
+|                   | next_tunnel (4)   |
++----+----+----+----+----+----+----+----+
+| next_ident (32 bytes)                 |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| layer_key (32 bytes)                  |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| iv_key (32 bytes)                     |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| reply_key (32 bytes)                  |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| reply_iv (16 bytes)                   |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|flag| request_time (4) | send_msg_id  |
++----+----+----+----+----+----+----+----+
+     (4)                | padding (29)  |
++----+----+----+----+----+              +
+|                                       |
++                             +----+----+
+|                             |
++----+----+----+----+----+----+
+
+receive_tunnel :: TunnelId (4 bytes, nonzero)
+our_ident :: Hash (32 bytes)
+next_tunnel :: TunnelId (4 bytes, nonzero)
+next_ident :: Hash (32 bytes)
+layer_key :: SessionKey (32 bytes)
+iv_key :: SessionKey (32 bytes)
+reply_key :: SessionKey (32 bytes)
+reply_iv :: 16 bytes
+flag :: Integer (1 byte)
+request_time :: Integer (4 bytes, hours since epoch = time / 3600)
+send_message_id :: Integer (4 bytes)
+padding :: 29 bytes random data
+</code></pre><p><strong>ملاحظات:</strong> - ينتج عن تشفير ElGamal-2048 (خوارزمية تشفير بالمفتاح العام) كتلة بحجم 514 بايت، لكن يتم إزالة بايتي الحشو (في الموضعين 0 و257)، لينتج 512 بايت - راجع <a href="../../../../ar/docs/specs/implementation/">مواصفة إنشاء Tunnel</a>
+ لمعرفة تفاصيل الحقول - الشيفرة المصدرية: <code>net.i2p.data.i2np.BuildRequestRecord</code> - ثابت: <code>EncryptedBuildRecord.RECORD_SIZE = 528</code></p>
+<h3 id="buildrequestrecord-سجل-طلب-البناء-ecies-x25519-المطول">BuildRequestRecord (سجل طلب البناء) (ECIES-X25519 المطوّل)</h3>
+<p>بالنسبة إلى ECIES-X25519 (مخطط ECIES فوق X25519) routers، التي تم تقديمها في إصدار API 0.9.48. تستخدم 528 بايتًا للحفاظ على التوافق مع الإصدارات الأقدم في tunnels المختلطة.</p>
+<p><strong>التنسيق:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| toPeer (16 bytes)                     |
++----+----+----+----+----+----+----+----+
+| ephemeral_key (32 bytes)              |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| ChaCha20 encrypted data (464 bytes)   |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Poly1305 MAC (16 bytes)               |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+
+toPeer :: First 16 bytes of SHA-256 hash of peer&#39;s RouterIdentity
+ephemeral_key :: X25519 ephemeral public key (32 bytes)
+encrypted_data :: ChaCha20 encrypted (464 bytes)
+mac :: Poly1305 message authentication code (16 bytes)
+</code></pre><p><strong>إجمالي الحجم:</strong> 528 بايت (مماثل لـElGamal للتوافق)</p>
+<p>راجع <a href="../../../../ar/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ للاطلاع على بنية النص غير المشفّر وتفاصيل التشفير.</p>
+<h3 id="buildrequestrecord-ecies-x25519-قصير">BuildRequestRecord (ECIES-X25519 قصير)</h3>
+<p>خاص بـ ECIES-X25519 routers فقط، اعتباراً من إصدار API 0.9.51 (الإصدار 1.5.0). هذا هو التنسيق القياسي الحالي.</p>
+<p><strong>التنسيق:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| toPeer (16 bytes)                     |
++----+----+----+----+----+----+----+----+
+| ephemeral_key (32 bytes)              |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| ChaCha20 encrypted data (154 bytes)   |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Poly1305 MAC (16 bytes)               |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+
+toPeer :: First 16 bytes of SHA-256 hash of peer&#39;s RouterIdentity
+ephemeral_key :: X25519 ephemeral public key (32 bytes)
+encrypted_data :: ChaCha20 encrypted (154 bytes)
+mac :: Poly1305 message authentication code (16 bytes)
+</code></pre><p><strong>الحجم الإجمالي:</strong> 218 بايت (انخفاض بنسبة 59% مقارنةً بـ 528 بايت)</p>
+<p><strong>الاختلاف الرئيسي:</strong> تستمد السجلات القصيرة جميع المفاتيح عبر HKDF (وظيفة اشتقاق المفاتيح) بدلاً من تضمينها بشكل صريح في السجل. يشمل ذلك: - مفاتيح الطبقة (لتشفير tunnel) - مفاتيح IV (لتشفير tunnel) - مفاتيح الرد (لبناء الرد) - قيم IV الخاصة بالرد (لبناء الرد)</p>
+<p>يتم اشتقاق جميع المفاتيح باستخدام آلية HKDF الخاصة ببروتوكول Noise، استنادًا إلى السرّ المشترك الناتج عن تبادل المفاتيح X25519.</p>
+<p><strong>الفوائد:</strong> - تتسع 4 سجلات قصيرة في رسالة tunnel واحدة (873 بايت) - عمليات بناء tunnel بثلاث رسائل بدلاً من رسائل منفصلة لكل سجل - انخفاض استهلاك النطاق الترددي والكمون - نفس خصائص الأمان كما في التنسيق الطويل</p>
+<p>انظر <a href="../../../../ar/proposals/157-new-tbm/">المقترح 157</a>
+ للمبررات و<a href="../../../../ar/docs/specs/implementation/">إنشاء Tunnel باستخدام ECIES</a>
+ للمواصفة الكاملة.</p>
+<p><strong>شفرة المصدر:</strong> - <code>net.i2p.data.i2np.ShortEncryptedBuildRecord</code> - ثابت: <code>ShortEncryptedBuildRecord.RECORD_SIZE = 218</code></p>
+<h3 id="buildresponserecord-elgamal">BuildResponseRecord (ElGamal)</h3>
+<p><strong>مهمل.</strong> يُستخدم فقط عندما يحتوي الـ tunnel على router من نوع ElGamal.</p>
+<p><strong>الغرض:</strong> سجل واحد ضمن مجموعة من سجلات متعددة تتضمن استجابات لطلب إنشاء.</p>
+<p><strong>التنسيق:</strong></p>
+<p>مشفّر (528 بايت، نفس حجم BuildRequestRecord (سجلّ طلب البناء)):</p>
+<pre tabindex="0"><code>bytes 0-527 :: AES-encrypted record
+</code></pre><p>البنية غير المشفرة:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| SHA-256 hash (32 bytes)               |
++                                       +
+|        (hash of bytes 32-527)         |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| random data (495 bytes)               |
+~                                       ~
+|                                  |ret |
++----+----+----+----+----+----+----+----+
+
+bytes 0-31 :: SHA-256 hash of bytes 32-527
+bytes 32-526 :: Random data (could be used for congestion info)
+byte 527 :: Reply code (0 = accept, 30 = reject)
+</code></pre><p><strong>رموز الرد:</strong> - <code>0</code> - قبول - <code>30</code> - رفض (تجاوز حد عرض النطاق)</p>
+<p>انظر <a href="../../../../ar/docs/specs/implementation/">مواصفة إنشاء Tunnel</a>
+ للتفاصيل حول حقل الرد.</p>
+<h3 id="سجل-استجابة-البناء-ecies-x25519">سجل استجابة البناء (ECIES-X25519)</h3>
+<p>بالنسبة إلى routers التي تستخدم ECIES-X25519 (مخطط تشفير بالمنحنى الإهليلجي باستخدام X25519)، إصدار واجهة برمجة التطبيقات 0.9.48+. بنفس حجم الطلب المقابل (528 للطويل، 218 للقصير).</p>
+<p><strong>التنسيق:</strong></p>
+<p>الصيغة الطويلة (528 بايت):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| ChaCha20 encrypted data (512 bytes)   |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Poly1305 MAC (16 bytes)               |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+</code></pre><p>التنسيق المختصر (218 بايت):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| ChaCha20 encrypted data (202 bytes)   |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Poly1305 MAC (16 bytes)               |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>بنية النص الصريح (كلا التنسيقين):</strong></p>
+<p>يحتوي على بنية Mapping (بنية تعيين) بصيغة key-value الخاصة بـ I2P مع: - رمز حالة الرد (إلزامي) - معامل عرض النطاق المتاح (&ldquo;b&rdquo;) (اختياري، أضيف في API 0.9.65) - معلمات اختيارية أخرى للتوسعات المستقبلية</p>
+<p><strong>رموز حالة الرد:</strong> - <code>0</code> - نجاح - <code>30</code> - رفض: تم تجاوز عرض النطاق الترددي</p>
+<p>انظر <a href="../../../../ar/docs/specs/implementation/">إنشاء Tunnel باستخدام ECIES</a>
+ للاطلاع على المواصفة الكاملة.</p>
+<h3 id="garlicclove-مكون-رسالة-ضمن-garlic-encryption-elgamalaes">GarlicClove (مكوّن رسالة ضمن garlic encryption) (ElGamal/AES)</h3>
+<p><strong>تحذير:</strong> هذا هو التنسيق المستخدم لفصوص الثوم داخل رسائل الثوم المُشفَّرة باستخدام ElGamal (خوارزمية تشفير بالمفتاح العام). يختلف تنسيق رسائل الثوم وفصوص الثوم الخاصة بـ ECIES-AEAD-X25519-Ratchet اختلافًا كبيرًا. راجع <a href="../../../../ar/docs/specs/ecies/">مواصفة ECIES</a>
+ (مخطط التشفير المتكامل بالمنحنيات البيضوية) للاطلاع على التنسيق الحديث.</p>
+<p><strong>أُعلن إهماله بالنسبة إلى routers (API 0.9.58+)، ولا يزال مدعومًا للوجهات.</strong></p>
+<p><strong>التنسيق:</strong></p>
+<p>غير مشفّر:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Delivery Instructions (variable)      |
+~                                       ~
++----+----+----+----+----+----+----+----+
+| I2NP Message (variable)               |
+~                                       ~
++----+----+----+----+----+----+----+----+
+| Clove ID (4)  | Expiration (8)   |Cert|
++----+----+----+----+----+----+----+----+
+                                    (3) |
++----+----+----+----+----+----+----+----+
+
+Delivery Instructions :: Variable length (typically 1, 33, or 37 bytes)
+I2NP Message :: Any I2NP message
+Clove ID :: 4-byte Integer (random, checked for duplicates)
+Expiration :: Date (8 bytes)
+Certificate :: Always NULL (3 bytes total, all zeroes)
+</code></pre><p><strong>ملاحظات:</strong> - لا تُجزَّأ الـ clove (رسالة فرعية ضمن GarlicMessage) إطلاقًا - عندما يكون البِتّ الأول من بايت العَلَم لـ Delivery Instructions (تعليمات التسليم) يساوي 0، لا يُشفَّر الـ clove - عندما يكون البِتّ الأول 1، يكون الـ clove مُشفَّرًا (ميزة غير منفذة) - الطول الأقصى دالة لمجموع أطوال الـ cloves وللطول الأقصى لـ GarlicMessage (رسالة حاوية لعدة cloves) - قد يُستخدم حقل الشهادة (Certificate) مع HashCash لـ &ldquo;الدفع&rdquo; مقابل التوجيه (احتمال مستقبلي) - الرسائل المستخدمة عمليًا: DataMessage, DeliveryStatusMessage, DatabaseStoreMessage - يمكن أن تحتوي GarlicMessage على GarlicMessage (nested garlic)، لكن هذا لا يُستخدم عمليًا</p>
+<p>انظر <a href="../../../../ar/docs/overview/garlic-routing/">Garlic Routing (توجيه «الثوم»)</a>
+ للحصول على نظرة عامة مفاهيمية.</p>
+<h3 id="garlicclove-ecies-x25519-aead-ratchet-عنصر-رسالة-ضمن-garlic-encryption-في-i2p">GarlicClove (ECIES-X25519-AEAD-Ratchet) (عنصر رسالة ضمن garlic encryption في I2P)</h3>
+<p>بالنسبة إلى routers والوجهات من نوع ECIES-X25519، إصدار API 0.9.46+. هذا هو التنسيق القياسي الحالي.</p>
+<p><strong>اختلاف جوهري:</strong> تستخدم ECIES garlic (أسلوب تجميع رسائل في I2P) بنية مختلفة تماماً تعتمد على كتل Noise protocol (بروتوكول Noise) بدلاً من البُنى الصريحة لـ clove (عنصر رسالة في I2P).</p>
+<p><strong>التنسيق:</strong></p>
+<p>تحتوي رسائل ECIES بأسلوب garlic (تقنية &ldquo;garlic&rdquo; في I2P) على سلسلة من الكتل:</p>
+<pre tabindex="0"><code>Block structure:
++----+----+----+----+----+----+----+----+
+|type| length    | data ...
++----+----+----+----+----+-//-
+
+type :: 1 byte block type
+length :: 2 bytes block length
+data :: variable length data
+</code></pre><p><strong>أنواع الكتل:</strong> - <code>0</code> - Garlic Clove Block (كتلة فصّ الثوم؛ تحتوي على رسالة I2NP) - <code>1</code> - كتلة التاريخ والوقت (طابع زمني) - <code>2</code> - كتلة الخيارات (خيارات التسليم) - <code>3</code> - كتلة الحشو - <code>254</code> - كتلة الإنهاء (غير مُنفذة)</p>
+<p><strong>Garlic Clove Block (كتلة فصّ الثوم) (النوع 0):</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|  0 | length    | Delivery Instructions |
++----+----+----+----+                    +
+~                                       ~
++----+----+----+----+----+----+----+----+
+| I2NP Message                          |
+~                                       ~
++----+----+----+----+----+----+----+----+
+| Clove ID (4)  | Expiration (4)        |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>الفروقات الأساسية عن صيغة ElGamal:</strong> - يستخدم انتهاء صلاحية بطول 4 بايت (ثوانٍ منذ Epoch، بداية حقبة يونكس) بدلاً من تاريخ بطول 8 بايت - لا يوجد حقل شهادة - مُغلّف ضمن بنية كتل تحتوي على النوع والطول - تُشفَّر الرسالة كاملة باستخدام ChaCha20/Poly1305 AEAD (تشفير مصادق مع بيانات مرتبطة) - إدارة الجلسة عبر ratcheting (آلية السقاطة الأمنية)</p>
+<p>انظر <a href="../../../../ar/docs/specs/ecies/">مواصفة ECIES</a>
+ للتفاصيل الكاملة حول إطار عمل بروتوكول Noise (إطار لبناء بروتوكولات تبادل المفاتيح المشفّرة) وهياكل الكتل.</p>
+<h3 id="تعليمات-تسليم-garlic-clove-رسالة-فرعية-ضمن-garlic-encryption">تعليمات تسليم Garlic Clove (رسالة فرعية ضمن garlic encryption)</h3>
+<p>يُستخدم هذا التنسيق لفصوص الثوم الخاصة بكلٍ من ElGamal وECIES. وهو يحدد كيفية إيصال الرسالة المضمّنة.</p>
+<p><strong>تحذير بالغ الأهمية:</strong> هذه المواصفة مخصصة لـ Delivery Instructions (تعليمات التسليم) داخل Garlic Cloves (فصوص الثوم) فقط. تُستخدم &ldquo;Delivery Instructions&rdquo; أيضًا داخل رسائل tunnel، حيث يختلف التنسيق اختلافًا كبيرًا. راجع <a href="../../../../ar/docs/specs/implementation/">مواصفة رسالة tunnel</a>
+ بخصوص Delivery Instructions الخاصة بـ tunnel. لا تخلط بين هذين التنسيقين.</p>
+<p><strong>التنسيق:</strong></p>
+<p>مفتاح الجلسة والتأخير غير مستخدمين ولا يظهران مطلقًا، لذا فالأطوال الثلاثة الممكنة هي: - 1 بايت (LOCAL) - 33 بايت (ROUTER and DESTINATION) - 37 بايت (TUNNEL)</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|flag|                                  |
++----+                                  +
+|       Session Key (optional, 32)     |
++                                       +
+|                                       |
++    +----+----+----+----+--------------+
+|    |                                  |
++----+                                  +
+|       To Hash (optional, 32)         |
++                                       +
+|                                       |
++    +----+----+----+----+--------------+
+|    | Tunnel ID (4, opt)| Delay (4, opt)|
++----+----+----+----+----+----+----+----+
+
+flag :: 1 byte
+        Bit order: 76543210
+        bit 7: encrypted? (Unimplemented, always 0)
+               If 1, a 32-byte encryption session key follows
+        bits 6-5: delivery type
+               0x0 = LOCAL (0)
+               0x1 = DESTINATION (1)
+               0x2 = ROUTER (2)
+               0x3 = TUNNEL (3)
+        bit 4: delay included? (Not fully implemented, always 0)
+               If 1, four delay bytes are included
+        bits 3-0: reserved, set to 0 for compatibility
+
+Session Key :: 32 bytes (Optional, unimplemented)
+               Present if encrypt flag bit is set
+
+To Hash :: 32 bytes (Optional)
+           Present if delivery type is DESTINATION, ROUTER, or TUNNEL
+           - DESTINATION: SHA256 hash of the destination
+           - ROUTER: SHA256 hash of the router identity
+           - TUNNEL: SHA256 hash of the gateway router identity
+
+Tunnel ID :: 4 bytes (Optional)
+             Present if delivery type is TUNNEL
+             The destination tunnel ID (nonzero)
+
+Delay :: 4 bytes (Optional, unimplemented)
+         Present if delay included flag is set
+         Specifies delay in seconds
+</code></pre><p><strong>الأطوال النموذجية:</strong> - تسليم محلي: 1 بايت (العلم فقط) - تسليم ROUTER / الوجهة: 33 بايت (العلم + التجزئة) - تسليم TUNNEL: 37 بايت (العلم + التجزئة + tunnel ID)</p>
+<p><strong>أوصاف نوع التسليم:</strong></p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Value</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">LOCAL</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deliver to the local router (this router)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">DESTINATION</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deliver to a destination (client) identified by hash</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ROUTER</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deliver to another router identified by hash</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">TUNNEL</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deliver to a tunnel gateway router</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="رسائل-i2np">رسائل I2NP</h2>
+<p>المواصفات الكاملة للرسائل لجميع أنواع رسائل I2NP.</p>
+<h3 id="ملخص-أنواع-الرسائل">ملخص أنواع الرسائل</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Message</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Since</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">DatabaseStore</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">DatabaseLookup</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">DatabaseSearchReply</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">DeliveryStatus</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">10</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Garlic</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">11</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">TunnelData</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">18</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">TunnelGateway</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">19</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">20</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">TunnelBuild</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">21</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">TunnelBuildReply</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">22</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">VariableTunnelBuild</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">23</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">VariableTunnelBuildReply</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">24</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">ShortTunnelBuild</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">25</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.51</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">OutboundTunnelBuildReply</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">26</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.51</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+  </tbody>
+</table>
+**محجوز:** - النوع 0: محجوز - الأنواع 4-9: محجوز للاستخدام المستقبلي - الأنواع 12-17: محجوز للاستخدام المستقبلي - الأنواع 224-254: محجوز للرسائل التجريبية - النوع 255: محجوز للتوسعة المستقبلية
+<hr>
+<h3 id="databasestore-رسالة-تخزين-قاعدة-البيانات-النوع-1">DatabaseStore (رسالة تخزين قاعدة البيانات) (النوع 1)</h3>
+<p><strong>الغرض:</strong> عملية تخزين في قاعدة البيانات غير مطلوبة مسبقاً، أو استجابة لرسالة DatabaseLookup (رسالة البحث في قاعدة البيانات) ناجحة.</p>
+<p><strong>المحتويات:</strong> أيٌّ من LeaseSet (بنية بيانات في I2P) أو LeaseSet2 أو MetaLeaseSet أو EncryptedLeaseSet غير مضغوط، أو RouterInfo مضغوط.</p>
+<p><strong>تنسيق باستخدام رمز الرد:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| SHA256 Hash as key (32 bytes)        |
++                                       +
+|                                       |
++                                       +
+|                                       |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|type| reply token (4)   | reply_tunnelId
++----+----+----+----+----+----+----+----+
+     (4)               | reply gateway  |
++----+----+----+----+----+              +
+|       SHA256 hash (32 bytes)          |
++                                       +
+|                                       |
++                                  +----+
+|                                  |
++----+----+----+----+----+----+----+
+| data ...
++----+-//
+
+key :: 32 bytes
+       SHA256 hash (the &#34;real&#34; hash, not routing key)
+
+type :: 1 byte
+        Type identifier
+        bit 0:
+            0 = RouterInfo
+            1 = LeaseSet or variants
+        bits 3-1: (as of 0.9.38)
+            0: RouterInfo or LeaseSet (types 0 or 1)
+            1: LeaseSet2 (type 3)
+            2: EncryptedLeaseSet (type 5)
+            3: MetaLeaseSet (type 7)
+            4-7: Unsupported, invalid
+        bits 7-4:
+            Reserved, set to 0
+
+reply token :: 4 bytes
+               If greater than zero, a DeliveryStatusMessage is
+               requested with the Message ID set to the reply token
+               A floodfill router is also expected to flood the data
+               to the closest floodfill peers
+
+reply_tunnelId :: 4 bytes (only if reply token &gt; 0)
+                  TunnelId of the inbound gateway of the tunnel
+                  for the response
+                  If 0, reply is sent directly to reply gateway
+
+reply gateway :: 32 bytes (only if reply token &gt; 0)
+                 SHA256 hash of the RouterInfo
+                 If reply_tunnelId is nonzero: inbound gateway router
+                 If reply_tunnelId is zero: router to send reply to
+
+data :: Variable length
+        If type == 0: 2-byte Integer length + gzip-compressed RouterInfo
+        If type == 1: Uncompressed LeaseSet
+        If type == 3: Uncompressed LeaseSet2
+        If type == 5: Uncompressed EncryptedLeaseSet
+        If type == 7: Uncompressed MetaLeaseSet
+</code></pre><p><strong>التنسيق باستخدام رمز الرد == 0:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| SHA256 Hash as key (32 bytes)        |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|type|         0         | data ...
++----+----+----+----+----+-//
+</code></pre><p><strong>الشيفرة المصدرية:</strong> - <code>net.i2p.data.i2np.DatabaseStoreMessage</code> - <code>net.i2p.data.RouterInfo</code> (لبنية RouterInfo) - <code>net.i2p.data.LeaseSet</code> (لبنية LeaseSet)</p>
+<hr>
+<h3 id="databaselookup-استعلام-قاعدة-البيانات-النوع-2">DatabaseLookup (استعلام قاعدة البيانات) (النوع 2)</h3>
+<p><strong>الغرض:</strong> طلب للاستعلام عن عنصر في قاعدة بيانات الشبكة. تكون الاستجابة إما DatabaseStore (رسالة تخزين قاعدة البيانات) أو DatabaseSearchReply (رسالة ردّ البحث في قاعدة البيانات).</p>
+<p><strong>التنسيق:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| SHA256 hash as the key (32 bytes)    |
++                                       +
+|                                       |
++                                       +
+|                                       |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| SHA256 hash of the from router (32)  |
++    or reply tunnel gateway            +
+|                                       |
++                                       +
+|                                       |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|flag| reply_tunnelId (4)| size (2)|   |
++----+----+----+----+----+----+----+    +
+| SHA256 of key1 to exclude (32 bytes) |
++                                       +
+|                                       |
++                                  +----+
+|                                  |    |
++----+----+----+----+----+----+----+    +
+| SHA256 of key2 to exclude (32)       |
++                                       +
+~                                       ~
+|                                       |
++                                  +----+
+|                                  |    |
++----+----+----+----+----+----+----+    +
+|   Session key if reply encryption     |
++       requested (32 bytes)             +
+|                                       |
++                                  +----+
+|                                  |tags|
++----+----+----+----+----+----+----+----+
+|   Session tags if reply encryption    |
++       requested (variable)             +
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+
+key :: 32 bytes
+       SHA256 hash of the object to lookup
+
+from :: 32 bytes
+        If deliveryFlag == 0: SHA256 hash of RouterInfo (sender)
+        If deliveryFlag == 1: SHA256 hash of reply tunnel gateway
+
+flags :: 1 byte
+         Bit order: 76543210
+         bit 0: deliveryFlag
+             0 = send reply directly
+             1 = send reply to some tunnel
+         bit 1: encryptionFlag
+             Through 0.9.5: must be 0
+             As of 0.9.6: ignored
+             As of 0.9.7:
+                 0 = send unencrypted reply
+                 1 = send AES encrypted reply using key and tag
+         bits 3-2: lookup type flags
+             Through 0.9.5: must be 00
+             As of 0.9.6: ignored
+             As of 0.9.16:
+                 00 = ANY (deprecated, use LS or RI as of 0.9.16)
+                 01 = LS lookup (LeaseSet or variants)
+                 10 = RI lookup (RouterInfo)
+                 11 = exploration lookup (RouterInfo, non-floodfill)
+         bit 4: ECIESFlag
+             Before 0.9.46: ignored
+             As of 0.9.46:
+                 0 = send unencrypted or ElGamal reply
+                 1 = send ChaCha/Poly encrypted reply using key
+         bits 7-5:
+             Reserved, set to 0
+
+reply_tunnelId :: 4 bytes (only if deliveryFlag == 1)
+                  TunnelId of the tunnel to send reply to (nonzero)
+
+size :: 2 bytes
+        Integer (valid range: 0-512)
+        Number of peers to exclude from DatabaseSearchReply
+
+excludedPeers :: $size SHA256 hashes of 32 bytes each
+                 If lookup fails, exclude these peers from the reply
+                 If includes a hash of all zeroes, the request is
+                 exploratory (return non-floodfill routers only)
+
+reply_key :: 32 bytes (conditional, see encryption modes below)
+reply_tags :: 1 byte count + variable length tags (conditional)
+</code></pre><p><strong>أنماط تشفير الرد:</strong></p>
+<p><strong>ملاحظة:</strong> أصبحت ElGamal routers متقادمة اعتبارًا من API 0.9.58. وبما أن الإصدار الأدنى الموصى به من floodfill للاستعلام هو الآن 0.9.58، فلا يلزم على عمليات التنفيذ تطبيق التشفير لـ ElGamal floodfill routers. لا تزال وجهات ElGamal مدعومة.</p>
+<p>يُستخدم البت رقم 4 (ECIESFlag) بالاقتران مع البت رقم 1 (encryptionFlag) لتحديد وضع تشفير الرد:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Flag bits 4,1</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">From</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">To Router</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Reply</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">DH?</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0 0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">No encryption</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">n/a</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">No encryption</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0 1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElG</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElG</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">AES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">No</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">As of 0.9.7, deprecated 0.9.58</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1 0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElG</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">AEAD</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">No</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">As of 0.9.46, deprecated 0.9.58</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1 0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">AEAD</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">No</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">As of 0.9.49, current standard</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1 1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElG</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">AES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Yes</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">TBD, future</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1 1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">AEAD</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Yes</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">TBD, future</td>
+    </tr>
+  </tbody>
+</table>
+**بدون تشفير (الأعلام 0,0):**
+<p>لا وجود لـ reply_key أو tags أو reply_tags.</p>
+<p><strong>ElG إلى ElG (أعلام 0,1) - مهمل:</strong></p>
+<p>مدعوم اعتباراً من 0.9.7، وأُعلن إهماله اعتباراً من 0.9.58.</p>
+<pre tabindex="0"><code>reply_key :: 32 byte SessionKey (big-endian)
+             CSRNG(32) random data
+
+tags :: 1 byte Integer (1-32, typically 1)
+        Number of reply tags that follow
+
+reply_tags :: One or more 32-byte SessionTags
+              Each is CSRNG(32) random data
+</code></pre><p><strong>ECIES (مخطط تشفير مدمج بالمنحنيات الإهليلجية) إلى ElG (إل-غامال) (أعلام 1,0) - مهمل:</strong></p>
+<p>مدعوم اعتبارًا من 0.9.46، ومهمل اعتبارًا من 0.9.58.</p>
+<pre tabindex="0"><code>reply_key :: 32 byte ECIES SessionKey (big-endian)
+             CSRNG(32) random data
+
+tags :: 1 byte Integer (required value: 1)
+        Number of reply tags that follow
+
+reply_tags :: One 8-byte ECIES SessionTag
+              CSRNG(8) random data
+</code></pre><p>الرد هو رسالة ECIES Existing Session (ECIES: مخطط التشفير المتكامل للمنحنيات الإهليلجية) كما هو محدد في <a href="../../../../ar/docs/specs/ecies/">مواصفة ECIES</a>
+:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Session Tag (8 bytes)                 |
++----+----+----+----+----+----+----+----+
+| ChaCha20 encrypted payload            |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Poly1305 MAC (16 bytes)               |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+
+tag :: 8 byte reply_tag
+k :: 32 byte session key (the reply_key)
+n :: 0 (nonce)
+ad :: The 8 byte reply_tag
+payload :: Plaintext data (DSM or DSRM)
+ciphertext = ENCRYPT(k, n, payload, ad)
+</code></pre><p><strong>ECIES (نظام تشفير متكامل قائم على المنحنيات الإهليلجية) إلى ECIES (flags 1,0) - المعيار الحالي:</strong></p>
+<p>تقوم وجهة ECIES (مخطط التشفير المتكامل بالمنحنى البيضوي) أو router بإرسال استعلام إلى router يعتمد ECIES. مدعوم ابتداءً من الإصدار 0.9.49.</p>
+<p>نفس التنسيق كما في &ldquo;ECIES to ElG&rdquo; أعلاه. يتم تحديد تشفير رسالة الاستعلام في <a href="../../../../ar/docs/specs/ecies/#routers">ECIES (تشفير متكامل قائم على المنحنى الإهليلجي) Routers</a>
+. الجهة الطالبة مجهولة الهوية.</p>
+<p><strong>ECIES (مخطط التشفير المتكامل بالمنحنيات الإهليلجية) إلى ECIES مع DH (تبادل مفاتيح ديفي-هيلمان) (أعلام 1,1) - مستقبلاً:</strong></p>
+<p>لم يتم تحديده بالكامل بعد. انظر <a href="../../../../ar/proposals/156-ecies-routers/">المقترح 156</a>
+.</p>
+<p><strong>ملاحظات:</strong> - قبل 0.9.16، قد يكون المفتاح لـ RouterInfo أو LeaseSet (نفس فضاء المفاتيح، دون علم للتمييز) - تكون الردود المشفّرة مفيدة فقط عندما يكون الرد عبر tunnel - قد يكون عدد الوسوم المتضمّنة أكبر من واحد إذا نُفِّذت استراتيجيات استعلام DHT بديلة - مفتاح الاستعلام ومفاتيح الاستبعاد هي التجزئات &ldquo;الحقيقية&rdquo;، وليست مفاتيح التوجيه - قد تُعاد الأنواع 3 و5 و7 (متغيرات LeaseSet2) اعتبارًا من 0.9.38. انظر <a href="../../../../ar/proposals/123-new-netdb-entries/">Proposal 123</a>
+ - <strong>ملاحظات الاستعلام الاستكشافي:</strong> يُعرَّف الاستعلام الاستكشافي بأنه يُرجع قائمة بتجزئات غير floodfill قريبة من المفتاح. ومع ذلك، تختلف التطبيقات: تقوم Java فعلًا بالاستعلام عن مفتاح البحث لـ RI وتُعيد DatabaseStore إن وُجد؛ أما i2pd فلا يفعل ذلك. لذلك لا يُنصح باستخدام استعلام استكشافي للتجزئات المُستلمة سابقًا</p>
+<p><strong>الشيفرة المصدرية:</strong> - <code>net.i2p.data.i2np.DatabaseLookupMessage</code> - التشفير: <code>net.i2p.crypto.SessionKeyManager</code></p>
+<hr>
+<h3 id="databasesearchreply-رد-بحث-قاعدة-البيانات-النوع-3">DatabaseSearchReply (ردّ بحث قاعدة البيانات) (النوع 3)</h3>
+<p><strong>الغرض:</strong> الاستجابة لرسالة DatabaseLookup (بحث في قاعدة البيانات) التي فشلت.</p>
+<p><strong>المحتويات:</strong> قائمة بتجزئات router الأقرب إلى المفتاح المطلوب.</p>
+<p><strong>التنسيق:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| SHA256 hash as query key (32 bytes)  |
++                                       +
+|                                       |
++                                       +
+|                                       |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| num| peer_hashes (variable)           |
++----+                                  +
+|                                       |
+~                                       ~
+|                                       |
++    +----+----+----+----+----+----+----+
+|    | from (32 bytes)                  |
++----+                                  +
+|                                       |
++                                       +
+|                                       |
++                                       +
+|                                       |
++    +----+----+----+----+----+----+----+
+|    |
++----+
+
+key :: 32 bytes
+       SHA256 of the object being searched
+
+num :: 1 byte Integer
+       Number of peer hashes that follow (0-255)
+
+peer_hashes :: $num SHA256 hashes of 32 bytes each (total $num*32 bytes)
+               SHA256 of the RouterIdentity that the sender thinks is
+               close to the key
+
+from :: 32 bytes
+        SHA256 of the RouterInfo of the router this reply was sent from
+</code></pre><p><strong>الشيفرة المصدرية:</strong> - <code>net.i2p.data.i2np.DatabaseSearchReplyMessage</code></p>
+<hr>
+<h3 id="حالة-التسليم-النوع-10">حالة التسليم (النوع 10)</h3>
+<p><strong>الغرض:</strong> إقرار بسيط باستلام الرسالة. عادةً ما يُنشئه مُرسِل الرسالة ويُغلَّف ضمن Garlic Message (رسالة Garlic، نوع رسالة في I2P) مع الرسالة نفسها، ليُعاد من قِبل الوجهة.</p>
+<p><strong>المحتويات:</strong> مُعرِّف الرسالة المُسلَّمة ووقت الإنشاء أو الوصول.</p>
+<p><strong>التنسيق:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+----+----+----+----+
+| msg_id (4)            | time_stamp (8)                    |
++----+----+----+----+----+----+----+----+----+----+----+----+
+
+msg_id :: Integer (4 bytes)
+          Unique ID of the message we deliver the DeliveryStatus for
+          (see I2NP Message Header for details)
+
+time_stamp :: Date (8 bytes)
+              Time the message was successfully created or delivered
+</code></pre><p><strong>ملاحظات:</strong> - يُضبط الطابع الزمني دائمًا من قبل المُنشئ على الوقت الحالي. ومع ذلك، هناك عدة استخدامات لهذا في الشيفرة، وقد يُضاف المزيد في المستقبل - تُستخدم هذه الرسالة أيضًا كتأكيد على إنشاء الجلسة في SSU. في هذه الحالة، يُضبط معرّف الرسالة على رقم عشوائي، ويُضبط &ldquo;وقت الوصول&rdquo; على المعرّف الحالي على مستوى الشبكة، وهو 2 (أي <code>0x0000000000000002</code>) - عادةً ما يتم تغليف DeliveryStatus (رسالة حالة التسليم) داخل GarlicMessage (رسالة Garlic) وإرساله عبر tunnel لتقديم إقرار بالاستلام من دون كشف المُرسِل - تُستخدم لاختبار tunnel لقياس زمن الوصول والموثوقية</p>
+<p><strong>الشيفرة المصدرية:</strong> - <code>net.i2p.data.i2np.DeliveryStatusMessage</code> - يُستخدم في: <code>net.i2p.router.tunnel.InboundEndpointProcessor</code> لاختبار tunnel (نفق اتصال في I2P)</p>
+<hr>
+<h3 id="garlicmessage-النوع-11">GarlicMessage (النوع 11)</h3>
+<p><strong>تحذير:</strong> هذا هو التنسيق المستخدم لرسائل garlic المشفّرة بـ ElGamal (أسلوب I2P لتجميع عدة رسائل في رسالة واحدة). يختلف تنسيق رسائل ECIES-AEAD-X25519-Ratchet garlic اختلافًا كبيرًا. راجع <a href="../../../../ar/docs/specs/ecies/">مواصفة ECIES</a>
+ للاطلاع على التنسيق الحديث.</p>
+<p><strong>الغرض:</strong> يُستخدم لتغليف عدة رسائل I2NP مُشفّرة.</p>
+<p><strong>المحتويات:</strong> عند فك التشفير، توجد سلسلة من Garlic Cloves (وحدات رسائل ضمن garlic encryption) وبيانات إضافية، تُعرف أيضًا باسم Clove Set (مجموعة الفصوص).</p>
+<p><strong>تنسيق مشفّر:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| length (4)            | data          |
++----+----+----+----+----+              +
+|                                       |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+
+length :: 4 byte Integer
+          Number of bytes that follow (0 to 64 KB)
+
+data :: $length bytes
+        ElGamal encrypted data
+</code></pre><p><strong>البيانات المفكوك تشفيرها (Clove Set، مجموعة «الفصوص»):</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| num| clove 1 (variable)               |
++----+                                  +
+|                                       |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| clove 2 (variable)                    |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Certificate (3) | Message_ID (4)  |
++----+----+----+----+----+----+----+----+
+    Expiration (8)                  |
++----+----+----+----+----+----+----+----+
+
+num :: 1 byte Integer
+       Number of GarlicCloves to follow
+
+clove :: GarlicClove (see GarlicClove structure above)
+
+Certificate :: Always NULL (3 bytes total, all zeroes)
+
+Message_ID :: 4 byte Integer
+
+Expiration :: Date (8 bytes)
+</code></pre><p><strong>بالنسبة لتنسيق ECIES-X25519-AEAD-Ratchet (المعيار الحالي لـ routers):</strong></p>
+<p>راجع <a href="../../../../ar/docs/specs/ecies/">مواصفة ECIES</a>
+ و<a href="../../../../ar/proposals/144-ecies-x25519-aead-ratchet/">المقترح 144</a>
+.</p>
+<p><strong>الشفرة المصدرية:</strong> - <code>net.i2p.data.i2np.GarlicMessage</code> - التشفير: <code>net.i2p.crypto.elgamal.ElGamalAESEngine</code> (مهمل) - التشفير الحديث: <code>net.i2p.crypto.ECIES</code> حزم</p>
+<hr>
+<h3 id="tunneldata-النوع-18">TunnelData (النوع 18)</h3>
+<p><strong>الغرض:</strong> رسالة تُرسَل من بوابة الـtunnel أو أحد المشاركين فيه إلى المشارك التالي أو نقطة النهاية. البيانات ذات طول ثابت، وتحتوي على رسائل I2NP تكون مجزأة، ومجموعة على دفعات، ومضافًا إليها الحشو، ومشفَّرة.</p>
+<p><strong>التنسيق:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| tunnelID (4)          | data (1024)   |
++----+----+----+----+----+              +
+|                                       |
+~                                       ~
+|                                       |
++                   +----+----+----+----+
+|                   |
++----+----+----+----+
+
+tunnelId :: 4 bytes
+            TunnelId identifying the tunnel this message is directed at
+            Nonzero
+
+data :: 1024 bytes
+        Payload data, fixed to 1024 bytes
+</code></pre><p><strong>بنية الحمولة (1024 بايت):</strong></p>
+<pre tabindex="0"><code>Bytes 0-15: Initialization Vector (IV) for AES encryption
+Bytes 16-1023: Encrypted tunnel message data (1008 bytes)
+</code></pre><p><strong>ملاحظات:</strong> - يتم تعيين معرّف رسالة I2NP لِـ TunnelData (رسالة بيانات النفق) إلى رقم عشوائي جديد عند كل قفزة - يتم تحديد تنسيق رسالة tunnel (ضمن البيانات المُشفَّرة) في <a href="../../../../ar/docs/specs/implementation/">Tunnel Message Specification (مواصفات رسائل النفق)</a>
+ - تفك كل قفزة طبقة واحدة باستخدام AES-256 في وضع CBC - يُحدَّث IV (مُتّجه التهيئة) عند كل قفزة باستخدام البيانات بعد فك التشفير - الحجم الإجمالي هو 1,028 بايت بالضبط (4 tunnelId + 1024 بيانات) - هذه هي الوحدة الأساسية لحركة مرور tunnel - تحمل رسائل TunnelData رسائل I2NP المُجزّأة (مثل GarlicMessage (رسالة Garlic) وDatabaseStore (تخزين قاعدة البيانات)، إلخ.)</p>
+<p><strong>الشيفرة المصدرية:</strong> - <code>net.i2p.data.i2np.TunnelDataMessage</code> - ثابت: <code>TunnelDataMessage.DATA_LENGTH = 1024</code> - المعالجة: <code>net.i2p.router.tunnel.InboundGatewayProcessor</code></p>
+<hr>
+<h3 id="tunnelgateway-بوابة-الـ-tunnel-النوع-19">TunnelGateway (بوابة الـ tunnel) (النوع 19)</h3>
+<p><strong>الغرض:</strong> يغلف رسالة I2NP أخرى لإرسالها إلى tunnel عبر بوابة الدخول الخاصة به.</p>
+<p><strong>التنسيق:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+-//
+| tunnelId (4)          | length (2)| data...
++----+----+----+----+----+----+----+-//
+
+tunnelId :: 4 bytes
+            TunnelId identifying the tunnel this message is directed at
+            Nonzero
+
+length :: 2 byte Integer
+          Length of the payload
+
+data :: $length bytes
+        Actual payload of this message
+</code></pre><p><strong>ملاحظات:</strong> - الحمولة عبارة عن رسالة I2NP ذات ترويسة قياسية بطول 16 بايت - تُستخدم لحقن الرسائل في tunnels من الـ router المحلي - تقوم البوابة بتجزئة الرسالة المضمّنة عند الحاجة - بعد التجزئة، تُغلَّف الأجزاء داخل رسائل TunnelData - TunnelGateway لا يُرسَل مطلقًا عبر الشبكة؛ إنه نوع رسالة داخلي يُستخدَم قبل معالجة tunnel</p>
+<p><strong>الشيفرة المصدرية:</strong> - <code>net.i2p.data.i2np.TunnelGatewayMessage</code> - المعالجة: <code>net.i2p.router.tunnel.OutboundGatewayProcessor</code></p>
+<hr>
+<h3 id="datamessage-رسالة-بيانات-النوع-20">DataMessage (رسالة بيانات) (النوع 20)</h3>
+<p><strong>الغرض:</strong> تُستخدم من قِبَل Garlic Messages (رسائل Garlic) وGarlic Cloves (فصوص Garlic) لتغليف بيانات اعتباطية (عادةً بيانات تطبيق مُشفّرة من طرف إلى طرف).</p>
+<p><strong>التنسيق:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+-//-+
+| length (4)            | data...    |
++----+----+----+----+----+----+-//-+
+
+length :: 4 bytes
+          Length of the payload
+
+data :: $length bytes
+        Actual payload of this message
+</code></pre><p><strong>ملاحظات:</strong> - لا تحتوي هذه الرسالة على أي معلومات التوجيه ولن يتم إرسالها مطلقاً &ldquo;بدون تغليف&rdquo; - لا يُستخدم إلا داخل Garlic messages (رسائل غارليك) - يحتوي عادةً على بيانات تطبيق مُشفّرة من طرف إلى طرف (HTTP وIRC والبريد الإلكتروني، إلخ) - تكون البيانات عادةً حمولة مُشفّرة بـ ElGamal/AES أو ECIES - أقصى طول عملي يبلغ نحو 61.2 KB بسبب قيود تجزئة رسائل tunnel</p>
+<p><strong>الشيفرة المصدرية:</strong> - <code>net.i2p.data.i2np.DataMessage</code></p>
+<hr>
+<h3 id="tunnelbuild-النوع-21">TunnelBuild (النوع 21)</h3>
+<p><strong>تم إهماله.</strong> استخدم VariableTunnelBuild (النوع 23) أو ShortTunnelBuild (النوع 25).</p>
+<p><strong>الغرض:</strong> طلب إنشاء tunnel بطول ثابت لـ 8 قفزات.</p>
+<p><strong>التنسيق:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Record 0 (528 bytes)                  |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Record 1 (528 bytes)                  |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Record 7 (528 bytes)                  |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+
+Just 8 BuildRequestRecords attached together
+Record size: 528 bytes
+Total size: 8 × 528 = 4,224 bytes
+</code></pre><p><strong>ملاحظات:</strong> - اعتبارًا من 0.9.48، قد يحتوي على ECIES-X25519 BuildRequestRecords (سجلات طلب إنشاء باستخدام ECIES-X25519). راجع <a href="../../../../ar/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ (إنشاء tunnel باستخدام ECIES) - راجع <a href="../../../../ar/docs/specs/implementation/">Tunnel Creation Specification</a>
+ (مواصفات إنشاء tunnel) للتفاصيل - يجب ضبط معرّف الرسالة I2NP لهذه الرسالة وفقًا لمواصفات إنشاء tunnel - على الرغم من ندرته في شبكة اليوم (تم استبداله بـ VariableTunnelBuild، بناء tunnel متغيّر)، لا يزال من الممكن استخدامه لـtunnels طويلة جدًا ولم يُعلن تقادمه رسميًا - Routers يجب أن تستمر في تنفيذ ذلك للتوافق - التنسيق الثابت المكوّن من 8 سجلات غير مرن ويهدر عرض النطاق الترددي لـtunnels الأقصر</p>
+<p><strong>الشيفرة المصدرية:</strong> - <code>net.i2p.data.i2np.TunnelBuildMessage</code> - ثابت: <code>TunnelBuildMessageBase.MAX_RECORD_COUNT = 8</code></p>
+<hr>
+<h3 id="tunnelbuildreply-النوع-22">TunnelBuildReply (النوع 22)</h3>
+<p><strong>مهمل.</strong> استخدم VariableTunnelBuildReply (رد بناء tunnel متغير) (النوع 24) أو OutboundTunnelBuildReply (رد بناء tunnel صادر) (النوع 26).</p>
+<p><strong>الغرض:</strong> ردّ إنشاء tunnel بطول ثابت لـ 8 قفزات.</p>
+<p><strong>التنسيق:</strong></p>
+<p>نفس التنسيق مثل TunnelBuildMessage (رسالة بناء tunnel)، مع BuildResponseRecords (سجلات استجابة البناء) بدلاً من BuildRequestRecords (سجلات طلب البناء).</p>
+<pre tabindex="0"><code>Total size: 8 × 528 = 4,224 bytes
+</code></pre><p><strong>ملاحظات:</strong> - اعتبارًا من 0.9.48، قد يحتوي على ECIES-X25519 BuildResponseRecords (سجلات استجابة البناء). راجع <a href="../../../../ar/docs/specs/implementation/">إنشاء Tunnel باستخدام ECIES</a>
+ - راجع <a href="../../../../ar/docs/specs/implementation/">مواصفات إنشاء Tunnel</a>
+ للتفاصيل - يجب ضبط معرّف رسالة I2NP لهذه الرسالة وفقًا لمواصفات إنشاء Tunnel - على الرغم من أنه نادرًا ما يُرى في شبكة اليوم (استُبدل بـ VariableTunnelBuildReply (ردّ بناء Tunnel متغيّر))، لا يزال من الممكن استخدامه لـ tunnels طويلة جدًا ولم يُعلن تقادمه رسميًا - يجب على Routers الاستمرار في تنفيذ ذلك لضمان التوافق</p>
+<p><strong>الشفرة المصدرية:</strong> - <code>net.i2p.data.i2np.TunnelBuildReplyMessage</code></p>
+<hr>
+<h3 id="variabletunnelbuild-النوع-23">VariableTunnelBuild (النوع 23)</h3>
+<p><strong>الغرض:</strong> إنشاء tunnel متغيّر الطول لعدد يتراوح بين 1 و8 قفزات. يدعم كِلا نوعَي routers: ElGamal وECIES-X25519.</p>
+<p><strong>التنسيق:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| num| BuildRequestRecords (variable)   |
++----+----+----+----+----+----+----+----+
+
+num :: 1 byte Integer
+       Valid values: 1-8
+
+BuildRequestRecords :: $num records of 528 bytes each
+
+Record size: 528 bytes
+Total size: 1 + ($num × 528) bytes
+</code></pre><p><strong>ملاحظات:</strong> - اعتبارًا من 0.9.48، قد يحتوي على ECIES-X25519 BuildRequestRecords (سجلات طلب البناء). راجع <a href="../../../../ar/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ - تم تقديمه في إصدار router 0.7.12 (2009) - قد لا يُرسَل إلى مشاركي الـ tunnel الأقدم من الإصدار 0.7.12 - راجع <a href="../../../../ar/docs/specs/implementation/">Tunnel Creation Specification</a>
+ للتفاصيل - يجب ضبط معرّف رسالة I2NP وفقًا لمواصفة إنشاء الـ tunnel - <strong>العدد النموذجي للسجلات:</strong> 4 (لـ tunnel من 4 قفزات) - <strong>الحجم الإجمالي النموذجي:</strong> 1 + (4 × 528) = 2,113 بايت - هذه هي رسالة بناء الـ tunnel القياسية لـ ElGamal routers - عادةً ما تستخدم ECIES routers ShortTunnelBuild (رسالة بناء Tunnel مختصرة، النوع 25) بدلًا من ذلك</p>
+<p><strong>شفرة المصدر:</strong> - <code>net.i2p.data.i2np.VariableTunnelBuildMessage</code></p>
+<hr>
+<h3 id="variabletunnelbuildreply-النوع-24">VariableTunnelBuildReply (النوع 24)</h3>
+<p><strong>الغرض:</strong> رد بناء tunnel بطول متغير لـ 1-8 قفزات. يدعم كلا نوعي routers: ElGamal وECIES-X25519.</p>
+<p><strong>التنسيق:</strong></p>
+<p>نفس التنسيق مثل VariableTunnelBuildMessage، مع BuildResponseRecords بدلاً من BuildRequestRecords.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| num| BuildResponseRecords (variable)  |
++----+----+----+----+----+----+----+----+
+
+num :: 1 byte Integer
+       Valid values: 1-8
+
+BuildResponseRecords :: $num records of 528 bytes each
+
+Record size: 528 bytes
+Total size: 1 + ($num × 528) bytes
+</code></pre><p><strong>ملاحظات:</strong> - اعتبارًا من 0.9.48، قد يحتوي على ECIES-X25519 (مخطط تشفير قائم على المنحنى الإهليلجي X25519) BuildResponseRecords (سجلات استجابة البناء). انظر <a href="../../../../ar/docs/specs/implementation/">إنشاء ECIES Tunnel</a>
+ - تم تقديمه في إصدار router 0.7.12 (2009) - قد لا يتم إرساله إلى مشاركي tunnel قبل الإصدار 0.7.12 - انظر <a href="../../../../ar/docs/specs/implementation/">مواصفة إنشاء Tunnel</a>
+ للتفاصيل - يجب تعيين معرف رسالة I2NP وفقًا لمواصفة إنشاء tunnel - <strong>العدد النموذجي للسجلات:</strong> 4 - <strong>الحجم الإجمالي النموذجي:</strong> 2,113 بايت</p>
+<p><strong>شفرة المصدر:</strong> - <code>net.i2p.data.i2np.VariableTunnelBuildReplyMessage</code></p>
+<hr>
+<h3 id="shorttunnelbuild-النوع-25">ShortTunnelBuild (النوع 25)</h3>
+<p><strong>Purpose:</strong> رسائل بناء tunnel قصيرة لـ ECIES-X25519 routers فقط. تم تقديمها في إصدار API 0.9.51 (الإصدار 1.5.0، أغسطس 2021). هذا هو المعيار الحالي لعمليات بناء ECIES tunnel.</p>
+<p><strong>الصيغة:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| num| ShortBuildRequestRecords (var)   |
++----+----+----+----+----+----+----+----+
+
+num :: 1 byte Integer
+       Valid values: 1-8
+
+ShortBuildRequestRecords :: $num records of 218 bytes each
+
+Record size: 218 bytes
+Total size: 1 + ($num × 218) bytes
+</code></pre><p><strong>ملاحظات:</strong> - تم تقديمه في إصدار router 0.9.51 (الإصدار 1.5.0، أغسطس 2021) - قد لا يُرسَل إلى مشاركي tunnel قبل إصدار API (واجهة برمجة التطبيقات) 0.9.51 - انظر <a href="../../../../ar/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ للمواصفة الكاملة (ECIES: نظام تشفير منحنى بيضاوي متكامل) - انظر <a href="../../../../ar/proposals/157-new-tbm/">Proposal 157</a>
+ للتبرير - <strong>العدد المعتاد من السجلات:</strong> 4 - <strong>الحجم الإجمالي المعتاد:</strong> 1 + (4 × 218) = 873 بايت - <strong>توفير في عرض النطاق:</strong> أصغر بنسبة 59% من VariableTunnelBuild (تنسيق بناء Tunnel متغيّر) (873 مقابل 2,113 بايت) - <strong>فائدة في الأداء:</strong> تتسع 4 سجلات قصيرة في رسالة tunnel واحدة؛ بينما يتطلب VariableTunnelBuild ثلاث رسائل tunnel - هذا هو الآن تنسيق بناء tunnel القياسي لـ ECIES-X25519 tunnels - تشتق السجلات المفاتيح عبر HKDF (وظيفة اشتقاق مفتاح مبنية على الهاش) بدلاً من تضمينها صراحةً</p>
+<p><strong>الشيفرة المصدرية:</strong> - <code>net.i2p.data.i2np.ShortTunnelBuildMessage</code> - الثابت: <code>ShortEncryptedBuildRecord.RECORD_SIZE = 218</code></p>
+<hr>
+<h3 id="outboundtunnelbuildreply-النوع-26">OutboundTunnelBuildReply (النوع 26)</h3>
+<p><strong>الغرض:</strong> مرسلة من نقطة النهاية الصادرة لـ tunnel جديد إلى المُنشئ. خاصة بـ ECIES-X25519 routers فقط. قُدِّمت في إصدار واجهة برمجة التطبيقات 0.9.51 (الإصدار 1.5.0، أغسطس 2021).</p>
+<p><strong>التنسيق:</strong></p>
+<p>نفس التنسيق مثل ShortTunnelBuildMessage, مع ShortBuildResponseRecords بدلاً من ShortBuildRequestRecords.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| num| ShortBuildResponseRecords (var)  |
++----+----+----+----+----+----+----+----+
+
+num :: 1 byte Integer
+       Valid values: 1-8
+
+ShortBuildResponseRecords :: $num records of 218 bytes each
+
+Record size: 218 bytes
+Total size: 1 + ($num × 218) bytes
+</code></pre><p><strong>ملاحظات:</strong> - تم تقديمه في إصدار router 0.9.51 (الإصدار 1.5.0، أغسطس 2021) - راجع <a href="../../../../ar/docs/specs/implementation/">إنشاء Tunnel ECIES</a>
+ للمواصفة الكاملة - <strong>العدد النموذجي للسجلات:</strong> 4 - <strong>الحجم الإجمالي النموذجي:</strong> 873 بايت - يُرسل هذا الرد من نقطة النهاية الصادرة (OBEP) إلى مُنشئ tunnel عبر tunnel صادر تم إنشاؤه حديثًا - يوفر تأكيدًا على أن جميع القفزات قبلت بناء tunnel</p>
+<p><strong>الشيفرة المصدرية:</strong> - <code>net.i2p.data.i2np.OutboundTunnelBuildReplyMessage</code></p>
+<hr>
+<h2 id="المراجع">المراجع</h2>
+<h3 id="المواصفات-الرسمية">المواصفات الرسمية</h3>
+<ul>
+<li><strong><a href="../../../../ar/docs/specs/i2np/">مواصفة I2NP</a>
+</strong> - المواصفة الكاملة لتنسيق رسائل I2NP</li>
+<li><strong><a href="../../../../ar/docs/specs/common-structures/">البُنى الشائعة</a>
+</strong> - أنواع البيانات والبُنى المستخدمة في جميع أنحاء I2P</li>
+<li><strong><a href="../../../../ar/docs/specs/implementation/">إنشاء Tunnel</a>
+</strong> - إنشاء Tunnel باستخدام ElGamal (مهمل)</li>
+<li><strong><a href="../../../../ar/docs/specs/implementation/">إنشاء Tunnel بـ ECIES</a>
+</strong> - إنشاء Tunnel باستخدام ECIES-X25519 (الحالي)</li>
+<li><strong><a href="../../../../ar/docs/specs/implementation/">رسالة Tunnel</a>
+</strong> - تنسيق رسالة Tunnel وتعليمات التسليم</li>
+<li><strong><a href="../../../../ar/docs/specs/ntcp2/">مواصفة NTCP2</a>
+</strong> - بروتوكول النقل عبر TCP</li>
+<li><strong><a href="../../../../ar/docs/specs/ssu2/">مواصفة SSU2</a>
+</strong> - بروتوكول النقل عبر UDP</li>
+<li><strong><a href="../../../../ar/docs/specs/ecies/">مواصفة ECIES</a>
+</strong> - تشفير ECIES-X25519-AEAD-Ratchet</li>
+<li><strong><a href="../../../../ar/docs/specs/cryptography/">مواصفة التشفير</a>
+</strong> - بدائيات تشفير منخفضة المستوى</li>
+<li><strong><a href="../../../../ar/docs/specs/i2cp/">مواصفة I2CP</a>
+</strong> - مواصفة بروتوكول العميل</li>
+<li><strong><a href="../../../../ar/docs/api/datagrams/">مواصفة Datagram</a>
+</strong> - تنسيقات Datagram2 وDatagram3</li>
+</ul>
+<h3 id="المقترحات">المقترحات</h3>
+<ul>
+<li><strong><a href="../../../../ar/proposals/123-new-netdb-entries/">الاقتراح 123</a>
+</strong> - مدخلات netDB جديدة (LeaseSet2, EncryptedLeaseSet, MetaLeaseSet)</li>
+<li><strong><a href="../../../../ar/proposals/144-ecies-x25519-aead-ratchet/">الاقتراح 144</a>
+</strong> - تشفير ECIES-X25519-AEAD-Ratchet</li>
+<li><strong><a href="../../../../ar/proposals/154-ecies-lookups/">الاقتراح 154</a>
+</strong> - استعلام قاعدة بيانات مُشفّر</li>
+<li><strong><a href="../../../../ar/proposals/156-ecies-routers/">الاقتراح 156</a>
+</strong> - ECIES routers</li>
+<li><strong><a href="../../../../ar/proposals/157-new-tbm/">الاقتراح 157</a>
+</strong> - رسائل إنشاء tunnel أصغر (تنسيق قصير)</li>
+<li><strong><a href="../../../../ar/proposals/159-ssu2/">الاقتراح 159</a>
+</strong> - نقل SSU2</li>
+<li><strong><a href="../../../../ar/proposals/161-ri-dest-padding/">الاقتراح 161</a>
+</strong> - حشو قابل للضغط</li>
+<li><strong><a href="../../../../ar/proposals/163-datagram2/">الاقتراح 163</a>
+</strong> - Datagram2 وDatagram3</li>
+<li><strong><a href="../../../../ar/proposals/167-service-records/">الاقتراح 167</a>
+</strong> - معلمات سجل خدمة LeaseSet</li>
+<li><strong><a href="../../../../ar/proposals/168-tunnel-bandwidth/">الاقتراح 168</a>
+</strong> - معلمات عرض النطاق لبناء tunnel</li>
+<li><strong><a href="../../../../ar/proposals/169-pq-crypto/">الاقتراح 169</a>
+</strong> - تشفير هجين ما بعد الكم</li>
+</ul>
+<h3 id="التوثيق">التوثيق</h3>
+<ul>
+<li><strong><a href="../../../../ar/docs/overview/garlic-routing/">التوجيه بالثوم</a>
+</strong> - تجميع الرسائل بطبقات</li>
+<li><strong><a href="../../../../ar/docs/legacy/elgamal-aes/">ElGamal/AES</a>
+</strong> - مخطط تشفير مُهمل</li>
+<li><strong><a href="../../../../ar/docs/specs/implementation/">تنفيذ Tunnel</a>
+</strong> - التجزئة والمعالجة</li>
+<li><strong><a href="../../../../ar/docs/specs/common-structures/">قاعدة بيانات الشبكة</a>
+</strong> - جدول تجزئة موزع</li>
+<li><strong><a href="../../../../ar/docs/specs/ntcp2/">نقل NTCP2</a>
+</strong> - مواصفة نقل TCP</li>
+<li><strong><a href="../../../../ar/docs/specs/ssu2/">نقل SSU2</a>
+</strong> - مواصفة نقل UDP</li>
+<li><strong><a href="../../../../ar/docs/overview/tech-intro/">مقدمة تقنية</a>
+</strong> - نظرة عامة على معمارية I2P</li>
+</ul>
+<h3 id="الشفرة-المصدرية">الشفرة المصدرية</h3>
+<ul>
+<li><strong><a href="https://i2pgit.org/I2P_Developers/i2p.i2p">مستودع Java I2P</a>
+</strong> - التنفيذ الرسمي بلغة Java</li>
+<li><strong><a href="https://github.com/i2p/i2p.i2p">مرآة GitHub</a>
+</strong> - مرآة GitHub لـ Java I2P</li>
+<li><strong><a href="https://github.com/PurpleI2P/i2pd">مستودع i2pd</a>
+</strong> - تنفيذ بلغة C++</li>
+</ul>
+<h3 id="المواقع-الرئيسية-للشيفرة-المصدرية">المواقع الرئيسية للشيفرة المصدرية</h3>
+<p><strong>Java I2P (i2pgit.org/I2P_Developers/i2p.i2p):</strong> - <code>core/java/src/net/i2p/data/i2np/</code> - تنفيذات رسائل I2NP - <code>core/java/src/net/i2p/crypto/</code> - تنفيذات التشفير - <code>router/java/src/net/i2p/router/tunnel/</code> - معالجة tunnel - <code>router/java/src/net/i2p/router/transport/</code> - تنفيذات النقل</p>
+<p><strong>الثوابت والقيم:</strong> - <code>I2NPMessage.MAX_SIZE = 65536</code> - أقصى حجم لرسالة I2NP - <code>I2NPMessageImpl.HEADER_LENGTH = 16</code> - حجم الترويسة القياسي - <code>TunnelDataMessage.DATA_LENGTH = 1024</code> - حمولة رسالة Tunnel - <code>EncryptedBuildRecord.RECORD_SIZE = 528</code> - سجل بناء طويل - <code>ShortEncryptedBuildRecord.RECORD_SIZE = 218</code> - سجل بناء قصير - <code>TunnelBuildMessageBase.MAX_RECORD_COUNT = 8</code> - الحد الأقصى للسجلات لكل عملية بناء</p>
+<hr>
+<h2 id="الملحق-أ-إحصاءات-الشبكة-والحالة-الراهنة">الملحق أ: إحصاءات الشبكة والحالة الراهنة</h2>
+<h3 id="تركيبة-الشبكة-اعتبارا-من-أكتوبر-2025">تركيبة الشبكة (اعتبارًا من أكتوبر 2025)</h3>
+<h3 id="الحد-الأدنى-لمتطلبات-router-الموجه">الحد الأدنى لمتطلبات Router (الموجّه)</h3>
+<ul>
+<li><strong>إصدار API:</strong> 0.9.16+ (لتوافق EdDSA مع الشبكة)</li>
+<li><strong>الحد الأدنى الموصى به:</strong> API 0.9.51+ (بُنى tunnel القصيرة بتقنية ECIES)</li>
+<li><strong>الحد الأدنى الحالي لـ floodfills:</strong> API 0.9.58+ (إيقاف دعم router المعتمد على ElGamal)</li>
+<li><strong>متطلب قادم:</strong> Java 17+ (اعتبارًا من الإصدار 2.11.0، ديسمبر 2025)</li>
+</ul>
+<h3 id="متطلبات-عرض-النطاق-الترددي">متطلبات عرض النطاق الترددي</h3>
+<ul>
+<li><strong>الحد الأدنى:</strong> 128 KBytes/sec (علم N أو أعلى) لـ floodfill</li>
+<li><strong>الموصى به:</strong> 256 KBytes/sec (علم O) أو أعلى</li>
+<li><strong>متطلبات floodfill:</strong>
+<ul>
+<li>حد أدنى لعرض النطاق الترددي 128 KB/sec</li>
+<li>مدة تشغيل مستقرة (&gt;95% مُوصى بها)</li>
+<li>زمن وصول منخفض (&lt;500ms إلى الأقران)</li>
+<li>اجتياز اختبارات الصحة (زمن قائمة الانتظار، تأخر المهام)</li>
+</ul>
+</li>
+</ul>
+<h3 id="إحصائيات-tunnel">إحصائيات Tunnel</h3>
+<ul>
+<li><strong>الطول النموذجي لـ tunnel:</strong> 3-4 قفزات</li>
+<li><strong>الحد الأقصى لطول الـ tunnel:</strong> 8 قفزات (نظري، نادر الاستخدام)</li>
+<li><strong>العمر النموذجي لـ tunnel:</strong> 10 دقائق</li>
+<li><strong>معدل نجاح بناء الـ tunnel:</strong> أكثر من 85% لدى routers ذات اتصال جيد</li>
+<li><strong>صيغة رسالة بناء الـ tunnel:</strong>
+<ul>
+<li>ECIES (نظام تشفير متكامل بالمنحنيات البيضوية) routers: ShortTunnelBuild (سجلات بحجم 218 بايت)</li>
+<li>tunnels المختلطة: VariableTunnelBuild (سجلات بحجم 528 بايت)</li>
+</ul>
+</li>
+</ul>
+<h3 id="مقاييس-الأداء">مقاييس الأداء</h3>
+<ul>
+<li><strong>وقت بناء tunnel:</strong> 1-3 ثانية (نموذجي)</li>
+<li><strong>الكمون من طرف إلى طرف:</strong> 0.5-2 ثانية (نموذجي، 6-8 قفزات إجمالًا)</li>
+<li><strong>معدل النقل:</strong> محدود بعرض نطاق tunnel (عادةً 10-50 KB/sec لكل tunnel)</li>
+<li><strong>أقصى حجم مخطط بيانات (datagram):</strong> 10 KB موصى به (61.2 KB حد أقصى نظري)</li>
+</ul>
+<hr>
+<h2 id="الملحق-ب-الميزات-المهملة-والمحذوفة">الملحق ب: الميزات المهملة والمحذوفة</h2>
+<h3 id="تمت-إزالته-بالكامل-لم-يعد-مدعوما">تمت إزالته بالكامل (لم يعد مدعومًا)</h3>
+<ul>
+<li><strong>نقل NTCP</strong> - أزيل في الإصدار 0.9.50 (مايو 2021)</li>
+<li><strong>نقل SSU v1</strong> - أزيل من Java I2P في الإصدار 2.4.0 (ديسمبر 2023)</li>
+<li><strong>نقل SSU v1</strong> - أزيل من i2pd في الإصدار 2.44.0 (نوفمبر 2022)</li>
+<li><strong>أنواع تواقيع RSA</strong> - غير مسموح بها اعتبارا من API 0.9.28</li>
+</ul>
+<h3 id="مهمل-مدعوم-ولكن-غير-موصى-به">مهمل (مدعوم ولكن غير موصى به)</h3>
+<ul>
+<li><strong>ElGamal (خوارزمية تشفير/توقيع) routers</strong> - أُعلن تقادمها اعتباراً من API 0.9.58 (مارس 2023)
+<ul>
+<li>لا تزال وجهات ElGamal مدعومة لأغراض التوافق العكسي</li>
+<li>يجب على routers الجديدة استخدام ECIES-X25519 (مخطط تشفير منحنيات إهليلجية باستخدام X25519) حصرياً</li>
+</ul>
+</li>
+<li><strong>TunnelBuild (type 21)</strong> - أُعلن تقادمه لصالح VariableTunnelBuild وShortTunnelBuild
+<ul>
+<li>ما زال مُنفّذاً من أجل tunnels الطويلة جداً (&gt;8 قفزات)</li>
+</ul>
+</li>
+<li><strong>TunnelBuildReply (type 22)</strong> - أُعلن تقادمه لصالح VariableTunnelBuildReply وOutboundTunnelBuildReply</li>
+<li><strong>تشفير ElGamal/AES</strong> - أُعلن تقادمه لصالح ECIES-X25519-AEAD-Ratchet
+<ul>
+<li>لا يزال مستخدماً للوجهات القديمة</li>
+</ul>
+</li>
+<li><strong>سجلات طلب البناء ECIES الطويلة (528 بايت)</strong> - أُعلن تقادمها لصالح التنسيق القصير (218 بايت)
+<ul>
+<li>لا تزال قيد الاستخدام في tunnels المختلطة ذات قفزات ElGamal</li>
+</ul>
+</li>
+</ul>
+<h3 id="الجدول-الزمني-لدعم-الإصدارات-القديمة">الجدول الزمني لدعم الإصدارات القديمة</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Feature</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Introduced</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Deprecated</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Removed</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">NTCP</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2003</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2018 (0.9.36)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2021 (0.9.50)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Replaced by NTCP2</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SSU v1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2004</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2022 (0.9.54)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2023 (Java) / 2022 (i2pd)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Replaced by SSU2</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElGamal routers</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2003</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2023 (0.9.58)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">TBD</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Destinations still supported</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">RSA signatures</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2015</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2017</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2017 (0.9.28)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Never widely used</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">TunnelBuild</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2004</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2009 (0.7.12)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Not removed</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Still supported for long tunnels</td>
+    </tr>
+  </tbody>
+</table>
+---
+<h2 id="الملحق-ج-التطورات-المستقبلية">الملحق ج: التطورات المستقبلية</h2>
+<h3 id="التشفير-ما-بعد-الكمي">التشفير ما بعد الكمّي</h3>
+<p><strong>الحالة:</strong> نسخة تجريبية اعتبارًا من الإصدار 2.10.0 (سبتمبر 2025)، وستصبح الإعداد الافتراضي في 2.11.0 (ديسمبر 2025)</p>
+<p><strong>التنفيذ:</strong> - نهج هجين يجمع بين X25519 الكلاسيكي وخوارزمية ما بعد الكم MLKEM (ML-KEM-768) - متوافق رجعياً مع البنية التحتية الحالية ECIES-X25519 - يستخدم Signal Double Ratchet (خوارزمية «التدرّج المزدوج» من Signal) مع مادة المفتاح الكلاسيكية وPQ (ما بعد الكم) - راجع <a href="../../../../ar/proposals/169-pq-crypto/">Proposal 169</a>
+ للتفاصيل</p>
+<p><strong>مسار الترحيل:</strong> 1. الإصدار 2.10.0 (سبتمبر 2025): متاح كخيار تجريبي 2. الإصدار 2.11.0 (ديسمبر 2025): مفعل افتراضيًا 3. الإصدارات المستقبلية: سيصبح إلزاميًا لاحقًا</p>
+<h3 id="الميزات-المخطط-لها">الميزات المخطط لها</h3>
+<ul>
+<li><strong>تحسينات IPv6</strong> - دعم أفضل لـ IPv6 وآليات الانتقال</li>
+<li><strong>تقييد السرعة لكل tunnel</strong> - تحكم دقيق في عرض النطاق الترددي لكل tunnel</li>
+<li><strong>مقاييس محسّنة</strong> - مراقبة الأداء والتشخيص بشكل أفضل</li>
+<li><strong>تحسينات البروتوكول</strong> - تقليل الحمولة الإضافية وتحسين الكفاءة</li>
+<li><strong>تحسين اختيار floodfill</strong> - توزيع أفضل لقاعدة بيانات الشبكة</li>
+</ul>
+<h3 id="مجالات-البحث">مجالات البحث</h3>
+<ul>
+<li><strong>تحسين طول Tunnel</strong> - طول tunnel ديناميكي يعتمد على نموذج التهديد</li>
+<li><strong>حشو متقدم</strong> - تحسينات في مقاومة تحليل حركة المرور</li>
+<li><strong>مخططات تشفير جديدة</strong> - استعداد لتهديدات الحوسبة الكمّية</li>
+<li><strong>التحكم في الازدحام</strong> - تعامل أفضل مع حمل الشبكة</li>
+<li><strong>دعم الأجهزة المحمولة</strong> - تحسينات للأجهزة والشبكات المحمولة</li>
+</ul>
+<hr>
+<h2 id="الملحق-د-إرشادات-التنفيذ">الملحق د: إرشادات التنفيذ</h2>
+<h3 id="للتنفيذات-الجديدة">للتنفيذات الجديدة</h3>
+<p><strong>الحد الأدنى من المتطلبات:</strong> 1. دعم ميزات API الخاصة بالإصدار 0.9.51+ 2. تنفيذ تشفير ECIES-X25519-AEAD-Ratchet (مخطط تشفير مع آلية ratchet يعتمد X25519 وAEAD) 3. دعم بروتوكولات النقل NTCP2 وSSU2 4. تنفيذ رسائل ShortTunnelBuild (رسائل بناء tunnel مختصرة) (سجلات بحجم 218 بايت) 5. دعم متغيرات LeaseSet2 (الأنواع 3 و5 و7) 6. استخدام تواقيع EdDSA (Ed25519؛ خوارزمية توقيع بمنحنيات بيضوية)</p>
+<p><strong>موصى به:</strong> 1. دعم التشفير الهجين بعد الكم (اعتباراً من 2.11.0) 2. تنفيذ معلمات عرض النطاق الترددي لكل tunnel 3. دعم تنسيقات Datagram2 وDatagram3 4. تنفيذ خيارات سجل الخدمة في LeaseSets 5. اتّباع المواصفات الرسمية على /docs/specs/</p>
+<p><strong>غير مطلوب:</strong> 1. دعم ElGamal router (مُهمل) 2. دعم النقل القديم (SSU1, NTCP) 3. BuildRequestRecords (سجلات طلب البناء) طويلة لـ ECIES (528 بايت لـ ECIES tunnels الخالصة) 4. رسائل TunnelBuild/TunnelBuildReply (استخدم المتغيرات Variable أو Short)</p>
+<h3 id="الاختبار-والتحقق-من-الصحة">الاختبار والتحقق من الصحة</h3>
+<p><strong>الامتثال للبروتوكول:</strong> 1. اختبار قابلية التشغيل البيني مع I2P router الرسمي المكتوب بلغة Java 2. اختبار قابلية التشغيل البيني مع i2pd C++ router 3. التحقق من صحة تنسيقات الرسائل وفقًا للمواصفات 4. اختبار دورات إنشاء/تفكيك tunnel 5. التحقق من التشفير/فك التشفير باستخدام متجهات الاختبار</p>
+<p><strong>اختبار الأداء:</strong> 1. قياس معدلات نجاح بناء tunnel (يجب أن تكون &gt;85%) 2. الاختبار بأطوال tunnel مختلفة (2-8 قفزات) 3. التحقق من صحة التجزئة وإعادة التجميع 4. الاختبار تحت الحمل (tunnels متعددة ومتزامنة) 5. قياس زمن الوصول من طرف إلى طرف</p>
+<p><strong>اختبارات الأمان:</strong> 1. التحقق من تنفيذ التشفير (استخدم متجهات الاختبار) 2. اختبار منع هجمات إعادة الإرسال 3. التحقق من صحة معالجة انتهاء صلاحية الرسائل 4. الاختبار ضد الرسائل سيئة التشكيل 5. التحقق من سلامة توليد الأرقام العشوائية</p>
+<h3 id="مزالق-التنفيذ-الشائعة">مزالق التنفيذ الشائعة</h3>
+<ol>
+<li><strong>تنسيقات تعليمات التسليم المربكة</strong> - Garlic clove (رسالة فرعية ضمن garlic encryption) مقابل رسالة tunnel</li>
+<li><strong>اشتقاق المفاتيح غير الصحيح</strong> - استخدام HKDF لسجلات البناء القصيرة</li>
+<li><strong>معالجة معرّف الرسالة</strong> - عدم ضبطه بشكل صحيح لعمليات بناء tunnel</li>
+<li><strong>مشكلات التجزئة</strong> - عدم احترام الحد العملي البالغ 61.2 KB</li>
+<li><strong>أخطاء ترتيب البايتات (Endianness)</strong> - Java تستخدم big-endian (الأكثر أهمية أولاً) لجميع الأعداد الصحيحة</li>
+<li><strong>التعامل مع تاريخ الانتهاء</strong> - التنسيق القصير يلتف في 7 فبراير 2106</li>
+<li><strong>توليد المجموع الاختباري (Checksum)</strong> - لا يزال مطلوبًا حتى إن لم يُتحقَّق منه</li>
+</ol>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../ar/docs/specs/ecies-hybrid/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">تشفير هجين باستخدام ECIES-X25519-AEAD-Ratchet (آلية تدوير المفاتيح تدريجياً)</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../ar/docs/specs/ntcp2/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">بروتوكول النقل NTCP2</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/ar/docs/specs/i2np.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">ابقَ على اطلاع بأخبار I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="أدخل بريدك الإلكتروني" required>
+                            <button type="submit">اشترك</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="../../../../ar/financial-support/">تبرع</a></li>
+                    <li><a href="../../../../ar/docs/overview/intro/">مقدمة I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>المجتمع</h3>
+                <ul>
+                    <li><a href="../../../../ar/get-involved/">شارك معنا</a></li>
+                    <li><a href="../../../../ar/blog/">مدونة</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">المنتديات الرسمية</a></li>
+                    <li><a href="../../../../ar/contact/">اتصل بنا</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>الموارد</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">إحصائيات I2P</a></li>
+                    <li><a href="../../../../ar/papers/">بحث</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">ستورمي كلاود</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 مشروع الإنترنت الخفي. مرخص تحت Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../ar/privacy/">الخصوصية</a>
+                <a href="../../../../ar/terms/">الشروط</a>
+                <a href="../../../../ar/about/media/">الصحافة</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="إغلاق">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>استطلاع المجتمع</h2>
+            <p class="modal-subtitle">نود أن نسمع منك</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                يساعد تصويتك في تشكيل مستقبل I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

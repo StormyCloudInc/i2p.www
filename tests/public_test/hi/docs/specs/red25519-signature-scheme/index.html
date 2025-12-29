@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Red25519 डिजिटल हस्ताक्षर योजना | I2P - अदृश्य इंटरनेट परियोजना</title>
+
+    <meta name="description" content="ब्लाइंडेड Destinations (I2P के पते/गंतव्य) बनाने के लिए पुनः-यादृच्छीकरण-योग्य हस्ताक्षर योजना">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Red25519 डिजिटल हस्ताक्षर योजना | I2P - अदृश्य इंटरनेट परियोजना">
+    <meta property="og:description" content="ब्लाइंडेड Destinations (I2P के पते/गंतव्य) बनाने के लिए पुनः-यादृच्छीकरण-योग्य हस्ताक्षर योजना">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/hi/docs/specs/red25519-signature-scheme/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P बीटा साइट अब लाइव है समस्याओं के लिए ई-मेल करें stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="बैनर बंद करें" title="बैनर बंद करें">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../hi/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../hi/about/" class="">के बारे में</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../hi/about/">समीक्षा</a></li>
+                            <li><a href="../../../../hi/papers/">अनुसंधान पत्र</a></li>
+                            <li><a href="../../../../hi/about/media/">प्रेस</a></li>
+                            <li><a href="../../../../hi/contact/">संपर्क करें</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../hi/docs/" class="active">दस्तावेज़</a></li>
+                    <li><a href="../../../../hi/downloads/" class="">डाउनलोड्स</a></li>
+                    <li><a href="../../../../hi/blog/" class="">ब्लॉग</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../hi/get-involved/" class="">शामिल हों</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../hi/get-involved/">समीक्षा</a></li>
+                            <li><a href="../../../../hi/feedback/">फीचर सुझाव</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">hi</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">अंग्रेजी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">स्पेनिश</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">कोरियाई</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">चीनी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">रूसी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">चेक</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">जर्मन</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">फ्रेंच</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">तुर्की</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">वियतनामी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/red25519-signature-scheme/"
+                                class="lang-option active">हिन्दी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">अरबी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">पुर्तगाली</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../hi/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../hi/downloads/" class="btn btn-primary">I2P प्राप्त करें</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#अवलकन">अवलोकन</a></li>
+    <li><a href="#पररण">प्रेरणा</a></li>
+    <li><a href="#डजइन">डिज़ाइन</a>
+      <ul>
+        <li><a href="#मखय-हसतकषर-यजन">मुख्य हस्ताक्षर योजना</a></li>
+        <li><a href="#ed25519-एक-एलपटक-करव-डजटल-हसतकषर-सकम-कजय-क-red25519-ed25519-क-वकलपक-परतनधतव-म-परवरतत-करन">Ed25519 (एक एलिप्टिक-कर्व डिजिटल हस्ताक्षर स्कीम) कुंजियों को Red25519 (Ed25519 का वैकल्पिक प्रतिनिधित्व) में परिवर्तित करना</a></li>
+      </ul>
+    </li>
+    <li><a href="#वनरदश">विनिर्देश</a>
+      <ul>
+        <li><a href="#परभषए">परिभाषाएँ</a></li>
+        <li><a href="#red25519-करपटगरफ-म-परयकत-एक-हसतकषर-एलगरदम-क-नम">Red25519 (क्रिप्टोग्राफी में प्रयुक्त एक हस्ताक्षर एल्गोरिदम का नाम)</a></li>
+        <li><a href="#एनकडग-और-डकडग">एन्कोडिंग और डिकोडिंग</a></li>
+        <li><a href="#reddsa-एक-करपटगरफक-हसतकषर-यजन-क-फकशनस">RedDSA (एक क्रिप्टोग्राफ़िक हस्ताक्षर योजना) के फ़ंक्शन्स</a></li>
+        <li><a href="#रपतरण-फकशनस">रूपांतरण फ़ंक्शन्स</a></li>
+      </ul>
+    </li>
+    <li><a href="#सरकष-सबध-नहतरथ">सुरक्षा संबंधी निहितार्थ</a>
+      <ul>
+        <li><a href="#सरकष-ऑडट-क-सथत">सुरक्षा ऑडिट की स्थिति</a></li>
+      </ul>
+    </li>
+    <li><a href="#सगतत">संगतता</a></li>
+    <li><a href="#करयनवयन-सबध-टपपणय">कार्यान्वयन संबंधी टिप्पणियाँ</a></li>
+    <li><a href="#परकषण-वकटर">परीक्षण वेक्टर</a>
+      <ul>
+        <li><a href="#टसट-वकटर-1">टेस्ट वेक्टर 1</a></li>
+        <li><a href="#परकषण-वकटर-2">परीक्षण वेक्टर 2</a></li>
+      </ul>
+    </li>
+    <li><a href="#सदरभ">संदर्भ</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../hi/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../hi/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../hi/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Red25519 डिजिटल हस्ताक्षर योजना</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">यह अनुवाद मशीन लर्निंग का उपयोग करके उत्पन्न किया गया था और 100% सटीक नहीं हो सकता है।</span>
+    
+    
+    <a href="../../../../en/docs/specs/red25519-signature-scheme/" class="disclaimer-link">अंग्रेज़ी संस्करण देखें</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Red25519 डिजिटल हस्ताक्षर योजना</h1>
+                    
+                        <p class="article-description">ब्लाइंडेड Destinations (I2P के पते/गंतव्य) बनाने के लिए पुनः-यादृच्छीकरण-योग्य हस्ताक्षर योजना</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="अवलकन">अवलोकन</h2>
+<p>यह दस्तावेज़ एक पुनः-यादृच्छीकृत करने योग्य हस्ताक्षर योजना निर्दिष्ट करता है, जो ब्लाइंड किए जा सकने वाले Destinations (I2P में पब्लिक-की आधारित पता/पहचान) बनाने के लिए उपयुक्त है। इसके अतिरिक्त, मौजूदा Ed25519 Destinations को ब्लाइंड करने के लिए भी इसका उपयोग किया जा सकता है, हालांकि प्रभावशीलता में थोड़ी कमी आती है।</p>
+<p>Red25519 I2P routers में संस्करण 0.9.39 (21 मार्च, 2019 को जारी) से पूरी तरह से कार्यशील है। उत्पादन परिनियोजन के 17 महीनों के बाद, इस विनिर्देश को संस्करण 0.9.47 (अगस्त 2020) में अंतिम रूप दिया गया। यह हस्ताक्षर योजना I2P नेटवर्क में हस्ताक्षर प्रकार 11 (RedDSA_SHA512_Ed25519) के रूप में कार्य करती है।</p>
+<h2 id="पररण">प्रेरणा</h2>
+<p>प्रस्ताव 123 (New netDB Entries) एक एन्क्रिप्टेड LeaseSet2 प्रारूप परिभाषित करता है जो न्यूनतम अधिकार के सिद्धांत का पालन करता है: प्रत्येक नेटवर्क सहभागी को उसकी भूमिका के लिए आवश्यक जानकारी ही दी जाती है। विशेष रूप से, floodfill पर प्रकाशित एन्क्रिप्टेड LeaseSet2 उस Destination (I2P में गंतव्य पहचान) का खुलासा नहीं करता जिसके लिए वह है, और Leases केवल वही देख सकता है जिसके पास उस Destination का पूर्व ज्ञान हो। हालाँकि, प्रकाशित करते समय floodfills को एन्क्रिप्टेड LeaseSet2s का प्रमाणीकरण करने में सक्षम होना अभी भी आवश्यक है, और क्लाइंट्स को अतिरिक्त रूप से यह सुनिश्चित करना होता है कि यह प्रमाणीकरण स्वयं Destination द्वारा लागू किया गया था।</p>
+<p>प्रस्ताव 123 इसे Destination (I2P में गंतव्य पहचान) की हस्ताक्षर कुंजियों को ब्लाइंड करके प्राप्त करता है। ब्लाइंड की गई कुंजियों का उपयोग ऐसे हस्ताक्षर बनाने में किया जा सकता है जिन्हें floodfills द्वारा सत्यापित किया जा सके, और क्लाइंट यह सुनिश्चित कर सकते हैं कि केवल Destination ही वे हस्ताक्षर बना सकता था। इसलिए, ब्लाइंडिंग के लिए प्रयोज्य एक हस्ताक्षर योजना निर्दिष्ट करना आवश्यक है।</p>
+<p><strong>प्रस्ताव 123 की स्थिति पर नोट</strong>: प्रस्ताव 123 के कुछ हिस्से संस्करण 0.9.38 से क्रमिक रूप से लागू और तैनात किए गए हैं, तथा 0.9.39 में Red25519 समर्थन जोड़ा गया। एन्क्रिप्टेड LeaseSet2 कार्यक्षमता उत्पादन के लिए तैयार है और गोपनीयता-वर्धित छिपी सेवाओं के लिए I2P नेटवर्क में सक्रिय रूप से उपयोग की जा रही है।</p>
+<h2 id="डजइन">डिज़ाइन</h2>
+<h3 id="मखय-हसतकषर-यजन">मुख्य हस्ताक्षर योजना</h3>
+<p>यहाँ निर्दिष्ट हस्ताक्षर योजना, Red25519, Zcash प्रोटोकॉल विनिर्देशन (Sapling और उसके बाद) के अनुभाग 5.4.6 में परिभाषित RedDSA की एक instantiation (विशिष्ट अवतरण) है। RedDSA एक Schnorr-आधारित हस्ताक्षर योजना है जो कुंजी के पुनः-यादृच्छिकीकरण का समर्थन करती है। इसके निम्नलिखित फंक्शन्स हैं:</p>
+<p><strong>GENERATE_PRIVATE()</strong> : समान-वितरित यादृच्छिक निजी कुंजी लौटाता है.</p>
+<p><strong>DERIVE_PUBLIC(sk)</strong> : दी गई निजी कुंजी के अनुरूप सार्वजनिक कुंजी लौटाता है।</p>
+<p><strong>GENERATE_RANDOM()</strong> : एक यादृच्छिक scalar (स्केलर) लौटाता है, जो किसी keypair (कुंजी-युग्म) के पुनः-यादृच्छिकीकरण के लिए उपयुक्त है।</p>
+<p><strong>RANDOMIZE_PRIVATE(sk, alpha)</strong> : एक गुप्त स्केलर alpha का उपयोग करके एक निजी कुंजी को पुनः-यादृच्छीकृत करता है।</p>
+<p><strong>RANDOMIZE_PUBLIC(vk, alpha)</strong> : एक गोपनीय स्केलर alpha का उपयोग करके सार्वजनिक कुंजी को पुनः यादृच्छिक करता है।</p>
+<p><strong>SIGN(sk, m)</strong> : दिए गए संदेश m पर निजी कुंजी sk द्वारा एक हस्ताक्षर लौटाता है.</p>
+<p><strong>VERIFY(vk, m, sig)</strong> : सार्वजनिक कुंजी vk और संदेश m के विरुद्ध हस्ताक्षर sig का सत्यापन करता है। यदि हस्ताक्षर मान्य है तो true लौटाता है, अन्यथा false।</p>
+<p>किसी दिए गए कुंजी-युग्म (sk, vk) के लिए निम्न संबंध सत्य होता है:</p>
+<pre tabindex="0"><code>RANDOMIZE_PUBLIC(vk, alpha) == DERIVE_PUBLIC(RANDOMIZE_PRIVATE(sk, alpha))
+</code></pre><h3 id="ed25519-एक-एलपटक-करव-डजटल-हसतकषर-सकम-कजय-क-red25519-ed25519-क-वकलपक-परतनधतव-म-परवरतत-करन">Ed25519 (एक एलिप्टिक-कर्व डिजिटल हस्ताक्षर स्कीम) कुंजियों को Red25519 (Ed25519 का वैकल्पिक प्रतिनिधित्व) में परिवर्तित करना</h3>
+<p>Ed25519 keys (एक डिजिटल हस्ताक्षर कुंजी प्रकार) को मौजूदा Ed25519 Destinations (I2P की public-key-आधारित पहचान) के पुनः-यादृच्छिकीकरण के समर्थन हेतु अस्थायी रूप से एक-तरफ़ा रूपांतरण द्वारा Red25519 keys (Ed25519 का पुनः-रैंडमाइज़ेबल रूप) में बदला जा सकता है। अन्य sigtypes (हस्ताक्षर प्रकार) संगत नहीं हैं।</p>
+<p>हम निम्नलिखित रूपांतरण फ़ंक्शनों को परिभाषित करते हैं:</p>
+<p><strong>CONVERT_ED25519_PRIVATE(privkey)</strong> : दिए गई Ed25519 निजी कुंजी के अनुरूप Red25519 निजी कुंजी लौटाता है।</p>
+<p><strong>CONVERT_ED25519_PUBLIC(pubkey)</strong> : दिए गई Ed25519 सार्वजनिक कुंजी के अनुरूप Red25519 सार्वजनिक कुंजी वापस करता है।</p>
+<p>किसी दिए गए Ed25519 कुंजी-युग्म (privkey, pubkey) के लिए निम्नलिखित संबंध सत्य होता है:</p>
+<pre tabindex="0"><code>CONVERT_ED25519_PUBLIC(pubkey) == DERIVE_PUBLIC(CONVERT_ED25519_PRIVATE(privkey))
+</code></pre><h2 id="वनरदश">विनिर्देश</h2>
+<h3 id="परभषए">परिभाषाएँ</h3>
+<p><strong>B</strong> : <a href="https://www.rfc-editor.org/rfc/rfc8032.html">RFC 8032</a>
+ में वर्णित Ed25519 का आधार बिंदु।</p>
+<p><strong>L</strong> : Ed25519 का order (समूह का क्रम) 2^252 + 27742317777372353535851937790883648493 है, जैसा कि <a href="https://www.rfc-editor.org/rfc/rfc8032.html">RFC 8032</a>
+ में दिया गया है।</p>
+<p><strong>[s] B</strong> : s द्वारा आधार बिंदु का स्थिर आधार स्केलर गुणन।</p>
+<p><strong>[s] A</strong> : A का s द्वारा परिवर्ती-आधार स्केलर गुणन।</p>
+<p><strong>x || y</strong> : दो बाइट एरे x और y को जोड़ना।</p>
+<h3 id="red25519-करपटगरफ-म-परयकत-एक-हसतकषर-एलगरदम-क-नम">Red25519 (क्रिप्टोग्राफी में प्रयुक्त एक हस्ताक्षर एल्गोरिदम का नाम)</h3>
+<p>Red25519 योजना (RedDSA का एक विशिष्ट रूप) RedDSA (डिजिटल हस्ताक्षर योजना) को निम्नलिखित के साथ विशेषीकृत करती है:</p>
+<ul>
+<li>G := Curve25519 के Edwards रूप पर बिंदुओं का समूह। विशेष रूप से, इसका अर्थ है कि Red25519 क्रम L वाले prime-order subgroup (अभाज्य-क्रम वाला उपसमूह) का उपयोग करता है, और cofactor (सहगुणक) h_G का मान 8 है।</li>
+<li>P_G := Ed25519 का आधार बिंदु B।</li>
+<li>l_H := 512</li>
+<li>H(x) := SHA-512(&ldquo;I2P_Red25519H(x)&rdquo; || x)</li>
+</ul>
+<p><strong>हैश फ़ंक्शन चयन पर टिप्पणी</strong>: Red25519, Zcash RedDSA में उपयोग होने वाले BLAKE2b-512 के बजाय SHA-512 का उपयोग करता है। इस डिज़ाइन विकल्प की भरपाई नीचे वर्णित length-prefixing (संदेश की लंबाई को पहले जोड़ने की तकनीक) सुरक्षा से की जाती है। I2P Proposal 148 भविष्य में Duplicate Message Identification (DMI; दुहराए गए संदेश की पहचान) और Length Extension Attacks (LEA; लंबाई विस्तार हमले) के विरुद्ध उन्नत सुरक्षा तथा बेहतर प्रदर्शन के लिए BLAKE2b-512 पर स्थानांतरण का सुझाव देता है।</p>
+<p>RedDSA यह मानता है कि H(x) को ऐसे क्रिप्टोग्राफ़िक हैश फ़ंक्शन से इंस्टैंशिएट किया गया है जो length extension attacks (ऐसे हमले जिनमें हमलावर हैश के आउटपुट से संदेश की लंबाई बढ़ाकर वैध हैश बना सकता है) के प्रति सुरक्षित है। SHA-512 अपने आप में इस शर्त को पूरा नहीं करता। इसे दूर करने के लिए, हम यह आवश्यक करते हैं कि संदेशों के प्रारंभ में उनकी लंबाई के prefix-free encoding (ऐसी एन्कोडिंग जिसमें कोई भी वैध कोडवर्ड किसी अन्य वैध कोडवर्ड का उपसर्ग न हो) का प्रीफ़िक्स जोड़ा जाए:</p>
+<pre tabindex="0"><code>len_u16(M) || M
+</code></pre><p>जहाँ <code>len_u16(M)</code> M की लंबाई का 2-बाइट प्रतिनिधित्व है, लिटल-एंडियन (कम-महत्व वाले बाइट पहले) में, ताकि स्केलर और बिंदुओं की लिटल-एंडियन एन्कोडिंग के साथ सुसंगत रहे।</p>
+<p>संदेश 65534 बाइट्स से अधिक लंबे नहीं होने चाहिए। 65535 की लंबाई संभावित भविष्य के विस्तारों के लिए आरक्षित है।</p>
+<p><strong>Security Note</strong>: हैश फ़ंक्शन में पब्लिक की (vk) का समावेश, और हस्ताक्षर में 80 रैंडम बाइट्स के उपयोग का संयोजन, प्रारंभिक RedDSA डिज़ाइनों में खोजी गई SURK-CMA (Strong Unforgeability with Re-randomized Keys under Chosen Message Attack — चुने हुए संदेश हमले के तहत पुनः-रैंडमाइज़्ड कुंजियों के साथ मजबूत नकली-रोधीता) कमजोरियों से सुरक्षा सुनिश्चित करता है। यह इम्प्लीमेंटेशन NCC Group Zcash ऑडिट (Finding NCC-Zcash2018-009) से सुरक्षा सुधारों को सम्मिलित करता है।</p>
+<h3 id="एनकडग-और-डकडग">एन्कोडिंग और डिकोडिंग</h3>
+<p>Red25519 निजी कुंजियाँ mod L स्केलर होती हैं, जिन्हें little-endian निरूपण (कम-से-उच्च बाइट क्रम) में एन्कोड किया जाता है। हम <code>DECODE_SCALAR</code> और <code>ENCODE_SCALAR</code> फ़ंक्शनों को परिभाषित करते हैं, जो स्केलर के बाइट ऐरे और पूर्णांक रूपों के बीच रूपांतरण के लिए हैं।</p>
+<p>Red25519 सार्वजनिक कुंजियाँ Curve25519 के एडवर्ड्स रूप पर स्थित बिंदु होती हैं। इनका एन्कोडिंग y-निर्देशांक के 255-बिट little-endian (बाइट क्रम जिसमें सबसे कम महत्त्व वाला बाइट पहले होता है) निरूपण के रूप में किया जाता है, जिसके बाद x-निर्देशांक के चिन्ह (sign) को दर्शाने वाला एक बिट जोड़ा जाता है। यह एन्कोडिंग Ed25519 के समान ही है। हम बिंदु के बाइट ऐरे और निर्देशांक रूपों के बीच रूपांतरण हेतु <code>DECODE_POINT</code> और <code>ENCODE_POINT</code> फ़ंक्शन परिभाषित करते हैं।</p>
+<h3 id="reddsa-एक-करपटगरफक-हसतकषर-यजन-क-फकशनस">RedDSA (एक क्रिप्टोग्राफ़िक हस्ताक्षर योजना) के फ़ंक्शन्स</h3>
+<p>कार्यान्वयन में सुविधा के लिए, हम नीचे Red25519 के लिए पहले से विशेषीकृत RedDSA (डिजिटल हस्ताक्षर योजना) के फ़ंक्शन (तथा कई सहायक फ़ंक्शन) स्पष्ट रूप से प्रस्तुत करते हैं। RedDSA फ़ंक्शनों के सामान्य विनिर्देशन के लिए, कार्यान्वयनकर्ताओं को Zcash Protocol Specification के अनुभाग 5.4.6 का संदर्भ लेना चाहिए।</p>
+<pre tabindex="0"><code>HStar(prefix1, prefix2, m) :=
+    h = SHA-512()
+    h.input(&#34;I2P_Red25519H(x)&#34;)
+    h.input(prefix1)
+    h.input(prefix2)
+
+    h.input(len(m) &amp; 0xff)
+    h.input((len(m) &gt;&gt; 8) &amp; 0xff)
+    h.input(m)
+
+    s = h.digest()
+    return s mod L
+
+GENERATE_PRIVATE :=
+    s = 64 random bytes
+    return s mod L
+
+DERIVE_PUBLIC(sk) := [sk] B
+
+GENERATE_RANDOM :=
+    s = 64 random bytes
+    return s mod L
+
+RANDOMIZE_PRIVATE(sk, alpha) := (sk + alpha) mod L
+
+RANDOMIZE_PUBLIC(vk, alpha) := vk + [alpha] B
+
+SIGN(sk, m) :=
+    T = 80 random bytes
+    vkBytes = ENCODE_POINT(DERIVE_PUBLIC(sk))
+    r = HStar(T, vkBytes, m)
+
+    R = [r] B
+    Rbytes = ENCODE_POINT(R)
+
+    c = HStar(Rbytes, vkBytes, m)
+    S = (r + (c * sk)) mod L
+
+    return Rbytes || ENCODE_SCALAR(S)
+
+VERIFY(vk, m, sig) :=
+    Rbytes = sig[0..32]
+    Sbytes = sig[32..64]
+
+    R = DECODE_POINT(Rbytes)
+    if R is invalid:
+        return false
+
+    S = DECODE_SCALAR(Sbytes)
+    if S &gt;= L:
+        return false
+
+    vkBytes = ENCODE_POINT(vk)
+    c = HStar(Rbytes, vkBytes, m)
+    return ((-[S] B) + R + ([c] vk)).multiplyByCofactor().isIdentity()
+</code></pre><h3 id="रपतरण-फकशनस">रूपांतरण फ़ंक्शन्स</h3>
+<pre tabindex="0"><code>CONVERT_ED25519_PRIVATE(privkey) :=
+    s = SHA-512(privkey)[0..32]
+    s[0] = s[0] &amp; 248
+    s[31] = (s[31] &amp; 63) | 64
+    return s
+
+CONVERT_ED25519_PUBLIC(pubkey) := pubkey
+</code></pre><p>ध्यान दें कि <code>CONVERT_ED25519_PRIVATE</code> का कार्यान्वयन Ed25519 निजी कुंजी से Ed25519 सार्वजनिक कुंजी व्युत्पन्न करते समय गोपनीय स्केलर s की गणना के समकक्ष है, जैसा कि <a href="https://www.rfc-editor.org/rfc/rfc8032.html">RFC 8032</a>
+ के अनुभाग 5.1.5 के चरण 1-3 में निर्दिष्ट है।</p>
+<h2 id="सरकष-सबध-नहतरथ">सुरक्षा संबंधी निहितार्थ</h2>
+<p>Red25519 Destination (I2P का गंतव्य/पहचान) को पुनः-रैंडमाइज़ करना और फिर उसका उपयोग करके हस्ताक्षर बनाना Destination के बारे में कोई जानकारी लीक नहीं करता, क्योंकि <code>RANDOMIZE_PRIVATE</code> के माध्यम से उत्पन्न Red25519 निजी कुंजियों का वितरण <code>GENERATE_PRIVATE</code> के माध्यम से उत्पन्न निजी कुंजियों के वितरण के समान होता है, और <code>DERIVE_PUBLIC</code> निर्धारक है।</p>
+<p><code>CONVERT_ED25519_PRIVATE</code> के माध्यम से Ed25519 (एक elliptic-curve आधारित डिजिटल हस्ताक्षर एल्गोरिथ्म) निजी कुंजियों को Red25519 (Ed25519 से व्युत्पन्न कुंजी-रूप) में रूपांतरित करने पर वही वितरण प्राप्त नहीं होता। फिर भी, सुरक्षा में होने वाली कमी को हम निम्नलिखित कारणों से स्वीकार्य मानते हैं:</p>
+<ul>
+<li>Ed25519 स्केलरों का समुच्चय, Red25519 स्केलरों के समुच्चय की तुलना में लगभग आधा है (संभव Ed25519 स्केलर 2^251 हैं, और Red25519 के लिए L ~= 2^252 संभावित स्केलर हैं)। इसलिए सुरक्षा में हानि अधिकतम लगभग 2 का गुणांक, या लगभग 1 बिट है (क्योंकि संभव है कि हमने संयोगवश ऐसा Red25519 स्केलर चुना हो जो एक वैध Ed25519 स्केलर भी हो)।</li>
+<li>मौजूदा Ed25519 डेस्टिनेशन पहले ही ऐतिहासिक रूप से नेटवर्क पर उजागर हो चुके हैं, और यह मानकर चलना चाहिए कि दुर्भावनापूर्ण floodfills ने उन्हें पहले ही सूचीबद्ध कर लिया है।</li>
+</ul>
+<p><strong>महत्वपूर्ण</strong>: जो उपयोगकर्ता इस सुरक्षा में आई कमी को लेकर चिंतित हैं, उन्हें अपने Destinations के लिए sigtype (हस्ताक्षर प्रकार) के रूप में Red25519 (signature type 11) का, Ed25519 (signature type 7) के बजाय, उपयोग करना चाहिए।</p>
+<p>ध्यान दें कि ऊपर दिया गया तर्क re-randomization scalar alpha (दोबारा-यादृच्छिकीकरण में प्रयुक्त स्केलर alpha) पर लागू नहीं होता; हर बार एक पक्षपाती alpha चुने जाने पर कुंजी के बारे में जानकारी लीक होती है, क्योंकि additive re-randomization (जोड़ात्मक दोबारा-यादृच्छिकीकरण) एक one-time pad (एक-बार-उपयोग एन्क्रिप्शन योजना) की तरह व्यवहार करता है।</p>
+<h3 id="सरकष-ऑडट-क-सथत">सुरक्षा ऑडिट की स्थिति</h3>
+<p><strong>महत्वपूर्ण प्रकटीकरण</strong>: I2P, जिसमें Red25519 भी शामिल है, ने कभी औपचारिक तृतीय-पक्ष सुरक्षा ऑडिट नहीं कराया है। अंतर्निहित RedDSA डिज़ाइन 2018 में Zcash Sapling प्रोटोकॉल ऑडिट के हिस्से के रूप में NCC Group द्वारा सुरक्षा समीक्षा से गुज़रा, जहाँ सुरक्षा समस्याओं की पहचान की गई और उन्हें ठीक किया गया। हालाँकि, SHA-512 (BLAKE2b-512 के स्थान पर) के साथ I2P के इस विशिष्ट क्रियान्वयन तथा I2P डोमेन पृथक्करण, दोनों का स्वतंत्र रूप से विश्लेषण नहीं किया गया है।</p>
+<p>str4d द्वारा ed25519-java का संदर्भ क्रियान्वयन का एक स्वतंत्र तृतीय-पक्ष ऑडिट हुआ था; हालांकि यह Red25519 के क्रियान्वयन से पहले था और इसने केवल Ed25519 की कार्यक्षमता को कवर किया, Red25519 के विस्तारों को नहीं।</p>
+<p>Red25519 को परिनियोजित करने वाले उपयोगकर्ताओं को इस सीमा को समझना चाहिए और अपने threat model (खतरा मॉडल) के आधार पर सुरक्षा संबंधी समझौतों का मूल्यांकन करना चाहिए।</p>
+<h2 id="सगतत">संगतता</h2>
+<p>I2P के वे संस्करण जो Red25519 (एक हस्ताक्षर एल्गोरिथ्म) का समर्थन करते हैं (संस्करण 0.9.39 और उसके बाद), उससे हस्ताक्षरित नेटवर्क डेटा संरचनाओं का सत्यापन कर सकेंगे। जो I2P संस्करण Red25519 का समर्थन नहीं करते, वे इसे अज्ञात हस्ताक्षर मानेंगे, और उन डेटा संरचनाओं को खारिज भी कर सकते हैं (MAY)।</p>
+<p><strong>परिनियोजन समयरेखा</strong>: - <strong>0.9.39</strong> (मार्च 2019): floodfills में Encrypted LS2 (कूटित leaseSet संस्करण 2) समर्थन के साथ पहला कार्यान्वयन - <strong>0.9.40</strong> (मई 2019): Encrypted LS2 के लिए प्रति‑क्लाइंट प्राधिकरण - <strong>0.9.41</strong> (अगस्त 2019): Meta LS2 तथा ऑफ़लाइन कुंजियों सहित Encrypted LS2 - <strong>0.9.43</strong> (फ़रवरी 2020): Encrypted LS2 के लिए b32 समर्थन - <strong>0.9.47</strong> (अगस्त 2020): विनिर्देश का अंतिमीकरण - <strong>2.10.0</strong> (अक्टूबर 2025): वर्तमान नेटवर्क संस्करण (0.9.67+ के समकक्ष)</p>
+<p>उपयोगकर्ताओं को अपेक्षा करनी चाहिए कि Red25519 से हस्ताक्षरित डेटा संरचनाएँ Encrypted LeaseSet2 उपयोग मामलों के लिए विश्वसनीय होंगी, क्योंकि प्रारंभिक कार्यान्वयन के बाद से नेटवर्क को अपग्रेड करने के लिए छह से अधिक वर्ष मिल चुके हैं। हालांकि, destination (I2P का पता/पहचानकर्ता) के सामान्य उपयोग के अपनाने के आँकड़े सार्वजनिक रूप से उपलब्ध नहीं हैं।</p>
+<p><strong>प्राथमिक उपयोग मामला</strong>: Red25519 का उपयोग मुख्यतः एन्क्रिप्टेड LeaseSet2 कार्यात्मकता के लिए किया जाता है, जहाँ key blinding (कुंजी ब्लाइंडिंग) आवश्यक होती है। एन्क्रिप्टेड leaseset आवश्यकताओं के बिना मानक डेस्टिनेशन के लिए, व्यापक अनुकूलता और लंबे समय से सिद्ध ट्रैक रिकॉर्ड के कारण Ed25519 (हस्ताक्षर प्रकार 7) अनुशंसित विकल्प बना रहता है।</p>
+<h2 id="करयनवयन-सबध-टपपणय">कार्यान्वयन संबंधी टिप्पणियाँ</h2>
+<p>Red25519 को I2P Java router में <code>net.i2p.crypto.eddsa.RedDSAEngine</code> पर लागू किया गया है, और यह str4d (Jack Grigg) द्वारा विकसित ed25519-java लाइब्रेरी का उपयोग Maven निर्भरता <code>net.i2p.crypto:eddsa</code> (संस्करण 0.1.0 से 0.3.0 तक) के रूप में करता है।</p>
+<p>i2pd का C++ कार्यान्वयन कूटबद्ध LeaseSet के प्रकाशन के लिए Red25519 (signaturetype=11) का भी समर्थन करता है।</p>
+<p>i2pd के लिए विन्यास उदाहरण:</p>
+<pre tabindex="0"><code>signaturetype=11
+i2cp.leaseSetType=5
+</code></pre><p><strong>Encrypted LeaseSet2 Compatibility</strong>: Encrypted LeaseSet विनिर्देश यह निर्धारित करता है कि unblinded destination (ब्लाइंडिंग हटाया गया गंतव्य) में मौजूद हस्ताक्षर हेतु सार्वजनिक कुंजी Ed25519 (हस्ताक्षर प्रकार 7) या Red25519 (हस्ताक्षर प्रकार 11) होनी चाहिए। encrypted leaseset कार्यक्षमता के लिए अन्य किसी हस्ताक्षर प्रकार का समर्थन नहीं है।</p>
+<h2 id="परकषण-वकटर">परीक्षण वेक्टर</h2>
+<p>कार्यान्वयन सत्यापन के लिए निम्नलिखित परीक्षण वेक्टर प्रदान किए गए हैं। प्रत्येक वेक्टर में निम्न शामिल होते हैं:</p>
+<ul>
+<li><code>edsk</code>: Ed25519 निजी कुंजी (यादृच्छिक)</li>
+<li><code>edpk</code>: Ed25519 सार्वजनिक कुंजी जो edsk के अनुरूप है</li>
+<li><code>sk</code>: CONVERT_ED25519_PRIVATE(edsk)</li>
+<li><code>vk</code>: CONVERT_ED25519_PUBLIC(edpk)</li>
+<li><code>msg</code>: हस्ताक्षर हेतु संदेश</li>
+<li><code>sig</code>: SIGN(sk, msg)</li>
+<li><code>alpha</code>: GENERATE_RANDOM()</li>
+<li><code>rsk</code>: RANDOMIZE_PRIVATE(sk, alpha)</li>
+<li><code>rvk</code>: RANDOMIZE_PUBLIC(vk, alpha)</li>
+<li><code>rsig</code>: SIGN(rsk, msg)</li>
+</ul>
+<p><strong>कार्यान्वयन संबंधी नोट</strong>: इन test vectors (परीक्षण वेक्टर) को निरंतर सत्यापन के लिए स्वचालित unit test suites (इकाई परीक्षण सूट) में एकीकृत किए जाने चाहिए। कार्यान्वयनकर्ता यह सत्यापित करें कि सभी रूपांतरण, हस्ताक्षर, और re-randomization (पुनः-यादृच्छिकीकरण) क्रियाएँ इन अपेक्षित मानों से मेल खाती हैं।</p>
+<h3 id="टसट-वकटर-1">टेस्ट वेक्टर 1</h3>
+<pre tabindex="0"><code>edsk:  0101010101010101010101010101010101010101010101010101010101010101
+edpk:  8a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c
+sk:    58e86efb75fa4e2c410f46e16de9f6acae1a1703528651b69bc176c088bef36e
+vk:    8a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c
+msg:   0202020202020202020202020202020202020202020202020202020202020202
+sig:   61f5527f4d3b46de4b2c234390370bf715ae9098907a0d191ba1b44b23a8ac1a
+       6a40437a5294e9503faaf9bd2b7f2fe7ba44dec487b3185aba7ff7d7a17cd40f
+alpha: ae9ba9cbbc047c442448fca7c9f4e288a202ed520bfad0c784b792b7773cee08
+rsk:   8bb85f3c7a494a08890d7d142109c1a3501d04565d80227e2079097800fbe107
+rvk:   6fe128737b8e76fa66698a748b0dc0a89168dd8a0601c2b1c0b26835d323e9b3
+rsig:  533053074d3b44f08723aab988ede9880a001b7a684d4a98f2d1b88fabee07a5
+       b5c9430c69a690321e0cb8365d7aeb6688bcbad2c0780e0c69e8a1b4a45f3001
+</code></pre><h3 id="परकषण-वकटर-2">परीक्षण वेक्टर 2</h3>
+<pre tabindex="0"><code>edsk:  0202020202020202020202020202020202020202020202020202020202020202
+edpk:  8139770ea87d175f56a35466c34c7ecccb8d8a91b4ee37a25df60f5b8fc9b394
+sk:    a83c626bc9c38c8c201878ebb1d5b0b50ac40e8986c78793db1d4ef369fca14e
+vk:    8139770ea87d175f56a35466c34c7ecccb8d8a91b4ee37a25df60f5b8fc9b394
+msg:   0303030303030303030303030303030303030303030303030303030303030303
+sig:   0829e58eb5399870f009bd1f0270264e556424bda7a93fbcec99f6d9d75db46d
+       5c3cb546d9947ca7c1200876c8775a90c357a2aef3d2f16388242ee1914b1a0a
+alpha: 98b615d9027e996cc2796c019d9c8beb46aa7d2b6eea2e5d98eb29eb1584c203
+rsk:   9fcfaa734852ca40b3810ebef590e138516e8cb4f4b1b6f0730978de7f806402
+rvk:   527e121090158419609e4a0d8de6f7d3271b353a8cd0b8172fe41468ea1e9177
+rsig:  9a6961f35ed264a946cd6214b2326a6e6caa426c2a61bc14367fd278e0b5fb51
+       3ac065a69210a457f17d12ba8a496cfd835002691affa8efcdecae48135c090f
+</code></pre><p><strong>ध्यान दें</strong>: अतिरिक्त test vectors (परीक्षण वेक्टर) 3-10 उसी प्रारूप का पालन करते हैं और संदर्भ कार्यान्वयन में उपलब्ध हैं।</p>
+<h2 id="सदरभ">संदर्भ</h2>
+<ul>
+<li><a href="../../../../hi/proposals/123-new-netdb-entries/">प्रस्ताव 123: नई netDB प्रविष्टियाँ</a>
+ - कुछ हिस्से 0.9.38, 0.9.39 और बाद के रिलीज़ में लागू और परिनियोजित किए गए</li>
+<li><a href="https://zips.z.cash/protocol/protocol.pdf">Zcash प्रोटोकॉल विनिर्देशन, अनुभाग 5.4.6: RedDSA, RedJubjub, और RedPallas</a>
+ - RedDSA को Zcash प्रोटोकॉल विनिर्देशन के हिस्से के रूप में परिभाषित किया गया है; NCC Group द्वारा सुरक्षा ऑडिट (जनवरी 2019)</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc8032.html">RFC 8032: Edwards-Curve डिजिटल हस्ताक्षर एल्गोरिद्म (EdDSA)</a>
+</li>
+<li><a href="../../../../hi/proposals/148-eddsa-blake2b-ed25519/">प्रस्ताव 148: RedDSA-BLAKE2b-Ed25519</a>
+ - प्रस्तावित, पर अभी लागू नहीं; भविष्य में BLAKE2b-512 पर माइग्रेशन का सुझाव देता है</li>
+<li><a href="../../../../hi/docs/specs/encryptedleaseset/">एन्क्रिप्टेड LeaseSet विनिर्देशन</a>
+</li>
+<li><a href="../../../../hi/docs/specs/cryptography/">निम्न-स्तरीय क्रिप्टोग्राफी विनिर्देशन</a>
+</li>
+</ul>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../hi/docs/specs/configuration/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">Router विन्यास</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../hi/docs/specs/ntcp2/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">NTCP2 ट्रांसपोर्ट</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/hi/docs/specs/red25519.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">I2P समाचार से अपडेट रहें:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="अपना ईमेल दर्ज करें" required>
+                            <button type="submit">सदस्यता लें</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>त्वरित लिंक</h3>
+                <ul>
+                    <li><a href="../../../../hi/financial-support/">दान करें</a></li>
+                    <li><a href="../../../../hi/docs/overview/intro/">I2P परिचय</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>समुदाय</h3>
+                <ul>
+                    <li><a href="../../../../hi/get-involved/">शामिल हो जाइए</a></li>
+                    <li><a href="../../../../hi/blog/">ब्लॉग</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">आधिकारिक फोरम</a></li>
+                    <li><a href="../../../../hi/contact/">संपर्क करें</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>संसाधन</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P मेट्रिक्स</a></li>
+                    <li><a href="../../../../hi/papers/">अनुसंधान</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">गिटलैब</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">स्टॉर्मीक्लाउड</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 इनविज़िबल इंटरनेट प्रोजेक्ट। क्रिएटिव कॉमन्स के अंतर्गत लाइसेंस।</p>
+            <div class="footer-links">
+                <a href="../../../../hi/privacy/">गोपनीयता</a>
+                <a href="../../../../hi/terms/">शर्तें</a>
+                <a href="../../../../hi/about/media/">प्रेस</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="बंद करें">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>सामुदायिक पोल</h2>
+            <p class="modal-subtitle">हम आपसे सुनना पसंद करेंगे</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                आपका वोट I2P के भविष्य को आकार देने में मदद करता है।
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

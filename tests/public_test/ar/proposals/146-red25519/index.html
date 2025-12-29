@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="ar" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>نظام توقيع Red25519 | I2P - مشروع الإنترنت غير المرئي</title>
+
+    <meta name="description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="نظام توقيع Red25519 | I2P - مشروع الإنترنت غير المرئي">
+    <meta property="og:description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/ar/proposals/146-red25519/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">موقع I2P التجريبي متاح الآن - أرسل المشاكل إلى stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="إغلاق الشريط" title="إغلاق الشريط">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../ar/" class="logo-link">
+                    <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../ar/about/" class="">حول</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../ar/about/">نظرة عامة</a></li>
+                            <li><a href="../../../ar/papers/">أبحاث</a></li>
+                            <li><a href="../../../ar/about/media/">الصحافة</a></li>
+                            <li><a href="../../../ar/contact/">اتصل بنا</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../ar/docs/" class="">المستندات</a></li>
+                    <li><a href="../../../ar/downloads/" class="">التنزيلات</a></li>
+                    <li><a href="../../../ar/blog/" class="">مدونة</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../ar/get-involved/" class="">شارك معنا</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../ar/get-involved/">نظرة عامة</a></li>
+                            <li><a href="../../../ar/feedback/">اقتراحات الميزات</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">ar</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../en/proposals/146-red25519/"
+                                class="lang-option">الإنجليزية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../es/proposals/146-red25519/"
+                                class="lang-option">الإسبانية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ko/proposals/146-red25519/"
+                                class="lang-option">الكورية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../zh/proposals/146-red25519/"
+                                class="lang-option">الصينية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ru/proposals/146-red25519/"
+                                class="lang-option">الروسية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../cs/proposals/146-red25519/"
+                                class="lang-option">التشيكية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../de/proposals/146-red25519/"
+                                class="lang-option">الألمانية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../fr/proposals/146-red25519/"
+                                class="lang-option">الفرنسية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../tr/proposals/146-red25519/"
+                                class="lang-option">التركية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../vi/proposals/146-red25519/"
+                                class="lang-option">الفيتنامية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../hi/proposals/146-red25519/"
+                                class="lang-option">الهندية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ar/proposals/146-red25519/"
+                                class="lang-option active">العربية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../pt/proposals/146-red25519/"
+                                class="lang-option">البرتغالية</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../ar/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../ar/downloads/" class="btn btn-primary">احصل على I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+<div class="proposals-page">
+    <div class="container">
+        
+        <nav class="breadcrumbs">
+            <a href="../../../ar/">Home</a>
+            <span class="separator">/</span>
+            <a href="../../../ar/proposals/">Proposals</a>
+            <span class="separator">/</span>
+            <span class="current">نظام توقيع Red25519</span>
+        </nav>
+
+        
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">تم إنشاء هذه الترجمة باستخدام التعلم الآلي وقد لا تكون دقيقة بنسبة 100%.</span>
+    
+    
+    <a href="../../../en/proposals/146-red25519/" class="disclaimer-link">عرض النسخة الإنجليزية</a>
+    
+</div>
+
+
+
+        
+        <header class="proposal-header">
+            <div class="proposal-title-section">
+                <h1 class="proposal-title">نظام توقيع Red25519</h1>
+                <div class="proposal-number">Proposal 146</div>
+            </div>
+
+            
+            <div class="proposal-meta-box">
+                <div class="proposal-status status-مغلق">
+                    مغلق
+                </div>
+
+                
+                <div class="proposal-info-grid">
+                    
+                    <div class="info-item">
+                        <span class="info-label">Author</span>
+                        <span class="info-value">str4d</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Created</span>
+                        <span class="info-value">2019-02-21</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Last Updated</span>
+                        <span class="info-value">2020-08-05</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Target Version</span>
+                        <span class="info-value">0.9.39</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Implemented In</span>
+                        <span class="info-value">0.9.39</span>
+                    </div>
+                    
+                </div>
+
+                
+                
+            </div>
+        </header>
+
+        
+        <div class="proposal-layout proposal-layout--with-toc">
+            
+            
+            <aside class="proposal-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ملاحظة">ملاحظة</a></li>
+    <li><a href="#نظرة-عامة">نظرة عامة</a></li>
+    <li><a href="#الدافع">الدافع</a></li>
+    <li><a href="#التصميم">التصميم</a>
+      <ul>
+        <li><a href="#نظام-التوقيع-الأساسي">نظام التوقيع الأساسي</a></li>
+        <li><a href="#تحويل-مفاتيح-ed25519-إلى-red25519">تحويل مفاتيح Ed25519 إلى Red25519</a></li>
+      </ul>
+    </li>
+    <li><a href="#المواصفات">المواصفات</a>
+      <ul>
+        <li><a href="#التعريفات">التعريفات</a></li>
+        <li><a href="#red25519">Red25519</a></li>
+        <li><a href="#الترميز-وفك-الترميز">الترميز وفك الترميز</a></li>
+        <li><a href="#وظائف-reddsa">وظائف RedDSA</a></li>
+        <li><a href="#وظائف-التحويل">وظائف التحويل</a></li>
+      </ul>
+    </li>
+    <li><a href="#الآثار-الأمنية">الآثار الأمنية</a></li>
+    <li><a href="#التوافق">التوافق</a></li>
+    <li><a href="#متجهات-الاختبار">متجهات الاختبار</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="proposal-main">
+                <article class="proposal-content">
+                    <h2 id="ملاحظة">ملاحظة</h2>
+<p>تنفيذ الشبكة والاختبار قيد التقدم.
+ممكن أن يخضع لتعديلات طفيفة.
+انظر إلى <a href="../../../ar/docs/specs/red25519-signature-scheme/">specification</a>
+ للحصول على المواصفات الرسمية.</p>
+<h2 id="نظرة-عامة">نظرة عامة</h2>
+<p>توضح هذه الاقتراح نظام توقيع قابل لإعادة التوزيع مناسب لإنشاء المقاصد التي يمكن تعميتها. يمكن أيضًا استخدامه لتعمية المقاصد الموجودة لنظام Ed25519، مع تقليل ضئيل في الفعالية.</p>
+<h2 id="الدافع">الدافع</h2>
+<p>يحدد <a href="../../../ar/proposals/123-new-netdb-entries/">Proposal 123</a>
+ تنسيق LeaseSet2 مشفرًا يجسد مبدأ السلطة الأقل: يُمنح كل مشارك في الشبكة فقط المعلومات الضرورية لدوره. على وجه الخصوص، فإن LeaseSet2 المشفر المنشور إلى Floodfill لا يكشف عن الوجهة الذي هو من أجلها، ولا يمكن عرض عقود الإيجار إلا من قبل شخص لديه معرفة مسبقة بالوجهة. ومع ذلك، لا تزال Floodfills بحاجة إلى أن تكون قادرة على التحقق من LeaseSet2 المشفرات عندما تكون منشورة، ويحتاج العملاء إلى ضمان إضافي بأن الوجهة هي التي فرضت المصادقة.</p>
+<p>يحقق Prop123 ذلك عن طريق تعمية مفاتيح توقيع الوجهات. يمكن استخدام المفاتيح المعمية لإنشاء توقيعات يمكن التحقق منها بواسطة Floodfills، ويمكن للعملاء أن يكونوا متأكدين من أن الوجهة فقط هي التي يمكن أن تنشئ التوقيعات. لذلك من الضروري تحديد نظام توقيع يمكن استخدامه للتعمية.</p>
+<h2 id="التصميم">التصميم</h2>
+<h3 id="نظام-التوقيع-الأساسي">نظام التوقيع الأساسي</h3>
+<p>نظام التوقيع الموضح في هذا الاقتراح، Red25519، هو تنفيذ لـ [RedDSA]، وهو نظام توقيع قائم على Schnorr يدعم إعادة التوزيع للمفاتيح. يحتوي على الوظائف التالية:</p>
+<p>GENERATE_PRIVATE()
+يعيد مفتاح خاص مولد بشكل عشوائي.</p>
+<p>DERIVE_PUBLIC(sk)
+يعيد المفتاح العام الذي يتوافق مع المفتاح الخاص المعطى.</p>
+<p>GENERATE_RANDOM()
+يعيد عدد عشوائي مناسب لإعادة توزيع زوج المفاتيح.</p>
+<p>RANDOMIZE_PRIVATE(sk, alpha)
+يعيد توزيع مفتاح خاص، باستخدام عدد سري alpha.</p>
+<p>RANDOMIZE_PUBLIC(vk, alpha)
+يعيد توزيع مفتاح عام، باستخدام عدد سري alpha.</p>
+<p>SIGN(sk, m)
+يعيد توقيع بالمفتاح الخاص sk للرسالة المعطاة m.</p>
+<p>VERIFY(vk, m, sig)
+يتحقق من التوقيع sig مقابل المفتاح العام vk والرسالة m. يُرجع true إذا كان التوقيع صالحًا، وإلا يُرجع false.</p>
+<p>للزوج المعطى (sk, vk) توجد العلاقة التالية:</p>
+<pre tabindex="0"><code>RANDOMIZE_PUBLIC(vk, alpha) == DERIVE_PUBLIC(RANDOMIZE_PRIVATE(sk, alpha))
+</code></pre><h3 id="تحويل-مفاتيح-ed25519-إلى-red25519">تحويل مفاتيح Ed25519 إلى Red25519</h3>
+<p>مفاتيح Ed25519 يُمكِن أحيانًا تحويلها في اتجاه واحد إلى مفاتيح Red25519 لدعم إعادة توزيع الوجهات الموجودة لنظام Ed25519. لا تتوافق الأنواع الأخرى من التوقيعات.</p>
+<p>نعرّف الوظائف التالية للتحويل:</p>
+<p>CONVERT_ED25519_PRIVATE(privkey)
+يعيد مفتاح Red25519 الخاص الذي يتوافق مع مفتاح Ed25519 الخاص المعطى.</p>
+<p>CONVERT_ED25519_PUBLIC(pubkey)
+يعيد مفتاح Red25519 العام الذي يتوافق مع مفتاح Ed25519 العام المعطى.</p>
+<p>للزوج Ed25519 المعطى (privkey, pubkey) توجد العلاقة التالية:</p>
+<pre tabindex="0"><code>CONVERT_ED25519_PUBLIC(pubkey) == DERIVE_PUBLIC(CONVERT_ED25519_PRIVATE(privkey))
+</code></pre><h2 id="المواصفات">المواصفات</h2>
+<h3 id="التعريفات">التعريفات</h3>
+<p>B
+نقطة الأساس لنظام Ed25519 كما في [RFC-8032].</p>
+<p>L
+ترتيب Ed25519 2^252 + 27742317777372353535851937790883648493 كما في [RFC-8032].</p>
+<p>[s] B
+الضرب الاسكالي الثابت لنقطة الأساس بواسطة s.</p>
+<p>[s] A
+الضرب الاسكالي المتغير للـ A بواسطة s.</p>
+<p>x || y
+دمج مصفوفتين من البايتات x و y.</p>
+<h3 id="red25519">Red25519</h3>
+<p>يختص نظام Red25519 بـ RedDSA مع:</p>
+<ul>
+<li>G: المجموعة من النقاط على الشكل إدوارد من Curve25519. على وجه الخصوص، يعني ذلك أن Red25519 يستخدم المجموعة التعاونية بالأعداد الأولية من الترتيب L، والمعامل h_G هو 8.</li>
+<li>P_G: نقطة الأساس لنظام Ed25519، B.</li>
+<li>l_H: 512</li>
+<li>H(x): SHA-512(&ldquo;I2P_Red25519H(x)&rdquo; || x)</li>
+</ul>
+<p>يفترض RedDSA أن H(x) يتم تنفيذها مع دالة تجزئة مشفرة تكون آمنة ضد الهجمات الخاصة بامتداد الطول. SHA-512 لا يلبي ذلك بمفرده. لتصحيح ذلك، نطلب أن تُسبق الرسائل بتشفير مسبق الطول:</p>
+<pre tabindex="0"><code>len_u16(M) || M
+</code></pre><p>حيث <code>len_u16(M)</code> هو تمثيل 2 بايت لطول M، بطريقة little-endian (لتتماشى مع الترميز الصغير للنقاط).</p>
+<p>يجب أن تكون الرسائل غير أطول من 65534 بايت. الطول 65535 محجوز للتوسعات المستقبلية المحتملة.</p>
+<h3 id="الترميز-وفك-الترميز">الترميز وفك الترميز</h3>
+<p>مفاتيح Red25519 الخاصة هي أعداد بتعديل L، مشفرة في تمثيل little-endian. نقوم بتعريف الدوال <code>DECODE_SCALAR</code> و <code>ENCODE_SCALAR</code> للتحول بين مصفوفة البايت والشكل العددي لمفتاح.</p>
+<p>مفاتيح Red25519 العامة هي نقاط على الشكل إدوارد من Curve25519. يتم ترميزها كتمثيل 255-بت لـ y-coordinate، ويليها بت واحد يشير إلى إشارة x-coordinate. هذا هو نفس الترميز في Ed25519. نقوم بتعريف الدوال <code>DECODE_POINT</code> و <code>ENCODE_POINT</code> للتحول بين مصفوفة البايت والشكل التنسيقي لنقطة.</p>
+<h3 id="وظائف-reddsa">وظائف RedDSA</h3>
+<p>لتسهيل التنفيذ، نعبر بوضوح عن وظائف RedDSA (وكذلك العديد من وظائف المساعدة) المتخصصة بالفعل لـ Red25519. يجب على المنفذين الرجوع إلى القسم 5.4.6 من [RedDSA] للمواصفات العامة لوظائف RedDSA.</p>
+<pre tabindex="0"><code>HStar(prefix1, prefix2, m) :=
+      h = SHA-512()
+      h.input(&#34;I2P_Red25519H(x)&#34;)
+      h.input(prefix1)
+      h.input(prefix2)
+
+      h.input(len(m) &amp; 0xff)
+      h.input((len(m) &gt;&gt; 8) &amp; 0xff)
+      h.input(m)
+
+      s = h.digest()
+      return s mod L
+
+  GENERATE_PRIVATE :=
+      s = 64 random bytes
+      return s mod L
+
+  DERIVE_PUBLIC(sk) := [sk] B
+
+  GENERATE_RANDOM :=
+      s = 64 random bytes
+      return s mod L
+
+  RANDOMIZE_PRIVATE(sk, alpha) := (sk + alpha) mod L
+
+  RANDOMIZE_PUBLIC(vk, alpha) := vk + [alpha] B
+
+  SIGN(sk, m) :=
+      T = 80 random bytes
+      vkBytes = ENCODE_POINT(DERIVE_PUBLIC(sk))
+      r = HStar(T, vkBytes, m)
+
+      R = [r] B
+      Rbytes = ENCODE_POINT(R)
+
+      c = HStar(Rbytes, vkBytes, m)
+      S = (r + (c * sk)) mod L
+
+      return Rbytes || ENCODE_SCALAR(S)
+
+  VERIFY(vk, m, sig) :=
+      Rbytes = sig[0..32]
+      Sbytes = sig[32..64]
+
+      R = DECODE_POINT(Rbytes)
+      if R is invalid:
+          return false
+
+      S = DECODE_SCALAR(Sbytes)
+      if S &gt;= L:
+          return false
+
+      vkBytes = ENCODE_POINT(vk)
+      c = HStar(Rbytes, vkBytes, m)
+      return ((-[S] B) + R + ([c] vk)).multiplyByCofactor().isIdentity()
+</code></pre><h3 id="وظائف-التحويل">وظائف التحويل</h3>
+<pre tabindex="0"><code>CONVERT_ED25519_PRIVATE(privkey) :=
+      s = SHA-512(privkey)[0..32]
+      s[0] = s[0] &amp; 248
+      s[31] = (s[31] &amp; 63) | 64
+      return s
+
+  CONVERT_ED25519_PUBLIC(pubkey) := pubkey
+</code></pre><p>لاحظ أن تنفيذ <code>CONVERT_ED25519_PRIVATE</code> يُعادل حساب العدد السري s عند اشتقاق مفتاح Ed25519 العام من مفتاح Ed25519 الخاص، كما هو محدد في الخطوات 1-3 في القسم 5.1.5 من [RFC-8032].</p>
+<h2 id="الآثار-الأمنية">الآثار الأمنية</h2>
+<p>إعادة توزيع وجهة Red25519 ثم إنشاء توقيعات معه لا تسرب أي معلومات عن الوجهة، لأن توزيع مفاتيح Red25519 الخاصة المولدة عبر <code>RANDOMIZE_PRIVATE</code> هو مطابق لتوزيع المفاتيح المولدة عبر <code>GENERATE_PRIVATE</code> و<code>DERIVE_PUBLIC</code> هو حتمي.</p>
+<p>تحويل مفاتيح Ed25519 الخاصة إلى Red25519 عبر <code>CONVERT_ED25519_PRIVATE</code> لا ينتج عن نفس التوزيع. ومع ذلك، نعتبر أن الخفض في الأمان مقبول للأسباب التالية:</p>
+<ul>
+<li>
+<p>مساحة الأعداد لنظام Ed25519 هي تقريباً نصف مساحة الأعداد لنظام Red25519 (هناك 2^251 عدد ممكن لنظام Ed25519، و L ~= 2^252 عدد ممكن لنظام Red25519). لذلك فإن الخسارة الأمنية هي في أكثر تقدير بمقدار 2، أو نحو 1 بت (لأننا قد نكون قد اخترنا مصادفة عدداً Red25519 الذي هو أيضاً صالح لنظام Ed25519).</p>
+</li>
+<li>
+<p>الوجهات Ed25519 الموجودة قد تم تعرضها تاريخياً على الشبكة، ويجب أن يفترض أن Floodfills الخبيثة قامت بالفعل بتعدادها.</p>
+</li>
+</ul>
+<p>يجب على المستخدمين الذين يشعرون بالقلق حول هذا الانخفاض الأمني استخدام Red25519 كنوع التوقيع لوجهاتهم بدلاً من Ed25519.</p>
+<p>لاحظ أن الحجة السابقة لا تنطبق على عامل التوزيع العشوائي alpha؛ يتم تسريب معلومات حول المفتاح في كل مرة يتم اختيار alpha منحاز، لأن إعادة التوزيع الإضافية تتصرف مثل وسادة لمرة واحدة.</p>
+<h2 id="التوافق">التوافق</h2>
+<p>الإصدارات من I2P التي تدعم Red25519 ستكون قادرة على التحقق من هياكل البيانات في الشبكة التي تم توقيعها بها. الإصدارات من I2P التي لا تدعم Red25519 ستعتبره توقيع غير معروف، وقد تسقط هياكل البيانات. يجب أن يتوقع المستخدمون أن تكون موثوقية هياكل البيانات الموقعة بـ Red25519 ضعيفة حتى يتم تحقيق نشر كافٍ من Red25519.</p>
+<h2 id="متجهات-الاختبار">متجهات الاختبار</h2>
+<pre tabindex="0"><code>Legend:
+    edsk:  مفتاح Ed25519 خاص (عشوائي)
+    edpk:  مفتاح Ed25519 عام يتوافق مع edsk
+    sk:    CONVERT_ED25519_PRIVATE(edsk)
+    vk:    CONVERT_ED25519_PUBLIC(edpk)
+    msg:   
+    sig:   SIGN(sk, msg)
+    alpha: GENERATE_RANDOM()
+    rsk:   RANDOMIZE_PRIVATE(sk, alpha)
+    rvk:   RANDOMIZE_PUBLIC(vk, alpha)
+    rsig:  SIGN(rsk, msg)
+
+  متجه الاختبار 1
+    edsk:  0101010101010101010101010101010101010101010101010101010101010101
+    edpk:  8a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c
+    sk:    58e86efb75fa4e2c410f46e16de9f6acae1a1703528651b69bc176c088bef36e
+    vk:    8a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c
+    msg:   0202020202020202020202020202020202020202020202020202020202020202
+    sig:   61f5527f4d3b46de4b2c234390370bf715ae9098907a0d191ba1b44b23a8ac1a
+           6a40437a5294e9503faaf9bd2b7f2fe7ba44dec487b3185aba7ff7d7a17cd40f
+    alpha: ae9ba9cbbc047c442448fca7c9f4e288a202ed520bfad0c784b792b7773cee08
+    rsk:   8bb85f3c7a494a08890d7d142109c1a3501d04565d80227e2079097800fbe107
+    rvk:   6fe128737b8e76fa66698a748b0dc0a89168dd8a0601c2b1c0b26835d323e9b3
+    rsig:  533053074d3b44f08723aab988ede9880a001b7a684d4a98f2d1b88fabee07a5
+           b5c9430c69a690321e0cb8365d7aeb6688bcbad2c0780e0c69e8a1b4a45f3001
+
+  متجه الاختبار 2
+    edsk:  0202020202020202020202020202020202020202020202020202020202020202
+    edpk:  8139770ea87d175f56a35466c34c7ecccb8d8a91b4ee37a25df60f5b8fc9b394
+    sk:    a83c626bc9c38c8c201878ebb1d5b0b50ac40e8986c78793db1d4ef369fca14e
+    vk:    8139770ea87d175f56a35466c34c7ecccb8d8a91b4ee37a25df60f5b8fc9b394
+    msg:   0303030303030303030303030303030303030303030303030303030303030303
+    sig:   0829e58eb5399870f009bd1f0270264e556424bda7a93fbcec99f6d9d75db46d
+           5c3cb546d9947ca7c1200876c8775a90c357a2aef3d2f16388242ee1914b1a0a
+    alpha: 98b615d9027e996cc2796c019d9c8beb46aa7d2b6eea2e5d98eb29eb1584c203
+    rsk:   9fcfaa734852ca40b3810ebef590e138516e8cb4f4b1b6f0730978de7f806402
+    rvk:   527e121090158419609e4a0d8de6f7d3271b353a8cd0b8172fe41468ea1e9177
+    rsig:  9a6961f35ed264a946cd6214b2326a6e6caa426c2a61bc14367fd278e0b5fb51
+           3ac065a69210a457f17d12ba8a496cfd835002691affa8efcdecae48135c090f
+
+  متجه الاختبار 3
+    edsk:  0303030303030303030303030303030303030303030303030303030303030303
+    edpk:  ed4928c628d1c2c6eae90338905995612959273a5c63f93636c14614ac8737d1
+    sk:    98aebbb178a551876bfaf8e1e530dac6aaf6c2ea1c8f8406a3ab37dfb40fbc65
+    vk:    ed4928c628d1c2c6eae90338905995612959273a5c63f93636c14614ac8737d1
+    msg:   0404040404040404040404040404040404040404040404040404040404040404
+    sig:   ef5fd1488048fb0247e5883bd90f7b2ce1ffe9b143a5bf6156b76ac2c39d8fdb
+           d0730d7111d9cec69a808f3d18268a91f035b41b82c1fe06f394a615f93a8709
+    alpha: ba17f5110fcea8a12e0bd3677e4088b874332c4e3e6c9911d9ec3fe0233d3e0a
+    rsk:   c4ceed95e9208c189458fe772c9628021f2aef385bfb1d187c9877bfd84cfa0f
+    rvk:   6e2b9b129bbe00fa964c996d40307dd01aff120e94fd15f17119341ecda3d7a0
+    rsig:  900ecc6306f895a8ccde97d3624799fd939062a87b69e09351903ba83ceeab2b
+           ef6e3c15e5d8400ed9151f7dce14bf4cfc7ce3f4399e22455fc18a68ed931c03
+
+  متجه الاختبار 4
+    edsk:  0404040404040404040404040404040404040404040404040404040404040404
+    edpk:  ca93ac1705187071d67b83c7ff0efe8108e8ec4530575d7726879333dbdabe7c
+    sk:    483e3c145d7e680a16676925fc045183d2f510cb2f660a1fc517c73762185d43
+    vk:    ca93ac1705187071d67b83c7ff0efe8108e8ec4530575d7726879333dbdabe7c
+    msg:   0505050505050505050505050505050505050505050505050505050505050505
+    sig:   d76b8133e08e4ff58de6b7f2df95c84a8bb968addd1d1ff585d79a90f5cfe11f
+           9aa21d0277908aecae3853ee44493f95f2445df2da712f28eea435044e6fed03
+    alpha: 9a14f2755512a72a3a5a514379f3458c3f912fc5eba8711b0cf2bfda49c79104
+    rsk:   2e0357164904c6d4f64ddcdcfa101bbc118740901b0f7c3ad1098712acdfee07
+    rvk:   de0a291ee45634de9a051c9373b9378ffbe45a8532067a9a93a86b837c762908
+    rsig:  010dcc6a44e942a6f7d52704d957ad66a5c6452ad9b9442cc8ef724e41d6c3ce
+           a24eace9b22e0f9d2b9ade14c61bded33286e7e6340faaa0167a9f1f90001503
+
+  متجه الاختبار 5
+    edsk:  0505050505050505050505050505050505050505050505050505050505050505
+    edpk:  6e7a1cdd29b0b78fd13af4c5598feff4ef2a97166e3ca6f2e4fbfccd80505bf1
+    sk:    48370d6146de919cc1ce472897775d9a6c2834c509e08e14efcb2b52188f946e
+    vk:    6e7a1cdd29b0b78fd13af4c5598feff4ef2a97166e3ca6f2e4fbfccd80505bf1
+    msg:   0606060606060606060606060606060606060606060606060606060606060606
+    sig:   2c56c96801f99ae1f5e8d8edc87725e08aaf7fc77071f222f7c46084b41c5b41
+           de1ee3df97217865633f7cceb11cedc3a637ce047d2111cb6f372882e2d6b20b
+    alpha: 687944d00a53ca02a0787da2acb8f99994ea7453c8d140d93efbc2b70d852a07
+    rsk:   35e598a6987bdb3685fdff552d5b3ea20013a918d2b1cfed2dc7ee092614bf05
+    rvk:   9951414e4f29408031f212edc6c9cfe36550b4ce2aa968db49de6c93ca9d565b
+    rsig:  4b8f3e3baa8b4fdb99b0053036d569352e49c98c61800288f676aed77b9929b3
+           f3278565d824c5566666d2c9ff789207098d5f9d09dd89aa4945ca3866831e02
+
+  متجه الاختبار 6
+    edsk:  0606060606060606060606060606060606060606060606060606060606060606
+    edpk:  8a875fff1eb38451577acd5afee405456568dd7c89e090863a0557bc7af49f17
+    sk:    a83f248f80ff04de20a82fe12bd3551887168e372d239932ce812d0992d34078
+    vk:    8a875fff1eb38451577acd5afee405456568dd7c89e090863a0557bc7af49f17
+    msg:   0707070707070707070707070707070707070707070707070707070707070707
+    sig:   f4a00093daa26b48465e07ee5697ba44191fb5673b6ab71a31d2349a18aecbd6
+           c4801be60ebf18cd7ce8ec5fe0988fc4762908095063b55068ce4c7578c91504
+    alpha: 0158cda553d7e9769829a5d36d2b7ce05e9171d8d058a8630d31029001ffd409
+    rsk:   41f8424d01be5b9406eb179da42fda51e5a7ff0ffe7b4196dbb22f9993d21502
+    rvk:   cef5dc9b4a246025df56fb118e34c3f06d6213c4c6ab8a1d4297eb7845cb2824
+    rsig:  de23eec573f35ebf7ea9539b511ca5129213821525190fdf1c186c2788c1abb3
+           5bd40937defbc4112225d399a79a171cf02c3eebbd6340bbdca7383906af1902
+
+  متجه الاختبار 7
+    edsk:  0707070707070707070707070707070707070707070707070707070707070707
+    edpk:  ea4a6c63e29c520abef5507b132ec5f9954776aebebe7b92421eea691446d22c
+    sk:    28ad39fefd7fa3e200a9c626eef599e61a2d055c48a8288a4e7e4c4bca392878
+    vk:    ea4a6c63e29c520abef5507b132ec5f9954776aebebe7b92421eea691446d22c
+    msg:   0808080808080808080808080808080808080808080808080808080808080808
+    sig:   e78bf2d340d9ae0af5dd81e4d58801b3872189a71573a12be343ed39cebab56a
+           6bc1f01872bbb1d16b2be4a943a9ba90fb7a4c97c3e5f20416890ceedf6e7e0c
+    alpha: 8e16161802e3c87857ae725dfa28d6222b326907f652e6c89f806882c0fb1a00
+    rsk:   3bf8968b47adebf27b0d740fd2495777455f6e633efb0e53eefeb4cd8a354308
+    rvk:   755a8f05633c45d0fac471a386776f63a7d28bc8d80e326ddde5484b20565e89
+    rsig:  6efdca4ba705bc05d4564f0ca626646679ac1cb2c3093618e95238ebd1c7aa09
+           632ccefc324594447a01074bb473c3ce94ccaae86e18f8f43477326a12ae6207
+
+  متجه الاختبار 8
+    edsk:  0808080808080808080808080808080808080808080808080808080808080808
+    edpk:  1398f62c6d1a457c51ba6a4b5f3dbd2f69fca93216218dc8997e416bd17d93ca
+    sk:    3826c9c31226edde9501fd2589203cb3e6fe737876a845512b53ada2fa2ace74
+    vk:    1398f62c6d1a457c51ba6a4b5f3dbd2f69fca93216218dc8997e416bd17d93ca
+    msg:   0909090909090909090909090909090909090909090909090909090909090909
+    sig:   1ed88a926dd80999d3a40efd3b74fa731729e28bb84e0430663822a69f9f4bcc
+           fd2bd0aa7325d9887eac76ddf08da65c42eedaaec244c3241307570910778f05
+    alpha: c4cc56d9c3e787ca60a54dfca65b4556f2dccabcac97e7a975e4efa1acb8920e
+    rsk:   945371b503f5e1e843c08d0a3bad8962d8db3e3523402dfba0379d44a7e36003
+    rvk:   db1730a0730ca0746a73f1880660ea5ea42f9d931760f3cdedc9cbe1c1d1b8d9
+    rsig:  db60c64b61e888696ca0a7ef7adb92b784e0e6070d0435818e99788022db8e83
+           81ddcc1e27f044b8c3c75044e715d870f3273a7f9cf85f1a59f4a7c95fded408
+
+  متجه الاختبار 9
+    edsk:  0909090909090909090909090909090909090909090909090909090909090909
+    edpk:  fd1724385aa0c75b64fb78cd602fa1d991fdebf76b13c58ed702eac835e9f618
+    sk:    388fe3ab30c0aabf54acd276f3d8bbbc2b7ca4a9495d204f255bacf578c74c46
+    vk:    fd1724385aa0c75b64fb78cd602fa1d991fdebf76b13c58ed702eac835e9f618
+    msg:   0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a
+    sig:   dd5a8c6ed9331c074ea11f65b9290900931bdf01a47f01adc75583d2a3dcfc10
+           b65c77a3e992678865e7dc713295749b4dddd33fa167b96c6d6904818e4d6806
+    alpha: b851f206eba78325ed5231cad059e8bd8a1e3d7f1e391058b3d9ab08d096cb03
+    rsk:   3c91fe3eb2dbe484e88b25b5494b2827b69ae128689630a7d83458fe485e180a
+    rvk:   601ab762eea5cd89ff34e0f661d1ca3932ba166ca67154b2e62afb85282dda81
+    rsig:  5a453378fdbb22b8f037ad61d144ce006201fea0c2c1472d463617c432786dfc
+           47430d27649817a7fc26296c94bf922f3863867c648ddd6709710bfa199aee02
+
+  متجه الاختبار 10
+    edsk:  0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a
+    edpk:  43a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c
+    sk:    0099bf92c41b5d3d309c3b074756e9707e40a9bcea229857f7cf551e8bb0fd45
+    vk:    43a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c
+    msg:   0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b
+    sig:   c54d64d550f7690ffdd108efc49f1c25a54282825e10328630710924b354cb4c
+           138a523b1ada66a8fdc8b7efcae939fd54b05552c30ca280d23199c391c5b707
+    alpha: 5eebb60818299d581fa68f5fcae4c2bb398a7e10876e27994d93d555075e7d05
+    rsk:   aa349f2773b8b035f6ceecda965330d9b7ca27cd7191bff044632b74920e7b0b
+    rvk:   d0c5fe8f83fd42202265efff804a1527c0eb0e1cce9781cf14571cd506eeed36
+    rsig:  28e96b6d4251b356e635e382ed89a37e7650d3035f98909e09a6cbe82c13e418
+           fddb2106b7b527e198039da7221dae1a0227f0a4ab88f06567e8fd9238acc106
+</code></pre>
+                </article>
+
+                
+                <nav class="page-nav">
+                    <a href="../../../ar/proposals/" class="page-nav-link">
+                        ← Back to Proposals
+                    </a>
+                    
+                    
+                    
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                            
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <a href="../../../proposals/146-red25519.txt" class="page-nav-link" download>
+                        Download Source (.txt)
+                    </a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.proposals-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.proposal-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.proposal-title-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.proposal-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-text);
+}
+
+.proposal-number {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+ 
+.proposal-meta-box {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.proposal-status {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+ 
+.status-open {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-open {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-accepted {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-accepted {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-finished {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-finished {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-closed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-closed {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.dark .status-rejected {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.status-draft,
+.status-needs-revision,
+.status-dead,
+.status-needs-research {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-draft,
+.dark .status-needs-revision,
+.dark .status-dead,
+.dark .status-needs-research {
+    background: #78350f;
+    color: #fde047;
+}
+
+.status-meta,
+.status-informational,
+.status-reserve {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+.dark .status-meta,
+.dark .status-informational,
+.dark .status-reserve {
+    background: #581c87;
+    color: #e879f9;
+}
+
+ 
+.proposal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.info-value {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+ 
+.proposal-relationships {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-md);
+}
+
+.relationship {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.relationship:last-child {
+    margin-bottom: 0;
+}
+
+.relationship-label {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    min-width: 120px;
+}
+
+.relationship-value {
+    color: var(--color-text);
+}
+
+ 
+.proposal-layout {
+    display: block;
+}
+
+.proposal-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.proposal-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.proposal-main {
+    min-width: 0;
+}
+
+ 
+.proposal-content {
+    line-height: 1.8;
+    color: var(--color-text);
+    max-width: 900px;
+}
+
+.proposal-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content ul,
+.proposal-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.proposal-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.proposal-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.proposal-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.proposal-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.proposal-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin-left: 0;
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+.proposal-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.proposal-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+.proposal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content table th {
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.proposal-content table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.proposal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+ 
+.page-nav {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.page-nav-link {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+ 
+@media (max-width: 1024px) {
+    .proposal-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .proposal-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .proposal-title {
+        font-size: 1.75rem;
+    }
+
+    .proposal-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">ابقَ على اطلاع بأخبار I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="أدخل بريدك الإلكتروني" required>
+                            <button type="submit">اشترك</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="../../../ar/financial-support/">تبرع</a></li>
+                    <li><a href="../../../ar/docs/overview/intro/">مقدمة I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>المجتمع</h3>
+                <ul>
+                    <li><a href="../../../ar/get-involved/">شارك معنا</a></li>
+                    <li><a href="../../../ar/blog/">مدونة</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">المنتديات الرسمية</a></li>
+                    <li><a href="../../../ar/contact/">اتصل بنا</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>الموارد</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">إحصائيات I2P</a></li>
+                    <li><a href="../../../ar/papers/">بحث</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">ستورمي كلاود</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 مشروع الإنترنت الخفي. مرخص تحت Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../ar/privacy/">الخصوصية</a>
+                <a href="../../../ar/terms/">الشروط</a>
+                <a href="../../../ar/about/media/">الصحافة</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="إغلاق">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>استطلاع المجتمع</h2>
+            <p class="modal-subtitle">نود أن نسمع منك</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                يساعد تصويتك في تشكيل مستقبل I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

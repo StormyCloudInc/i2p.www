@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="ar" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>دليل تكوين واجهة إدارة Router Console | I2P - مشروع الإنترنت غير المرئي</title>
+
+    <meta name="description" content="دليل شامل لفهم وتكوين واجهة التحكم في جهاز التوجيه I2P Router Console">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="دليل تكوين واجهة إدارة Router Console | I2P - مشروع الإنترنت غير المرئي">
+    <meta property="og:description" content="دليل شامل لفهم وتكوين واجهة التحكم في جهاز التوجيه I2P Router Console">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/ar/docs/guides/router-console-config/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">موقع I2P التجريبي متاح الآن - أرسل المشاكل إلى stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="إغلاق الشريط" title="إغلاق الشريط">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../ar/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../ar/about/" class="">حول</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ar/about/">نظرة عامة</a></li>
+                            <li><a href="../../../../ar/papers/">أبحاث</a></li>
+                            <li><a href="../../../../ar/about/media/">الصحافة</a></li>
+                            <li><a href="../../../../ar/contact/">اتصل بنا</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../ar/docs/" class="active">المستندات</a></li>
+                    <li><a href="../../../../ar/downloads/" class="">التنزيلات</a></li>
+                    <li><a href="../../../../ar/blog/" class="">مدونة</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../ar/get-involved/" class="">شارك معنا</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ar/get-involved/">نظرة عامة</a></li>
+                            <li><a href="../../../../ar/feedback/">اقتراحات الميزات</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">ar</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/guides/router-console-config/"
+                                class="lang-option">الإنجليزية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/guides/router-console-config/"
+                                class="lang-option">الإسبانية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/guides/router-console-config/"
+                                class="lang-option">الكورية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/guides/router-console-config/"
+                                class="lang-option">الصينية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/guides/router-console-config/"
+                                class="lang-option">الروسية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/guides/router-console-config/"
+                                class="lang-option">التشيكية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/guides/router-console-config/"
+                                class="lang-option">الألمانية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/guides/router-console-config/"
+                                class="lang-option">الفرنسية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/guides/router-console-config/"
+                                class="lang-option">التركية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/guides/router-console-config/"
+                                class="lang-option">الفيتنامية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/guides/router-console-config/"
+                                class="lang-option">الهندية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/guides/router-console-config/"
+                                class="lang-option active">العربية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/guides/router-console-config/"
+                                class="lang-option">البرتغالية</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../ar/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../ar/downloads/" class="btn btn-primary">احصل على I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#الوصول-إلى-لوحة-تحكم-الـ-router">الوصول إلى لوحة تحكم الـ Router</a></li>
+    <li><a href="#دفتر-العناوين">دفتر العناوين</a></li>
+    <li><a href="#الإعدادات">الإعدادات</a>
+      <ul>
+        <li><a href="#advanced">Advanced</a></li>
+        <li><a href="#bandwidth">Bandwidth</a></li>
+        <li><a href="#client-configuration">Client Configuration</a></li>
+        <li><a href="#متقدم">متقدم</a></li>
+        <li><a href="#النطاق-الترددي">النطاق الترددي</a></li>
+        <li><a href="#إعداد-العميل">إعداد العميل</a></li>
+        <li><a href="#تكوين-i2cp">تكوين I2CP</a></li>
+        <li><a href="#إعداد-الشبكة">إعداد الشبكة</a></li>
+        <li><a href="#إعداد-النظير">إعداد النظير</a></li>
+        <li><a href="#تكوين-إعادة-البذر-reseed">تكوين إعادة البذر (Reseed)</a></li>
+        <li><a href="#تكوين-عائلة-الموجه-router-family">تكوين عائلة الموجه (Router Family)</a></li>
+      </ul>
+    </li>
+    <li><a href="#help">Help</a></li>
+    <li><a href="#performance-graphs">Performance Graphs</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../ar/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../ar/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../ar/docs/guides/">Guides</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">دليل تكوين واجهة إدارة Router Console</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">تم إنشاء هذه الترجمة باستخدام التعلم الآلي وقد لا تكون دقيقة بنسبة 100%.</span>
+    
+    
+    <a href="../../../../en/docs/guides/router-console-config/" class="disclaimer-link">عرض النسخة الإنجليزية</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">دليل تكوين واجهة إدارة Router Console</h1>
+                    
+                        <p class="article-description">دليل شامل لفهم وتكوين واجهة التحكم في جهاز التوجيه I2P Router Console</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-11
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <p>يوفر هذا الدليل نظرة عامة على واجهة إدارة I2P Router Console وصفحات التكوين الخاصة بها. يشرح كل قسم وظيفة الصفحة والغرض منها، مما يساعدك على فهم كيفية مراقبة وتكوين جهاز I2P router الخاص بك.</p>
+<h2 id="الوصول-إلى-لوحة-تحكم-الـ-router">الوصول إلى لوحة تحكم الـ Router</h2>
+<p>وحدة التحكم في I2P Router هي المركز الرئيسي لإدارة ومراقبة I2P router الخاص بك. بشكل افتراضي، يمكن الوصول إليها عبر <a href="http://127.0.0.1:7657/home">وحدة التحكم في I2P Router</a>
+ بمجرد تشغيل I2P router الخاص بك.</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-home.png" 
+    alt="Router Console Home"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>تعرض الصفحة الرئيسية عدة أقسام رئيسية:</p>
+<ul>
+<li><strong>التطبيقات</strong> - وصول سريع إلى تطبيقات I2P المدمجة مثل البريد الإلكتروني، Torrents، مدير الخدمات المخفية، وخادم الويب</li>
+<li><strong>مواقع مجتمع I2P</strong> - روابط لموارد المجتمع المهمة بما في ذلك المنتديات، الوثائق، ومواقع المشروع</li>
+<li><strong>الإعدادات والمساعدة</strong> - أدوات لتكوين إعدادات النطاق الترددي، إدارة الإضافات، والوصول إلى موارد المساعدة</li>
+<li><strong>معلومات الشبكة والمطورين</strong> - الوصول إلى الرسوم البيانية، السجلات، الوثائق التقنية، وإحصائيات الشبكة</li>
+</ul>
+<h2 id="دفتر-العناوين">دفتر العناوين</h2>
+<p><strong>عنوان URL:</strong> <a href="http://127.0.0.1:7657/dns">دفتر العناوين</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-address-book.png" 
+    alt="دفتر عناوين وحدة تحكم الموجه"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>يعمل دفتر عناوين I2P بشكل مشابه لنظام DNS على الشبكة العادية، مما يتيح لك إدارة أسماء يمكن قراءتها بشريًا لوجهات I2P (eepsites). هنا يمكنك عرض وإضافة عناوين I2P إلى دفتر العناوين الشخصي الخاص بك.</p>
+<p>يعمل نظام دفتر العناوين من خلال طبقات متعددة:</p>
+<ul>
+<li>
+<p><strong>السجلات المحلية</strong> - دفاتر العناوين الشخصية الخاصة بك والمتخزنة فقط على router الخاص بك</p>
+<ul>
+<li><strong>دفتر العناوين المحلي</strong> - المضيفون الذين تضيفهم يدوياً أو تحفظهم لاستخدامك الشخصي</li>
+<li><strong>دفتر العناوين الخاص</strong> - العناوين التي لا تريد مشاركتها مع الآخرين؛ لا يتم توزيعها علنياً أبداً</li>
+</ul>
+</li>
+<li>
+<p><strong>الاشتراكات</strong> - مصادر دفتر العناوين البعيدة (مثل <code>http://i2p-projekt.i2p/hosts.txt</code>) التي تقوم تلقائياً بتحديث دفتر عناوين الـ router الخاص بك بمواقع I2P المعروفة</p>
+</li>
+<li>
+<p><strong>دفتر عناوين الراوتر</strong> - النتيجة المدمجة من سجلاتك المحلية والاشتراكات، قابلة للبحث من قبل جميع تطبيقات I2P على الراوتر الخاص بك</p>
+</li>
+<li>
+<p><strong>دفتر العناوين المنشور</strong> - مشاركة عامة اختيارية لدفتر عناوينك ليستخدمه الآخرون كمصدر اشتراك (مفيد إذا كنت تدير موقع I2P)</p>
+</li>
+</ul>
+<p>يقوم دفتر العناوين باستطلاع اشتراكاتك بشكل منتظم ودمج المحتوى في دفتر عناوين الموجه الخاص بك، مما يحافظ على تحديث ملف hosts.txt الخاص بك مع شبكة I2P.</p>
+<h2 id="الإعدادات">الإعدادات</h2>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configadvanced">التكوين المتقدم</a>
+</p>
+<p>يوفر قسم الإعدادات الوصول إلى جميع إعدادات الـ router من خلال علامات تبويب متخصصة متعددة.</p>
+<h3 id="advanced">Advanced</h3>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-advanced.png" 
+    alt="تكوين متقدم لوحة تحكم الراوتر"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>توفر صفحة الإعدادات المتقدمة إمكانية الوصول إلى إعدادات router منخفضة المستوى التي لا تكون مطلوبة عادةً للتشغيل العادي. <strong>يجب على معظم المستخدمين عدم تعديل هذه الإعدادات ما لم يفهموا خيار الإعداد المحدد وتأثيره على سلوك router.</strong></p>
+<p>الميزات الرئيسية:</p>
+<ul>
+<li>
+<p><strong>إعدادات Floodfill</strong> - التحكم في ما إذا كان الموجه الخاص بك يشارك كعقدة floodfill، والتي تساعد الشبكة من خلال تخزين وتوزيع معلومات قاعدة بيانات الشبكة. قد يستخدم هذا المزيد من موارد النظام لكنه يعزز شبكة I2P.</p>
+</li>
+<li>
+<p><strong>التكوين المتقدم لـ I2P</strong> - وصول مباشر إلى ملف <code>router.config</code>، يعرض جميع معلمات التكوين المتقدمة بما في ذلك:</p>
+<ul>
+<li>حدود عرض النطاق وإعدادات الاندفاع</li>
+<li>إعدادات النقل (NTCP2، SSU2، منافذ UDP والمفاتيح)</li>
+<li>معلومات تعريف الـ router والإصدار</li>
+<li>تفضيلات وحدة التحكم وإعدادات التحديث</li>
+</ul>
+</li>
+</ul>
+<p>معظم خيارات الإعدادات المتقدمة غير ظاهرة في واجهة المستخدم لأنها نادراً ما تكون مطلوبة. لتمكين تحرير هذه الإعدادات، يجب عليك إضافة <code>routerconsole.advanced=true</code> إلى ملف <code>router.config</code> يدوياً.</p>
+<p><strong>تحذير:</strong> قد يؤثر تعديل الإعدادات المتقدمة بشكل غير صحيح سلباً على أداء router الخاص بك أو الاتصال. قم بتغيير هذه الإعدادات فقط إذا كنت تعرف ما تفعله.</p>
+<h3 id="bandwidth">Bandwidth</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/config">إعدادات النطاق الترددي</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-bandwidth.png" 
+    alt="تكوين عرض النطاق لوحدة التحكم بالموجه"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>تتيح لك صفحة إعدادات النطاق الترددي التحكم في مقدار النطاق الترددي الذي يساهم به الـ router الخاص بك في شبكة I2P. يعمل I2P بشكل أفضل عندما تقوم بتكوين معدلاتك لتتناسب مع سرعة اتصالك بالإنترنت.</p>
+<p><strong>الإعدادات الرئيسية:</strong></p>
+<ul>
+<li><strong>KBps In</strong> - الحد الأقصى لعرض النطاق الترددي الوارد الذي سيقبله الراوتر الخاص بك (سرعة التنزيل)</li>
+<li><strong>KBps Out</strong> - الحد الأقصى لعرض النطاق الترددي الصادر الذي سيستخدمه الراوتر الخاص بك (سرعة الرفع)</li>
+<li><strong>Share</strong> - النسبة المئوية من عرض النطاق الترددي الصادر المخصص لحركة المرور المشاركة (المساعدة في توجيه حركة المرور للآخرين)</li>
+</ul>
+<p><strong>ملاحظات مهمة:</strong></p>
+<ul>
+<li>جميع القيم بوحدة <strong>بايت في الثانية</strong> (KBps)، وليس بت في الثانية</li>
+<li>كلما زادت سعة النطاق الترددي التي توفرها، كلما ساعدت الشبكة أكثر وحسّنت إخفاء هويتك</li>
+<li>مقدار مشاركتك للرفع (KBps Out) يحدد مساهمتك الإجمالية في الشبكة</li>
+<li>إذا كنت غير متأكد من سرعة شبكتك، استخدم <strong>اختبار سعة النطاق الترددي</strong> لقياسها</li>
+<li>زيادة سعة النطاق الترددي للمشاركة تحسّن إخفاء هويتك وتساعد في تقوية شبكة I2P</li>
+</ul>
+<p>تعرض صفحة الإعدادات نقل البيانات الشهري المقدّر بناءً على إعداداتك، مما يساعدك على تخطيط تخصيص عرض النطاق الترددي وفقًا لحدود خطة الإنترنت الخاصة بك.</p>
+<h3 id="client-configuration">Client Configuration</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configclients">إعدادات العميل</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-clients.png" 
+    alt="تكوين عميل وحدة تحكم الموجه"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>تتيح لك صفحة إعدادات العميل التحكم في تطبيقات وخدمات I2P التي يتم تشغيلها عند بدء التشغيل. هذا هو المكان الذي يمكنك فيه تمكين أو تعطيل عملاء I2P المدمجين دون إلغاء تثبيتهم.</p>
+<p><strong>تحذير مهم:</strong> كن حذرًا عند تغيير الإعدادات هنا. تُعد وحدة تحكم الراوتر وأنفاق التطبيقات مطلوبة لمعظم استخدامات I2P. يجب على المستخدمين المتقدمين فقط تعديل هذه الإعدادات.</p>
+<p><strong>العملاء المتاحون:</strong></p>
+<ul>
+<li><strong>Application tunnels</strong> - نظام I2PTunnel الذي يدير أنفاق العميل والخادم (وكيل HTTP، IRC، إلخ.)</li>
+<li><strong>I2P Router Console</strong> - واجهة الإدارة المستندة إلى الويب التي تستخدمها حالياً</li>
+<li><strong>I2P webserver (eepsite)</strong> - خادم ويب Jetty المدمج لاستضافة موقع I2P الخاص بك</li>
+<li><strong>Open Router Console in web browser at startup</strong> - يفتح المتصفح تلقائياً إلى الصفحة الرئيسية للوحة التحكم عند بدء التشغيل</li>
+<li><strong>SAM application bridge</strong> - جسر API لتطبيقات الطرف الثالث للاتصال بـ I2P</li>
+</ul>
+<p>يعرض كل عميل: - <strong>التشغيل عند بدء التشغيل؟</strong> - مربع اختيار لتمكين/تعطيل التشغيل التلقائي - <strong>التحكم</strong> - أزرار بدء/إيقاف للتحكم الفوري - <strong>الفئة والمعاملات</strong> - تفاصيل تقنية حول كيفية تشغيل العميل</p>
+<p>التغييرات على إعداد &ldquo;التشغيل عند بدء التشغيل؟&rdquo; تتطلب إعادة تشغيل الموجه لتصبح سارية المفعول. يتم حفظ جميع التعديلات في <code>/var/lib/i2p/i2p-config/clients.config.d/</code>.</p>
+<h3 id="متقدم">متقدم</h3>
+<p><strong>عنوان URL:</strong> <a href="http://127.0.0.1:7657/configi2cp">إعدادات I2CP</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-i2cp.png" 
+    alt="Router Console I2CP Configuration"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>صفحة تكوين I2CP (بروتوكول عميل I2P) تسمح لك بتكوين كيفية اتصال التطبيقات الخارجية بموجه I2P الخاص بك. I2CP هو البروتوكول الذي تستخدمه التطبيقات للتواصل مع الموجه لإنشاء الأنفاق وإرسال/استقبال البيانات عبر I2P.</p>
+<p><strong>هام:</strong> الإعدادات الافتراضية ستعمل لمعظم المستخدمين. أي تغييرات يتم إجراؤها هنا يجب أن يتم تكوينها أيضًا في تطبيق العميل الخارجي. العديد من العملاء لا يدعمون SSL أو التفويض. <strong>جميع التغييرات تتطلب إعادة التشغيل لتصبح سارية المفعول.</strong></p>
+<p><strong>خيارات الإعدادات:</strong></p>
+<ul>
+<li>
+<p><strong>تكوين واجهة I2CP الخارجية</strong></p>
+<ul>
+<li><strong>مُفعّل بدون SSL</strong> - وصول I2CP القياسي (الافتراضي والأكثر توافقاً)</li>
+<li><strong>مُفعّل مع SSL مطلوب</strong> - اتصالات I2CP مشفرة فقط</li>
+<li><strong>مُعطّل</strong> - يحظر اتصال العملاء الخارجيين عبر I2CP</li>
+</ul>
+</li>
+<li>
+<p><strong>واجهة I2CP</strong> - واجهة الشبكة للاستماع عليها (افتراضي: 127.0.0.1 للمضيف المحلي فقط)</p>
+</li>
+<li>
+<p><strong>منفذ I2CP</strong> - رقم المنفذ لاتصالات I2CP (افتراضي: 7654)</p>
+</li>
+<li>
+<p><strong>التفويض</strong></p>
+<ul>
+<li><strong>طلب اسم المستخدم وكلمة المرور</strong> - تفعيل المصادقة لاتصالات I2CP</li>
+<li><strong>اسم المستخدم</strong> - تعيين اسم المستخدم المطلوب للوصول إلى I2CP</li>
+<li><strong>كلمة المرور</strong> - تعيين كلمة المرور المطلوبة للوصول إلى I2CP</li>
+</ul>
+</li>
+</ul>
+<p><strong>ملاحظة أمنية:</strong> إذا كنت تقوم بتشغيل التطبيقات فقط على نفس الجهاز الذي يعمل عليه router الخاص بك في I2P، احتفظ بواجهة الاتصال مضبوطة على <code>127.0.0.1</code> لمنع الوصول عن بُعد. قم بتغيير هذه الإعدادات فقط إذا كنت بحاجة للسماح لتطبيقات I2P من أجهزة أخرى بالاتصال بـ router الخاص بك.</p>
+<h3 id="النطاق-الترددي">النطاق الترددي</h3>
+<p><strong>عنوان URL:</strong> <a href="http://127.0.0.1:7657/confignet">إعدادات الشبكة</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-network.png" 
+    alt="تكوين شبكة لوحة تحكم الموجّه"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>تتيح لك صفحة إعدادات الشبكة تكوين كيفية اتصال router الخاص بك في I2P بالإنترنت، بما في ذلك اكتشاف عنوان IP، تفضيلات IPv4/IPv6، وإعدادات المنافذ لكل من نقل UDP وTCP.</p>
+<p><strong>عنوان IP قابل للوصول خارجياً:</strong></p>
+<ul>
+<li><strong>استخدام جميع طرق الكشف التلقائي</strong> - يكتشف تلقائياً عنوان IP العام الخاص بك باستخدام طرق متعددة (موصى به)</li>
+<li><strong>تعطيل كشف عنوان IP عبر UPnP</strong> - يمنع استخدام UPnP لاكتشاف عنوان IP الخاص بك</li>
+<li><strong>تجاهل عنوان IP للواجهة المحلية</strong> - عدم استخدام عنوان IP للشبكة المحلية</li>
+<li><strong>استخدام كشف عنوان IP عبر SSU فقط</strong> - استخدام نقل SSU2 فقط لكشف عنوان IP</li>
+<li><strong>الوضع المخفي - عدم نشر عنوان IP</strong> - يمنع المشاركة في حركة مرور الشبكة (يقلل من إخفاء الهوية)</li>
+<li><strong>تحديد اسم المضيف أو عنوان IP</strong> - تعيين عنوان IP العام أو اسم المضيف يدوياً</li>
+</ul>
+<p><strong>إعدادات IPv4:</strong></p>
+<ul>
+<li><strong>تعطيل الاتصالات الواردة (Firewalled)</strong> - حدد هذا الخيار إذا كنت خلف جدار حماية، أو شبكة منزلية، أو مزود خدمة إنترنت، أو DS-Lite، أو NAT على مستوى المشغّل يحظر الاتصالات الواردة</li>
+</ul>
+<p><strong>إعداد IPv6:</strong></p>
+<ul>
+<li><strong>تفضيل IPv4 على IPv6</strong> - يعطي الأولوية لاتصالات IPv4</li>
+<li><strong>تفضيل IPv6 على IPv4</strong> - يعطي الأولوية لاتصالات IPv6 (الافتراضي للشبكات ثنائية المكدس)</li>
+<li><strong>تمكين IPv6</strong> - يسمح باتصالات IPv6</li>
+<li><strong>تعطيل IPv6</strong> - يعطل جميع اتصالات IPv6</li>
+<li><strong>استخدام IPv6 فقط (تعطيل IPv4)</strong> - وضع IPv6 التجريبي فقط</li>
+<li><strong>تعطيل الوارد (محمي بجدار ناري)</strong> - تحقق من كون IPv6 محمياً بجدار ناري</li>
+</ul>
+<p><strong>الإجراء عند تغيير عنوان IP:</strong></p>
+<ul>
+<li><strong>وضع الكمبيوتر المحمول</strong> - ميزة تجريبية تقوم بتغيير هوية الموجه (router) ومنفذ UDP عندما يتغير عنوان IP الخاص بك لتعزيز عدم الكشف عن الهوية</li>
+</ul>
+<p><strong>إعدادات UDP:</strong></p>
+<ul>
+<li><strong>تحديد المنفذ</strong> - قم بتعيين منفذ UDP محدد لنقل SSU2 (يجب فتحه في جدار الحماية الخاص بك)</li>
+<li><strong>التعطيل الكامل</strong> - اختر هذا الخيار فقط إذا كنت خلف جدار حماية يحظر جميع اتصالات UDP الصادرة</li>
+</ul>
+<p><strong>إعدادات TCP:</strong></p>
+<ul>
+<li><strong>تحديد المنفذ</strong> - تعيين منفذ TCP محدد لنقل NTCP2 (يجب فتحه في جدار الحماية الخاص بك)</li>
+<li><strong>استخدام نفس المنفذ المُهيأ لـ UDP</strong> - يبسط التهيئة باستخدام منفذ واحد لكلا النقلين</li>
+<li><strong>استخدام عنوان IP المكتشف تلقائياً</strong> - يكتشف عنوان IP العام الخاص بك تلقائياً (يظهر &ldquo;غير معروف حالياً&rdquo; إذا لم يتم اكتشافه بعد أو كان محجوباً بجدار حماية)</li>
+<li><strong>استخدام عنوان IP المكتشف تلقائياً دائماً (غير محجوب بجدار حماية)</strong> - الأفضل للموجهات التي لديها وصول مباشر للإنترنت</li>
+<li><strong>تعطيل الاتصالات الواردة (محجوب بجدار حماية)</strong> - ضع علامة إذا كانت اتصالات TCP محظورة بواسطة جدار الحماية الخاص بك</li>
+<li><strong>التعطيل الكامل</strong> - اختر فقط إذا كنت خلف جدار حماية يخنق أو يحظر TCP الصادر</li>
+<li><strong>تحديد اسم المضيف أو IP</strong> - تهيئة عنوانك القابل للوصول خارجياً يدوياً</li>
+</ul>
+<p><strong>هام:</strong> قد تتطلب التغييرات في إعدادات الشبكة إعادة تشغيل الموجه (router) لتصبح سارية المفعول بالكامل. يؤدي تكوين توجيه المنافذ (port forwarding) بشكل صحيح إلى تحسين أداء الموجه بشكل كبير ويساعد شبكة I2P.</p>
+<h3 id="إعداد-العميل">إعداد العميل</h3>
+<p><strong>عنوان URL:</strong> <a href="http://127.0.0.1:7657/configpeer">إعدادات النظير</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-peer.png" 
+    alt="تكوين النظير في وحدة تحكم الموجه"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>توفر صفحة إعدادات النظير (Peer Configuration) عناصر تحكم يدوية لإدارة النظراء الفرديين على شبكة I2P. هذه ميزة متقدمة تُستخدم عادةً فقط لاستكشاف أخطاء النظراء الإشكاليين وإصلاحها.</p>
+<p><strong>التحكم اليدوي بالنظراء:</strong></p>
+<ul>
+<li><strong>Router Hash</strong> - أدخل router hash المكون من 44 حرفاً بصيغة base64 للعقدة التي تريد إدارتها</li>
+</ul>
+<p><strong>حظر / إلغاء حظر نظير يدوياً:</strong></p>
+<p>حظر نظير يمنعه من المشاركة في أي tunnels تقوم بإنشائها. هذا الإجراء: - يمنع استخدام النظير في tunnels العميل أو الاستكشافية الخاصة بك - يسري مفعوله فوراً دون الحاجة لإعادة التشغيل - يستمر حتى تقوم بإلغاء الحظر يدوياً أو إعادة تشغيل router الخاص بك - <strong>حظر النظير حتى إعادة التشغيل</strong> - يحظر النظير مؤقتاً - <strong>إلغاء حظر النظير</strong> - يزيل الحظر عن نظير محظور سابقاً</p>
+<p><strong>ضبط مكافآت الملف الشخصي:</strong></p>
+<p>تؤثر مكافآت الملفات الشخصية على كيفية اختيار النظراء للمشاركة في الأنفاق. يمكن أن تكون المكافآت إيجابية أو سلبية: - <strong>النظراء السريعون</strong> - تُستخدم لأنفاق العميل التي تتطلب سرعة عالية - <strong>النظراء ذوو السعة العالية</strong> - تُستخدم لبعض الأنفاق الاستكشافية التي تتطلب توجيهاً موثوقاً - يتم عرض المكافآت الحالية على صفحة الملفات الشخصية</p>
+<p><strong>الإعدادات:</strong> - <strong>السرعة</strong> - ضبط مكافأة السرعة لهذا الند (0 = محايد) - <strong>السعة</strong> - ضبط مكافأة السعة لهذا الند (0 = محايد) - <strong>ضبط مكافآت الند</strong> - تطبيق إعدادات المكافأة</p>
+<p><strong>حالات الاستخدام:</strong> - حظر peer يتسبب باستمرار في مشاكل الاتصال - استبعاد peer مؤقتاً تشك في أنه ضار - ضبط المكافآت لتقليل أولوية peers ضعيفة الأداء - تصحيح أخطاء مشاكل بناء tunnel من خلال استبعاد peers محددة</p>
+<p><strong>ملاحظة:</strong> معظم المستخدمين لن يحتاجوا أبدًا لاستخدام هذه الميزة. يدير router الخاص بـ I2P تلقائيًا اختيار الأقران وتصنيفهم بناءً على مقاييس الأداء.</p>
+<h3 id="تكوين-i2cp">تكوين I2CP</h3>
+<p><strong>عنوان URL:</strong> <a href="http://127.0.0.1:7657/configreseed">إعدادات Reseed</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-reseed.png" 
+    alt="إعدادات إعادة التهيئة في وحدة التحكم بالموجه"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>تتيح لك صفحة إعدادات إعادة البذر (Reseed Configuration) إعادة بذر الموجه (router) يدوياً في حالة فشل إعادة البذر التلقائية. إعادة البذر هي عملية الإقلاع الأولي (bootstrapping) المستخدمة للعثور على موجهات أخرى عند تثبيت I2P لأول مرة، أو عندما يتبقى لدى الموجه الخاص بك عدد قليل جداً من مراجع الموجهات.</p>
+<p><strong>متى تستخدم إعادة التشغيل اليدوية (Manual Reseed):</strong></p>
+<ol>
+<li>
+<p>إذا فشلت عملية إعادة البذر، يجب عليك أولاً التحقق من اتصال الشبكة لديك</p>
+</li>
+<li>
+<p>إذا كان جدار الحماية يحجب اتصالاتك بخوادم إعادة البذر، فقد يكون لديك إمكانية الوصول إلى بروكسي:</p>
+<ul>
+<li>قد يكون البروكسي بروكسي عام بعيد، أو قد يكون يعمل على جهاز الكمبيوتر الخاص بك (localhost)</li>
+<li>لاستخدام بروكسي، قم بتكوين النوع والمضيف والمنفذ في قسم Reseeding Configuration</li>
+<li>إذا كنت تستخدم Tor Browser، قم بإعادة البذر من خلاله عن طريق تكوين SOCKS 5، localhost، المنفذ 9150</li>
+<li>إذا كنت تستخدم Tor من سطر الأوامر، قم بإعادة البذر من خلاله عن طريق تكوين SOCKS 5، localhost، المنفذ 9050</li>
+<li>إذا كان لديك بعض الأقران ولكنك تحتاج المزيد، يمكنك تجربة خيار I2P Outproxy. اترك المضيف والمنفذ فارغين. لن يعمل هذا لعملية إعادة بذر أولية عندما لا يكون لديك أي أقران على الإطلاق</li>
+<li>ثم، انقر على &ldquo;Save changes and reseed now&rdquo;</li>
+<li>الإعدادات الافتراضية ستعمل لمعظم الأشخاص. قم بتغيير هذه الإعدادات فقط إذا كان HTTPS محجوباً بواسطة جدار حماية مقيد وفشلت عملية إعادة البذر</li>
+</ul>
+</li>
+<li>
+<p>إذا كنت تعرف وتثق بشخص يشغل I2P، اطلب منه إرسال ملف reseed تم إنشاؤه باستخدام هذه الصفحة على router console الخاص به. ثم، استخدم هذه الصفحة لإعادة التغذية (reseed) بالملف الذي تلقيته. أولاً، حدد الملف أدناه. ثم، انقر على &ldquo;Reseed from file&rdquo;</p>
+</li>
+<li>
+<p>إذا كنت تعرف وتثق بشخص ينشر ملفات reseed، اطلب منه الرابط (URL). بعد ذلك، استخدم هذه الصفحة لإجراء reseed باستخدام الرابط الذي حصلت عليه. أولاً، أدخل الرابط أدناه. ثم، انقر على &ldquo;Reseed from URL&rdquo;</p>
+</li>
+<li>
+<p>راجع <a href="../../../../ar/docs/overview/faq/">الأسئلة الشائعة</a>
+ للحصول على تعليمات حول إعادة البذر يدوياً</p>
+</li>
+</ol>
+<p><strong>خيارات إعادة البذر اليدوية:</strong></p>
+<ul>
+<li>
+<p><strong>إعادة البذر من عنوان URL</strong> - أدخل عنوان URL لملف zip أو su3 من مصدر موثوق وانقر على &ldquo;Reseed from URL&rdquo;</p>
+<ul>
+<li>يُفضل تنسيق su3، حيث سيتم التحقق من توقيعه بواسطة مصدر موثوق</li>
+<li>تنسيق zip غير موقّع؛ استخدم ملف zip فقط من مصدر تثق به</li>
+</ul>
+</li>
+<li>
+<p><strong>إعادة البذر من ملف</strong> - تصفح واختر ملف zip أو su3 محلي، ثم انقر على &ldquo;Reseed from file&rdquo;</p>
+<ul>
+<li>يمكنك العثور على ملفات reseed على <a href="https://checki2p.com/reseed">checki2p.com/reseed</a>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>إنشاء ملف Reseed</strong> - إنشاء ملف reseed مضغوط جديد يمكنك مشاركته ليستخدمه الآخرون في إعادة البذر يدوياً</p>
+<ul>
+<li>لن يحتوي هذا الملف أبداً على هوية الراوتر الخاص بك أو عنوان IP الخاص بك</li>
+</ul>
+</li>
+</ul>
+<p><strong>إعدادات إعادة التوزيع (Reseeding):</strong></p>
+<p>الإعدادات الافتراضية ستعمل لمعظم المستخدمين. قم بتغيير هذه الإعدادات فقط إذا كان HTTPS محظوراً بواسطة جدار ناري مقيد وفشل إعادة التزويد (reseed).</p>
+<ul>
+<li><strong>عناوين URL لإعادة البذر</strong> - قائمة بعناوين HTTPS لخوادم إعادة البذر (القائمة الافتراضية مدمجة ويتم تحديثها بانتظام)</li>
+<li><strong>إعدادات البروكسي</strong> - تكوين بروكسي HTTP/HTTPS/SOCKS إذا كنت بحاجة للوصول إلى خوادم إعادة البذر من خلال بروكسي</li>
+<li><strong>إعادة تعيين قائمة URL</strong> - استعادة قائمة خوادم إعادة البذر الافتراضية</li>
+</ul>
+<p><strong>هام:</strong> يجب أن يكون البذر اليدوي ضروريًا فقط في حالات نادرة حيث يفشل البذر التلقائي بشكل متكرر. معظم المستخدمين لن يحتاجوا أبدًا لاستخدام هذه الصفحة.</p>
+<h3 id="إعداد-الشبكة">إعداد الشبكة</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configfamily">إعدادات عائلة الراوتر</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-family.png" 
+    alt="إعدادات عائلة الموجه في واجهة التحكم بالموجه"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>صفحة إعدادات عائلة الموجه (Router Family Configuration) تتيح لك إدارة عائلات الموجهات. الموجهات في نفس العائلة تشترك في مفتاح عائلة، والذي يحددها كموجهات يتم تشغيلها من قبل نفس الشخص أو المؤسسة. هذا يمنع اختيار عدة موجهات تتحكم بها لنفس النفق (tunnel)، مما قد يقلل من إخفاء الهوية.</p>
+<p><strong>ما هي عائلة الموجه (Router Family)؟</strong></p>
+<p>عندما تقوم بتشغيل عدة routers من I2P، يجب عليك تهيئتها لتكون جزءًا من نفس العائلة. هذا يضمن: - لن يتم استخدام routers الخاصة بك في نفس مسار tunnel معًا - يحافظ المستخدمون الآخرون على إخفاء الهوية بشكل صحيح عندما تستخدم tunnels الخاصة بهم routers الخاصة بك - يمكن للشبكة توزيع المشاركة في tunnel بشكل صحيح</p>
+<p><strong>العائلة الحالية:</strong></p>
+<p>تعرض الصفحة اسم عائلة الموجّه الحالي الخاص بك. إذا لم تكن جزءًا من عائلة، فسيكون هذا فارغًا.</p>
+<p><strong>تصدير مفتاح العائلة:</strong></p>
+<ul>
+<li><strong>قم بتصدير مفتاح العائلة السري لاستيراده إلى الموجهات الأخرى التي تتحكم بها</strong></li>
+<li>انقر على &ldquo;Export Family Key&rdquo; لتنزيل ملف مفتاح العائلة الخاص بك</li>
+<li>قم باستيراد هذا المفتاح على الموجهات الأخرى لإضافتها إلى نفس العائلة</li>
+</ul>
+<p><strong>مغادرة عائلة الموجه:</strong></p>
+<ul>
+<li><strong>لن تكون عضواً في العائلة بعد الآن</strong></li>
+<li>انقر على &ldquo;مغادرة العائلة&rdquo; لإزالة هذا الـ router من عائلته الحالية</li>
+<li>لا يمكن التراجع عن هذا الإجراء دون إعادة استيراد مفتاح العائلة</li>
+</ul>
+<p><strong>اعتبارات مهمة:</strong></p>
+<ul>
+<li><strong>التسجيل العام مطلوب:</strong> لكي يتم التعرف على عائلتك على مستوى الشبكة بأكملها، يجب إضافة مفتاح العائلة الخاص بك إلى قاعدة كود I2P من قبل فريق التطوير. هذا يضمن أن جميع الموجهات (routers) على الشبكة تعرف عن عائلتك.</li>
+<li><strong>اتصل بفريق I2P</strong> لتسجيل مفتاح عائلتك إذا كنت تدير عدة موجهات عامة</li>
+<li>معظم المستخدمين الذين يشغلون موجهاً واحداً فقط لن يحتاجوا أبداً لاستخدام هذه الميزة</li>
+<li>يتم استخدام إعدادات العائلة بشكل أساسي من قبل مشغلي الموجهات العامة المتعددة أو مزودي البنية التحتية</li>
+</ul>
+<p><strong>حالات الاستخدام:</strong></p>
+<ul>
+<li>تشغيل أجهزة توجيه I2P متعددة لتحقيق التكرار</li>
+<li>تشغيل البنية التحتية مثل خوادم reseed أو outproxies على أجهزة متعددة</li>
+<li>إدارة شبكة من أجهزة توجيه I2P لمؤسسة</li>
+</ul>
+<h3 id="إعداد-النظير">إعداد النظير</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configtunnels">إعدادات Tunnel</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-tunnels.png" 
+    alt="إعدادات نفق وحدة التحكم في الموجه"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>صفحة إعدادات Tunnel تسمح لك بضبط إعدادات tunnel الافتراضية لكل من tunnels الاستكشافية (المستخدمة لاتصال router) وtunnels العميل (المستخدمة من قبل التطبيقات). <strong>الإعدادات الافتراضية تعمل لمعظم الأشخاص ويجب تغييرها فقط إذا كنت تفهم المقايضات.</strong></p>
+<p><strong>تحذيرات هامة:</strong></p>
+<p>⚠️ <strong>المقايضة بين إخفاء الهوية والأداء:</strong> هناك مقايضة أساسية بين إخفاء الهوية والأداء. قد تؤدي الأنفاق الأطول من 3 قفزات (على سبيل المثال 2 قفزة + 0-2 قفزة، 3 قفزات + 0-1 قفزة، 3 قفزات + 0-2 قفزة)، أو كمية عالية + كمية احتياطية، إلى تقليل الأداء أو الموثوقية بشكل كبير. قد ينتج عن ذلك استخدام عالٍ لوحدة المعالجة المركزية و/أو عرض النطاق الترددي الصادر. قم بتغيير هذه الإعدادات بحذر، وقم بتعديلها إذا واجهت مشاكل.</p>
+<p>⚠️ <strong>الاستمرارية:</strong> يتم تخزين تغييرات إعدادات tunnel الاستكشافي في ملف router.config. تغييرات tunnel العميل مؤقتة ولا يتم حفظها. لإجراء تغييرات دائمة على tunnel العميل، راجع <a href="../../../../ar/docs/api/i2ptunnel">صفحة I2PTunnel</a>
+.</p>
+<p><strong>أنفاق الاستكشاف:</strong></p>
+<p>تُستخدم الأنفاق الاستكشافية (Exploratory tunnels) بواسطة الموجه (router) الخاص بك للتواصل مع قاعدة بيانات الشبكة (netDb) والمشاركة في شبكة I2P.</p>
+<p>خيارات الإعداد لكل من الوارد والصادر: - <strong>الطول</strong> - عدد القفزات في النفق (الافتراضي: 2-3 قفزات) - <strong>العشوائية</strong> - التباين العشوائي في طول النفق (الافتراضي: 0-1 قفزة) - <strong>الكمية</strong> - عدد الأنفاق النشطة (الافتراضي: نفقان) - <strong>كمية الاحتياطي</strong> - عدد الأنفاق الاحتياطية الجاهزة للتفعيل (الافتراضي: 0 نفق)</p>
+<p><strong>أنفاق العميل لخادم الويب I2P:</strong></p>
+<p>هذه الإعدادات تتحكم في الأنفاق (tunnels) الخاصة بخادم الويب I2P المدمج (eepsite).</p>
+<p>⚠️ <strong>تحذير من السرية</strong> - الإعدادات تتضمن أنفاق 1-hop. ⚠️ <strong>تحذير من الأداء</strong> - الإعدادات تتضمن كميات عالية من الأنفاق.</p>
+<p>خيارات التكوين لكل من الوارد والصادر: - <strong>الطول</strong> - طول النفق (الافتراضي: قفزة واحدة لخادم الويب) - <strong>العشوائية</strong> - التباين العشوائي في طول النفق - <strong>الكمية</strong> - عدد الأنفاق النشطة - <strong>كمية الاحتياطي</strong> - عدد الأنفاق الاحتياطية</p>
+<p><strong>أنفاق العميل للعملاء المشتركين:</strong></p>
+<p>تنطبق هذه الإعدادات على تطبيقات العميل المشتركة (وكيل HTTP، IRC، إلخ).</p>
+<p>خيارات التكوين لكل من الوارد والصادر: - <strong>الطول</strong> - طول النفق (الافتراضي: 3 قفزات) - <strong>العشوائية</strong> - التباين العشوائي في طول النفق - <strong>الكمية</strong> - عدد الأنفاق النشطة - <strong>كمية النسخ الاحتياطية</strong> - عدد الأنفاق الاحتياطية</p>
+<p><strong>فهم معاملات الأنفاق (Tunnel Parameters):</strong></p>
+<ul>
+<li><strong>الطول:</strong> الأنفاق الأطول توفر إخفاء هوية أفضل لكنها تقلل من الأداء والموثوقية</li>
+<li><strong>العشوائية:</strong> تضيف عدم قابلية التنبؤ لمسارات الأنفاق، مما يحسن الأمان</li>
+<li><strong>الكمية:</strong> المزيد من الأنفاق يحسن الموثوقية وتوزيع الحمل لكنه يزيد من استهلاك الموارد</li>
+<li><strong>كمية الاحتياطي:</strong> أنفاق مبنية مسبقاً جاهزة لاستبدال الأنفاق الفاشلة، مما يحسن المرونة</li>
+</ul>
+<p><strong>أفضل الممارسات:</strong></p>
+<ul>
+<li>احتفظ بالإعدادات الافتراضية ما لم تكن لديك احتياجات محددة</li>
+<li>قم بزيادة طول tunnel فقط إذا كانت إخفاء الهوية أمراً بالغ الأهمية ويمكنك قبول أداء أبطأ</li>
+<li>قم بزيادة الكمية/النسخ الاحتياطي فقط إذا كنت تواجه فشل tunnel متكرر</li>
+<li>راقب أداء router بعد إجراء التغييرات</li>
+<li>انقر على &ldquo;Save changes&rdquo; لتطبيق التعديلات</li>
+</ul>
+<h3 id="تكوين-إعادة-البذر-reseed">تكوين إعادة البذر (Reseed)</h3>
+<p><strong>عنوان URL:</strong> <a href="http://127.0.0.1:7657/configui">إعدادات واجهة المستخدم</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-ui.png" 
+    alt="تكوين واجهة مستخدم وحدة تحكم الموجه"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>تتيح لك صفحة إعدادات واجهة المستخدم تخصيص مظهر وإمكانية الوصول إلى وحدة تحكم الـ router الخاص بك، بما في ذلك اختيار السمة وتفضيلات اللغة وحماية كلمة المرور.</p>
+<p><strong>سمة لوحة التحكم في Router:</strong></p>
+<p>اختر بين السمات الداكنة والفاتحة لواجهة وحدة تحكم الموجه:</p>
+<ul>
+<li><strong>داكن</strong> - سمة الوضع الداكن (أكثر راحة للعينين في البيئات ذات الإضاءة المنخفضة)</li>
+<li><strong>فاتح</strong> - سمة الوضع الفاتح (المظهر التقليدي)</li>
+</ul>
+<p>خيارات السمات الإضافية: - <strong>تعيين السمة بشكل عام عبر جميع التطبيقات</strong> - تطبيق السمة المحددة على جميع تطبيقات I2P، وليس فقط على وحدة تحكم الموجه - <strong>إجبار استخدام وحدة التحكم المحمولة</strong> - استخدام الواجهة المحسّنة للأجهزة المحمولة حتى على متصفحات سطح المكتب - <strong>تضمين تطبيقات البريد الإلكتروني والتورنت في وحدة التحكم</strong> - دمج Susimail و I2PSnark مباشرة في واجهة وحدة التحكم بدلاً من فتحها في علامات تبويب منفصلة</p>
+<p><strong>لغة وحدة تحكم الراوتر (Router Console):</strong></p>
+<p>اختر لغتك المفضلة لواجهة وحدة تحكم الراوتر (router console) من القائمة المنسدلة. يدعم I2P العديد من اللغات بما في ذلك الإنجليزية والألمانية والفرنسية والإسبانية والروسية والصينية واليابانية وغيرها.</p>
+<p><strong>مساهمات الترجمة مرحب بها:</strong> إذا لاحظت ترجمات غير مكتملة أو غير صحيحة، يمكنك المساعدة في تحسين I2P من خلال المساهمة في مشروع الترجمة. تواصل مع المطورين في #i2p-dev على IRC أو تحقق من تقرير حالة الترجمة (المرتبط في الصفحة).</p>
+<p><strong>كلمة مرور وحدة تحكم الموجه (Router Console):</strong></p>
+<p>أضف مصادقة اسم المستخدم وكلمة المرور لحماية الوصول إلى وحدة تحكم الـ router الخاصة بك:</p>
+<ul>
+<li><strong>اسم المستخدم</strong> - أدخل اسم المستخدم للوصول إلى console</li>
+<li><strong>كلمة المرور</strong> - أدخل كلمة المرور للوصول إلى console</li>
+<li><strong>إضافة مستخدم</strong> - إنشاء مستخدم جديد ببيانات الاعتماد المحددة</li>
+<li><strong>حذف المحدد</strong> - إزالة حسابات المستخدمين الموجودة</li>
+</ul>
+<p><strong>لماذا نضيف كلمة مرور؟</strong></p>
+<ul>
+<li>يمنع الوصول المحلي غير المصرح به إلى وحدة تحكم الموجه (router console) الخاصة بك</li>
+<li>ضروري إذا كان عدة أشخاص يستخدمون جهاز الكمبيوتر الخاص بك</li>
+<li>موصى به إذا كانت وحدة تحكم الموجه (router console) الخاصة بك يمكن الوصول إليها على شبكتك المحلية</li>
+<li>يحمي إعدادات I2P والخصوصية الخاصة بك من العبث</li>
+</ul>
+<p><strong>ملاحظة أمنية:</strong> حماية كلمة المرور تؤثر فقط على الوصول إلى واجهة الويب الخاصة بلوحة تحكم الراوتر في <a href="http://127.0.0.1:7657">I2P Router Console</a>
+. لا تقوم بتشفير حركة مرور I2P أو منع التطبيقات من استخدام I2P. إذا كنت المستخدم الوحيد لجهاز الكمبيوتر الخاص بك ولوحة تحكم الراوتر تستمع فقط على localhost (افتراضياً)، فقد لا تكون كلمة المرور ضرورية.</p>
+<h3 id="تكوين-عائلة-الموجه-router-family">تكوين عائلة الموجه (Router Family)</h3>
+<p><strong>الرابط:</strong> <a href="http://127.0.0.1:7657/configwebapps">إعدادات WebApp</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-webapps.png" 
+    alt="تكوين تطبيق الويب لوحة تحكم الراوتر"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>صفحة تكوين WebApp تسمح لك بإدارة تطبيقات الويب Java التي تعمل داخل موجه I2P الخاص بك. يتم تشغيل هذه التطبيقات بواسطة عميل webConsole وتعمل في نفس JVM الخاص بالموجه، مما يوفر وظائف متكاملة يمكن الوصول إليها من خلال وحدة تحكم الموجه.</p>
+<p><strong>ما هي تطبيقات الويب (WebApps)؟</strong></p>
+<p>WebApps هي تطبيقات قائمة على Java يمكن أن تكون: - <strong>تطبيقات كاملة</strong> (مثل I2PSnark للتورنت) - <strong>واجهات أمامية لعملاء آخرين</strong> يجب تفعيلها بشكل منفصل (مثل Susidns، I2PTunnel) - <strong>تطبيقات ويب بدون واجهة ويب</strong> (مثل دفتر العناوين)</p>
+<p><strong>ملاحظات هامة:</strong></p>
+<ul>
+<li>قد يتم تعطيل تطبيق الويب بشكل كامل، أو قد يتم تعطيله فقط من التشغيل عند بدء التشغيل</li>
+<li>إزالة ملف war من دليل webapps يعطل تطبيق الويب بشكل كامل</li>
+<li>ومع ذلك، سيظهر ملف .war ودليل تطبيق الويب مرة أخرى عند تحديث الموجه الخاص بك إلى إصدار أحدث</li>
+<li><strong>لتعطيل تطبيق ويب بشكل دائم:</strong> قم بتعطيله هنا، وهي الطريقة المفضلة</li>
+</ul>
+<p><strong>تطبيقات الويب المتاحة:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>WebApp</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>i2psnark</strong></td>
+          <td>Torrents - Built-in BitTorrent client for I2P</td>
+      </tr>
+      <tr>
+          <td><strong>i2ptunnel</strong></td>
+          <td>Hidden Services Manager - Configure client and server tunnels</td>
+      </tr>
+      <tr>
+          <td><strong>imagegen</strong></td>
+          <td>Identification Image Generator - Creates unique identicons</td>
+      </tr>
+      <tr>
+          <td><strong>jsonrpc</strong></td>
+          <td>jsonrpc.war - JSON-RPC API interface (disabled by default)</td>
+      </tr>
+      <tr>
+          <td><strong>routerconsole</strong></td>
+          <td>I2P Router Console - The main administrative interface</td>
+      </tr>
+      <tr>
+          <td><strong>susidns</strong></td>
+          <td>Address Book - Manage I2P addresses and subscriptions</td>
+      </tr>
+      <tr>
+          <td><strong>susimail</strong></td>
+          <td>Email - Web-based email client for I2P</td>
+      </tr>
+      <tr>
+          <td><strong>عناصر التحكم:</strong></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>لكل webapp: - <strong>التشغيل عند بدء التشغيل؟</strong> - خانة اختيار لتمكين/تعطيل التشغيل التلقائي - <strong>التحكم</strong> - أزرار إيقاف/تشغيل للتحكم الفوري   - <strong>إيقاف</strong> - يوقف webapp الذي يعمل حالياً   - <strong>تشغيل</strong> - يشغل webapp متوقف</p>
+<p><strong>أزرار الإعدادات:</strong></p>
+<ul>
+<li><strong>إلغاء</strong> - تجاهل التغييرات والعودة إلى الصفحة السابقة</li>
+<li><strong>حفظ إعدادات WebApp</strong> - حفظ التغييرات وتطبيقها</li>
+</ul>
+<p><strong>حالات الاستخدام:</strong></p>
+<ul>
+<li>أوقف I2PSnark إذا كنت لا تستخدم التورنت لتوفير الموارد</li>
+<li>عطّل jsonrpc إذا كنت لا تحتاج إلى الوصول عبر API</li>
+<li>أوقف Susimail إذا كنت تستخدم عميل بريد إلكتروني خارجي</li>
+<li>أوقف webapps مؤقتاً لتحرير الذاكرة أو لاستكشاف المشاكل وإصلاحها</li>
+</ul>
+<p><strong>نصيحة للأداء:</strong> تعطيل تطبيقات الويب غير المستخدمة يمكن أن يقلل من استهلاك الذاكرة ويحسن أداء الـ router، خاصة على الأنظمة ذات الموارد المحدودة.</p>
+<h2 id="help">Help</h2>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/help">مساعدة</a>
+</p>
+<p>صفحة المساعدة توفر توثيقًا شاملاً وموارد لمساعدتك على فهم واستخدام I2P بفعالية. تعمل كمركز رئيسي لاستكشاف الأخطاء والتعلم والحصول على الدعم.</p>
+<p><strong>ما ستجده:</strong></p>
+<ul>
+<li><strong>دليل البدء السريع</strong> - معلومات أساسية للمستخدمين الجدد للبدء باستخدام I2P</li>
+<li><strong>الأسئلة الشائعة (FAQ)</strong> - إجابات على الأسئلة الشائعة حول تثبيت I2P وإعداده واستخدامه</li>
+<li><strong>استكشاف الأخطاء وإصلاحها</strong> - حلول للمشاكل الشائعة ومشاكل الاتصال</li>
+<li><strong>الوثائق التقنية</strong> - معلومات تفصيلية حول بروتوكولات I2P وبنيته ومواصفاته</li>
+<li><strong>أدلة التطبيقات</strong> - تعليمات لاستخدام تطبيقات I2P مثل التورنت والبريد الإلكتروني والخدمات المخفية</li>
+<li><strong>معلومات الشبكة</strong> - فهم كيفية عمل I2P وما يجعله آمناً</li>
+<li><strong>موارد الدعم</strong> - روابط للمنتديات وقنوات IRC ودعم المجتمع</li>
+</ul>
+<p><strong>الحصول على المساعدة:</strong></p>
+<p>إذا كنت تواجه مشاكل مع I2P: 1. راجع الأسئلة الشائعة للحصول على الأسئلة والأجوبة الشائعة 2. راجع قسم استكشاف الأخطاء وإصلاحها للحصول على حل لمشكلتك المحددة 3. قم بزيارة منتدى I2P على <a href="http://i2pforum.i2p">i2pforum.i2p</a>
+ أو <a href="https://i2pforum.net">i2pforum.net</a>
+ 4. انضم إلى قناة IRC رقم #i2p للحصول على دعم المجتمع في الوقت الفعلي 5. ابحث في الوثائق للحصول على معلومات تقنية مفصلة</p>
+<p><strong>نصيحة:</strong> صفحة المساعدة متاحة دائمًا من الشريط الجانبي لوحة تحكم الـ router، مما يسهل العثور على المساعدة كلما احتجت إليها.</p>
+<h2 id="performance-graphs">Performance Graphs</h2>
+<p><strong>عنوان URL:</strong> <a href="http://127.0.0.1:7657/graphs">رسوم بيانية للأداء</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-graphs.png" 
+    alt="Router Console Performance Graphs"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>توفر صفحة رسوم الأداء مراقبة بصرية في الوقت الفعلي لأداء router الخاص بك في I2P ونشاط الشبكة. تساعدك هذه الرسوم على فهم استخدام عرض النطاق الترددي، واتصالات النظراء، واستهلاك الذاكرة، والصحة العامة لل router.</p>
+<p><strong>الرسوم البيانية المتاحة:</strong></p>
+<ul>
+<li>
+<p><strong>استخدام النطاق الترددي</strong></p>
+<ul>
+<li><strong>معدل الإرسال على المستوى المنخفض (بايت/ثانية)</strong> - معدل حركة البيانات الصادرة</li>
+<li><strong>معدل الاستقبال على المستوى المنخفض (بايت/ثانية)</strong> - معدل حركة البيانات الواردة</li>
+<li>يعرض الاستخدام الحالي والمتوسط والأقصى للنطاق الترددي</li>
+<li>يساعد في مراقبة ما إذا كنت تقترب من حدود النطاق الترددي المحددة</li>
+</ul>
+</li>
+<li>
+<p><strong>النظراء النشطون</strong></p>
+<ul>
+<li><strong>router.activePeers متوسط لمدة 60 ثانية</strong> - عدد النظراء الذين تتواصل معهم بنشاط</li>
+<li>يوضح صحة اتصالك بالشبكة</li>
+<li>المزيد من النظراء النشطين يعني عمومًا بناء أنفاق أفضل ومشاركة أفضل في الشبكة</li>
+</ul>
+</li>
+<li>
+<p><strong>استخدام ذاكرة Router</strong></p>
+<ul>
+<li><strong>router.memoryUsed متوسط لمدة 60 ثانية</strong> - استهلاك ذاكرة JVM</li>
+<li>يعرض الاستخدام الحالي والمتوسط والأقصى للذاكرة بالميغابايت</li>
+<li>مفيد لتحديد تسرب الذاكرة أو تحديد ما إذا كنت بحاجة إلى زيادة حجم Java heap</li>
+</ul>
+</li>
+</ul>
+<p><strong>تكوين عرض الرسم البياني:</strong></p>
+<p>تخصيص كيفية عرض وتحديث الرسوم البيانية:</p>
+<ul>
+<li><strong>حجم الرسم البياني</strong> - تعيين العرض (افتراضي: 400 بكسل) والارتفاع (افتراضي: 100 بكسل)</li>
+<li><strong>فترة العرض</strong> - النطاق الزمني المراد عرضه (افتراضي: 60 دقيقة)</li>
+<li><strong>تأخير التحديث</strong> - مدى تكرار تحديث الرسوم البيانية (افتراضي: 5 دقائق)</li>
+<li><strong>نوع الرسم</strong> - الاختيار بين عرض المتوسطات أو الأحداث</li>
+<li><strong>إخفاء وسيلة الإيضاح</strong> - إزالة وسيلة الإيضاح من الرسوم البيانية لتوفير المساحة</li>
+<li><strong>UTC</strong> - استخدام توقيت UTC بدلاً من التوقيت المحلي على الرسوم البيانية</li>
+<li><strong>الاستمرارية</strong> - تخزين بيانات الرسوم البيانية على القرص للتحليل التاريخي</li>
+</ul>
+<p><strong>الخيارات المتقدمة:</strong></p>
+<p>انقر على <strong>[Select Stats]</strong> لاختيار الإحصائيات التي تريد رسمها بيانياً: - مقاييس الأنفاق (معدل نجاح البناء، عدد الأنفاق، إلخ.) - إحصائيات قاعدة بيانات الشبكة - إحصائيات النقل (NTCP2، SSU2) - أداء أنفاق العميل - والعديد من المقاييس التفصيلية الأخرى</p>
+<p><strong>حالات الاستخدام:</strong></p>
+<ul>
+<li>راقب عرض النطاق الترددي للتأكد من أنك لا تتجاوز الحدود المكونة</li>
+<li>تحقق من اتصال النظراء عند استكشاف مشاكل الشبكة</li>
+<li>تتبع استخدام الذاكرة لتحسين إعدادات Java heap</li>
+<li>حدد أنماط الأداء مع مرور الوقت</li>
+<li>شخّص مشاكل بناء الأنفاق من خلال ربط الرسوم البيانية</li>
+</ul>
+<p><strong>نصيحة:</strong> انقر على &ldquo;حفظ الإعدادات وإعادة رسم الرسوم البيانية&rdquo; بعد إجراء التغييرات لتطبيق التكوين الخاص بك. سيتم تحديث الرسوم البيانية تلقائيًا بناءً على إعداد تأخير التحديث الخاص بك.</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                    
+                        <a href="../../../../ar/docs/guides/browser-config/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">تكوين متصفح الويب</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/ar/docs/guides/router-console-config.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">ابقَ على اطلاع بأخبار I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="أدخل بريدك الإلكتروني" required>
+                            <button type="submit">اشترك</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="../../../../ar/financial-support/">تبرع</a></li>
+                    <li><a href="../../../../ar/docs/overview/intro/">مقدمة I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>المجتمع</h3>
+                <ul>
+                    <li><a href="../../../../ar/get-involved/">شارك معنا</a></li>
+                    <li><a href="../../../../ar/blog/">مدونة</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">المنتديات الرسمية</a></li>
+                    <li><a href="../../../../ar/contact/">اتصل بنا</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>الموارد</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">إحصائيات I2P</a></li>
+                    <li><a href="../../../../ar/papers/">بحث</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">ستورمي كلاود</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 مشروع الإنترنت الخفي. مرخص تحت Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../ar/privacy/">الخصوصية</a>
+                <a href="../../../../ar/terms/">الشروط</a>
+                <a href="../../../../ar/about/media/">الصحافة</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="إغلاق">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>استطلاع المجتمع</h2>
+            <p class="modal-subtitle">نود أن نسمع منك</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                يساعد تصويتك في تشكيل مستقبل I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

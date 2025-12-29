@@ -1,0 +1,2579 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Транспорт NTCP2 | I2P - Проект невидимого интернета</title>
+
+    <meta name="description" content="TCP-транспорт на основе Noise для соединений router-to-router">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Транспорт NTCP2 | I2P - Проект невидимого интернета">
+    <meta property="og:description" content="TCP-транспорт на основе Noise для соединений router-to-router">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/ru/docs/specs/ntcp2/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Бета-сайт I2P теперь доступен Сообщайте о проблемах с E-Mail на stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Закрыть баннер" title="Закрыть баннер">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../ru/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../ru/about/" class="">О проекте</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ru/about/">Обзор</a></li>
+                            <li><a href="../../../../ru/papers/">Научные статьи</a></li>
+                            <li><a href="../../../../ru/about/media/">Пресса</a></li>
+                            <li><a href="../../../../ru/contact/">Связаться с нами</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../ru/docs/" class="active">Документы</a></li>
+                    <li><a href="../../../../ru/downloads/" class="">Загрузки</a></li>
+                    <li><a href="../../../../ru/blog/" class="">Блог</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../ru/get-involved/" class="">Присоединиться</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ru/get-involved/">Обзор</a></li>
+                            <li><a href="../../../../ru/feedback/">Предложения по функциям</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">ru</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/ntcp2/"
+                                class="lang-option">Английский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/ntcp2/"
+                                class="lang-option">Испанский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/ntcp2/"
+                                class="lang-option">Корейский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/ntcp2/"
+                                class="lang-option">Китайский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/ntcp2/"
+                                class="lang-option active">Русский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/ntcp2/"
+                                class="lang-option">Чешский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/ntcp2/"
+                                class="lang-option">Немецкий</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/ntcp2/"
+                                class="lang-option">Французский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/ntcp2/"
+                                class="lang-option">Турецкий</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/ntcp2/"
+                                class="lang-option">Вьетнамский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/ntcp2/"
+                                class="lang-option">Хинди</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/ntcp2/"
+                                class="lang-option">Арабский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/ntcp2/"
+                                class="lang-option">Португальский</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../ru/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../ru/downloads/" class="btn btn-primary">Загрузить I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#обзор">Обзор</a></li>
+    <li><a href="#фреймворк-протоколов-noise">Фреймворк протоколов Noise</a>
+      <ul>
+        <li><a href="#расширения-специфичные-для-i2p">Расширения, специфичные для I2P</a></li>
+      </ul>
+    </li>
+    <li><a href="#последовательность-рукопожатия">Последовательность рукопожатия</a>
+      <ul>
+        <li><a href="#рукопожатие-из-трех-сообщений">Рукопожатие из трех сообщений</a></li>
+        <li><a href="#шаблоны-сообщений-noise">Шаблоны сообщений Noise</a></li>
+      </ul>
+    </li>
+    <li><a href="#спецификации-сообщений">Спецификации сообщений</a>
+      <ul>
+        <li><a href="#обозначения-ключей">Обозначения ключей</a></li>
+        <li><a href="#аутентифицированное-шифрование-chacha20-poly1305">Аутентифицированное шифрование (ChaCha20-Poly1305)</a></li>
+      </ul>
+    </li>
+    <li><a href="#сообщение-1-sessionrequest">Сообщение 1: SessionRequest</a>
+      <ul>
+        <li><a href="#необработанный-формат">Необработанный формат</a></li>
+        <li><a href="#расшифрованное-содержимое">Расшифрованное содержимое</a></li>
+        <li><a href="#блок-опций-16-байт-big-endian-старший-байт-первым">Блок опций (16 байт, big-endian (старший байт первым))</a></li>
+        <li><a href="#функция-выработки-ключа-kdf-1">Функция выработки ключа (KDF-1)</a></li>
+        <li><a href="#примечания-по-реализации">Примечания по реализации</a></li>
+      </ul>
+    </li>
+    <li><a href="#сообщение-2-sessioncreated">Сообщение 2: SessionCreated</a>
+      <ul>
+        <li><a href="#необработанный-формат-1">Необработанный формат</a></li>
+        <li><a href="#расшифрованное-содержимое-1">Расшифрованное содержимое</a></li>
+        <li><a href="#блок-параметров-16-байт-big-endian-старший-байт-первым">Блок параметров (16 байт, big-endian (старший байт первым))</a></li>
+        <li><a href="#функция-выработки-ключей-kdf-2">Функция выработки ключей (KDF-2)</a></li>
+        <li><a href="#примечания-по-реализации-1">Примечания по реализации</a></li>
+      </ul>
+    </li>
+    <li><a href="#сообщение-3-sessionconfirmed-подтверждение-сеанса">Сообщение 3: SessionConfirmed (подтверждение сеанса)</a>
+      <ul>
+        <li><a href="#структура-из-двух-частей">Структура из двух частей</a></li>
+        <li><a href="#необработанный-формат-2">Необработанный формат</a></li>
+        <li><a href="#расшифрованное-содержимое-2">Расшифрованное содержимое</a></li>
+        <li><a href="#функция-вывода-ключей-kdf-3">Функция вывода ключей (KDF-3)</a></li>
+        <li><a href="#примечания-по-реализации-2">Примечания по реализации</a></li>
+      </ul>
+    </li>
+    <li><a href="#фаза-данных">Фаза данных</a>
+      <ul>
+        <li><a href="#функция-выработки-ключей-фаза-данных">Функция выработки ключей (фаза данных)</a></li>
+        <li><a href="#структура-кадра">Структура кадра</a></li>
+        <li><a href="#маскировка-длины-с-помощью-siphash">Маскировка длины с помощью SipHash</a></li>
+        <li><a href="#формат-блока">Формат блока</a></li>
+        <li><a href="#типы-блоков">Типы блоков</a></li>
+        <li><a href="#тип-блока-0-datetime">Тип блока 0: DateTime</a></li>
+        <li><a href="#тип-блока-1-параметры">Тип блока 1: Параметры</a></li>
+        <li><a href="#тип-блока-2-routerinfo-структура-с-информацией-о-router">Тип блока 2: RouterInfo (структура с информацией о router)</a></li>
+        <li><a href="#тип-блока-3-сообщение-i2np">Тип блока 3: сообщение I2NP</a></li>
+        <li><a href="#тип-блока-4-завершение">Тип блока 4: Завершение</a></li>
+        <li><a href="#тип-блока-254-заполнение">Тип блока 254: Заполнение</a></li>
+      </ul>
+    </li>
+    <li><a href="#обработка-ошибок-aead">Обработка ошибок AEAD</a>
+      <ul>
+        <li><a href="#фаза-рукопожатия-сообщения-13">Фаза рукопожатия (сообщения 1–3)</a></li>
+        <li><a href="#фаза-данных-1">Фаза данных</a></li>
+      </ul>
+    </li>
+    <li><a href="#опубликованный-routerinfo-информация-о-маршрутизаторе">Опубликованный RouterInfo (информация о маршрутизаторе)</a>
+      <ul>
+        <li><a href="#формат-адреса-router">Формат адреса Router</a></li>
+        <li><a href="#обязательные-параметры">Обязательные параметры</a></li>
+        <li><a href="#примеры-записей-routeraddress-адрес-маршрутизатора">Примеры записей RouterAddress (адрес маршрутизатора)</a></li>
+        <li><a href="#неопубликованный-адрес-ntcp2">Неопубликованный адрес NTCP2</a></li>
+        <li><a href="#ротация-открытого-ключа-и-вектора-инициализации-iv">Ротация открытого ключа и вектора инициализации (IV)</a></li>
+      </ul>
+    </li>
+    <li><a href="#определение-версии">Определение версии</a></li>
+    <li><a href="#рекомендации-по-смещению-часов">Рекомендации по смещению часов</a>
+      <ul>
+        <li><a href="#обработка-на-стороне-боба-сообщение-1">Обработка на стороне Боба (Сообщение 1)</a></li>
+        <li><a href="#обработка-на-стороне-алисы-сообщение-2">Обработка на стороне Алисы (сообщение 2)</a></li>
+        <li><a href="#обработка-бобом-сообщение-3">Обработка Бобом (Сообщение 3)</a></li>
+        <li><a href="#синхронизация-времени">Синхронизация времени</a></li>
+      </ul>
+    </li>
+    <li><a href="#свойства-безопасности">Свойства безопасности</a>
+      <ul>
+        <li><a href="#прямая-секретность">Прямая секретность</a></li>
+        <li><a href="#аутентификация">Аутентификация</a></li>
+        <li><a href="#устойчивость-к-анализу-трафика">Устойчивость к анализу трафика</a></li>
+        <li><a href="#противодействие-атакам-отказа-в-обслуживании">Противодействие атакам отказа в обслуживании</a></li>
+        <li><a href="#криптографическая-безопасность">Криптографическая безопасность</a></li>
+      </ul>
+    </li>
+    <li><a href="#ссылки">Ссылки</a>
+      <ul>
+        <li><a href="#основные-спецификации">Основные спецификации</a></li>
+        <li><a href="#криптографические-стандарты">Криптографические стандарты</a></li>
+        <li><a href="#связанные-спецификации-i2p">Связанные спецификации I2P</a></li>
+        <li><a href="#ссылки-по-реализации">Ссылки по реализации</a></li>
+        <li><a href="#исторический-контекст">Исторический контекст</a></li>
+      </ul>
+    </li>
+    <li><a href="#рекомендации-по-реализации">Рекомендации по реализации</a>
+      <ul>
+        <li><a href="#обязательные-требования">Обязательные требования</a></li>
+        <li><a href="#рекомендуемые-практики">Рекомендуемые практики</a></li>
+        <li><a href="#распространённые-ошибки">Распространённые ошибки</a></li>
+        <li><a href="#методология-тестирования">Методология тестирования</a></li>
+        <li><a href="#переход-с-ntcp">Переход с NTCP</a></li>
+      </ul>
+    </li>
+    <li><a href="#приложение-a-шаблон-noise-xk">Приложение A: шаблон Noise XK</a></li>
+    <li><a href="#приложение-b-кодирование-base64">Приложение B: кодирование Base64</a></li>
+    <li><a href="#приложение-c-анализ-захвата-пакетов">Приложение C: Анализ захвата пакетов</a></li>
+    <li><a href="#приложение-d-история-версий">Приложение D: История версий</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../ru/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../ru/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../ru/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Транспорт NTCP2</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Этот перевод был создан с помощью машинного обучения и может быть не на 100% точным.</span>
+    
+    
+    <a href="../../../../en/docs/specs/ntcp2/" class="disclaimer-link">Просмотреть английскую версию</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Транспорт NTCP2</h1>
+                    
+                        <p class="article-description">TCP-транспорт на основе Noise для соединений router-to-router</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 0.9.66
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="обзор">Обзор</h2>
+<p>NTCP2 заменяет устаревший транспорт NTCP рукопожатием на базе протокола Noise, которое устойчиво к фингерпринтингу трафика, шифрует поля длины и поддерживает современные наборы шифров. Routers могут запускать NTCP2 вместе с SSU2 как два обязательных транспортных протокола в сети I2P. NTCP (версия 1) был объявлен устаревшим в 0.9.40 (май 2019) и полностью удалён в 0.9.50 (май 2021).</p>
+<h2 id="фреймворк-протоколов-noise">Фреймворк протоколов Noise</h2>
+<p>NTCP2 использует фреймворк протокола Noise <a href="https://noiseprotocol.org/noise.html">Ревизия 33, 2017-10-04</a>
+ с расширениями, специфичными для I2P:</p>
+<ul>
+<li><strong>Шаблон</strong>: <code>Noise_XK_25519_ChaChaPoly_SHA256</code></li>
+<li><strong>Расширенный идентификатор</strong>: <code>Noise_XKaesobfse+hs2+hs3_25519_ChaChaPoly_SHA256</code> (для инициализации KDF (функции выработки ключей))</li>
+<li><strong>Функция DH</strong>: X25519 (RFC 7748) - 32-байтные ключи, кодирование little-endian</li>
+<li><strong>Шифр</strong>: AEAD_CHACHA20_POLY1305 (RFC 7539/RFC 8439)
+<ul>
+<li>12-байтный nonce (одноразовое значение): первые 4 байта — нули, последние 8 байт — счетчик (little-endian)</li>
+<li>Максимальное значение nonce: 2^64 - 2 (соединение должно быть завершено до достижения 2^64 - 1)</li>
+</ul>
+</li>
+<li><strong>Хеш-функция</strong>: SHA-256 (32-байтный вывод)</li>
+<li><strong>MAC</strong>: Poly1305 (16-байтный тег аутентификации)</li>
+</ul>
+<h3 id="расширения-специфичные-для-i2p">Расширения, специфичные для I2P</h3>
+<ol>
+<li><strong>AES-обфускация</strong>: Эфемерные ключи зашифрованы с помощью AES-256-CBC с использованием хеша router Боба и опубликованного IV</li>
+<li><strong>Случайный паддинг</strong>: Паддинг в открытом виде в сообщениях 1-2 (аутентифицирован), паддинг AEAD в сообщениях 3+ (зашифрован)</li>
+<li><strong>Обфускация длины SipHash-2-4</strong>: Двухбайтовые длины кадров побитово складываются по XOR с выходом SipHash</li>
+<li><strong>Структура кадров</strong>: Кадры с префиксом длины для фазы данных (совместимость с потоковой передачей по TCP)</li>
+<li><strong>Блочно-ориентированные полезные данные</strong>: Структурированный формат данных с типизированными блоками</li>
+</ol>
+<h2 id="последовательность-рукопожатия">Последовательность рукопожатия</h2>
+<pre tabindex="0"><code>Alice (Initiator)             Bob (Responder)
+SessionRequest  ──────────────────────►
+                ◄────────────────────── SessionCreated
+SessionConfirmed ──────────────────────►
+</code></pre><h3 id="рукопожатие-из-трех-сообщений">Рукопожатие из трех сообщений</h3>
+<ol>
+<li><strong>SessionRequest</strong> - замаскированный эфемерный ключ Алисы, параметры, подсказки по padding (заполнению)</li>
+<li><strong>SessionCreated</strong> - замаскированный эфемерный ключ Боба, зашифрованные параметры, padding</li>
+<li><strong>SessionConfirmed</strong> - зашифрованный статический ключ Алисы и RouterInfo (два AEAD-фрейма)</li>
+</ol>
+<h3 id="шаблоны-сообщений-noise">Шаблоны сообщений Noise</h3>
+<pre tabindex="0"><code>XK(s, rs):           Authentication   Confidentiality
+  &lt;- s               (Bob&#39;s static key known in advance)
+  -&gt; e, es                  0                2
+  &lt;- e, ee                  2                1
+  -&gt; s, se                  2                5
+  &lt;-                        2                5
+</code></pre><p><strong>Уровни аутентификации:</strong> - 0: Без аутентификации (кто угодно мог отправить) - 2: Аутентификация отправителя, устойчивая к key-compromise impersonation (KCI, подмене личности при компрометации ключа)</p>
+<p><strong>Уровни конфиденциальности:</strong> - 1: Эфемерный получатель (прямая секретность, без аутентификации получателя) - 2: Известный получатель, прямая секретность только при компрометации отправителя - 5: Сильная прямая секретность (эфемерный-эфемерный + эфемерный-статический DH (Диффи — Хеллман))</p>
+<h2 id="спецификации-сообщений">Спецификации сообщений</h2>
+<h3 id="обозначения-ключей">Обозначения ключей</h3>
+<ul>
+<li><code>RH_A</code> = Router Hash для Алисы (32 байта, SHA-256)</li>
+<li><code>RH_B</code> = Router Hash для Боба (32 байта, SHA-256)</li>
+<li><code>||</code> = Оператор конкатенации</li>
+<li><code>byte(n)</code> = Один байт со значением n</li>
+<li>Все многобайтовые целые числа — <strong>биг-эндиан</strong> (если не указано иное)</li>
+<li>Ключи X25519 — <strong>литтл-эндиан</strong> (32 байта)</li>
+</ul>
+<h3 id="аутентифицированное-шифрование-chacha20-poly1305">Аутентифицированное шифрование (ChaCha20-Poly1305)</h3>
+<p><strong>Функция шифрования:</strong></p>
+<pre tabindex="0"><code>AEAD_ChaCha20_Poly1305(key, nonce, associatedData, plaintext)
+  → (ciphertext || MAC)
+</code></pre><p><strong>Параметры:</strong> - <code>key</code>: 32-байтный ключ шифрования из KDF (функции деривации ключа) - <code>nonce</code>: 12 байт (4 нулевых байта + 8-байтный счётчик, little-endian) - <code>associatedData</code>: 32-байтный хеш в фазе рукопожатия; нулевой длины в фазе передачи данных - <code>plaintext</code>: Данные для шифрования (0+ байт)</p>
+<p><strong>Вывод:</strong> - Шифротекст: той же длины, что и открытый текст - MAC: 16 байт (аутентификационный тег Poly1305)</p>
+<p><strong>Управление Nonce (одноразовым числом):</strong> - Счетчик начинается с 0 для каждого экземпляра шифра - Увеличивается при каждой операции AEAD в данном направлении - Отдельные счетчики для Alice→Bob и Bob→Alice на этапе передачи данных - Соединение должно быть завершено до того, как счетчик достигнет 2^64 - 1</p>
+<h2 id="сообщение-1-sessionrequest">Сообщение 1: SessionRequest</h2>
+<p>Алиса инициирует соединение с Бобом.</p>
+<p><strong>Операции Noise</strong>: <code>e, es</code> (генерация и обмен эфемерными ключами)</p>
+<h3 id="необработанный-формат">Необработанный формат</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    AES-256-CBC Encrypted X (32B)      +
+|    Key: RH_B, IV: Bob&#39;s published IV  |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame (48 bytes)        +
+|    Plaintext: 32B (X + options)       |
++    k from KDF-1, n=0, ad=h            +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
++    Length specified in options         +
+|    0 to 65535 - 80 bytes              |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Ограничения по размеру:</strong> - Минимум: 80 байт (32 AES + 48 AEAD) - Максимум: 65535 байт всего - <strong>Особый случай</strong>: Максимум 287 байт при подключении к адресам &ldquo;NTCP&rdquo; (определение версии)</p>
+<h3 id="расшифрованное-содержимое">Расшифрованное содержимое</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    X (Alice ephemeral public key)     +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|           Options Block               |
++             (16 bytes)                +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="блок-опций-16-байт-big-endian-старший-байт-первым">Блок опций (16 байт, big-endian (старший байт первым))</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| id | ver|  padLen | m3p2len | Rsvd(0) |
++----+----+----+----+----+----+----+----+
+|        tsA        |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+
+id      : 1 byte  - Network ID (2 for mainnet, 16-254 for testnets)
+ver     : 1 byte  - Protocol version (currently 2)
+padLen  : 2 bytes - Padding length in this message (0-65455)
+m3p2len : 2 bytes - Length of SessionConfirmed part 2 frame
+Rsvd    : 2 bytes - Reserved, set to 0
+tsA     : 4 bytes - Unix timestamp (seconds since epoch)
+Reserved: 4 bytes - Reserved, set to 0
+</code></pre><p><strong>Критические поля:</strong> - <strong>Идентификатор сети</strong> (начиная с 0.9.42): Быстрое отклонение соединений между разными сетями - <strong>m3p2len</strong>: Точный размер части 2 сообщения 3 (должен совпадать при отправке)</p>
+<h3 id="функция-выработки-ключа-kdf-1">Функция выработки ключа (KDF-1)</h3>
+<p><strong>Инициализация протокола:</strong></p>
+<pre tabindex="0"><code>protocol_name = &#34;Noise_XKaesobfse+hs2+hs3_25519_ChaChaPoly_SHA256&#34;
+h = SHA256(protocol_name)
+ck = h  // Chaining key initialized to hash
+</code></pre><p><strong>Операции MixHash:</strong></p>
+<pre tabindex="0"><code>h = SHA256(h)                    // Null prologue
+h = SHA256(h || rs)              // Bob&#39;s static key (known)
+h = SHA256(h || e.pubkey)        // Alice&#39;s ephemeral key X
+// h is now the associated data for message 1 AEAD
+</code></pre><p><strong>Операция MixKey (es pattern, шаблон рукопожатия ephemeral-static):</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Alice.ephemeral_private, Bob.static_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 1
+// ck is retained for message 2 KDF
+</code></pre><h3 id="примечания-по-реализации">Примечания по реализации</h3>
+<ol>
+<li><strong>AES Obfuscation</strong>: Используется только для устойчивости к DPI (глубокая инспекция пакетов); любой, у кого есть хеш router Боба и IV (инициализационный вектор), может расшифровать X</li>
+<li><strong>Replay Prevention</strong>: Боб должен кэшировать значения X (или их зашифрованные эквиваленты) не менее 2*D секунд (D = макс. рассинхронизация часов)</li>
+<li><strong>Timestamp Validation</strong>: Боб должен отклонять соединения с |tsA - current_time| &gt; D (обычно D = 60 секунд)</li>
+<li><strong>Curve Validation</strong>: Боб должен проверить, что X — корректная точка X25519</li>
+<li><strong>Fast Rejection</strong>: Боб может проверить X[31] &amp; 0x80 == 0 до расшифрования (у корректных ключей X25519 старший бит сброшен)</li>
+<li><strong>Error Handling</strong>: При любом сбое Боб закрывает соединение отправкой TCP RST после случайной задержки и чтения случайного числа байтов</li>
+<li><strong>Buffering</strong>: Алиса должна сбрасывать весь буфер сообщения (включая паддинг) сразу для эффективности</li>
+</ol>
+<h2 id="сообщение-2-sessioncreated">Сообщение 2: SessionCreated</h2>
+<p>Боб отвечает Алисе.</p>
+<p><strong>Операции Noise</strong>: <code>e, ee</code> (эфемерно-эфемерный Диффи-Хеллман)</p>
+<h3 id="необработанный-формат-1">Необработанный формат</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    AES-256-CBC Encrypted Y (32B)      +
+|    Key: RH_B, IV: AES state from msg1 |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame (48 bytes)        +
+|    Plaintext: 32B (Y + options)       |
++    k from KDF-2, n=0, ad=h            +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
++    Length specified in options         +
+|    0 to 65535 - 80 bytes              |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="расшифрованное-содержимое-1">Расшифрованное содержимое</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    Y (Bob ephemeral public key)       +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|           Options Block               |
++             (16 bytes)                +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="блок-параметров-16-байт-big-endian-старший-байт-первым">Блок параметров (16 байт, big-endian (старший байт первым))</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Rsvd(0) | padLen  |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+|        tsB        |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+
+Rsvd    : 2 bytes - Reserved, set to 0
+padLen  : 2 bytes - Padding length in this message
+Reserved: 10 bytes - Reserved, set to 0
+tsB     : 4 bytes - Unix timestamp (seconds since epoch)
+</code></pre><h3 id="функция-выработки-ключей-kdf-2">Функция выработки ключей (KDF-2)</h3>
+<p><strong>Операции MixHash:</strong></p>
+<pre tabindex="0"><code>h = SHA256(h || encrypted_payload_msg1)  // 32-byte ciphertext
+if (msg1_padding_length &gt; 0):
+    h = SHA256(h || padding_from_msg1)
+h = SHA256(h || e.pubkey)                // Bob&#39;s ephemeral key Y
+// h is now the associated data for message 2 AEAD
+</code></pre><p><strong>Операция MixKey (шаблон ee):</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Bob.ephemeral_private, Alice.ephemeral_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 2
+// ck is retained for message 3 KDF
+</code></pre><p><strong>Очистка памяти:</strong></p>
+<pre tabindex="0"><code>// Overwrite ephemeral keys after ee DH
+Alice.ephemeral_public = zeros(32)
+Alice.ephemeral_private = zeros(32)  // Bob side
+Bob.received_ephemeral = zeros(32)    // Bob side
+</code></pre><h3 id="примечания-по-реализации-1">Примечания по реализации</h3>
+<ol>
+<li><strong>Цепной режим AES</strong>: Шифрование Y использует состояние AES-CBC из сообщения 1 (не сбрасывается)</li>
+<li><strong>Защита от повторов</strong>: Алиса должна кэшировать значения Y как минимум в течение 2*D секунд</li>
+<li><strong>Проверка метки времени</strong>: Алиса должна отклонять, если |tsB - current_time| &gt; D</li>
+<li><strong>Проверка кривой</strong>: Алиса должна проверить, что Y — корректная точка X25519</li>
+<li><strong>Обработка ошибок</strong>: Алиса закрывает соединение, посылая TCP RST, при любой ошибке</li>
+<li><strong>Буферизация</strong>: Боб должен сбрасывать всё сообщение целиком за один раз</li>
+</ol>
+<h2 id="сообщение-3-sessionconfirmed-подтверждение-сеанса">Сообщение 3: SessionConfirmed (подтверждение сеанса)</h2>
+<p>Алиса подтверждает сеанс и отправляет RouterInfo (данные о router в I2P).</p>
+<p><strong>Операции Noise</strong>: <code>s, se</code> (раскрытие статического ключа и статический-эфемерный DH)</p>
+<h3 id="структура-из-двух-частей">Структура из двух частей</h3>
+<p>Сообщение 3 состоит из <strong>двух отдельных AEAD-фреймов</strong>:</p>
+<ol>
+<li><strong>Часть 1</strong>: Фиксированный 48-байтовый кадр с зашифрованным статическим ключом Алисы</li>
+<li><strong>Часть 2</strong>: Кадр переменной длины с RouterInfo, параметрами и заполнением</li>
+</ol>
+<h3 id="необработанный-формат-2">Необработанный формат</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|    ChaChaPoly Frame 1 (48 bytes)      |
++    Plaintext: Alice static key (32B)  +
+|    k from KDF-2, n=1, ad=h            |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame 2 (variable)      +
+|    Length specified in msg1.m3p2len   |
++    k from KDF-3, n=0, ad=h            +
+|    Plaintext: RouterInfo + padding    |
++                                       +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Ограничения по размеру:</strong> - Часть 1: Ровно 48 байт (32 байта открытого текста + 16 байт MAC) - Часть 2: Длина указана в сообщении 1 (поле m3p2len) - Общий максимум: 65535 байт (часть 1 максимум 48, значит часть 2 максимум 65487)</p>
+<h3 id="расшифрованное-содержимое-2">Расшифрованное содержимое</h3>
+<p><strong>Часть 1:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    S (Alice static public key)        +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Часть 2:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|    Block: RouterInfo (required)       |
++    Type=2, contains Alice&#39;s RI         +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+|    Block: Options (optional)          |
++    Type=1, padding parameters          +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Block: Padding (optional)          |
++    Type=254, random data               +
+|    MUST be last block if present      |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="функция-вывода-ключей-kdf-3">Функция вывода ключей (KDF-3)</h3>
+<p><strong>Часть 1 (шаблон s):</strong></p>
+<pre tabindex="0"><code>h = SHA256(h || encrypted_payload_msg2)  // 32-byte ciphertext
+if (msg2_padding_length &gt; 0):
+    h = SHA256(h || padding_from_msg2)
+
+// Encrypt static key with message 2 cipher key
+ciphertext = AEAD_ChaCha20_Poly1305(k_msg2, n=1, h, Alice.static_public)
+h = SHA256(h || ciphertext)  // 48 bytes (32 + 16)
+// h is now the associated data for message 3 part 2
+</code></pre><p><strong>Часть 2 (se pattern):</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Alice.static_private, Bob.ephemeral_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 3 part 2
+// ck is retained for data phase KDF
+
+ciphertext = AEAD_ChaCha20_Poly1305(k, n=0, h, payload)
+h = SHA256(h || ciphertext)
+// h is retained for SipHash KDF
+</code></pre><p><strong>Очистка памяти:</strong></p>
+<pre tabindex="0"><code>// Overwrite Bob&#39;s ephemeral key after se DH
+Alice.received_ephemeral = zeros(32)  // Alice side
+Bob.ephemeral_public = zeros(32)       // Bob side
+Bob.ephemeral_private = zeros(32)      // Bob side
+</code></pre><h3 id="примечания-по-реализации-2">Примечания по реализации</h3>
+<ol>
+<li><strong>Проверка RouterInfo</strong>: Боб должен проверить подпись, метку времени и согласованность ключей</li>
+<li><strong>Сопоставление ключа</strong>: Боб должен удостовериться, что статический ключ Алисы в части 1 совпадает с ключом в RouterInfo</li>
+<li><strong>Расположение статического ключа</strong>: Ищите совпадающий параметр &ldquo;s&rdquo; в NTCP или NTCP2 RouterAddress</li>
+<li><strong>Порядок блоков</strong>: RouterInfo должен идти первым, Options — вторым (если есть), Padding — последним (если есть)</li>
+<li><strong>Планирование длины</strong>: Алиса должна убедиться, что m3p2len в сообщении 1 в точности соответствует длине части 2</li>
+<li><strong>Буферизация</strong>: Алиса должна сбросить буфер, отправив обе части вместе одной отправкой TCP</li>
+<li><strong>Необязательное связывание</strong>: Алиса может сразу добавить кадр фазы данных для повышения эффективности</li>
+</ol>
+<h2 id="фаза-данных">Фаза данных</h2>
+<p>После завершения рукопожатия все сообщения используют кадры AEAD (аутентифицированное шифрование с дополнительными данными) переменной длины с обфусцированными полями длины.</p>
+<h3 id="функция-выработки-ключей-фаза-данных">Функция выработки ключей (фаза данных)</h3>
+<p><strong>Функция Split (протокол Noise):</strong></p>
+<pre tabindex="0"><code>// Generate transmit and receive keys
+zerolen = &#34;&#34;  // Zero-length byte array
+temp_key = HMAC-SHA256(ck, zerolen)
+
+// Alice transmits to Bob
+k_ab = HMAC-SHA256(temp_key, byte(0x01))
+
+// Bob transmits to Alice  
+k_ba = HMAC-SHA256(temp_key, k_ab || byte(0x02))
+
+// Cleanup
+ck = zeros(32)
+temp_key = zeros(32)
+</code></pre><p><strong>Деривация ключа SipHash:</strong></p>
+<pre tabindex="0"><code>// Generate additional symmetric key for SipHash
+ask_master = HMAC-SHA256(temp_key, &#34;ask&#34; || byte(0x01))
+
+// &#34;siphash&#34; is 7 bytes US-ASCII
+temp_key2 = HMAC-SHA256(ask_master, h || &#34;siphash&#34;)
+sip_master = HMAC-SHA256(temp_key2, byte(0x01))
+
+// Alice to Bob SipHash keys
+temp_key3 = HMAC-SHA256(sip_master, zerolen)
+sipkeys_ab = HMAC-SHA256(temp_key3, byte(0x01))
+sipk1_ab = sipkeys_ab[0:7]   // 8 bytes, little-endian
+sipk2_ab = sipkeys_ab[8:15]  // 8 bytes, little-endian
+sipiv_ab = sipkeys_ab[16:23] // 8 bytes, IV
+
+// Bob to Alice SipHash keys
+sipkeys_ba = HMAC-SHA256(temp_key3, sipkeys_ab || byte(0x02))
+sipk1_ba = sipkeys_ba[0:7]   // 8 bytes, little-endian
+sipk2_ba = sipkeys_ba[8:15]  // 8 bytes, little-endian
+sipiv_ba = sipkeys_ba[16:23] // 8 bytes, IV
+</code></pre><h3 id="структура-кадра">Структура кадра</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|Obfs Len |                             |
++----+----+    ChaChaPoly Frame         +
+|    Encrypted Block Data               |
++    k_ab (Alice→Bob) or k_ba (Bob→Alice)|
+|    Nonce starts at 0, increments      |
++    No associated data (empty string)  +
+|                                       |
+~           .   .   .                   ~
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Poly1305 MAC (16 bytes)            |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Ограничения фрейма:</strong> - Минимум: 18 байт (2 байта обфусцированной длины + 0 байт открытого текста + 16 байт MAC) - Максимум: 65537 байт (2 байта обфусцированной длины + 65535 байт данных фрейма) - Рекомендуется: Несколько КБ на фрейм (минимизировать задержку на стороне получателя)</p>
+<h3 id="маскировка-длины-с-помощью-siphash">Маскировка длины с помощью SipHash</h3>
+<p><strong>Назначение</strong>: Предотвратить идентификацию средствами DPI (глубокая проверка пакетов) границ кадров</p>
+<p><strong>Алгоритм:</strong></p>
+<pre tabindex="0"><code>// Initialization (per direction)
+IV[0] = sipiv  // From KDF
+
+// For each frame:
+IV[n] = SipHash-2-4(sipk1, sipk2, IV[n-1])
+Mask[n] = IV[n][0:1]  // First 2 bytes of IV
+ObfuscatedLength = ActualLength XOR Mask[n]
+
+// Send 2-byte ObfuscatedLength, then ActualLength bytes
+</code></pre><p><strong>Декодирование:</strong></p>
+<pre tabindex="0"><code>// Receiver maintains identical IV chain
+IV[n] = SipHash-2-4(sipk1, sipk2, IV[n-1])
+Mask[n] = IV[n][0:1]
+ActualLength = ObfuscatedLength XOR Mask[n]
+// Read ActualLength bytes (includes 16-byte MAC)
+</code></pre><p><strong>Примечания:</strong> - Отдельные цепочки IV (инициализационный вектор) для каждого направления (Alice→Bob и Bob→Alice) - Если SipHash возвращает uint64, используйте 2 младших байта в качестве маски - Преобразуйте uint64 в следующий IV в виде байтов в формате little-endian</p>
+<h3 id="формат-блока">Формат блока</h3>
+<p>Каждый кадр содержит ноль или более блоков:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|Type| Length  |       Data              |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type  : 1 byte  - Block type identifier
+Length: 2 bytes - Big-endian, data size (0-65516)
+Data  : Variable length payload
+</code></pre><p><strong>Ограничения по размеру:</strong> - Максимальный кадр: 65535 байт (включая MAC (код аутентификации сообщения)) - Максимальное пространство под блоки: 65519 байт (кадр - 16-байтовый MAC) - Максимальный размер одного блока: 65519 байт (3-байтовый заголовок + 65516 байт данных)</p>
+<h3 id="типы-блоков">Типы блоков</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Name</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DateTime</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Time synchronization (4-byte timestamp)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Options</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding parameters, dummy traffic</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo delivery/flooding</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">I2NP</td><td style="border:1px solid var(--color-border); padding:0.5rem;">I2NP message with shortened header</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Termination</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Explicit connection close</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">224-253</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Experimental features</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">254</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Random padding (must be last)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">255</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Future extensions</td></tr>
+  </tbody>
+</table>
+**Правила упорядочивания блоков:** - **Сообщение 3, часть 2**: RouterInfo, Параметры (необязательно), Заполнение (необязательно) - НИКАКИХ других типов - **Фаза данных**: Любой порядок, кроме:   - Заполнение ДОЛЖНО быть последним блоком, если присутствует   - Завершение ДОЛЖНО быть последним блоком (кроме Заполнения), если присутствует - Несколько блоков I2NP допускаются в одном кадре - Несколько блоков Заполнения НЕ допускаются в одном кадре
+<h3 id="тип-блока-0-datetime">Тип блока 0: DateTime</h3>
+<p>Синхронизация времени для обнаружения рассинхронизации часов.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+
+| 0  |    4    |     timestamp     |
++----+----+----+----+----+----+----+
+
+Type     : 0
+Length   : 4 (big-endian)
+Timestamp: 4 bytes, Unix seconds (big-endian)
+</code></pre><p><strong>Реализация</strong>: Округляйте до ближайшей секунды, чтобы предотвратить накопление смещения часов.</p>
+<h3 id="тип-блока-1-параметры">Тип блока 1: Параметры</h3>
+<p>Параметры паддинга и формирования трафика.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 1  |  size   |tmin|tmax|rmin|rmax|tdmy|
++----+----+----+----+----+----+----+----+
+|tdmy|  rdmy   |  tdelay |  rdelay |    |
++----+----+----+----+----+----+----+    +
+|         more_options (TBD)            |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type  : 1
+Length: 12+ bytes (big-endian)
+</code></pre><p><strong>Коэффициенты паддинга</strong> (число с фиксированной точкой 4.4, value/16.0): - <code>tmin</code>: Минимальный коэффициент паддинга при передаче (0.0 - 15.9375) - <code>tmax</code>: Максимальный коэффициент паддинга при передаче (0.0 - 15.9375) - <code>rmin</code>: Минимальный коэффициент паддинга при приёме (0.0 - 15.9375) - <code>rmax</code>: Максимальный коэффициент паддинга при приёме (0.0 - 15.9375)</p>
+<p><strong>Примеры:</strong> - 0x00 = 0% заполнения - 0x01 = 6.25% заполнения - 0x10 = 100% заполнения (соотношение 1:1) - 0x80 = 800% заполнения (соотношение 8:1)</p>
+<p><strong>Фиктивный трафик:</strong> - <code>tdmy</code>: Максимальная скорость, которую готовы отправлять (2 байта, среднее в байтах/с) - <code>rdmy</code>: Запрашиваемая скорость приёма (2 байта, среднее в байтах/с)</p>
+<p><strong>Вставка задержки:</strong> - <code>tdelay</code>: Максимальная задержка, которую готов вставить (2 байта, среднее значение в миллисекундах) - <code>rdelay</code>: Запрашиваемая задержка (2 байта, среднее значение в миллисекундах)</p>
+<p><strong>Рекомендации:</strong> - Минимальные значения указывают на желаемую устойчивость к анализу трафика - Максимальные значения указывают на ограничения пропускной способности - Отправитель должен соблюдать максимальные значения, указанные получателем - Отправитель может учитывать минимальные значения получателя в пределах ограничений - Механизм принуждения отсутствует; реализации могут различаться</p>
+<h3 id="тип-блока-2-routerinfo-структура-с-информацией-о-router">Тип блока 2: RouterInfo (структура с информацией о router)</h3>
+<p>Доставка RouterInfo для пополнения netdb и выполнения flooding (массовой рассылки).</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 2  |  size   |flg |    RouterInfo     |
++----+----+----+----+                   +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type : 2
+Length: Flag (1 byte) + RouterInfo size
+Flag : Bit 0 = flood request (1) or local store (0)
+       Bits 1-7 = Reserved, set to 0
+</code></pre><p><strong>Использование:</strong></p>
+<p><strong>В сообщении 3, часть 2</strong> (рукопожатие): - Алиса отправляет свой RouterInfo (информация о router) Бобу - Flood bit (флаг распространения в netDb) обычно равен 0 (локальное хранение) - RouterInfo НЕ сжат gzip</p>
+<p><strong>Во время Data Phase (этап передачи данных):</strong> - Любая из сторон может отправить свой обновлённый RouterInfo - Бит Flood = 1: запросить распространение через floodfill (если получатель — floodfill) - Бит Flood = 0: только локальное хранение в netdb</p>
+<p><strong>Требования к проверке:</strong> 1. Проверьте, что тип подписи поддерживается 2. Проверьте подпись RouterInfo 3. Проверьте, что метка времени находится в допустимых пределах 4. Для рукопожатия: Проверьте, что статический ключ соответствует параметру &ldquo;s&rdquo; адреса NTCP2 5. Для фазы данных: Проверьте, что хэш router соответствует пиру сеанса 6. Распространяйте только RouterInfos с опубликованными адресами</p>
+<p><strong>Примечания:</strong> - Нет механизма ACK (используйте I2NP DatabaseStore с токеном ответа при необходимости) - Может содержать сторонние RouterInfos (при использовании floodfill) - НЕ сжато gzip (в отличие от I2NP DatabaseStore)</p>
+<h3 id="тип-блока-3-сообщение-i2np">Тип блока 3: сообщение I2NP</h3>
+<p>Сообщение I2NP с укороченным 9-байтным заголовком.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 3  |  size   |type|    msg_id         |
++----+----+----+----+----+----+----+----+
+|   expiration  |     I2NP payload      |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type      : 3
+Length    : 9 + payload_size (big-endian)
+Type      : 1 byte, I2NP message type
+Msg_ID    : 4 bytes, big-endian, I2NP message ID
+Expiration: 4 bytes, big-endian, Unix timestamp (seconds)
+Payload   : I2NP message body (length = size - 9)
+</code></pre><p><strong>Отличия от NTCP1:</strong> - Срок действия: 4 байта (секунды) против 8 байт (миллисекунды) - Длина: опущена (выводится из длины блока) - Контрольная сумма: опущена (AEAD (аутентифицированное шифрование с дополнительными данными) обеспечивает целостность) - Заголовок: 9 байт против 16 байт (сокращение на 44%)</p>
+<p><strong>Фрагментация:</strong> - Сообщения I2NP НЕ ДОЛЖНЫ фрагментироваться между блоками - Сообщения I2NP НЕ ДОЛЖНЫ фрагментироваться между кадрами - В одном кадре допускается несколько блоков I2NP</p>
+<h3 id="тип-блока-4-завершение">Тип блока 4: Завершение</h3>
+<p>Явное закрытие соединения с указанием кода причины.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 4  |  size   |  valid_frames_recv    |
++----+----+----+----+----+----+----+----+
+| (continued) |rsn |   additional_data   |
++----+----+----+----+                   +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type            : 4
+Length          : 9+ bytes (big-endian)
+Valid_Frames_Recv: 8 bytes, big-endian (receive nonce value)
+                  0 if error in handshake phase
+Reason          : 1 byte (see table below)
+Additional_Data : Optional (format unspecified, for debugging)
+</code></pre><p><strong>Коды причин:</strong></p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Code</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Reason</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Phase</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Normal close / unspecified</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Termination received</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Idle timeout</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Router shutdown</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data phase AEAD failure</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">5</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Incompatible options</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">6</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Incompatible signature type</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">7</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Clock skew</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">8</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding violation</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">9</td><td style="border:1px solid var(--color-border); padding:0.5rem;">AEAD framing error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Payload format error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">11</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 1 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 2 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">13</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 3 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">14</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Intra-frame read timeout</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">15</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo signature verification fail</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">16</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Static key parameter mismatch</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">17</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Banned</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+  </tbody>
+</table>
+**Правила:** - Termination (блок завершения) ДОЛЖЕН быть последним блоком, не являющимся блоком заполнения, в кадре - Не более одного блока завершения на кадр - Отправителю следует закрыть соединение после отправки - Получателю следует закрыть соединение после получения
+<p><strong>Обработка ошибок:</strong> - Ошибки рукопожатия: обычно закрывать с TCP RST (без блока завершения) - Ошибки AEAD на этапе передачи данных: случайный тайм-аут + случайное чтение, затем отправить блок завершения - См. раздел &ldquo;AEAD Error Handling&rdquo; для процедур безопасности</p>
+<h3 id="тип-блока-254-заполнение">Тип блока 254: Заполнение</h3>
+<p>Случайный паддинг (добавление случайных данных) для противодействия анализу трафика.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|254 |  size   |     random_data       |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type: 254
+Length: 0-65516 bytes (big-endian)
+Data: Cryptographically random bytes
+</code></pre><p><strong>Правила:</strong> - Паддинг ДОЛЖЕН быть последним блоком в фрейме, если он присутствует - Паддинг нулевой длины допускается - В каждом фрейме допускается только один блок паддинга - Допускаются фреймы, содержащие только паддинг - Следует придерживаться согласованных параметров из блока Options</p>
+<p><strong>Паддинг в сообщениях 1-2:</strong> - Вне фрейма AEAD (аутентифицированное шифрование с дополнительными данными) (в открытом виде) - Включён в хеш-цепочку следующего сообщения (аутентифицировано) - Подмена обнаруживается, когда проверка AEAD следующего сообщения завершается с ошибкой</p>
+<p><strong>Заполнение в сообщении 3+ и в фазе передачи данных:</strong> - Внутри фрейма AEAD (зашифровано и аутентифицировано) - Используется для формирования трафика и маскировки размера</p>
+<h2 id="обработка-ошибок-aead">Обработка ошибок AEAD</h2>
+<p><strong>Критические требования безопасности:</strong></p>
+<h3 id="фаза-рукопожатия-сообщения-13">Фаза рукопожатия (сообщения 1–3)</h3>
+<p><strong>Известный размер сообщения:</strong> - Размеры сообщений заранее определены или явно указаны - Сбой аутентификации AEAD однозначно обнаруживается</p>
+<p><strong>Ответ Боба на сбой сообщения 1:</strong> 1. Установить случайный таймаут (диапазон зависит от реализации, рекомендуется 100–500 мс) 2. Прочитать случайное число байтов (диапазон зависит от реализации, рекомендуется 1–64 КБ) 3. Закрыть соединение с помощью TCP RST (без ответа) 4. Временно занести исходный IP-адрес в чёрный список 5. Отслеживать повторяющиеся сбои для долгосрочных блокировок</p>
+<p><strong>Ответ Алисы на ошибку сообщения 2:</strong> 1. Немедленно закрыть соединение с помощью TCP RST 2. Не отвечать Бобу</p>
+<p><strong>Ответ Боба на сбой сообщения 3:</strong> 1. Немедленно закрыть соединение отправкой TCP RST 2. Не отвечать Алисе</p>
+<h3 id="фаза-данных-1">Фаза данных</h3>
+<p><strong>Обфусцированный размер сообщения:</strong> - Поле длины обфусцировано с помощью SipHash - Недопустимая длина или сбой AEAD может указывать на:   - Зондирование атакующим   - Повреждение данных в сети   - Рассинхронизированный IV (инициализирующий вектор) SipHash   - Злонамеренный пир</p>
+<p><strong>Ответ на ошибку AEAD (аутентифицированное шифрование с дополнительными данными) или ошибку длины:</strong> 1. Установить случайный таймаут (рекомендуется 100-500 мс) 2. Прочитать случайное количество байтов (рекомендуется 1KB-64KB) 3. Отправить блок завершения с кодом причины 4 (сбой AEAD) или 9 (ошибка фрейминга) 4. Закрыть соединение</p>
+<p><strong>Предотвращение атаки типа «оракул расшифрования»:</strong> - Никогда не раскрывать тип ошибки пиру до истечения случайного тайм-аута - Никогда не пропускать проверку длины перед проверкой AEAD - Рассматривать недопустимую длину так же, как ошибку AEAD - Использовать одинаковый путь обработки ошибок для обеих ошибок</p>
+<p><strong>Соображения по реализации:</strong> - Некоторые реализации могут продолжать работу после ошибок AEAD, если они редки - Прекращать работу после повторяющихся ошибок (рекомендуемый порог: 3-5 ошибок в час) - Баланс между восстановлением после ошибок и безопасностью</p>
+<h2 id="опубликованный-routerinfo-информация-о-маршрутизаторе">Опубликованный RouterInfo (информация о маршрутизаторе)</h2>
+<h3 id="формат-адреса-router">Формат адреса Router</h3>
+<p>Поддержка NTCP2 анонсируется через опубликованные записи RouterAddress (адрес маршрутизатора) с определёнными параметрами.</p>
+<p><strong>Стиль транспорта:</strong> - <code>&quot;NTCP2&quot;</code> - NTCP2 только на этом порту - <code>&quot;NTCP&quot;</code> - И NTCP, и NTCP2 на этом порту (автоопределение)   - <strong>Примечание</strong>: поддержка NTCP (v1) удалена в 0.9.50 (май 2021)   - стиль &ldquo;NTCP&rdquo; теперь устарел; используйте &ldquo;NTCP2&rdquo;</p>
+<h3 id="обязательные-параметры">Обязательные параметры</h3>
+<p><strong>Все опубликованные адреса NTCP2:</strong></p>
+<ol>
+<li>
+<p><strong><code>host</code></strong> - IP-адрес (IPv4 или IPv6) или имя хоста</p>
+<ul>
+<li>Формат: стандартная запись IP или доменное имя</li>
+<li>Может быть опущен для routers только с исходящими соединениями или скрытых routers</li>
+</ul>
+</li>
+<li>
+<p><strong><code>port</code></strong> - номер TCP-порта</p>
+<ul>
+<li>Формат: целое число, 1-65535</li>
+<li>Можно опустить для router, работающих только на исходящую связь, или скрытых</li>
+</ul>
+</li>
+<li>
+<p><strong><code>s</code></strong> - Статический открытый ключ (X25519)</p>
+<ul>
+<li>Формат: закодирован в Base64, 44 символа</li>
+<li>Кодировка: алфавит Base64 I2P</li>
+<li>Источник: 32-байтный открытый ключ X25519, little-endian (младший порядок байтов)</li>
+</ul>
+</li>
+<li>
+<p><strong><code>i</code></strong> - Вектор инициализации (IV) для AES</p>
+<ul>
+<li>Формат: закодировано в Base64, 24 символа</li>
+<li>Кодировка: алфавит Base64 I2P</li>
+<li>Источник: 16-байтовый IV, big-endian (старший байт первым)</li>
+</ul>
+</li>
+<li>
+<p><strong><code>v</code></strong> - Версия протокола</p>
+<ul>
+<li>Формат: целое число или целые числа, разделённые запятыми</li>
+<li>Текущее: <code>&quot;2&quot;</code></li>
+<li>Будущее: <code>&quot;2,3&quot;</code> (должны быть в числовом порядке)</li>
+</ul>
+</li>
+</ol>
+<p><strong>Необязательные параметры:</strong></p>
+<ol start="6">
+<li>
+<p><strong><code>caps</code></strong> - Возможности (начиная с 0.9.50)</p>
+<ul>
+<li>Формат: строка символов, обозначающих возможности</li>
+<li>Значения:
+<ul>
+<li><code>&quot;4&quot;</code> - возможность исходящих соединений по IPv4</li>
+<li><code>&quot;6&quot;</code> - возможность исходящих соединений по IPv6</li>
+<li><code>&quot;46&quot;</code> - и IPv4, и IPv6 (рекомендуемый порядок)</li>
+</ul>
+</li>
+<li>Не требуется, если <code>host</code> опубликован</li>
+<li>Полезно для скрытых/за межсетевым экраном routers</li>
+</ul>
+</li>
+<li>
+<p><strong><code>cost</code></strong> - Приоритет адреса</p>
+<ul>
+<li>Формат: целое число, 0-255</li>
+<li>Меньшие значения = более высокий приоритет</li>
+<li>Рекомендуется: 5-10 для обычных адресов</li>
+<li>Рекомендуется: 14 для неопубликованных адресов</li>
+</ul>
+</li>
+</ol>
+<h3 id="примеры-записей-routeraddress-адрес-маршрутизатора">Примеры записей RouterAddress (адрес маршрутизатора)</h3>
+<p><strong>Опубликованный IPv4-адрес:</strong></p>
+<pre tabindex="0"><code>&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;192.0.2.1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>Скрытый Router (только исходящий):</strong></p>
+<pre tabindex="0"><code>&lt;Address cost=&#34;14&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;v&gt;2&lt;/v&gt;
+    &lt;caps&gt;4&lt;/caps&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>Router с двойным стеком:</strong></p>
+<pre tabindex="0"><code>&lt;!-- IPv4 Address --&gt;
+&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;192.0.2.1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+
+&lt;!-- IPv6 Address (same keys, same port) --&gt;
+&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;2001:db8::1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>Важные правила:</strong> - Несколько адресов NTCP2 с <strong>одним и тем же портом</strong> ДОЛЖНЫ использовать <strong>идентичные</strong> значения <code>s</code>, <code>i</code> и <code>v</code> - Разные порты могут использовать разные ключи - Двухстековые routers должны публиковать отдельные адреса IPv4 и IPv6</p>
+<h3 id="неопубликованный-адрес-ntcp2">Неопубликованный адрес NTCP2</h3>
+<p><strong>Для routers в режиме Outbound-Only:</strong></p>
+<p>Если router не принимает входящие соединения NTCP2, но инициирует исходящие соединения, он ДОЛЖЕН всё равно публиковать RouterAddress со следующими параметрами:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;Address</span> <span style="color:#a6e22e">cost=</span><span style="color:#e6db74">&#34;14&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;transport_style&gt;</span>NTCP2<span style="color:#f92672">&lt;/transport_style&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;options&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;s&gt;</span>9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=<span style="color:#f92672">&lt;/s&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;v&gt;</span>2<span style="color:#f92672">&lt;/v&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/options&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/Address&gt;</span>
+</span></span></code></pre></div><p><strong>Назначение:</strong> - Позволяет Бобу проверить статический ключ Алисы во время рукопожатия - Требуется для проверки RouterInfo (информация о router) в сообщении 3, часть 2 - Не требуются <code>i</code>, <code>host</code> или <code>port</code> (только исходящее)</p>
+<p><strong>Альтернатива:</strong> - Добавьте <code>s</code> и <code>v</code> к уже опубликованному адресу &ldquo;NTCP&rdquo; или SSU</p>
+<h3 id="ротация-открытого-ключа-и-вектора-инициализации-iv">Ротация открытого ключа и вектора инициализации (IV)</h3>
+<p><strong>Критическая политика безопасности:</strong></p>
+<p><strong>Общие правила:</strong> 1. <strong>Никогда не выполняйте ротацию, пока router работает</strong> 2. <strong>Сохраняйте ключ и IV (инициализационный вектор)</strong> между перезапусками 3. <strong>Отслеживайте предыдущий простой</strong>, чтобы определить допустимость ротации</p>
+<p><strong>Минимальное время простоя перед ротацией:</strong></p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Router Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Min Downtime</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Published NTCP2 address</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>1 month</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Many routers cache RouterInfo</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Published SSU only (no NTCP2)</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>1 day</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Moderate caching</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">No published addresses (hidden)</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>2 hours</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Minimal impact</td></tr>
+  </tbody>
+</table>
+**Дополнительные триггеры:** - Изменение локального IP-адреса: может вызывать ротацию независимо от простоя - Router "rekey" (смена ключей; новый Router Hash): генерация новых ключей
+<p><strong>Обоснование:</strong> - Предотвращает раскрытие времени перезапуска через смену ключей - Позволяет кэшированным RouterInfos естественным образом устаревать - Поддерживает стабильность сети - Снижает количество неудачных попыток подключения</p>
+<p><strong>Реализация:</strong> 1. Сохранять ключ, IV (вектор инициализации) и метку времени последнего завершения работы в постоянном хранилище 2. При запуске вычислить downtime = current_time - last_shutdown 3. Если downtime &gt; минимума для типа router, можно выполнить ротацию 4. Если IP изменился или происходит смена ключей, можно выполнить ротацию 5. В противном случае повторно использовать предыдущие ключ и IV</p>
+<p><strong>Ротация IV (вектор инициализации):</strong> - Подчиняется тем же правилам, что и ротация ключа - Присутствует только в опубликованных адресах (не в скрытых routers) - Рекомендуется менять IV при каждом изменении ключа</p>
+<h2 id="определение-версии">Определение версии</h2>
+<p><strong>Контекст:</strong> Когда <code>transportStyle=&quot;NTCP&quot;</code> (устаревший), Bob поддерживает как NTCP v1, так и v2 на одном порту и должен автоматически определять версию протокола.</p>
+<p><strong>Алгоритм обнаружения:</strong></p>
+<pre tabindex="0"><code>1. Wait for at least 64 bytes (minimum NTCP2 message 1 size)
+
+2. If received ≥ 288 bytes:
+   → Connection is NTCP version 1 (NTCP1 message 1 is 288 bytes)
+
+3. If received &lt; 288 bytes:
+   
+   Option A (conservative, pre-NTCP2 majority):
+   a. Wait additional short time (e.g., 100-500ms)
+   b. If total received ≥ 288 bytes → NTCP1
+   c. Otherwise → Attempt NTCP2 decode
+   
+   Option B (aggressive, post-NTCP2 majority):
+   a. Attempt NTCP2 decode immediately:
+      - Decrypt first 32 bytes (X key) with AES-256-CBC
+      - Verify valid X25519 point (X[31] &amp; 0x80 == 0)
+      - Verify AEAD frame
+   b. If decode succeeds → NTCP2
+   c. If decode fails → Wait for more data or NTCP1
+</code></pre><p><strong>Быстрая проверка старшего бита (MSB):</strong> - Перед расшифрованием AES проверьте: <code>encrypted_X[31] &amp; 0x80 == 0</code> - У валидных ключей X25519 старший бит сброшен - Сбой, вероятно, указывает на NTCP1 (старый транспортный протокол I2P) (или атаку) - При сбое реализуйте устойчивость к зондированию (случайный таймаут + чтение)</p>
+<p><strong>Требования к реализации:</strong></p>
+<ol>
+<li>
+<p><strong>Обязанности Алисы:</strong></p>
+<ul>
+<li>При подключении к адресу &ldquo;NTCP&rdquo; ограничьте размер сообщения 1 не более 287 байтов</li>
+<li>Буферизуйте и сбросьте всё сообщение 1 целиком за один раз</li>
+<li>Повышает вероятность доставки одним TCP-пакетом</li>
+</ul>
+</li>
+<li>
+<p><strong>Ответственность Боба:</strong></p>
+<ul>
+<li>Буферизовать полученные данные до определения версии</li>
+<li>Реализовать корректную обработку таймаутов</li>
+<li>Использовать TCP_NODELAY для быстрого определения версии</li>
+<li>Буферизовать и затем целиком сбросить сообщение 2 сразу после определения версии</li>
+</ul>
+</li>
+</ol>
+<p><strong>Соображения безопасности:</strong> - Атаки сегментацией: Боб должен быть устойчив к сегментации TCP - Зондирующие атаки: реализуйте случайные задержки и по-байтовое чтение при сбоях - Предотвращение DoS: ограничьте число одновременных ожидающих установления соединений - Тайм-ауты чтения: как на каждое чтение, так и общий (защита от «slowloris» — атака, при которой клиент удерживает соединение открытым, передавая данные крайне медленно)</p>
+<h2 id="рекомендации-по-смещению-часов">Рекомендации по смещению часов</h2>
+<p><strong>Поля временных меток:</strong> - Сообщение 1: <code>tsA</code> (метка времени Алисы) - Сообщение 2: <code>tsB</code> (метка времени Боба) - Сообщение 3+: необязательные блоки DateTime</p>
+<p><strong>Максимальное расхождение (D):</strong> - Обычно: <strong>±60 секунд</strong> - Настраивается в каждой реализации - Расхождение &gt; D, как правило, фатально</p>
+<h3 id="обработка-на-стороне-боба-сообщение-1">Обработка на стороне Боба (Сообщение 1)</h3>
+<pre tabindex="0"><code>1. Receive tsA from Alice
+2. skew = tsA - current_time
+3. If |skew| &gt; D:
+   a. Still send message 2 (allows Alice to calculate skew)
+   b. Include tsB in message 2
+   c. Do NOT initiate handshake completion
+   d. Optionally: Temporary ban Alice&#39;s IP
+   e. After message 2 sent, close connection
+
+4. If |skew| ≤ D:
+   a. Continue handshake normally
+</code></pre><p><strong>Обоснование:</strong> Отправка сообщения 2 даже при расхождении часов позволяет Алисе диагностировать проблемы с системным временем.</p>
+<h3 id="обработка-на-стороне-алисы-сообщение-2">Обработка на стороне Алисы (сообщение 2)</h3>
+<pre tabindex="0"><code>1. Receive tsB from Bob
+2. RTT = (current_time_now - tsA_sent)
+3. adjusted_skew = (tsB - current_time_now) - (RTT / 2)
+4. If |adjusted_skew| &gt; D:
+   a. Close connection immediately
+   b. If local clock suspect: Adjust clock or use external time source
+   c. If Bob&#39;s clock suspect: Temporary ban Bob
+   d. Log for operator review
+5. If |adjusted_skew| ≤ D:
+   a. Continue handshake normally
+   b. Optionally: Track skew for time synchronization
+</code></pre><p><strong>Корректировка RTT:</strong> - Вычтите половину RTT из рассчитанного смещения - Учитывает задержку распространения в сети - Более точная оценка смещения</p>
+<h3 id="обработка-бобом-сообщение-3">Обработка Бобом (Сообщение 3)</h3>
+<pre tabindex="0"><code>1. If message 3 received (unlikely if skew exceeded in message 1)
+2. Recalculate skew = tsA_received - current_time
+3. If |adjusted_skew| &gt; D:
+   a. Send termination block (reason code 7: clock skew)
+   b. Close connection
+   c. Ban Alice for period (e.g., 1-24 hours)
+</code></pre><h3 id="синхронизация-времени">Синхронизация времени</h3>
+<p><strong>Блоки DateTime (фаза данных):</strong> - Периодически отправляйте блок DateTime (тип 0) - Получатель может использовать для корректировки часов - Округляйте метку времени до ближайшей секунды (чтобы предотвратить смещение)</p>
+<p><strong>Внешние источники времени:</strong> - NTP (Network Time Protocol) - Синхронизация системных часов - Время консенсуса сети I2P</p>
+<p><strong>Стратегии корректировки часов:</strong> - Если локальные часы неверны: скорректируйте системное время или используйте смещение - Если часы пиров стабильно неверны: зафиксируйте проблему на стороне пира - Отслеживайте статистику рассинхронизации для мониторинга состояния сети</p>
+<h2 id="свойства-безопасности">Свойства безопасности</h2>
+<h3 id="прямая-секретность">Прямая секретность</h3>
+<p><strong>Достигается посредством:</strong> - Эфемерного обмена ключами Диффи-Хеллмана (X25519) - Трех операций DH: es, ee, se (шаблон Noise XK) - Уничтожения эфемерных ключей после завершения рукопожатия</p>
+<p><strong>Прогрессия конфиденциальности:</strong> - Сообщение 1: Уровень 2 (прямая секретность при компрометации отправителя) - Сообщение 2: Уровень 1 (эфемерный получатель) - Сообщение 3+: Уровень 5 (сильная прямая секретность)</p>
+<p><strong>Совершенная прямая секретность:</strong> - Компрометация долгосрочных статических ключей НЕ раскрывает сессионные ключи прошлых сессий - Каждая сессия использует уникальные эфемерные ключи - Эфемерные закрытые ключи никогда не используются повторно - Очистка памяти после согласования ключей</p>
+<p><strong>Ограничения:</strong> - Сообщение 1 уязвимо, если статический ключ Боба скомпрометирован (но сохраняется прямая секретность в случае компрометации Алисы) - Возможны атаки воспроизведения для сообщения 1 (смягчаются меткой времени и кэшем повторов)</p>
+<h3 id="аутентификация">Аутентификация</h3>
+<p><strong>Взаимная аутентификация:</strong> - Алиса аутентифицируется статическим ключом в сообщении 3 - Боб аутентифицируется владением статическим закрытым ключом (неявно из успешного рукопожатия)</p>
+<p><strong>Устойчивость к Key Compromise Impersonation (KCI; имитация при компрометации ключа):</strong> - Уровень аутентификации 2 (устойчив к KCI) - Злоумышленник не может выдать себя за Alice, даже имея статический закрытый ключ Alice (без её эфемерного ключа) - Злоумышленник не может выдать себя за Bob, даже имея статический закрытый ключ Bob (без его эфемерного ключа)</p>
+<p><strong>Проверка статического ключа:</strong> - Алиса заранее знает статический ключ Боба (из RouterInfo) - Боб проверяет, что статический ключ Алисы соответствует RouterInfo в сообщении 3 - Предотвращает атаки типа «человек посередине»</p>
+<h3 id="устойчивость-к-анализу-трафика">Устойчивость к анализу трафика</h3>
+<p><strong>Контрмеры против DPI:</strong> 1. <strong>Сокрытие с помощью AES:</strong> Эфемерные ключи зашифрованы, данные выглядят случайными 2. <strong>Сокрытие длины с SipHash:</strong> Длины фреймов не в открытом виде 3. <strong>Случайное заполнение (padding):</strong> Переменные размеры сообщений, нет фиксированных шаблонов 4. <strong>Зашифрованные фреймы:</strong> Вся полезная нагрузка зашифрована алгоритмом ChaCha20</p>
+<p><strong>Предотвращение атак повторов:</strong> - Проверка метки времени (±60 секунд) - Кэш повторов для эфемерных ключей (время жизни 2*D) - Инкрементирование Nonce (одноразовое число) предотвращает повтор пакетов в рамках сеанса</p>
+<p><strong>Устойчивость к зондированию:</strong> - Случайные тайм-ауты при ошибках AEAD - Случайное чтение байтов перед закрытием соединения - Отсутствие ответов при ошибках рукопожатия - Занесение IP-адресов в черный список при повторных сбоях</p>
+<p><strong>Рекомендации по паддингу:</strong> - Сообщения 1-2: паддинг в открытом виде (аутентифицированный) - Сообщение 3+: зашифрованный паддинг внутри фреймов AEAD (шифрование с аутентификацией и ассоциированными данными) - Согласованные параметры паддинга (Options block — блок параметров) - Разрешены фреймы только с паддингом</p>
+<h3 id="противодействие-атакам-отказа-в-обслуживании">Противодействие атакам отказа в обслуживании</h3>
+<p><strong>Ограничения соединений:</strong> - Максимальное количество активных соединений (зависит от реализации) - Максимальное количество незавершённых рукопожатий (например, 100-1000) - Ограничения на число соединений с одного IP-адреса (например, 3-10 одновременно)</p>
+<p><strong>Защита ресурсов:</strong> - операции DH (обмен ключами Диффи — Хеллмана) ограничены по частоте (ресурсоёмные) - таймауты чтения для каждого сокета и общий - защита от &ldquo;Slowloris&rdquo; (общие лимиты времени) - занесение IP в чёрный список за злоупотребления</p>
+<p><strong>Быстрое отклонение:</strong> - Несоответствие идентификатора сети → немедленное закрытие - Некорректная точка X25519 → быстрая проверка старшего бита до расшифрования - Метка времени вне допустимого диапазона → закрытие без вычислений - Сбой AEAD (аутентифицированное шифрование с дополнительными данными) → без ответа, случайная задержка</p>
+<p><strong>Устойчивость к зондированию:</strong> - Случайный таймаут: 100-500 мс (зависит от реализации) - Случайный объём чтения: 1KB-64KB (зависит от реализации) - Нет информации об ошибках для атакующего - Закрытие соединения TCP RST (без рукопожатия FIN)</p>
+<h3 id="криптографическая-безопасность">Криптографическая безопасность</h3>
+<p><strong>Алгоритмы:</strong> - <strong>X25519</strong>: 128-битная стойкость, DH на эллиптических кривых (Curve25519) - <strong>ChaCha20</strong>: потоковый шифр с ключом 256 бит - <strong>Poly1305</strong>: информационно-теоретически стойкий MAC - <strong>SHA-256</strong>: 128-битная стойкость к коллизиям, 256-битная стойкость к нахождению прообраза - <strong>HMAC-SHA256</strong>: PRF (псевдослучайная функция) для деривации ключей</p>
+<p><strong>Размеры ключей:</strong> - Статические ключи: 32 байта (256 бит) - Эфемерные ключи: 32 байта (256 бит) - Ключи шифрования: 32 байта (256 бит) - MAC (код аутентификации сообщения): 16 байт (128 бит)</p>
+<p><strong>Известные проблемы:</strong> - В ChaCha20 повторное использование nonce (одноразового номера) катастрофично (предотвращается увеличением счётчика) - У X25519 есть проблемы малых подгрупп (смягчаются проверкой кривой) - SHA-256 теоретически уязвим к атаке расширения длины (не эксплуатируется в HMAC)</p>
+<p><strong>Неизвестно о каких-либо уязвимостях (по состоянию на октябрь 2025 года):</strong> - Noise Protocol Framework (фреймворк протоколов Noise) широко исследован - ChaCha20-Poly1305 используется в TLS 1.3 - X25519 является стандартом в современных протоколах - Нет практических атак на конструкцию</p>
+<h2 id="ссылки">Ссылки</h2>
+<h3 id="основные-спецификации">Основные спецификации</h3>
+<ul>
+<li><strong><a href="../../../../ru/docs/specs/ntcp2/">Спецификация NTCP2</a>
+</strong> - Официальная спецификация I2P</li>
+<li><strong><a href="../../../../ru/proposals/111-ntcp-2/">Предложение 111</a>
+</strong> - Исходный документ проектирования с обоснованием</li>
+<li><strong><a href="https://noiseprotocol.org/noise.html">Noise Protocol Framework (фреймворк протокола Noise)</a>
+</strong> - Редакция 33 (2017-10-04)</li>
+</ul>
+<h3 id="криптографические-стандарты">Криптографические стандарты</h3>
+<ul>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc7748">RFC 7748</a>
+</strong> - Эллиптические кривые для обеспечения безопасности (X25519)</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc7539">RFC 7539</a>
+</strong> - ChaCha20 и Poly1305 для протоколов IETF</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc8439">RFC 8439</a>
+</strong> - ChaCha20-Poly1305 (объявляет устаревшим RFC 7539)</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc2104">RFC 2104</a>
+</strong> - HMAC: хеширование с ключом для аутентификации сообщений</li>
+<li><strong><a href="https://www.131002.net/siphash/">SipHash</a>
+</strong> - SipHash-2-4 для приложений хеш-функций</li>
+</ul>
+<h3 id="связанные-спецификации-i2p">Связанные спецификации I2P</h3>
+<ul>
+<li><strong><a href="../../../../ru/docs/specs/i2np/">Спецификация I2NP</a>
+</strong> - формат сообщений протокола сети I2P</li>
+<li><strong><a href="../../../../ru/docs/specs/common-structures/">Общие структуры</a>
+</strong> - форматы RouterInfo, RouterAddress</li>
+<li><strong><a href="../../../../ru/docs/legacy/ssu/">Транспорт SSU</a>
+</strong> - транспорт UDP (исходный, теперь SSU2)</li>
+<li><strong><a href="../../../../ru/proposals/147-transport-network-id-check/">Предложение 147</a>
+</strong> - проверка идентификатора транспортной сети (0.9.42)</li>
+</ul>
+<h3 id="ссылки-по-реализации">Ссылки по реализации</h3>
+<ul>
+<li><strong><a href="https://github.com/i2p/i2p.i2p">I2P Java</a>
+</strong> - Эталонная реализация (Java)</li>
+<li><strong><a href="https://github.com/PurpleI2P/i2pd">i2pd</a>
+</strong> - Реализация на C++</li>
+<li><strong><a href="../../../../ru/blog/">Примечания к выпуску I2P</a>
+</strong> - История версий и обновления</li>
+</ul>
+<h3 id="исторический-контекст">Исторический контекст</h3>
+<ul>
+<li><strong><a href="https://en.wikipedia.org/wiki/Station-to-Station_protocol">Station-To-Station Protocol (STS)</a>
+</strong> - Послужил источником вдохновения для фреймворка Noise</li>
+<li><strong><a href="https://gitlab.com/yawning/obfs4">obfs4</a>
+</strong> - Подключаемый транспорт (пример обфускации длины на базе SipHash)</li>
+</ul>
+<h2 id="рекомендации-по-реализации">Рекомендации по реализации</h2>
+<h3 id="обязательные-требования">Обязательные требования</h3>
+<p><strong>Для соответствия требованиям:</strong></p>
+<ol>
+<li>
+<p><strong>Реализовать полное рукопожатие:</strong></p>
+<ul>
+<li>Поддержать все три сообщения с корректными цепочками KDF (функция выработки ключей)</li>
+<li>Проверять все теги AEAD (аутентифицированное шифрование с дополнительными данными)</li>
+<li>Проверять, что точки на кривой X25519 (эллиптическая кривая X25519) корректны</li>
+</ul>
+</li>
+<li>
+<p><strong>Реализовать фазу данных:</strong></p>
+<ul>
+<li>Обфускация длины с помощью SipHash (в обоих направлениях)</li>
+<li>Все типы блоков: 0 (DateTime), 1 (Options), 2 (RouterInfo), 3 (I2NP), 4 (Termination), 254 (Padding)</li>
+<li>Корректное управление nonce (одноразовое значение) (отдельные счётчики)</li>
+</ul>
+</li>
+<li>
+<p><strong>Функции безопасности:</strong></p>
+<ul>
+<li>Защита от повторов (кэширование эфемерных ключей в течение 2*D)</li>
+<li>Проверка меток времени (по умолчанию ±60 секунд)</li>
+<li>Случайное заполнение в сообщениях 1-2</li>
+<li>Обработка ошибок AEAD со случайными таймаутами</li>
+</ul>
+</li>
+<li>
+<p><strong>Публикация RouterInfo:</strong></p>
+<ul>
+<li>Публиковать статический ключ (&ldquo;s&rdquo;), вектор инициализации (IV) (&ldquo;i&rdquo;) и версию (&ldquo;v&rdquo;)</li>
+<li>Выполнять ротацию ключей согласно политике</li>
+<li>Поддерживать поле возможностей (&ldquo;caps&rdquo;) для скрытых routers</li>
+</ul>
+</li>
+<li>
+<p><strong>Совместимость с сетью:</strong></p>
+<ul>
+<li>Поддерживать поле идентификатора сети (в настоящее время — 2 для mainnet (основная сеть))</li>
+<li>Обеспечивать совместимость с существующими реализациями на Java и i2pd</li>
+<li>Поддерживать как IPv4, так и IPv6</li>
+</ul>
+</li>
+</ol>
+<h3 id="рекомендуемые-практики">Рекомендуемые практики</h3>
+<p><strong>Оптимизация производительности:</strong></p>
+<ol>
+<li>
+<p><strong>Стратегия буферизации:</strong></p>
+<ul>
+<li>Сбрасывать сообщения полностью сразу (сообщения 1, 2, 3)</li>
+<li>Использовать TCP_NODELAY для сообщений рукопожатия</li>
+<li>Буферизовать несколько блоков данных в один кадр</li>
+<li>Ограничить размер кадра до нескольких КБ (минимизировать задержку у получателя)</li>
+</ul>
+</li>
+<li>
+<p><strong>Управление соединениями:</strong></p>
+<ul>
+<li>Переиспользуйте соединения, когда возможно</li>
+<li>Реализуйте пул соединений</li>
+<li>Отслеживайте состояние соединений (DateTime blocks — временные блокировки)</li>
+</ul>
+</li>
+<li>
+<p><strong>Управление памятью:</strong></p>
+<ul>
+<li>Обнуляйте конфиденциальные данные после использования (эфемерные ключи, результаты DH (Диффи-Хеллман))</li>
+<li>Ограничивайте число параллельных рукопожатий (предотвращение DoS-атак)</li>
+<li>Используйте пулы памяти для частых выделений</li>
+</ul>
+</li>
+</ol>
+<p><strong>Укрепление безопасности:</strong></p>
+<ol>
+<li>
+<p><strong>Устойчивость к зондированию:</strong></p>
+<ul>
+<li>Случайные тайм-ауты: 100-500 мс</li>
+<li>Случайные чтения байтов: 1 КБ-64 КБ</li>
+<li>Занесение IP-адресов в черный список при повторных сбоях</li>
+<li>Без подробностей об ошибках для пиров</li>
+</ul>
+</li>
+<li>
+<p><strong>Ограничения ресурсов:</strong></p>
+<ul>
+<li>Максимальное число соединений на IP-адрес: 3-10</li>
+<li>Максимальное число ожидающих рукопожатий: 100-1000</li>
+<li>Таймауты чтения: 30-60 секунд на операцию</li>
+<li>Общий таймаут соединения: 5 минут на рукопожатие</li>
+</ul>
+</li>
+<li>
+<p><strong>Управление ключами:</strong></p>
+<ul>
+<li>Постоянное хранение статического ключа и вектора инициализации (IV)</li>
+<li>Безопасная генерация случайных чисел (криптографически стойкий генератор случайных чисел)</li>
+<li>Строгое соблюдение политик ротации</li>
+<li>Никогда не переиспользовать эфемерные ключи</li>
+</ul>
+</li>
+</ol>
+<p><strong>Мониторинг и диагностика:</strong></p>
+<ol>
+<li>
+<p><strong>Метрики:</strong></p>
+<ul>
+<li>Доли успешных/неудачных рукопожатий</li>
+<li>Частота ошибок AEAD</li>
+<li>Распределение смещения часов</li>
+<li>Статистика длительности соединений</li>
+</ul>
+</li>
+<li>
+<p><strong>Логирование:</strong></p>
+<ul>
+<li>Логировать ошибки рукопожатия с кодами причин</li>
+<li>Логировать события смещения часов</li>
+<li>Логировать заблокированные IP-адреса</li>
+<li>Никогда не логировать конфиденциальный ключевой материал</li>
+</ul>
+</li>
+<li>
+<p><strong>Тестирование:</strong></p>
+<ul>
+<li>Модульные тесты для цепочек KDF (функций выработки ключа)</li>
+<li>Интеграционные тесты с другими реализациями</li>
+<li>Фаззинг обработки пакетов</li>
+<li>Нагрузочное тестирование на устойчивость к DoS-атакам</li>
+</ul>
+</li>
+</ol>
+<h3 id="распространённые-ошибки">Распространённые ошибки</h3>
+<p><strong>Критические ошибки, которых следует избегать:</strong></p>
+<ol>
+<li>
+<p><strong>Повторное использование Nonce (одноразового числа):</strong></p>
+<ul>
+<li>Никогда не сбрасывайте счетчик nonce в середине сеанса</li>
+<li>Используйте отдельные счетчики для каждого направления</li>
+<li>Завершайте сеанс до достижения 2^64 - 1</li>
+</ul>
+</li>
+<li>
+<p><strong>Ротация ключей:</strong></p>
+<ul>
+<li>Никогда не выполняйте ротацию ключей, пока router работает</li>
+<li>Никогда не переиспользуйте эфемерные ключи между сеансами</li>
+<li>Соблюдайте правила минимального времени простоя</li>
+</ul>
+</li>
+<li>
+<p><strong>Обработка временных меток:</strong></p>
+<ul>
+<li>Никогда не принимать истекшие временные метки</li>
+<li>Всегда вносить поправку на RTT (время кругового прохода) при расчете смещения</li>
+<li>Округлять метки времени DateTime до секунд</li>
+</ul>
+</li>
+<li>
+<p><strong>Ошибки AEAD:</strong></p>
+<ul>
+<li>Никогда не раскрывайте тип ошибки атакующему</li>
+<li>Всегда используйте случайный таймаут перед закрытием</li>
+<li>Обрабатывайте недопустимую длину так же, как ошибку AEAD</li>
+</ul>
+</li>
+<li>
+<p><strong>Заполнение:</strong></p>
+<ul>
+<li>Никогда не отправляйте заполнение вне согласованных границ</li>
+<li>Всегда размещайте блок заполнения последним</li>
+<li>Никогда не используйте несколько блоков заполнения в одном кадре</li>
+</ul>
+</li>
+<li>
+<p><strong>RouterInfo (метаданные router):</strong></p>
+<ul>
+<li>Всегда проверяйте, что статический ключ соответствует данным в RouterInfo</li>
+<li>Никогда не рассылайте RouterInfo без опубликованных адресов</li>
+<li>Всегда проверяйте подписи</li>
+</ul>
+</li>
+</ol>
+<h3 id="методология-тестирования">Методология тестирования</h3>
+<p><strong>Модульные тесты:</strong></p>
+<ol>
+<li>
+<p><strong>Криптографические примитивы:</strong></p>
+<ul>
+<li>Тестовые векторы для X25519, ChaCha20, Poly1305, SHA-256</li>
+<li>Тестовые векторы для HMAC-SHA256</li>
+<li>Тестовые векторы для SipHash-2-4</li>
+</ul>
+</li>
+<li>
+<p><strong>Цепочки KDF:</strong></p>
+<ul>
+<li>Тесты с эталонными ответами для всех трёх сообщений</li>
+<li>Проверить передачу ключа цепочки</li>
+<li>Тест генерации вектора инициализации (IV) для SipHash</li>
+</ul>
+</li>
+<li>
+<p><strong>Разбор сообщений:</strong></p>
+<ul>
+<li>Декодирование корректных сообщений</li>
+<li>Отклонение некорректных сообщений</li>
+<li>Граничные условия (пустое сообщение, максимальный размер)</li>
+</ul>
+</li>
+</ol>
+<p><strong>Интеграционные тесты:</strong></p>
+<ol>
+<li>
+<p><strong>Рукопожатие:</strong></p>
+<ul>
+<li>Успешный обмен из трёх сообщений</li>
+<li>Отклонение при смещении часов</li>
+<li>Обнаружение атаки повторного воспроизведения</li>
+<li>Отклонение некорректного ключа</li>
+</ul>
+</li>
+<li>
+<p><strong>Фаза данных:</strong></p>
+<ul>
+<li>Передача сообщений I2NP</li>
+<li>Обмен RouterInfo (информация о router)</li>
+<li>Обработка заполнения</li>
+<li>Сообщения завершения</li>
+</ul>
+</li>
+<li>
+<p><strong>Совместимость:</strong></p>
+<ul>
+<li>Тестирование с Java I2P</li>
+<li>Тестирование с i2pd</li>
+<li>Тестирование IPv4 и IPv6</li>
+<li>Тестирование опубликованных и скрытых routers</li>
+</ul>
+</li>
+</ol>
+<p><strong>Тесты безопасности:</strong></p>
+<ol>
+<li>
+<p><strong>Негативные тесты:</strong></p>
+<ul>
+<li>Недопустимые теги AEAD (аутентифицированное шифрование с дополнительными данными)</li>
+<li>Повторно переданные сообщения</li>
+<li>Атаки на основе смещения часов</li>
+<li>Некорректно сформированные кадры</li>
+</ul>
+</li>
+<li>
+<p><strong>Тесты DoS:</strong></p>
+<ul>
+<li>Флуд соединениями</li>
+<li>Атаки Slowloris</li>
+<li>Истощение CPU (чрезмерные DH-вычисления)</li>
+<li>Истощение памяти</li>
+</ul>
+</li>
+<li>
+<p><strong>Фаззинг:</strong></p>
+<ul>
+<li>Случайные сообщения рукопожатия</li>
+<li>Случайные кадры фазы данных</li>
+<li>Случайные типы и размеры блоков</li>
+<li>Недопустимые криптографические значения</li>
+</ul>
+</li>
+</ol>
+<h3 id="переход-с-ntcp">Переход с NTCP</h3>
+<p><strong>Для поддержки устаревшего NTCP (теперь удалено):</strong></p>
+<p>NTCP (version 1) был удалён в I2P 0.9.50 (май 2021 года). Все текущие реализации должны поддерживать NTCP2. Исторические примечания:</p>
+<ol>
+<li>
+<p><strong>Переходный период (2018–2021):</strong></p>
+<ul>
+<li>0.9.36: NTCP2 представлен (по умолчанию отключён)</li>
+<li>0.9.37: NTCP2 включён по умолчанию</li>
+<li>0.9.40: NTCP объявлён устаревшим</li>
+<li>0.9.50: NTCP удалён</li>
+</ul>
+</li>
+<li>
+<p><strong>Определение версии:</strong></p>
+<ul>
+<li>Поле transportStyle (тип транспорта) со значением &ldquo;NTCP&rdquo; указывало на поддержку обеих версий</li>
+<li>Поле transportStyle со значением &ldquo;NTCP2&rdquo; указывало на поддержку только NTCP2</li>
+<li>Автоматическое определение по размеру сообщения (287 против 288 байт)</li>
+</ul>
+</li>
+<li>
+<p><strong>Текущее состояние:</strong></p>
+<ul>
+<li>Все router должны поддерживать NTCP2</li>
+<li>&ldquo;NTCP&rdquo; transportStyle устарел</li>
+<li>Используйте исключительно &ldquo;NTCP2&rdquo; transportStyle</li>
+</ul>
+</li>
+</ol>
+<h2 id="приложение-a-шаблон-noise-xk">Приложение A: шаблон Noise XK</h2>
+<p><strong>Стандартный шаблон Noise XK:</strong></p>
+<pre tabindex="0"><code>XK(s, rs):
+  &lt;- s
+  ...
+  -&gt; e, es
+  &lt;- e, ee
+  -&gt; s, se
+</code></pre><p><strong>Интерпретация:</strong></p>
+<ul>
+<li><code>&lt;-</code> : Сообщение от респондента (Боба) к инициатору (Алисе)</li>
+<li><code>-&gt;</code> : Сообщение от инициатора (Алисы) к респонденту (Бобу)</li>
+<li><code>s</code> : Статический ключ (долгосрочный ключ идентичности)</li>
+<li><code>rs</code> : Удалённый статический ключ (статический ключ пира, известный заранее)</li>
+<li><code>e</code> : Эфемерный ключ (специфичный для сеанса, создаётся по требованию)</li>
+<li><code>es</code> : Эфемерный-Статический DH (Диффи — Хеллман) (эфемерный Алисы × статический Боба)</li>
+<li><code>ee</code> : Эфемерный-Эфемерный DH (эфемерный Алисы × эфемерный Боба)</li>
+<li><code>se</code> : Статический-Эфемерный DH (статический Алисы × эфемерный Боба)</li>
+</ul>
+<p><strong>Последовательность согласования ключа:</strong></p>
+<ol>
+<li><strong>Предсообщение:</strong> Алиса знает статический открытый ключ Боба (из RouterInfo)</li>
+<li><strong>Сообщение 1:</strong> Алиса отправляет эфемерный ключ, выполняет es DH</li>
+<li><strong>Сообщение 2:</strong> Боб отправляет эфемерный ключ, выполняет ee DH</li>
+<li><strong>Сообщение 3:</strong> Алиса раскрывает статический ключ, выполняет se DH</li>
+</ol>
+<p><strong>Свойства безопасности:</strong></p>
+<ul>
+<li>Алиса аутентифицирована: Да (на основании сообщения 3)</li>
+<li>Боб аутентифицирован: Да (по наличию статического закрытого ключа)</li>
+<li>Прямая секретность: Да (эфемерные ключи уничтожаются)</li>
+<li>KCI resistance (устойчивость к имперсонации при компрометации ключа): Да (уровень аутентификации 2)</li>
+</ul>
+<h2 id="приложение-b-кодирование-base64">Приложение B: кодирование Base64</h2>
+<p><strong>Алфавит Base64 в I2P:</strong></p>
+<pre tabindex="0"><code>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-~
+</code></pre><p><strong>Отличия от стандартного Base64:</strong> - Символы 62–63: <code>-~</code> вместо <code>+/</code> - Дополнение: то же самое (<code>=</code>) или опускается в зависимости от контекста</p>
+<p><strong>Использование в NTCP2:</strong> - Статический ключ (&ldquo;s&rdquo;): 32 байта → 44 символа (без дополнения) - IV (&ldquo;i&rdquo;): 16 байт → 24 символа (без дополнения)</p>
+<p><strong>Пример кодирования:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 32-byte static key (hex): </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># f4489e1bb0597b39ca6cbf5ad9f5f1f09043e02d96cb9aa6a63742b3462429aa</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2P Base64 encoded:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=</span>
+</span></span></code></pre></div><h2 id="приложение-c-анализ-захвата-пакетов">Приложение C: Анализ захвата пакетов</h2>
+<p><strong>Идентификация трафика NTCP2:</strong></p>
+<ol>
+<li>
+<p><strong>Рукопожатие TCP:</strong></p>
+<ul>
+<li>Стандартные TCP SYN, SYN-ACK, ACK</li>
+<li>Порт назначения обычно 8887 или аналогичный</li>
+</ul>
+</li>
+<li>
+<p><strong>Сообщение 1 (SessionRequest — запрос сеанса):</strong></p>
+<ul>
+<li>Первые прикладные данные от Алисы</li>
+<li>80-65535 байт (обычно несколько сотен)</li>
+<li>Выглядит как случайные данные (эфемерный ключ, зашифрованный AES)</li>
+<li>287 байт максимум при подключении к адресу &ldquo;NTCP&rdquo;</li>
+</ul>
+</li>
+<li>
+<p><strong>Сообщение 2 (SessionCreated — «создание сессии»):</strong></p>
+<ul>
+<li>Ответ от Боба</li>
+<li>80-65535 байт (обычно несколько сотен)</li>
+<li>Также похоже на случайные данные</li>
+</ul>
+</li>
+<li>
+<p><strong>Сообщение 3 (SessionConfirmed):</strong></p>
+<ul>
+<li>От Alice</li>
+<li>48 байт + переменная часть (размер RouterInfo (информация о router) + заполнение)</li>
+<li>Обычно 1-4 КБ</li>
+</ul>
+</li>
+<li>
+<p><strong>Фаза данных:</strong></p>
+<ul>
+<li>Кадры переменной длины</li>
+<li>Поле длины замаскировано (выглядит случайным)</li>
+<li>Зашифрованная полезная нагрузка</li>
+<li>Padding (выравнивание данными) делает размер непредсказуемым</li>
+</ul>
+</li>
+</ol>
+<p><strong>Обход DPI:</strong> - Отсутствуют незашифрованные заголовки - Отсутствуют фиксированные шаблоны - Поля длины замаскированы - Случайный паддинг нарушает работу эвристик, основанных на размере</p>
+<p><strong>Сравнение с NTCP:</strong> - Сообщение 1 в NTCP всегда 288 байт (идентифицируемо) - Размер сообщения 1 в NTCP2 варьируется (не идентифицируемо) - В NTCP были распознаваемые шаблоны - NTCP2 спроектирован для противодействия глубокой инспекции пакетов (DPI)</p>
+<h2 id="приложение-d-история-версий">Приложение D: История версий</h2>
+<p><strong>Ключевые вехи:</strong></p>
+<ul>
+<li><strong>0.9.36</strong> (23 августа 2018 г.): Введён NTCP2, по умолчанию отключён</li>
+<li><strong>0.9.37</strong> (4 октября 2018 г.): NTCP2 включён по умолчанию</li>
+<li><strong>0.9.40</strong> (20 мая 2019 г.): NTCP объявлен устаревшим</li>
+<li><strong>0.9.42</strong> (27 августа 2019 г.): Добавлено поле Network ID (идентификатор сети; Proposal 147)</li>
+<li><strong>0.9.50</strong> (17 мая 2021 г.): NTCP удалён, добавлена поддержка capabilities (флагов возможностей)</li>
+<li><strong>2.10.0</strong> (9 сентября 2025 г.): Последний стабильный релиз</li>
+</ul>
+<p><strong>Стабильность протокола:</strong> - Нет изменений, нарушающих совместимость, с 0.9.50 - Продолжаются улучшения устойчивости к зондированию - Фокус на производительности и надежности - Постквантовая криптография в разработке (не включена по умолчанию)</p>
+<p><strong>Текущий статус транспортов:</strong> - NTCP2: Обязательный транспорт TCP - SSU2: Обязательный транспорт UDP - NTCP (v1): Удалён - SSU (v1): Удалён</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../ru/docs/specs/plugin/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">Формат пакета плагина</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../ru/docs/specs/red25519-signature-scheme/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">Схема подписи Red25519</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/ru/docs/specs/ntcp2.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Следите за новостями I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Введите ваш email" required>
+                            <button type="submit">Подписаться</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Быстрые ссылки</h3>
+                <ul>
+                    <li><a href="../../../../ru/financial-support/">Пожертвовать</a></li>
+                    <li><a href="../../../../ru/docs/overview/intro/">Введение в I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Сообщество</h3>
+                <ul>
+                    <li><a href="../../../../ru/get-involved/">Присоединяйтесь</a></li>
+                    <li><a href="../../../../ru/blog/">Блог</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Официальные форумы</a></li>
+                    <li><a href="../../../../ru/contact/">Контакты</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Ресурсы</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P Метрики</a></li>
+                    <li><a href="../../../../ru/papers/">Исследование</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Проект Невидимый Интернет. Лицензировано под Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../ru/privacy/">Конфиденциальность</a>
+                <a href="../../../../ru/terms/">Условия</a>
+                <a href="../../../../ru/about/media/">Пресса</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Закрыть">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Опрос сообщества</h2>
+            <p class="modal-subtitle">Мы хотели бы услышать ваше мнение</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Ваш голос помогает формировать будущее I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

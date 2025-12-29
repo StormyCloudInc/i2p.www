@@ -1,0 +1,2846 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Router Yapılandırması | I2P - Görünmez İnternet Projesi</title>
+
+    <meta name="description" content="I2P router&#39;ları ve istemcileri için yapılandırma seçenekleri ve biçimleri">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Router Yapılandırması | I2P - Görünmez İnternet Projesi">
+    <meta property="og:description" content="I2P router&#39;ları ve istemcileri için yapılandırma seçenekleri ve biçimleri">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tr/docs/specs/configuration/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P Beta Sitesi Artık Yayında E-posta sorunları için stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Banner" title="Banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../tr/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../tr/about/" class="">Hakkında</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../tr/about/">Genel Bakış</a></li>
+                            <li><a href="../../../../tr/papers/">Araştırma Makaleleri</a></li>
+                            <li><a href="../../../../tr/about/media/">Basın</a></li>
+                            <li><a href="../../../../tr/contact/">İletişim</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../tr/docs/" class="active">Belgeler</a></li>
+                    <li><a href="../../../../tr/downloads/" class="">İndirilenler</a></li>
+                    <li><a href="../../../../tr/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../tr/get-involved/" class="">Katılım Sağla</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../tr/get-involved/">Genel Bakış</a></li>
+                            <li><a href="../../../../tr/feedback/">Özellik Önerileri</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">tr</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/configuration/"
+                                class="lang-option">İngilizce</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/configuration/"
+                                class="lang-option">İspanyolca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/configuration/"
+                                class="lang-option">Korece</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/configuration/"
+                                class="lang-option">Çince</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/configuration/"
+                                class="lang-option">Rusça</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/configuration/"
+                                class="lang-option">Çekçe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/configuration/"
+                                class="lang-option">Almanca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/configuration/"
+                                class="lang-option">Fransızca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/configuration/"
+                                class="lang-option active">Türkçe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/configuration/"
+                                class="lang-option">Vietnamca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/configuration/"
+                                class="lang-option">Hintçe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/configuration/"
+                                class="lang-option">Arapça</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/configuration/"
+                                class="lang-option">Portekizce</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../tr/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../tr/downloads/" class="btn btn-primary">I2P&#39;yi Edin</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#genel-bakış">Genel Bakış</a>
+      <ul>
+        <li><a href="#kapsam">Kapsam</a></li>
+        <li><a href="#uygulama-notları">Uygulama Notları</a></li>
+      </ul>
+    </li>
+    <li><a href="#genel-yapılandırma-dosyası-biçimi">Genel Yapılandırma Dosyası Biçimi</a>
+      <ul>
+        <li><a href="#biçim-belirtimi">Biçim Belirtimi</a></li>
+        <li><a href="#dosya-sıralama">Dosya Sıralama</a></li>
+        <li><a href="#uygulama-ayrıntıları">Uygulama Ayrıntıları</a></li>
+        <li><a href="#biçim-örnekleri">Biçim Örnekleri</a></li>
+      </ul>
+    </li>
+    <li><a href="#çekirdek-kitaplığı-ve-router-yapılandırması">Çekirdek Kitaplığı ve Router Yapılandırması</a>
+      <ul>
+        <li><a href="#istemci-yapılandırması-clientsconfig">İstemci Yapılandırması (clients.config)</a></li>
+        <li><a href="#günlükleyici-yapılandırması-loggerconfig">Günlükleyici Yapılandırması (logger.config)</a></li>
+        <li><a href="#eklenti-yapılandırması">Eklenti Yapılandırması</a></li>
+        <li><a href="#web-uygulamaları-yapılandırması-webappsconfig">Web Uygulamaları Yapılandırması (webapps.config)</a></li>
+        <li><a href="#router-yapılandırması-routerconfig">Router Yapılandırması (router.config)</a></li>
+      </ul>
+    </li>
+    <li><a href="#uygulama-yapılandırma-dosyaları">Uygulama Yapılandırma Dosyaları</a>
+      <ul>
+        <li><a href="#adres-defteri-yapılandırması-addressbookconfigtxt">Adres Defteri Yapılandırması (addressbook/config.txt)</a></li>
+        <li><a href="#i2psnark-yapılandırması-i2psnarkconfigdi2psnarkconfig">I2PSnark Yapılandırması (i2psnark.config.d/i2psnark.config)</a></li>
+        <li><a href="#i2ptunnel-yapılandırması-i2ptunnelconfig">I2PTunnel Yapılandırması (i2ptunnel.config)</a></li>
+      </ul>
+    </li>
+    <li><a href="#i2ptunnel-yapılandırma-referansı">I2PTunnel Yapılandırma Referansı</a>
+      <ul>
+        <li><a href="#temel-özellikler">Temel Özellikler</a></li>
+        <li><a href="#proxy-yapılandırması">Proxy Yapılandırması</a></li>
+        <li><a href="#sunucu-yapılandırması">Sunucu Yapılandırması</a></li>
+        <li><a href="#istemciye-özgü-seçenekler">İstemciye Özgü Seçenekler</a></li>
+        <li><a href="#i2cp-seçenekleri-i2ptunnel-uygulaması">I2CP Seçenekleri (I2PTunnel Uygulaması)</a></li>
+        <li><a href="#sunucuya-özel-seçenekler">Sunucuya Özel Seçenekler</a></li>
+        <li><a href="#iş-parçacığı-havuzu-yapılandırması">İş Parçacığı Havuzu Yapılandırması</a></li>
+        <li><a href="#http-istemci-seçenekleri">HTTP İstemci Seçenekleri</a></li>
+        <li><a href="#http-istemci-kimlik-doğrulaması">HTTP İstemci Kimlik Doğrulaması</a></li>
+        <li><a href="#dış-proxy-kimlik-doğrulaması">Dış Proxy Kimlik Doğrulaması</a></li>
+        <li><a href="#socks-istemci-seçenekleri">SOCKS İstemci Seçenekleri</a></li>
+        <li><a href="#http-sunucusu-seçenekleri">HTTP Sunucusu Seçenekleri</a></li>
+        <li><a href="#http-sunucusu-güvenlik-seçenekleri">HTTP Sunucusu Güvenlik Seçenekleri</a></li>
+        <li><a href="#irc-sunucusu-seçenekleri">IRC Sunucusu Seçenekleri</a></li>
+        <li><a href="#ssltls-yapılandırması">SSL/TLS Yapılandırması</a></li>
+        <li><a href="#genel-i2cp-ve-akış-seçenekleri">Genel I2CP ve Akış Seçenekleri</a></li>
+        <li><a href="#tam-tunnel-örneği">Tam Tunnel Örneği</a></li>
+      </ul>
+    </li>
+    <li><a href="#sürüm-geçmişi-ve-özellik-zaman-çizelgesi">Sürüm Geçmişi ve Özellik Zaman Çizelgesi</a>
+      <ul>
+        <li><a href="#sürüm-0910-2013">Sürüm 0.9.10 (2013)</a></li>
+        <li><a href="#sürüm-0918-2015">Sürüm 0.9.18 (2015)</a></li>
+        <li><a href="#sürüm-0923-kasım-2015">Sürüm 0.9.23 (Kasım 2015)</a></li>
+        <li><a href="#sürüm-0925-2015">Sürüm 0.9.25 (2015)</a></li>
+        <li><a href="#sürüm-0933-ocak-2018">Sürüm 0.9.33 (Ocak 2018)</a></li>
+        <li><a href="#sürüm-0941-2019">Sürüm 0.9.41 (2019)</a></li>
+        <li><a href="#sürüm-0942-ağustos-2019">Sürüm 0.9.42 (Ağustos 2019)</a></li>
+        <li><a href="#sürüm-0956-2021">Sürüm 0.9.56 (2021)</a></li>
+        <li><a href="#sürüm-0957-ocak-2023">Sürüm 0.9.57 (Ocak 2023)</a></li>
+        <li><a href="#sürüm-260-temmuz-2024">Sürüm 2.6.0 (Temmuz 2024)</a></li>
+        <li><a href="#sürüm-2100-eylül-2025---güncel">Sürüm 2.10.0 (Eylül 2025 - Güncel)</a></li>
+      </ul>
+    </li>
+    <li><a href="#kullanımdan-kaldırmalar-ve-geriye-dönük-uyumluluğu-bozan-değişiklikler">Kullanımdan Kaldırmalar ve Geriye Dönük Uyumluluğu Bozan Değişiklikler</a>
+      <ul>
+        <li><a href="#kritik-kullanımdan-kaldırmalar">Kritik Kullanımdan Kaldırmalar</a></li>
+        <li><a href="#yapılandırma-mimarisindeki-değişiklikler">Yapılandırma Mimarisindeki Değişiklikler</a></li>
+        <li><a href="#java-sürüm-gereksinimleri">Java Sürüm Gereksinimleri</a></li>
+        <li><a href="#kaldırılan-özellikler">Kaldırılan Özellikler</a></li>
+        <li><a href="#önerilen-geçişler">Önerilen Geçişler</a></li>
+      </ul>
+    </li>
+    <li><a href="#kaynakça">Kaynakça</a>
+      <ul>
+        <li><a href="#resmi-dokümantasyon">Resmi Dokümantasyon</a></li>
+        <li><a href="#kaynak-kodu">Kaynak Kodu</a></li>
+        <li><a href="#topluluk-kaynakları">Topluluk Kaynakları</a></li>
+        <li><a href="#api-dokümantasyonu">API Dokümantasyonu</a></li>
+        <li><a href="#belirtim-durumu">Belirtim Durumu</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../tr/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../tr/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../tr/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Router Yapılandırması</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Bu çeviri makine öğrenimi kullanılarak oluşturulmuştur ve %100 doğru olmayabilir.</span>
+    
+    
+    <a href="../../../../en/docs/specs/configuration/" class="disclaimer-link">İngilizce versiyonu görüntüle</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Router Yapılandırması</h1>
+                    
+                        <p class="article-description">I2P router&#39;ları ve istemcileri için yapılandırma seçenekleri ve biçimleri</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="genel-bakış">Genel Bakış</h2>
+<p>Bu belge, router ve çeşitli uygulamalar tarafından kullanılan I2P yapılandırma dosyalarının kapsamlı bir teknik şartnamesini sunar. Dosya biçimi belirtimleri, özellik tanımları ve I2P kaynak kodu ile resmi dokümantasyonla karşılaştırılarak doğrulanmış gerçekleme ayrıntılarını kapsar.</p>
+<h3 id="kapsam">Kapsam</h3>
+<ul>
+<li>Router yapılandırma dosyaları ve biçimleri</li>
+<li>İstemci uygulama yapılandırmaları</li>
+<li>I2PTunnel tunnel yapılandırmaları</li>
+<li>Dosya biçimi spesifikasyonları ve uygulanması</li>
+<li>Sürüme özgü özellikler ve kullanımdan kaldırmalar</li>
+</ul>
+<h3 id="uygulama-notları">Uygulama Notları</h3>
+<p>Yapılandırma dosyaları, I2P çekirdek kitaplığındaki <code>DataHelper.loadProps()</code> ve <code>storeProps()</code> yöntemleri kullanılarak okunup yazılır. Dosya biçimi, I2P protokollerinde kullanılan serileştirilmiş biçimden önemli ölçüde farklıdır (bkz. <a href="../../../../tr/docs/specs/common-structures/#type-mapping">Ortak Yapılar Belirtimi - Tür Eşlemesi</a>
+).</p>
+<hr>
+<h2 id="genel-yapılandırma-dosyası-biçimi">Genel Yapılandırma Dosyası Biçimi</h2>
+<p>I2P yapılandırma dosyaları, belirli istisna ve kısıtlamalar içeren değiştirilmiş bir Java Properties biçimini kullanır.</p>
+<h3 id="biçim-belirtimi">Biçim Belirtimi</h3>
+<p><a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Properties.html#load%28java.io.InputStream%29">Java Properties</a>
+ temel alınır, ancak aşağıdaki kritik farklılıklar vardır:</p>
+<h4 id="kodlama">Kodlama</h4>
+<ul>
+<li><strong>MUTLAKA</strong> UTF-8 kodlaması kullanılmalıdır (standart Java Properties&rsquo;te olduğu gibi ISO-8859-1 DEĞİL)</li>
+<li>Gerçekleme: Tüm dosya işlemleri için <code>DataHelper.getUTF8()</code> yardımcı işlevlerini kullanır</li>
+</ul>
+<h4 id="kaçış-dizileri">Kaçış Dizileri</h4>
+<ul>
+<li><strong>HİÇBİR</strong> kaçış dizisi tanınmaz (ters eğik çizgi <code>\</code> dahil)</li>
+<li>Satır devamı <strong>DESTEKLENMEZ</strong></li>
+<li>Ters eğik çizgi karakterleri olduğu gibi yorumlanır</li>
+</ul>
+<h4 id="yorum-karakterleri">Yorum Karakterleri</h4>
+<ul>
+<li><code>#</code> bir satırın herhangi bir yerinde yorum başlatır</li>
+<li><code>;</code> yalnızca 1. sütunda yorum başlatır</li>
+<li><code>!</code> yorum <strong>BAŞLATMAZ</strong> (Java Properties&rsquo;den farklıdır)</li>
+</ul>
+<h4 id="anahtar-değer-ayırıcıları">Anahtar-Değer Ayırıcıları</h4>
+<ul>
+<li><code>=</code> <strong>YALNIZCA</strong> geçerli anahtar-değer ayırıcısıdır</li>
+<li><code>:</code> bir ayırıcı olarak <strong>TANINMAZ</strong></li>
+<li>Boşluk karakterleri bir ayırıcı olarak <strong>TANINMAZ</strong></li>
+</ul>
+<h4 id="boşluk-karakterlerinin-yönetimi">Boşluk Karakterlerinin Yönetimi</h4>
+<ul>
+<li>Anahtarlardaki baş ve sondaki boşluk karakterleri <strong>KIRPILMAZ</strong></li>
+<li>Değerlerdeki baş ve sondaki boşluk karakterleri <strong>KIRPILIR</strong></li>
+</ul>
+<h4 id="satır-işleme">Satır İşleme</h4>
+<ul>
+<li><code>=</code> içermeyen satırlar yok sayılır (yorum veya boş satır olarak değerlendirilir)</li>
+<li>Boş değerler (<code>key=</code>) 0.9.10 sürümünden itibaren desteklenir</li>
+<li>Boş değerlere sahip anahtarlar normal şekilde depolanır ve okunur</li>
+</ul>
+<h4 id="karakter-kısıtlamaları">Karakter Kısıtlamaları</h4>
+<p><strong>Anahtarlar şunları içeremez</strong>: - <code>#</code> (kare/diyez işareti) - <code>=</code> (eşittir işareti) - <code>\n</code> (yeni satır karakteri) - <code>;</code> (noktalı virgül) ile başlayamaz</p>
+<p><strong>Değerler şunları İÇEREMEZ</strong>: - <code>#</code> (kare/diyez işareti) - <code>\n</code> (yeni satır karakteri) - Başında veya sonunda <code>\r</code> olamaz (satır başı) - Başında veya sonunda boşluk olamaz (otomatik olarak kırpılır)</p>
+<h3 id="dosya-sıralama">Dosya Sıralama</h3>
+<p>Yapılandırma dosyalarının anahtara göre sıralanması gerekmez. Ancak, çoğu I2P uygulaması, aşağıdakileri kolaylaştırmak için yapılandırma dosyalarını yazarken anahtarları alfabetik olarak sıralar: - Elle düzenleme - Sürüm kontrolü diff (fark karşılaştırma) işlemleri - İnsan tarafından okunabilirlik</p>
+<h3 id="uygulama-ayrıntıları">Uygulama Ayrıntıları</h3>
+<h4 id="yapılandırma-dosyalarını-okuma">Yapılandırma Dosyalarını Okuma</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// Method signature from net.i2p.data.DataHelper</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Properties <span style="color:#a6e22e">loadProps</span>(File file)
+</span></span></code></pre></div><p><strong>Davranış</strong>: - UTF-8 ile kodlanmış dosyaları okur - Yukarıda açıklanan tüm biçim kurallarını uygular - Karakter kısıtlamalarını doğrular - Dosya yoksa boş bir Properties nesnesi döndürür - Okuma hatalarında <code>IOException</code> fırlatır</p>
+<h4 id="yapılandırma-dosyaları-yazma">Yapılandırma Dosyaları Yazma</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// Method signature from net.i2p.data.DataHelper</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">storeProps</span>(Properties props, File file)
+</span></span></code></pre></div><p><strong>Davranış</strong>: - UTF-8 ile kodlanmış dosyalar yazar - Anahtarları alfabetik olarak sıralar (OrderedProperties kullanılmadıkça) - Sürüm 0.8.1 itibarıyla dosya izinlerini 600 moduna (yalnızca kullanıcı okuma/yazma) ayarlar - Anahtar veya değerlerdeki geçersiz karakterler için <code>IllegalArgumentException</code> fırlatır - Yazma hataları için <code>IOException</code> fırlatır</p>
+<h4 id="biçim-doğrulaması">Biçim Doğrulaması</h4>
+<p>Uygulama sıkı bir doğrulama yapar: - Anahtarlar ve değerler izin verilmeyen karakterler açısından kontrol edilir - Geçersiz girdiler yazma işlemleri sırasında istisnalara neden olur - Okuma, biçimi bozuk satırları sessizce yok sayar (<code>=</code> olmayan satırlar)</p>
+<h3 id="biçim-örnekleri">Biçim Örnekleri</h3>
+<h4 id="geçerli-yapılandırma-dosyası">Geçerli Yapılandırma Dosyası</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># This is a comment</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">;</span> <span style="color:#e6db74">This is also a comment (column 1 only)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">key.with.dots</span><span style="color:#f92672">=</span><span style="color:#e6db74">value with spaces</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">another_key</span><span style="color:#f92672">=</span><span style="color:#e6db74">value=with=equals</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">empty.value</span><span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">numeric.value</span><span style="color:#f92672">=</span><span style="color:#e6db74">12345</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">unicode.value</span><span style="color:#f92672">=</span><span style="color:#e6db74">こんにちは</span>
+</span></span></code></pre></div><h4 id="geçersiz-yapılandırma-örnekleri">Geçersiz Yapılandırma Örnekleri</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># INVALID: Key contains equals sign</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">invalid</span><span style="color:#f92672">=</span><span style="color:#e6db74">key=value</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># INVALID: Key contains hash</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">invalid#key</span><span style="color:#f92672">=</span><span style="color:#e6db74">value</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># INVALID: Value contains newline (implicit)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">key</span><span style="color:#f92672">=</span><span style="color:#e6db74">value</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">continues</span> <span style="color:#e6db74">here</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># INVALID: Semicolon comment not in column 1 (treated as key)</span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">;</span> <span style="color:#e6db74">not.a.comment=value</span>
+</span></span></code></pre></div><hr>
+<h2 id="çekirdek-kitaplığı-ve-router-yapılandırması">Çekirdek Kitaplığı ve Router Yapılandırması</h2>
+<h3 id="istemci-yapılandırması-clientsconfig">İstemci Yapılandırması (clients.config)</h3>
+<p><strong>Konum</strong>: <code>$I2P_CONFIG_DIR/clients.config</code> (eski) veya <code>$I2P_CONFIG_DIR/clients.config.d/</code> (modern)   <strong>Yapılandırma Arayüzü</strong>: Router konsolu <code>/configclients</code> adresinde   <strong>Biçim Değişikliği</strong>: Sürüm 0.9.42 (Ağustos 2019)</p>
+<h4 id="dizin-yapısı-sürüm-0942">Dizin Yapısı (Sürüm 0.9.42+)</h4>
+<p>0.9.42 sürümünden itibaren, varsayılan clients.config dosyası otomatik olarak ayrı yapılandırma dosyalarına ayrılır:</p>
+<pre tabindex="0"><code>$I2P_CONFIG_DIR/
+├── clients.config.d/
+│   ├── 00-webConsole.config
+│   ├── 01-i2ptunnel.config
+│   ├── 02-i2psnark.config
+│   ├── 03-susidns.config
+│   └── ...
+└── clients.config (legacy, auto-migrated)
+</code></pre><p><strong>Geçiş Davranışı</strong>: - 0.9.42+ sürümüne yükseltmeden sonraki ilk çalıştırmada, monolitik dosya otomatik olarak bölünür - Bölünmüş dosyalardaki özelliklerin başına <code>clientApp.0.</code> öneki eklenir - Geriye dönük uyumluluk için eski biçim hâlâ desteklenir - Bölünmüş biçim, modüler paketlemeyi ve eklenti yönetimini mümkün kılar</p>
+<h4 id="özellik-biçimi">Özellik Biçimi</h4>
+<p>Satırlar <code>clientApp.x.prop=val</code> biçimindedir; burada <code>x</code> uygulama numarasıdır.</p>
+<p><strong>Uygulama numaralandırma gereksinimleri</strong>: - 0 ile başlamalıdır - Ardışık olmalıdır (atlama olmamalı) - Sıralama, başlatma sırasını belirler</p>
+<h4 id="zorunlu-özellikler">Zorunlu Özellikler</h4>
+<h5 id="ana">ana</h5>
+<ul>
+<li><strong>Tür</strong>: String (tam nitelikli sınıf adı)</li>
+<li><strong>Gerekli</strong>: Evet</li>
+<li><strong>Açıklama</strong>: Bu sınıftaki kurucu (constructor) veya <code>main()</code> metodu, istemci türüne (yönetilen vs. yönetilmeyen) bağlı olarak çağrılacaktır</li>
+<li><strong>Örnek</strong>: <code>clientApp.0.main=net.i2p.router.web.RouterConsoleRunner</code></li>
+</ul>
+<h4 id="isteğe-bağlı-özellikler">İsteğe Bağlı Özellikler</h4>
+<h5 id="ad">ad</h5>
+<ul>
+<li><strong>Tür</strong>: Dize</li>
+<li><strong>Gerekli</strong>: Hayır</li>
+<li><strong>Açıklama</strong>: router konsolunda gösterilen görünen ad</li>
+<li><strong>Örnek</strong>: <code>clientApp.0.name=Router Console</code></li>
+</ul>
+<h5 id="args">args</h5>
+<ul>
+<li><strong>Tür</strong>: Dize (boşluk veya sekme ile ayrılmış)</li>
+<li><strong>Gerekli</strong>: Hayır</li>
+<li><strong>Açıklama</strong>: Ana sınıfın kurucusuna veya main() yöntemine geçirilen argümanlar</li>
+<li><strong>Tırnak kullanımı</strong>: Boşluk veya sekme içeren argümanlar <code>'</code> veya <code>&quot;</code> ile tırnak içine alınabilir</li>
+<li><strong>Örnek</strong>: <code>clientApp.0.args=-d $CONFIG/eepsite</code></li>
+</ul>
+<h5 id="gecikme">gecikme</h5>
+<ul>
+<li><strong>Tür</strong>: Tamsayı (saniye)</li>
+<li><strong>Gerekli</strong>: Hayır</li>
+<li><strong>Varsayılan</strong>: 120</li>
+<li><strong>Açıklama</strong>: İstemciyi başlatmadan önce beklenecek saniye sayısı</li>
+<li><strong>Geçersiz kılmalar</strong>: <code>onBoot=true</code> tarafından geçersiz kılınır (gecikmeyi 0&rsquo;a ayarlar)</li>
+<li><strong>Özel Değerler</strong>:
+<ul>
+<li><code>&lt; 0</code>: router RUNNING durumuna ulaşana kadar bekler, sonra yeni bir iş parçacığında hemen başlatır</li>
+<li><code>= 0</code>: Aynı iş parçacığında hemen çalıştırır (istisnalar konsola iletilir)</li>
+<li><code>&gt; 0</code>: Gecikmeden sonra yeni bir iş parçacığında başlatır (istisnalar kaydedilir, iletilmez)</li>
+</ul>
+</li>
+</ul>
+<h5 id="onboot">onBoot</h5>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Gerekli</strong>: Hayır</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: Gecikmeyi 0&rsquo;a zorlar, açıkça belirtilen gecikme ayarını geçersiz kılar</li>
+<li><strong>Kullanım Durumu</strong>: Kritik servisleri router önyüklemesinde hemen başlat</li>
+</ul>
+<h5 id="startonload">startOnLoad</h5>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Gerekli</strong>: Hayır</li>
+<li><strong>Varsayılan</strong>: true</li>
+<li><strong>Açıklama</strong>: İstemcinin hiç başlatılıp başlatılmayacağı</li>
+<li><strong>Kullanım Durumu</strong>: Yapılandırmayı kaldırmadan istemcileri devre dışı bırakma</li>
+</ul>
+<h4 id="eklentiye-özel-özellikler">Eklentiye Özel Özellikler</h4>
+<p>Bu özellikler yalnızca eklentiler tarafından kullanılır (çekirdek istemciler tarafından değil):</p>
+<h5 id="stopargs-durdurma-argümanları">stopargs (durdurma argümanları)</h5>
+<ul>
+<li><strong>Tür</strong>: Dize (boşluk veya sekme ile ayrılmış)</li>
+<li><strong>Açıklama</strong>: İstemciyi durdurmak için iletilen argümanlar</li>
+<li><strong>Değişken Yerine Koyma</strong>: Evet (aşağıya bakın)</li>
+</ul>
+<h5 id="uninstallargs">uninstallargs</h5>
+<ul>
+<li><strong>Tür</strong>: Dize (boşluk veya sekme ile ayrılmış)</li>
+<li><strong>Açıklama</strong>: İstemciyi kaldırma işlemine iletilen argümanlar</li>
+<li><strong>Değişken yerine koyma</strong>: Evet (aşağıya bakın)</li>
+</ul>
+<h5 id="sınıf-yolu">sınıf yolu</h5>
+<ul>
+<li><strong>Tür</strong>: String (virgülle ayrılmış yollar)</li>
+<li><strong>Açıklama</strong>: İstemci için ek classpath öğeleri</li>
+<li><strong>Değişken ikamesi</strong>: Evet (aşağıya bakın)</li>
+</ul>
+<h4 id="değişken-yerine-koyma-yalnızca-eklentiler">Değişken Yerine Koyma (Yalnızca Eklentiler)</h4>
+<p>Aşağıdaki değişkenler, eklentiler için <code>args</code>, <code>stopargs</code>, <code>uninstallargs</code>, ve <code>classpath</code> içinde yerine konur:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Variable</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Expands To</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$I2P</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Base I2P installation directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>/usr/share/i2p</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$CONFIG</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">User configuration directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>~/.i2p</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$PLUGIN</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Plugin directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>~/.i2p/plugins/foo</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$OS</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Operating system name</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>linux</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$ARCH</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Architecture name</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>amd64</code></td>
+    </tr>
+  </tbody>
+</table>
+**Not**: Değişken yerine koyma yalnızca eklentiler için uygulanır, çekirdek istemcilerde uygulanmaz.
+<h4 id="istemci-türleri">İstemci Türleri</h4>
+<h5 id="yönetilen-istemciler">Yönetilen İstemciler</h5>
+<ul>
+<li>Kurucu, <code>RouterContext</code> ve <code>ClientAppManager</code> parametreleriyle çağrılır</li>
+<li>İstemci, <code>ClientApp</code> arayüzünü uygulamalıdır</li>
+<li>Yaşam döngüsü router tarafından kontrol edilir</li>
+<li>Dinamik olarak başlatılabilir, durdurulabilir ve yeniden başlatılabilir</li>
+</ul>
+<h5 id="yönetilmeyen-istemciler">Yönetilmeyen İstemciler</h5>
+<ul>
+<li><code>main(String[] args)</code> metodu çağrılır</li>
+<li>Ayrı bir iş parçacığında çalıştırılır</li>
+<li>Yaşam döngüsü router tarafından yönetilmez</li>
+<li>Eski istemci türü</li>
+</ul>
+<h4 id="örnek-yapılandırma">Örnek Yapılandırma</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Router Console (core client)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">net.i2p.router.web.RouterConsoleRunner</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Router Console</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.args</span><span style="color:#f92672">=</span><span style="color:#e6db74">-d $CONFIG/eepsite</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.delay</span><span style="color:#f92672">=</span><span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.onBoot</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2PTunnel (core client)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">net.i2p.i2ptunnel.TunnelControllerGroup</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.name</span><span style="color:#f92672">=</span><span style="color:#e6db74">I2PTunnel</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.args</span><span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.delay</span><span style="color:#f92672">=</span><span style="color:#e6db74">120</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plugin Example</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">org.example.plugin.PluginMain</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example Plugin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.args</span><span style="color:#f92672">=</span><span style="color:#e6db74">-config $PLUGIN/config.properties</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.stopargs</span><span style="color:#f92672">=</span><span style="color:#e6db74">-shutdown</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.uninstallargs</span><span style="color:#f92672">=</span><span style="color:#e6db74">-remove $PLUGIN</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/lib/plugin.jar,$PLUGIN/lib/dep.jar</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.delay</span><span style="color:#f92672">=</span><span style="color:#e6db74">240</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span></code></pre></div><hr>
+<h3 id="günlükleyici-yapılandırması-loggerconfig">Günlükleyici Yapılandırması (logger.config)</h3>
+<p><strong>Konum</strong>: <code>$I2P_CONFIG_DIR/logger.config</code>   <strong>Yapılandırma Arayüzü</strong>: Router konsolunda <code>/configlogging</code></p>
+<h4 id="özellikler-referansı">Özellikler Referansı</h4>
+<h5 id="konsol-arabellek-yapılandırması">Konsol Arabellek Yapılandırması</h5>
+<h6 id="loggerconsolebuffersize">logger.consoleBufferSize</h6>
+<ul>
+<li><strong>Tür</strong>: Tamsayı</li>
+<li><strong>Varsayılan</strong>: 20</li>
+<li><strong>Açıklama</strong>: Konsolda arabelleğe alınacak en fazla günlük mesajı sayısı</li>
+<li><strong>Aralık</strong>: 1-1000 önerilir</li>
+</ul>
+<h5 id="tarih-ve-saat-biçimlendirme">Tarih ve Saat Biçimlendirme</h5>
+<h6 id="loggerdateformat">logger.dateFormat</h6>
+<ul>
+<li><strong>Tür</strong>: String (SimpleDateFormat deseni)</li>
+<li><strong>Varsayılan</strong>: Sistem yerel ayarından</li>
+<li><strong>Örnek</strong>: <code>HH:mm:ss.SSS</code></li>
+<li><strong>Belgelendirme</strong>: <a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html">Java SimpleDateFormat</a>
+</li>
+</ul>
+<h5 id="günlük-seviyeleri">Günlük Seviyeleri</h5>
+<h6 id="loggerdefaultlevel">logger.defaultLevel</h6>
+<ul>
+<li><strong>Tür</strong>: Enum (numaralandırma)</li>
+<li><strong>Varsayılan</strong>: ERROR</li>
+<li><strong>Değerler</strong>: <code>CRIT</code>, <code>ERROR</code>, <code>WARN</code>, <code>INFO</code>, <code>DEBUG</code></li>
+<li><strong>Açıklama</strong>: Tüm sınıflar için varsayılan günlükleme düzeyi</li>
+</ul>
+<h6 id="loggerminimumonscreenlevel">logger.minimumOnScreenLevel</h6>
+<ul>
+<li><strong>Tür</strong>: Enum (numaralandırma)</li>
+<li><strong>Varsayılan</strong>: CRIT</li>
+<li><strong>Değerler</strong>: <code>CRIT</code>, <code>ERROR</code>, <code>WARN</code>, <code>INFO</code>, <code>DEBUG</code></li>
+<li><strong>Açıklama</strong>: Ekranda gösterilen iletiler için en düşük düzey</li>
+</ul>
+<h6 id="loggerrecordclass">logger.record.{class}</h6>
+<ul>
+<li><strong>Tür</strong>: Enum</li>
+<li><strong>Değerler</strong>: <code>CRIT</code>, <code>ERROR</code>, <code>WARN</code>, <code>INFO</code>, <code>DEBUG</code></li>
+<li><strong>Açıklama</strong>: Sınıf başına günlükleme düzeyi geçersiz kılma</li>
+<li><strong>Örnek</strong>: <code>logger.record.net.i2p.router.transport.udp=DEBUG</code></li>
+</ul>
+<h5 id="görüntüleme-seçenekleri">Görüntüleme Seçenekleri</h5>
+<h6 id="loggerdisplayonscreen">logger.displayOnScreen</h6>
+<ul>
+<li><strong>Tür</strong>: Boolean (mantıksal tür)</li>
+<li><strong>Varsayılan</strong>: true</li>
+<li><strong>Açıklama</strong>: Günlük iletilerinin konsol çıktısında gösterilip gösterilmeyeceği</li>
+</ul>
+<h6 id="loggerdropduplicates">logger.dropDuplicates</h6>
+<ul>
+<li><strong>Tür</strong>: Boolean (mantıksal)</li>
+<li><strong>Varsayılan</strong>: true</li>
+<li><strong>Açıklama</strong>: Ardışık yinelenen günlük iletilerini yoksay</li>
+</ul>
+<h6 id="loggerdroponoverflow">logger.dropOnOverflow</h6>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: Arabellek dolu olduğunda mesajları düşür (bloklayıcı bekleme yerine)</li>
+</ul>
+<h5 id="boşaltma-davranışı">Boşaltma Davranışı</h5>
+<h6 id="loggerflushinterval">logger.flushInterval</h6>
+<ul>
+<li><strong>Tür</strong>: Tamsayı (saniye)</li>
+<li><strong>Varsayılan</strong>: 29</li>
+<li><strong>İtibaren</strong>: Sürüm 0.9.18</li>
+<li><strong>Açıklama</strong>: Günlük arabelleğinin diske ne sıklıkla yazılacağı</li>
+</ul>
+<h5 id="biçim-yapılandırması">Biçim Yapılandırması</h5>
+<h6 id="loggerformat">logger.format</h6>
+<ul>
+<li><strong>Tür</strong>: String (karakter dizisi)</li>
+<li><strong>Açıklama</strong>: Günlük iletisi biçim şablonu</li>
+<li><strong>Biçim Karakterleri</strong>:
+<ul>
+<li><code>d</code> = tarih/saat</li>
+<li><code>c</code> = sınıf adı</li>
+<li><code>t</code> = iş parçacığı adı</li>
+<li><code>p</code> = öncelik (günlük düzeyi)</li>
+<li><code>m</code> = ileti</li>
+</ul>
+</li>
+<li><strong>Örnek</strong>: <code>dctpm</code> şunu üretir: <code>[zaman damgası] [sınıf] [iş parçacığı] [düzey] ileti</code></li>
+</ul>
+<h5 id="sıkıştırma-sürüm-0956">Sıkıştırma (Sürüm 0.9.56+)</h5>
+<h6 id="loggergzip">logger.gzip</h6>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Şu sürümden beri</strong>: Sürüm 0.9.56</li>
+<li><strong>Açıklama</strong>: Döndürülen günlük dosyaları için gzip sıkıştırmasını etkinleştirir</li>
+</ul>
+<h6 id="loggermingzipsize">logger.minGzipSize</h6>
+<ul>
+<li><strong>Tür</strong>: Tamsayı (bayt)</li>
+<li><strong>Varsayılan</strong>: 65536</li>
+<li><strong>Sürüm</strong>: 0.9.56&rsquo;dan beri</li>
+<li><strong>Açıklama</strong>: Sıkıştırmayı tetiklemek için minimum dosya boyutu (varsayılan 64 KB)</li>
+</ul>
+<h5 id="dosya-yönetimi">Dosya Yönetimi</h5>
+<h6 id="loggerlogbuffersize">logger.logBufferSize</h6>
+<ul>
+<li><strong>Tür</strong>: Tamsayı (bayt)</li>
+<li><strong>Varsayılan</strong>: 1024</li>
+<li><strong>Açıklama</strong>: Boşaltmadan önce arabelleğe alınacak en fazla ileti sayısı</li>
+</ul>
+<h6 id="loggerlogfilename">logger.logFileName</h6>
+<ul>
+<li><strong>Tür</strong>: Dize (dosya yolu)</li>
+<li><strong>Varsayılan</strong>: <code>logs/log-@.txt</code></li>
+<li><strong>Açıklama</strong>: Günlük dosyası adlandırma deseni (<code>@</code> yerine döndürme numarası konur)</li>
+</ul>
+<h6 id="loggerlogfilenameoverride">logger.logFilenameOverride</h6>
+<ul>
+<li><strong>Tür</strong>: Dize (dosya yolu)</li>
+<li><strong>Açıklama</strong>: Günlük dosya adını geçersiz kılma (döndürme desenini devre dışı bırakır)</li>
+</ul>
+<h6 id="loggerlogfilesize">logger.logFileSize</h6>
+<ul>
+<li><strong>Tür</strong>: Dize (birimle birlikte boyut)</li>
+<li><strong>Varsayılan</strong>: 10M</li>
+<li><strong>Birimler</strong>: K (kilobayt), M (megabayt), G (gigabayt)</li>
+<li><strong>Örnek</strong>: <code>50M</code>, <code>1G</code></li>
+</ul>
+<h6 id="loggerlogrotationlimit">logger.logRotationLimit</h6>
+<ul>
+<li><strong>Tür</strong>: Tamsayı</li>
+<li><strong>Varsayılan</strong>: 2</li>
+<li><strong>Açıklama</strong>: En yüksek döndürme dosyası numarası (log-0.txt&rsquo;den log-N.txt&rsquo;ye kadar)</li>
+</ul>
+<h4 id="örnek-yapılandırma-1">Örnek Yapılandırma</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Basic logging configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.consoleBufferSize</span><span style="color:#f92672">=</span><span style="color:#e6db74">50</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.dateFormat</span><span style="color:#f92672">=</span><span style="color:#e6db74">yyyy-MM-dd HH:mm:ss.SSS</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.defaultLevel</span><span style="color:#f92672">=</span><span style="color:#e6db74">WARN</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.displayOnScreen</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.dropDuplicates</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.dropOnOverflow</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Flushing and format</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.flushInterval</span><span style="color:#f92672">=</span><span style="color:#e6db74">30</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.format</span><span style="color:#f92672">=</span><span style="color:#e6db74">dctpm</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># File management</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.logBufferSize</span><span style="color:#f92672">=</span><span style="color:#e6db74">2048</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.logFileName</span><span style="color:#f92672">=</span><span style="color:#e6db74">logs/log-@.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.logFileSize</span><span style="color:#f92672">=</span><span style="color:#e6db74">25M</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.logRotationLimit</span><span style="color:#f92672">=</span><span style="color:#e6db74">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Compression (0.9.56+)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.gzip</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.minGzipSize</span><span style="color:#f92672">=</span><span style="color:#e6db74">131072</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># On-screen filtering</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.minimumOnScreenLevel</span><span style="color:#f92672">=</span><span style="color:#e6db74">ERROR</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Per-class overrides</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.record.net.i2p.router.transport</span><span style="color:#f92672">=</span><span style="color:#e6db74">INFO</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.record.net.i2p.router.tunnel</span><span style="color:#f92672">=</span><span style="color:#e6db74">DEBUG</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.record.net.i2p.crypto</span><span style="color:#f92672">=</span><span style="color:#e6db74">WARN</span>
+</span></span></code></pre></div><hr>
+<h3 id="eklenti-yapılandırması">Eklenti Yapılandırması</h3>
+<h4 id="bireysel-eklenti-yapılandırması-pluginspluginconfig">Bireysel Eklenti Yapılandırması (plugins/*/plugin.config)</h4>
+<p><strong>Konum</strong>: <code>$I2P_CONFIG_DIR/plugins/{plugin-name}/plugin.config</code>   <strong>Biçim</strong>: Standart I2P yapılandırma dosyası biçimi   <strong>Belgeler</strong>: <a href="../../../../tr/docs/specs/plugin/">Eklenti Belirtimi</a>
+</p>
+<h5 id="gerekli-özellikler">Gerekli Özellikler</h5>
+<h6 id="ad-1">ad</h6>
+<ul>
+<li><strong>Type</strong>: Dize</li>
+<li><strong>Required</strong>: Evet</li>
+<li><strong>Description</strong>: Eklentinin görünen adı</li>
+<li><strong>Example</strong>: <code>name=I2P Plugin Example</code></li>
+</ul>
+<h6 id="anahtar">anahtar</h6>
+<ul>
+<li><strong>Tür</strong>: Dize (genel anahtar)</li>
+<li><strong>Zorunlu</strong>: Evet (SU3 ile imzalanmış eklentiler için belirtmeyin)</li>
+<li><strong>Açıklama</strong>: İmzaları doğrulamak için eklentinin imzalama genel anahtarı</li>
+<li><strong>Biçim</strong>: Base64 ile kodlanmış imzalama anahtarı</li>
+</ul>
+<h6 id="imzalayan">imzalayan</h6>
+<ul>
+<li><strong>Tür</strong>: Dize</li>
+<li><strong>Gerekli</strong>: Evet</li>
+<li><strong>Açıklama</strong>: Eklenti imzalayıcısının kimliği</li>
+<li><strong>Örnek</strong>: <code>signer=user@example.i2p</code></li>
+</ul>
+<h6 id="sürüm">sürüm</h6>
+<ul>
+<li><strong>Tür</strong>: String (VersionComparator biçimi)</li>
+<li><strong>Gerekli</strong>: Evet</li>
+<li><strong>Açıklama</strong>: Güncelleme denetimi için eklenti sürümü</li>
+<li><strong>Biçim</strong>: Semantik sürümleme veya özel karşılaştırılabilir biçim</li>
+<li><strong>Örnek</strong>: <code>version=1.2.3</code></li>
+</ul>
+<h5 id="görüntü-özellikleri">Görüntü Özellikleri</h5>
+<h6 id="tarih">tarih</h6>
+<ul>
+<li><strong>Tip</strong>: Long (Unix zaman damgası milisaniye cinsinden)</li>
+<li><strong>Açıklama</strong>: Eklentinin yayın tarihi</li>
+</ul>
+<h6 id="yazar">yazar</h6>
+<ul>
+<li><strong>Tür</strong>: String</li>
+<li><strong>Açıklama</strong>: Eklenti yazarının adı</li>
+</ul>
+<h6 id="websiteurl">websiteURL</h6>
+<ul>
+<li><strong>Tür</strong>: String (URL)</li>
+<li><strong>Açıklama</strong>: Eklenti web sitesi URL’si</li>
+</ul>
+<h6 id="updateurl">updateURL</h6>
+<ul>
+<li><strong>Tür</strong>: Dize (URL)</li>
+<li><strong>Açıklama</strong>: Eklenti için güncelleme denetimi URL&rsquo;si</li>
+</ul>
+<h6 id="updateurlsu3">updateURL.su3</h6>
+<ul>
+<li><strong>Tür</strong>: Dize (URL)</li>
+<li><strong>Sürüm</strong>: 0.9.15&rsquo;ten beri</li>
+<li><strong>Açıklama</strong>: SU3 biçiminde güncelleme URL&rsquo;si (tercih edilen)</li>
+</ul>
+<h6 id="açıklama">açıklama</h6>
+<ul>
+<li><strong>Tür</strong>: String</li>
+<li><strong>Açıklama</strong>: İngilizce eklenti açıklaması</li>
+</ul>
+<h6 id="description_language">description_{language}</h6>
+<ul>
+<li><strong>Tip</strong>: String</li>
+<li><strong>Açıklama</strong>: Yerelleştirilmiş eklenti açıklaması</li>
+<li><strong>Örnek</strong>: <code>description_de=Deutsche Beschreibung</code></li>
+</ul>
+<h6 id="lisans">lisans</h6>
+<ul>
+<li><strong>Tür</strong>: Dize</li>
+<li><strong>Açıklama</strong>: Eklenti lisans tanımlayıcısı</li>
+<li><strong>Örnek</strong>: <code>license=Apache 2.0</code></li>
+</ul>
+<h5 id="kurulum-özellikleri">Kurulum Özellikleri</h5>
+<h6 id="dont-start-at-install">dont-start-at-install</h6>
+<ul>
+<li><strong>Tür</strong>: Boolean (mantıksal)</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: Kurulumdan sonra otomatik başlamayı engeller</li>
+</ul>
+<h6 id="routerın-yeniden-başlatılması-gerekiyor">router&rsquo;ın yeniden başlatılması gerekiyor</h6>
+<ul>
+<li><strong>Tür</strong>: Boolean (mantıksal)</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: Kurulumdan sonra router’ın yeniden başlatılmasını gerektirir</li>
+</ul>
+<h6 id="yalnızca-kurulum">yalnızca kurulum</h6>
+<ul>
+<li><strong>Tür</strong>: Boolean (mantıksal)</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: Yalnızca bir kez yükle (güncelleme yok)</li>
+</ul>
+<h6 id="yalnızca-güncelleme">yalnızca güncelleme</h6>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: Yalnızca mevcut kurulumu güncelle (sıfırdan kurulum yok)</li>
+</ul>
+<h5 id="örnek-eklenti-yapılandırması">Örnek Eklenti Yapılandırması</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Required properties</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example I2P Plugin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">signer</span><span style="color:#f92672">=</span><span style="color:#e6db74">developer@mail.i2p</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">version</span><span style="color:#f92672">=</span><span style="color:#e6db74">1.5.0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Display properties</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">author</span><span style="color:#f92672">=</span><span style="color:#e6db74">Plugin Developer</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">websiteURL</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://plugin.example.i2p</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">updateURL</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://plugin.example.i2p/update.xpi2p</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">updateURL.su3</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://plugin.example.i2p/update.su3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example plugin demonstrating configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description_de</span><span style="color:#f92672">=</span><span style="color:#e6db74">Beispiel-Plugin zur Demonstration der Konfiguration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">license</span><span style="color:#f92672">=</span><span style="color:#e6db74">MIT</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Installation behavior</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">dont-start-at-install</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router-restart-required</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span></code></pre></div><h4 id="genel-eklenti-yapılandırması-pluginsconfig">Genel Eklenti Yapılandırması (plugins.config)</h4>
+<p><strong>Konum</strong>: <code>$I2P_CONFIG_DIR/plugins.config</code>   <strong>Amaç</strong>: Yüklü eklentileri genel olarak etkinleştirmek/devre dışı bırakmak</p>
+<h5 id="özellik-formatı">Özellik Formatı</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">plugin.{name}.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true|false</span>
+</span></span></code></pre></div><ul>
+<li><code>{name}</code>: plugin.config içindeki eklenti adı</li>
+<li><code>startOnLoad</code>: router (yönlendirici) başlatılırken eklentinin başlatılıp başlatılmayacağı</li>
+</ul>
+<h5 id="örnek">Örnek</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">plugin.i2psnark.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plugin.susimail.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plugin.susidns.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plugin.i2pbote.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span></code></pre></div><hr>
+<h3 id="web-uygulamaları-yapılandırması-webappsconfig">Web Uygulamaları Yapılandırması (webapps.config)</h3>
+<p><strong>Konum</strong>: <code>$I2P_CONFIG_DIR/webapps.config</code>   <strong>Amaç</strong>: Web uygulamalarını etkinleştirme/devre dışı bırakma ve yapılandırma</p>
+<h4 id="özellik-biçimi-1">Özellik Biçimi</h4>
+<h5 id="webappsnamestartonload">webapps.{name}.startOnLoad</h5>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Açıklama</strong>: router başlatıldığında web uygulamasının başlatılıp başlatılmayacağı</li>
+<li><strong>Biçim</strong>: <code>webapps.{name}.startOnLoad=true|false</code></li>
+</ul>
+<h5 id="webappsnameclasspath">webapps.{name}.classpath</h5>
+<ul>
+<li><strong>Tür</strong>: String (boşluk veya virgülle ayrılmış yollar)</li>
+<li><strong>Açıklama</strong>: web uygulaması için ek classpath (sınıf yolu) öğeleri</li>
+<li><strong>Biçim</strong>: <code>webapps.{name}.classpath=[paths]</code></li>
+</ul>
+<h4 id="değişken-yerine-koyma">Değişken Yerine Koyma</h4>
+<p>Yollar aşağıdaki değişken ikamelerini destekler:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Variable</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Expands To</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Context</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$I2P</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Base I2P directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Core webapps</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$CONFIG</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">User config directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">All webapps</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$PLUGIN</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Plugin directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Plugin webapps</td>
+    </tr>
+  </tbody>
+</table>
+#### Sınıf Yolu Çözümlemesi
+<ul>
+<li><strong>Çekirdek web uygulamaları</strong>: Yollar <code>$I2P/lib</code> dizinine göredir</li>
+<li><strong>Eklenti web uygulamaları</strong>: Yollar <code>$CONFIG/plugins/{appname}/lib</code> dizinine göredir</li>
+</ul>
+<h4 id="örnek-yapılandırma-2">Örnek Yapılandırma</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Router console</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.routerconsole.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.routerconsole.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">routerconsole.jar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2PSnark</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.i2psnark.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.i2psnark.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">i2psnark.jar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># SusiDNS</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.susidns.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.susidns.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">susidns.jar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plugin webapp example</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.exampleplugin.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.exampleplugin.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/lib/webapp.jar,$PLUGIN/lib/deps.jar</span>
+</span></span></code></pre></div><hr>
+<h3 id="router-yapılandırması-routerconfig">Router Yapılandırması (router.config)</h3>
+<p><strong>Konum</strong>: <code>$I2P_CONFIG_DIR/router.config</code>   <strong>Yapılandırma Arabirimi</strong>: router konsolu <code>/configadvanced</code> adresinde   <strong>Amaç</strong>: Temel router ayarları ve ağ parametreleri</p>
+<h4 id="yapılandırma-kategorileri">Yapılandırma Kategorileri</h4>
+<h5 id="ağ-yapılandırması">Ağ Yapılandırması</h5>
+<p>Bant genişliği ayarları:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">i2np.bandwidth.inboundKBytesPerSecond</span><span style="color:#f92672">=</span><span style="color:#e6db74">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.bandwidth.outboundKBytesPerSecond</span><span style="color:#f92672">=</span><span style="color:#e6db74">50</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.bandwidth.share.percentage</span><span style="color:#f92672">=</span><span style="color:#e6db74">80</span>
+</span></span></code></pre></div><p>Taşıma yapılandırması:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># NTCP (TCP-based transport)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.ntcp.port</span><span style="color:#f92672">=</span><span style="color:#e6db74">8887</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.ntcp.enable</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.ntcp.autoip</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># SSU (UDP-based transport)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.udp.port</span><span style="color:#f92672">=</span><span style="color:#e6db74">8887</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.udp.enable</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># UPnP/NAT-PMP</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.upnp.enable</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span></code></pre></div><h5 id="router-davranışı">Router Davranışı</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Tunnel participation</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.maxParticipatingTunnels</span><span style="color:#f92672">=</span><span style="color:#e6db74">200</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.sharePercentage</span><span style="color:#f92672">=</span><span style="color:#e6db74">80</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Updates</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.updatePolicy</span><span style="color:#f92672">=</span><span style="color:#e6db74">notify</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.updateURL</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://update.i2p2.i2p/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Network integration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.hiddenMode</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.clockSkewOffset</span><span style="color:#f92672">=</span><span style="color:#e6db74">0</span>
+</span></span></code></pre></div><h5 id="konsol-yapılandırması">Konsol Yapılandırması</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Language and display</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">en</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.country</span><span style="color:#f92672">=</span><span style="color:#e6db74">US</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.summaryRefresh</span><span style="color:#f92672">=</span><span style="color:#e6db74">60</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Browser</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.browser</span><span style="color:#f92672">=</span><span style="color:#e6db74">default</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Security</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.enableCompression</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span></code></pre></div><h5 id="zaman-yapılandırması">Zaman Yapılandırması</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># NTP</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">time.disabled</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">time.sntpServerList</span><span style="color:#f92672">=</span><span style="color:#e6db74">0.pool.ntp.org,1.pool.ntp.org</span>
+</span></span></code></pre></div><p><strong>Not</strong>: Router yapılandırması kapsamlıdır. Tam özellik başvurusu için <code>/configadvanced</code> adresindeki router konsoluna bakın.</p>
+<hr>
+<h2 id="uygulama-yapılandırma-dosyaları">Uygulama Yapılandırma Dosyaları</h2>
+<h3 id="adres-defteri-yapılandırması-addressbookconfigtxt">Adres Defteri Yapılandırması (addressbook/config.txt)</h3>
+<p><strong>Konum</strong>: <code>$I2P_CONFIG_DIR/addressbook/config.txt</code>   <strong>Uygulama</strong>: SusiDNS   <strong>Amaç</strong>: Ana makine adı çözümleme ve adres defteri yönetimi</p>
+<h4 id="dosya-konumları">Dosya Konumları</h4>
+<h5 id="router_addressbook">router_addressbook</h5>
+<ul>
+<li><strong>Varsayılan</strong>: <code>../hosts.txt</code></li>
+<li><strong>Açıklama</strong>: Ana adres defteri (sistem genelindeki ana bilgisayar adları)</li>
+<li><strong>Biçim</strong>: Standart hosts dosyası biçimi</li>
+</ul>
+<h5 id="privatehoststxt">privatehosts.txt</h5>
+<ul>
+<li><strong>Konum</strong>: <code>$I2P_CONFIG_DIR/addressbook/privatehosts.txt</code></li>
+<li><strong>Açıklama</strong>: Özel ana bilgisayar adı eşlemeleri</li>
+<li><strong>Öncelik</strong>: En yüksek (diğer tüm kaynakları geçersiz kılar)</li>
+</ul>
+<h5 id="userhoststxt">userhosts.txt</h5>
+<ul>
+<li><strong>Konum</strong>: <code>$I2P_CONFIG_DIR/addressbook/userhosts.txt</code></li>
+<li><strong>Açıklama</strong>: Kullanıcı tarafından eklenen ana bilgisayar adı eşlemeleri</li>
+<li><strong>Yönetim</strong>: SusiDNS arayüzü üzerinden</li>
+</ul>
+<h5 id="hoststxt">hosts.txt</h5>
+<ul>
+<li><strong>Konum</strong>: <code>$I2P_CONFIG_DIR/addressbook/hosts.txt</code></li>
+<li><strong>Açıklama</strong>: İndirilen genel adres defteri</li>
+<li><strong>Kaynak</strong>: Abonelik beslemeleri</li>
+</ul>
+<h4 id="adlandırma-hizmeti">Adlandırma Hizmeti</h4>
+<h5 id="blockfilenamingservice-blok-dosyası-adlandırma-hizmeti-088den-beri-varsayılan">BlockfileNamingService (blok dosyası adlandırma hizmeti) (0.8.8&rsquo;den beri varsayılan)</h5>
+<p>Depolama biçimi: - <strong>Dosya</strong>: <code>hostsdb.blockfile</code> - <strong>Konum</strong>: <code>$I2P_CONFIG_DIR/addressbook/</code> - <strong>Performans</strong>: hosts.txt&rsquo;ye göre ~10x daha hızlı sorgular - <strong>Biçim</strong>: İkili veritabanı biçimi</p>
+<p>Eski adlandırma hizmeti: - <strong>Biçim</strong>: Düz metin hosts.txt - <strong>Durum</strong>: Kullanımdan kaldırıldı ancak hâlâ destekleniyor - <strong>Kullanım Senaryosu</strong>: El ile düzenleme, sürüm kontrolü</p>
+<h4 id="ana-bilgisayar-adı-kuralları">Ana Bilgisayar Adı Kuralları</h4>
+<p>I2P ana makine adları şunlara uymalıdır:</p>
+<ol>
+<li><strong>TLD (üst düzey alan adı) gereksinimi</strong>: Sonu <code>.i2p</code> ile bitmelidir</li>
+<li><strong>Maksimum uzunluk</strong>: Toplam 67 karakter</li>
+<li><strong>Karakter kümesi</strong>: <code>[a-z]</code>, <code>[0-9]</code>, <code>.</code> (nokta), <code>-</code> (tire)</li>
+<li><strong>Büyük/küçük harf</strong>: Yalnızca küçük harf</li>
+<li><strong>Başlangıç kısıtlamaları</strong>: <code>.</code> veya <code>-</code> ile başlayamaz</li>
+<li><strong>Yasak kalıplar</strong>: <code>..</code>, <code>.-</code> veya <code>-.</code> içeremez (0.6.1.33 sürümünden beri)</li>
+<li><strong>Ayrılmış</strong>: Base32 ana bilgisayar adları <code>*.b32.i2p</code> (base32.b32.i2p&rsquo;nin 52 karakteri)</li>
+</ol>
+<h5 id="geçerli-örnekler">Geçerli Örnekler</h5>
+<pre tabindex="0"><code>example.i2p
+my-site.i2p
+test.example.i2p
+site123.i2p
+</code></pre><h5 id="geçersiz-örnekler">Geçersiz Örnekler</h5>
+<pre tabindex="0"><code>example.com          # Wrong TLD
+-invalid.i2p         # Starts with hyphen
+invalid..i2p         # Contains double dot
+invalid.-.i2p        # Contains dot-hyphen
+UPPERCASE.I2P        # Must be lowercase
+verylonghostnameover67charactersthatexceedsthemaximumlength.i2p  # Too long
+</code></pre><h4 id="abonelik-yönetimi">Abonelik Yönetimi</h4>
+<h5 id="subscriptionstxt">subscriptions.txt</h5>
+<ul>
+<li><strong>Konum</strong>: <code>$I2P_CONFIG_DIR/addressbook/subscriptions.txt</code></li>
+<li><strong>Biçim</strong>: Her satırda bir URL</li>
+<li><strong>Varsayılan</strong>: <code>http://i2p-projekt.i2p/hosts.txt</code></li>
+</ul>
+<h5 id="abonelik-besleme-biçimi-0926-sürümünden-beri">Abonelik Besleme Biçimi (0.9.26 sürümünden beri)</h5>
+<p>Meta veriler içeren gelişmiş besleme biçimi:</p>
+<pre tabindex="0"><code>#
+# I2P Address Book Subscription Feed
+# Format: hostname=destination [#property=value ...]
+#
+
+example.i2p=base64destination #added=20250101 #src=manual
+another.i2p=base64destination #added=20250102 #src=feed1
+</code></pre><p>Üstveri özellikleri: - <code>added</code>: Ana makine adının eklendiği tarih (YYYYMMDD biçimi) - <code>src</code>: Kaynak tanımlayıcısı - <code>sig</code>: İsteğe bağlı imza</p>
+<p><strong>Geriye dönük uyumluluk</strong>: Basit hostname=destination biçimi hâlâ desteklenmektedir.</p>
+<h4 id="örnek-yapılandırma-3">Örnek Yapılandırma</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Address book locations</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router_addressbook</span><span style="color:#f92672">=</span><span style="color:#e6db74">../hosts.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">privatehosts.txt</span><span style="color:#f92672">=</span><span style="color:#e6db74">$CONFIG/addressbook/privatehosts.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">userhosts.txt</span><span style="color:#f92672">=</span><span style="color:#e6db74">$CONFIG/addressbook/userhosts.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">hosts.txt</span><span style="color:#f92672">=</span><span style="color:#e6db74">$CONFIG/addressbook/hosts.txt</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Naming service</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">naming.service</span><span style="color:#f92672">=</span><span style="color:#e6db74">BlockfileNamingService</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">naming.service.blockfile.location</span><span style="color:#f92672">=</span><span style="color:#e6db74">$CONFIG/addressbook/hostsdb.blockfile</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Subscriptions</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">subscriptions.txt</span><span style="color:#f92672">=</span><span style="color:#e6db74">$CONFIG/addressbook/subscriptions.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">subscriptions.schedule</span><span style="color:#f92672">=</span><span style="color:#e6db74">daily</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">subscriptions.proxy</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span></code></pre></div><hr>
+<h3 id="i2psnark-yapılandırması-i2psnarkconfigdi2psnarkconfig">I2PSnark Yapılandırması (i2psnark.config.d/i2psnark.config)</h3>
+<p><strong>Konum</strong>: <code>$I2P_CONFIG_DIR/i2psnark.config.d/i2psnark.config</code>   <strong>Uygulama</strong>: I2PSnark BitTorrent istemcisi   <strong>Yapılandırma Arayüzü</strong>: http://127.0.0.1:7657/i2psnark adresindeki Web arayüzü</p>
+<h4 id="dizin-yapısı">Dizin Yapısı</h4>
+<pre tabindex="0"><code>$I2P_CONFIG_DIR/i2psnark.config.d/
+├── i2psnark.config
+├── [torrent-hash-1]/
+│   └── *.config
+├── [torrent-hash-2]/
+│   └── *.config
+└── ...
+</code></pre><h4 id="ana-yapılandırma-i2psnarkconfig">Ana Yapılandırma (i2psnark.config)</h4>
+<p>Asgari varsayılan yapılandırma:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.dir</span><span style="color:#f92672">=</span><span style="color:#e6db74">i2psnark</span>
+</span></span></code></pre></div><p>Web arayüzü aracılığıyla yönetilen ek özellikler:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Basic settings</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.dir</span><span style="color:#f92672">=</span><span style="color:#e6db74">i2psnark</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.autoStart</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.openTrackers</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Network settings</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.uploaders</span><span style="color:#f92672">=</span><span style="color:#e6db74">8</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.upBW</span><span style="color:#f92672">=</span><span style="color:#e6db74">40</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.seedPct</span><span style="color:#f92672">=</span><span style="color:#e6db74">100</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2CP settings</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.i2cpHost</span><span style="color:#f92672">=</span><span style="color:#e6db74">127.0.0.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.i2cpPort</span><span style="color:#f92672">=</span><span style="color:#e6db74">7654</span>
+</span></span></code></pre></div><h4 id="bireysel-torrent-yapılandırması">Bireysel Torrent Yapılandırması</h4>
+<p><strong>Konum</strong>: <code>$I2P_CONFIG_DIR/i2psnark.config.d/[torrent-hash]/*.config</code>   <strong>Biçim</strong>: Torrent başına ayarlar   <strong>Yönetim</strong>: Otomatik (web arayüzü aracılığıyla)</p>
+<p>Özellikler şunları içerir: - Torrent&rsquo;e özgü yükleme/indirme ayarları - Dosya öncelikleri - İzleyici bilgileri - Eş sınırları</p>
+<p><strong>Not</strong>: Torrent yapılandırmaları öncelikle web arayüzü üzerinden yönetilir. Elle düzenleme önerilmez.</p>
+<h4 id="torrent-verilerinin-düzenlenmesi">Torrent Verilerinin Düzenlenmesi</h4>
+<p>Veri depolama, yapılandırmadan ayrıdır:</p>
+<pre tabindex="0"><code>$I2P_CONFIG_DIR/i2psnark/          # Data directory
+├── *.torrent                       # Torrent metadata files
+├── *.torrent.downloaded/           # Downloaded file directories
+├── file1.dat                       # Direct file downloads
+└── ...
+
+$I2P_CONFIG_DIR/i2psnark.config.d/ # Configuration directory
+├── i2psnark.config                 # Main config
+└── [hashes]/                       # Per-torrent configs
+</code></pre><hr>
+<h3 id="i2ptunnel-yapılandırması-i2ptunnelconfig">I2PTunnel Yapılandırması (i2ptunnel.config)</h3>
+<p><strong>Konum</strong>: <code>$I2P_CONFIG_DIR/i2ptunnel.config</code> (eski) veya <code>$I2P_CONFIG_DIR/i2ptunnel.config.d/</code> (modern)   <strong>Yapılandırma Arayüzü</strong>: Router konsolu <code>/i2ptunnel</code> adresinde   <strong>Biçim Değişikliği</strong>: Sürüm 0.9.42 (Ağustos 2019)</p>
+<h4 id="dizin-yapısı-sürüm-0942-1">Dizin Yapısı (Sürüm 0.9.42+)</h4>
+<p>0.9.42 sürümünden itibaren, varsayılan i2ptunnel.config dosyası otomatik olarak bölünür:</p>
+<pre tabindex="0"><code>$I2P_CONFIG_DIR/
+├── i2ptunnel.config.d/
+│   ├── http-proxy/
+│   │   └── tunnel.config
+│   ├── irc-proxy/
+│   │   └── tunnel.config
+│   ├── ssh-service/
+│   │   └── tunnel.config
+│   └── ...
+└── i2ptunnel.config (legacy, auto-migrated)
+</code></pre><p><strong>Kritik Biçim Farkı</strong>: - <strong>Monolitik biçim</strong>: Özellikler <code>tunnel.N.</code> önekiyle başlar - <strong>Bölünmüş biçim</strong>: Özellikler <strong>önekli değildir</strong> (örn., <code>description=</code>, <code>tunnel.0.description=</code> değil)</p>
+<h4 id="geçiş-davranışı">Geçiş Davranışı</h4>
+<p>0.9.42&rsquo;ye yükselttikten sonra ilk çalıştırmada: 1. Mevcut i2ptunnel.config okunur 2. Bireysel tunnel yapılandırmaları i2ptunnel.config.d/ içinde oluşturulur 3. Özelliklerin ön ekleri ayrılmış dosyalarda kaldırılır 4. Özgün dosya yedeklenir 5. Geriye dönük uyumluluk için eski biçim hâlâ desteklenir</p>
+<h4 id="yapılandırma-bölümleri">Yapılandırma Bölümleri</h4>
+<p>I2PTunnel yapılandırması, aşağıdaki <a href="#i2ptunnel-configuration-reference">I2PTunnel Yapılandırma Başvurusu</a>
+ bölümünde ayrıntılı olarak belgelenmiştir. Özellik açıklamaları hem monolitik (<code>tunnel.N.property</code>) hem de bölünmüş (<code>property</code>) biçimler için geçerlidir.</p>
+<hr>
+<h2 id="i2ptunnel-yapılandırma-referansı">I2PTunnel Yapılandırma Referansı</h2>
+<p>Bu bölüm, tüm I2PTunnel yapılandırma özellikleri için kapsamlı bir teknik başvuru sağlar. Özellikler bölünmüş biçimde (<code>tunnel.N.</code> ön eki olmadan) gösterilir. Monolitik biçim için, N&rsquo;in tunnel numarası olduğu <code>tunnel.N.</code> ön ekini tüm özelliklerin başına ekleyin.</p>
+<p><strong>Önemli</strong>: <code>tunnel.N.option.i2cp.*</code> olarak tanımlanan özellikler I2PTunnel içinde uygulanır ve I2CP protokolü veya SAM API gibi diğer arayüzler üzerinden <strong>DESTEKLENMEZ</strong>.</p>
+<h3 id="temel-özellikler">Temel Özellikler</h3>
+<h4 id="tunnelndescription-açıklama">tunnel.N.description (açıklama)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize</li>
+<li><strong>Bağlam</strong>: Tüm tunnels</li>
+<li><strong>Açıklama</strong>: Kullanıcı arayüzünde görüntülemek için insan tarafından okunabilir tunnel açıklaması</li>
+<li><strong>Örnek</strong>: <code>description=HTTP Proxy for outproxy access</code></li>
+</ul>
+<h4 id="tunnelnname-ad">tunnel.N.name (ad)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize</li>
+<li><strong>Bağlam</strong>: Tüm tunnel&rsquo;ler</li>
+<li><strong>Gerekli</strong>: Evet</li>
+<li><strong>Açıklama</strong>: Benzersiz tunnel tanımlayıcısı ve görünen ad</li>
+<li><strong>Örnek</strong>: <code>name=I2P HTTP Proxy</code></li>
+</ul>
+<h4 id="tunnelntype-tip">tunnel.N.type (tip)</h4>
+<ul>
+<li><strong>Tür</strong>: Enum</li>
+<li><strong>Bağlam</strong>: Tüm tunnel&rsquo;lar</li>
+<li><strong>Gerekli</strong>: Evet</li>
+<li><strong>Değerler</strong>:
+<ul>
+<li><code>client</code> - Genel amaçlı istemci tunnel</li>
+<li><code>httpclient</code> - HTTP proxy istemcisi</li>
+<li><code>ircclient</code> - IRC istemci tunnel</li>
+<li><code>socksirctunnel</code> - SOCKS IRC proxy</li>
+<li><code>sockstunnel</code> - SOCKS proxy (sürüm 4, 4a, 5)</li>
+<li><code>connectclient</code> - CONNECT proxy istemcisi</li>
+<li><code>streamrclient</code> - Streamr istemcisi</li>
+<li><code>server</code> - Genel amaçlı sunucu tunnel</li>
+<li><code>httpserver</code> - HTTP sunucu tunnel</li>
+<li><code>ircserver</code> - IRC sunucu tunnel</li>
+<li><code>httpbidirserver</code> - Çift yönlü HTTP sunucusu</li>
+<li><code>streamrserver</code> - Streamr sunucusu</li>
+</ul>
+</li>
+</ul>
+<h4 id="tunnelninterface-arayüz">tunnel.N.interface (arayüz)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize (IP adresi veya ana makine adı)</li>
+<li><strong>Bağlam</strong>: Yalnızca Client tunnels (istemci tünelleri)</li>
+<li><strong>Varsayılan</strong>: 127.0.0.1</li>
+<li><strong>Açıklama</strong>: Gelen bağlantılar için bağlanılacak yerel arayüz</li>
+<li><strong>Güvenlik Notu</strong>: 0.0.0.0 adresine bağlamak uzak bağlantılara izin verir</li>
+<li><strong>Örnek</strong>: <code>interface=127.0.0.1</code></li>
+</ul>
+<h4 id="tunnelnlistenport-listenport">tunnel.N.listenPort (listenPort)</h4>
+<ul>
+<li><strong>Tür</strong>: Tamsayı</li>
+<li><strong>Bağlam</strong>: Yalnızca Client tunnels</li>
+<li><strong>Aralık</strong>: 1-65535</li>
+<li><strong>Açıklama</strong>: İstemci bağlantıları için dinlenecek yerel bağlantı noktası</li>
+<li><strong>Örnek</strong>: <code>listenPort=4444</code></li>
+</ul>
+<h4 id="tunnelntargethost-targethost">tunnel.N.targetHost (targetHost)</h4>
+<ul>
+<li><strong>Tür</strong>: String (IP adresi veya ana bilgisayar adı)</li>
+<li><strong>Bağlam</strong>: Yalnızca sunucu tunnel&rsquo;ları</li>
+<li><strong>Açıklama</strong>: Bağlantıların iletileceği yerel sunucu</li>
+<li><strong>Örnek</strong>: <code>targetHost=127.0.0.1</code></li>
+</ul>
+<h4 id="tunnelntargetport-targetport">tunnel.N.targetPort (targetPort)</h4>
+<ul>
+<li><strong>Tür</strong>: Tamsayı</li>
+<li><strong>Bağlam</strong>: Yalnızca sunucu tunnels</li>
+<li><strong>Aralık</strong>: 1-65535</li>
+<li><strong>Açıklama</strong>: Bağlanılacak targetHost üzerindeki port</li>
+<li><strong>Örnek</strong>: <code>targetPort=80</code></li>
+</ul>
+<h4 id="tunnelntargetdestination-targetdestination">tunnel.N.targetDestination (targetDestination)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize (virgül veya boşlukla ayrılmış hedefler)</li>
+<li><strong>Bağlam</strong>: Yalnızca client tunnels</li>
+<li><strong>Biçim</strong>: <code>destination[:port][,destination[:port]]</code></li>
+<li><strong>Açıklama</strong>: Bağlanılacak I2P hedef(ler)i</li>
+<li><strong>Örnekler</strong>:
+<ul>
+<li><code>targetDestination=example.i2p</code></li>
+<li><code>targetDestination=example.i2p:8080</code></li>
+<li><code>targetDestination=site1.i2p,site2.i2p:8080</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="tunnelni2cphost-i2cphost">tunnel.N.i2cpHost (i2cpHost)</h4>
+<ul>
+<li><strong>Tür</strong>: String (IP adresi veya ana makine adı)</li>
+<li><strong>Varsayılan</strong>: 127.0.0.1</li>
+<li><strong>Açıklama</strong>: I2P router I2CP arayüz adresi</li>
+<li><strong>Not</strong>: router bağlamında çalışırken yok sayılır</li>
+<li><strong>Örnek</strong>: <code>i2cpHost=127.0.0.1</code></li>
+</ul>
+<h4 id="tunnelni2cpport-i2cpport">tunnel.N.i2cpPort (i2cpPort)</h4>
+<ul>
+<li><strong>Tür</strong>: Tamsayı</li>
+<li><strong>Varsayılan</strong>: 7654</li>
+<li><strong>Aralık</strong>: 1-65535</li>
+<li><strong>Açıklama</strong>: I2P router I2CP bağlantı noktası</li>
+<li><strong>Not</strong>: router bağlamında çalışırken yok sayılır</li>
+<li><strong>Örnek</strong>: <code>i2cpPort=7654</code></li>
+</ul>
+<h4 id="tunnelnstartonload-startonload">tunnel.N.startOnLoad (startOnLoad)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean (mantıksal)</li>
+<li><strong>Varsayılan</strong>: true</li>
+<li><strong>Açıklama</strong>: I2PTunnel yüklendiğinde tunnel&rsquo;in başlatılıp başlatılmayacağı</li>
+<li><strong>Örnek</strong>: <code>startOnLoad=true</code></li>
+</ul>
+<h3 id="proxy-yapılandırması">Proxy Yapılandırması</h3>
+<h4 id="tunnelnproxylist-proxylist">tunnel.N.proxyList (proxyList)</h4>
+<ul>
+<li><strong>Tür</strong>: String (virgülle veya boşlukla ayrılmış ana makine adları)</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP ve SOCKS vekil sunucuları</li>
+<li><strong>Açıklama</strong>: outproxy (dış vekil sunucu) ana makinelerinin listesi</li>
+<li><strong>Örnek</strong>: <code>proxyList=outproxy.example.i2p,backup.example.i2p</code></li>
+</ul>
+<h3 id="sunucu-yapılandırması">Sunucu Yapılandırması</h3>
+<h4 id="tunnelnprivkeyfile-privkeyfile">tunnel.N.privKeyFile (privKeyFile)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize (dosya yolu)</li>
+<li><strong>Bağlam</strong>: Sunucular ve kalıcı istemci tunnels</li>
+<li><strong>Açıklama</strong>: Kalıcı hedefin özel anahtarlarını içeren dosya</li>
+<li><strong>Yol</strong>: Mutlak veya I2P yapılandırma dizinine göreli</li>
+<li><strong>Örnek</strong>: <code>privKeyFile=eepsite/eepPriv.dat</code></li>
+</ul>
+<h4 id="tunnelnspoofedhost-spoofedhost">tunnel.N.spoofedHost (spoofedHost)</h4>
+<ul>
+<li><strong>Tür</strong>: String (ana bilgisayar adı)</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP sunucuları</li>
+<li><strong>Varsayılan</strong>: Hedefin Base32 ana bilgisayar adı</li>
+<li><strong>Açıklama</strong>: Yerel sunucuya iletilen Host başlığı değeri</li>
+<li><strong>Örnek</strong>: <code>spoofedHost=example.i2p</code></li>
+</ul>
+<h4 id="tunnelnspoofedhostnnnn-spoofedhostnnnn">tunnel.N.spoofedHost.NNNN (spoofedHost.NNNN)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize (ana bilgisayar adı)</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP sunucuları</li>
+<li><strong>Açıklama</strong>: Belirli bir gelen bağlantı noktası için sanal ana bilgisayar adını geçersiz kılma</li>
+<li><strong>Kullanım Durumu</strong>: Birden çok siteyi farklı bağlantı noktalarında barındırma</li>
+<li><strong>Örnek</strong>: <code>spoofedHost.8080=site1.example.i2p</code></li>
+</ul>
+<h3 id="istemciye-özgü-seçenekler">İstemciye Özgü Seçenekler</h3>
+<h4 id="tunnelnsharedclient-sharedclient">tunnel.N.sharedClient (sharedClient)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean (doğru/yanlış)</li>
+<li><strong>Bağlam</strong>: Yalnızca istemci tunnel&rsquo;ları</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: Birden fazla istemcinin bu tunnel&rsquo;ı paylaşmasına izin verilip verilmediği</li>
+<li><strong>Örnek</strong>: <code>sharedClient=false</code></li>
+</ul>
+<h4 id="tunnelnoptionpersistentclientkey-persistentclientkey">tunnel.N.option.persistentClientKey (persistentClientKey)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Bağlam</strong>: Yalnızca Client tunnels</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: Yeniden başlatmalar arasında hedef anahtarlarını saklayıp yeniden kullanır</li>
+<li><strong>Çakışma</strong>: <code>i2cp.newDestOnResume=true</code> ile birlikte kullanılamaz</li>
+<li><strong>Örnek</strong>: <code>option.persistentClientKey=true</code></li>
+</ul>
+<h3 id="i2cp-seçenekleri-i2ptunnel-uygulaması">I2CP Seçenekleri (I2PTunnel Uygulaması)</h3>
+<p><strong>Önemli</strong>: Bu özellikler <code>option.i2cp.</code> önekiyle başlar, ancak <strong>I2PTunnel içinde uygulanır</strong>, I2CP protokol katmanında değil. I2CP veya SAM API&rsquo;leri üzerinden kullanılamazlar.</p>
+<h4 id="tunnelnoptioni2cpdelayopen-optioni2cpdelayopen">tunnel.N.option.i2cp.delayOpen (option.i2cp.delayOpen)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Bağlam</strong>: Yalnızca istemci tunnels (tünel) için</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: İlk bağlantıya kadar tunnel oluşturmayı geciktir</li>
+<li><strong>Kullanım Durumu</strong>: Seyrek kullanılan tunnels için kaynak tasarrufu</li>
+<li><strong>Örnek</strong>: <code>option.i2cp.delayOpen=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2cpnewdestonresume-optioni2cpnewdestonresume">tunnel.N.option.i2cp.newDestOnResume (option.i2cp.newDestOnResume)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Bağlam</strong>: Yalnızca istemci tunnel&rsquo;ları</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Gerektirir</strong>: <code>i2cp.closeOnIdle=true</code></li>
+<li><strong>Çakışma</strong>: <code>persistentClientKey=true</code> ile birlikte kullanılamaz</li>
+<li><strong>Açıklama</strong>: Boşta kalma zaman aşımından sonra yeni Destination (uç nokta kimliği) oluştur</li>
+<li><strong>Örnek</strong>: <code>option.i2cp.newDestOnResume=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2cpleasesetprivatekey-optioni2cpleasesetprivatekey">tunnel.N.option.i2cp.leaseSetPrivateKey (option.i2cp.leaseSetPrivateKey)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize (base64 ile kodlanmış anahtar)</li>
+<li><strong>Bağlam</strong>: Yalnızca sunucu tunnel&rsquo;ları</li>
+<li><strong>Açıklama</strong>: Kalıcı özel leaseset (I2P&rsquo;de bir hedefin erişim bilgilerini içeren kayıt) şifreleme anahtarı</li>
+<li><strong>Kullanım Senaryosu</strong>: Yeniden başlatmalar arasında şifrelenmiş leaseset tutarlılığını sürdürmek</li>
+<li><strong>Örnek</strong>: <code>option.i2cp.leaseSetPrivateKey=AAAA...base64...</code></li>
+</ul>
+<h4 id="tunnelnoptioni2cpleasesetsigningprivatekey-optioni2cpleasesetsigningprivatekey">tunnel.N.option.i2cp.leaseSetSigningPrivateKey (option.i2cp.leaseSetSigningPrivateKey)</h4>
+<ul>
+<li><strong>Tür</strong>: String (sigtype:base64)</li>
+<li><strong>Bağlam</strong>: Yalnızca sunucu tunnels</li>
+<li><strong>Biçim</strong>: <code>sigtype:base64key</code></li>
+<li><strong>Açıklama</strong>: Kalıcı leaseSet (I2P&rsquo;de bir destinasyonun bağlantı bilgileri kümesi) imzalama özel anahtarı</li>
+<li><strong>Örnek</strong>: <code>option.i2cp.leaseSetSigningPrivateKey=7:AAAA...base64...</code></li>
+</ul>
+<h3 id="sunucuya-özel-seçenekler">Sunucuya Özel Seçenekler</h3>
+<h4 id="tunnelnoptionenableuniquelocal-optionenableuniquelocal">tunnel.N.option.enableUniqueLocal (option.enableUniqueLocal)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean (mantıksal)</li>
+<li><strong>Bağlam</strong>: Yalnızca Server tunnels için</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: Her uzak I2P hedefi için benzersiz yerel IP kullanın</li>
+<li><strong>Kullanım Senaryosu</strong>: Sunucu günlüklerinde istemci IP&rsquo;lerini izlemek</li>
+<li><strong>Güvenlik Notu</strong>: Anonimliği azaltabilir</li>
+<li><strong>Örnek</strong>: <code>option.enableUniqueLocal=false</code></li>
+</ul>
+<h4 id="tunnelnoptiontargetforportnnnn-optiontargetforportnnnn">tunnel.N.option.targetForPort.NNNN (option.targetForPort.NNNN)</h4>
+<ul>
+<li><strong>Tür</strong>: String (hostname:port)</li>
+<li><strong>Bağlam</strong>: Yalnızca sunucu tunnel&rsquo;ları</li>
+<li><strong>Açıklama</strong>: Gelen NNNN bağlantı noktası için targetHost/targetPort değerlerini geçersiz kıl</li>
+<li><strong>Kullanım Senaryosu</strong>: Farklı yerel hizmetlere bağlantı noktası tabanlı yönlendirme</li>
+<li><strong>Örnek</strong>: <code>option.targetForPort.8080=localhost:8080</code></li>
+</ul>
+<h3 id="iş-parçacığı-havuzu-yapılandırması">İş Parçacığı Havuzu Yapılandırması</h3>
+<h4 id="tunnelnoptioni2ptunnelusepool-optioni2ptunnelusepool">tunnel.N.option.i2ptunnel.usePool (option.i2ptunnel.usePool)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Bağlam</strong>: Yalnızca sunucu tunnels</li>
+<li><strong>Varsayılan</strong>: true</li>
+<li><strong>Açıklama</strong>: Bağlantı işleme için iş parçacığı havuzu kullan</li>
+<li><strong>Not</strong>: Standart sunucular için her zaman false (yok sayılır)</li>
+<li><strong>Örnek</strong>: <code>option.i2ptunnel.usePool=true</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelblockinghandlercount-optioni2ptunnelblockinghandlercount">tunnel.N.option.i2ptunnel.blockingHandlerCount (option.i2ptunnel.blockingHandlerCount)</h4>
+<ul>
+<li><strong>Tür</strong>: Tamsayı</li>
+<li><strong>Bağlam</strong>: Yalnızca sunucu tunnels</li>
+<li><strong>Varsayılan</strong>: 65</li>
+<li><strong>Açıklama</strong>: Maksimum iş parçacığı havuzu boyutu</li>
+<li><strong>Not</strong>: Standart sunucular için yok sayılır</li>
+<li><strong>Örnek</strong>: <code>option.i2ptunnel.blockingHandlerCount=100</code></li>
+</ul>
+<h3 id="http-istemci-seçenekleri">HTTP İstemci Seçenekleri</h3>
+<h4 id="tunnelnoptioni2ptunnelhttpclientallowinternalssl-optioni2ptunnelhttpclientallowinternalssl">tunnel.N.option.i2ptunnel.httpclient.allowInternalSSL (option.i2ptunnel.httpclient.allowInternalSSL)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP istemcileri için</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: .i2p adreslerine yapılan SSL bağlantılarına izin verir</li>
+<li><strong>Örnek</strong>: <code>option.i2ptunnel.httpclient.allowInternalSSL=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientdisableaddresshelper-optioni2ptunnelhttpclientdisableaddresshelper">tunnel.N.option.i2ptunnel.httpclient.disableAddressHelper (option.i2ptunnel.httpclient.disableAddressHelper)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP istemcileri</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: Proxy yanıtlarındaki address helper bağlantılarını (adres eklemeye yardımcı bağlantılar) devre dışı bırakır</li>
+<li><strong>Örnek</strong>: <code>option.i2ptunnel.httpclient.disableAddressHelper=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientjumpservers-optioni2ptunnelhttpclientjumpservers">tunnel.N.option.i2ptunnel.httpclient.jumpServers (option.i2ptunnel.httpclient.jumpServers)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize (virgülle veya boşlukla ayrılmış URL&rsquo;ler)</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP istemcileri</li>
+<li><strong>Açıklama</strong>: Ana bilgisayar adı çözümlemesi için jump server (atlama sunucusu) URL&rsquo;leri</li>
+<li><strong>Örnek</strong>: <code>option.i2ptunnel.httpclient.jumpServers=http://jump.i2p/jump,http://stats.i2p/jump</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientsendaccept-optioni2ptunnelhttpclientsendaccept">tunnel.N.option.i2ptunnel.httpclient.sendAccept (option.i2ptunnel.httpclient.sendAccept)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP istemcileri</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: Accept-* başlıklarını iletir (Accept ve Accept-Encoding hariç)</li>
+<li><strong>Örnek</strong>: <code>option.i2ptunnel.httpclient.sendAccept=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientsendreferer-optioni2ptunnelhttpclientsendreferer">tunnel.N.option.i2ptunnel.httpclient.sendReferer (option.i2ptunnel.httpclient.sendReferer)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean (mantıksal)</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP istemcileri</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: Referer üstbilgilerini proxy üzerinden iletir</li>
+<li><strong>Gizlilik Notu</strong>: Bilgi sızdırabilir</li>
+<li><strong>Örnek</strong>: <code>option.i2ptunnel.httpclient.sendReferer=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientsenduseragent-optioni2ptunnelhttpclientsenduseragent">tunnel.N.option.i2ptunnel.httpclient.sendUserAgent (option.i2ptunnel.httpclient.sendUserAgent)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP istemcileri</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: User-Agent başlıklarını vekil sunucu üzerinden geçirir</li>
+<li><strong>Gizlilik Notu</strong>: Tarayıcı bilgilerini sızdırabilir</li>
+<li><strong>Örnek</strong>: <code>option.i2ptunnel.httpclient.sendUserAgent=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientsendvia-optioni2ptunnelhttpclientsendvia">tunnel.N.option.i2ptunnel.httpclient.sendVia (option.i2ptunnel.httpclient.sendVia)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean (mantıksal)</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP istemcileri</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: Via başlıklarını proxy üzerinden geçirir</li>
+<li><strong>Örnek</strong>: <code>option.i2ptunnel.httpclient.sendVia=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientssloutproxies-optioni2ptunnelhttpclientssloutproxies">tunnel.N.option.i2ptunnel.httpclient.SSLOutproxies (option.i2ptunnel.httpclient.SSLOutproxies)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize (virgül veya boşlukla ayrılmış hedefler)</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP istemcileri</li>
+<li><strong>Açıklama</strong>: HTTPS için ağ içi SSL outproxy&rsquo;leri</li>
+<li><strong>Örnek</strong>: <code>option.i2ptunnel.httpclient.SSLOutproxies=ssl-outproxy.i2p</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunneluselocaloutproxy-optioni2ptunneluselocaloutproxy">tunnel.N.option.i2ptunnel.useLocalOutproxy (option.i2ptunnel.useLocalOutproxy)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP istemcileri için</li>
+<li><strong>Varsayılan</strong>: true</li>
+<li><strong>Açıklama</strong>: Kayıtlı yerel outproxy (çıkış vekil sunucusu) eklentilerini kullanır</li>
+<li><strong>Örnek</strong>: <code>option.i2ptunnel.useLocalOutproxy=true</code></li>
+</ul>
+<h3 id="http-istemci-kimlik-doğrulaması">HTTP İstemci Kimlik Doğrulaması</h3>
+<h4 id="tunnelnoptionproxyauth-optionproxyauth">tunnel.N.option.proxyAuth (option.proxyAuth)</h4>
+<ul>
+<li><strong>Tür</strong>: Enum (numaralandırma)</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP istemcileri</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Değerler</strong>: <code>true</code>, <code>false</code>, <code>basic</code>, <code>digest</code></li>
+<li><strong>Açıklama</strong>: Proxy erişimi için yerel kimlik doğrulaması gerektirir</li>
+<li><strong>Not</strong>: <code>true</code>, <code>basic</code> ile eşdeğerdir</li>
+<li><strong>Örnek</strong>: <code>option.proxyAuth=basic</code></li>
+</ul>
+<h4 id="tunnelnoptionproxyauthusermd5-optionproxyauthusermd5">tunnel.N.option.proxy.auth.USER.md5 (option.proxy.auth.USER.md5)</h4>
+<ul>
+<li><strong>Tür</strong>: String (32 karakterlik küçük harfli onaltılık)</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP istemcileri</li>
+<li><strong>Gerektirir</strong>: <code>proxyAuth=basic</code> veya <code>proxyAuth=digest</code></li>
+<li><strong>Açıklama</strong>: USER kullanıcısının parolasının MD5 özeti</li>
+<li><strong>Kullanımdan kaldırıldı</strong>: Bunun yerine SHA-256 kullanın (0.9.56+)</li>
+<li><strong>Örnek</strong>: <code>option.proxy.auth.alice.md5=5f4dcc3b5aa765d61d8327deb882cf99</code></li>
+</ul>
+<h4 id="tunnelnoptionproxyauthusersha256-optionproxyauthusersha256">tunnel.N.option.proxy.auth.USER.sha256 (option.proxy.auth.USER.sha256)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize (64 karakterlik küçük harfli onaltılık)</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP istemcileri</li>
+<li><strong>Gerektirir</strong>: <code>proxyAuth=digest</code></li>
+<li><strong>İtibaren</strong>: Sürüm 0.9.56</li>
+<li><strong>Standart</strong>: RFC 7616</li>
+<li><strong>Açıklama</strong>: USER kullanıcısının parolasının SHA-256 özeti</li>
+<li><strong>Örnek</strong>: <code>option.proxy.auth.alice.sha256=5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8</code></li>
+</ul>
+<h3 id="dış-proxy-kimlik-doğrulaması">Dış Proxy Kimlik Doğrulaması</h3>
+<h4 id="tunnelnoptionoutproxyauth-optionoutproxyauth">tunnel.N.option.outproxyAuth (option.outproxyAuth)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP istemcileri</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: Kimlik doğrulama bilgilerini outproxy&rsquo;ye (I2P dış çıkış proxy&rsquo;si) gönder</li>
+<li><strong>Örnek</strong>: <code>option.outproxyAuth=false</code></li>
+</ul>
+<h4 id="tunnelnoptionoutproxyusername-optionoutproxyusername">tunnel.N.option.outproxyUsername (option.outproxyUsername)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP istemcileri</li>
+<li><strong>Gerektirir</strong>: <code>outproxyAuth=true</code></li>
+<li><strong>Açıklama</strong>: outproxy (harici proxy) kimlik doğrulaması için kullanıcı adı</li>
+<li><strong>Örnek</strong>: <code>option.outproxyUsername=user</code></li>
+</ul>
+<h4 id="tunnelnoptionoutproxypassword-optionoutproxypassword">tunnel.N.option.outproxyPassword (option.outproxyPassword)</h4>
+<ul>
+<li><strong>Tür</strong>: String</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP istemcileri</li>
+<li><strong>Gerektirir</strong>: <code>outproxyAuth=true</code></li>
+<li><strong>Açıklama</strong>: outproxy kimlik doğrulaması için parola (I2P’de dış ağlara erişim sağlayan vekil sunucu anlamındaki outproxy)</li>
+<li><strong>Güvenlik</strong>: Düz metin olarak saklanır</li>
+<li><strong>Örnek</strong>: <code>option.outproxyPassword=secret</code></li>
+</ul>
+<h3 id="socks-istemci-seçenekleri">SOCKS İstemci Seçenekleri</h3>
+<h4 id="tunnelnoptioni2ptunnelsocksproxydefault-optioni2ptunnelsocksproxydefault">tunnel.N.option.i2ptunnel.socks.proxy.default (option.i2ptunnel.socks.proxy.default)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize (virgülle veya boşlukla ayrılmış hedefler)</li>
+<li><strong>Bağlam</strong>: Yalnızca SOCKS istemcileri</li>
+<li><strong>Açıklama</strong>: Belirtilmemiş portlar için ağ içi outproxy&rsquo;ler (I2P ağında erişilebilen çıkış proxy&rsquo;leri)</li>
+<li><strong>Örnek</strong>: <code>option.i2ptunnel.socks.proxy.default=outproxy.i2p</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelsocksproxynnnn-optioni2ptunnelsocksproxynnnn">tunnel.N.option.i2ptunnel.socks.proxy.NNNN (option.i2ptunnel.socks.proxy.NNNN)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize (virgülle veya boşlukla ayrılmış destinations (I2P adresleri))</li>
+<li><strong>Bağlam</strong>: Yalnızca SOCKS istemcileri</li>
+<li><strong>Açıklama</strong>: Özellikle NNNN bağlantı noktası için ağ içi outproxies (I2P ağından açık internete çıkış sağlayan vekil sunucular)</li>
+<li><strong>Örnek</strong>: <code>option.i2ptunnel.socks.proxy.443=ssl-outproxy.i2p</code></li>
+</ul>
+<h4 id="tunnelnoptionoutproxytype-optionoutproxytype">tunnel.N.option.outproxyType (option.outproxyType)</h4>
+<ul>
+<li><strong>Tür</strong>: Enum (numaralandırma)</li>
+<li><strong>Bağlam</strong>: Yalnızca SOCKS istemcileri</li>
+<li><strong>Varsayılan</strong>: socks</li>
+<li><strong>İtibaren</strong>: Sürüm 0.9.57</li>
+<li><strong>Değerler</strong>: <code>socks</code>, <code>connect</code> (HTTPS)</li>
+<li><strong>Açıklama</strong>: Yapılandırılmış outproxy (dış vekil) türü</li>
+<li><strong>Örnek</strong>: <code>option.outproxyType=connect</code></li>
+</ul>
+<h3 id="http-sunucusu-seçenekleri">HTTP Sunucusu Seçenekleri</h3>
+<h4 id="tunnelnoptionmaxposts-optionmaxposts">tunnel.N.option.maxPosts (option.maxPosts)</h4>
+<ul>
+<li><strong>Tür</strong>: Tamsayı</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP sunucuları</li>
+<li><strong>Varsayılan</strong>: 0 (sınırsız)</li>
+<li><strong>Açıklama</strong>: postCheckTime başına tek bir hedeften en fazla POST sayısı</li>
+<li><strong>Örnek</strong>: <code>option.maxPosts=10</code></li>
+</ul>
+<h4 id="tunnelnoptionmaxtotalposts-optionmaxtotalposts">tunnel.N.option.maxTotalPosts (option.maxTotalPosts)</h4>
+<ul>
+<li><strong>Tür</strong>: Tamsayı</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP sunucuları</li>
+<li><strong>Varsayılan</strong>: 0 (sınırsız)</li>
+<li><strong>Açıklama</strong>: postCheckTime başına, tüm Destinations (I2P hedef kimliği) genelinde toplam en fazla POST isteği sayısı</li>
+<li><strong>Örnek</strong>: <code>option.maxTotalPosts=50</code></li>
+</ul>
+<h4 id="tunnelnoptionpostchecktime-optionpostchecktime">tunnel.N.option.postCheckTime (option.postCheckTime)</h4>
+<ul>
+<li><strong>Tür</strong>: Tamsayı (saniye)</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP sunucuları</li>
+<li><strong>Varsayılan</strong>: 300</li>
+<li><strong>Açıklama</strong>: POST sınırlarını denetlemek için zaman aralığı</li>
+<li><strong>Örnek</strong>: <code>option.postCheckTime=600</code></li>
+</ul>
+<h4 id="tunnelnoptionpostbantime-optionpostbantime">tunnel.N.option.postBanTime (option.postBanTime)</h4>
+<ul>
+<li><strong>Tür</strong>: Tamsayı (saniye)</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP sunucuları için</li>
+<li><strong>Varsayılan</strong>: 1800</li>
+<li><strong>Açıklama</strong>: Tek bir hedef için maxPosts aşıldığında yasaklama süresi</li>
+<li><strong>Örnek</strong>: <code>option.postBanTime=3600</code></li>
+</ul>
+<h4 id="tunnelnoptionposttotalbantime-optionposttotalbantime">tunnel.N.option.postTotalBanTime (option.postTotalBanTime)</h4>
+<ul>
+<li><strong>Tür</strong>: Tamsayı (saniye)</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP sunucuları</li>
+<li><strong>Varsayılan</strong>: 600</li>
+<li><strong>Açıklama</strong>: maxTotalPosts sınırı aşıldığında yasaklama süresi</li>
+<li><strong>Örnek</strong>: <code>option.postTotalBanTime=1200</code></li>
+</ul>
+<h3 id="http-sunucusu-güvenlik-seçenekleri">HTTP Sunucusu Güvenlik Seçenekleri</h3>
+<h4 id="tunnelnoptionrejectinproxy-optionrejectinproxy">tunnel.N.option.rejectInproxy (option.rejectInproxy)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP sunucuları</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Açıklama</strong>: Görünüşe göre bir inproxy (I2P ağına girişi sağlayan ara sunucu) üzerinden gelen bağlantıları reddet</li>
+<li><strong>Örnek</strong>: <code>option.rejectInproxy=false</code></li>
+</ul>
+<h4 id="tunnelnoptionrejectreferer-optionrejectreferer">tunnel.N.option.rejectReferer (option.rejectReferer)</h4>
+<ul>
+<li><strong>Tür</strong>: Mantıksal</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP sunucuları</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Sürüm</strong>: 0.9.25&rsquo;ten itibaren</li>
+<li><strong>Açıklama</strong>: Referer başlığı içeren bağlantıları reddeder</li>
+<li><strong>Örnek</strong>: <code>option.rejectReferer=false</code></li>
+</ul>
+<h4 id="tunnelnoptionrejectuseragents-optionrejectuseragents">tunnel.N.option.rejectUserAgents (option.rejectUserAgents)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP sunucuları için</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Başlangıç</strong>: Sürüm 0.9.25</li>
+<li><strong>Gerektirir</strong>: <code>userAgentRejectList</code> özelliği</li>
+<li><strong>Açıklama</strong>: Eşleşen User-Agent&rsquo;a sahip bağlantıları reddeder</li>
+<li><strong>Örnek</strong>: <code>option.rejectUserAgents=false</code></li>
+</ul>
+<h4 id="tunnelnoptionuseragentrejectlist-optionuseragentrejectlist">tunnel.N.option.userAgentRejectList (option.userAgentRejectList)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize (virgülle ayrılmış eşleşme dizeleri)</li>
+<li><strong>Bağlam</strong>: Yalnızca HTTP sunucuları</li>
+<li><strong>Sürüm</strong>: Sürüm 0.9.25&rsquo;ten beri</li>
+<li><strong>Büyük/küçük harf</strong>: Büyük/küçük harfe duyarlı eşleştirme</li>
+<li><strong>Özel</strong>: &ldquo;none&rdquo; (0.9.33&rsquo;ten beri) boş User-Agent (kullanıcı aracısı) ile eşleşir</li>
+<li><strong>Açıklama</strong>: Reddedilecek User-Agent kalıplarının listesi</li>
+<li><strong>Örnek</strong>: <code>option.userAgentRejectList=Mozilla,Opera,none</code></li>
+</ul>
+<h3 id="irc-sunucusu-seçenekleri">IRC Sunucusu Seçenekleri</h3>
+<h4 id="tunnelnoptionircserverfakehostname-optionircserverfakehostname">tunnel.N.option.ircserver.fakeHostname (option.ircserver.fakeHostname)</h4>
+<ul>
+<li><strong>Type</strong>: Dize (ana makine adı deseni)</li>
+<li><strong>Context</strong>: Yalnızca IRC sunucuları için</li>
+<li><strong>Default</strong>: <code>%f.b32.i2p</code></li>
+<li><strong>Tokens</strong>:
+<ul>
+<li><code>%f</code> = Tam base32 hedef karması</li>
+<li><code>%c</code> = Gizlenmiş hedef karması (bkz. cloakKey)</li>
+</ul>
+</li>
+<li><strong>Description</strong>: IRC sunucusuna gönderilen ana makine adı biçimi</li>
+<li><strong>Example</strong>: <code>option.ircserver.fakeHostname=%c.irc.i2p</code></li>
+</ul>
+<h4 id="tunnelnoptionircservercloakkey-optionircservercloakkey">tunnel.N.option.ircserver.cloakKey (option.ircserver.cloakKey)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize (parola tümcesi)</li>
+<li><strong>Bağlam</strong>: Yalnızca IRC sunucuları için</li>
+<li><strong>Varsayılan</strong>: Oturum başına rastgele</li>
+<li><strong>Kısıtlamalar</strong>: Tırnak işareti veya boşluk içeremez</li>
+<li><strong>Açıklama</strong>: Tutarlı ana makine adı gizlemesi için parola tümcesi</li>
+<li><strong>Kullanım Durumu</strong>: Yeniden başlatmalar/sunucular arasında kalıcı kullanıcı takibi</li>
+<li><strong>Örnek</strong>: <code>option.ircserver.cloakKey=mysecretkey</code></li>
+</ul>
+<h4 id="tunnelnoptionircservermethod-optionircservermethod">tunnel.N.option.ircserver.method (option.ircserver.method)</h4>
+<ul>
+<li><strong>Tür</strong>: Enum (numaralandırma)</li>
+<li><strong>Bağlam</strong>: Yalnızca IRC sunucuları için</li>
+<li><strong>Varsayılan</strong>: user</li>
+<li><strong>Değerler</strong>: <code>user</code>, <code>webirc</code></li>
+<li><strong>Açıklama</strong>: IRC sunucusu için kimlik doğrulama yöntemi</li>
+<li><strong>Örnek</strong>: <code>option.ircserver.method=webirc</code></li>
+</ul>
+<h4 id="tunnelnoptionircserverwebircpassword-optionircserverwebircpassword">tunnel.N.option.ircserver.webircPassword (option.ircserver.webircPassword)</h4>
+<ul>
+<li><strong>Tür</strong>: String (parola)</li>
+<li><strong>Bağlam</strong>: Yalnızca IRC sunucuları</li>
+<li><strong>Gerektirir</strong>: <code>method=webirc</code></li>
+<li><strong>Kısıtlamalar</strong>: Tırnak işareti veya boşluk içeremez</li>
+<li><strong>Açıklama</strong>: WEBIRC protokolü kimlik doğrulaması için parola</li>
+<li><strong>Örnek</strong>: <code>option.ircserver.webircPassword=webircpass</code></li>
+</ul>
+<h4 id="tunnelnoptionircserverwebircspoofip-optionircserverwebircspoofip">tunnel.N.option.ircserver.webircSpoofIP (option.ircserver.webircSpoofIP)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize (IP adresi)</li>
+<li><strong>Bağlam</strong>: Yalnızca IRC sunucuları için</li>
+<li><strong>Gerektirir</strong>: <code>method=webirc</code></li>
+<li><strong>Açıklama</strong>: WEBIRC protokolü için spoofed (sahte) IP adresi</li>
+<li><strong>Örnek</strong>: <code>option.ircserver.webircSpoofIP=10.0.0.1</code></li>
+</ul>
+<h3 id="ssltls-yapılandırması">SSL/TLS Yapılandırması</h3>
+<h4 id="tunnelnoptionusessl-optionusessl">tunnel.N.option.useSSL (option.useSSL)</h4>
+<ul>
+<li><strong>Tür</strong>: Boolean</li>
+<li><strong>Varsayılan</strong>: false</li>
+<li><strong>Bağlam</strong>: Tüm tunnels</li>
+<li><strong>Davranış</strong>:
+<ul>
+<li><strong>Sunucular</strong>: Yerel sunucu bağlantıları için SSL kullan</li>
+<li><strong>İstemciler</strong>: Yerel istemciler için SSL gerektir</li>
+</ul>
+</li>
+<li><strong>Örnek</strong>: <code>option.useSSL=false</code></li>
+</ul>
+<h4 id="tunnelnoptionkeystorefile-optionkeystorefile">tunnel.N.option.keystoreFile (option.keystoreFile)</h4>
+<ul>
+<li><strong>Tür</strong>: Dize (dosya yolu)</li>
+<li><strong>Bağlam</strong>: Yalnızca istemci tunnels</li>
+<li><strong>Varsayılan</strong>: <code>i2ptunnel-(random).ks</code></li>
+<li><strong>Yol</strong>: Mutlak değilse <code>$(I2P_CONFIG_DIR)/keystore/</code> dizinine göre göreli</li>
+<li><strong>Otomatik oluşturulur</strong>: Mevcut değilse oluşturulur</li>
+<li><strong>Açıklama</strong>: SSL özel anahtarını içeren keystore dosyası</li>
+<li><strong>Örnek</strong>: <code>option.keystoreFile=my-tunnel.ks</code></li>
+</ul>
+<h4 id="tunnelnoptionkeystorepassword-optionkeystorepassword">tunnel.N.option.keystorePassword (option.keystorePassword)</h4>
+<ul>
+<li><strong>Tür</strong>: String (parola)</li>
+<li><strong>Bağlam</strong>: Yalnızca Client tunnels</li>
+<li><strong>Varsayılan</strong>: changeit</li>
+<li><strong>Otomatik oluşturulur</strong>: Yeni bir keystore (anahtar deposu) oluşturulursa rastgele parola</li>
+<li><strong>Açıklama</strong>: SSL keystore parolası</li>
+<li><strong>Örnek</strong>: <code>option.keystorePassword=secretpassword</code></li>
+</ul>
+<h4 id="tunnelnoptionkeyalias-optionkeyalias">tunnel.N.option.keyAlias (option.keyAlias)</h4>
+<ul>
+<li><strong>Tür</strong>: String (takma ad)</li>
+<li><strong>Bağlam</strong>: Yalnızca istemci tunnels</li>
+<li><strong>Otomatik olarak oluşturulur</strong>: Yeni bir anahtar üretildiğinde oluşturulur</li>
+<li><strong>Açıklama</strong>: Anahtar deposundaki (keystore) özel anahtar için takma ad</li>
+<li><strong>Örnek</strong>: <code>option.keyAlias=mytunnel-key</code></li>
+</ul>
+<h4 id="tunnelnoptionkeypassword-optionkeypassword">tunnel.N.option.keyPassword (option.keyPassword)</h4>
+<ul>
+<li><strong>Tür</strong>: String (parola)</li>
+<li><strong>Bağlam</strong>: Yalnızca istemci tunnel&rsquo;ları</li>
+<li><strong>Otomatik oluşturulur</strong>: Yeni anahtar oluşturulursa rastgele parola</li>
+<li><strong>Açıklama</strong>: anahtar deposu (keystore) içindeki özel anahtar için parola</li>
+<li><strong>Örnek</strong>: <code>option.keyPassword=keypass123</code></li>
+</ul>
+<h3 id="genel-i2cp-ve-akış-seçenekleri">Genel I2CP ve Akış Seçenekleri</h3>
+<p>Tüm <code>tunnel.N.option.*</code> özellikleri (yukarıda özellikle belgelenmemiş olanlar), <code>tunnel.N.option.</code> öneki çıkarılmış olarak I2CP arayüzüne ve akış kitaplığına iletilir.</p>
+<p><strong>Önemli</strong>: Bunlar, I2PTunnel&rsquo;e özgü seçeneklerden ayrıdır. Bkz: - <a href="../../../../tr/docs/specs/i2cp/">I2CP Spesifikasyonu</a>
+ - <a href="../../../../tr/docs/specs/streaming/">Streaming Library Spesifikasyonu</a>
+</p>
+<p>Örnek akış seçenekleri:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">option.i2cp.messageReliability</span><span style="color:#f92672">=</span><span style="color:#e6db74">BestEffort</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2p.streaming.connectDelay</span><span style="color:#f92672">=</span><span style="color:#e6db74">1000</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2p.streaming.maxWindowSize</span><span style="color:#f92672">=</span><span style="color:#e6db74">128</span>
+</span></span></code></pre></div><h3 id="tam-tunnel-örneği">Tam Tunnel Örneği</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># HTTP Proxy (split format without tunnel.N. prefix)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">I2P HTTP Proxy</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description</span><span style="color:#f92672">=</span><span style="color:#e6db74">HTTP proxy for accessing I2P sites and outproxy</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">httpclient</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">interface</span><span style="color:#f92672">=</span><span style="color:#e6db74">127.0.0.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">listenPort</span><span style="color:#f92672">=</span><span style="color:#e6db74">4444</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">targetDestination</span><span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">sharedClient</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2CP configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2cpHost</span><span style="color:#f92672">=</span><span style="color:#e6db74">127.0.0.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2cpPort</span><span style="color:#f92672">=</span><span style="color:#e6db74">7654</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># HTTP client options</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.allowInternalSSL</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.disableAddressHelper</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.jumpServers</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://stats.i2p/cgi-bin/jump.cgi</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.sendAccept</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.sendReferer</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.sendUserAgent</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Proxy authentication</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.proxyAuth</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Outproxy configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.SSLOutproxies</span><span style="color:#f92672">=</span><span style="color:#e6db74">false.i2p</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">proxyList</span><span style="color:#f92672">=</span><span style="color:#e6db74">false.i2p</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Client behavior</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.persistentClientKey</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2cp.delayOpen</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2CP tunnel options</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.inbound.length</span><span style="color:#f92672">=</span><span style="color:#e6db74">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.outbound.length</span><span style="color:#f92672">=</span><span style="color:#e6db74">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.inbound.quantity</span><span style="color:#f92672">=</span><span style="color:#e6db74">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.outbound.quantity</span><span style="color:#f92672">=</span><span style="color:#e6db74">2</span>
+</span></span></code></pre></div><hr>
+<h2 id="sürüm-geçmişi-ve-özellik-zaman-çizelgesi">Sürüm Geçmişi ve Özellik Zaman Çizelgesi</h2>
+<h3 id="sürüm-0910-2013">Sürüm 0.9.10 (2013)</h3>
+<p><strong>Özellik</strong>: Yapılandırma dosyalarında boş değer desteği - Boş değerlere sahip anahtarlar (<code>key=</code>) artık destekleniyor - Önceden yok sayılıyor veya ayrıştırma hatalarına neden oluyordu</p>
+<h3 id="sürüm-0918-2015">Sürüm 0.9.18 (2015)</h3>
+<p><strong>Özellik</strong>: Logger tampon boşaltma aralığı yapılandırması - Özellik: <code>logger.flushInterval</code> (varsayılan 29 saniye) - Kabul edilebilir günlük gecikmesini korurken disk G/Ç&rsquo;sini azaltır</p>
+<h3 id="sürüm-0923-kasım-2015">Sürüm 0.9.23 (Kasım 2015)</h3>
+<p><strong>Önemli Değişiklik</strong>: En az Java 7 gereklidir - Java 6 desteği sona erdi - Güvenlik güncellemelerinin devamı için zorunludur</p>
+<h3 id="sürüm-0925-2015">Sürüm 0.9.25 (2015)</h3>
+<p><strong>Özellikler</strong>: HTTP sunucusu güvenlik seçenekleri - <code>tunnel.N.option.rejectReferer</code> - Referer başlığı olan bağlantıları reddet - <code>tunnel.N.option.rejectUserAgents</code> - Belirli User-Agent başlıklarını reddet - <code>tunnel.N.option.userAgentRejectList</code> - Reddedilecek User-Agent kalıpları - <strong>Kullanım Senaryosu</strong>: crawler’ların (tarama botlarının) ve istenmeyen istemcilerin etkisini azaltmak</p>
+<h3 id="sürüm-0933-ocak-2018">Sürüm 0.9.33 (Ocak 2018)</h3>
+<p><strong>Özellik</strong>: Geliştirilmiş User-Agent filtreleme - <code>userAgentRejectList</code> dizesi &ldquo;none&rdquo; boş User-Agent ile eşleşir - i2psnark, i2ptunnel, streaming, SusiMail için ek hata düzeltmeleri</p>
+<h3 id="sürüm-0941-2019">Sürüm 0.9.41 (2019)</h3>
+<p><strong>Kullanımdan Kaldırma</strong>: BOB Protokolü Android&rsquo;den kaldırıldı - Android kullanıcıları SAM veya I2CP&rsquo;ye geçmelidir</p>
+<h3 id="sürüm-0942-ağustos-2019">Sürüm 0.9.42 (Ağustos 2019)</h3>
+<p><strong>Önemli Değişiklik</strong>: Yapılandırma dosyalarının bölünmesi - <code>clients.config</code> bölünerek <code>clients.config.d/</code> dizin yapısına taşındı - <code>i2ptunnel.config</code> bölünerek <code>i2ptunnel.config.d/</code> dizin yapısına taşındı - Yükseltmeden sonraki ilk çalıştırmada otomatik geçiş - Modüler paketleme ve eklenti yönetimini etkinleştirir - Eski monolitik biçim hala destekleniyor</p>
+<p><strong>Ek Özellikler</strong>: - SSU performans iyileştirmeleri - Ağlar arası geçişin önlenmesi (Proposal 147) - Şifreleme türleri için başlangıç desteği</p>
+<h3 id="sürüm-0956-2021">Sürüm 0.9.56 (2021)</h3>
+<p><strong>Özellikler</strong>: Güvenlik ve günlük kaydı iyileştirmeleri - <code>logger.gzip</code> - Döndürülen günlükler için Gzip sıkıştırması (varsayılan: false) - <code>logger.minGzipSize</code> - Sıkıştırma için en düşük boyut (varsayılan: 65536 bayt) - <code>tunnel.N.option.proxy.auth.USER.sha256</code> - SHA-256 özet kimlik doğrulaması (RFC 7616) - <strong>Güvenlik</strong>: Özet kimlik doğrulaması için MD5&rsquo;in yerini SHA-256 alır</p>
+<h3 id="sürüm-0957-ocak-2023">Sürüm 0.9.57 (Ocak 2023)</h3>
+<p><strong>Özellik</strong>: SOCKS outproxy (I2P dışa çıkış vekil sunucusu) türü yapılandırması - <code>tunnel.N.option.outproxyType</code> - outproxy türünü seçin (socks|connect) - Varsayılan: socks - HTTPS outproxy&rsquo;ler için HTTPS CONNECT desteği</p>
+<h3 id="sürüm-260-temmuz-2024">Sürüm 2.6.0 (Temmuz 2024)</h3>
+<p><strong>Geriye dönük uyumsuz değişiklik</strong>: I2P-over-Tor engellendi (Tor üzerinden I2P kullanımı) - Tor çıkış düğümü IP adreslerinden gelen bağlantılar artık reddediliyor - <strong>Gerekçe</strong>: I2P performansını düşürür, Tor çıkış düğümlerinin kaynaklarını boşa harcar - <strong>Etkisi</strong>: Tor çıkış düğümleri üzerinden I2P&rsquo;ye erişen kullanıcılar engellenecek - Çıkış olmayan röleler ve Tor istemcileri etkilenmeyecek</p>
+<h3 id="sürüm-2100-eylül-2025---güncel">Sürüm 2.10.0 (Eylül 2025 - Güncel)</h3>
+<p><strong>Öne Çıkan Özellikler</strong>: - <strong>Kuantum sonrası kriptografi</strong> mevcut (isteğe bağlı olarak Hidden Service Manager (Gizli Servis Yöneticisi) üzerinden etkinleştirilebilir) - <strong>UDP izleyici desteği</strong> I2PSnark için, izleyici yükünü azaltmak üzere - <strong>Hidden Mode (Gizli Mod) kararlılığı</strong> iyileştirmeleri, RouterInfo tükenmesini azaltmak için - Yoğun router’lar için ağ iyileştirmeleri - Geliştirilmiş UPnP/NAT geçişi - Agresif leaseSet kaldırma ile NetDB iyileştirmeleri - router olayları için gözlemlenebilirliğin azaltılması</p>
+<p><strong>Yapılandırma</strong>: Yeni yapılandırma özellikleri eklenmedi</p>
+<p><strong>Yaklaşan Kritik Değişiklik</strong>: Bir sonraki sürüm (muhtemelen 2.11.0 veya 3.0.0) Java 17 veya daha yenisini gerektirecek</p>
+<hr>
+<h2 id="kullanımdan-kaldırmalar-ve-geriye-dönük-uyumluluğu-bozan-değişiklikler">Kullanımdan Kaldırmalar ve Geriye Dönük Uyumluluğu Bozan Değişiklikler</h2>
+<h3 id="kritik-kullanımdan-kaldırmalar">Kritik Kullanımdan Kaldırmalar</h3>
+<h4 id="i2p-over-tor-erişimi-sürüm-260">I2P-over-Tor Erişimi (Sürüm 2.6.0+)</h4>
+<ul>
+<li><strong>Durum</strong>: Temmuz 2024&rsquo;ten beri BLOKLANDI</li>
+<li><strong>Etkisi</strong>: Tor çıkış düğümü IP&rsquo;lerinden gelen bağlantılar reddediliyor</li>
+<li><strong>Gerekçe</strong>: Anonimlik açısından bir fayda sağlamadan I2P ağının performansını düşürüyor</li>
+<li><strong>Etkiler</strong>: Yalnızca Tor çıkış düğümleri; röleler veya normal Tor istemcileri değil</li>
+<li><strong>Alternatif</strong>: I2P veya Tor&rsquo;u ayrı ayrı kullanın, birlikte kullanmayın</li>
+</ul>
+<h4 id="md5-özet-kimlik-doğrulaması">MD5 Özet Kimlik Doğrulaması</h4>
+<ul>
+<li><strong>Durum</strong>: Kullanımdan kaldırıldı (SHA-256 kullanın)</li>
+<li><strong>Özellik</strong>: <code>tunnel.N.option.proxy.auth.USER.md5</code></li>
+<li><strong>Gerekçe</strong>: MD5 kriptografik olarak kırıldı</li>
+<li><strong>Yerine geçen</strong>: <code>tunnel.N.option.proxy.auth.USER.sha256</code> (0.9.56 sürümünden beri)</li>
+<li><strong>Zaman çizelgesi</strong>: MD5 hâlâ destekleniyor ancak önerilmiyor</li>
+</ul>
+<h3 id="yapılandırma-mimarisindeki-değişiklikler">Yapılandırma Mimarisindeki Değişiklikler</h3>
+<h4 id="monolitik-yapılandırma-dosyaları-sürüm-0942">Monolitik Yapılandırma Dosyaları (Sürüm 0.9.42+)</h4>
+<ul>
+<li><strong>Etkilenen</strong>: <code>clients.config</code>, <code>i2ptunnel.config</code></li>
+<li><strong>Durum</strong>: Bölünmüş dizin yapısı lehine kullanımdan kaldırıldı</li>
+<li><strong>Geçiş</strong>: 0.9.42 yükseltmesinden sonraki ilk çalıştırmada otomatik</li>
+<li><strong>Uyumluluk</strong>: Eski biçim hâlâ çalışır (geriye dönük uyumlu)</li>
+<li><strong>Öneri</strong>: Yeni yapılandırmalar için bölünmüş biçimi kullanın</li>
+</ul>
+<h3 id="java-sürüm-gereksinimleri">Java Sürüm Gereksinimleri</h3>
+<h4 id="java-6-desteği">Java 6 Desteği</h4>
+<ul>
+<li><strong>Sona erdi</strong>: Sürüm 0.9.23 (Kasım 2015)</li>
+<li><strong>Asgari</strong>: 0.9.23&rsquo;ten beri Java 7 zorunlu</li>
+</ul>
+<h4 id="java-17-gereksinimi-yakında">Java 17 Gereksinimi (Yakında)</h4>
+<ul>
+<li><strong>Durum</strong>: KRİTİK YAKLAŞAN DEĞİŞİKLİK</li>
+<li><strong>Hedef</strong>: 2.10.0’dan sonra çıkacak bir sonraki ana sürüm (muhtemelen 2.11.0 veya 3.0.0)</li>
+<li><strong>Mevcut Minimum</strong>: Java 8</li>
+<li><strong>Gerekli Eylem</strong>: Java 17 geçişine hazırlanın</li>
+<li><strong>Takvim</strong>: Sürüm notlarıyla duyurulacaktır</li>
+</ul>
+<h3 id="kaldırılan-özellikler">Kaldırılan Özellikler</h3>
+<h4 id="bob-protokolü-android">BOB Protokolü (Android)</h4>
+<ul>
+<li><strong>Kaldırıldı</strong>: Sürüm 0.9.41</li>
+<li><strong>Platform</strong>: Yalnızca Android</li>
+<li><strong>Alternatif</strong>: SAM veya I2CP protokolleri</li>
+<li><strong>Masaüstü</strong>: BOB hâlâ masaüstü platformlarda mevcut</li>
+</ul>
+<h3 id="önerilen-geçişler">Önerilen Geçişler</h3>
+<ol>
+<li><strong>Kimlik Doğrulama</strong>: MD5&rsquo;ten SHA-256 digest (özet) kimlik doğrulamaya geçiş yapın</li>
+<li><strong>Yapılandırma Biçimi</strong>: İstemciler ve tunnels için ayrılmış dizin yapısına geçin</li>
+<li><strong>Java Çalışma Zamanı</strong>: Bir sonraki ana sürümden önce Java 17 yükseltmesini planlayın</li>
+<li><strong>Tor Entegrasyonu</strong>: I2P&rsquo;yi Tor çıkış düğümleri üzerinden yönlendirmeyin</li>
+</ol>
+<hr>
+<h2 id="kaynakça">Kaynakça</h2>
+<h3 id="resmi-dokümantasyon">Resmi Dokümantasyon</h3>
+<ul>
+<li><a href="../../../../tr/docs/specs/configuration/">I2P Yapılandırma Şartnamesi</a>
+ - Yapılandırma dosyası biçimi için resmi şartname</li>
+<li><a href="../../../../tr/docs/specs/plugin/">I2P Eklenti Şartnamesi</a>
+ - Eklenti yapılandırması ve paketleme</li>
+<li><a href="../../../../tr/docs/specs/common-structures/#type-mapping">I2P Ortak Yapılar - Tür Eşlemesi</a>
+ - Protokol veri serileştirme biçimi</li>
+<li><a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Properties.html#load%28java.io.InputStream%29">Java Properties Biçimi</a>
+ - Temel biçim şartnamesi</li>
+</ul>
+<h3 id="kaynak-kodu">Kaynak Kodu</h3>
+<ul>
+<li><a href="https://github.com/i2p/i2p.i2p">I2P Java Router Deposu</a>
+ - GitHub aynası</li>
+<li><a href="https://i2pgit.org/I2P_Developers/i2p.i2p">I2P Geliştiricileri Gitea</a>
+ - Resmi I2P kaynak deposu</li>
+<li><a href="https://github.com/i2p/i2p.i2p/blob/master/core/java/src/net/i2p/data/DataHelper.java">DataHelper.java</a>
+ - Yapılandırma dosyası G/Ç gerçeklemesi</li>
+</ul>
+<h3 id="topluluk-kaynakları">Topluluk Kaynakları</h3>
+<ul>
+<li><a href="https://i2pforum.net/">I2P Forum</a>
+ - Aktif topluluk tartışmaları ve destek</li>
+<li><a href="../../../../tr/">I2P Website</a>
+ - Resmi proje web sitesi</li>
+</ul>
+<h3 id="api-dokümantasyonu">API Dokümantasyonu</h3>
+<ul>
+<li><a href="https://i2pplus.github.io/javadoc/net/i2p/data/DataHelper.html">DataHelper JavaDoc</a>
+ - yapılandırma dosyası yöntemlerine ilişkin API dokümantasyonu</li>
+</ul>
+<h3 id="belirtim-durumu">Belirtim Durumu</h3>
+<ul>
+<li><strong>Son Spesifikasyon Güncellemesi</strong>: Ocak 2023 (Sürüm 0.9.57)</li>
+<li><strong>Güncel I2P Sürümü</strong>: 2.10.0 (Eylül 2025)</li>
+<li><strong>Teknik Doğruluk</strong>: Spesifikasyon 2.10.0 dahil olmak üzere doğruluğunu korumaktadır (geriye dönük uyumluluğu bozan değişiklik yok)</li>
+<li><strong>Bakım</strong>: Yapılandırma formatı değiştirildiğinde güncellenen yaşayan bir belgedir</li>
+</ul>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../tr/docs/specs/ssu2/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">SSU2 Spesifikasyonu</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../tr/docs/specs/red25519-signature-scheme/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">Red25519 İmza Şeması</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/tr/docs/specs/configuration.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">I2P haberleriyle güncel kalın:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="E-posta adresinizi girin" required>
+                            <button type="submit">Abone Ol</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Hızlı Bağlantılar</h3>
+                <ul>
+                    <li><a href="../../../../tr/financial-support/">Bağış Yap</a></li>
+                    <li><a href="../../../../tr/docs/overview/intro/">I2P Tanıtımı</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Topluluk</h3>
+                <ul>
+                    <li><a href="../../../../tr/get-involved/">Katılın</a></li>
+                    <li><a href="../../../../tr/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Resmi Forumlar</a></li>
+                    <li><a href="../../../../tr/contact/">İletişim</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Kaynaklar</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P Metrikleri</a></li>
+                    <li><a href="../../../../tr/papers/">Araştırma</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Invisible Internet Projesi. Creative Commons altında lisanslanmıştır.</p>
+            <div class="footer-links">
+                <a href="../../../../tr/privacy/">Gizlilik</a>
+                <a href="../../../../tr/terms/">Şartlar</a>
+                <a href="../../../../tr/about/media/">Basın</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Kapat">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Topluluk Anketi</h2>
+            <p class="modal-subtitle">Sizden haber almaktan memnuniyet duyarız</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Oyunuz I2P&#39;nin geleceğini şekillendirmeye yardımcı olur.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

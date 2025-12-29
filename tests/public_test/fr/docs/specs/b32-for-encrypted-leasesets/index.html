@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>B32 pour les Leasesets chiffrés | I2P - Le projet Internet invisible</title>
+
+    <meta name="description" content="Format d’adresse Base 32 pour les leaseSets LS2 chiffrés">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="B32 pour les Leasesets chiffrés | I2P - Le projet Internet invisible">
+    <meta property="og:description" content="Format d’adresse Base 32 pour les leaseSets LS2 chiffrés">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/fr/docs/specs/b32-for-encrypted-leasesets/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Site Bêta I2P Maintenant En Ligne Signaler les problèmes e-mail à stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Fermer la bannière" title="Fermer la bannière">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../fr/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../fr/about/" class="">À propos</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../fr/about/">Aperçu</a></li>
+                            <li><a href="../../../../fr/papers/">Articles de recherche</a></li>
+                            <li><a href="../../../../fr/about/media/">Presse</a></li>
+                            <li><a href="../../../../fr/contact/">Contactez-nous</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../fr/docs/" class="active">Docs</a></li>
+                    <li><a href="../../../../fr/downloads/" class="">Téléchargements</a></li>
+                    <li><a href="../../../../fr/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../fr/get-involved/" class="">S&#39;impliquer</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../fr/get-involved/">Aperçu</a></li>
+                            <li><a href="../../../../fr/feedback/">Suggestions de fonctionnalités</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">fr</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Anglais</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Espagnol</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Coréen</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Chinois</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Russe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Tchèque</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Allemand</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option active">Français</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Turc</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Vietnamien</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Arabe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Portugais</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../fr/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../fr/downloads/" class="btn btn-primary">Obtenir I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#aperçu">Aperçu</a></li>
+    <li><a href="#statut-de-limplémentation">Statut de l&rsquo;implémentation</a></li>
+    <li><a href="#conception">Conception</a></li>
+    <li><a href="#spécification">Spécification</a>
+      <ul>
+        <li><a href="#création-et-encodage">Création et encodage</a></li>
+        <li><a href="#décodage-et-vérification">Décodage et vérification</a></li>
+        <li><a href="#bits-des-clés-secrètes-et-privées">Bits des clés secrètes et privées</a></li>
+      </ul>
+    </li>
+    <li><a href="#détails-cryptographiques">Détails cryptographiques</a>
+      <ul>
+        <li><a href="#schéma-daveuglement">Schéma d’aveuglement</a></li>
+        <li><a href="#chiffrement">Chiffrement</a></li>
+        <li><a href="#méthodes-dauthentification">Méthodes d&rsquo;authentification</a></li>
+      </ul>
+    </li>
+    <li><a href="#mise-en-cache">Mise en cache</a></li>
+    <li><a href="#types-de-signature">Types de signature</a></li>
+    <li><a href="#remarques">Remarques</a></li>
+    <li><a href="#compatibilité-des-versions">Compatibilité des versions</a></li>
+    <li><a href="#références">Références</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../fr/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../fr/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../fr/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">B32 pour les Leasesets chiffrés</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Cette traduction a été générée par apprentissage automatique et peut ne pas être exacte à 100%.</span>
+    
+    
+    <a href="../../../../en/docs/specs/b32-for-encrypted-leasesets/" class="disclaimer-link">Voir la version anglaise</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">B32 pour les Leasesets chiffrés</h1>
+                    
+                        <p class="article-description">Format d’adresse Base 32 pour les leaseSets LS2 chiffrés</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="aperçu">Aperçu</h2>
+<p>Les adresses Base 32 standard (&ldquo;b32&rdquo;) contiennent le hachage de la destination. Cela ne fonctionnera pas pour LS2 (leaseSet version 2) chiffré (proposition 123).</p>
+<p>Nous ne pouvons pas utiliser une adresse traditionnelle en base 32 pour un LS2 chiffré (proposition 123), car elle ne contient que le hachage de la destination. Elle ne fournit pas la clé publique non aveuglée. Les clients doivent connaître la clé publique de la destination, le type de signature, le type de signature de la clé aveuglée, ainsi qu’un secret ou une clé privée facultatifs pour récupérer et déchiffrer le leaseset. Par conséquent, une adresse en base 32 seule est insuffisante. Le client a besoin soit de la destination complète (qui contient la clé publique), soit de la clé publique seule. Si le client dispose de la destination complète dans un carnet d’adresses, et que ce carnet prend en charge la recherche inverse par hachage, alors la clé publique peut être récupérée.</p>
+<p>Ce format place la clé publique, au lieu du hachage, dans une adresse en base32. Ce format doit également contenir le type de signature de la clé publique, ainsi que le type de signature du schéma d’aveuglement.</p>
+<p>Ce document spécifie un format b32 pour ces adresses. Bien que nous ayons désigné ce nouveau format, lors des discussions, comme une &ldquo;adresse b33&rdquo;, le format effectivement retenu conserve le suffixe habituel &ldquo;.b32.i2p&rdquo;.</p>
+<h2 id="statut-de-limplémentation">Statut de l&rsquo;implémentation</h2>
+<p>Proposition 123 (Nouvelles entrées netDB) a été entièrement implémentée dans la version 0.9.43 (octobre 2019). L&rsquo;ensemble des fonctionnalités de LS2 (version 2 de leaseSet) chiffré est resté stable jusqu&rsquo;à la version 2.10.0 (septembre 2025), sans modifications rompant la compatibilité du format d&rsquo;adressage ni des spécifications cryptographiques.</p>
+<p>Jalons clés de l&rsquo;implémentation : - 0.9.38 : Prise en charge de Floodfill pour LS2 standard avec des clés hors ligne - 0.9.39 : Type de signature RedDSA 11 et chiffrement/déchiffrement de base - 0.9.40 : Prise en charge complète de l&rsquo;adressage B32 (Proposition 149) - 0.9.41 : Authentification par client basée sur X25519 - 0.9.42 : Toutes les fonctionnalités d&rsquo;aveuglement opérationnelles - 0.9.43 : Implémentation complète déclarée (octobre 2019)</p>
+<h2 id="conception">Conception</h2>
+<ul>
+<li>Le nouveau format contient la clé publique démasquée, le type de signature démasqué et le type de signature masqué.</li>
+<li>Peut indiquer, en option, les exigences de secret et/ou de clé privée pour les liens privés.</li>
+<li>Utilise le suffixe &ldquo;.b32.i2p&rdquo; existant, mais avec une longueur plus longue.</li>
+<li>Inclut une somme de contrôle pour la détection d’erreurs.</li>
+<li>Les adresses pour les leasesets chiffrés sont identifiées par 56 caractères codés ou plus (35 octets décodés ou plus), contre 52 caractères (32 octets) pour les adresses traditionnelles en base 32.</li>
+</ul>
+<h2 id="spécification">Spécification</h2>
+<h3 id="création-et-encodage">Création et encodage</h3>
+<p>Construisez un nom d&rsquo;hôte de {56+ caractères}.b32.i2p (35+ caractères en binaire) comme suit :</p>
+<pre tabindex="0"><code>flag (1 byte)
+  bit 0: 0 for one-byte sigtypes, 1 for two-byte sigtypes
+  bit 1: 0 for no secret, 1 if secret is required
+  bit 2: 0 for no per-client auth,
+         1 if client private key is required
+  bits 7-3: Unused, set to 0
+
+public key sigtype (1 or 2 bytes as indicated in flags)
+  If 1 byte, the upper byte is assumed zero
+
+blinded key sigtype (1 or 2 bytes as indicated in flags)
+  If 1 byte, the upper byte is assumed zero
+
+public key
+  Number of bytes as implied by sigtype
+</code></pre><p>Post-traitement et somme de contrôle:</p>
+<pre tabindex="0"><code>Construct the binary data as above.
+Treat checksum as little-endian.
+Calculate checksum = CRC-32(data[3:end])
+data[0] ^= (byte) checksum
+data[1] ^= (byte) (checksum &gt;&gt; 8)
+data[2] ^= (byte) (checksum &gt;&gt; 16)
+
+hostname = Base32.encode(data) || &#34;.b32.i2p&#34;
+</code></pre><p>Tous les bits non utilisés à la fin du b32 (base32) doivent être à 0. Il n’y a pas de bits non utilisés pour une adresse standard de 56 caractères (35 octets).</p>
+<h3 id="décodage-et-vérification">Décodage et vérification</h3>
+<pre tabindex="0"><code>strip the &#34;.b32.i2p&#34; from the hostname
+data = Base32.decode(hostname)
+Calculate checksum = CRC-32(data[3:end])
+Treat checksum as little-endian.
+flags = data[0] ^ (byte) checksum
+if 1 byte sigtypes:
+  pubkey sigtype = data[1] ^ (byte) (checksum &gt;&gt; 8)
+  blinded sigtype = data[2] ^ (byte) (checksum &gt;&gt; 16)
+else (2 byte sigtypes):
+  pubkey sigtype = data[1] ^ ((byte) (checksum &gt;&gt; 8)) || data[2] ^ ((byte) (checksum &gt;&gt; 16))
+  blinded sigtype = data[3] || data[4]
+parse the remainder based on the flags to get the public key
+</code></pre><h3 id="bits-des-clés-secrètes-et-privées">Bits des clés secrètes et privées</h3>
+<p>Les indicateurs de clé secrète et de clé privée sont utilisés pour signaler aux clients, aux proxies ou à tout autre code côté client que la clé secrète et/ou la clé privée seront nécessaires pour déchiffrer le leaseSet (ensemble de baux). Certaines implémentations peuvent demander à l’utilisateur de fournir les données requises, ou rejeter les tentatives de connexion si les données requises sont absentes.</p>
+<p>Ces bits ne servent que d&rsquo;indicateurs. La clé secrète ou privée ne doit jamais être incluse dans l&rsquo;adresse B32 elle-même, car cela compromettrait la sécurité.</p>
+<h2 id="détails-cryptographiques">Détails cryptographiques</h2>
+<h3 id="schéma-daveuglement">Schéma d’aveuglement</h3>
+<p>Le schéma d’aveuglement utilise RedDSA, basé sur Ed25519 et sur la conception de ZCash, pour produire des signatures Red25519 sur la courbe Ed25519 en utilisant SHA-512. Cette approche garantit que les clés publiques aveuglées restent dans le sous-groupe d’ordre premier, évitant ainsi les problèmes de sécurité présents dans certaines conceptions alternatives.</p>
+<p>Les clés aveuglées sont renouvelées quotidiennement en fonction de la date UTC à l&rsquo;aide de la formule :</p>
+<pre tabindex="0"><code>blinded_key = BLIND(unblinded_key, date, optional_secret)
+</code></pre><p>L’emplacement de stockage de la table de hachage distribuée (DHT) est calculé comme suit :</p>
+<pre tabindex="0"><code>SHA256(type_byte || blinded_public_key)
+</code></pre><h3 id="chiffrement">Chiffrement</h3>
+<p>Le leaseset (ensemble de baux) chiffré utilise l’algorithme de chiffrement en flux ChaCha20, choisi pour ses performances supérieures sur les appareils dépourvus d’accélération matérielle AES. La spécification emploie HKDF pour la dérivation de clés et X25519 pour les opérations Diffie-Hellman.</p>
+<p>Les leaseSet chiffrés ont une structure en trois couches : - Couche externe : métadonnées en clair - Couche intermédiaire : authentification du client (méthodes DH ou PSK) - Couche interne : données LS2 proprement dites contenant les informations de lease (période et paramètres d&rsquo;un tunnel)</p>
+<h3 id="méthodes-dauthentification">Méthodes d&rsquo;authentification</h3>
+<p>L&rsquo;authentification par client prend en charge deux méthodes :</p>
+<p><strong>Authentification DH</strong>: Utilise l&rsquo;accord de clés X25519. Chaque client autorisé fournit sa clé publique au serveur, et le serveur chiffre la couche intermédiaire à l&rsquo;aide d&rsquo;un secret partagé dérivé d&rsquo;ECDH.</p>
+<p><strong>Authentification PSK</strong>: Utilise directement des clés pré-partagées pour le chiffrement.</p>
+<p>Le bit de drapeau 2 de l’adresse B32 indique si une authentification par client est requise.</p>
+<h2 id="mise-en-cache">Mise en cache</h2>
+<p>Bien que cela soit hors du champ de cette spécification, les routers et les clients doivent mémoriser et mettre en cache (de préférence de manière persistante) la correspondance entre la clé publique et la destination, et inversement.</p>
+<p>Le service de nommage blockfile (fichier en blocs), système de carnet d’adresses par défaut d’I2P depuis la version 0.9.8, gère plusieurs carnets d’adresses avec un mappage de recherche inversée dédié, permettant des recherches rapides par hachage. Cette fonctionnalité est essentielle pour la résolution de leaseSet chiffré lorsqu’au départ seul un hachage est connu.</p>
+<h2 id="types-de-signature">Types de signature</h2>
+<p>À partir de la version 2.10.0 d&rsquo;I2P, les types de signature de 0 à 11 sont définis. L&rsquo;encodage sur un octet reste la norme, tandis que l&rsquo;encodage sur deux octets est disponible mais n&rsquo;est pas utilisé en pratique.</p>
+<p><strong>Types couramment utilisés:</strong> - Type 0 (DSA_SHA1): Déprécié pour les router, pris en charge pour les destinations - Type 7 (EdDSA_SHA512_Ed25519): Norme actuelle pour les identités de router et les destinations - Type 11 (RedDSA_SHA512_Ed25519): Exclusivement pour les LS2 leasesets chiffrés avec prise en charge du blinding (aveuglement)</p>
+<p><strong>Remarque importante</strong> : Seuls Ed25519 (type 7) et Red25519 (type 11) prennent en charge le blindage (aveuglement cryptographique) nécessaire aux leasesets chiffrés. Les autres types de signature ne peuvent pas être utilisés avec cette fonctionnalité.</p>
+<p>Les types 9-10 (algorithmes GOST) restent réservés mais non implémentés. Les types 4-6 et 8 sont marqués &ldquo;offline only&rdquo; pour les clés de signature hors ligne.</p>
+<h2 id="remarques">Remarques</h2>
+<ul>
+<li>Distinguer les anciennes des nouvelles variantes par la longueur. Les anciennes adresses b32 sont toujours {52 caractères}.b32.i2p. Les nouvelles sont {56+ caractères}.b32.i2p</li>
+<li>L’encodage base32 suit la norme RFC 4648, avec un décodage insensible à la casse et une sortie en minuscules privilégiée</li>
+<li>Les adresses peuvent dépasser 200 caractères lorsqu’on utilise des types de signature avec des clés publiques plus grandes (par exemple, ECDSA P521 avec des clés de 132 octets)</li>
+<li>Le nouveau format peut être utilisé dans des liens de saut (et servi par des serveurs de saut) si souhaité, tout comme le b32 standard</li>
+<li>Les clés aveuglées sont renouvelées quotidiennement en fonction de la date UTC afin d’améliorer la confidentialité</li>
+<li>Ce format s’écarte de l’approche de l’annexe A.2 de rend-spec-v3.txt de Tor, qui présente des implications potentielles en matière de sécurité avec des clés publiques aveuglées hors courbe</li>
+</ul>
+<h2 id="compatibilité-des-versions">Compatibilité des versions</h2>
+<p>Cette spécification est valide pour I2P de la version 0.9.47 (août 2020) à la version 2.10.0 (septembre 2025). Aucun changement rétro-incompatible n’a affecté le format d’adressage B32, la structure LS2 (LeaseSet, version 2) chiffrée, ni les implémentations cryptographiques durant cette période. Toutes les adresses créées avec la 0.9.47 restent entièrement compatibles avec les versions actuelles.</p>
+<h2 id="références">Références</h2>
+<p><strong>CRC-32</strong> - <a href="https://en.wikipedia.org/wiki/CRC-32">CRC-32 (Wikipédia)</a>
+ - <a href="https://tools.ietf.org/html/rfc3309">RFC 3309 : Somme de contrôle du Stream Control Transmission Protocol (protocole de transport gérant des flux)</a>
+</p>
+<p><strong>Spécifications I2P</strong> - <a href="../../../../fr/docs/specs/encryptedleaseset/">Spécification du LeaseSet chiffré</a>
+ - <a href="../../../../fr/proposals/123-new-netdb-entries/">Proposition 123 : Nouvelles entrées du netDB</a>
+ - <a href="../../../../fr/proposals/149-b32-encrypted-ls2/">Proposition 149 : B32 pour LS2 chiffré</a>
+ - <a href="../../../../fr/docs/specs/common-structures/">Spécification des structures communes</a>
+ - <a href="../../../../fr/docs/overview/naming/">Nommage et carnet d’adresses</a>
+</p>
+<p><strong>Comparaison avec Tor</strong> - <a href="https://lists.torproject.org/pipermail/tor-dev/2017-January/011816.html">Fil de discussion Tor (contexte de conception)</a>
+</p>
+<p><strong>Ressources supplémentaires</strong> - <a href="../../../../fr/">Projet I2P</a>
+ - <a href="https://i2pforum.net">Forum I2P</a>
+ - <a href="http://docs.i2p-projekt.de/javadoc/">Documentation de l&rsquo;API Java</a>
+</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../fr/docs/specs/ecies-hybrid/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">Chiffrement hybride ECIES-X25519-AEAD-Ratchet</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../fr/docs/specs/udp-bittorrent-announces/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">Annonces BitTorrent via UDP</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/fr/docs/specs/b32encrypted.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Restez informé des actualités I2P :</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Entrez votre email" required>
+                            <button type="submit">S&#39;abonner</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Liens Rapides</h3>
+                <ul>
+                    <li><a href="../../../../fr/financial-support/">Faire un don</a></li>
+                    <li><a href="../../../../fr/docs/overview/intro/">Introduction à I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Communauté</h3>
+                <ul>
+                    <li><a href="../../../../fr/get-involved/">Participez</a></li>
+                    <li><a href="../../../../fr/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Forums Officiels</a></li>
+                    <li><a href="../../../../fr/contact/">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Ressources</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Mesures I2P</a></li>
+                    <li><a href="../../../../fr/papers/">Recherche</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Le Projet Internet Invisible. Sous licence Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../fr/privacy/">Confidentialité</a>
+                <a href="../../../../fr/terms/">Conditions d&#39;utilisation</a>
+                <a href="../../../../fr/about/media/">Presse</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Fermer">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Sondage de la communauté</h2>
+            <p class="modal-subtitle">Nous aimerions avoir de vos nouvelles</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Votre vote aide à façonner l&#39;avenir d&#39;I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

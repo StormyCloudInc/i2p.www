@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Chiffrement de Couche de Tunnel ChaCha | I2P - Le projet Internet invisible</title>
+
+    <meta name="description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Chiffrement de Couche de Tunnel ChaCha | I2P - Le projet Internet invisible">
+    <meta property="og:description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/fr/proposals/153-chacha20-layer-encryption/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Site Bêta I2P Maintenant En Ligne Signaler les problèmes e-mail à stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Fermer la bannière" title="Fermer la bannière">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../fr/" class="logo-link">
+                    <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../fr/about/" class="">À propos</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../fr/about/">Aperçu</a></li>
+                            <li><a href="../../../fr/papers/">Articles de recherche</a></li>
+                            <li><a href="../../../fr/about/media/">Presse</a></li>
+                            <li><a href="../../../fr/contact/">Contactez-nous</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../fr/docs/" class="">Docs</a></li>
+                    <li><a href="../../../fr/downloads/" class="">Téléchargements</a></li>
+                    <li><a href="../../../fr/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../fr/get-involved/" class="">S&#39;impliquer</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../fr/get-involved/">Aperçu</a></li>
+                            <li><a href="../../../fr/feedback/">Suggestions de fonctionnalités</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">fr</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../en/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">Anglais</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../es/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">Espagnol</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ko/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">Coréen</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../zh/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">Chinois</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ru/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">Russe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../cs/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">Tchèque</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../de/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">Allemand</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../fr/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option active">Français</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../tr/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">Turc</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../vi/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">Vietnamien</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../hi/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ar/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">Arabe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../pt/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">Portugais</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../fr/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../fr/downloads/" class="btn btn-primary">Obtenir I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+<div class="proposals-page">
+    <div class="container">
+        
+        <nav class="breadcrumbs">
+            <a href="../../../fr/">Home</a>
+            <span class="separator">/</span>
+            <a href="../../../fr/proposals/">Proposals</a>
+            <span class="separator">/</span>
+            <span class="current">Chiffrement de Couche de Tunnel ChaCha</span>
+        </nav>
+
+        
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Cette traduction a été générée par apprentissage automatique et peut ne pas être exacte à 100%.</span>
+    
+    
+    <a href="../../../en/proposals/153-chacha20-layer-encryption/" class="disclaimer-link">Voir la version anglaise</a>
+    
+</div>
+
+
+
+        
+        <header class="proposal-header">
+            <div class="proposal-title-section">
+                <h1 class="proposal-title">Chiffrement de Couche de Tunnel ChaCha</h1>
+                <div class="proposal-number">Proposal 153</div>
+            </div>
+
+            
+            <div class="proposal-meta-box">
+                <div class="proposal-status status-ouvert">
+                    Ouvert
+                </div>
+
+                
+                <div class="proposal-info-grid">
+                    
+                    <div class="info-item">
+                        <span class="info-label">Author</span>
+                        <span class="info-value">chisana</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Created</span>
+                        <span class="info-value">2019-08-04</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Last Updated</span>
+                        <span class="info-value">2019-08-05</span>
+                    </div>
+                    
+
+                    
+
+                    
+                </div>
+
+                
+                
+            </div>
+        </header>
+
+        
+        <div class="proposal-layout proposal-layout--with-toc">
+            
+            
+            <aside class="proposal-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#vue-densemble">Vue d&rsquo;ensemble</a>
+      <ul>
+        <li><a href="#objectifs">Objectifs</a></li>
+        <li><a href="#traitement-des-messages-de-tunnel-établis">Traitement des Messages de Tunnel Établis</a></li>
+        <li><a href="#chiffrement-aead-des-messages-de-saut-à-saut">Chiffrement AEAD des Messages de Saut à Saut</a></li>
+        <li><a href="#traitement-des-messages-de-créateur-de-tunnel-et-de-passerelle">Traitement des Messages de Créateur de Tunnel et de Passerelle</a></li>
+        <li><a href="#prétraitement--chiffrement-de-passerelle">Prétraitement &amp; Chiffrement de Passerelle</a></li>
+        <li><a href="#traitement-des-participants">Traitement des Participants</a></li>
+        <li><a href="#traitement-du-point-de-terminaison-entrant">Traitement du Point de Terminaison Entrant</a></li>
+        <li><a href="#analyse-de-sécurité-pour-le-chiffrement-de-couche-de-tunnel-chacha20chacha20-poly1305">Analyse de Sécurité pour le Chiffrement de Couche de Tunnel ChaCha20+ChaCha20-Poly1305</a></li>
+      </ul>
+    </li>
+    <li><a href="#références">Références</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="proposal-main">
+                <article class="proposal-content">
+                    <h2 id="vue-densemble">Vue d&rsquo;ensemble</h2>
+<p>Cette proposition s&rsquo;appuie sur et nécessite les modifications de la proposition 152 : Tunnels ECIES.</p>
+<p>Seuls les tunnels construits à travers des sauts supportant le format BuildRequestRecord pour les tunnels ECIES-X25519 peuvent implémenter cette spécification.</p>
+<p>Cette spécification nécessite le format Tunnel Build Options pour indiquer le type de chiffrement de couche de tunnel et transmettre les clés AEAD de couche.</p>
+<h3 id="objectifs">Objectifs</h3>
+<p>Les objectifs de cette proposition sont :</p>
+<ul>
+<li>Remplacer AES256/ECB+CBC par ChaCha20 pour l&rsquo;IV du tunnel établi et le chiffrement de couche</li>
+<li>Utiliser ChaCha20-Poly1305 pour la protection AEAD inter-saut</li>
+<li>Être indétectable à partir du chiffrement de couche de tunnel existant par des participants non-tunnel</li>
+<li>Ne pas modifier la longueur globale du message de tunnel</li>
+</ul>
+<h3 id="traitement-des-messages-de-tunnel-établis">Traitement des Messages de Tunnel Établis</h3>
+<p>Cette section décrit les modifications concernant :</p>
+<ul>
+<li>Prétraitement + chiffrement des passerelles sortantes et entrantes</li>
+<li>Chiffrement et post-traitement des participants</li>
+<li>Chiffrement et post-traitement des points de terminaison sortants et entrants</li>
+</ul>
+<p>Pour un aperçu du traitement actuel des messages de tunnel, voir la spécification <a href="../../../fr/docs/specs/implementation/">Tunnel Implementation</a>
+.</p>
+<p>Seules les modifications pour les routeurs supportant le chiffrement de couche ChaCha20 sont discutées.</p>
+<p>Aucune modification n&rsquo;est envisagée pour les tunnels mixtes avec chiffrement de couche AES, jusqu&rsquo;à ce qu&rsquo;un protocole sûr puisse être conçu pour convertir un IV AES 128 bits en nonce ChaCha20 64 bits. Les filtres de Bloom garantissent l&rsquo;unicité pour l&rsquo;ensemble de l&rsquo;IV, mais la première moitié des IV uniques pourrait être identique.</p>
+<p>Cela signifie que le chiffrement de la couche doit être uniforme pour tous les sauts dans le tunnel et établi à l&rsquo;aide des options de construction de tunnel pendant le processus de création de tunnel.</p>
+<p>Toutes les passerelles et les participants de tunnel devront maintenir un filtre de Bloom pour valider les deux nonces indépendants.</p>
+<p>Le <code>nonceKey</code> mentionné tout au long de cette proposition remplace le <code>IVKey</code> utilisé dans le chiffrement de couche AES. Il est généré en utilisant le même KDF de la proposition 152.</p>
+<h3 id="chiffrement-aead-des-messages-de-saut-à-saut">Chiffrement AEAD des Messages de Saut à Saut</h3>
+<p>Une clé <code>AEADKey</code> unique supplémentaire devra être générée pour chaque paire de sauts consécutifs. Cette clé sera utilisée par les sauts consécutifs pour chiffrer et déchiffrer les messages de tunnel internes chiffrés ChaCha20.</p>
+<p>Les messages de tunnel devront réduire la longueur du cadre chiffré interne de 16 octets pour accueillir le MAC Poly1305.</p>
+<p>AEAD ne peut pas être utilisé directement sur les messages, car le déchiffrement itératif est nécessaire par les tunnels sortants. Le déchiffrement itératif ne peut être réalisé, dans son utilisation actuelle, qu&rsquo;en utilisant ChaCha20 sans AEAD.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>+----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>  |    ID de Tunnel    |   tunnelNonce     |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>  | suite de tunnelNonce |    obfsNonce      |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>  | suite d&#39;obfsNonce  |                   |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+                   +
+</span></span><span style="display:flex;"><span>  |                                       |
+</span></span><span style="display:flex;"><span>  +           Données Chiffrées           +
+</span></span><span style="display:flex;"><span>  ~                                       ~
+</span></span><span style="display:flex;"><span>  |                                       |
+</span></span><span style="display:flex;"><span>  +                   +----+----+----+----+
+</span></span><span style="display:flex;"><span>  |                   |    MAC Poly1305    |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+                   +  
+</span></span><span style="display:flex;"><span>  |                                       |
+</span></span><span style="display:flex;"><span>  +                   +----+----+----+----+
+</span></span><span style="display:flex;"><span>  |                   |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ID de Tunnel :: `TunnelId`
+</span></span><span style="display:flex;"><span>         4 octets
+</span></span><span style="display:flex;"><span>         l&#39;ID du prochain saut
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tunnelNonce ::
+</span></span><span style="display:flex;"><span>         8 octets
+</span></span><span style="display:flex;"><span>         le nonce de couche du tunnel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  obfsNonce ::
+</span></span><span style="display:flex;"><span>         8 octets
+</span></span><span style="display:flex;"><span>         le nonce de chiffrement de couche du tunnel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Données Chiffrées ::
+</span></span><span style="display:flex;"><span>         992 octets
+</span></span><span style="display:flex;"><span>         le message chiffré du tunnel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  MAC Poly1305 ::
+</span></span><span style="display:flex;"><span>         16 octets
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  taille totale : 1028 Octets
+</span></span></code></pre></div><p>Les sauts internes (avec des sauts précédents et suivants) auront deux <code>AEADKeys</code>, un pour déchiffrer la couche AEAD du saut précédent, et chiffrer la couche AEAD vers le saut suivant.</p>
+<p>Tous les participants au saut interne auront ainsi 64 octets supplémentaires de matériel de clé inclus dans leurs BuildRequestRecords.</p>
+<p>Le Point d&rsquo;Entrée Sortant et la Passerelle Entrante ne nécessiteront que 32 octets supplémentaires de données clé, puisqu&rsquo;ils ne chiffrent pas la couche tunnel lors du transfert de messages entre eux.</p>
+<p>La Passerelle Sortante génère sa clé <code>outAEAD</code>, qui est identique à la clé <code>inAEAD</code> du premier saut sortant.</p>
+<p>Le Point d&rsquo;Entrée Entrant génère sa clé <code>inAEAD</code>, qui est identique à la clé <code>outAEAD</code> du dernier saut entrant.</p>
+<p>Les sauts internes recevront et utiliseront une <code>inAEADKey</code> pour déchiffrer les messages entrants et une <code>outAEADKey</code> pour chiffrer les messages sortants, respectivement.</p>
+<p>À titre d&rsquo;exemple, dans un tunnel avec sauts internes OBGW, A, B, OBEP :</p>
+<ul>
+<li>La clé <code>inAEADKey</code> de A est identique à la clé <code>outAEADKey</code> de OBGW</li>
+<li>La clé <code>inAEADKey</code> de B est identique à la clé <code>outAEADKey</code> de A</li>
+<li>La clé <code>outAEADKey</code> de B est identique à la clé <code>inAEADKey</code> de OBEP</li>
+</ul>
+<p>Les clés sont uniques aux paires de sauts, donc la clé <code>inAEADKey</code> de OBEP sera différente de la clé <code>inAEADKey</code> de A, la clé <code>outAEADKey</code> de A sera différente de la clé <code>outAEADKey</code> de B, etc.</p>
+<h3 id="traitement-des-messages-de-créateur-de-tunnel-et-de-passerelle">Traitement des Messages de Créateur de Tunnel et de Passerelle</h3>
+<p>Les passerelles fragmenteront et regrouperont les messages de la même manière, en réservant de l&rsquo;espace après le cadre d&rsquo;instructions-fragment pour le MAC Poly1305.</p>
+<p>Les messages I2NP internes contenant des cadres AEAD (y compris le MAC) peuvent être répartis sur plusieurs fragments, mais tout fragment perdu entraînera un échec du déchiffrement AEAD (échec de la vérification MAC) au point d&rsquo;extrémité.</p>
+<h3 id="prétraitement--chiffrement-de-passerelle">Prétraitement &amp; Chiffrement de Passerelle</h3>
+<p>Lorsque les tunnels supportent le chiffrement de couche ChaCha20, les passerelles généreront deux nonces 64 bits par ensemble de messages.</p>
+<p>Tunnels entrants :</p>
+<ul>
+<li>
+<p>Chiffrer l&rsquo;IV et le(s) message(s) de tunnel en utilisant ChaCha20</p>
+</li>
+<li>
+<p>Utiliser un <code>tunnelNonce</code> et <code>obfsNonce</code> de 8 octets compte tenu de la durée de vie des tunnels</p>
+</li>
+<li>
+<p>Utiliser un <code>obfsNonce</code> de 8 octets pour le chiffrement de <code>tunnelNonce</code></p>
+</li>
+<li>
+<p>Détruire le tunnel avant 2^(64 - 1) - 1 ensembles de messages : 2^63 - 1 = 9,223,372,036,854,775,807</p>
+<ul>
+<li>Limite de nonce en place pour éviter la collision des nonces 64 bits</li>
+<li>Limite de nonce presque impossible à atteindre, compte tenu que cela représenterait ~15,372,286,728,091,294 msgs/seconde pour des tunnels de 10 minutes</li>
+</ul>
+</li>
+<li>
+<p>Ajuster le filtre de Bloom en fonction d&rsquo;un nombre raisonnable d&rsquo;éléments attendus (128 msgs/sec, 1024 msgs/sec ? À déterminer)</p>
+</li>
+</ul>
+<p>La passerelle entrante (IBGW) du tunnel, traite les messages reçus d&rsquo;un point de terminaison sortant (OBEP) d&rsquo;un autre tunnel.</p>
+<p>À ce stade, la couche extérieure du message est chiffrée à l&rsquo;aide d&rsquo;un chiffrement de transport point à point. Les en-têtes de message I2NP sont visibles, au niveau de la couche tunnel, par OBEP et IBGW. Les messages I2NP internes sont enveloppés dans des gousses Garlic, chiffrés en utilisant un chiffrement de session de bout en bout.</p>
+<p>L&rsquo;IBGW prétraite les messages dans les messages de tunnel formatés de manière appropriée, et chiffre comme suit :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// L&#39;IBGW génère des nonces aléatoires, assurant aucune collision dans son filtre de Bloom pour chaque nonce
+</span></span><span style="display:flex;"><span>  tunnelNonce = Random(len = 64-bits)
+</span></span><span style="display:flex;"><span>  obfsNonce = Random(len = 64-bits)
+</span></span><span style="display:flex;"><span>  // L&#39;IBGW &#34;chiffre&#34; chaque message de tunnel prétraité avec son tunnelNonce et sa layerKey en utilisant ChaCha20
+</span></span><span style="display:flex;"><span>  encMsg = ChaCha20(msg = tunnel msg, nonce = tunnelNonce, key = layerKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Chacre20-Poly1305 chiffre chaque cadre de données chiffrées du message avec le tunnelNonce et outAEADKey
+</span></span><span style="display:flex;"><span>  (encMsg, MAC) = ChanCha20-Poly1305-Encrypt(msg = encMsg, nonce = tunnelNonce, key = outAEADKey)
+</span></span></code></pre></div><p>Le format du message de tunnel changera légèrement, utilisant deux nonces de 8 octets au lieu d&rsquo;un IV de 16 octets. Le <code>obfsNonce</code> utilisé pour chiffrer le nonce est ajouté au <code>tunnelNonce</code> de 8 octets et est chiffré par chaque saut en utilisant le <code>tunnelNonce</code> chiffré et le <code>nonceKey</code> du saut.</p>
+<p>Après que l&rsquo;ensemble de messages a été préalablement déchiffré pour chaque saut, la passerelle sortante chiffre à nouveau la partie du message de tunnel en utilisant ChaCha20-Poly1305 AEAD en utilisant le <code>tunnelNonce</code> et sa <code>outAEADKey</code>.</p>
+<p>Tunnels sortants :</p>
+<ul>
+<li>Déchiffrer de manière itérative les messages de tunnel</li>
+<li>Chiffrer ChaCha20-Poly1305 de manière préemptive les cadres chiffrés de message de tunnel</li>
+<li>Utiliser les mêmes règles pour les nonces de couche que pour les tunnels entrants</li>
+<li>Générer des nonces aléatoires une fois par ensemble de messages de tunnel expédiés</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// Pour chaque ensemble de messages, générer des nonces uniques et aléatoires
+</span></span><span style="display:flex;"><span>  tunnelNonce = Random(len = 64-bits)
+</span></span><span style="display:flex;"><span>  obfsNonce = Random(len = 64-bits)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Pour chaque saut, décrypter ChaCha20 le tunnelNonce précédent avec le key IV du saut actuel
+</span></span><span style="display:flex;"><span>  tunnelNonce = ChaCha20(msg = prev. tunnelNonce, nonce = obfsNonce, key = hop&#39;s nonceKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Pour chaque saut, décrypter ChaCha20 le message de tunnel avec le tunnelNonce actuel et layerKey du saut
+</span></span><span style="display:flex;"><span>  decMsg = ChaCha20(msg = tunnel msg(s), nonce = tunnelNonce, key = hop&#39;s layerKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Pour chaque saut, décrypter ChaCha20 le obfsNonce avec le tunnelNonce chiffré actuel et nonceKey du saut
+</span></span><span style="display:flex;"><span>  obfsNonce = ChaCha20(msg = obfsNonce, nonce = tunnelNonce, key = hop&#39;s nonceKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Après le traitement des sauts, chiffrer ChaCha20-Poly1305 chaque cadre de données &#34;déchiffrées&#34; des messages de tunnel avec le premier tunnelNonce chiffré des sauts et inAEADKey du saut
+</span></span><span style="display:flex;"><span>  (encMsg, MAC) = ChaCha20-Poly1305-Encrypt(msg = decMsg, nonce = first hop&#39;s encrypted tunnelNonce, key = first hop&#39;s inAEADKey / GW outAEADKey)
+</span></span></code></pre></div><h3 id="traitement-des-participants">Traitement des Participants</h3>
+<p>Les participants suivront les messages reçus de la même manière, utilisant des filtres de Bloom décroissants.</p>
+<p>Les nonces de tunnel devront être chiffrés une fois par saut, pour éviter les attaques de confirmation par des sauts collusifs non-consecutifs.</p>
+<p>Les sauts chiffreront le nonce reçu pour éviter les attaques de confirmation entre des sauts précédents et ultérieurs, c&rsquo;est-à-dire, les sauts collusifs et non-consecutifs étant capables de dire qu&rsquo;ils appartiennent au même tunnel.</p>
+<p>Pour valider les <code>tunnelNonce</code> et <code>obfsNonce</code> reçus, les participants vérifient chaque nonce individuellement contre leur filtre de Bloom pour éviter les doublons.</p>
+<p>Après validation, le participant :</p>
+<ul>
+<li>Déchiffre ChaCha20-Poly1305 chaque cadre chiffré AEAD des messages de tunnel avec le <code>tunnelNonce</code> reçu et sa <code>inAEADKey</code></li>
+<li>Chiffre ChaCha20 le <code>tunnelNonce</code> avec le <code>nonceKey</code> reçu et le <code>obfsNonce</code></li>
+<li>Chiffre ChaCha20 chaque cadre de données chiffré du message de tunnel avec le <code>tunnelNonce</code> chiffré et sa <code>layerKey</code></li>
+<li>Chiffre ChaCha20-Poly1305 chaque cadre de données chiffré de message de tunnel avec le <code>tunnelNonce</code> chiffré et sa <code>outAEADKey</code></li>
+<li>Chiffre ChaCha20 le <code>obfsNonce</code> avec son <code>nonceKey</code> et le <code>tunnelNonce</code> chiffré</li>
+<li>Envoie le tuple {<code>nextTunnelId</code>, chiffré (<code>tunnelNonce</code> || <code>obfsNonce</code>), texte chiffré AEAD || MAC} au saut suivant.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// Pour vérification, les sauts de tunnel devraient vérifier le filtre de Bloom pour l&#39;unicité de chaque nonce reçu
+</span></span><span style="display:flex;"><span>  // Après vérification, défaire le(s) cadre(s) AEAD en déchiffrant ChaCha20-Poly1305 chaque cadre chiffré des messages de tunnel
+</span></span><span style="display:flex;"><span>  // avec le tunnelNonce reçu et inAEADKey 
+</span></span><span style="display:flex;"><span>  encTunMsg = ChaCha20-Poly1305-Decrypt(msg = encMsg reçu \|\| MAC, nonce = tunnelNonce reçu, key = inAEADKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Chiffre ChaCha20 le tunnelNonce avec le obfsNonce reçu et nonceKey du saut
+</span></span><span style="display:flex;"><span>  tunnelNonce = ChaCha20(msg = tunnelNonce reçu, nonce = obfsNonce reçu, key = nonceKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Chiffre ChaCha20 chaque cadre de données chiffré du message de tunnel avec le tunnelNonce chiffré et layerKey du saut
+</span></span><span style="display:flex;"><span>  encMsg = ChaCha20(msg = encTunMsg, nonce = tunnelNonce, key = layerKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Pour la protection AEAD, chiffre également ChaCha20-Poly1305 chaque cadre de données chiffré
+</span></span><span style="display:flex;"><span>  // avec le tunnelNonce chiffré et outAEADKey du saut
+</span></span><span style="display:flex;"><span>  (encMsg, MAC) = ChaCha20-Poly1305-Encrypt(msg = encMsg, nonce = tunnelNonce, key = outAEADKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Chiffre ChaCha20 le obfsNonce reçu avec le tunnelNonce chiffré et nonceKey du saut
+</span></span><span style="display:flex;"><span>  obfsNonce = ChaCha20(msg = obfsNonce, nonce = tunnelNonce, key = nonceKey)
+</span></span></code></pre></div><h3 id="traitement-du-point-de-terminaison-entrant">Traitement du Point de Terminaison Entrant</h3>
+<p>Pour les tunnels ChaCha20, le schéma suivant sera utilisé pour déchiffrer chaque message de tunnel :</p>
+<ul>
+<li>Valider les <code>tunnelNonce</code> et <code>obfsNonce</code> reçus indépendamment contre son filtre de Bloom</li>
+<li>Déchiffrer ChaCha20-Poly1305 le cadre de données chiffré en utilisant le <code>tunnelNonce</code> reçu et <code>inAEADKey</code></li>
+<li>Déchiffrer ChaCha20 le cadre de données chiffré en utilisant le <code>tunnelNonce</code> reçu et <code>layerKey</code> du saut</li>
+<li>Déchiffrer ChaCha20 le <code>obfsNonce</code> en utilisant le <code>nonceKey</code> du saut et le <code>tunnelNonce</code> reçu pour obtenir le <code>obfsNonce</code> précédent</li>
+<li>Déchiffrer ChaCha20 le <code>tunnelNonce</code> reçu en utilisant le <code>nonceKey</code> du saut et <code>obfsNonce</code> déchiffré pour obtenir le <code>tunnelNonce</code> précédent</li>
+<li>Déchiffrer ChaCha20 les données chiffrées en utilisant le <code>tunnelNonce</code> déchiffré et la <code>layerKey</code> du saut précédent</li>
+<li>Répéter les étapes pour déchiffrement des nonces et de la couche pour chaque saut dans le tunnel, jusqu&rsquo;à l&rsquo;IBGW</li>
+<li>La déchiffrement du cadre AEAD n&rsquo;est nécessaire que lors du premier tour</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// Pour le premier tour, déchiffre ChaCha20-Poly1305 chaque cadre de données chiffré + MAC
+</span></span><span style="display:flex;"><span>  // en utilisant le tunnelNonce reçu et inAEADKey
+</span></span><span style="display:flex;"><span>  msg = encTunMsg \|\| MAC
+</span></span><span style="display:flex;"><span>  tunnelNonce = tunnelNonce reçu
+</span></span><span style="display:flex;"><span>  encTunMsg = ChaCha20-Poly1305-Decrypt(msg, nonce = tunnelNonce, key = inAEADKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Répéter pour chaque saut dans le tunnel jusqu&#39;à l&#39;IBGW
+</span></span><span style="display:flex;"><span>  // Pour chaque tour, déchiffre ChaCha20 chaque chiffrement de couche de chaque message de cadre de données chiffré
+</span></span><span style="display:flex;"><span>  // Remplacer le tunnelNonce reçu par le tunnelNonce déchiffré du tour précédent pour chaque saut
+</span></span><span style="display:flex;"><span>  decMsg = ChaCha20(msg = encTunMsg, nonce = tunnelNonce, key = layerKey)
+</span></span><span style="display:flex;"><span>  obfsNonce = ChaCha20(msg = obfsNonce, nonce = tunnelNonce, key = nonceKey)
+</span></span><span style="display:flex;"><span>  tunnelNonce = ChaCha20(msg = tunnelNonce, nonce = obfsNonce, key = nonceKey)
+</span></span></code></pre></div><h3 id="analyse-de-sécurité-pour-le-chiffrement-de-couche-de-tunnel-chacha20chacha20-poly1305">Analyse de Sécurité pour le Chiffrement de Couche de Tunnel ChaCha20+ChaCha20-Poly1305</h3>
+<p>Passer d&rsquo;AES256/ECB+AES256/CBC à ChaCha20+ChaCha20-Poly1305 présente plusieurs avantages et de nouvelles considérations de sécurité.</p>
+<p>Les plus grandes considérations de sécurité à prendre en compte sont que les nonces ChaCha20 et ChaCha20-Poly1305 doivent être uniques par message, pendant la durée de vie de la clé utilisée.</p>
+<p>Ne pas utiliser des nonces uniques avec la même clé sur des messages différents casse ChaCha20 et ChaCha20-Poly1305.</p>
+<p>Utiliser un <code>obfsNonce</code> ajouté permet à l&rsquo;IBEP de déchiffrer le <code>tunnelNonce</code> pour chaque chiffrement de couche de saut, récupérant le nonce précédent.</p>
+<p>Le <code>obfsNonce</code> aux côtés du <code>tunnelNonce</code> ne révèle aucune nouvelle information aux sauts de tunnel, puisque le <code>obfsNonce</code> est chiffré en utilisant le <code>tunnelNonce</code> chiffré. Cela permet également à l&rsquo;IBEP de récupérer le <code>obfsNonce</code> précédent d&rsquo;une manière similaire à la récupération du <code>tunnelNonce</code>.</p>
+<p>Le plus grand avantage en matière de sécurité est qu&rsquo;il n&rsquo;y a pas d&rsquo;attaques de confirmation ou d&rsquo;oracle contre ChaCha20, et utiliser ChaCha20-Poly1305 entre les sauts ajoute une protection AEAD contre la manipulation de texte chiffré par des attaquants MITM hors bande.</p>
+<p>Il existe des attaques d&rsquo;oracle pratiques contre AES256/ECB + AES256/CBC, lorsque la clé est réutilisée (comme dans le chiffrement de couche de tunnel).</p>
+<p>Les attaques d&rsquo;oracle contre AES256/ECB ne fonctionneront pas, en raison du double chiffrement utilisé, et le chiffrement est effectué sur un seul bloc (l&rsquo;IV de tunnel).</p>
+<p>Les attaques d&rsquo;oracle de padding contre AES256/CBC ne fonctionneront pas, car aucun padding n&rsquo;est utilisé. Si la longueur du message de tunnel changeait jamais vers des longueurs non mod-16, AES256/CBC ne serait toujours pas vulnérable en raison du rejet des IV en doublon.</p>
+<p>Les deux attaques sont également bloquées en interdisant les multiples appels d&rsquo;oracle utilisant le même IV, les IV en doublon étant rejetés.</p>
+<h2 id="références">Références</h2>
+<ul>
+<li><a href="../../../fr/docs/specs/implementation/">Tunnel-Implementation</a>
+</li>
+</ul>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    <a href="../../../fr/proposals/" class="page-nav-link">
+                        ← Back to Proposals
+                    </a>
+                    
+                    
+                    
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                            
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <a href="../../../proposals/153-chacha20-layer-encryption.txt" class="page-nav-link" download>
+                        Download Source (.txt)
+                    </a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.proposals-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.proposal-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.proposal-title-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.proposal-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-text);
+}
+
+.proposal-number {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+ 
+.proposal-meta-box {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.proposal-status {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+ 
+.status-open {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-open {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-accepted {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-accepted {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-finished {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-finished {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-closed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-closed {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.dark .status-rejected {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.status-draft,
+.status-needs-revision,
+.status-dead,
+.status-needs-research {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-draft,
+.dark .status-needs-revision,
+.dark .status-dead,
+.dark .status-needs-research {
+    background: #78350f;
+    color: #fde047;
+}
+
+.status-meta,
+.status-informational,
+.status-reserve {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+.dark .status-meta,
+.dark .status-informational,
+.dark .status-reserve {
+    background: #581c87;
+    color: #e879f9;
+}
+
+ 
+.proposal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.info-value {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+ 
+.proposal-relationships {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-md);
+}
+
+.relationship {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.relationship:last-child {
+    margin-bottom: 0;
+}
+
+.relationship-label {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    min-width: 120px;
+}
+
+.relationship-value {
+    color: var(--color-text);
+}
+
+ 
+.proposal-layout {
+    display: block;
+}
+
+.proposal-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.proposal-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.proposal-main {
+    min-width: 0;
+}
+
+ 
+.proposal-content {
+    line-height: 1.8;
+    color: var(--color-text);
+    max-width: 900px;
+}
+
+.proposal-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content ul,
+.proposal-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.proposal-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.proposal-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.proposal-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.proposal-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.proposal-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin-left: 0;
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+.proposal-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.proposal-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+.proposal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content table th {
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.proposal-content table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.proposal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+ 
+.page-nav {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.page-nav-link {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+ 
+@media (max-width: 1024px) {
+    .proposal-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .proposal-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .proposal-title {
+        font-size: 1.75rem;
+    }
+
+    .proposal-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Restez informé des actualités I2P :</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Entrez votre email" required>
+                            <button type="submit">S&#39;abonner</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Liens Rapides</h3>
+                <ul>
+                    <li><a href="../../../fr/financial-support/">Faire un don</a></li>
+                    <li><a href="../../../fr/docs/overview/intro/">Introduction à I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Communauté</h3>
+                <ul>
+                    <li><a href="../../../fr/get-involved/">Participez</a></li>
+                    <li><a href="../../../fr/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Forums Officiels</a></li>
+                    <li><a href="../../../fr/contact/">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Ressources</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Mesures I2P</a></li>
+                    <li><a href="../../../fr/papers/">Recherche</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Le Projet Internet Invisible. Sous licence Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../fr/privacy/">Confidentialité</a>
+                <a href="../../../fr/terms/">Conditions d&#39;utilisation</a>
+                <a href="../../../fr/about/media/">Presse</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Fermer">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Sondage de la communauté</h2>
+            <p class="modal-subtitle">Nous aimerions avoir de vos nouvelles</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Votre vote aide à façonner l&#39;avenir d&#39;I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

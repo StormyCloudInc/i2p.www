@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Instalación de I2P en macOS (El Camino Largo) | I2P - El Proyecto Internet Invisible</title>
+
+    <meta name="description" content="Guía paso a paso para instalar manualmente I2P y sus dependencias en macOS">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Instalación de I2P en macOS (El Camino Largo) | I2P - El Proyecto Internet Invisible">
+    <meta property="og:description" content="Guía paso a paso para instalar manualmente I2P y sus dependencias en macOS">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/es/docs/guides/instalaci%C3%B3n-de-i2p-en-macos-el-camino-largo/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Sitio Beta I2P Ahora Activo - Reportar problemas por correo a stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Cerrar banner" title="Cerrar banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../es/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../es/about/" class="">Acerca de</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../es/about/">Resumen</a></li>
+                            <li><a href="../../../../es/papers/">Artículos de Investigación</a></li>
+                            <li><a href="../../../../es/about/media/">Prensa</a></li>
+                            <li><a href="../../../../es/contact/">Contáctanos</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../es/docs/" class="active">Documentos</a></li>
+                    <li><a href="../../../../es/downloads/" class="">Descargas</a></li>
+                    <li><a href="../../../../es/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../es/get-involved/" class="">Participa</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../es/get-involved/">Resumen</a></li>
+                            <li><a href="../../../../es/feedback/">Sugerencias de Funciones</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">es</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/guides/installing-i2p-on-macos-the-long-way/"
+                                class="lang-option">Inglés</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/guides/instalaci%C3%B3n-de-i2p-en-macos-el-camino-largo/"
+                                class="lang-option active">Español</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/guides/macos%EC%97%90-i2p-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0-%EC%9E%90%EC%84%B8%ED%95%9C-%EB%B0%A9%EB%B2%95/"
+                                class="lang-option">Coreano</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/guides/%E5%9C%A8-macos-%E4%B8%8A%E5%AE%89%E8%A3%85-i2p%E8%AF%A6%E7%BB%86%E6%96%B9%E5%BC%8F/"
+                                class="lang-option">Chino</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/guides/%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-i2p-%D0%BD%D0%B0-macos-%D0%B4%D0%BB%D0%B8%D0%BD%D0%BD%D1%8B%D0%B9-%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1/"
+                                class="lang-option">Ruso</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/guides/instalace-i2p-na-macos-dlouh%C3%A1-cesta/"
+                                class="lang-option">Checo</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/guides/i2p-auf-macos-installieren-der-lange-weg/"
+                                class="lang-option">Alemán</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/guides/installer-i2p-sur-macos-la-m%C3%A9thode-longue/"
+                                class="lang-option">Francés</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/guides/macosta-i2p-kurulumu-uzun-yol/"
+                                class="lang-option">Turco</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/guides/c%C3%A0i-%C4%91%E1%BA%B7t-i2p-tr%C3%AAn-macos-c%C3%A1ch-th%E1%BB%A7-c%C3%B4ng/"
+                                class="lang-option">Vietnamita</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/guides/macos-%E0%A4%AA%E0%A4%B0-i2p-%E0%A4%87%E0%A4%82%E0%A4%B8%E0%A5%8D%E0%A4%9F%E0%A5%89%E0%A4%B2-%E0%A4%95%E0%A4%B0%E0%A4%A8%E0%A4%BE-%E0%A4%B5%E0%A4%BF%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%83%E0%A4%A4-%E0%A4%A4%E0%A4%B0%E0%A5%80%E0%A4%95%E0%A4%BE/"
+                                class="lang-option">Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/guides/%D8%AA%D8%AB%D8%A8%D9%8A%D8%AA-i2p-%D8%B9%D9%84%D9%89-macos-%D8%A7%D9%84%D8%B7%D8%B1%D9%8A%D9%82%D8%A9-%D8%A7%D9%84%D8%B7%D9%88%D9%8A%D9%84%D8%A9/"
+                                class="lang-option">Árabe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/guides/instalando-o-i2p-no-macos-o-caminho-longo/"
+                                class="lang-option">Portugués</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../es/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../es/downloads/" class="btn btn-primary">Obtener I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#lo-que-necesitarás">Lo que necesitarás</a></li>
+    <li><a href="#descripción-general">Descripción general</a></li>
+    <li><a href="#primera-parte-instalar-java">Primera Parte: Instalar Java</a>
+      <ul>
+        <li><a href="#step-1-download-java">Step 1: Download Java</a></li>
+        <li><a href="#step-2-run-the-installer">Step 2: Run the Installer</a></li>
+        <li><a href="#step-3-allow-installation">Step 3: Allow Installation</a></li>
+        <li><a href="#paso-1-descargar-java">Paso 1: Descargar Java</a></li>
+        <li><a href="#paso-2-ejecutar-el-instalador">Paso 2: Ejecutar el Instalador</a></li>
+        <li><a href="#paso-3-permitir-la-instalación">Paso 3: Permitir la Instalación</a></li>
+      </ul>
+    </li>
+    <li><a href="#part-two-download-and-install-i2p">Part Two: Download and Install I2P</a>
+      <ul>
+        <li><a href="#paso-4-instalar-java">Paso 4: Instalar Java</a></li>
+        <li><a href="#paso-5-espera-a-que-se-complete-la-instalación">Paso 5: Espera a que se Complete la Instalación</a></li>
+        <li><a href="#paso-6-instalación-completa">Paso 6: Instalación Completa</a></li>
+        <li><a href="#step-4-important-notice">Step 4: Important Notice</a></li>
+        <li><a href="#paso-1-descargar-i2p">Paso 1: Descargar I2P</a></li>
+        <li><a href="#paso-2-ejecutar-el-instalador-1">Paso 2: Ejecutar el Instalador</a></li>
+        <li><a href="#paso-3-pantalla-de-bienvenida">Paso 3: Pantalla de Bienvenida</a></li>
+        <li><a href="#paso-4-aviso-importante">Paso 4: Aviso Importante</a></li>
+        <li><a href="#paso-5-acuerdo-de-licencia">Paso 5: Acuerdo de Licencia</a></li>
+        <li><a href="#paso-6-seleccionar-el-directorio-de-instalación">Paso 6: Seleccionar el Directorio de Instalación</a></li>
+        <li><a href="#paso-7-seleccionar-componentes">Paso 7: Seleccionar Componentes</a></li>
+        <li><a href="#paso-8-iniciar-la-instalación">Paso 8: Iniciar la Instalación</a></li>
+      </ul>
+    </li>
+    <li><a href="#part-three-configure-i2p-app">Part Three: Configure I2P App</a>
+      <ul>
+        <li><a href="#paso-9-instalación-de-archivos">Paso 9: Instalación de Archivos</a></li>
+        <li><a href="#paso-10-generar-scripts-de-lanzamiento">Paso 10: Generar Scripts de Lanzamiento</a></li>
+        <li><a href="#paso-11-atajos-de-instalación">Paso 11: Atajos de Instalación</a></li>
+      </ul>
+    </li>
+    <li><a href="#part-four-configure-i2p-bandwidth">Part Four: Configure I2P Bandwidth</a>
+      <ul>
+        <li><a href="#paso-12-instalación-completada">Paso 12: Instalación Completada</a></li>
+        <li><a href="#step-2-welcome-wizard">Step 2: Welcome Wizard</a></li>
+        <li><a href="#paso-1-abrir-la-carpeta-de-aplicaciones">Paso 1: Abrir la Carpeta de Aplicaciones</a></li>
+        <li><a href="#paso-2-encuentra-el-lanzador-de-i2p">Paso 2: Encuentra el Lanzador de I2P</a></li>
+        <li><a href="#paso-3-agregar-al-dock">Paso 3: Agregar al Dock</a></li>
+        <li><a href="#step-6-test-results">Step 6: Test Results</a></li>
+        <li><a href="#paso-1-iniciar-i2p">Paso 1: Iniciar I2P</a></li>
+        <li><a href="#paso-2-asistente-de-bienvenida">Paso 2: Asistente de Bienvenida</a></li>
+      </ul>
+    </li>
+    <li><a href="#getting-started-with-i2p">Getting Started with I2P</a>
+      <ul>
+        <li><a href="#paso-3-idioma-y-tema">Paso 3: Idioma y Tema</a></li>
+      </ul>
+    </li>
+    <li><a href="#re-running-the-setup-wizard">Re-running the Setup Wizard</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a>
+      <ul>
+        <li><a href="#paso-4-información-de-prueba-de-ancho-de-banda">Paso 4: Información de Prueba de Ancho de Banda</a></li>
+        <li><a href="#paso-5-ejecutar-prueba-de-ancho-de-banda">Paso 5: Ejecutar Prueba de Ancho de Banda</a></li>
+        <li><a href="#paso-6-resultados-de-las-pruebas">Paso 6: Resultados de las Pruebas</a></li>
+      </ul>
+    </li>
+    <li><a href="#parte-dos-descargar-e-instalar-i2p">Parte Dos: Descargar e Instalar I2P</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../es/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../es/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../es/docs/guides/">Guides</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Instalación de I2P en macOS (El Camino Largo)</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Esta traducción fue generada mediante aprendizaje automático y puede no ser 100% precisa.</span>
+    
+    
+    <a href="../../../../en/docs/guides/installing-i2p-on-macos-the-long-way/" class="disclaimer-link">Ver versión en inglés</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Instalación de I2P en macOS (El Camino Largo)</h1>
+                    
+                        <p class="article-description">Guía paso a paso para instalar manualmente I2P y sus dependencias en macOS</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="lo-que-necesitarás">Lo que necesitarás</h2>
+<ul>
+<li>Una Mac con macOS 10.14 (Mojave) o posterior</li>
+<li>Acceso de administrador para instalar aplicaciones</li>
+<li>Aproximadamente 15-20 minutos de tiempo</li>
+<li>Conexión a Internet para descargar los instaladores</li>
+</ul>
+<h2 id="descripción-general">Descripción general</h2>
+<p>Este proceso de instalación tiene cuatro pasos principales:</p>
+<ol>
+<li><strong>Instalar Java</strong> - Descarga e instala Oracle Java Runtime Environment</li>
+<li><strong>Instalar I2P</strong> - Descarga y ejecuta el instalador de I2P</li>
+<li><strong>Configurar la Aplicación I2P</strong> - Configura el lanzador y agrégalo a tu dock</li>
+<li><strong>Configurar el Ancho de Banda de I2P</strong> - Ejecuta el asistente de configuración para optimizar tu conexión</li>
+</ol>
+<h2 id="primera-parte-instalar-java">Primera Parte: Instalar Java</h2>
+<p>I2P requiere Java para funcionar. Si ya tienes Java 8 o posterior instalado, puedes <a href="#part-two-download-and-install-i2p">saltar a la Parte Dos</a>
+.</p>
+<h3 id="step-1-download-java">Step 1: Download Java</h3>
+<p>Visita la <a href="https://www.oracle.com/java/technologies/downloads/">página de descarga de Oracle Java</a>
+ y descarga el instalador de macOS para Java 8 o posterior.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/0-jre.png" 
+    alt="Descargar Oracle Java para macOS"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="step-2-run-the-installer">Step 2: Run the Installer</h3>
+<p>Localiza el archivo <code>.dmg</code> descargado en tu carpeta de Descargas y haz doble clic para abrirlo.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/1-jre.png" 
+    alt="Abrir el instalador de Java"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="step-3-allow-installation">Step 3: Allow Installation</h3>
+<p>macOS puede mostrar una advertencia de seguridad porque el instalador proviene de un desarrollador identificado. Haz clic en <strong>Abrir</strong> para continuar.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/2-jre.png" 
+    alt="Permite que el instalador continúe"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-1-descargar-java">Paso 1: Descargar Java</h3>
+<p>Haz clic en <strong>Instalar</strong> para iniciar el proceso de instalación de Java.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/3-jre.png" 
+    alt="Comenzar a instalar Java"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-2-ejecutar-el-instalador">Paso 2: Ejecutar el Instalador</h3>
+<p>El instalador copiará archivos y configurará Java en su sistema. Esto generalmente toma de 1 a 2 minutos.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/4-jre.png" 
+    alt="Espera a que se complete el instalador"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-3-permitir-la-instalación">Paso 3: Permitir la Instalación</h3>
+<p>Cuando veas el mensaje de éxito, ¡Java está instalado! Haz clic en <strong>Cerrar</strong> para finalizar.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/5-jre.png" 
+    alt="Instalación de Java completa"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h2 id="part-two-download-and-install-i2p">Part Two: Download and Install I2P</h2>
+<p>Ahora que Java está instalado, puedes instalar el router I2P.</p>
+<h3 id="paso-4-instalar-java">Paso 4: Instalar Java</h3>
+<p>Visita la <a href="../../../../es/downloads/">página de Descargas</a>
+ y descarga el instalador de <strong>I2P para Unix/Linux/BSD/Solaris</strong> (el archivo <code>.jar</code>).</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/0-i2p.png" 
+    alt="Descargar el instalador de I2P"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-5-espera-a-que-se-complete-la-instalación">Paso 5: Espera a que se Complete la Instalación</h3>
+<p>Haz doble clic en el archivo descargado <code>i2pinstall_X.X.X.jar</code>. El instalador se iniciará y te pedirá que selecciones tu idioma preferido.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/1-i2p.png" 
+    alt="Selecciona tu idioma"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-6-instalación-completa">Paso 6: Instalación Completa</h3>
+<p>Lee el mensaje de bienvenida y haz clic en <strong>Next</strong> para continuar.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/2-i2p.png" 
+    alt="Introducción del instalador"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="step-4-important-notice">Step 4: Important Notice</h3>
+<p>El instalador mostrará un aviso importante sobre las actualizaciones. Las actualizaciones de I2P están <strong>firmadas de extremo a extremo</strong> y verificadas, aunque este instalador en sí mismo no está firmado. Haz clic en <strong>Siguiente</strong>.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/3-i2p.png" 
+    alt="Aviso importante sobre actualizaciones"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-1-descargar-i2p">Paso 1: Descargar I2P</h3>
+<p>Lea el acuerdo de licencia de I2P (licencia estilo BSD). Haga clic en <strong>Siguiente</strong> para aceptar.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/4-i2p.png" 
+    alt="Acuerdo de licencia"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-2-ejecutar-el-instalador-1">Paso 2: Ejecutar el Instalador</h3>
+<p>Elige dónde instalar I2P. Se recomienda la ubicación predeterminada (<code>/Applications/i2p</code>). Haz clic en <strong>Siguiente</strong>.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/5-i2p.png" 
+    alt="Seleccionar directorio de instalación"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-3-pantalla-de-bienvenida">Paso 3: Pantalla de Bienvenida</h3>
+<p>Deja todos los componentes seleccionados para una instalación completa. Haz clic en <strong>Siguiente</strong>.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/6-i2p.png" 
+    alt="Seleccionar componentes a instalar"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-4-aviso-importante">Paso 4: Aviso Importante</h3>
+<p>Revisa tus opciones y haz clic en <strong>Siguiente</strong> para comenzar a instalar I2P.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/7-i2p.png" 
+    alt="Iniciar la instalación"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-5-acuerdo-de-licencia">Paso 5: Acuerdo de Licencia</h3>
+<p>El instalador copiará los archivos de I2P a tu sistema. Esto toma aproximadamente 1-2 minutos.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/8-i2p.png" 
+    alt="Instalación en progreso"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-6-seleccionar-el-directorio-de-instalación">Paso 6: Seleccionar el Directorio de Instalación</h3>
+<p>El instalador crea scripts de lanzamiento para iniciar I2P.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/9-i2p.png" 
+    alt="Generando scripts de lanzamiento"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-7-seleccionar-componentes">Paso 7: Seleccionar Componentes</h3>
+<p>El instalador ofrece crear accesos directos en el escritorio y entradas en el menú. Realiza tus selecciones y haz clic en <strong>Siguiente</strong>.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/10-i2p.png" 
+    alt="Crear accesos directos"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-8-iniciar-la-instalación">Paso 8: Iniciar la Instalación</h3>
+<p>¡Éxito! I2P está ahora instalado. Haz clic en <strong>Listo</strong> para finalizar.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/11-i2p.png" 
+    alt="Instalación completa"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h2 id="part-three-configure-i2p-app">Part Three: Configure I2P App</h2>
+<p>Ahora hagamos que I2P sea fácil de iniciar agregándolo a tu carpeta de Aplicaciones y al Dock.</p>
+<h3 id="paso-9-instalación-de-archivos">Paso 9: Instalación de Archivos</h3>
+<p>Abre Finder y navega hasta tu carpeta <strong>Applications</strong>.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/0-conf.png" 
+    alt="Abrir la carpeta Aplicaciones"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-10-generar-scripts-de-lanzamiento">Paso 10: Generar Scripts de Lanzamiento</h3>
+<p>Busca la carpeta <strong>I2P</strong> o la aplicación <strong>Start I2P Router</strong> dentro de <code>/Applications/i2p/</code>.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/1-conf.png" 
+    alt="Encuentra el lanzador de I2P"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-11-atajos-de-instalación">Paso 11: Atajos de Instalación</h3>
+<p>Arrastra la aplicación <strong>Start I2P Router</strong> a tu Dock para acceder fácilmente. También puedes crear un alias en tu escritorio.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/2-conf.png" 
+    alt="Añadir I2P a tu Dock"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p><strong>Consejo</strong>: Haz clic derecho en el icono de I2P en el Dock y selecciona <strong>Opciones → Mantener en el Dock</strong> para hacerlo permanente.</p>
+<h2 id="part-four-configure-i2p-bandwidth">Part Four: Configure I2P Bandwidth</h2>
+<p>Cuando inicies I2P por primera vez, pasarás por un asistente de configuración para ajustar tu configuración de ancho de banda. Esto ayuda a optimizar el rendimiento de I2P para tu conexión.</p>
+<h3 id="paso-12-instalación-completada">Paso 12: Instalación Completada</h3>
+<p>Haz clic en el icono de I2P en tu Dock (o haz doble clic en el lanzador). Tu navegador web predeterminado se abrirá en la Consola del Router I2P.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/0-wiz.png" 
+    alt="Pantalla de bienvenida de la Consola del Router I2P"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="step-2-welcome-wizard">Step 2: Welcome Wizard</h3>
+<p>El asistente de configuración te dará la bienvenida. Haz clic en <strong>Siguiente</strong> para comenzar a configurar I2P.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/1-wiz.png" 
+    alt="Introducción del asistente de configuración"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-1-abrir-la-carpeta-de-aplicaciones">Paso 1: Abrir la Carpeta de Aplicaciones</h3>
+<p>Selecciona tu <strong>idioma de interfaz</strong> preferido y elige entre el tema <strong>claro</strong> u <strong>oscuro</strong>. Haz clic en <strong>Siguiente</strong>.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/2-wiz.png" 
+    alt="Seleccionar idioma y tema"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-2-encuentra-el-lanzador-de-i2p">Paso 2: Encuentra el Lanzador de I2P</h3>
+<p>El asistente explicará la prueba de ancho de banda. Esta prueba se conecta al servicio <strong>M-Lab</strong> para medir la velocidad de tu internet. Haz clic en <strong>Siguiente</strong> para continuar.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/3-wiz.png" 
+    alt="Explicación de la prueba de ancho de banda"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-3-agregar-al-dock">Paso 3: Agregar al Dock</h3>
+<p>Haz clic en <strong>Run Test</strong> para medir tus velocidades de carga y descarga. La prueba tarda aproximadamente 30-60 segundos.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/4-wiz.png" 
+    alt="Ejecutando la prueba de ancho de banda"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="step-6-test-results">Step 6: Test Results</h3>
+<p>Revisa los resultados de tu prueba. I2P recomendará configuraciones de ancho de banda basadas en la velocidad de tu conexión.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/5-wiz.png" 
+    alt="Resultados de la prueba de ancho de banda"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-1-iniciar-i2p">Paso 1: Iniciar I2P</h3>
+<p>Elige cuánto ancho de banda deseas compartir con la red I2P:</p>
+<ul>
+<li><strong>Automático</strong> (Recomendado): I2P gestiona el ancho de banda según tu uso</li>
+<li><strong>Limitado</strong>: Establece límites específicos de subida/descarga</li>
+<li><strong>Ilimitado</strong>: Comparte tanto como sea posible (para conexiones rápidas)</li>
+</ul>
+<p>Haz clic en <strong>Siguiente</strong> para guardar tu configuración.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/macos-install/6-wiz.png" 
+    alt="Configurar compartición de ancho de banda"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="paso-2-asistente-de-bienvenida">Paso 2: Asistente de Bienvenida</h3>
+<p>¡Tu router I2P ahora está configurado y en funcionamiento! La consola del router mostrará el estado de tu conexión y te permitirá navegar por sitios I2P.</p>
+<h2 id="getting-started-with-i2p">Getting Started with I2P</h2>
+<p>Ahora que I2P está instalado y configurado, puedes:</p>
+<ol>
+<li><strong>Navega sitios I2P</strong>: Visita la <a href="http://127.0.0.1:7657/home">página principal de I2P</a>
+ para ver enlaces a servicios populares de I2P</li>
+<li><strong>Configura tu navegador</strong>: Configura un <a href="../../../../es/docs/guides/browser-config">perfil de navegador</a>
+ para acceder a sitios <code>.i2p</code></li>
+<li><strong>Explora servicios</strong>: Descubre correo electrónico I2P, foros, compartición de archivos y más</li>
+<li><strong>Monitorea tu router</strong>: La <a href="http://127.0.0.1:7657/console">consola</a>
+ muestra el estado de tu red y estadísticas</li>
+</ol>
+<h3 id="paso-3-idioma-y-tema">Paso 3: Idioma y Tema</h3>
+<ul>
+<li><strong>Router Console</strong>: <a href="http://127.0.0.1:7657/">http://127.0.0.1:7657/</a>
+</li>
+<li><strong>Configuración</strong>: <a href="http://127.0.0.1:7657/config">http://127.0.0.1:7657/config</a>
+</li>
+<li><strong>Libreta de Direcciones</strong>: <a href="http://127.0.0.1:7657/susidns/addressbook">http://127.0.0.1:7657/susidns/addressbook</a>
+</li>
+<li><strong>Configuración de Ancho de Banda</strong>: <a href="http://127.0.0.1:7657/config">http://127.0.0.1:7657/config</a>
+</li>
+</ul>
+<h2 id="re-running-the-setup-wizard">Re-running the Setup Wizard</h2>
+<p>Si deseas cambiar tu configuración de ancho de banda o reconfigurar I2P más tarde, puedes volver a ejecutar el asistente de bienvenida desde la Consola del Router:</p>
+<ol>
+<li>Ve al <a href="http://127.0.0.1:7657/welcome">Asistente de Configuración de I2P</a>
+</li>
+<li>Sigue los pasos del asistente nuevamente</li>
+</ol>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="paso-4-información-de-prueba-de-ancho-de-banda">Paso 4: Información de Prueba de Ancho de Banda</h3>
+<ul>
+<li><strong>Verificar Java</strong>: Asegúrate de que Java esté instalado ejecutando <code>java -version</code> en Terminal</li>
+<li><strong>Verificar permisos</strong>: Asegúrate de que la carpeta de I2P tenga los permisos correctos</li>
+<li><strong>Verificar logs</strong>: Revisa <code>~/.i2p/wrapper.log</code> para mensajes de error</li>
+</ul>
+<h3 id="paso-5-ejecutar-prueba-de-ancho-de-banda">Paso 5: Ejecutar Prueba de Ancho de Banda</h3>
+<ul>
+<li>Asegúrate de que I2P esté en ejecución (verifica la Router Console)</li>
+<li>Configura los ajustes de proxy de tu navegador para usar el proxy HTTP <code>127.0.0.1:4444</code></li>
+<li>Espera de 5 a 10 minutos después de iniciar para que I2P se integre en la red</li>
+</ul>
+<h3 id="paso-6-resultados-de-las-pruebas">Paso 6: Resultados de las Pruebas</h3>
+<ul>
+<li>Ejecuta la prueba de ancho de banda nuevamente y ajusta tu configuración</li>
+<li>Asegúrate de estar compartiendo algo de ancho de banda con la red</li>
+<li>Verifica el estado de tu conexión en la Router Console</li>
+</ul>
+<h2 id="parte-dos-descargar-e-instalar-i2p">Parte Dos: Descargar e Instalar I2P</h2>
+<p>Para eliminar I2P de tu Mac:</p>
+<ol>
+<li>Cierra el router I2P si está en ejecución</li>
+<li>Elimina la carpeta <code>/Applications/i2p</code></li>
+<li>Elimina la carpeta <code>~/.i2p</code> (tu configuración y datos de I2P)</li>
+<li>Elimina el icono de I2P de tu Dock</li>
+</ol>
+<h2 id="next-steps">Next Steps</h2>
+<ul>
+<li><strong>Únete a la comunidad</strong>: Visita <a href="http://i2pforum.net">i2pforum.net</a>
+ o consulta I2P en Reddit</li>
+<li><strong>Aprende más</strong>: Lee la <a href="../../../../en/docs">documentación de I2P</a>
+ para entender cómo funciona la red</li>
+<li><strong>Participa</strong>: Considera <a href="../../../../en/get-involved">contribuir al desarrollo de I2P</a>
+ o ejecutar infraestructura</li>
+</ul>
+<p>¡Felicidades! Ahora eres parte de la red I2P. ¡Bienvenido a internet invisible!</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../es/docs/guides/instalaci%C3%B3n-de-i2p-en-windows/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">Instalación de I2P en Windows</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../es/docs/guides/instalaci%C3%B3n-de-i2p-en-debian-y-ubuntu/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">Instalación de I2P en Debian y Ubuntu</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/es/docs/guides/macos-install.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Mantente informado con las noticias de I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Introduce tu correo electrónico" required>
+                            <button type="submit">Suscribirse</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="../../../../es/financial-support/">Donar</a></li>
+                    <li><a href="../../../../es/docs/overview/intro/">Introducción a I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Comunidad</h3>
+                <ul>
+                    <li><a href="../../../../es/get-involved/">Participa</a></li>
+                    <li><a href="../../../../es/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Foros Oficiales</a></li>
+                    <li><a href="../../../../es/contact/">Contacto</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Recursos</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Métricas de I2P</a></li>
+                    <li><a href="../../../../es/papers/">Investigación</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 El Proyecto de Internet Invisible. Licenciado bajo Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../es/privacy/">Privacidad</a>
+                <a href="../../../../es/terms/">Términos</a>
+                <a href="../../../../es/about/media/">Prensa</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Encuesta de la comunidad</h2>
+            <p class="modal-subtitle">Nos encantaría saber de ti</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Tu voto ayuda a dar forma al futuro de I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

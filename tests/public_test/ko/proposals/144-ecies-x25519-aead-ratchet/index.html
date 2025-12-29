@@ -1,0 +1,3748 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>ECIES-X25519-AEAD-Ratchet | I2P - 보이지 않는 인터넷 프로젝트</title>
+
+    <meta name="description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="ECIES-X25519-AEAD-Ratchet | I2P - 보이지 않는 인터넷 프로젝트">
+    <meta property="og:description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/ko/proposals/144-ecies-x25519-aead-ratchet/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P 베타 사이트 현재 운영 중 문의사항은 stormycloud@mail.i2p로 이메일 주세요</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="배너 닫기" title="배너 닫기">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../ko/" class="logo-link">
+                    <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../ko/about/" class="">소개</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../ko/about/">개요</a></li>
+                            <li><a href="../../../ko/papers/">연구 논문</a></li>
+                            <li><a href="../../../ko/about/media/">보도자료</a></li>
+                            <li><a href="../../../ko/contact/">문의하기</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../ko/docs/" class="">문서</a></li>
+                    <li><a href="../../../ko/downloads/" class="">다운로드</a></li>
+                    <li><a href="../../../ko/blog/" class="">블로그</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../ko/get-involved/" class="">참여하기</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../ko/get-involved/">개요</a></li>
+                            <li><a href="../../../ko/feedback/">기능 제안</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">ko</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../en/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">영어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../es/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">스페인어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ko/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option active">한국어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../zh/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">중국어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ru/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">러시아어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../cs/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">체코어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../de/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">독일어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../fr/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">프랑스어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../tr/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">터키어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../vi/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">베트남어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../hi/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">힌디어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ar/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">아랍어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../pt/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">포르투갈어</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../ko/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../ko/downloads/" class="btn btn-primary">I2P 다운로드</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+<div class="proposals-page">
+    <div class="container">
+        
+        <nav class="breadcrumbs">
+            <a href="../../../ko/">Home</a>
+            <span class="separator">/</span>
+            <a href="../../../ko/proposals/">Proposals</a>
+            <span class="separator">/</span>
+            <span class="current">ECIES-X25519-AEAD-Ratchet</span>
+        </nav>
+
+        
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">이 번역은 기계 학습을 사용하여 생성되었으며 100% 정확하지 않을 수 있습니다.</span>
+    
+    
+    <a href="../../../en/proposals/144-ecies-x25519-aead-ratchet/" class="disclaimer-link">영어 버전 보기</a>
+    
+</div>
+
+
+
+        
+        <header class="proposal-header">
+            <div class="proposal-title-section">
+                <h1 class="proposal-title">ECIES-X25519-AEAD-Ratchet</h1>
+                <div class="proposal-number">Proposal 144</div>
+            </div>
+
+            
+            <div class="proposal-meta-box">
+                <div class="proposal-status status-닫힘">
+                    닫힘
+                </div>
+
+                
+                <div class="proposal-info-grid">
+                    
+                    <div class="info-item">
+                        <span class="info-label">Author</span>
+                        <span class="info-value">zzz, chisana, orignal</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Created</span>
+                        <span class="info-value">2018-11-22</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Last Updated</span>
+                        <span class="info-value">2025-03-05</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Target Version</span>
+                        <span class="info-value">0.9.46</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Implemented In</span>
+                        <span class="info-value">0.9.46</span>
+                    </div>
+                    
+                </div>
+
+                
+                
+            </div>
+        </header>
+
+        
+        <div class="proposal-layout proposal-layout--with-toc">
+            
+            
+            <aside class="proposal-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#참고">참고</a></li>
+    <li><a href="#개요">개요</a>
+      <ul>
+        <li><a href="#current-elgamal-uses">Current ElGamal Uses</a></li>
+        <li><a href="#enctypes-in-key-certs">EncTypes in Key Certs</a></li>
+        <li><a href="#현재-elgamal-사용">현재 ElGamal 사용</a></li>
+        <li><a href="#key-cert의-enctypes">Key Cert의 EncTypes</a></li>
+        <li><a href="#비대칭-암호화-사용법">비대칭 암호화 사용법</a></li>
+        <li><a href="#목표">목표</a></li>
+        <li><a href="#비목표--범위-외">비목표 / 범위 외</a></li>
+      </ul>
+    </li>
+    <li><a href="#detailed-proposal">Detailed Proposal</a>
+      <ul>
+        <li><a href="#정당화">정당화</a></li>
+        <li><a href="#위협-모델">위협 모델</a></li>
+        <li><a href="#crypto-type">Crypto Type</a></li>
+        <li><a href="#암호화-설계-요약">암호화 설계 요약</a></li>
+        <li><a href="#i2p를-위한-새로운-암호화-기본-요소">I2P를 위한 새로운 암호화 기본 요소</a></li>
+        <li><a href="#암호화-유형">암호화 유형</a></li>
+        <li><a href="#noise-protocol-framework">Noise Protocol Framework</a></li>
+        <li><a href="#프레임워크-추가-사항">프레임워크 추가 사항</a></li>
+        <li><a href="#핸드셰이크-패턴">핸드셰이크 패턴</a></li>
+        <li><a href="#세션">세션</a></li>
+        <li><a href="#세션-컨텍스트">세션 컨텍스트</a></li>
+        <li><a href="#인바운드-및-아웃바운드-세션-페어링">인바운드 및 아웃바운드 세션 페어링</a></li>
+        <li><a href="#세션-및-목적지-바인딩">세션 및 목적지 바인딩</a></li>
+        <li><a href="#바인딩과-페어링의-이점">바인딩과 페어링의 이점</a></li>
+        <li><a href="#메시지-ack">메시지 ACK</a></li>
+        <li><a href="#세션-타임아웃">세션 타임아웃</a></li>
+        <li><a href="#멀티캐스트">멀티캐스트</a></li>
+        <li><a href="#정의">정의</a></li>
+        <li><a href="#1-메시지-형식">1) 메시지 형식</a></li>
+        <li><a href="#현재-메시지-형식-검토">현재 메시지 형식 검토</a></li>
+        <li><a href="#암호화된-데이터-형식-검토">암호화된 데이터 형식 검토</a></li>
+        <li><a href="#새로운-세션-태그와-signal과의-비교">새로운 세션 태그와 Signal과의 비교</a></li>
+        <li><a href="#1a-새로운-세션-형식">1a) 새로운 세션 형식</a></li>
+        <li><a href="#1b-새로운-세션-형식-바인딩-포함">1b) 새로운 세션 형식 (바인딩 포함)</a></li>
+        <li><a href="#새로운-세션-임시-키">새로운 세션 임시 키</a></li>
+        <li><a href="#정적-키">정적 키</a></li>
+        <li><a href="#페이로드">페이로드</a></li>
+        <li><a href="#1c-새로운-세션-형식-바인딩-없음">1c) 새로운 세션 형식 (바인딩 없음)</a></li>
+        <li><a href="#새-세션-임시-키">새 세션 임시 키</a></li>
+        <li><a href="#flags-section-복호화된-데이터">Flags Section 복호화된 데이터</a></li>
+        <li><a href="#페이로드-1">페이로드</a></li>
+        <li><a href="#1d-일회성-형식-바인딩이나-세션-없음">1d) 일회성 형식 (바인딩이나 세션 없음)</a></li>
+        <li><a href="#새-세션-일회용-키">새 세션 일회용 키</a></li>
+        <li><a href="#flags-section-복호화된-데이터-1">Flags Section 복호화된 데이터</a></li>
+        <li><a href="#페이로드-2">페이로드</a></li>
+        <li><a href="#1f-새-세션-메시지용-kdf들">1f) 새 세션 메시지용 KDF들</a></li>
+        <li><a href="#초기-chainkey를-위한-kdf">초기 ChainKey를 위한 KDF</a></li>
+        <li><a href="#플래그정적-키-섹션-암호화된-내용을-위한-kdf">플래그/정적 키 섹션 암호화된 내용을 위한 KDF</a></li>
+        <li><a href="#페이로드-섹션을-위한-kdf-alice-정적-키-포함">페이로드 섹션을 위한 KDF (Alice 정적 키 포함)</a></li>
+        <li><a href="#페이로드-섹션을-위한-kdf-alice-정적-키-제외">페이로드 섹션을 위한 KDF (Alice 정적 키 제외)</a></li>
+        <li><a href="#1g-새-세션-응답-형식">1g) 새 세션 응답 형식</a></li>
+        <li><a href="#세션-태그">세션 태그</a></li>
+        <li><a href="#새-세션-응답-임시-키">새 세션 응답 임시 키</a></li>
+        <li><a href="#페이로드-3">페이로드</a></li>
+        <li><a href="#reply-tagset을-위한-kdf">Reply TagSet을 위한 KDF</a></li>
+        <li><a href="#reply-key-section-암호화된-내용을-위한-kdf">Reply Key Section 암호화된 내용을 위한 KDF</a></li>
+        <li><a href="#페이로드-섹션-암호화된-콘텐츠를-위한-kdf">페이로드 섹션 암호화된 콘텐츠를 위한 KDF</a></li>
+        <li><a href="#참고사항">참고사항</a></li>
+        <li><a href="#1h-기존-세션-형식">1h) 기존 세션 형식</a></li>
+        <li><a href="#형식">형식</a></li>
+        <li><a href="#페이로드-4">페이로드</a></li>
+        <li><a href="#2-ecies-x25519">2) ECIES-X25519</a></li>
+        <li><a href="#2a-elligator2">2a) Elligator2</a></li>
+        <li><a href="#형식-1">형식</a></li>
+        <li><a href="#정당화-1">정당화</a></li>
+        <li><a href="#참고사항-1">참고사항</a></li>
+        <li><a href="#3-aead-chachapoly">3) AEAD (ChaChaPoly)</a></li>
+        <li><a href="#새-세션-및-새-세션-응답-입력">새 세션 및 새 세션 응답 입력</a></li>
+        <li><a href="#기존-세션-입력">기존 세션 입력</a></li>
+        <li><a href="#암호화된-형식">암호화된 형식</a></li>
+        <li><a href="#참고사항-2">참고사항</a></li>
+        <li><a href="#aead-오류-처리">AEAD 오류 처리</a></li>
+        <li><a href="#정당성">정당성</a></li>
+        <li><a href="#4-ratchets">4) Ratchets</a></li>
+        <li><a href="#메시지-번호">메시지 번호</a></li>
+        <li><a href="#샘플-구현">샘플 구현</a></li>
+        <li><a href="#4a-dh-ratchet">4a) DH Ratchet</a></li>
+        <li><a href="#payload-section-decrypted-data">Payload Section Decrypted data</a></li>
+        <li><a href="#unencrypted-data">Unencrypted data</a></li>
+        <li><a href="#block-ordering-rules">Block Ordering Rules</a></li>
+        <li><a href="#datetime">DateTime</a></li>
+        <li><a href="#4b-session-tag-ratchet">4b) Session Tag Ratchet</a></li>
+        <li><a href="#termination">Termination</a></li>
+        <li><a href="#4c-대칭-키-래칫">4c) 대칭 키 래칫</a></li>
+        <li><a href="#message-numbers">Message Numbers</a></li>
+        <li><a href="#5-페이로드">5) 페이로드</a></li>
+        <li><a href="#payload-section-복호화된-데이터">Payload Section 복호화된 데이터</a></li>
+        <li><a href="#암호화되지-않은-데이터">암호화되지 않은 데이터</a></li>
+        <li><a href="#블록-순서-규칙">블록 순서 규칙</a></li>
+        <li><a href="#날짜시간">날짜시간</a></li>
+        <li><a href="#garlic-clove">Garlic Clove</a></li>
+      </ul>
+    </li>
+    <li><a href="#typical-usage-patterns">Typical Usage Patterns</a>
+      <ul>
+        <li><a href="#종료">종료</a></li>
+        <li><a href="#옵션">옵션</a></li>
+        <li><a href="#메시지-번호-1">메시지 번호</a></li>
+        <li><a href="#다음-dh-ratchet-공개-키">다음 DH Ratchet 공개 키</a></li>
+        <li><a href="#확인">확인</a></li>
+        <li><a href="#ack-요청">Ack 요청</a></li>
+      </ul>
+    </li>
+    <li><a href="#implementation-considerations">Implementation Considerations</a>
+      <ul>
+        <li><a href="#패딩">패딩</a></li>
+        <li><a href="#다른-블록-타입">다른 블록 타입</a></li>
+        <li><a href="#향후-작업">향후 작업</a></li>
+        <li><a href="#x25519-only">X25519 Only</a></li>
+        <li><a href="#http-get">HTTP GET</a></li>
+        <li><a href="#http-post">HTTP POST</a></li>
+      </ul>
+    </li>
+    <li><a href="#analysis">Analysis</a>
+      <ul>
+        <li><a href="#응답-가능한-데이터그램">응답 가능한 데이터그램</a></li>
+        <li><a href="#다중-원시-데이터그램">다중 원시 데이터그램</a></li>
+        <li><a href="#단일-원시-데이터그램">단일 원시 데이터그램</a></li>
+        <li><a href="#장기-지속-세션">장기 지속 세션</a></li>
+        <li><a href="#cpu">CPU</a></li>
+        <li><a href="#방어">방어</a></li>
+        <li><a href="#매개변수">매개변수</a></li>
+        <li><a href="#분류">분류</a></li>
+      </ul>
+    </li>
+    <li><a href="#related-changes">Related Changes</a>
+      <ul>
+        <li><a href="#x25519만">X25519만</a></li>
+        <li><a href="#x25519-공유와-elgamalaessessiontags">X25519 공유와 ElGamal/AES+SessionTags</a></li>
+        <li><a href="#프로토콜-계층-응답">프로토콜 계층 응답</a></li>
+        <li><a href="#create-leaseset2-message">Create Leaseset2 Message</a></li>
+        <li><a href="#오버헤드">오버헤드</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="proposal-main">
+                <article class="proposal-content">
+                    <h2 id="참고">참고</h2>
+<p>네트워크 배포 및 테스트가 진행 중입니다. 사소한 수정이 있을 수 있습니다. 공식 사양은 <a href="../../../ko/docs/specs/ecies/">SPEC</a>
+을 참조하십시오.</p>
+<p>다음 기능들은 0.9.46 버전 기준으로 구현되지 않았습니다:</p>
+<ul>
+<li>MessageNumbers, Options, 및 Termination 블록</li>
+<li>프로토콜 계층 응답</li>
+<li>Zero static key</li>
+<li>멀티캐스트</li>
+</ul>
+<h2 id="개요">개요</h2>
+<p>이것은 I2P 시작 이래 첫 번째 새로운 end-to-end 암호화 유형에 대한 제안으로, ElGamal/AES+SessionTags <a href="../../../ko/docs/legacy/elgamal-aes/">Elg-AES</a>
+를 대체하기 위한 것입니다.</p>
+<p>다음과 같은 이전 작업에 의존합니다:</p>
+<ul>
+<li>공통 구조 명세 <a href="../../../ko/docs/specs/common-structures/">Common Structures</a>
+</li>
+<li>LS2를 포함한 <a href="../../../ko/docs/specs/i2np/">I2NP</a>
+ 명세</li>
+<li>ElGamal/AES+Session Tags <a href="../../../ko/docs/legacy/elgamal-aes/">Elg-AES</a>
+</li>
+<li><a href="http://zzz.i2p/topics/1768">http://zzz.i2p/topics/1768</a>
+ 새로운 비대칭 암호화 개요</li>
+<li>저수준 암호화 개요 <a href="../../../ko/docs/specs/cryptography/">CRYPTO-ELG</a>
+</li>
+<li>ECIES <a href="http://zzz.i2p/topics/2418">http://zzz.i2p/topics/2418</a>
+</li>
+<li><a href="../../../ko/docs/specs/ntcp2/">NTCP2</a>
+ <a href="../../../ko/proposals/111-ntcp-2/">제안서 111</a>
+</li>
+<li>123 새로운 netDB 항목</li>
+<li>142 새로운 암호화 템플릿</li>
+<li><a href="https://noiseprotocol.org/noise.html">Noise</a>
+ 프로토콜</li>
+<li><a href="https://signal.org/docs/">Signal</a>
+ double ratchet 알고리즘</li>
+</ul>
+<p>목표는 종단 간, destination-to-destination 통신을 위한 새로운 암호화를 지원하는 것입니다.</p>
+<p>설계는 Signal의 이중 래칫을 통합한 Noise 핸드셰이크 및 데이터 단계를 사용할 것입니다.</p>
+<p>이 제안서에서 Signal과 Noise에 대한 모든 언급은 배경 정보 목적으로만 제공됩니다. 이 제안서를 이해하거나 구현하는 데 Signal과 Noise 프로토콜에 대한 지식은 필요하지 않습니다.</p>
+<h3 id="current-elgamal-uses">Current ElGamal Uses</h3>
+<p>검토를 위해, ElGamal 256바이트 공개 키는 다음 데이터 구조에서 찾을 수 있습니다. 공통 구조 사양을 참조하세요.</p>
+<ul>
+<li>
+<p>Router Identity에서
+이것은 라우터의 암호화 키입니다.</p>
+</li>
+<li>
+<p>Destination에서
+destination의 공개 키는 버전 0.6에서 비활성화된 이전 i2cp-to-i2cp 암호화에 사용되었으며,
+현재는 더 이상 사용되지 않는 LeaseSet 암호화를 위한 IV를 제외하고는 사용되지 않습니다.
+대신 LeaseSet의 공개 키가 사용됩니다.</p>
+</li>
+<li>
+<p>LeaseSet에서
+이것은 목적지의 암호화 키입니다.</p>
+</li>
+<li>
+<p>LS2에서
+이것은 목적지의 암호화 키입니다.</p>
+</li>
+</ul>
+<h3 id="enctypes-in-key-certs">EncTypes in Key Certs</h3>
+<p>복습해보면, signature type 지원을 추가할 때 암호화 유형에 대한 지원도 추가했습니다. 암호화 유형 필드는 Destination과 RouterIdentity 모두에서 항상 0입니다. 이를 변경할지 여부는 미정입니다. 공통 구조 사양 <a href="../../../ko/docs/specs/common-structures/">Common Structures</a>
+를 참조하십시오.</p>
+<h3 id="현재-elgamal-사용">현재 ElGamal 사용</h3>
+<p>복습으로, 우리는 다음을 위해 ElGamal을 사용합니다:</p>
+<ol>
+<li>
+<p>Tunnel Build 메시지 (키는 RouterIdentity에 있음)    대체는 이 제안서에서 다루지 않습니다.    제안서 152 <a href="../../../ko/proposals/152-ecies-tunnels">Proposal 152</a>
+를 참조하세요.</p>
+</li>
+<li>
+<p>netdb 및 기타 I2NP 메시지의 router 간 암호화 (키는 RouterIdentity에 있음)    이 제안에 따라 달라짐.    1)에 대한 제안 또는 RI 옵션에 키를 넣는 것도 필요함.</p>
+</li>
+<li>
+<p>클라이언트 종단 간 ElGamal+AES/SessionTag (키는 LeaseSet에 있으며, Destination 키는 사용되지 않음)    대체는 이 제안서에서 다루어집니다.</p>
+</li>
+<li>
+<p>NTCP1 및 SSU용 임시 DH    교체는 이 제안서에서 다루지 않습니다.    NTCP2에 대해서는 제안서 111을 참조하십시오.    SSU2에 대한 현재 제안서는 없습니다.</p>
+</li>
+</ol>
+<h3 id="key-cert의-enctypes">Key Cert의 EncTypes</h3>
+<ul>
+<li>하위 호환성 제공</li>
+<li>LS2(제안서 123) 필요 및 기반으로 구축</li>
+<li>NTCP2(제안서 111)에 추가된 새로운 암호화 또는 원시 기능 활용</li>
+<li>지원을 위한 새로운 암호화 또는 원시 기능 불필요</li>
+<li>암호화와 서명의 분리 유지; 모든 현재 및 향후 버전 지원</li>
+<li>destination을 위한 새로운 암호화 활성화</li>
+<li>router를 위한 새로운 암호화 활성화, 단 garlic 메시지만 해당 - 터널 구축은 별도 제안서가 필요</li>
+<li>32바이트 이진 destination 해시에 의존하는 기능(예: bittorrent) 손상 방지</li>
+<li>ephemeral-static DH를 사용한 0-RTT 메시지 전달 유지</li>
+<li>이 프로토콜 계층에서 메시지 버퍼링/큐잉 요구하지 않음;
+응답 대기 없이 양방향 무제한 메시지 전달 지원 지속</li>
+<li>1 RTT 후 ephemeral-ephemeral DH로 업그레이드</li>
+<li>순서 이탈 메시지 처리 유지</li>
+<li>256비트 보안 유지</li>
+<li>전방향 보안 추가</li>
+<li>인증(AEAD) 추가</li>
+<li>ElGamal보다 훨씬 CPU 효율적</li>
+<li>DH 효율성을 위해 Java jbigi에 의존하지 않음</li>
+<li>DH 연산 최소화</li>
+<li>ElGamal보다 훨씬 대역폭 효율적(514바이트 ElGamal 블록)</li>
+<li>원하는 경우 동일 터널에서 신규 및 기존 암호화 지원</li>
+<li>수신자가 동일 터널을 통해 들어오는 신규 및 기존 암호화를 효율적으로 구별 가능</li>
+<li>타인은 신규, 기존 또는 향후 암호화를 구별할 수 없음</li>
+<li>신규 대 기존 세션 길이 분류 제거(패딩 지원)</li>
+<li>새로운 I2NP 메시지 불필요</li>
+<li>AES 페이로드의 SHA-256 체크섬을 AEAD로 교체</li>
+<li>송신 및 수신 세션 바인딩 지원으로
+프로토콜 내에서 승인이 발생할 수 있도록 하며, 대역 외 방식만이 아니도록 함.
+이를 통해 응답이 즉시 전방향 보안을 가질 수 있음.</li>
+<li>CPU 오버헤드로 인해 현재 수행하지 않는 특정 메시지(RouterInfo 저장소)의
+종단 간 암호화 활성화.</li>
+<li>I2NP Garlic Message 또는
+Garlic Message Delivery Instructions 형식을 변경하지 않음.</li>
+<li>Garlic Clove Set 및 Clove 형식에서 사용되지 않거나 중복된 필드 제거.</li>
+</ul>
+<p>다음을 포함한 세션 태그의 여러 문제점들을 해결합니다:</p>
+<ul>
+<li>첫 번째 응답까지 AES 사용 불가</li>
+<li>태그 전달이 가정될 경우 불안정성 및 정체</li>
+<li>대역폭 비효율성, 특히 첫 번째 전달 시</li>
+<li>태그 저장을 위한 막대한 공간 비효율성</li>
+<li>태그 전달을 위한 막대한 대역폭 오버헤드</li>
+<li>매우 복잡하고 구현이 어려움</li>
+<li>다양한 사용 사례에 대한 튜닝이 어려움
+(스트리밍 vs. 데이터그램, 서버 vs. 클라이언트, 높은 vs. 낮은 대역폭)</li>
+<li>태그 전달로 인한 메모리 고갈 취약점</li>
+</ul>
+<h3 id="비대칭-암호화-사용법">비대칭 암호화 사용법</h3>
+<ul>
+<li>LS2 형식 변경 (제안 123 완료)</li>
+<li>새로운 DHT 순환 알고리즘 또는 공유 랜덤 생성</li>
+<li>터널 구축을 위한 새로운 암호화.
+제안 152 <a href="../../../ko/proposals/152-ecies-tunnels">Proposal 152</a>
+ 참조.</li>
+<li>터널 레이어 암호화를 위한 새로운 암호화.
+제안 153 <a href="../../../ko/proposals/153-chacha20-layer-encryption">Proposal 153</a>
+ 참조.</li>
+<li>I2NP DLM / DSM / DSRM 메시지의 암호화, 전송, 수신 방법.
+변경 없음.</li>
+<li>LS1-to-LS2 또는 ElGamal/AES-to-this-proposal 통신은 지원되지 않음.
+이 제안은 양방향 프로토콜임.
+목적지는 동일한 터널을 사용하여 두 개의 leaseSet을 게시하거나
+LS2에 두 가지 암호화 유형을 모두 포함시켜 하위 호환성을 처리할 수 있음.</li>
+<li>위협 모델 변경</li>
+<li>구현 세부사항은 여기서 논의되지 않으며 각 프로젝트에 맡김.</li>
+<li>(낙관적) 멀티캐스트 지원을 위한 확장 또는 훅 추가</li>
+</ul>
+<h3 id="목표">목표</h3>
+<p>ElGamal/AES+SessionTag는 약 15년간 우리의 유일한 종단간 프로토콜이었으며, 본질적으로 프로토콜에 대한 수정 없이 사용되어 왔습니다. 이제 더 빠른 암호화 원시 함수들이 존재합니다. 우리는 프로토콜의 보안을 강화해야 합니다. 또한 프로토콜의 메모리 및 대역폭 오버헤드를 최소화하기 위한 휴리스틱 전략과 임시방편을 개발했지만, 이러한 전략들은 취약하고 조정하기 어려우며, 프로토콜을 더욱 손상되기 쉽게 만들어 세션이 끊어지는 원인이 됩니다.</p>
+<p>거의 같은 기간 동안, ElGamal/AES+SessionTag 명세와 관련 문서들은 세션 태그를 전달하는 것이 얼마나 대역폭 비용이 많이 드는지 설명해왔으며, 세션 태그 전달을 &ldquo;동기화된 PRNG&quot;로 대체할 것을 제안해왔습니다. 동기화된 PRNG는 공통 시드에서 파생되어 양쪽 끝에서 동일한 태그를 결정론적으로 생성합니다. 동기화된 PRNG는 &ldquo;래칫(ratchet)&ldquo;이라고도 할 수 있습니다. 이 제안서는 (마침내) 해당 래칫 메커니즘을 명세하고 태그 전달을 제거합니다.</p>
+<p>ratchet(동기화된 PRNG)을 사용하여 세션 태그를 생성함으로써, New Session 메시지와 필요시 후속 메시지에서 세션 태그를 전송하는 오버헤드를 제거합니다. 일반적인 32개 태그 세트의 경우, 이는 1KB입니다. 또한 송신 측에서 세션 태그 저장을 제거하여 저장 요구사항을 절반으로 줄입니다.</p>
+<p>Key Compromise Impersonation (KCI) 공격을 방지하기 위해서는 Noise IK 패턴과 유사한 완전한 양방향 handshake가 필요합니다. <a href="https://noiseprotocol.org/noise.html">NOISE</a>
+의 Noise &ldquo;Payload Security Properties&rdquo; 표를 참조하세요. KCI에 대한 자세한 정보는 다음 논문을 참조하세요: <a href="https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf">https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf</a>
+</p>
+<h3 id="비목표--범위-외">비목표 / 범위 외</h3>
+<p>위협 모델은 NTCP2 (제안서 111)와는 다소 다릅니다. MitM 노드들은 OBEP와 IBGW이며, floodfill들과 공모하여 현재 또는 과거의 전역 netDb에 대한 완전한 가시성을 가지고 있다고 가정됩니다.</p>
+<p>목표는 이러한 MitM들이 트래픽을 새로운 메시지와 기존 세션 메시지로 분류하거나, 새로운 암호화 방식과 기존 암호화 방식으로 분류하는 것을 방지하는 것입니다.</p>
+<h2 id="detailed-proposal">Detailed Proposal</h2>
+<p>이 제안서는 ElGamal/AES+SessionTags를 대체할 새로운 종단 간 프로토콜을 정의합니다. 이 설계는 Signal의 이중 래칫(double ratchet)을 통합한 Noise 핸드셰이크와 데이터 단계를 사용할 것입니다.</p>
+<h3 id="정당화">정당화</h3>
+<p>재설계해야 할 프로토콜의 다섯 가지 부분이 있습니다:</p>
+<ul>
+<li>
+<ol>
+<li>새로운 세션 컨테이너 형식과 기존 세션 컨테이너 형식이
+새로운 형식으로 교체됩니다.</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>ElGamal (256바이트 공개 키, 128바이트 개인 키)이
+ECIES-X25519 (32바이트 공개 키 및 개인 키)로 교체됩니다</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>AES가
+AEAD_ChaCha20_Poly1305 (아래에서 ChaChaPoly로 축약)로 교체됩니다</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>SessionTags가 ratchets로 교체되는데,
+이는 본질적으로 암호화된 동기화 PRNG입니다.</li>
+</ol>
+</li>
+<li>
+<ol start="5">
+<li>ElGamal/AES+SessionTags 사양에 정의된 AES 페이로드가
+NTCP2와 유사한 블록 형식으로 교체됩니다.</li>
+</ol>
+</li>
+</ul>
+<p>다섯 가지 변경사항 각각에 대해 아래에 별도 섹션이 있습니다.</p>
+<h3 id="위협-모델">위협 모델</h3>
+<p>기존 I2P router 구현에서는 현재 I2P 프로토콜에서 요구되지 않는 다음 표준 암호화 기본 요소들에 대한 구현이 필요합니다:</p>
+<ul>
+<li>ECIES (하지만 이는 본질적으로 X25519입니다)</li>
+<li>Elligator2</li>
+</ul>
+<p><a href="../../../ko/docs/specs/ntcp2/">NTCP2</a>
+ (<a href="../../../ko/proposals/111-ntcp-2/">Proposal 111</a>
+)를 아직 구현하지 않은 기존 I2P router 구현체들도 다음에 대한 구현이 필요합니다:</p>
+<ul>
+<li>X25519 키 생성 및 DH</li>
+<li>AEAD_ChaCha20_Poly1305 (아래에서 ChaChaPoly로 줄여서 표기)</li>
+<li>HKDF</li>
+</ul>
+<h3 id="crypto-type">Crypto Type</h3>
+<p>암호화 타입(LS2에서 사용됨)은 4입니다. 이는 리틀 엔디안 32바이트 X25519 공개 키와 여기에 명시된 end-to-end 프로토콜을 나타냅니다.</p>
+<p>Crypto type 0은 ElGamal입니다. Crypto type 1-3은 ECIES-ECDH-AES-SessionTag를 위해 예약되어 있으며, proposal 145 <a href="../../../ko/proposals/145-ecies">Proposal 145</a>
+를 참조하세요.</p>
+<h3 id="암호화-설계-요약">암호화 설계 요약</h3>
+<p>이 제안서는 Noise Protocol Framework <a href="https://noiseprotocol.org/noise.html">NOISE</a>
+ (Revision 34, 2018-07-11)를 기반으로 한 요구사항을 제공합니다. Noise는 <a href="../../../ko/docs/legacy/ssu/">SSU</a>
+ 프로토콜의 기반이 되는 Station-To-Station 프로토콜 <a href="https://en.wikipedia.org/wiki/Station-to-Station_protocol">STS</a>
+와 유사한 특성을 가지고 있습니다. Noise 용어로는 Alice가 개시자(initiator)이고, Bob이 응답자(responder)입니다.</p>
+<p>이 제안은 Noise protocol Noise_IK_25519_ChaChaPoly_SHA256을 기반으로 합니다. (초기 키 유도 함수의 실제 식별자는 I2P 확장을 나타내기 위해 &ldquo;Noise_IKelg2_25519_ChaChaPoly_SHA256&quot;입니다 - 아래 KDF 1 섹션 참조) 이 Noise protocol은 다음 프리미티브를 사용합니다:</p>
+<ul>
+<li>
+<p>Interactive Handshake Pattern: IK
+Alice가 즉시 자신의 정적 키를 Bob에게 전송함 (I)
+Alice는 이미 Bob의 정적 키를 알고 있음 (K)</p>
+</li>
+<li>
+<p>One-Way Handshake Pattern: N
+Alice는 자신의 정적 키를 Bob에게 전송하지 않습니다 (N)</p>
+</li>
+<li>
+<p>DH Function: X25519
+<a href="https://tools.ietf.org/html/rfc7748">RFC-7748</a>
+에서 명시된 32바이트 키 길이를 가진 X25519 DH.</p>
+</li>
+<li>
+<p>Cipher Function: ChaChaPoly
+<a href="https://tools.ietf.org/html/rfc7539">RFC-7539</a>
+ 섹션 2.8에 명시된 AEAD_CHACHA20_POLY1305.
+12바이트 nonce, 처음 4바이트는 0으로 설정.
+<a href="../../../ko/docs/specs/ntcp2/">NTCP2</a>
+와 동일.</p>
+</li>
+<li>
+<p>Hash Function: SHA256
+I2P에서 이미 광범위하게 사용되고 있는 표준 32바이트 해시.</p>
+</li>
+</ul>
+<h3 id="i2p를-위한-새로운-암호화-기본-요소">I2P를 위한 새로운 암호화 기본 요소</h3>
+<p>이 제안서는 Noise_IK_25519_ChaChaPoly_SHA256에 대한 다음과 같은 개선사항을 정의합니다. 이는 일반적으로 <a href="https://noiseprotocol.org/noise.html">NOISE</a>
+ 섹션 13의 가이드라인을 따릅니다.</p>
+<ol>
+<li>
+<p>평문 임시 키들은 <a href="https://elligator.cr.yp.to/">Elligator2</a>
+로 인코딩됩니다.</p>
+</li>
+<li>
+<p>응답에는 평문 태그가 접두사로 붙습니다.</p>
+</li>
+<li>
+<p>페이로드 형식은 메시지 1, 2, 그리고 데이터 단계에 대해 정의됩니다. 물론 이것은 Noise에서 정의되지 않습니다.</p>
+</li>
+</ol>
+<p>모든 메시지에는 <a href="../../../ko/docs/specs/i2np/">I2NP</a>
+ Garlic Message 헤더가 포함됩니다. 데이터 단계는 Noise 데이터 단계와 유사하지만 호환되지 않는 암호화를 사용합니다.</p>
+<h3 id="암호화-유형">암호화 유형</h3>
+<p>핸드셰이크는 <a href="https://noiseprotocol.org/noise.html">Noise</a>
+ 핸드셰이크 패턴을 사용합니다.</p>
+<p>다음 문자 매핑이 사용됩니다:</p>
+<ul>
+<li>e = 일회용 임시 키(one-time ephemeral key)</li>
+<li>s = 정적 키(static key)</li>
+<li>p = 메시지 페이로드(message payload)</li>
+</ul>
+<p>일회성 및 비제한(Unbound) 세션은 Noise N 패턴과 유사합니다.</p>
+<pre tabindex="0"><code>
+&lt;- s
+  ...
+  e es p -&gt;
+</code></pre><p>Bound 세션은 Noise IK 패턴과 유사합니다.</p>
+<pre tabindex="0"><code>
+&lt;- s
+  ...
+  e es s ss p -&gt;
+  &lt;- tag e ee se
+  &lt;- p
+  p -&gt;
+</code></pre><h3 id="noise-protocol-framework">Noise Protocol Framework</h3>
+<p>현재 ElGamal/AES+SessionTag 프로토콜은 단방향입니다. 이 계층에서 수신자는 메시지가 어디서 왔는지 알 수 없습니다. 아웃바운드와 인바운드 세션은 연관되지 않습니다. 확인 응답은 clove의 DeliveryStatusMessage(GarlicMessage로 래핑됨)를 사용하여 대역 외에서 처리됩니다.</p>
+<p>단방향 프로토콜에는 상당한 비효율성이 있습니다. 모든 응답도 비용이 많이 드는 &lsquo;New Session&rsquo; 메시지를 사용해야 합니다. 이로 인해 대역폭, CPU, 메모리 사용량이 증가합니다.</p>
+<p>단방향 프로토콜에는 보안상의 약점도 있습니다. 모든 세션은 ephemeral-static DH를 기반으로 합니다. 리턴 경로가 없으면 Bob이 자신의 정적 키를 ephemeral 키로 &ldquo;ratchet&quot;할 방법이 없습니다. 메시지의 출처를 알 수 없으면 아웃바운드 메시지에 수신된 ephemeral 키를 사용할 방법이 없으므로, 초기 응답도 ephemeral-static DH를 사용합니다.</p>
+<p>이 제안에서는 양방향 프로토콜을 생성하기 위한 두 가지 메커니즘인 &ldquo;pairing&quot;과 &ldquo;binding&quot;을 정의합니다. 이러한 메커니즘은 향상된 효율성과 보안을 제공합니다.</p>
+<h3 id="프레임워크-추가-사항">프레임워크 추가 사항</h3>
+<p>ElGamal/AES+SessionTags와 마찬가지로, 모든 인바운드 및 아웃바운드 세션은 특정 컨텍스트 내에 있어야 하며, 이는 router의 컨텍스트이거나 특정 로컬 목적지의 컨텍스트입니다. Java I2P에서 이 컨텍스트를 Session Key Manager라고 합니다.</p>
+<p>세션은 컨텍스트 간에 공유되어서는 안 됩니다. 그렇게 되면 다양한 로컬 destination들 간의 상관관계나 로컬 destination과 router 간의 상관관계를 허용하게 되기 때문입니다.</p>
+<p>주어진 destination이 ElGamal/AES+SessionTags와 이 제안서를 모두 지원하는 경우, 두 유형의 세션이 컨텍스트를 공유할 수 있습니다. 아래 섹션 1c)를 참조하십시오.</p>
+<h3 id="핸드셰이크-패턴">핸드셰이크 패턴</h3>
+<p>발신자(Alice)에서 아웃바운드 세션이 생성될 때, 응답이 예상되지 않는 경우(예: raw 데이터그램)를 제외하고는 새로운 인바운드 세션이 생성되어 아웃바운드 세션과 쌍을 이룹니다.</p>
+<p>새로운 인바운드 세션은 응답이 요청되지 않는 경우(예: 원시 데이터그램)가 아닌 이상 항상 새로운 아웃바운드 세션과 쌍을 이룹니다.</p>
+<p>응답이 요청되고 원격 목적지나 router에 바인딩된 경우, 해당 새로운 아웃바운드 세션이 그 목적지나 router에 바인딩되며, 해당 목적지나 router에 대한 이전 아웃바운드 세션을 대체합니다.</p>
+<p>인바운드 및 아웃바운드 세션을 페어링하면 DH 키를 래칫할 수 있는 기능을 갖춘 양방향 프로토콜이 제공됩니다.</p>
+<h3 id="세션">세션</h3>
+<p>주어진 목적지나 router에 대해서는 단 하나의 아웃바운드 세션만 존재합니다. 주어진 목적지나 router로부터는 여러 개의 현재 인바운드 세션이 있을 수 있습니다. 일반적으로 새로운 인바운드 세션이 생성되고 해당 세션에서 트래픽이 수신되면(이는 ACK 역할을 함), 다른 세션들은 1분 정도 내에 비교적 빠르게 만료되도록 표시됩니다. 이전에 전송된 메시지(PN) 값이 확인되며, 이전 인바운드 세션에서 수신되지 않은 메시지가 (윈도우 크기 내에서) 없다면, 이전 세션은 즉시 삭제될 수 있습니다.</p>
+<p>발신자(Alice)에서 아웃바운드 세션이 생성되면, 이는 원격 Destination(Bob)에 바인딩되며, 페어링된 인바운드 세션 역시 원격 Destination에 바인딩됩니다. 세션이 ratchet되면서 원격 Destination에 계속 바인딩된 상태를 유지합니다.</p>
+<p>수신자(Bob)에서 인바운드 세션이 생성될 때, Alice의 선택에 따라 원격 Destination(Alice)에 바인딩될 수 있습니다. Alice가 New Session 메시지에 바인딩 정보(그녀의 정적 키)를 포함하면, 세션은 해당 destination에 바인딩되고, 아웃바운드 세션이 생성되어 동일한 Destination에 바인딩됩니다. 세션들이 래칫팅되면서, 원격 Destination에 계속 바인딩된 상태를 유지합니다.</p>
+<h3 id="세션-컨텍스트">세션 컨텍스트</h3>
+<p>일반적인 스트리밍 사례의 경우, Alice와 Bob이 다음과 같이 프로토콜을 사용할 것으로 예상됩니다:</p>
+<ul>
+<li>Alice는 새로운 아웃바운드 세션을 새로운 인바운드 세션과 페어링하며, 둘 다 원격 목적지(Bob)에 바인딩됩니다.</li>
+<li>Alice는 바인딩 정보와 서명, 그리고 응답 요청을 Bob에게 보내는 New Session 메시지에 포함합니다.</li>
+<li>Bob은 새로운 인바운드 세션을 새로운 아웃바운드 세션과 페어링하며, 둘 다 원격 목적지(Alice)에 바인딩됩니다.</li>
+<li>Bob은 페어링된 세션에서 새로운 DH 키로의 래칫과 함께 Alice에게 응답(ack)을 보냅니다.</li>
+<li>Alice는 Bob의 새로운 키로 새로운 아웃바운드 세션으로 래칫하며, 기존 인바운드 세션과 페어링됩니다.</li>
+</ul>
+<p>인바운드 세션을 원격 Destination에 바인딩하고, 인바운드 세션을 동일한 Destination에 바인딩된 아웃바운드 세션과 페어링함으로써 두 가지 주요 이점을 얻을 수 있습니다:</p>
+<ol>
+<li>
+<p>Bob이 Alice에게 보내는 초기 응답은 ephemeral-ephemeral DH를 사용합니다</p>
+</li>
+<li>
+<p>Alice가 Bob의 응답을 받고 ratchet한 후, Alice에서 Bob으로의 모든 후속 메시지는 ephemeral-ephemeral DH를 사용합니다.</p>
+</li>
+</ol>
+<h3 id="인바운드-및-아웃바운드-세션-페어링">인바운드 및 아웃바운드 세션 페어링</h3>
+<p>ElGamal/AES+SessionTags에서 LeaseSet이 garlic clove로 묶이거나 태그가 전달될 때, 송신 router는 ACK를 요청합니다. 이는 DeliveryStatus 메시지를 포함하는 별도의 garlic clove입니다. 추가 보안을 위해 DeliveryStatus 메시지는 Garlic 메시지로 래핑됩니다. 이 메커니즘은 프로토콜 관점에서 대역 외(out-of-band) 방식입니다.</p>
+<p>새로운 프로토콜에서는 인바운드와 아웃바운드 세션이 쌍을 이루므로, 대역 내에서 ACK를 가질 수 있습니다. 별도의 clove가 필요하지 않습니다.</p>
+<p>명시적 ACK는 단순히 I2NP 블록이 없는 Existing Session 메시지입니다. 그러나 대부분의 경우 역방향 트래픽이 있기 때문에 명시적 ACK를 피할 수 있습니다. 구현체에서는 스트리밍이나 애플리케이션 계층이 응답할 시간을 주기 위해 명시적 ACK를 보내기 전에 짧은 시간(아마 100ms 정도)을 기다리는 것이 바람직할 수 있습니다.</p>
+<p>구현체들은 I2NP 블록이 처리된 후까지 ACK 전송을 지연해야 합니다. Garlic Message에 lease set이 포함된 Database Store Message가 들어있을 수 있기 때문입니다. ACK를 라우팅하려면 최신 lease set이 필요하고, 바인딩 정적 키를 검증하려면 원단 목적지(lease set에 포함됨)가 필요합니다.</p>
+<h3 id="세션-및-목적지-바인딩">세션 및 목적지 바인딩</h3>
+<p>아웃바운드 세션은 항상 인바운드 세션보다 먼저 만료되어야 합니다. 아웃바운드 세션이 만료되고 새로운 세션이 생성되면, 새로운 쌍을 이루는 인바운드 세션도 함께 생성됩니다. 기존 인바운드 세션이 있었다면, 해당 세션은 만료되도록 허용됩니다.</p>
+<h3 id="바인딩과-페어링의-이점">바인딩과 페어링의 이점</h3>
+<p>미정</p>
+<h3 id="메시지-ack">메시지 ACK</h3>
+<p>우리는 사용되는 암호화 구성 요소에 해당하는 다음 함수들을 정의합니다.</p>
+<p>ZEROLEN</p>
+<pre><code>zero-length byte array
+</code></pre>
+<p>CSRNG(n)</p>
+<pre><code>n-byte output from a cryptographically-secure random number generator.
+</code></pre>
+<p>H(p, d)</p>
+<pre><code>SHA-256 hash function that takes a personalization string p and data d, and
+produces an output of length 32 bytes.
+As defined in [NOISE](https://noiseprotocol.org/noise.html).
+|| below means append.
+
+Use SHA-256 as follows::
+
+    H(p, d) := SHA-256(p || d)
+</code></pre>
+<p>MixHash(d)</p>
+<pre><code>SHA-256 hash function that takes a previous hash h and new data d,
+and produces an output of length 32 bytes.
+|| below means append.
+
+Use SHA-256 as follows::
+
+    MixHash(d) := h = SHA-256(h || d)
+</code></pre>
+<p>STREAM</p>
+<pre><code>The ChaCha20/Poly1305 AEAD as specified in [RFC-7539](https://tools.ietf.org/html/rfc7539).
+S_KEY_LEN = 32 and S_IV_LEN = 12.
+
+ENCRYPT(k, n, plaintext, ad)
+    Encrypts plaintext using the cipher key k, and nonce n which MUST be unique for
+    the key k.
+    Associated data ad is optional.
+    Returns a ciphertext that is the size of the plaintext + 16 bytes for the HMAC.
+
+    The entire ciphertext must be indistinguishable from random if the key is secret.
+
+DECRYPT(k, n, ciphertext, ad)
+    Decrypts ciphertext using the cipher key k, and nonce n.
+    Associated data ad is optional.
+    Returns the plaintext.
+</code></pre>
+<p>DH</p>
+<pre><code>X25519 public key agreement system. Private keys of 32 bytes, public keys of 32
+bytes, produces outputs of 32 bytes. It has the following
+functions:
+
+GENERATE_PRIVATE()
+    Generates a new private key.
+
+DERIVE_PUBLIC(privkey)
+    Returns the public key corresponding to the given private key.
+
+GENERATE_PRIVATE_ELG2()
+    Generates a new private key that maps to a public key suitable for Elligator2 encoding.
+    Note that half of the randomly-generated private keys will not be suitable and must be discarded.
+
+ENCODE_ELG2(pubkey)
+    Returns the Elligator2-encoded public key corresponding to the given public key (inverse mapping).
+    Encoded keys are little endian.
+    Encoded key must be 256 bits indistinguishable from random data.
+    See Elligator2 section below for specification.
+
+DECODE_ELG2(pubkey)
+    Returns the public key corresponding to the given Elligator2-encoded public key.
+    See Elligator2 section below for specification.
+
+DH(privkey, pubkey)
+    Generates a shared secret from the given private and public keys.
+</code></pre>
+<p>HKDF(salt, ikm, info, n)</p>
+<pre><code>A cryptographic key derivation function which takes some input key material ikm (which
+should have good entropy but is not required to be a uniformly random string), a salt
+of length 32 bytes, and a context-specific 'info' value, and produces an output
+of n bytes suitable for use as key material.
+
+Use HKDF as specified in [RFC-5869](https://tools.ietf.org/html/rfc5869), using the HMAC hash function SHA-256
+as specified in [RFC-2104](https://tools.ietf.org/html/rfc2104). This means that SALT_LEN is 32 bytes max.
+</code></pre>
+<p>MixKey(d)</p>
+<pre><code>Use HKDF() with a previous chainKey and new data d, and
+sets the new chainKey and k.
+As defined in [NOISE](https://noiseprotocol.org/noise.html).
+
+Use HKDF as follows::
+
+    MixKey(d) := output = HKDF(chainKey, d, &quot;&quot;, 64)
+                 chainKey = output[0:31]
+                 k = output[32:63]
+</code></pre>
+<h3 id="세션-타임아웃">세션 타임아웃</h3>
+<h3 id="멀티캐스트">멀티캐스트</h3>
+<p><a href="../../../ko/docs/specs/i2np/">I2NP</a>
+에 명세된 Garlic Message는 다음과 같습니다. 중간 홉들이 새로운 암호화와 기존 암호화를 구별할 수 없도록 하는 것이 설계 목표이므로, 길이 필드가 중복되더라도 이 형식은 변경될 수 없습니다. 이 형식은 전체 16바이트 헤더로 표시되지만, 사용되는 전송 방식에 따라 실제 헤더는 다른 형식일 수 있습니다.</p>
+<p>복호화되면 데이터에는 일련의 Garlic Clove들과 추가 데이터가 포함되며, 이는 Clove Set이라고도 알려져 있습니다.</p>
+<p>자세한 내용과 전체 사양은 <a href="../../../ko/docs/specs/i2np/">I2NP</a>
+를 참조하세요.</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |type|      msg_id       |  expiration
+  +----+----+----+----+----+----+----+----+
+                           |  size   |chks|
+  +----+----+----+----+----+----+----+----+
+  |      length       |                   |
+  +----+----+----+----+                   +
+  |          encrypted data               |
+  ~                                       ~
+  ~                                       ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+</code></pre><h3 id="정의">정의</h3>
+<p>15년 넘게 사용된 현재 메시지 형식은 ElGamal/AES+SessionTags입니다. ElGamal/AES+SessionTags에서는 두 가지 메시지 형식이 있습니다:</p>
+<ol>
+<li>
+<p>새 세션: - 514바이트 ElGamal 블록 - AES 블록 (최소 128바이트, 16의 배수)</p>
+</li>
+<li>
+<p>기존 세션: - 32바이트 Session Tag - AES 블록 (최소 128바이트, 16의 배수)</p>
+</li>
+</ol>
+<p>128로의 최소 패딩은 Java I2P에서 구현된 대로이지만 수신 시에는 강제되지 않습니다.</p>
+<p>이러한 메시지들은 길이 필드를 포함하는 I2NP garlic 메시지에 캡슐화되므로, 길이를 알 수 있습니다.</p>
+<p>16으로 나누어떨어지지 않는 길이에 대한 패딩이 정의되어 있지 않으므로, New Session은 항상 (mod 16 == 2)이고, Existing Session은 항상 (mod 16 == 0)입니다. 이를 수정해야 합니다.</p>
+<p>수신자는 먼저 처음 32바이트를 Session Tag로 조회를 시도합니다. 발견되면 AES 블록을 복호화합니다. 발견되지 않고 데이터가 최소 (514+16) 길이인 경우, ElGamal 블록 복호화를 시도하고, 성공하면 AES 블록을 복호화합니다.</p>
+<h3 id="1-메시지-형식">1) 메시지 형식</h3>
+<p>Signal Double Ratchet에서 헤더는 다음을 포함합니다:</p>
+<ul>
+<li>DH: 현재 래칫 공개 키</li>
+<li>PN: 이전 체인 메시지 길이</li>
+<li>N: 메시지 번호</li>
+</ul>
+<p>Signal의 &ldquo;sending chains&quot;는 우리의 tag sets와 대략 동등합니다. session tag를 사용함으로써 대부분을 제거할 수 있습니다.</p>
+<p>New Session에서는 암호화되지 않은 헤더에 공개 키만 넣습니다.</p>
+<p>기존 세션에서는 헤더에 세션 태그를 사용합니다. 세션 태그는 현재 ratchet 공개 키와 메시지 번호에 연결됩니다.</p>
+<p>신규 세션과 기존 세션 모두에서 PN과 N은 암호화된 본문에 있습니다.</p>
+<p>Signal에서는 지속적으로 래칭이 발생합니다. 새로운 DH 공개 키는 수신자가 래칭하고 새로운 공개 키를 다시 전송하도록 요구하며, 이는 또한 수신된 공개 키에 대한 승인 역할도 합니다. 이는 우리에게는 너무 많은 DH 연산이 될 것입니다. 따라서 우리는 수신된 키의 승인과 새로운 공개 키의 전송을 분리합니다. 새로운 DH 공개 키에서 생성된 세션 태그를 사용하는 모든 메시지는 ACK를 구성합니다. 우리는 키를 다시 설정하고자 할 때만 새로운 공개 키를 전송합니다.</p>
+<p>DH가 ratchet해야 하는 최대 메시지 수는 65535개입니다.</p>
+<p>세션 키를 전달할 때, 세션 태그도 함께 전달해야 하는 대신 세션 키로부터 &ldquo;Tag Set&quot;을 도출합니다. Tag Set은 최대 65536개의 태그를 가질 수 있습니다. 하지만 수신자는 모든 가능한 태그를 한 번에 생성하는 대신 &ldquo;미리보기(look-ahead)&rdquo; 전략을 구현해야 합니다. 마지막으로 수신된 유효한 태그 이후 최대 N개의 태그만 생성합니다. N은 최대 128개일 수 있지만, 32개 또는 그보다 적은 수가 더 나은 선택일 수 있습니다.</p>
+<h3 id="현재-메시지-형식-검토">현재 메시지 형식 검토</h3>
+<p>새 세션 일회용 공개 키 (32바이트) 암호화된 데이터 및 MAC (나머지 바이트)</p>
+<p>New Session 메시지는 송신자의 정적 공개 키를 포함할 수도 있고 포함하지 않을 수도 있습니다. 포함된 경우, 역방향 세션이 해당 키에 바인딩됩니다. 응답이 예상되는 경우, 즉 스트리밍 및 응답 가능한 데이터그램의 경우 정적 키가 포함되어야 합니다. 원시 데이터그램의 경우에는 포함되지 않아야 합니다.</p>
+<p>New Session 메시지는 단방향 Noise <a href="https://noiseprotocol.org/noise.html">NOISE</a>
+ 패턴 &ldquo;N&rdquo;(정적 키가 전송되지 않는 경우) 또는 양방향 패턴 &ldquo;IK&rdquo;(정적 키가 전송되는 경우)와 유사합니다.</p>
+<h3 id="암호화된-데이터-형식-검토">암호화된 데이터 형식 검토</h3>
+<p>길이는 96 + 페이로드 길이입니다. 암호화된 형식:</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |   New Session Ephemeral Public Key    |
+  +             32 bytes                  +
+  |     Encoded with Elligator2           |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +         Static Key                    +
+  |       ChaCha20 encrypted data         |
+  +            32 bytes                   +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +    (MAC) for Static Key Section       +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for Payload Section     +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+
+  Public Key :: 32 bytes, little endian, Elligator2, cleartext
+
+  Static Key encrypted data :: 32 bytes
+
+  Payload Section encrypted data :: remaining data minus 16 bytes
+
+  MAC :: Poly1305 message authentication code, 16 bytes
+</code></pre><h3 id="새로운-세션-태그와-signal과의-비교">새로운 세션 태그와 Signal과의 비교</h3>
+<p>임시 키(ephemeral key)는 32바이트이며, Elligator2로 인코딩됩니다. 이 키는 절대 재사용되지 않으며, 재전송을 포함하여 각 메시지마다 새로운 키가 생성됩니다.</p>
+<h3 id="1a-새로운-세션-형식">1a) 새로운 세션 형식</h3>
+<p>복호화되었을 때, Alice의 X25519 정적 키, 32바이트.</p>
+<h3 id="1b-새로운-세션-형식-바인딩-포함">1b) 새로운 세션 형식 (바인딩 포함)</h3>
+<p>암호화된 길이는 데이터의 나머지 부분입니다. 복호화된 길이는 암호화된 길이보다 16 적습니다. 페이로드는 DateTime 블록을 포함해야 하며 일반적으로 하나 이상의 Garlic Clove 블록을 포함합니다. 형식 및 추가 요구사항은 아래 페이로드 섹션을 참조하세요.</p>
+<h3 id="새로운-세션-임시-키">새로운 세션 임시 키</h3>
+<p>응답이 필요하지 않은 경우, static key는 전송되지 않습니다.</p>
+<p>길이는 96 + 페이로드 길이입니다. 암호화된 형식:</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |   New Session Ephemeral Public Key    |
+  +             32 bytes                  +
+  |     Encoded with Elligator2           |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +           Flags Section               +
+  |       ChaCha20 encrypted data         |
+  +            32 bytes                   +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for above section       +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for Payload Section     +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+
+  Public Key :: 32 bytes, little endian, Elligator2, cleartext
+
+  Flags Section encrypted data :: 32 bytes
+
+  Payload Section encrypted data :: remaining data minus 16 bytes
+
+  MAC :: Poly1305 message authentication code, 16 bytes
+</code></pre><h3 id="정적-키">정적 키</h3>
+<p>Alice의 ephemeral key. ephemeral key는 32바이트이며, Elligator2로 인코딩되고 little endian 방식입니다. 이 키는 재사용되지 않으며, 재전송을 포함하여 각 메시지마다 새로운 키가 생성됩니다.</p>
+<h3 id="페이로드">페이로드</h3>
+<p>Flags 섹션은 아무것도 포함하지 않습니다. 바인딩이 있는 New Session 메시지의 static key와 동일한 길이여야 하므로 항상 32바이트입니다. Bob은 32바이트가 모두 0인지 테스트하여 그것이 static key인지 flags 섹션인지 판단합니다.</p>
+<p>TODO 여기에 필요한 플래그가 있나요?</p>
+<h3 id="1c-새로운-세션-형식-바인딩-없음">1c) 새로운 세션 형식 (바인딩 없음)</h3>
+<p>암호화된 길이는 데이터의 나머지 부분입니다. 복호화된 길이는 암호화된 길이보다 16바이트 적습니다. 페이로드는 DateTime 블록을 포함해야 하며 일반적으로 하나 이상의 Garlic Clove 블록을 포함합니다. 형식 및 추가 요구사항은 아래 페이로드 섹션을 참조하세요.</p>
+<h3 id="새-세션-임시-키">새 세션 임시 키</h3>
+<p>단일 메시지만 전송될 것으로 예상되는 경우, 세션 설정이나 정적 키가 필요하지 않습니다.</p>
+<p>길이는 96 + 페이로드 길이입니다. 암호화된 형식:</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |       Ephemeral Public Key            |
+  +             32 bytes                  +
+  |     Encoded with Elligator2           |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +           Flags Section               +
+  |       ChaCha20 encrypted data         |
+  +            32 bytes                   +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for above section       +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for Payload Section     +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+
+  Public Key :: 32 bytes, little endian, Elligator2, cleartext
+
+  Flags Section encrypted data :: 32 bytes
+
+  Payload Section encrypted data :: remaining data minus 16 bytes
+
+  MAC :: Poly1305 message authentication code, 16 bytes
+</code></pre><h3 id="flags-section-복호화된-데이터">Flags Section 복호화된 데이터</h3>
+<p>일회용 키는 32바이트이며, Elligator2로 인코딩되고 리틀 엔디안 방식을 사용합니다. 이 키는 재사용되지 않으며, 재전송을 포함하여 각 메시지마다 새로운 키가 생성됩니다.</p>
+<h3 id="페이로드-1">페이로드</h3>
+<p>Flags 섹션은 아무것도 포함하지 않습니다. 바인딩을 사용하는 New Session 메시지의 static key와 동일한 길이여야 하므로 항상 32바이트입니다. Bob은 32바이트가 모두 0인지 테스트하여 static key인지 flags 섹션인지 판단합니다.</p>
+<p>TODO 여기에 필요한 플래그가 있나요?</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |                                       |
+  +             All zeros                 +
+  |              32 bytes                 |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  zeros:: All zeros, 32 bytes.
+</code></pre><h3 id="1d-일회성-형식-바인딩이나-세션-없음">1d) 일회성 형식 (바인딩이나 세션 없음)</h3>
+<p>암호화된 길이는 데이터의 나머지 부분입니다. 복호화된 길이는 암호화된 길이보다 16 작습니다. 페이로드는 DateTime 블록을 포함해야 하며 일반적으로 하나 이상의 Garlic Clove 블록을 포함합니다. 형식과 추가 요구사항은 아래 페이로드 섹션을 참조하세요.</p>
+<h3 id="새-세션-일회용-키">새 세션 일회용 키</h3>
+<h3 id="flags-section-복호화된-데이터-1">Flags Section 복호화된 데이터</h3>
+<p>이것은 수정된 프로토콜 이름을 가진 IK용 표준 <a href="https://noiseprotocol.org/noise.html">NOISE</a>
+입니다. IK 패턴(바인드된 세션)과 N 패턴(언바인드된 세션) 모두에 동일한 초기화자를 사용한다는 점에 주목하세요.</p>
+<p>프로토콜 이름이 수정된 이유는 두 가지입니다. 첫째, 임시 키들이 Elligator2로 인코딩되었음을 나타내기 위함이고, 둘째, 태그 값을 혼합하기 위해 두 번째 메시지 이전에 MixHash()가 호출됨을 나타내기 위함입니다.</p>
+<pre tabindex="0"><code>
+This is the &#34;e&#34; message pattern:
+
+  // Define protocol_name.
+  Set protocol_name = &#34;Noise_IKelg2+hs2_25519_ChaChaPoly_SHA256&#34;
+   (40 bytes, US-ASCII encoded, no NULL termination).
+
+  // Define Hash h = 32 bytes
+  h = SHA256(protocol_name);
+
+  Define ck = 32 byte chaining key. Copy the h data to ck.
+  Set chainKey = h
+
+  // MixHash(null prologue)
+  h = SHA256(h);
+
+  // up until here, can all be precalculated by Alice for all outgoing connections
+</code></pre><h3 id="페이로드-2">페이로드</h3>
+<pre tabindex="0"><code>
+This is the &#34;e&#34; message pattern:
+
+  // Bob&#39;s X25519 static keys
+  // bpk is published in leaseset
+  bsk = GENERATE_PRIVATE()
+  bpk = DERIVE_PUBLIC(bsk)
+
+  // Bob static public key
+  // MixHash(bpk)
+  // || below means append
+  h = SHA256(h || bpk);
+
+  // up until here, can all be precalculated by Bob for all incoming connections
+
+  // Alice&#39;s X25519 ephemeral keys
+  aesk = GENERATE_PRIVATE_ELG2()
+  aepk = DERIVE_PUBLIC(aesk)
+
+  // Alice ephemeral public key
+  // MixHash(aepk)
+  // || below means append
+  h = SHA256(h || aepk);
+
+  // h is used as the associated data for the AEAD in the New Session Message
+  // Retain the Hash h for the New Session Reply KDF
+  // eapk is sent in cleartext in the
+  // beginning of the New Session message
+  elg2_aepk = ENCODE_ELG2(aepk)
+  // As decoded by Bob
+  aepk = DECODE_ELG2(elg2_aepk)
+
+  End of &#34;e&#34; message pattern.
+
+  This is the &#34;es&#34; message pattern:
+
+  // Noise es
+  sharedSecret = DH(aesk, bpk) = DH(bsk, aepk)
+
+  // MixKey(DH())
+  //[chainKey, k] = MixKey(sharedSecret)
+  // ChaChaPoly parameters to encrypt/decrypt
+  keydata = HKDF(chainKey, sharedSecret, &#34;&#34;, 64)
+  chainKey = keydata[0:31]
+
+  // AEAD parameters
+  k = keydata[32:63]
+  n = 0
+  ad = h
+  ciphertext = ENCRYPT(k, n, flags/static key section, ad)
+
+  End of &#34;es&#34; message pattern.
+
+  This is the &#34;s&#34; message pattern:
+
+  // MixHash(ciphertext)
+  // Save for Payload section KDF
+  h = SHA256(h || ciphertext)
+
+  // Alice&#39;s X25519 static keys
+  ask = GENERATE_PRIVATE()
+  apk = DERIVE_PUBLIC(ask)
+
+  End of &#34;s&#34; message pattern.
+</code></pre><h3 id="1f-새-세션-메시지용-kdf들">1f) 새 세션 메시지용 KDF들</h3>
+<pre tabindex="0"><code>
+This is the &#34;ss&#34; message pattern:
+
+  // Noise ss
+  sharedSecret = DH(ask, bpk) = DH(bsk, apk)
+
+  // MixKey(DH())
+  //[chainKey, k] = MixKey(sharedSecret)
+  // ChaChaPoly parameters to encrypt/decrypt
+  // chainKey from Static Key Section
+  Set sharedSecret = X25519 DH result
+  keydata = HKDF(chainKey, sharedSecret, &#34;&#34;, 64)
+  chainKey = keydata[0:31]
+
+  // AEAD parameters
+  k = keydata[32:63]
+  n = 0
+  ad = h
+  ciphertext = ENCRYPT(k, n, payload, ad)
+
+  End of &#34;ss&#34; message pattern.
+
+  // MixHash(ciphertext)
+  // Save for New Session Reply KDF
+  h = SHA256(h || ciphertext)
+</code></pre><h3 id="초기-chainkey를-위한-kdf">초기 ChainKey를 위한 KDF</h3>
+<p>이는 Noise &ldquo;N&rdquo; 패턴이지만, 바운드 세션과 동일한 &ldquo;IK&rdquo; 초기화자를 사용한다는 점에 주목하세요.</p>
+<p>새로운 세션 메시지는 정적 키가 복호화되고 모든 값이 0인지 확인하기 위해 검사되기 전까지는 Alice의 정적 키를 포함하고 있는지 여부를 식별할 수 없습니다. 따라서 수신자는 모든 새로운 세션 메시지에 대해 &ldquo;IK&rdquo; 상태 머신을 사용해야 합니다. 정적 키가 모두 0인 경우 &ldquo;ss&rdquo; 메시지 패턴을 건너뛰어야 합니다.</p>
+<pre tabindex="0"><code>
+chainKey = from Flags/Static key section
+  k = from Flags/Static key section
+  n = 1
+  ad = h from Flags/Static key section
+  ciphertext = ENCRYPT(k, n, payload, ad)
+</code></pre><h3 id="플래그정적-키-섹션-암호화된-내용을-위한-kdf">플래그/정적 키 섹션 암호화된 내용을 위한 KDF</h3>
+<p>단일 New Session 메시지에 대한 응답으로 하나 이상의 New Session Reply가 전송될 수 있습니다. 각 reply는 해당 세션의 TagSet에서 생성된 태그로 시작됩니다.</p>
+<p>New Session Reply는 두 부분으로 구성됩니다. 첫 번째 부분은 앞에 태그가 붙은 Noise IK handshake의 완성입니다. 첫 번째 부분의 길이는 56바이트입니다. 두 번째 부분은 데이터 단계 페이로드입니다. 두 번째 부분의 길이는 16 + 페이로드 길이입니다.</p>
+<p>전체 길이는 72 + 페이로드 길이입니다. 암호화된 형식:</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |       Session Tag   8 bytes           |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +        Ephemeral Public Key           +
+  |                                       |
+  +            32 bytes                   +
+  |     Encoded with Elligator2           |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +  (MAC) for Key Section (no data)      +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for Payload Section     +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+
+  Tag :: 8 bytes, cleartext
+
+  Public Key :: 32 bytes, little endian, Elligator2, cleartext
+
+  MAC :: Poly1305 message authentication code, 16 bytes
+         Note: The ChaCha20 plaintext data is empty (ZEROLEN)
+
+  Payload Section encrypted data :: remaining data minus 16 bytes
+
+  MAC :: Poly1305 message authentication code, 16 bytes
+</code></pre><h3 id="페이로드-섹션을-위한-kdf-alice-정적-키-포함">페이로드 섹션을 위한 KDF (Alice 정적 키 포함)</h3>
+<p>태그는 아래의 DH 초기화 KDF에서 초기화된 Session Tags KDF에서 생성됩니다. 이는 응답을 세션과 연관시킵니다. DH 초기화의 Session Key는 사용되지 않습니다.</p>
+<h3 id="페이로드-섹션을-위한-kdf-alice-정적-키-제외">페이로드 섹션을 위한 KDF (Alice 정적 키 제외)</h3>
+<p>Bob의 ephemeral key. ephemeral key는 32바이트이며, Elligator2로 인코딩되고 little endian 형식입니다. 이 키는 재사용되지 않으며, 재전송을 포함하여 각 메시지마다 새로운 키가 생성됩니다.</p>
+<h3 id="1g-새-세션-응답-형식">1g) 새 세션 응답 형식</h3>
+<p>암호화된 길이는 데이터의 나머지 부분입니다. 복호화된 길이는 암호화된 길이보다 16 적습니다. 페이로드는 일반적으로 하나 이상의 Garlic Clove 블록을 포함합니다. 형식 및 추가 요구사항은 아래 페이로드 섹션을 참조하십시오.</p>
+<h3 id="세션-태그">세션 태그</h3>
+<p>하나 이상의 태그가 TagSet에서 생성되며, 이는 New Session 메시지의 chainKey를 사용하여 아래 KDF로 초기화됩니다.</p>
+<pre tabindex="0"><code>
+// Generate tagset
+  tagsetKey = HKDF(chainKey, ZEROLEN, &#34;SessionReplyTags&#34;, 32)
+  tagset_nsr = DH_INITIALIZE(chainKey, tagsetKey)
+</code></pre><h3 id="새-세션-응답-임시-키">새 세션 응답 임시 키</h3>
+<pre tabindex="0"><code>
+// Keys from the New Session message
+  // Alice&#39;s X25519 keys
+  // apk and aepk are sent in original New Session message
+  // ask = Alice private static key
+  // apk = Alice public static key
+  // aesk = Alice ephemeral private key
+  // aepk = Alice ephemeral public key
+  // Bob&#39;s X25519 static keys
+  // bsk = Bob private static key
+  // bpk = Bob public static key
+
+  // Generate the tag
+  tagsetEntry = tagset_nsr.GET_NEXT_ENTRY()
+  tag = tagsetEntry.SESSION_TAG
+
+  // MixHash(tag)
+  h = SHA256(h || tag)
+
+  This is the &#34;e&#34; message pattern:
+
+  // Bob&#39;s X25519 ephemeral keys
+  besk = GENERATE_PRIVATE_ELG2()
+  bepk = DERIVE_PUBLIC(besk)
+
+  // Bob&#39;s ephemeral public key
+  // MixHash(bepk)
+  // || below means append
+  h = SHA256(h || bepk);
+
+  // elg2_bepk is sent in cleartext in the
+  // beginning of the New Session message
+  elg2_bepk = ENCODE_ELG2(bepk)
+  // As decoded by Bob
+  bepk = DECODE_ELG2(elg2_bepk)
+
+  End of &#34;e&#34; message pattern.
+
+  This is the &#34;ee&#34; message pattern:
+
+  // MixKey(DH())
+  //[chainKey, k] = MixKey(sharedSecret)
+  // ChaChaPoly parameters to encrypt/decrypt
+  // chainKey from original New Session Payload Section
+  sharedSecret = DH(aesk, bepk) = DH(besk, aepk)
+  keydata = HKDF(chainKey, sharedSecret, &#34;&#34;, 32)
+  chainKey = keydata[0:31]
+
+  End of &#34;ee&#34; message pattern.
+
+  This is the &#34;se&#34; message pattern:
+
+  // MixKey(DH())
+  //[chainKey, k] = MixKey(sharedSecret)
+  sharedSecret = DH(ask, bepk) = DH(besk, apk)
+  keydata = HKDF(chainKey, sharedSecret, &#34;&#34;, 64)
+  chainKey = keydata[0:31]
+
+  // AEAD parameters
+  k = keydata[32:63]
+  n = 0
+  ad = h
+  ciphertext = ENCRYPT(k, n, ZEROLEN, ad)
+
+  End of &#34;se&#34; message pattern.
+
+  // MixHash(ciphertext)
+  h = SHA256(h || ciphertext)
+
+  chainKey is used in the ratchet below.
+</code></pre><h3 id="페이로드-3">페이로드</h3>
+<p>이는 분할 후 첫 번째 기존 세션 메시지와 같지만 별도의 태그가 없습니다. 또한 위의 해시를 사용하여 페이로드를 NSR 메시지에 바인딩합니다.</p>
+<pre tabindex="0"><code>
+// split()
+  keydata = HKDF(chainKey, ZEROLEN, &#34;&#34;, 64)
+  k_ab = keydata[0:31]
+  k_ba = keydata[32:63]
+  tagset_ab = DH_INITIALIZE(chainKey, k_ab)
+  tagset_ba = DH_INITIALIZE(chainKey, k_ba)
+
+  // AEAD parameters for New Session Reply payload
+  k = HKDF(k_ba, ZEROLEN, &#34;AttachPayloadKDF&#34;, 32)
+  n = 0
+  ad = h
+  ciphertext = ENCRYPT(k, n, payload, ad)
+</code></pre><h3 id="reply-tagset을-위한-kdf">Reply TagSet을 위한 KDF</h3>
+<p>응답의 크기에 따라 각각 고유한 임시 키를 가진 여러 NSR 메시지가 응답으로 전송될 수 있습니다.</p>
+<p>Alice와 Bob은 모든 NS 및 NSR 메시지에 대해 새로운 임시 키를 사용해야 합니다.</p>
+<p>Alice는 Existing Session (ES) 메시지를 보내기 전에 Bob의 NSR 메시지 중 하나를 받아야 하며, Bob은 ES 메시지를 보내기 전에 Alice로부터 ES 메시지를 받아야 합니다.</p>
+<p>Bob의 NSR Payload Section에서 가져온 <code>chainKey</code>와 <code>k</code>는 초기 ES DH Ratchets(양방향, DH Ratchet KDF 참조)의 입력값으로 사용됩니다.</p>
+<p>Bob은 Alice로부터 수신한 ES 메시지에 대해서만 기존 세션(Existing Sessions)을 유지해야 합니다. 다른 생성된 인바운드 및 아웃바운드 세션들(여러 NSR용)은 주어진 세션에 대해 Alice의 첫 번째 ES 메시지를 수신한 후 즉시 파기되어야 합니다.</p>
+<h3 id="reply-key-section-암호화된-내용을-위한-kdf">Reply Key Section 암호화된 내용을 위한 KDF</h3>
+<p>세션 태그 (8바이트) 암호화된 데이터 및 MAC (아래 섹션 3 참조)</p>
+<h3 id="페이로드-섹션-암호화된-콘텐츠를-위한-kdf">페이로드 섹션 암호화된 콘텐츠를 위한 KDF</h3>
+<p>암호화됨:</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |       Session Tag                     |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +              (MAC)                    +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+
+  Session Tag :: 8 bytes, cleartext
+
+  Payload Section encrypted data :: remaining data minus 16 bytes
+
+  MAC :: Poly1305 message authentication code, 16 bytes
+</code></pre><h3 id="참고사항">참고사항</h3>
+<p>암호화된 길이는 데이터의 나머지 부분입니다. 복호화된 길이는 암호화된 길이보다 16만큼 적습니다. 형식과 요구사항은 아래 payload 섹션을 참조하세요.</p>
+<p>KDF</p>
+<pre tabindex="0"><code>See AEAD section below.
+
+  // AEAD parameters for Existing Session payload
+  k = The 32-byte session key associated with this session tag
+  n = The message number N in the current chain, as retrieved from the associated Session Tag.
+  ad = The session tag, 8 bytes
+  ciphertext = ENCRYPT(k, n, payload, ad)
+</code></pre><h3 id="1h-기존-세션-형식">1h) 기존 세션 형식</h3>
+<p>형식: 32바이트 공개 키와 개인 키, little-endian.</p>
+<p>정당화: <a href="../../../ko/docs/specs/ntcp2/">NTCP2</a>
+에서 사용됩니다.</p>
+<h3 id="형식">형식</h3>
+<p>표준 Noise handshake에서 각 방향의 초기 handshake 메시지는 평문으로 전송되는 ephemeral key로 시작합니다. 유효한 X25519 키는 무작위 데이터와 구별 가능하므로, 중간자가 이러한 메시지를 무작위 세션 태그로 시작하는 Existing Session 메시지와 구별할 수 있습니다. <a href="../../../ko/docs/specs/ntcp2/">NTCP2</a>
+ (<a href="../../../ko/proposals/111-ntcp-2/">Proposal 111</a>
+)에서는 out-of-band 정적 키를 사용하는 저오버헤드 XOR 함수를 사용하여 키를 난독화했습니다. 그러나 여기서의 위협 모델은 다릅니다. 우리는 어떤 중간자도 어떤 수단을 사용하여 트래픽의 목적지를 확인하거나 초기 handshake 메시지를 Existing Session 메시지와 구별할 수 있도록 허용하지 않으려고 합니다.</p>
+<p>따라서 <a href="https://elligator.cr.yp.to/">Elligator2</a>
+를 사용하여 New Session 및 New Session Reply 메시지의 임시 키를 변환하여 균등 랜덤 문자열과 구별할 수 없도록 합니다.</p>
+<h3 id="페이로드-4">페이로드</h3>
+<p>32바이트 공개키 및 개인키. 인코딩된 키는 리틀 엔디안입니다.</p>
+<p><a href="https://elligator.cr.yp.to/">Elligator2</a>
+에서 정의된 바와 같이, 인코딩된 키들은 254개의 무작위 비트와 구별할 수 없습니다. 우리는 256개의 무작위 비트(32바이트)가 필요합니다. 따라서 인코딩과 디코딩은 다음과 같이 정의됩니다:</p>
+<p>인코딩:</p>
+<pre tabindex="0"><code>
+ENCODE_ELG2() Definition
+
+  // Encode as defined in Elligator2 specification
+  encodedKey = encode(pubkey)
+  // OR in 2 random bits to MSB
+  randomByte = CSRNG(1)
+  encodedKey[31] |= (randomByte &amp; 0xc0)
+</code></pre><p>디코딩:</p>
+<pre tabindex="0"><code>
+DECODE_ELG2() Definition
+
+  // Mask out 2 random bits from MSB
+  encodedKey[31] &amp;= 0x3f
+  // Decode as defined in Elligator2 specification
+  pubkey = decode(encodedKey)
+</code></pre><h3 id="2-ecies-x25519">2) ECIES-X25519</h3>
+<p>OBEP와 IBGW가 트래픽을 분류하는 것을 방지하는 데 필요합니다.</p>
+<h3 id="2a-elligator2">2a) Elligator2</h3>
+<p>Elligator2는 평균 키 생성 시간을 두 배로 늘립니다. 개인 키의 절반이 Elligator2로 인코딩하기에 부적합한 공개 키를 생성하기 때문입니다. 또한, 생성기가 적합한 키 쌍을 찾을 때까지 계속 재시도해야 하므로 키 생성 시간은 지수 분포를 가진 무제한적입니다.</p>
+<p>이 오버헤드는 적합한 키들의 풀을 유지하기 위해 별도의 스레드에서 미리 키 생성을 수행하여 관리할 수 있습니다.</p>
+<p>generator는 적합성을 판단하기 위해 ENCODE_ELG2() 함수를 수행합니다. 따라서 generator는 다시 계산할 필요가 없도록 ENCODE_ELG2()의 결과를 저장해야 합니다.</p>
+<p>또한, 부적합한 키들은 Elligator2가 사용되지 않는 <a href="../../../ko/docs/specs/ntcp2/">NTCP2</a>
+에 사용되는 키 풀에 추가될 수 있습니다. 이렇게 하는 것의 보안 문제는 TBD입니다.</p>
+<h3 id="형식-1">형식</h3>
+<p><a href="../../../ko/docs/specs/ntcp2/">NTCP2</a>
+에서와 동일한 ChaCha20과 Poly1305를 사용하는 AEAD입니다. 이는 TLS <a href="https://tools.ietf.org/html/rfc7905">RFC-7905</a>
+에서도 유사하게 사용되는 <a href="https://tools.ietf.org/html/rfc7539">RFC-7539</a>
+에 해당합니다.</p>
+<h3 id="정당화-1">정당화</h3>
+<p>New Session 메시지의 AEAD 블록에 대한 암호화/복호화 함수의 입력:</p>
+<pre tabindex="0"><code>
+k :: 32 byte cipher key
+       See New Session and New Session Reply KDFs above.
+
+  n :: Counter-based nonce, 12 bytes.
+       n = 0
+
+  ad :: Associated data, 32 bytes.
+        The SHA256 hash of the preceding data, as output from mixHash()
+
+  data :: Plaintext data, 0 or more bytes
+</code></pre><h3 id="참고사항-1">참고사항</h3>
+<p>Existing Session 메시지에서 AEAD 블록의 암호화/복호화 함수에 대한 입력값:</p>
+<pre tabindex="0"><code>
+k :: 32 byte session key
+       As looked up from the accompanying session tag.
+
+  n :: Counter-based nonce, 12 bytes.
+       Starts at 0 and incremented for each message when transmitting.
+       For the receiver, the value
+       as looked up from the accompanying session tag.
+       First four bytes are always zero.
+       Last eight bytes are the message number (n), little-endian encoded.
+       Maximum value is 65535.
+       Session must be ratcheted when N reaches that value.
+       Higher values must never be used.
+
+  ad :: Associated data
+        The session tag
+
+  data :: Plaintext data, 0 or more bytes
+</code></pre><h3 id="3-aead-chachapoly">3) AEAD (ChaChaPoly)</h3>
+<p>암호화 함수의 출력, 복호화 함수의 입력:</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |       ChaCha20 encrypted data         |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +              (MAC)                    +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+
+  encrypted data :: Same size as plaintext data, 0 - 65519 bytes
+
+  MAC :: Poly1305 message authentication code, 16 bytes
+</code></pre><h3 id="새-세션-및-새-세션-응답-입력">새 세션 및 새 세션 응답 입력</h3>
+<ul>
+<li>
+<p>ChaCha20은 스트림 암호이므로 평문을 패딩할 필요가 없습니다.
+추가 키스트림 바이트는 폐기됩니다.</p>
+</li>
+<li>
+<p>암호의 키(256비트)는 SHA256 KDF를 통해 합의됩니다.
+각 메시지에 대한 KDF의 세부사항은 아래 별도 섹션에 있습니다.</p>
+</li>
+<li>
+<p>ChaChaPoly 프레임은 I2NP 데이터 메시지에 캡슐화되어 있기 때문에 크기가 알려져 있습니다.</p>
+</li>
+<li>
+<p>모든 메시지에 대해,
+패딩은 인증된
+데이터 프레임 내부에 있습니다.</p>
+</li>
+</ul>
+<h3 id="기존-세션-입력">기존 세션 입력</h3>
+<p>AEAD 검증에 실패한 모든 수신 데이터는 폐기되어야 합니다. 응답은 반환되지 않습니다.</p>
+<h3 id="암호화된-형식">암호화된 형식</h3>
+<p><a href="../../../ko/docs/specs/ntcp2/">NTCP2</a>
+에서 사용됩니다.</p>
+<h3 id="참고사항-2">참고사항</h3>
+<p>이전과 같이 session tag를 여전히 사용하지만, ratchet을 사용하여 생성합니다. Session tag에는 구현하지 않은 rekey 옵션도 있었습니다. 따라서 이중 ratchet과 같지만 두 번째 것은 구현하지 않았습니다.</p>
+<p>여기서는 Signal의 Double Ratchet과 유사한 것을 정의합니다. 세션 태그는 수신자와 송신자 측에서 결정론적이고 동일하게 생성됩니다.</p>
+<p>대칭 키/태그 래칫(ratchet)을 사용함으로써 송신자 측에서 세션 태그를 저장하기 위한 메모리 사용량을 제거합니다. 또한 태그 세트를 전송하는 대역폭 소비도 제거합니다. 수신자 측 사용량은 여전히 상당하지만, 세션 태그를 32바이트에서 8바이트로 줄여 더욱 감소시킬 수 있습니다.</p>
+<p>Signal에서 지정된(그리고 선택적인) 헤더 암호화는 사용하지 않으며, 대신 세션 태그를 사용합니다.</p>
+<p>DH ratchet을 사용함으로써 우리는 ElGamal/AES+SessionTags에서는 구현되지 않았던 전방향 보안성(forward secrecy)을 달성합니다.</p>
+<p>참고: New Session 일회용 공개 키는 ratchet의 일부가 아니며, 유일한 기능은 Alice의 초기 DH ratchet 키를 암호화하는 것입니다.</p>
+<h3 id="aead-오류-처리">AEAD 오류 처리</h3>
+<p>Double Ratchet은 각 메시지 헤더에 태그를 포함시켜 손실되거나 순서가 바뀐 메시지를 처리합니다. 수신자는 태그의 인덱스를 조회하며, 이것이 메시지 번호 N입니다. 메시지에 PN 값을 가진 Message Number 블록이 포함되어 있다면, 수신자는 이전 태그 세트에서 해당 값보다 높은 모든 태그를 삭제할 수 있으며, 건너뛴 메시지가 나중에 도착할 경우를 대비해 이전 태그 세트에서 건너뛴 태그들은 보관합니다.</p>
+<h3 id="정당성">정당성</h3>
+<p>이러한 래칫을 구현하기 위해 다음과 같은 데이터 구조와 함수를 정의합니다.</p>
+<p>TAGSET_ENTRY</p>
+<pre><code>A single entry in a TAGSET.
+
+INDEX
+    An integer index, starting with 0
+
+SESSION_TAG
+    An identifier to go out on the wire, 8 bytes
+
+SESSION_KEY
+    A symmetric key, never goes on the wire, 32 bytes
+</code></pre>
+<p>태그셋</p>
+<pre><code>A collection of TAGSET_ENTRIES.
+
+CREATE(key, n)
+    Generate a new TAGSET using initial cryptographic key material of 32 bytes.
+    The associated session identifier is provided.
+    The initial number of of tags to create is specified; this is generally 0 or 1
+    for an outgoing session.
+    LAST_INDEX = -1
+    EXTEND(n) is called.
+
+EXTEND(n)
+    Generate n more TAGSET_ENTRIES by calling EXTEND() n times.
+
+EXTEND()
+    Generate one more TAGSET_ENTRY, unless the maximum number SESSION_TAGS have
+    already been generated.
+    If LAST_INDEX is greater than or equal to 65535, return.
+    ++ LAST_INDEX
+    Create a new TAGSET_ENTRY with the LAST_INDEX value and the calculated SESSION_TAG.
+    Calls RATCHET_TAG() and (optionally) RATCHET_KEY().
+    For inbound sessions, the calculation of the SESSION_KEY may
+    be deferred and calculated in GET_SESSION_KEY().
+    Calls EXPIRE()
+
+EXPIRE()
+    Remove tags and keys that are too old, or if the TAGSET size exceeds some limit.
+
+RATCHET_TAG()
+    Calculates the next SESSION_TAG based on the last SESSION_TAG.
+
+RATCHET_KEY()
+    Calculates the next SESSION_KEY based on the last SESSION_KEY.
+
+SESSION
+    The associated session.
+
+CREATION_TIME
+    When the TAGSET was created.
+
+LAST_INDEX
+    The last TAGSET_ENTRY INDEX generated by EXTEND().
+
+GET_NEXT_ENTRY()
+    Used for outgoing sessions only.
+    EXTEND(1) is called if there are no remaining TAGSET_ENTRIES.
+    If EXTEND(1) did nothing, the max of 65535 TAGSETS have been used,
+    and return an error.
+    Returns the next unused TAGSET_ENTRY.
+
+GET_SESSION_KEY(sessionTag)
+    Used for incoming sessions only.
+    Returns the TAGSET_ENTRY containing the sessionTag.
+    If found, the TAGSET_ENTRY is removed.
+    If the SESSION_KEY calculation was deferred, it is calculated now.
+    If there are few TAGSET_ENTRIES remaining, EXTEND(n) is called.
+</code></pre>
+<h3 id="4-ratchets">4) Ratchets</h3>
+<p>Ratchet하지만 Signal만큼 빠르지는 않습니다. 우리는 수신된 키의 ack를 새 키 생성과 분리합니다. 일반적인 사용에서 Alice와 Bob은 각각 New Session에서 즉시 ratchet(두 번)하지만, 다시는 ratchet하지 않습니다.</p>
+<p>참고로 ratchet은 단일 방향용이며, 해당 방향에 대한 새로운 세션 태그 / 메시지 키 ratchet 체인을 생성합니다. 양방향에 대한 키를 생성하려면 두 번 ratchet해야 합니다.</p>
+<p>새로운 키를 생성하고 전송할 때마다 ratchet합니다. 새로운 키를 받을 때마다 ratchet합니다.</p>
+<p>Alice는 바인딩되지 않은 아웃바운드 세션을 생성할 때 한 번 래칫하며, 인바운드 세션은 생성하지 않습니다(바인딩되지 않은 것은 응답 불가능합니다).</p>
+<p>Bob은 바운드되지 않은 인바운드 세션을 생성할 때 한 번 ratchet하며, 해당하는 아웃바운드 세션을 생성하지 않습니다(바운드되지 않은 세션은 응답할 수 없습니다).</p>
+<p>Alice는 Bob의 New Session Reply (NSR) 메시지 중 하나를 받을 때까지 Bob에게 New Session (NS) 메시지를 계속 보냅니다. 그런 다음 NSR의 Payload Section KDF 결과를 세션 ratchet의 입력으로 사용하고(DH Ratchet KDF 참조), Existing Session (ES) 메시지를 보내기 시작합니다.</p>
+<p>수신된 각 NS 메시지에 대해 Bob은 새로운 인바운드 세션을 생성하며, 응답 Payload Section의 KDF 결과를 새로운 인바운드 및 아웃바운드 ES DH Ratchet의 입력으로 사용합니다.</p>
+<p>각 응답이 필요할 때마다, Bob은 페이로드에 응답을 담은 NSR 메시지를 Alice에게 전송합니다. Bob은 모든 NSR에 대해 새로운 임시 키를 사용해야 합니다.</p>
+<p>Bob은 해당 아웃바운드 세션에서 ES 메시지를 생성하고 전송하기 전에 인바운드 세션 중 하나에서 Alice로부터 ES 메시지를 받아야 합니다.</p>
+<p>Alice는 Bob으로부터 NSR 메시지를 수신하기 위해 타이머를 사용해야 합니다. 타이머가 만료되면 세션을 제거해야 합니다.</p>
+<p>KCI 및/또는 리소스 고갈 공격을 피하기 위해, 공격자가 Alice가 NS 메시지를 계속 보내도록 하기 위해 Bob의 NSR 응답을 드롭하는 경우, Alice는 타이머 만료로 인한 일정 횟수의 재시도 후에는 Bob에게 New Session을 시작하는 것을 피해야 합니다.</p>
+<p>Alice와 Bob은 각각 수신된 모든 NextKey 블록에 대해 DH ratchet을 수행합니다.</p>
+<p>Alice와 Bob은 각 DH ratchet 후에 새로운 태그 세트와 두 개의 대칭 키 ratchet을 생성합니다. 주어진 방향에서 각각의 새로운 ES 메시지에 대해 Alice와 Bob은 세션 태그와 대칭 키 ratchet을 진행시킵니다.</p>
+<p>초기 핸드셰이크 이후 DH ratchet의 빈도는 구현에 따라 달라집니다. 프로토콜에서는 ratchet이 필요하기 전까지 최대 65535개의 메시지 제한을 두고 있지만, 더 빈번한 ratcheting(메시지 수, 경과 시간 또는 둘 다 기준)은 추가적인 보안을 제공할 수 있습니다.</p>
+<p>바운드 세션에서 최종 handshake KDF 이후, Bob과 Alice는 결과로 나온 CipherState에서 Noise Split() 함수를 실행하여 인바운드 및 아웃바운드 세션에 대한 독립적인 대칭 및 태그 체인 키를 생성해야 합니다.</p>
+<h4 id="key-and-tag-set-ids">KEY AND TAG SET IDS</h4>
+<p>키와 태그 세트 ID 번호는 키와 태그 세트를 식별하는 데 사용됩니다. 키 ID는 NextKey 블록에서 전송되거나 사용된 키를 식별하는 데 사용됩니다. 태그 세트 ID는 ACK 블록에서 (메시지 번호와 함께) 확인응답되는 메시지를 식별하는 데 사용됩니다. 키와 태그 세트 ID 모두 단일 방향의 태그 세트에 적용됩니다. 키와 태그 세트 ID 번호는 순차적이어야 합니다.</p>
+<p>각 방향의 세션에서 사용되는 첫 번째 태그 세트에서는 태그 세트 ID가 0입니다. NextKey 블록이 전송되지 않았으므로 키 ID가 없습니다.</p>
+<p>DH ratchet을 시작하려면, 송신자는 키 ID가 0인 새로운 NextKey 블록을 전송합니다. 수신자는 키 ID가 0인 새로운 NextKey 블록으로 응답합니다. 그러면 송신자는 태그 세트 ID가 1인 새로운 태그 세트를 사용하기 시작합니다.</p>
+<p>후속 태그 세트는 유사하게 생성됩니다. NextKey 교환 후에 사용되는 모든 태그 세트의 경우, 태그 세트 번호는 (1 + Alice의 키 ID + Bob의 키 ID)입니다.</p>
+<p>키와 태그 세트 ID는 0부터 시작하여 순차적으로 증가합니다. 최대 태그 세트 ID는 65535입니다. 최대 키 ID는 32767입니다. 태그 세트가 거의 소진되면, 태그 세트 발신자는 NextKey 교환을 시작해야 합니다. 태그 세트 65535가 거의 소진되면, 태그 세트 발신자는 New Session 메시지를 전송하여 새로운 세션을 시작해야 합니다.</p>
+<p>스트리밍 최대 메시지 크기가 1730이고 재전송이 없다고 가정할 때, 단일 태그 세트를 사용한 이론적 최대 데이터 전송량은 1730 * 65536 ~= 108 MB입니다. 실제 최대값은 재전송으로 인해 더 낮아질 것입니다.</p>
+<p>사용 가능한 모든 65536개의 태그 세트를 사용한 이론적 최대 데이터 전송량은 세션을 폐기하고 교체해야 하기 전까지 64K * 108 MB ~= 6.9 TB입니다.</p>
+<h4 id="dh-ratchet-message-flow">DH RATCHET MESSAGE FLOW</h4>
+<p>태그 집합에 대한 다음 키 교환은 해당 태그들의 발신자(아웃바운드 태그 집합의 소유자)가 시작해야 합니다. 수신자(인바운드 태그 집합의 소유자)가 응답합니다. 애플리케이션 계층에서의 일반적인 HTTP GET 트래픽의 경우, Bob이 더 많은 메시지를 보내고 키 교환을 시작하여 먼저 래칫팅을 수행할 것입니다. 아래 다이어그램이 이를 보여줍니다. Alice가 래칫팅할 때는 동일한 과정이 역순으로 발생합니다.</p>
+<p>NS/NSR 핸드셰이크 후에 사용되는 첫 번째 태그 세트는 태그 세트 0입니다. 태그 세트 0이 거의 소진되면, 태그 세트 1을 생성하기 위해 양방향으로 새로운 키를 교환해야 합니다. 그 후에는 새로운 키가 한 방향으로만 전송됩니다.</p>
+<p>태그 세트 2를 생성하기 위해, 태그 발송자는 새 키를 보내고 태그 수신자는 확인응답으로 자신의 이전 키의 ID를 보냅니다. 양측 모두 DH를 수행합니다.</p>
+<p>태그 세트 3을 생성하기 위해, 태그 발신자는 자신의 이전 키의 ID를 전송하고 태그 수신자에게 새로운 키를 요청합니다. 양쪽 모두 DH를 수행합니다.</p>
+<p>후속 태그 세트는 태그 세트 2와 3처럼 생성됩니다. 태그 세트 번호는 (1 + 송신자 키 ID + 수신자 키 ID)입니다.</p>
+<pre tabindex="0"><code>
+Tag Sender                    Tag Receiver
+
+                   ... use tag set #0 ...
+
+
+  (Tagset #0 almost empty)
+  (generate new key #0)
+
+  Next Key, forward, request reverse, with key #0  --------&gt;
+  (repeat until next key received)
+
+                              (generate new key #0, do DH, create IB Tagset #1)
+
+          &lt;-------------      Next Key, reverse, with key #0
+                              (repeat until tag received on new tagset)
+
+  (do DH, create OB Tagset #1)
+
+
+                   ... use tag set #1 ...
+
+
+  (Tagset #1 almost empty)
+  (generate new key #1)
+
+  Next Key, forward, with key #1        --------&gt;
+  (repeat until next key received)
+
+                              (reuse key #0, do DH, create IB Tagset #2)
+
+          &lt;--------------     Next Key, reverse, id 0
+                              (repeat until tag received on new tagset)
+
+  (do DH, create OB Tagset #2)
+
+
+                   ... use tag set #2 ...
+
+
+  (Tagset #2 almost empty)
+  (reuse key #1)
+
+  Next Key, forward, request reverse, id 1  --------&gt;
+  (repeat until next key received)
+
+                              (generate new key #1, do DH, create IB Tagset #3)
+
+          &lt;--------------     Next Key, reverse, with key #1
+
+  (do DH, create OB Tagset #3)
+  (reuse key #1, do DH, create IB Tagset #3)
+
+
+                   ... use tag set #3 ...
+
+
+       After tag set 3, repeat the above
+       patterns as shown for tag sets 2 and 3.
+
+       To create a new even-numbered tag set, the sender sends a new key
+       to the receiver. The receiver sends his old key ID
+       back as an acknowledgement.
+
+       To create a new odd-numbered tag set, the sender sends a reverse request
+       to the receiver. The receiver sends a new reverse key to the sender.
+</code></pre><p>아웃바운드 tagset에 대한 DH ratchet이 완료되고 새로운 아웃바운드 tagset이 생성된 후에는 즉시 사용되어야 하며, 기존 아웃바운드 tagset은 삭제할 수 있습니다.</p>
+<p>인바운드 tagset에 대한 DH ratchet이 완료되고 새로운 인바운드 tagset이 생성된 후, 수신자는 두 tagset 모두에서 태그를 수신하고, 약 3분 정도의 짧은 시간 후에 기존 tagset을 삭제해야 합니다.</p>
+<p>태그 세트와 키 ID 진행의 요약은 아래 표에 있습니다. *는 새로운 키가 생성됨을 나타냅니다.</p>
+<table>
+  <thead>
+      <tr>
+          <th>New Tag Set ID</th>
+          <th>Sender key ID</th>
+          <th>Rcvr key ID</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>0</td>
+          <td>n/a</td>
+          <td>n/a</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0 *</td>
+          <td>0 *</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>1 *</td>
+          <td>0</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>1</td>
+          <td>1 *</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>2 *</td>
+          <td>1</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>2</td>
+          <td>2 *</td>
+      </tr>
+      <tr>
+          <td>&hellip;</td>
+          <td>&hellip;</td>
+          <td>&hellip;</td>
+      </tr>
+      <tr>
+          <td>65534</td>
+          <td>32767 *</td>
+          <td>32766</td>
+      </tr>
+      <tr>
+          <td>65535</td>
+          <td>32767</td>
+          <td>32767 *</td>
+      </tr>
+      <tr>
+          <td>키와 태그 집합 ID 번호는 순차적이어야 합니다.</td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="dh-initialization-kdf">DH INITIALIZATION KDF</h4>
+<p>이것은 단일 방향에 대한 DH_INITIALIZE(rootKey, k)의 정의입니다. 이는 tagset과 필요시 후속 DH ratchet에 사용될 &ldquo;next root key&quot;를 생성합니다.</p>
+<p>DH 초기화를 세 곳에서 사용합니다. 첫째, New Session Replies용 태그 세트를 생성하는 데 사용합니다. 둘째, Existing Session 메시지에서 사용할 각 방향별로 하나씩 두 개의 태그 세트를 생성하는 데 사용합니다. 마지막으로, DH Ratchet 이후에 추가 Existing Session 메시지를 위해 단일 방향으로 새로운 태그 세트를 생성하는 데 사용합니다.</p>
+<pre tabindex="0"><code>
+Inputs:
+  1) rootKey = chainKey from Payload Section
+  2) k from the New Session KDF or split()
+
+  // KDF_RK(rk, dh_out)
+  keydata = HKDF(rootKey, k, &#34;KDFDHRatchetStep&#34;, 64)
+
+  // Output 1: The next Root Key (KDF input for the next DH ratchet)
+  nextRootKey = keydata[0:31]
+  // Output 2: The chain key to initialize the new
+  // session tag and symmetric key ratchets
+  // for the tag set
+  ck = keydata[32:63]
+
+  // session tag and symmetric key chain keys
+  keydata = HKDF(ck, ZEROLEN, &#34;TagAndKeyGenKeys&#34;, 64)
+  sessTag_ck = keydata[0:31]
+  symmKey_ck = keydata[32:63]
+</code></pre><h4 id="dh-ratchet-kdf">DH RATCHET KDF</h4>
+<p>이는 tagset이 소진되기 전에 NextKey 블록에서 새로운 DH 키가 교환된 후 사용됩니다.</p>
+<pre tabindex="0"><code>
+
+// Tag sender generates new X25519 ephemeral keys
+  // and sends rapk to tag receiver in a NextKey block
+  rask = GENERATE_PRIVATE()
+  rapk = DERIVE_PUBLIC(rask)
+  
+  // Tag receiver generates new X25519 ephemeral keys
+  // and sends rbpk to Tag sender in a NextKey block
+  rbsk = GENERATE_PRIVATE()
+  rbpk = DERIVE_PUBLIC(rbsk)
+
+  sharedSecret = DH(rask, rbpk) = DH(rbsk, rapk)
+  tagsetKey = HKDF(sharedSecret, ZEROLEN, &#34;XDHRatchetTagSet&#34;, 32)
+  rootKey = nextRootKey // from previous tagset in this direction
+  newTagSet = DH_INITIALIZE(rootKey, tagsetKey)
+</code></pre><h3 id="메시지-번호">메시지 번호</h3>
+<p>Signal에서처럼 모든 메시지에 대한 래칫(ratchet). 세션 태그 래칫은 대칭 키 래칫과 동기화되지만, 수신자 키 래칫은 메모리 절약을 위해 &ldquo;지연&quot;될 수 있습니다.</p>
+<p>송신자는 전송되는 각 메시지에 대해 한 번씩 ratchet합니다. 추가 태그를 저장할 필요는 없습니다. 송신자는 또한 현재 체인에서 메시지의 메시지 번호인 &lsquo;N&rsquo;에 대한 카운터를 유지해야 합니다. &lsquo;N&rsquo; 값은 전송되는 메시지에 포함됩니다. Message Number 블록 정의를 참조하세요.</p>
+<p>수신자는 최대 윈도우 크기만큼 ratchet를 앞당기고 세션과 연결된 &ldquo;tag set&quot;에 태그를 저장해야 합니다. 수신되면 저장된 태그는 폐기될 수 있으며, 이전에 수신되지 않은 태그가 없다면 윈도우를 진행시킬 수 있습니다. 수신자는 각 세션 태그와 연결된 &lsquo;N&rsquo; 값을 유지하고, 전송된 메시지의 번호가 이 값과 일치하는지 확인해야 합니다. Message Number 블록 정의를 참조하십시오.</p>
+<h4 id="kdf">KDF</h4>
+<p>이것은 RATCHET_TAG()의 정의입니다.</p>
+<pre tabindex="0"><code>
+Inputs:
+  1) Session Tag Chain key sessTag_ck
+     First time: output from DH ratchet
+     Subsequent times: output from previous session tag ratchet
+
+  Generated:
+  2) input_key_material = SESSTAG_CONSTANT
+     Must be unique for this tag set (generated from chain key),
+     so that the sequence isn&#39;t predictable, since session tags
+     go out on the wire in plaintext.
+
+  Outputs:
+  1) N (the current session tag number)
+  2) the session tag (and symmetric key, probably)
+  3) the next Session Tag Chain Key (KDF input for the next session tag ratchet)
+
+  Initialization:
+  keydata = HKDF(sessTag_ck, ZEROLEN, &#34;STInitialization&#34;, 64)
+  // Output 1: Next chain key
+  sessTag_chainKey = keydata[0:31]
+  // Output 2: The constant
+  SESSTAG_CONSTANT = keydata[32:63]
+
+  // KDF_ST(ck, constant)
+  keydata_0 = HKDF(sessTag_chainkey, SESSTAG_CONSTANT, &#34;SessionTagKeyGen&#34;, 64)
+  // Output 1: Next chain key
+  sessTag_chainKey_0 = keydata_0[0:31]
+  // Output 2: The session tag
+  // or more if tag is longer than 8 bytes
+  tag_0 = keydata_0[32:39]
+
+  // repeat as necessary to get to tag_n
+  keydata_n = HKDF(sessTag_chainKey_(n-1), SESSTAG_CONSTANT, &#34;SessionTagKeyGen&#34;, 64)
+  // Output 1: Next chain key
+  sessTag_chainKey_n = keydata_n[0:31]
+  // Output 2: The session tag
+  // or more if tag is longer than 8 bytes
+  tag_n = keydata_n[32:39]
+</code></pre><h3 id="샘플-구현">샘플 구현</h3>
+<p>Signal에서와 같이 모든 메시지에 대한 래칫. 각 대칭 키는 연관된 메시지 번호와 세션 태그를 가집니다. 세션 키 래칫은 대칭 태그 래칫과 동기화되지만, 수신자 키 래칫은 메모리 절약을 위해 &ldquo;뒤처질&rdquo; 수 있습니다.</p>
+<p>전송기는 전송되는 각 메시지마다 한 번씩 ratchet됩니다. 추가 키를 저장할 필요가 없습니다.</p>
+<p>수신자가 session tag를 받으면, 아직 연관된 키까지 대칭 키 ratchet을 앞으로 돌리지 않았다면, 연관된 키까지 &ldquo;따라잡아야&rdquo; 합니다. 수신자는 아직 받지 않은 이전 tag들에 대한 키들을 캐시할 것입니다. 일단 받으면, 저장된 키는 폐기될 수 있으며, 이전에 받지 않은 tag가 없다면 윈도우를 앞으로 이동시킬 수 있습니다.</p>
+<p>효율성을 위해 session tag과 대칭 키 ratchet은 분리되어 있어 session tag ratchet이 대칭 키 ratchet보다 앞서 실행될 수 있습니다. 이는 또한 session tag들이 네트워크를 통해 전송되기 때문에 추가적인 보안을 제공합니다.</p>
+<h4 id="kdf-1">KDF</h4>
+<p>이것은 RATCHET_KEY()의 정의입니다.</p>
+<pre tabindex="0"><code>
+Inputs:
+  1) Symmetric Key Chain key symmKey_ck
+     First time: output from DH ratchet
+     Subsequent times: output from previous symmetric key ratchet
+
+  Generated:
+  2) input_key_material = SYMMKEY_CONSTANT = ZEROLEN
+     No need for uniqueness. Symmetric keys never go out on the wire.
+     TODO: Set a constant anyway?
+
+  Outputs:
+  1) N (the current session key number)
+  2) the session key
+  3) the next Symmetric Key Chain Key (KDF input for the next symmetric key ratchet)
+
+  // KDF_CK(ck, constant)
+  SYMMKEY_CONSTANT = ZEROLEN
+  // Output 1: Next chain key
+  keydata_0 = HKDF(symmKey_ck, SYMMKEY_CONSTANT, &#34;SymmetricRatchet&#34;, 64)
+  symmKey_chainKey_0 = keydata_0[0:31]
+  // Output 2: The symmetric key
+  k_0 = keydata_0[32:63]
+
+  // repeat as necessary to get to k[n]
+  keydata_n = HKDF(symmKey_chainKey_(n-1), SYMMKEY_CONSTANT, &#34;SymmetricRatchet&#34;, 64)
+  // Output 1: Next chain key
+  symmKey_chainKey_n = keydata_n[0:31]
+  // Output 2: The symmetric key
+  k_n = keydata_n[32:63]
+</code></pre><h3 id="4a-dh-ratchet">4a) DH Ratchet</h3>
+<p>이것은 ElGamal/AES+SessionTags 명세서에 정의된 AES 섹션 형식을 대체합니다.</p>
+<p>이는 <a href="../../../ko/docs/specs/ntcp2/">NTCP2</a>
+ 명세에서 정의된 것과 동일한 블록 형식을 사용합니다. 개별 블록 타입은 다르게 정의됩니다.</p>
+<p>구현자들이 코드를 공유하도록 권장하는 것이 파싱 문제로 이어질 수 있다는 우려가 있습니다. 구현자들은 코드 공유의 장점과 위험을 신중하게 고려하고, 두 컨텍스트에서 순서 및 유효한 블록 규칙이 다르도록 보장해야 합니다.</p>
+<h3 id="payload-section-decrypted-data">Payload Section Decrypted data</h3>
+<p>암호화된 길이는 데이터의 나머지 부분입니다. 복호화된 길이는 암호화된 길이보다 16 작습니다. 모든 블록 유형이 지원됩니다. 일반적인 내용에는 다음 블록들이 포함됩니다:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Payload Block Type</th>
+          <th>Type Number</th>
+          <th>Block Length</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>DateTime</td>
+          <td>0</td>
+          <td>7</td>
+      </tr>
+      <tr>
+          <td>Termination (TBD)</td>
+          <td>4</td>
+          <td>9 typ.</td>
+      </tr>
+      <tr>
+          <td>Options (TBD)</td>
+          <td>5</td>
+          <td>21+</td>
+      </tr>
+      <tr>
+          <td>Message Number (TBD)</td>
+          <td>6</td>
+          <td>TBD</td>
+      </tr>
+      <tr>
+          <td>Next Key</td>
+          <td>7</td>
+          <td>3 or 35</td>
+      </tr>
+      <tr>
+          <td>ACK</td>
+          <td>8</td>
+          <td>4 typ.</td>
+      </tr>
+      <tr>
+          <td>ACK Request</td>
+          <td>9</td>
+          <td>3</td>
+      </tr>
+      <tr>
+          <td>Garlic Clove</td>
+          <td>11</td>
+          <td>varies</td>
+      </tr>
+      <tr>
+          <td>Padding</td>
+          <td>254</td>
+          <td>varies</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="unencrypted-data">Unencrypted data</h3>
+<p>암호화된 프레임에는 0개 이상의 블록이 있습니다. 각 블록은 1바이트 식별자, 2바이트 길이, 그리고 0바이트 이상의 데이터를 포함합니다.</p>
+<p>확장성을 위해, 수신자는 알려지지 않은 타입 번호를 가진 블록들을 반드시 무시해야 하며, 이를 패딩으로 처리해야 합니다.</p>
+<p>암호화된 데이터는 16바이트 인증 헤더를 포함하여 최대 65535바이트이므로, 암호화되지 않은 데이터의 최대 크기는 65519바이트입니다.</p>
+<p>(Poly1305 인증 태그는 표시되지 않음):</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |blk |  size   |       data             |
+  +----+----+----+                        +
+  |                                       |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |blk |  size   |       data             |
+  +----+----+----+                        +
+  |                                       |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  ~               .   .   .               ~
+
+  blk :: 1 byte
+         0 datetime
+         1-3 reserved
+         4 termination
+         5 options
+         6 previous message number
+         7 next session key
+         8 ack
+         9 ack request
+         10 reserved
+         11 Garlic Clove
+         224-253 reserved for experimental features
+         254 for padding
+         255 reserved for future extension
+  size :: 2 bytes, big endian, size of data to follow, 0 - 65516
+  data :: the data
+
+  Maximum ChaChaPoly frame is 65535 bytes.
+  Poly1305 tag is 16 bytes
+  Maximum total block size is 65519 bytes
+  Maximum single block size is 65519 bytes
+  Block type is 1 byte
+  Block length is 2 bytes
+  Maximum single block data size is 65516 bytes.
+</code></pre><h3 id="block-ordering-rules">Block Ordering Rules</h3>
+<p>New Session 메시지에서 DateTime 블록은 필수이며, 첫 번째 블록이어야 합니다.</p>
+<p>기타 허용되는 블록:</p>
+<ul>
+<li>Garlic Clove (타입 11)</li>
+<li>Options (타입 5)</li>
+<li>Padding (타입 254)</li>
+</ul>
+<p>New Session Reply 메시지에서는 블록이 필요하지 않습니다.</p>
+<p>기타 허용된 블록:</p>
+<ul>
+<li>Garlic Clove (타입 11)</li>
+<li>Options (타입 5)</li>
+<li>Padding (타입 254)</li>
+</ul>
+<p>다른 블록은 허용되지 않습니다. 패딩이 있는 경우 마지막 블록이어야 합니다.</p>
+<p>기존 세션 메시지에서는 블록이 필요하지 않으며, 다음 요구사항을 제외하고는 순서가 지정되지 않습니다:</p>
+<p>Termination이 있는 경우, Padding을 제외하고 마지막 블록이어야 합니다. Padding이 있는 경우, 마지막 블록이어야 합니다.</p>
+<p>단일 프레임에는 여러 개의 Garlic Clove 블록이 있을 수 있습니다. 단일 프레임에는 최대 두 개의 Next Key 블록이 있을 수 있습니다. 단일 프레임에서는 여러 개의 Padding 블록이 허용되지 않습니다. 다른 블록 유형들은 단일 프레임에 여러 블록을 가질 가능성이 낮지만 금지되어 있지는 않습니다.</p>
+<h3 id="datetime">DateTime</h3>
+<p>만료 시각. 재전송 방지를 돕습니다. Bob은 이 타임스탬프를 사용하여 메시지가 최근 것인지 검증해야 합니다. Bob은 시간이 유효한 경우 재전송 공격을 방지하기 위해 Bloom filter 또는 다른 메커니즘을 구현해야 합니다. 일반적으로 New Session 메시지에만 포함됩니다.</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+
+  | 0  |    4    |     timestamp     |
+  +----+----+----+----+----+----+----+
+
+  blk :: 0
+  size :: 2 bytes, big endian, value = 4
+  timestamp :: Unix timestamp, unsigned seconds.
+               Wraps around in 2106
+</code></pre><h3 id="4b-session-tag-ratchet">4b) Session Tag Ratchet</h3>
+<p><a href="../../../ko/docs/specs/i2np/">I2NP</a>
+에서 명시된 단일 복호화된 Garlic Clove로, 사용되지 않거나 중복되는 필드를 제거하도록 수정되었습니다. 경고: 이 형식은 ElGamal/AES용과 상당히 다릅니다. 각 clove는 별도의 페이로드 블록입니다. Garlic Clove는 블록 간이나 ChaChaPoly 프레임 간에 단편화될 수 없습니다.</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  | 11 |  size   |                        |
+  +----+----+----+                        +
+  |      Delivery Instructions            |
+  ~                                       ~
+  ~                                       ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |type|  Message_ID       | Expiration   
+  +----+----+----+----+----+----+----+----+
+       |      I2NP Message body           |
+  +----+                                  +
+  ~                                       ~
+  ~                                       ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  size :: size of all data to follow
+
+  Delivery Instructions :: As specified in
+         the Garlic Clove section of [I2NP](/docs/specs/i2np/).
+         Length varies but is typically 1, 33, or 37 bytes
+
+  type :: I2NP message type
+
+  Message_ID :: 4 byte `Integer` I2NP message ID
+
+  Expiration :: 4 bytes, seconds since the epoch
+</code></pre><p>주의사항:</p>
+<ul>
+<li>
+<p>구현자는 블록을 읽을 때, 잘못된 형식이나 악의적인 데이터가
+다음 블록으로의 읽기 오버런을 발생시키지 않도록 보장해야 합니다.</p>
+</li>
+<li>
+<p><a href="../../../ko/docs/specs/i2np/">I2NP</a>
+에서 명시된 Clove Set 형식은 사용되지 않습니다.
+각 clove는 자체 블록에 포함됩니다.</p>
+</li>
+<li>
+<p>I2NP 메시지 헤더는 9바이트이며, <a href="../../../ko/docs/specs/ntcp2/">NTCP2</a>
+에서 사용되는 것과 동일한 형식을 가집니다.</p>
+</li>
+<li>
+<p><a href="../../../ko/docs/specs/i2np/">I2NP</a>
+의 Garlic Message 정의에서 Certificate, Message ID, Expiration은 포함되지 않습니다.</p>
+</li>
+<li>
+<p><a href="../../../ko/docs/specs/i2np/">I2NP</a>
+의 Garlic Clove 정의에서 Certificate, Clove ID, Expiration은 포함되지 않습니다.</p>
+</li>
+</ul>
+<p>정당화:</p>
+<ul>
+<li>인증서는 전혀 사용되지 않았습니다.</li>
+<li>별도의 메시지 ID와 clove ID는 전혀 사용되지 않았습니다.</li>
+<li>별도의 만료 시간은 전혀 사용되지 않았습니다.</li>
+<li>기존 Clove Set 및 Clove 형식과 비교한 전체적인 절약은
+clove 1개의 경우 약 35바이트, clove 2개의 경우 54바이트,
+clove 3개의 경우 73바이트입니다.</li>
+<li>블록 형식은 확장 가능하며 새로운 블록 타입으로
+새로운 필드를 추가할 수 있습니다.</li>
+</ul>
+<h3 id="termination">Termination</h3>
+<p>구현은 선택 사항입니다. 세션을 중단합니다. 이것은 프레임에서 패딩이 아닌 마지막 블록이어야 합니다. 이 세션에서는 더 이상 메시지가 전송되지 않습니다.</p>
+<p>NS 또는 NSR에서는 허용되지 않습니다. Existing Session 메시지에만 포함됩니다.</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  | 4  |  size   | rsn|     addl data     |
+  +----+----+----+----+                   +
+  ~               .   .   .               ~
+  +----+----+----+----+----+----+----+----+
+
+  blk :: 4
+  size :: 2 bytes, big endian, value = 1 or more
+  rsn :: reason, 1 byte:
+         0: normal close or unspecified
+         1: termination received
+         others: optional, impementation-specific
+  addl data :: optional, 0 or more bytes, for future expansion, debugging,
+               or reason text.
+               Format unspecified and may vary based on reason code.
+</code></pre><h3 id="4c-대칭-키-래칫">4c) 대칭 키 래칫</h3>
+<p>구현되지 않음, 추가 연구 필요. 업데이트된 옵션을 전달. 옵션에는 세션에 대한 다양한 매개변수가 포함됨. 자세한 정보는 아래의 Session Tag Length Analysis 섹션을 참조.</p>
+<p>options 블록은 more_options가 존재할 수 있으므로 가변 길이일 수 있습니다.</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  | 5  |  size   |ver |flg |STL |STimeout |
+  +----+----+----+----+----+----+----+----+
+  |  SOTW   |  RITW   |tmin|tmax|rmin|rmax|
+  +----+----+----+----+----+----+----+----+
+  |  tdmy   |  rdmy   |  tdelay |  rdelay |
+  +----+----+----+----+----+----+----+----+
+  |              more_options             |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  blk :: 5
+  size :: 2 bytes, big endian, size of options to follow, 21 bytes minimum
+  ver :: Protocol version, must be 0
+  flg :: 1 byte flags
+         bits 7-0: Unused, set to 0 for future compatibility
+  STL :: Session tag length (must be 8), other values unimplemented
+  STimeout :: Session idle timeout (seconds), big endian
+  SOTW :: Sender Outbound Tag Window, 2 bytes big endian
+  RITW :: Receiver Inbound Tag Window 2 bytes big endian
+
+  tmin, tmax, rmin, rmax :: requested padding limits
+      tmin and rmin are for desired resistance to traffic analysis.
+      tmax and rmax are for bandwidth limits.
+      tmin and tmax are the transmit limits for the router sending this options block.
+      rmin and rmax are the receive limits for the router sending this options block.
+      Each is a 4.4 fixed-point float representing 0 to 15.9375
+      (or think of it as an unsigned 8-bit integer divided by 16.0).
+      This is the ratio of padding to data. Examples:
+      Value of 0x00 means no padding
+      Value of 0x01 means add 6 percent padding
+      Value of 0x10 means add 100 percent padding
+      Value of 0x80 means add 800 percent (8x) padding
+      Alice and Bob will negotiate the minimum and maximum in each direction.
+      These are guidelines, there is no enforcement.
+      Sender should honor receiver&#39;s maximum.
+      Sender may or may not honor receiver&#39;s minimum, within bandwidth constraints.
+
+  tdmy: Max dummy traffic willing to send, 2 bytes big endian, bytes/sec average
+  rdmy: Requested dummy traffic, 2 bytes big endian, bytes/sec average
+  tdelay: Max intra-message delay willing to insert, 2 bytes big endian, msec average
+  rdelay: Requested intra-message delay, 2 bytes big endian, msec average
+
+  more_options :: Format undefined, for future use
+</code></pre><p>SOTW는 송신자가 수신자에게 제공하는 수신자의 인바운드 태그 윈도우(최대 lookahead)에 대한 권장사항입니다. RITW는 송신자가 사용할 계획인 인바운드 태그 윈도우(최대 lookahead)에 대한 송신자의 선언입니다. 그러면 각 측은 최소값이나 최대값 또는 기타 계산을 기반으로 lookahead를 설정하거나 조정합니다.</p>
+<p>참고사항:</p>
+<ul>
+<li>기본이 아닌 세션 태그 길이에 대한 지원은 hopefully
+결코 필요하지 않을 것입니다.</li>
+<li>태그 윈도우는 Signal 문서에서 MAX_SKIP입니다.</li>
+</ul>
+<p>이슈:</p>
+<ul>
+<li>옵션 협상은 TBD입니다.</li>
+<li>기본값은 TBD입니다.</li>
+<li>패딩과 지연 옵션은 NTCP2에서 복사되었지만,
+해당 옵션들은 그곳에서 완전히 구현되거나 연구되지 않았습니다.</li>
+</ul>
+<h3 id="message-numbers">Message Numbers</h3>
+<p>구현은 선택 사항입니다. 이전 태그 집합(PN)의 길이(전송된 메시지 수)입니다. 수신자는 이전 태그 집합에서 PN보다 높은 태그를 즉시 삭제할 수 있습니다. 수신자는 이전 태그 집합에서 PN보다 작거나 같은 태그를 짧은 시간(예: 2분) 후에 만료시킬 수 있습니다.</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+
+  | 6  |  size   |  PN    |
+ +----+----+----+----+----+
+
+  blk :: 6
+  size :: 2
+  PN :: 2 bytes big endian. The index of the last tag sent in the previous tag set.
+</code></pre><p>참고사항:</p>
+<ul>
+<li>최대 PN은 65535입니다.</li>
+<li>PN의 정의는 Signal의 정의에서 1을 뺀 것과 같습니다.
+이는 Signal이 하는 것과 비슷하지만, Signal에서는 PN과 N이 헤더에 있습니다.
+여기서는 암호화된 메시지 본문에 있습니다.</li>
+<li>이전 tag set이 없었기 때문에 tag set 0에서는 이 블록을 전송하지 마십시오.</li>
+</ul>
+<h3 id="5-페이로드">5) 페이로드</h3>
+<p>다음 DH ratchet 키는 페이로드에 있으며 선택사항입니다. 우리는 매번 ratchet을 수행하지 않습니다. (이는 헤더에 있고 매번 전송되는 signal과는 다릅니다)</p>
+<p>첫 번째 ratchet의 경우, Key ID = 0입니다.</p>
+<p>NS 또는 NSR에서는 허용되지 않습니다. 기존 세션 메시지에만 포함됩니다.</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  | 7  |  size   |flag|  key ID |         |
+  +----+----+----+----+----+----+         +
+  |                                       |
+  +                                       +
+  |     Next DH Ratchet Public Key        |
+  +                                       +
+  |                                       |
+  +                             +----+----+
+  |                             |
+  +----+----+----+----+----+----+
+
+  blk :: 7
+  size :: 3 or 35
+  flag :: 1 byte flags
+          bit order: 76543210
+          bit 0: 1 for key present, 0 for no key present
+          bit 1: 1 for reverse key, 0 for forward key
+          bit 2: 1 to request reverse key, 0 for no request
+                 only set if bit 1 is 0
+          bits 7-2: Unused, set to 0 for future compatibility
+  key ID :: The key ID of this key. 2 bytes, big endian
+            0 - 32767
+  Public Key :: The next X25519 public key, 32 bytes, little endian
+                Only if bit 0 is 1
+</code></pre><p>참고사항:</p>
+<ul>
+<li>Key ID는 해당 태그 세트에 사용되는 로컬 키에 대한 증분 카운터로, 0부터 시작합니다.</li>
+<li>ID는 키가 변경되지 않는 한 변경되어서는 안 됩니다.</li>
+<li>엄격히 필요하지는 않을 수 있지만, 디버깅에 유용합니다.
+Signal은 key ID를 사용하지 않습니다.</li>
+<li>최대 Key ID는 32767입니다.</li>
+<li>양방향 태그 세트가 동시에 ratcheting하는 드문 경우에는, 프레임에 두 개의 Next Key 블록이 포함됩니다. 하나는 순방향 키용이고 다른 하나는 역방향 키용입니다.</li>
+<li>키와 태그 세트 ID 번호는 순차적이어야 합니다.</li>
+<li>자세한 내용은 위의 DH Ratchet 섹션을 참조하십시오.</li>
+</ul>
+<h3 id="payload-section-복호화된-데이터">Payload Section 복호화된 데이터</h3>
+<p>이것은 ack 요청 블록이 수신된 경우에만 전송됩니다. 여러 메시지를 ack하기 위해 여러 ack가 존재할 수 있습니다.</p>
+<p>NS 또는 NSR에서는 허용되지 않습니다. 기존 세션 메시지에만 포함됩니다.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  | 8  |  size   |tagsetid |   N     |    |
+  +----+----+----+----+----+----+----+    +
+  |             more acks                 |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  blk :: 8
+  size :: 4 * number of acks to follow, minimum 1 ack
+  for each ack:
+  tagsetid :: 2 bytes, big endian, from the message being acked
+  N :: 2 bytes, big endian, from the message being acked
+</code></pre><p>참고사항:</p>
+<ul>
+<li>태그 세트 ID와 N은 확인 응답되는 메시지를 고유하게 식별합니다.</li>
+<li>각 방향으로 세션에서 사용되는 첫 번째 태그 세트에서, 태그 세트 ID는 0입니다.</li>
+<li>NextKey 블록이 전송되지 않았으므로 키 ID가 없습니다.</li>
+<li>NextKey 교환 후 사용되는 모든 태그 세트의 경우, 태그 세트 번호는 (1 + Alice의 키 ID + Bob의 키 ID)입니다.</li>
+</ul>
+<h3 id="암호화되지-않은-데이터">암호화되지 않은 데이터</h3>
+<p>in-band ack를 요청합니다. Garlic Clove에서 out-of-band DeliveryStatus Message를 대체하기 위해서입니다.</p>
+<p>명시적인 ack가 요청되면, 현재 tagset ID와 메시지 번호(N)가 ack 블록에 반환됩니다.</p>
+<p>NS 또는 NSR에서는 허용되지 않습니다. 기존 세션 메시지에만 포함됩니다.</p>
+<pre tabindex="0"><code>
++----+----+----+----+
+  |  9 |  size   |flg |
+  +----+----+----+----+
+
+  blk :: 9
+  size :: 1
+  flg :: 1 byte flags
+         bits 7-0: Unused, set to 0 for future compatibility
+</code></pre><h3 id="블록-순서-규칙">블록 순서 규칙</h3>
+<p>모든 패딩은 AEAD 프레임 내부에 있습니다. TODO AEAD 내부의 패딩은 협상된 매개변수를 대략적으로 준수해야 합니다. TODO Alice는 NS 메시지에서 요청된 tx/rx 최소/최대 매개변수를 보냈습니다. TODO Bob은 NSR 메시지에서 요청된 tx/rx 최소/최대 매개변수를 보냈습니다. 업데이트된 옵션은 데이터 단계 중에 전송될 수 있습니다. 위의 옵션 블록 정보를 참조하세요.</p>
+<p>존재하는 경우, 이는 프레임의 마지막 블록이어야 합니다.</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |254 |  size   |      padding           |
+  +----+----+----+                        +
+  |                                       |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  blk :: 254
+  size :: 2 bytes, big endian, 0-65516
+  padding :: zeros or random data
+</code></pre><p>참고사항:</p>
+<ul>
+<li>전체가 0인 패딩은 암호화될 것이므로 문제없습니다.</li>
+<li>패딩 전략은 추후 결정 예정입니다.</li>
+<li>패딩 전용 프레임이 허용됩니다.</li>
+<li>패딩 기본값은 0-15바이트입니다.</li>
+<li>패딩 매개변수 협상에 대해서는 옵션 블록을 참조하세요</li>
+<li>최소/최대 패딩 매개변수에 대해서는 옵션 블록을 참조하세요</li>
+<li>협상된 패딩 위반 시 router 응답은 구현에 따라 달라집니다.</li>
+</ul>
+<h3 id="날짜시간">날짜시간</h3>
+<p>구현체들은 향후 호환성을 위해 알 수 없는 블록 유형을 무시해야 합니다.</p>
+<h3 id="garlic-clove">Garlic Clove</h3>
+<ul>
+<li>패딩 길이는 메시지별로 결정되고 길이 분포를 추정하거나, 무작위 지연이 추가되어야 합니다. 이러한 대응책은 DPI에 대응하기 위해 포함되어야 하며, 그렇지 않으면 메시지 크기로 인해 전송 프로토콜이 I2P 트래픽을 전송하고 있다는 것이 드러날 수 있습니다. 정확한 패딩 방식은 향후 작업 영역이며, 부록 A에서 이 주제에 대한 자세한 정보를 제공합니다.</li>
+</ul>
+<h2 id="typical-usage-patterns">Typical Usage Patterns</h2>
+<h3 id="종료">종료</h3>
+<p>이것은 가장 일반적인 사용 사례이며, 대부분의 비HTTP 스트리밍 사용 사례들도 이 사용 사례와 동일할 것입니다. 작은 초기 메시지가 전송되고, 응답이 뒤따르며, 양방향으로 추가 메시지들이 전송됩니다.</p>
+<p>HTTP GET은 일반적으로 단일 I2NP 메시지에 들어맞습니다. Alice는 응답 leaseSet을 묶어서 단일 새 Session 메시지로 작은 요청을 보냅니다. Alice는 새 키로의 즉시 ratchet을 포함합니다. 목적지에 바인딩하기 위한 서명을 포함합니다. 확인 응답(ack)은 요청되지 않습니다.</p>
+<p>Bob이 즉시 ratchet합니다.</p>
+<p>Alice는 즉시 ratchet합니다.</p>
+<p>해당 세션들과 함께 계속됩니다.</p>
+<pre tabindex="0"><code>
+Alice                           Bob
+
+  New Session (1b)     -------------------&gt;
+  with ephemeral key 1
+  with static key for binding
+  with next key
+  with bundled HTTP GET
+  with bundled LS
+  without bundled Delivery Status Message
+
+  any retransmissions, same as above
+
+  following messages may arrive in any order:
+
+  &lt;--------------     New Session Reply (1g)
+                      with Bob ephemeral key 1
+                      with bundled HTTP reply part 1
+
+  &lt;--------------     New Session Reply (1g)
+                      with Bob ephemeral key 2
+                      with bundled HTTP reply part 2
+
+  &lt;--------------     New Session Reply (1g)
+                      with Bob ephemeral key 3
+                      with bundled HTTP reply part 3
+
+  After reception of any of these messages,
+  Alice switches to use Existing Session messages,
+  creates a new inbound + outbound session pair,
+  and ratchets.
+
+
+  Existing Session     -------------------&gt;
+  with bundled streaming ack
+
+
+  Existing Session     -------------------&gt;
+  with bundled streaming ack
+
+
+  After reception of any of these messages,
+  Bob switches to use Existing Session messages.
+
+
+  &lt;--------------     Existing Session
+                      with bundled HTTP reply part 4
+
+
+  Existing Session     -------------------&gt;
+  with bundled streaming ack
+
+  &lt;--------------     Existing Session
+                      with bundled HTTP reply part 5
+</code></pre><h3 id="옵션">옵션</h3>
+<p>Alice는 세 가지 옵션이 있습니다:</p>
+<ol>
+<li>
+<p>HTTP GET에서와 같이 첫 번째 메시지만 전송 (window size = 1). 권장하지 않음.</p>
+</li>
+<li>
+<p>streaming window까지 전송하되, 동일한 Elligator2로 인코딩된 cleartext public key를 사용합니다. 모든 메시지는 동일한 next public key (ratchet)를 포함합니다. 이는 모두 동일한 cleartext로 시작하기 때문에 OBGW/IBEP에게 보일 것입니다. 과정은 1)과 동일하게 진행됩니다. 권장하지 않습니다.</p>
+</li>
+<li>
+<p>권장 구현.    스트리밍 윈도우까지 전송하되, 각각에 대해 서로 다른 Elligator2로 인코딩된 평문 공개 키(세션)를 사용합니다.    모든 메시지는 동일한 다음 공개 키(ratchet)를 포함합니다.    모두 서로 다른 평문으로 시작하기 때문에 OBGW/IBEP에는 보이지 않습니다.    Bob은 모든 메시지가 동일한 다음 공개 키를 포함한다는 것을 인식해야 하며,    모든 메시지에 동일한 ratchet으로 응답해야 합니다.    Alice는 해당 다음 공개 키를 사용하여 계속 진행합니다.</p>
+</li>
+</ol>
+<p>옵션 3 메시지 플로우:</p>
+<pre tabindex="0"><code>
+Alice                           Bob
+
+  New Session (1b)     -------------------&gt;
+  with ephemeral key 1
+  with static key for binding
+  with bundled HTTP POST part 1
+  with bundled LS
+  without bundled Delivery Status Message
+
+
+  New Session (1b)     -------------------&gt;
+  with ephemeral key 2
+  with static key for binding
+  with bundled HTTP POST part 2
+  with bundled LS
+  without bundled Delivery Status Message
+
+
+  New Session (1b)     -------------------&gt;
+  with ephemeral key 3
+  with static key for binding
+  with bundled HTTP POST part 3
+  with bundled LS
+  without bundled Delivery Status Message
+
+
+  following messages can arrive in any order:
+
+  &lt;--------------     New Session Reply (1g)
+                      with Bob ephemeral key 1
+                      with bundled streaming ack
+
+  &lt;--------------     New Session Reply (1g)
+                      with Bob ephemeral key 2
+                      with bundled streaming ack
+
+  After reception of any of these messages,
+  Alice switches to use Existing Session messages,
+  creates a new inbound + outbound session pair,
+  and ratchets.
+
+
+  following messages can arrive in any order:
+
+
+  Existing Session     -------------------&gt;
+  with bundled HTTP POST part 4
+
+  Existing Session     -------------------&gt;
+  with next key
+  with bundled HTTP POST part 5
+
+
+  After reception of any of these messages,
+  Bob switches to use Existing Session messages.
+
+
+  &lt;--------------     Existing Session
+                      with bundled streaming ack
+
+  After reception of any of this message,
+  Alice switches to use Existing Session messages,
+  and Alice ratchets.
+
+
+  Existing Session     -------------------&gt;
+  with next key
+  with bundled HTTP POST part 4
+
+  after reception of this message, Bob ratchets
+
+  Existing Session     -------------------&gt;
+  with next key
+  with bundled HTTP POST part 5
+
+  &lt;--------------     Existing Session
+                      with bundled streaming ack
+</code></pre><h3 id="메시지-번호-1">메시지 번호</h3>
+<p>단일 응답이 예상되는 단일 메시지입니다. 추가 메시지나 응답이 전송될 수 있습니다.</p>
+<p>HTTP GET과 유사하지만, 세션 태그 창 크기와 수명에 대한 더 작은 옵션을 제공합니다. ratchet을 요청하지 않을 수도 있습니다.</p>
+<pre tabindex="0"><code>
+Alice                           Bob
+
+  New Session (1b)     -------------------&gt;
+  with static key for binding
+  with next key
+  with bundled repliable datagram
+  with bundled LS
+  without bundled Delivery Status Message
+
+
+  &lt;--------------     New Session Reply (1g)
+                      with Bob ephemeral key
+                      with bundled reply part 1
+
+  &lt;--------------     New Session Reply (1g)
+                      with Bob ephemeral key
+                      with bundled reply part 2
+
+  After reception of either message,
+  Alice switches to use Existing Session messages,
+  and ratchets.
+
+  If the Existing Session message arrives first,
+  Alice ratchets on the existing inbound and outbound
+  sessions.
+
+  When the New Session Reply arrives, Alice
+  sets the existing inbound session to expire,
+  creates a new inbound and outbound session,
+  and sends Existing Session messages on
+  the new outbound session.
+
+  Alice keeps the expiring inbound session
+  around for a while to process the Existing Session
+  message sent to Alice.
+  If all expected original Existing Session message replies
+  have been processed, Alice can expire the original
+  inbound session immediately.
+
+  if there are any other messages:
+
+  Existing Session     -------------------&gt;
+  with bundled message
+
+  Existing Session     -------------------&gt;
+  with bundled streaming ack
+
+  &lt;--------------     Existing Session
+                      with bundled message
+</code></pre><h3 id="다음-dh-ratchet-공개-키">다음 DH Ratchet 공개 키</h3>
+<p>응답이 예상되지 않는 다수의 익명 메시지.</p>
+<p>이 시나리오에서는 Alice가 세션을 요청하지만 바인딩은 하지 않습니다. 새 세션 메시지가 전송됩니다. 응답 LS는 번들되지 않습니다. 응답 DSM이 번들됩니다 (이것이 번들된 DSM이 필요한 유일한 사용 사례입니다). 다음 키는 포함되지 않습니다. 응답이나 ratchet이 요청되지 않습니다. Ratchet이 전송되지 않습니다. 옵션은 세션 태그 윈도우를 0으로 설정합니다.</p>
+<pre tabindex="0"><code>
+Alice                           Bob
+
+  New Session (1c)     -------------------&gt;
+  with bundled message
+  without bundled LS
+  with bundled Delivery Status Message 1
+
+  New Session (1c)     -------------------&gt;
+  with bundled message
+  without bundled LS
+  with bundled Delivery Status Message 2
+
+  New Session (1c)     -------------------&gt;
+  with bundled message
+  without bundled LS
+  with bundled Delivery Status Message 3
+ 
+  following messages can arrive in any order:
+
+  &lt;--------------     Delivery Status Message 1
+
+  &lt;--------------     Delivery Status Message 2
+
+  &lt;--------------     Delivery Status Message 3
+
+  After reception of any of these messages,
+  Alice switches to use Existing Session messages.
+
+  Existing Session     -------------------&gt;
+
+  Existing Session     -------------------&gt;
+
+  Existing Session     -------------------&gt;
+</code></pre><h3 id="확인">확인</h3>
+<p>응답이 예상되지 않는 단일 익명 메시지.</p>
+<p>일회성 메시지가 전송됩니다. 응답 LS나 DSM은 번들되지 않습니다. 다음 키는 포함되지 않습니다. 응답이나 ratchet이 요청되지 않습니다. Ratchet이 전송되지 않습니다. 옵션은 세션 태그 윈도우를 0으로 설정합니다.</p>
+<pre tabindex="0"><code>
+Alice                           Bob
+
+  One-Time Message (1d)   -------------------&gt;
+  with bundled message
+  without bundled LS
+  without bundled Delivery Status Message
+</code></pre><h3 id="ack-요청">Ack 요청</h3>
+<p>장기간 지속되는 세션은 해당 시점부터 순방향 비밀성을 유지하기 위해 언제든지 ratchet하거나 ratchet을 요청할 수 있습니다. 세션은 세션당 전송 메시지 한계(65535개)에 접근할 때 반드시 ratchet해야 합니다.</p>
+<h2 id="implementation-considerations">Implementation Considerations</h2>
+<h3 id="패딩">패딩</h3>
+<p>기존 ElGamal/AES+SessionTag 프로토콜과 마찬가지로, 구현체는 세션 태그 저장을 제한하고 메모리 고갈 공격으로부터 보호해야 합니다.</p>
+<p>권장되는 몇 가지 전략은 다음과 같습니다:</p>
+<ul>
+<li>저장되는 세션 태그 수에 대한 하드 리미트</li>
+<li>메모리 압박 상황에서 유휴 인바운드 세션의 적극적인 만료</li>
+<li>단일 원격 목적지에 바인딩되는 인바운드 세션 수 제한</li>
+<li>메모리 압박 상황에서 세션 태그 윈도우의 적응형 축소 및 사용되지 않는 오래된 태그 삭제</li>
+<li>메모리 압박 상황에서 요청되더라도 래칫 수행 거부</li>
+</ul>
+<h3 id="다른-블록-타입">다른 블록 타입</h3>
+<p>권장 매개변수 및 시간 초과:</p>
+<ul>
+<li>NSR tagset 크기: 12 tsmin 및 tsmax</li>
+<li>ES tagset 0 크기: tsmin 24, tsmax 160</li>
+<li>ES tagset (1+) 크기: 160 tsmin 및 tsmax</li>
+<li>NSR tagset 타임아웃: 수신자 3분</li>
+<li>ES tagset 타임아웃: 송신자 8분, 수신자 10분</li>
+<li>이전 ES tagset 제거 시점: 3분 후</li>
+<li>태그 N의 Tagset look ahead: min(tsmax, tsmin + N/4)</li>
+<li>태그 N의 Tagset trim behind: min(tsmax, tsmin + N/4) / 2</li>
+<li>다음 키 전송 태그: TBD</li>
+<li>tagset 수명 후 다음 키 전송: TBD</li>
+<li>NS 수신 후 세션 교체 시점: 3분 후</li>
+<li>최대 클록 스큐: -5분 ~ +2분</li>
+<li>NS 리플레이 필터 지속 시간: 5분</li>
+<li>패딩 크기: 0-15바이트 (기타 전략은 TBD)</li>
+</ul>
+<h3 id="향후-작업">향후 작업</h3>
+<p>다음은 수신 메시지를 분류하기 위한 권장사항입니다.</p>
+<h3 id="x25519-only">X25519 Only</h3>
+<p>이 프로토콜만 사용하는 터널에서는 현재 ElGamal/AES+SessionTags로 수행되는 것처럼 식별을 수행합니다:</p>
+<p>먼저, 초기 데이터를 session tag로 취급하고, session tag를 조회합니다. 발견되면, 해당 session tag와 연결된 저장된 데이터를 사용하여 복호화합니다.</p>
+<p>찾을 수 없는 경우, 초기 데이터를 DH 공개 키와 nonce로 취급합니다. DH 연산과 지정된 KDF를 수행하고, 나머지 데이터를 복호화를 시도합니다.</p>
+<h3 id="http-get">HTTP GET</h3>
+<p>이 프로토콜과 ElGamal/AES+SessionTags를 모두 지원하는 터널에서는 들어오는 메시지를 다음과 같이 분류합니다:</p>
+<p>ElGamal/AES+SessionTags 사양의 결함으로 인해 AES 블록이 임의의 non-mod-16 길이로 패딩되지 않습니다. 따라서 Existing Session 메시지의 길이를 mod 16으로 나눈 나머지는 항상 0이고, New Session 메시지의 길이를 mod 16으로 나눈 나머지는 항상 2입니다 (ElGamal 블록이 514바이트 길이이므로).</p>
+<p>길이를 16으로 나눈 나머지가 0 또는 2가 아닌 경우, 초기 데이터를 session tag로 취급하고 해당 session tag를 조회합니다. 찾은 경우, 해당 session tag와 연결된 저장된 데이터를 사용하여 복호화합니다.</p>
+<p>찾을 수 없고 길이를 16으로 나눈 나머지가 0 또는 2가 아닌 경우, 초기 데이터를 DH public key와 nonce로 처리합니다. DH 연산과 지정된 KDF를 수행하고, 나머지 데이터의 복호화를 시도합니다. (상대적인 트래픽 혼합과 X25519 및 ElGamal DH 연산의 상대적 비용을 기반으로, 이 단계는 대신 마지막에 수행될 수 있습니다)</p>
+<p>그렇지 않고, 길이를 16으로 나눈 나머지가 0이면, 초기 데이터를 ElGamal/AES session tag로 처리하고 해당 session tag를 조회합니다. 찾을 경우, 해당 session tag와 연결된 저장된 데이터를 사용하여 복호화합니다.</p>
+<p>찾을 수 없고, 데이터가 최소 642(514 + 128)바이트 길이이며, 길이를 16으로 나눈 나머지가 2인 경우, 초기 데이터를 ElGamal 블록으로 처리합니다. 나머지 데이터의 복호화를 시도합니다.</p>
+<p>ElGamal/AES+SessionTag 사양이 non-mod-16 패딩을 허용하도록 업데이트되면, 작업을 다르게 수행해야 할 것입니다.</p>
+<h3 id="http-post">HTTP POST</h3>
+<p>초기 구현들은 상위 계층에서의 양방향 트래픽에 의존합니다. 즉, 구현들은 반대 방향의 트래픽이 곧 전송될 것이라고 가정하며, 이는 ECIES 계층에서 필요한 응답을 강제로 발생시킵니다.</p>
+<p>그러나 특정 트래픽은 단방향이거나 매우 낮은 대역폭을 가질 수 있어서, 적시에 응답을 생성할 상위 계층 트래픽이 없을 수 있습니다.</p>
+<p>NS 및 NSR 메시지 수신은 응답이 필요하며, ACK Request 및 Next Key 블록 수신 역시 응답이 필요합니다.</p>
+<p>정교한 구현에서는 응답이 필요한 이러한 메시지 중 하나를 받을 때 타이머를 시작할 수 있으며, 짧은 시간(예: 1초) 내에 역방향 트래픽이 전송되지 않으면 ECIES 계층에서 &ldquo;빈&rdquo;(Garlic Clove 블록 없음) 응답을 생성할 수 있습니다.</p>
+<p>NS 및 NSR 메시지에 대한 응답에 더욱 짧은 타임아웃을 적용하여 트래픽을 효율적인 ES 메시지로 가능한 한 빨리 전환하는 것도 적절할 수 있습니다.</p>
+<h2 id="analysis">Analysis</h2>
+<h3 id="응답-가능한-데이터그램">응답 가능한 데이터그램</h3>
+<p>각 방향에서 처음 두 메시지에 대한 메시지 오버헤드는 다음과 같습니다. 이는 ACK 전에 각 방향으로 하나의 메시지만 있거나, 추가 메시지들이 기존 세션 메시지로 추측적으로 전송되는 것으로 가정합니다. 전달된 세션 태그의 추측적 ack이 없다면, 기존 프로토콜의 오버헤드는 훨씬 높습니다.</p>
+<p>새로운 프로토콜의 분석에서는 패딩이 없다고 가정합니다. 번들된 leaseSet은 없다고 가정합니다.</p>
+<h3 id="다중-원시-데이터그램">다중 원시 데이터그램</h3>
+<p>새 세션 메시지, 각 방향에서 동일:</p>
+<pre tabindex="0"><code>
+ElGamal block:
+  514 bytes
+
+  AES block:
+  - 2 byte tag count
+  - 1024 bytes of tags (32 typical)
+  - 4 byte payload size
+  - 32 byte hash of payload
+  - 1 byte flags
+  - 1 byte clove count
+  - 33 byte Garlic deliv. inst.
+  - 16 byte I2NP header
+  - 15 byte clove cert, id, exp.
+  - 15 byte msg cert, id, exp.
+  - 0 byte padding assuming 1936 byte message
+  1143 total
+
+  Total:
+  1657 bytes
+</code></pre><p>기존 세션 메시지, 각 방향 동일:</p>
+<pre tabindex="0"><code>
+AES block:
+  - 32 byte session tag
+  - 2 byte tag count
+  - 4 byte payload size
+  - 32 byte hash of payload
+  - 1 byte flags
+  - 1 byte clove count
+  - 33 byte Garlic deliv. inst.
+  - 16 byte I2NP header
+  - 15 byte msg cert, id, exp.
+  - 15 byte clove cert, id, exp.
+  - 0 byte padding assuming 1936 byte message
+  151 total
+</code></pre><pre tabindex="0"><code>Four message total (two each direction)
+  3616 bytes overhead
+</code></pre><h3 id="단일-원시-데이터그램">단일 원시 데이터그램</h3>
+<p>Alice-to-Bob 새 세션 메시지:</p>
+<pre tabindex="0"><code>
+- 32 byte ephemeral public key
+  - 32 byte static public key
+  - 16 byte Poly1305 MAC
+  - 7 byte DateTime block
+  - 3 byte Garlic block overhead
+  - 9 byte I2NP header
+  - 33 byte Garlic deliv. inst.
+  - 16 byte Poly1305 MAC
+
+  Total:
+  148 bytes overhead
+</code></pre><p>Bob에서 Alice로의 새 세션 응답 메시지:</p>
+<pre tabindex="0"><code>
+- 8 byte session tag
+  - 32 byte ephemeral public key
+  - 16 byte Poly1305 MAC
+  - 3 byte Garlic block overhead
+  - 9 byte I2NP header
+  - 33 byte Garlic deliv. inst.
+  - 16 byte Poly1305 MAC
+
+  Total:
+  117 bytes overhead
+</code></pre><p>기존 세션 메시지, 각 방향 동일:</p>
+<pre tabindex="0"><code>
+- 8 byte session tag
+  - 3 byte Garlic block overhead
+  - 9 byte I2NP header
+  - 33 byte Garlic deliv. inst.
+  - 16 byte Poly1305 MAC
+
+  Total:
+  69 bytes
+</code></pre><h3 id="장기-지속-세션">장기 지속 세션</h3>
+<p>총 4개의 메시지 (각 방향으로 2개씩):</p>
+<pre tabindex="0"><code>
+372 bytes
+  90% (approx. 10x) reduction compared to ElGamal/AES+SessionTags
+</code></pre><p>핸드셰이크만:</p>
+<pre tabindex="0"><code>
+ElGamal: 1657 + 1657 = 3314 bytes
+  Ratchet: 148 _ 117 = 265 bytes
+  92% (approx. 12x) reduction compared to ElGamal/AES+SessionTags
+</code></pre><p>장기 총계 (핸드셰이크 제외):</p>
+<pre tabindex="0"><code>ElGamal: 151 + 32 byte tag sent previously = 183 bytes
+  Ratchet: 69 bytes
+  64% (approx. 3x) reduction compared to ElGamal/AES+SessionTags
+</code></pre><h3 id="cpu">CPU</h3>
+<p>TODO 제안서가 안정화된 후 이 섹션을 업데이트하세요.</p>
+<p>다음 암호화 연산들이 New Session과 New Session Reply 메시지를 교환하기 위해 각 당사자에게 필요합니다:</p>
+<ul>
+<li>HMAC-SHA256: HKDF당 3개, 총계 미정</li>
+<li>ChaChaPoly: 각각 2개</li>
+<li>X25519 키 생성: Alice 2개, Bob 1개</li>
+<li>X25519 DH: 각각 3개</li>
+<li>서명 검증: 1개 (Bob)</li>
+</ul>
+<p>Alice는 바운드 세션당 최소 5개의 ECDH를 계산하며, Bob에게 보내는 각 NS 메시지에 대해 2개, Bob의 각 NSR 메시지에 대해 3개를 계산합니다.</p>
+<p>Bob도 바운드 세션당 6개의 ECDH를 계산하며, Alice의 NS 메시지 각각에 대해 3개, 자신의 NSR 메시지 각각에 대해 3개를 계산합니다.</p>
+<p>각 기존 세션(Existing Session) 메시지에 대해 각 당사자가 수행해야 하는 암호화 작업은 다음과 같습니다:</p>
+<ul>
+<li>HKDF: 2</li>
+<li>ChaChaPoly: 1</li>
+</ul>
+<h3 id="방어">방어</h3>
+<p>현재 세션 태그 길이는 32바이트입니다. 아직 해당 길이에 대한 정당성을 찾지 못했지만, 아카이브 연구를 계속하고 있습니다. 위의 제안서는 새로운 태그 길이를 8바이트로 정의합니다. 8바이트 태그를 정당화하는 분석은 다음과 같습니다:</p>
+<p>세션 태그 래칫(session tag ratchet)은 무작위로 균등하게 분산된 태그를 생성하는 것으로 가정됩니다. 특정 세션 태그 길이에 대한 암호학적 이유는 없습니다. 세션 태그 래칫은 대칭 키 래칫(symmetric key ratchet)과 동기화되지만 독립적인 출력을 생성합니다. 두 래칫의 출력은 서로 다른 길이일 수 있습니다.</p>
+<p>따라서 유일한 우려사항은 session tag 충돌입니다. 구현체들이 두 세션 모두로 복호화를 시도하여 충돌을 처리하려 하지 않을 것으로 가정합니다. 구현체들은 단순히 태그를 이전 세션이나 새 세션 중 하나와 연결하며, 다른 세션에서 해당 태그로 수신된 모든 메시지는 복호화 실패 후 폐기됩니다.</p>
+<p>목표는 충돌 위험을 최소화할 수 있을 만큼 충분히 크면서도 메모리 사용량을 최소화할 수 있을 만큼 작은 세션 태그 길이를 선택하는 것입니다.</p>
+<p>이는 구현체가 메모리 고갈 공격을 방지하기 위해 세션 태그 저장을 제한한다고 가정합니다. 이는 또한 공격자가 충돌을 생성할 가능성을 크게 줄일 것입니다. 아래의 구현 고려사항 섹션을 참조하십시오.</p>
+<p>최악의 경우를 가정하면, 초당 64개의 새로운 인바운드 세션을 처리하는 바쁜 서버가 있다고 하자. 인바운드 세션 태그 수명을 15분(현재와 동일하며, 아마도 줄여야 할 것)이라고 가정한다. 인바운드 세션 태그 윈도우를 32라고 가정한다. 64 * 15 * 60 * 32 = 1,843,200개의 태그. 현재 Java I2P의 최대 인바운드 태그 수는 750,000개이며, 우리가 아는 한 이 수치에 도달한 적이 없다.</p>
+<p>백만 분의 1 (1e-6) 세션 태그 충돌 목표는 아마도 충분할 것입니다. 혼잡으로 인해 도중에 메시지가 드롭될 확률이 그보다 훨씬 높습니다.</p>
+<p>참조: <a href="https://en.wikipedia.org/wiki/Birthday_paradox">https://en.wikipedia.org/wiki/Birthday_paradox</a>
+ 확률 표 섹션.</p>
+<p>32바이트 session tag(256비트)를 사용하면 session tag 공간은 1.2e77입니다. 확률 1e-18로 충돌이 발생할 확률에는 4.8e29개의 항목이 필요합니다. 확률 1e-6으로 충돌이 발생할 확률에는 4.8e35개의 항목이 필요합니다. 각각 32바이트인 180만 개의 tag는 총 약 59MB입니다.</p>
+<p>16바이트 session tag (128비트)를 사용하면 session tag 공간은 3.4e38입니다. 확률이 1e-18인 충돌 확률을 위해서는 2.6e10개의 항목이 필요합니다. 확률이 1e-6인 충돌 확률을 위해서는 2.6e16개의 항목이 필요합니다. 각각 16바이트인 180만 개의 태그는 총 약 30MB입니다.</p>
+<p>8바이트 session tag(64비트)를 사용할 때 session tag 공간은 1.8e19입니다. 충돌 확률이 1e-18인 경우 6.1개의 항목이 필요합니다. 충돌 확률이 1e-6인 경우 6.1e6(6,100,000)개의 항목이 필요합니다. 각각 8바이트인 180만 개의 tag는 총 약 15MB입니다.</p>
+<p>610만 개의 활성 태그는 우리의 최악의 경우 추정치인 180만 태그보다 3배 이상 많습니다. 따라서 충돌 확률은 백만 분의 일 미만이 될 것입니다. 따라서 우리는 8바이트 세션 태그가 충분하다고 결론지었습니다. 이는 전송 태그가 저장되지 않기 때문에 2배 감소에 더하여 저장 공간의 4배 감소를 가져옵니다. 따라서 우리는 ElGamal/AES+SessionTags에 비해 세션 태그 메모리 사용량을 8배 줄일 수 있습니다.</p>
+<p>이러한 가정이 틀릴 경우 유연성을 유지하기 위해 옵션에 session tag 길이 필드를 포함하여 기본 길이가 세션별로 재정의될 수 있도록 할 것입니다. 절대적으로 필요하지 않는 한 동적 tag 길이 협상은 구현하지 않을 예정입니다.</p>
+<p>구현체는 최소한 세션 태그 충돌을 인식하고, 이를 우아하게 처리하며, 충돌 횟수를 로그에 기록하거나 카운트해야 합니다. 여전히 극히 드물긴 하지만, ElGamal/AES+SessionTags보다는 훨씬 더 발생할 가능성이 높으며, 실제로 일어날 수 있습니다.</p>
+<h3 id="매개변수">매개변수</h3>
+<p>초당 세션 수를 두 배(128)로, 태그 윈도우를 두 배(64)로 사용하면 태그가 4배(740만 개)가 됩니다. 백만 분의 일 충돌 확률의 최대값은 610만 개 태그입니다. 12바이트(또는 10바이트) 태그는 훨씬 큰 여유를 제공할 것입니다.</p>
+<p>하지만 백만 분의 일의 충돌 확률이 좋은 목표일까요? 경로상에서 드롭될 확률보다 훨씬 큰 값은 별로 유용하지 않습니다. Java의 DecayingBloomFilter에 대한 거짓 양성(false-positive) 목표는 대략 만 분의 일이지만, 천 분의 일이라도 심각한 우려사항은 아닙니다. 목표를 만 분의 일로 줄임으로써 8바이트 태그로도 충분한 여유가 있습니다.</p>
+<h3 id="분류">분류</h3>
+<p>발신자는 태그와 키를 즉석에서 생성하므로 저장소가 필요하지 않습니다. 이는 ElGamal/AES에 비해 전체 저장 요구사항을 절반으로 줄입니다. ECIES 태그는 ElGamal/AES의 32바이트 대신 8바이트입니다. 이는 전체 저장 요구사항을 또 다른 4배 요인만큼 줄입니다. 태그별 세션 키는 합리적인 손실률에서 최소화되는 &ldquo;gaps&quot;을 제외하고는 수신자에서 저장되지 않습니다.</p>
+<p>태그 만료 시간의 33% 단축은 짧은 세션 시간을 가정할 때 추가로 33%의 절약 효과를 가져옵니다.</p>
+<p>따라서 ElGamal/AES 대비 총 공간 절약은 10.7배, 즉 92%입니다.</p>
+<h2 id="related-changes">Related Changes</h2>
+<h3 id="x25519만">X25519만</h3>
+<p>ECIES Destinations에서의 데이터베이스 조회: <a href="../../../ko/proposals/154-ecies-lookups">제안 154</a>
+를 참조하세요. 이는 현재 릴리스 0.9.46용 <a href="../../../ko/docs/specs/i2np/">I2NP</a>
+에 통합되었습니다.</p>
+<p>이 제안은 X25519 공개 키를 leaseSet과 함께 게시하기 위해 LS2 지원이 필요합니다. <a href="../../../ko/docs/specs/i2np/">I2NP</a>
+의 LS2 사양에는 변경이 필요하지 않습니다. 모든 지원은 0.9.38에서 구현된 <a href="../../../ko/proposals/123-new-netdb-entries">Proposal 123</a>
+에서 설계, 명시, 구현되었습니다.</p>
+<h3 id="x25519-공유와-elgamalaessessiontags">X25519 공유와 ElGamal/AES+SessionTags</h3>
+<p>없음. 이 제안은 LS2 지원과 I2CP 옵션에서 활성화될 속성 설정이 필요합니다. <a href="../../../ko/docs/specs/i2cp/">I2CP</a>
+ 사양에는 변경 사항이 필요하지 않습니다. 모든 지원은 0.9.38에서 구현된 <a href="../../../ko/proposals/123-new-netdb-entries">Proposal 123</a>
+에서 설계, 명세화 및 구현되었습니다.</p>
+<p>ECIES를 활성화하는 데 필요한 옵션은 I2CP, BOB, SAM 또는 i2ptunnel에 대한 단일 I2CP 속성입니다.</p>
+<p>일반적인 값은 ECIES 전용의 경우 i2cp.leaseSetEncType=4이고, ECIES와 ElGamal 듀얼 키의 경우 i2cp.leaseSetEncType=4,0입니다.</p>
+<h3 id="프로토콜-계층-응답">프로토콜 계층 응답</h3>
+<p>이 섹션은 <a href="../../../ko/proposals/123-new-netdb-entries">Proposal 123</a>
+에서 복사되었습니다.</p>
+<p>SessionConfig 매핑의 옵션:</p>
+<pre tabindex="0"><code>  i2cp.leaseSetEncType=nnn[,nnn]  The encryption types to be used.
+                                  0: ElGamal
+                                  1-3: See proposal 145
+                                  4: This proposal.
+</code></pre><h3 id="create-leaseset2-message">Create Leaseset2 Message</h3>
+<p>이 제안은 릴리스 0.9.38부터 지원되는 LS2가 필요합니다. <a href="../../../ko/docs/specs/i2cp/">I2CP</a>
+ 사양에는 변경 사항이 필요하지 않습니다. 모든 지원은 0.9.38에서 구현된 <a href="../../../ko/proposals/123-new-netdb-entries">Proposal 123</a>
+에서 설계, 명세화 및 구현되었습니다.</p>
+<h3 id="오버헤드">오버헤드</h3>
+<p>이중 키로 LS2를 지원하는 모든 router (0.9.38 이상)는 이중 키를 가진 대상과의 연결을 지원해야 합니다.</p>
+<p>ECIES 전용 목적지는 암호화된 조회 응답을 받기 위해 floodfill의 대부분이 0.9.46으로 업데이트되어야 합니다. <a href="../../../ko/proposals/154-ecies-lookups">제안서 154</a>
+를 참조하세요.</p>
+<p>ECIES 전용 destination은 ECIES 전용이거나 이중 키를 사용하는 다른 destination과만 연결할 수 있습니다.</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    <a href="../../../ko/proposals/" class="page-nav-link">
+                        ← Back to Proposals
+                    </a>
+                    
+                    
+                    
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                            
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <a href="../../../proposals/144-ecies-x25519-aead-ratchet.txt" class="page-nav-link" download>
+                        Download Source (.txt)
+                    </a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.proposals-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.proposal-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.proposal-title-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.proposal-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-text);
+}
+
+.proposal-number {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+ 
+.proposal-meta-box {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.proposal-status {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+ 
+.status-open {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-open {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-accepted {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-accepted {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-finished {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-finished {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-closed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-closed {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.dark .status-rejected {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.status-draft,
+.status-needs-revision,
+.status-dead,
+.status-needs-research {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-draft,
+.dark .status-needs-revision,
+.dark .status-dead,
+.dark .status-needs-research {
+    background: #78350f;
+    color: #fde047;
+}
+
+.status-meta,
+.status-informational,
+.status-reserve {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+.dark .status-meta,
+.dark .status-informational,
+.dark .status-reserve {
+    background: #581c87;
+    color: #e879f9;
+}
+
+ 
+.proposal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.info-value {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+ 
+.proposal-relationships {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-md);
+}
+
+.relationship {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.relationship:last-child {
+    margin-bottom: 0;
+}
+
+.relationship-label {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    min-width: 120px;
+}
+
+.relationship-value {
+    color: var(--color-text);
+}
+
+ 
+.proposal-layout {
+    display: block;
+}
+
+.proposal-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.proposal-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.proposal-main {
+    min-width: 0;
+}
+
+ 
+.proposal-content {
+    line-height: 1.8;
+    color: var(--color-text);
+    max-width: 900px;
+}
+
+.proposal-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content ul,
+.proposal-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.proposal-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.proposal-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.proposal-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.proposal-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.proposal-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin-left: 0;
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+.proposal-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.proposal-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+.proposal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content table th {
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.proposal-content table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.proposal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+ 
+.page-nav {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.page-nav-link {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+ 
+@media (max-width: 1024px) {
+    .proposal-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .proposal-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .proposal-title {
+        font-size: 1.75rem;
+    }
+
+    .proposal-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">I2P 뉴스 받기:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="이메일을 입력하세요" required>
+                            <button type="submit">구독하기</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>빠른 링크</h3>
+                <ul>
+                    <li><a href="../../../ko/financial-support/">기부하기</a></li>
+                    <li><a href="../../../ko/docs/overview/intro/">I2P 소개</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>커뮤니티</h3>
+                <ul>
+                    <li><a href="../../../ko/get-involved/">참여하기</a></li>
+                    <li><a href="../../../ko/blog/">블로그</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">공식 포럼</a></li>
+                    <li><a href="../../../ko/contact/">연락처</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>리소스</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P 메트릭</a></li>
+                    <li><a href="../../../ko/papers/">연구</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">스톰이클라우드</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Invisible Internet Project. Creative Commons 라이선스 적용.</p>
+            <div class="footer-links">
+                <a href="../../../ko/privacy/">개인정보 처리방침</a>
+                <a href="../../../ko/terms/">이용 약관</a>
+                <a href="../../../ko/about/media/">언론</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="닫기">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>커뮤니티 설문 조사</h2>
+            <p class="modal-subtitle">귀하의 의견을 듣고 싶습니다</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                귀하의 투표는 I2P의 미래를 형성하는 데 도움이 됩니다.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

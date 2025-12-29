@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>B32 cho các leaseSet mã hóa | I2P - Dự án Internet vô hình</title>
+
+    <meta name="description" content="Định dạng địa chỉ Base 32 cho leasesets LS2 được mã hóa">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="B32 cho các leaseSet mã hóa | I2P - Dự án Internet vô hình">
+    <meta property="og:description" content="Định dạng địa chỉ Base 32 cho leasesets LS2 được mã hóa">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/vi/docs/specs/b32-for-encrypted-leasesets/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Trang I2P Beta Đã Hoạt Động Gửi báo cáo lỗi tới stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Đóng banner" title="Đóng banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../vi/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../vi/about/" class="">Giới thiệu</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../vi/about/">Tổng quan</a></li>
+                            <li><a href="../../../../vi/papers/">Bài Nghiên Cứu</a></li>
+                            <li><a href="../../../../vi/about/media/">Báo chí</a></li>
+                            <li><a href="../../../../vi/contact/">Liên hệ</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../vi/docs/" class="active">Tài liệu</a></li>
+                    <li><a href="../../../../vi/downloads/" class="">Tải xuống</a></li>
+                    <li><a href="../../../../vi/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../vi/get-involved/" class="">Tham gia</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../vi/get-involved/">Tổng quan</a></li>
+                            <li><a href="../../../../vi/feedback/">Đề xuất Tính năng</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">vi</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Tiếng Anh</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Tiếng Tây Ban Nha</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Tiếng Hàn</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Tiếng Trung</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Tiếng Nga</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Tiếng Séc</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Tiếng Đức</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Tiếng Pháp</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Tiếng Thổ Nhĩ Kỳ</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option active">Tiếng Việt</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Tiếng Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Tiếng Ả Rập</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/b32-for-encrypted-leasesets/"
+                                class="lang-option">Tiếng Bồ Đào Nha</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../vi/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../vi/downloads/" class="btn btn-primary">Tải I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tổng-quan">Tổng quan</a></li>
+    <li><a href="#tình-trạng-triển-khai">Tình trạng triển khai</a></li>
+    <li><a href="#thiết-kế">Thiết kế</a></li>
+    <li><a href="#đặc-tả">Đặc tả</a>
+      <ul>
+        <li><a href="#tạo-và-mã-hóa">Tạo và mã hóa</a></li>
+        <li><a href="#giải-mã-và-xác-minh">Giải mã và Xác minh</a></li>
+        <li><a href="#độ-dài-tính-bằng-bit-của-khóa-bí-mật-và-khóa-riêng">Độ dài (tính bằng bit) của khóa bí mật và khóa riêng</a></li>
+      </ul>
+    </li>
+    <li><a href="#chi-tiết-mật-mã-học">Chi tiết mật mã học</a>
+      <ul>
+        <li><a href="#lược-đồ-làm-mù">Lược đồ làm mù</a></li>
+        <li><a href="#mã-hóa">Mã hóa</a></li>
+        <li><a href="#các-phương-thức-xác-thực">Các phương thức xác thực</a></li>
+      </ul>
+    </li>
+    <li><a href="#bộ-nhớ-đệm">Bộ nhớ đệm</a></li>
+    <li><a href="#các-loại-chữ-ký">Các loại chữ ký</a></li>
+    <li><a href="#ghi-chú">Ghi chú</a></li>
+    <li><a href="#tương-thích-phiên-bản">Tương thích phiên bản</a></li>
+    <li><a href="#tài-liệu-tham-khảo">Tài liệu tham khảo</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../vi/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../vi/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../vi/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">B32 cho các leaseSet mã hóa</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Bản dịch này được tạo bằng máy học và có thể không chính xác 100%.</span>
+    
+    
+    <a href="../../../../en/docs/specs/b32-for-encrypted-leasesets/" class="disclaimer-link">Xem phiên bản tiếng Anh</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">B32 cho các leaseSet mã hóa</h1>
+                    
+                        <p class="article-description">Định dạng địa chỉ Base 32 cho leasesets LS2 được mã hóa</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="tổng-quan">Tổng quan</h2>
+<p>Các địa chỉ Base 32 tiêu chuẩn (&ldquo;b32&rdquo;) chứa giá trị băm của đích (destination). Điều này sẽ không hoạt động đối với LS2 được mã hóa (proposal 123).</p>
+<p>Chúng ta không thể dùng một địa chỉ base 32 truyền thống cho một LS2 được mã hóa (đề xuất 123), vì nó chỉ chứa băm của đích (Destination). Nó không cung cấp khóa công khai không mù hóa. Ứng dụng khách phải biết khóa công khai của đích, kiểu chữ ký, kiểu chữ ký mù hóa, và một bí mật tùy chọn hoặc khóa riêng để lấy và giải mã leaseSet. Do đó, chỉ một địa chỉ base 32 là không đủ. Ứng dụng khách cần hoặc đích đầy đủ (trong đó chứa khóa công khai), hoặc chỉ riêng khóa công khai. Nếu ứng dụng khách có đích đầy đủ trong sổ địa chỉ và sổ địa chỉ hỗ trợ tra cứu ngược theo băm, thì khóa công khai có thể được truy xuất.</p>
+<p>Định dạng này đặt khóa công khai vào địa chỉ base32 thay cho giá trị băm. Định dạng này cũng phải chứa kiểu chữ ký của khóa công khai, và kiểu chữ ký của lược đồ làm mù.</p>
+<p>Tài liệu này đặc tả một định dạng b32 cho các địa chỉ này. Mặc dù trong quá trình thảo luận, chúng tôi đã gọi định dạng mới này là địa chỉ &ldquo;b33&rdquo;, nhưng trên thực tế, định dạng mới vẫn giữ hậu tố &ldquo;.b32.i2p&rdquo; như thường lệ.</p>
+<h2 id="tình-trạng-triển-khai">Tình trạng triển khai</h2>
+<p>Đề xuất 123 (Các mục netDB mới) đã được triển khai đầy đủ trong phiên bản 0.9.43 (Tháng 10 năm 2019). Bộ tính năng LS2 (LeaseSet 2) được mã hóa đã duy trì ổn định đến phiên bản 2.10.0 (Tháng 9 năm 2025), không có thay đổi phá vỡ tính tương thích đối với định dạng địa chỉ hoặc các đặc tả mật mã.</p>
+<p>Các mốc triển khai quan trọng: - 0.9.38: Hỗ trợ Floodfill cho LS2 tiêu chuẩn với các khóa ngoại tuyến - 0.9.39: Kiểu chữ ký RedDSA loại 11 và mã hóa/giải mã cơ bản - 0.9.40: Hỗ trợ định địa chỉ B32 đầy đủ (Đề xuất 149) - 0.9.41: Xác thực theo từng máy khách dựa trên X25519 - 0.9.42: Tất cả các tính năng blinding (kỹ thuật làm mù trong mật mã học) đã hoạt động - 0.9.43: Tuyên bố triển khai hoàn chỉnh (Tháng 10 năm 2019)</p>
+<h2 id="thiết-kế">Thiết kế</h2>
+<ul>
+<li>Định dạng mới chứa unblinded public key (khóa công khai không làm mù), unblinded signature type (kiểu chữ ký không làm mù), và blinded signature type (kiểu chữ ký làm mù).</li>
+<li>Tùy chọn cho biết các yêu cầu về bí mật và/hoặc khóa riêng cho các liên kết riêng tư.</li>
+<li>Sử dụng hậu tố &ldquo;.b32.i2p&rdquo; hiện có, nhưng với độ dài lớn hơn.</li>
+<li>Bao gồm checksum để phát hiện lỗi.</li>
+<li>Địa chỉ cho leasesets được mã hóa được nhận diện bởi 56 ký tự được mã hóa trở lên (35 byte được giải mã trở lên), so với 52 ký tự (32 byte) đối với các địa chỉ base 32 truyền thống.</li>
+</ul>
+<h2 id="đặc-tả">Đặc tả</h2>
+<h3 id="tạo-và-mã-hóa">Tạo và mã hóa</h3>
+<p>Tạo một tên máy chủ dạng {56+ ký tự}.b32.i2p (35+ ký tự ở dạng nhị phân) như sau:</p>
+<pre tabindex="0"><code>flag (1 byte)
+  bit 0: 0 for one-byte sigtypes, 1 for two-byte sigtypes
+  bit 1: 0 for no secret, 1 if secret is required
+  bit 2: 0 for no per-client auth,
+         1 if client private key is required
+  bits 7-3: Unused, set to 0
+
+public key sigtype (1 or 2 bytes as indicated in flags)
+  If 1 byte, the upper byte is assumed zero
+
+blinded key sigtype (1 or 2 bytes as indicated in flags)
+  If 1 byte, the upper byte is assumed zero
+
+public key
+  Number of bytes as implied by sigtype
+</code></pre><p>Hậu xử lý và checksum (tổng kiểm):</p>
+<pre tabindex="0"><code>Construct the binary data as above.
+Treat checksum as little-endian.
+Calculate checksum = CRC-32(data[3:end])
+data[0] ^= (byte) checksum
+data[1] ^= (byte) (checksum &gt;&gt; 8)
+data[2] ^= (byte) (checksum &gt;&gt; 16)
+
+hostname = Base32.encode(data) || &#34;.b32.i2p&#34;
+</code></pre><p>Bất kỳ bit chưa sử dụng nào ở cuối b32 phải bằng 0. Đối với một địa chỉ tiêu chuẩn 56 ký tự (35 byte), không có bit chưa sử dụng.</p>
+<h3 id="giải-mã-và-xác-minh">Giải mã và Xác minh</h3>
+<pre tabindex="0"><code>strip the &#34;.b32.i2p&#34; from the hostname
+data = Base32.decode(hostname)
+Calculate checksum = CRC-32(data[3:end])
+Treat checksum as little-endian.
+flags = data[0] ^ (byte) checksum
+if 1 byte sigtypes:
+  pubkey sigtype = data[1] ^ (byte) (checksum &gt;&gt; 8)
+  blinded sigtype = data[2] ^ (byte) (checksum &gt;&gt; 16)
+else (2 byte sigtypes):
+  pubkey sigtype = data[1] ^ ((byte) (checksum &gt;&gt; 8)) || data[2] ^ ((byte) (checksum &gt;&gt; 16))
+  blinded sigtype = data[3] || data[4]
+parse the remainder based on the flags to get the public key
+</code></pre><h3 id="độ-dài-tính-bằng-bit-của-khóa-bí-mật-và-khóa-riêng">Độ dài (tính bằng bit) của khóa bí mật và khóa riêng</h3>
+<p>Các bit khóa bí mật và khóa riêng được dùng để cho client, proxy, hoặc mã phía client khác biết rằng cần có khóa bí mật và/hoặc khóa riêng để giải mã leaseset. Một số triển khai cụ thể có thể nhắc người dùng cung cấp dữ liệu cần thiết, hoặc từ chối các lần thử kết nối nếu thiếu dữ liệu cần thiết.</p>
+<p>Các bit này chỉ dùng làm chỉ báo. Khóa bí mật hoặc khóa riêng tư tuyệt đối không được đưa vào chính địa chỉ B32, vì như vậy sẽ làm suy giảm tính bảo mật.</p>
+<h2 id="chi-tiết-mật-mã-học">Chi tiết mật mã học</h2>
+<h3 id="lược-đồ-làm-mù">Lược đồ làm mù</h3>
+<p>Lược đồ làm mù sử dụng RedDSA dựa trên Ed25519 và thiết kế của ZCash, tạo ra các chữ ký Red25519 trên đường cong Ed25519 sử dụng SHA-512. Cách tiếp cận này đảm bảo các khóa công khai đã làm mù vẫn thuộc nhóm con có cấp nguyên tố của đường cong, tránh được các lo ngại về bảo mật tồn tại trong một số thiết kế thay thế.</p>
+<p>Các Blinded keys (khóa đã làm mù) được luân chuyển hằng ngày dựa trên ngày UTC theo công thức:</p>
+<pre tabindex="0"><code>blinded_key = BLIND(unblinded_key, date, optional_secret)
+</code></pre><p>Vị trí lưu trữ trong DHT (bảng băm phân tán) được tính như sau:</p>
+<pre tabindex="0"><code>SHA256(type_byte || blinded_public_key)
+</code></pre><h3 id="mã-hóa">Mã hóa</h3>
+<p>leaseSet được mã hóa sử dụng mật mã dòng ChaCha20 cho việc mã hóa, được lựa chọn vì hiệu năng vượt trội trên các thiết bị không có tăng tốc phần cứng AES. Đặc tả sử dụng HKDF (Hàm phái sinh khóa dựa trên HMAC) để phái sinh khóa và X25519 (thuật toán ECDH trên Curve25519) cho các hoạt động Diffie-Hellman (trao đổi khóa Diffie-Hellman).</p>
+<p>Các leaseSet được mã hóa có cấu trúc ba lớp: - Lớp ngoài: siêu dữ liệu bản rõ - Lớp giữa: xác thực máy khách (các phương thức DH hoặc PSK) - Lớp trong: phần dữ liệu LS2 chính với thông tin lease</p>
+<h3 id="các-phương-thức-xác-thực">Các phương thức xác thực</h3>
+<p>Xác thực theo từng client (máy khách) hỗ trợ hai phương thức:</p>
+<p><strong>Xác thực DH</strong>: Sử dụng thỏa thuận khóa X25519. Mỗi máy khách được ủy quyền sẽ cung cấp khóa công khai của mình cho máy chủ, và máy chủ mã hóa lớp giữa bằng một bí mật chung được dẫn xuất từ ECDH.</p>
+<p><strong>PSK Authentication</strong> (xác thực bằng khóa chia sẻ trước): Sử dụng trực tiếp khóa chia sẻ trước để mã hóa.</p>
+<p>Bit cờ thứ 2 trong địa chỉ B32 cho biết liệu xác thực theo từng client có bắt buộc hay không.</p>
+<h2 id="bộ-nhớ-đệm">Bộ nhớ đệm</h2>
+<p>Dù vượt ngoài phạm vi của đặc tả này, các routers và clients phải ghi nhớ và lưu vào bộ nhớ đệm (khuyến nghị lưu bền) ánh xạ từ khóa công khai tới destination (định danh đích trong I2P), và ngược lại.</p>
+<p>Blockfile naming service (dịch vụ đặt tên dạng blockfile), hệ thống sổ địa chỉ mặc định của I2P từ phiên bản 0.9.8, duy trì nhiều sổ địa chỉ cùng với một bảng ánh xạ tra ngược chuyên dụng, cung cấp khả năng tra cứu nhanh theo giá trị băm (hash). Tính năng này rất quan trọng để phân giải leaseSet được mã hóa khi ban đầu chỉ biết mỗi giá trị băm.</p>
+<h2 id="các-loại-chữ-ký">Các loại chữ ký</h2>
+<p>Tính đến phiên bản I2P 2.10.0, các kiểu chữ ký từ 0 đến 11 đã được định nghĩa. Mã hóa một byte vẫn là tiêu chuẩn; mã hóa hai byte có sẵn nhưng trên thực tế không được sử dụng.</p>
+<p><strong>Các loại thường dùng:</strong> - Loại 0 (DSA_SHA1): Không còn được khuyến nghị cho router, vẫn được hỗ trợ cho các destination (đích trong I2P) - Loại 7 (EdDSA_SHA512_Ed25519): Tiêu chuẩn hiện tại cho danh tính router và các đích - Loại 11 (RedDSA_SHA512_Ed25519): Chỉ dùng cho các leaseSet LS2 được mã hóa có hỗ trợ blinding (kỹ thuật làm mù trong mật mã)</p>
+<p><strong>Lưu ý quan trọng</strong>: Chỉ Ed25519 (type 7) và Red25519 (type 11) hỗ trợ blinding (kỹ thuật làm mù trong mật mã) cần thiết cho các leasesets được mã hóa. Các loại chữ ký khác không thể được sử dụng với tính năng này.</p>
+<p>Các loại 9-10 (GOST algorithms (thuật toán mật mã GOST)) vẫn được dành trước nhưng chưa được triển khai. Các loại 4-6 và 8 được đánh dấu &ldquo;offline only&rdquo; cho các khóa ký ngoại tuyến.</p>
+<h2 id="ghi-chú">Ghi chú</h2>
+<ul>
+<li>Phân biệt biến thể cũ và mới theo độ dài. Địa chỉ b32 cũ luôn là {52 chars}.b32.i2p. Địa chỉ mới là {56+ chars}.b32.i2p</li>
+<li>Mã hóa base32 tuân theo tiêu chuẩn RFC 4648, giải mã không phân biệt hoa/thường và ưu tiên đầu ra chữ thường</li>
+<li>Địa chỉ có thể vượt quá 200 ký tự khi dùng các kiểu chữ ký có khóa công khai lớn hơn (ví dụ: ECDSA P521 với khóa 132 byte)</li>
+<li>Định dạng mới có thể được dùng trong jump links (liên kết tra cứu) (và được phục vụ bởi jump servers (máy chủ jump)) nếu muốn, tương tự như b32 tiêu chuẩn</li>
+<li>Blinded keys (khóa làm mù) luân phiên hằng ngày theo ngày UTC để tăng cường quyền riêng tư</li>
+<li>Định dạng này khác với cách tiếp cận ở phụ lục A.2 của Tor trong tệp rend-spec-v3.txt, có thể kéo theo các hệ quả bảo mật tiềm ẩn khi dùng off-curve blinded public keys (khóa công khai bị làm mù nằm ngoài đường cong)</li>
+</ul>
+<h2 id="tương-thích-phiên-bản">Tương thích phiên bản</h2>
+<p>Đặc tả này áp dụng cho I2P từ phiên bản 0.9.47 (tháng 8 năm 2020) đến phiên bản 2.10.0 (tháng 9 năm 2025). Không có thay đổi không tương thích ngược đối với định dạng địa chỉ B32, cấu trúc LS2 (LeaseSet phiên bản 2) được mã hóa, hoặc các triển khai mật mã học trong giai đoạn này. Tất cả các địa chỉ được tạo bằng 0.9.47 vẫn hoàn toàn tương thích với các phiên bản hiện tại.</p>
+<h2 id="tài-liệu-tham-khảo">Tài liệu tham khảo</h2>
+<p><strong>CRC-32</strong> - <a href="https://en.wikipedia.org/wiki/CRC-32">CRC-32 (Wikipedia)</a>
+ - <a href="https://tools.ietf.org/html/rfc3309">RFC 3309: Tổng kiểm (checksum) của Giao thức Truyền tải Điều khiển Luồng</a>
+</p>
+<p><strong>Các đặc tả I2P</strong> - <a href="../../../../vi/docs/specs/encryptedleaseset/">Đặc tả LeaseSet được mã hóa</a>
+ - <a href="../../../../vi/proposals/123-new-netdb-entries/">Đề xuất 123: Mục nhập netDB mới</a>
+ - <a href="../../../../vi/proposals/149-b32-encrypted-ls2/">Đề xuất 149: B32 cho LS2 được mã hóa</a>
+ - <a href="../../../../vi/docs/specs/common-structures/">Đặc tả cấu trúc chung</a>
+ - <a href="../../../../vi/docs/overview/naming/">Đặt tên và Sổ địa chỉ</a>
+</p>
+<p><strong>So sánh Tor</strong> - <a href="https://lists.torproject.org/pipermail/tor-dev/2017-January/011816.html">Chuỗi thảo luận Tor (bối cảnh thiết kế)</a>
+</p>
+<p><strong>Tài nguyên bổ sung</strong> - <a href="../../../../vi/">I2P Project</a>
+ - <a href="https://i2pforum.net">Diễn đàn I2P</a>
+ - <a href="http://docs.i2p-projekt.de/javadoc/">Tài liệu Java API</a>
+</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../vi/docs/specs/subscription/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">Các lệnh cho nguồn cấp đăng ký địa chỉ</span>
+                        </a>
+                    
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/vi/docs/specs/b32encrypted.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Cập nhật tin tức I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Nhập email của bạn" required>
+                            <button type="submit">Đăng ký</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Liên kết nhanh</h3>
+                <ul>
+                    <li><a href="../../../../vi/financial-support/">Quyên góp</a></li>
+                    <li><a href="../../../../vi/docs/overview/intro/">Giới thiệu I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Cộng đồng</h3>
+                <ul>
+                    <li><a href="../../../../vi/get-involved/">Tham Gia</a></li>
+                    <li><a href="../../../../vi/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Diễn đàn chính thức</a></li>
+                    <li><a href="../../../../vi/contact/">Liên hệ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Tài nguyên</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Thống kê I2P</a></li>
+                    <li><a href="../../../../vi/papers/">Nghiên cứu</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Dự án Internet Vô hình. Được cấp phép theo Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../vi/privacy/">Quyền riêng tư</a>
+                <a href="../../../../vi/terms/">Điều khoản</a>
+                <a href="../../../../vi/about/media/">Báo chí</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Đóng">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Thăm dò ý kiến cộng đồng</h2>
+            <p class="modal-subtitle">Chúng tôi rất muốn nghe ý kiến từ bạn</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Phiếu bầu của bạn giúp định hình tương lai của I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

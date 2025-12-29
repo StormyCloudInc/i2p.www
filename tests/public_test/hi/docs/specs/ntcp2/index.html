@@ -1,0 +1,2572 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>NTCP2 ट्रांसपोर्ट | I2P - अदृश्य इंटरनेट परियोजना</title>
+
+    <meta name="description" content="router-से-router लिंक के लिए Noise (क्रिप्टोग्राफ़िक प्रोटोकॉल) आधारित TCP ट्रांसपोर्ट">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="NTCP2 ट्रांसपोर्ट | I2P - अदृश्य इंटरनेट परियोजना">
+    <meta property="og:description" content="router-से-router लिंक के लिए Noise (क्रिप्टोग्राफ़िक प्रोटोकॉल) आधारित TCP ट्रांसपोर्ट">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/hi/docs/specs/ntcp2/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P बीटा साइट अब लाइव है समस्याओं के लिए ई-मेल करें stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="बैनर बंद करें" title="बैनर बंद करें">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../hi/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../hi/about/" class="">के बारे में</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../hi/about/">समीक्षा</a></li>
+                            <li><a href="../../../../hi/papers/">अनुसंधान पत्र</a></li>
+                            <li><a href="../../../../hi/about/media/">प्रेस</a></li>
+                            <li><a href="../../../../hi/contact/">संपर्क करें</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../hi/docs/" class="active">दस्तावेज़</a></li>
+                    <li><a href="../../../../hi/downloads/" class="">डाउनलोड्स</a></li>
+                    <li><a href="../../../../hi/blog/" class="">ब्लॉग</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../hi/get-involved/" class="">शामिल हों</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../hi/get-involved/">समीक्षा</a></li>
+                            <li><a href="../../../../hi/feedback/">फीचर सुझाव</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">hi</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/ntcp2/"
+                                class="lang-option">अंग्रेजी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/ntcp2/"
+                                class="lang-option">स्पेनिश</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/ntcp2/"
+                                class="lang-option">कोरियाई</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/ntcp2/"
+                                class="lang-option">चीनी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/ntcp2/"
+                                class="lang-option">रूसी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/ntcp2/"
+                                class="lang-option">चेक</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/ntcp2/"
+                                class="lang-option">जर्मन</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/ntcp2/"
+                                class="lang-option">फ्रेंच</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/ntcp2/"
+                                class="lang-option">तुर्की</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/ntcp2/"
+                                class="lang-option">वियतनामी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/ntcp2/"
+                                class="lang-option active">हिन्दी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/ntcp2/"
+                                class="lang-option">अरबी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/ntcp2/"
+                                class="lang-option">पुर्तगाली</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../hi/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../hi/downloads/" class="btn btn-primary">I2P प्राप्त करें</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#अवलकन">अवलोकन</a></li>
+    <li><a href="#noise-protocol-framework-करपटगरफक-हडशक-क-लए-एक-ढच">Noise Protocol Framework (क्रिप्टोग्राफिक हैंडशेक के लिए एक ढांचा)</a>
+      <ul>
+        <li><a href="#i2p-वशषट-एकसटशनस">I2P-विशिष्ट एक्सटेंशन्स</a></li>
+      </ul>
+    </li>
+    <li><a href="#हडशक-परवह">हैंडशेक प्रवाह</a>
+      <ul>
+        <li><a href="#तन-सदश-वल-हडशक">तीन-संदेशों वाला हैंडशेक</a></li>
+        <li><a href="#noise-सदश-पटरन">Noise संदेश पैटर्न</a></li>
+      </ul>
+    </li>
+    <li><a href="#सदश-वनरदश">संदेश विनिर्देश</a>
+      <ul>
+        <li><a href="#कज-सकतन">कुंजी संकेतन</a></li>
+        <li><a href="#परमणकत-एनकरपशन-chacha20-poly1305">प्रमाणीकृत एन्क्रिप्शन (ChaCha20-Poly1305)</a></li>
+      </ul>
+    </li>
+    <li><a href="#सदश-1-sessionrequest-सतर-अनरध">संदेश 1: SessionRequest (सत्र अनुरोध)</a>
+      <ul>
+        <li><a href="#र-फरमट">रॉ फ़ॉर्मेट</a></li>
+        <li><a href="#डकरपट-क-गई-समगर">डिक्रिप्ट की गई सामग्री</a></li>
+        <li><a href="#वकलप-बलक-16-बइट-big-endian-सबस-महततवपरण-बइट-पहल">विकल्प ब्लॉक (16 बाइट, big-endian (सबसे महत्त्वपूर्ण बाइट पहले))</a></li>
+        <li><a href="#कज-वयतपतत-फकशन-kdf-1">कुंजी व्युत्पत्ति फ़ंक्शन (KDF-1)</a></li>
+        <li><a href="#करयनवयन-सबध-टपपणय">कार्यान्वयन संबंधी टिप्पणियाँ</a></li>
+      </ul>
+    </li>
+    <li><a href="#सदश-2-sessioncreated">संदेश 2: SessionCreated</a>
+      <ul>
+        <li><a href="#र-फरमट-1">रॉ फ़ॉर्मेट</a></li>
+        <li><a href="#डकरपट-क-गई-समगर-1">डिक्रिप्ट की गई सामग्री</a></li>
+        <li><a href="#वकलप-बलक-16-बइटस-big-endian-सरवधक-महततवपरण-बइट-पहल">विकल्प ब्लॉक (16 बाइट्स, big-endian (सर्वाधिक महत्त्वपूर्ण बाइट पहले))</a></li>
+        <li><a href="#कज-वयतपतत-फकशन-kdf-2">कुंजी व्युत्पत्ति फ़ंक्शन (KDF-2)</a></li>
+        <li><a href="#करयनवयन-सबध-टपपणय-1">कार्यान्वयन संबंधी टिप्पणियाँ</a></li>
+      </ul>
+    </li>
+    <li><a href="#सदश-3-sessionconfirmed-सतर-क-पषट">संदेश 3: SessionConfirmed (सत्र की पुष्टि)</a>
+      <ul>
+        <li><a href="#दवभगय-सरचन">द्विभागीय संरचना</a></li>
+        <li><a href="#कचच-पररप">कच्चा प्रारूप</a></li>
+        <li><a href="#डकरपट-क-गई-समगर-2">डिक्रिप्ट की गई सामग्री</a></li>
+        <li><a href="#कज-वयतपतत-फकशन-kdf-3">कुंजी व्युत्पत्ति फ़ंक्शन (KDF-3)</a></li>
+        <li><a href="#करयनवयन-सबध-टपपणय-2">कार्यान्वयन संबंधी टिप्पणियाँ</a></li>
+      </ul>
+    </li>
+    <li><a href="#डट-चरण">डेटा चरण</a>
+      <ul>
+        <li><a href="#कज-वयतपतत-फकशन-डट-चरण">कुंजी व्युत्पत्ति फ़ंक्शन (डेटा चरण)</a></li>
+        <li><a href="#फरम-सरचन">फ्रेम संरचना</a></li>
+        <li><a href="#siphash-एक-कज-आधरत-तज-हश-फकशन-लबई-क-असपषटकरण">SipHash (एक कुंजी-आधारित तेज़ हैश फ़ंक्शन) लंबाई का अस्पष्टकरण</a></li>
+        <li><a href="#बलक-पररप">ब्लॉक प्रारूप</a></li>
+        <li><a href="#बलक-परकर">ब्लॉक प्रकार</a></li>
+        <li><a href="#बलक-परकर-0-datetime">ब्लॉक प्रकार 0: DateTime</a></li>
+        <li><a href="#बलक-परकर-1-वकलप">ब्लॉक प्रकार 1: विकल्प</a></li>
+        <li><a href="#बलक-परकर-2-routerinfo-router-क-जनकर">ब्लॉक प्रकार 2: RouterInfo (router की जानकारी)</a></li>
+        <li><a href="#बलक-परकर-3-i2np-सदश">ब्लॉक प्रकार 3: I2NP संदेश</a></li>
+        <li><a href="#बलक-परकर-4-समपन">ब्लॉक प्रकार 4: समापन</a></li>
+        <li><a href="#बलक-परकर-254-पडग">ब्लॉक प्रकार 254: पैडिंग</a></li>
+      </ul>
+    </li>
+    <li><a href="#aead-सबदध-डट-सहत-परमणत-एनकरपशन-तरट-परबधन">AEAD (संबद्ध डेटा सहित प्रमाणित एन्क्रिप्शन) त्रुटि प्रबंधन</a>
+      <ul>
+        <li><a href="#हडशक-चरण-सदश-1-3">हैंडशेक चरण (संदेश 1-3)</a></li>
+        <li><a href="#डट-चरण-1">डेटा चरण</a></li>
+      </ul>
+    </li>
+    <li><a href="#परकशत-routerinfo-router-सबध-जनकर">प्रकाशित RouterInfo (router संबंधी जानकारी)</a>
+      <ul>
+        <li><a href="#router-पत-क-पररप">Router पते का प्रारूप</a></li>
+        <li><a href="#आवशयक-वकलप">आवश्यक विकल्प</a></li>
+        <li><a href="#उदहरण-routeraddress-परवषटय">उदाहरण RouterAddress प्रविष्टियाँ</a></li>
+        <li><a href="#अपरकशत-ntcp2-पत">अप्रकाशित NTCP2 पता</a></li>
+        <li><a href="#सरवजनक-कज-और-iv-initialization-vector-आरभक-वकटर-रटशन">सार्वजनिक कुंजी और IV (Initialization Vector, आरंभिक वेक्टर) रोटेशन</a></li>
+      </ul>
+    </li>
+    <li><a href="#ससकरण-पहचन">संस्करण पहचान</a></li>
+    <li><a href="#clock-skew-ससटम-घड-क-अतर-दशनरदश">Clock Skew (सिस्टम घड़ी का अंतर) दिशानिर्देश</a>
+      <ul>
+        <li><a href="#बब-क-हडलग-सदश-1">बॉब की हैंडलिंग (संदेश 1)</a></li>
+        <li><a href="#ऐलस-क-हडलग-सदश-2">ऐलिस की हैंडलिंग (संदेश 2)</a></li>
+        <li><a href="#बब-क-परससकरण-सदश-3">बॉब का प्रसंस्करण (संदेश 3)</a></li>
+        <li><a href="#समय-समकलकरण">समय समकालिकरण</a></li>
+      </ul>
+    </li>
+    <li><a href="#सरकष-गणधरम">सुरक्षा गुणधर्म</a>
+      <ul>
+        <li><a href="#forward-secrecy-अगरसकरय-गपनयत">Forward Secrecy (अग्रसक्रिय गोपनीयता)</a></li>
+        <li><a href="#परमणकरण">प्रमाणीकरण</a></li>
+        <li><a href="#टरफक-वशलषण-क-परत-परतरधक-कषमत">ट्रैफ़िक विश्लेषण के प्रति प्रतिरोधक क्षमता</a></li>
+        <li><a href="#denial-of-service-सव-वचन-शमन">Denial of Service (सेवा-वंचन) शमन</a></li>
+        <li><a href="#करपटगरफक-सरकष">क्रिप्टोग्राफिक सुरक्षा</a></li>
+      </ul>
+    </li>
+    <li><a href="#सदरभ">संदर्भ</a>
+      <ul>
+        <li><a href="#मखय-वनरदश">मुख्य विनिर्देश</a></li>
+        <li><a href="#कटलखन-मनक">कूटलेखन मानक</a></li>
+        <li><a href="#सबधत-i2p-वनरदश">संबंधित I2P विनिर्देश</a></li>
+        <li><a href="#करयनवयन-सदरभ">कार्यान्वयन संदर्भ</a></li>
+        <li><a href="#ऐतहसक-सदरभ">ऐतिहासिक संदर्भ</a></li>
+      </ul>
+    </li>
+    <li><a href="#करयनवयन-दशनरदश">कार्यान्वयन दिशानिर्देश</a>
+      <ul>
+        <li><a href="#अनवरय-आवशयकतए">अनिवार्य आवश्यकताएँ</a></li>
+        <li><a href="#अनशसत-परथए">अनुशंसित प्रथाएँ</a></li>
+        <li><a href="#आम-गलतय">आम गलतियाँ</a></li>
+        <li><a href="#परकषण-करयपरणल">परीक्षण कार्यप्रणाली</a></li>
+        <li><a href="#ntcp-टरसपरट-परटकल-स-मइगरशन">NTCP (ट्रांसपोर्ट प्रोटोकॉल) से माइग्रेशन</a></li>
+      </ul>
+    </li>
+    <li><a href="#परशषट-a-noise-xk-pattern-noise-परटकल-फरमवरक-क-xk-हडशक-पटरन">परिशिष्ट A: Noise XK Pattern (Noise प्रोटोकॉल फ़्रेमवर्क का XK हैंडशेक पैटर्न)</a></li>
+    <li><a href="#परशषट-ब-base64-encoding-बइनर-डट-क-ascii-पठ-म-बदलन-क-मनक-वध">परिशिष्ट बी: Base64 Encoding (बाइनरी डेटा को ASCII-पाठ में बदलने की मानक विधि)</a></li>
+    <li><a href="#परशषट-c-पकट-कपचर-वशलषण">परिशिष्ट C: पैकेट कैप्चर विश्लेषण</a></li>
+    <li><a href="#परशषट-d-ससकरण-इतहस">परिशिष्ट D: संस्करण इतिहास</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../hi/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../hi/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../hi/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">NTCP2 ट्रांसपोर्ट</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">यह अनुवाद मशीन लर्निंग का उपयोग करके उत्पन्न किया गया था और 100% सटीक नहीं हो सकता है।</span>
+    
+    
+    <a href="../../../../en/docs/specs/ntcp2/" class="disclaimer-link">अंग्रेज़ी संस्करण देखें</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">NTCP2 ट्रांसपोर्ट</h1>
+                    
+                        <p class="article-description">router-से-router लिंक के लिए Noise (क्रिप्टोग्राफ़िक प्रोटोकॉल) आधारित TCP ट्रांसपोर्ट</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 0.9.66
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="अवलकन">अवलोकन</h2>
+<p>NTCP2 पुराने NTCP ट्रांसपोर्ट को एक Noise‑based handshake (कनेक्शन स्थापित करने की आरंभिक कुंजी-विनिमय प्रक्रिया) से बदलता है, जो traffic fingerprinting (ट्रैफ़िक के पैटर्न से पहचान निकालने की तकनीक) का प्रतिरोध करता है, length fields (डेटा की लंबाई बताने वाले फ़ील्ड) को एन्क्रिप्ट करता है, और आधुनिक cipher suites (एन्क्रिप्शन एल्गोरिद्म के संयोजन) का समर्थन करता है। Routers I2P नेटवर्क में दो अनिवार्य ट्रांसपोर्ट प्रोटोकॉल के रूप में NTCP2 को SSU2 के साथ चला सकते हैं। NTCP (version 1) को 0.9.40 (May 2019) में अप्रचलित घोषित किया गया और 0.9.50 (May 2021) में पूरी तरह हटा दिया गया।</p>
+<h2 id="noise-protocol-framework-करपटगरफक-हडशक-क-लए-एक-ढच">Noise Protocol Framework (क्रिप्टोग्राफिक हैंडशेक के लिए एक ढांचा)</h2>
+<p>NTCP2, I2P-विशिष्ट विस्तारों के साथ Noise Protocol Framework (क्रिप्टोग्राफ़िक प्रोटोकॉल फ़्रेमवर्क) <a href="https://noiseprotocol.org/noise.html">Revision 33, 2017-10-04</a>
+ का उपयोग करता है:</p>
+<ul>
+<li><strong>पैटर्न</strong>: <code>Noise_XK_25519_ChaChaPoly_SHA256</code></li>
+<li><strong>विस्तारित पहचानकर्ता</strong>: <code>Noise_XKaesobfse+hs2+hs3_25519_ChaChaPoly_SHA256</code> (KDF (Key Derivation Function; कुंजी व्युत्पन्नीकरण फ़ंक्शन) के प्रारंभिककरण हेतु)</li>
+<li><strong>DH फ़ंक्शन (Diffie-Hellman)</strong>: X25519 (RFC 7748) - 32-बाइट कुंजियाँ, लिटिल-एंडियन (कम-महत्वपूर्ण-बाइट पहले) एन्कोडिंग</li>
+<li><strong>साइफ़र</strong>: AEAD_CHACHA20_POLY1305 (RFC 7539/RFC 8439)
+<ul>
+<li>12-बाइट nonce (एक बार प्रयुक्त मान): पहले 4 बाइट शून्य, आख़िरी 8 बाइट काउंटर (little-endian)</li>
+<li>अधिकतम nonce मान: 2^64 - 2 (कनेक्शन को 2^64 - 1 तक पहुँचने से पहले समाप्त हो जाना चाहिए)</li>
+</ul>
+</li>
+<li><strong>हैश फ़ंक्शन</strong>: SHA-256 (32-बाइट आउटपुट)</li>
+<li><strong>MAC (संदेश प्रमाणीकरण कोड)</strong>: Poly1305 (16-बाइट प्रमाणीकरण टैग)</li>
+</ul>
+<h3 id="i2p-वशषट-एकसटशनस">I2P-विशिष्ट एक्सटेंशन्स</h3>
+<h2 id="हडशक-परवह">हैंडशेक प्रवाह</h2>
+<pre tabindex="0"><code>Alice (Initiator)             Bob (Responder)
+SessionRequest  ──────────────────────►
+                ◄────────────────────── SessionCreated
+SessionConfirmed ──────────────────────►
+</code></pre><h3 id="तन-सदश-वल-हडशक">तीन-संदेशों वाला हैंडशेक</h3>
+<ol>
+<li><strong>SessionRequest</strong> (सत्र अनुरोध संदेश) - Alice की अस्पष्टीकृत अस्थायी कुंजी, विकल्प, पैडिंग संकेत</li>
+<li><strong>SessionCreated</strong> (सत्र-निर्मित संदेश) - Bob की अस्पष्टीकृत अस्थायी कुंजी, कूटबद्ध विकल्प, पैडिंग</li>
+<li><strong>SessionConfirmed</strong> (सत्र-पुष्ट संदेश) - Alice की कूटबद्ध स्थिर कुंजी और RouterInfo (router की जानकारी) (दो AEAD फ़्रेम)</li>
+</ol>
+<h3 id="noise-सदश-पटरन">Noise संदेश पैटर्न</h3>
+<pre tabindex="0"><code>XK(s, rs):           Authentication   Confidentiality
+  &lt;- s               (Bob&#39;s static key known in advance)
+  -&gt; e, es                  0                2
+  &lt;- e, ee                  2                1
+  -&gt; s, se                  2                5
+  &lt;-                        2                5
+</code></pre><p><strong>प्रमाणीकरण स्तर:</strong> - 0: कोई प्रमाणीकरण नहीं (कोई भी पक्ष इसे भेज सकता था) - 2: प्रेषक प्रमाणीकरण, key-compromise impersonation (कुंजी-समझौता प्रतिरूपण, KCI) के प्रति प्रतिरोधी</p>
+<p><strong>गोपनीयता स्तर:</strong> - 1: अस्थायी प्राप्तकर्ता (forward secrecy (भविष्य-गोपनीयता), प्राप्तकर्ता का प्रमाणीकरण नहीं) - 2: ज्ञात प्राप्तकर्ता, केवल प्रेषक के समझौते की स्थिति में forward secrecy - 5: मजबूत forward secrecy (ephemeral-ephemeral + ephemeral-static DH)</p>
+<h2 id="सदश-वनरदश">संदेश विनिर्देश</h2>
+<h3 id="कज-सकतन">कुंजी संकेतन</h3>
+<ul>
+<li><code>RH_A</code> = ऐलिस के लिए Router हैश (32 बाइट, SHA-256)</li>
+<li><code>RH_B</code> = बॉब के लिए Router हैश (32 बाइट, SHA-256)</li>
+<li><code>||</code> = संयोजन ऑपरेटर</li>
+<li><code>byte(n)</code> = मान n वाला एकल बाइट</li>
+<li>सभी बहु-बाइट पूर्णांक, जब तक अन्यथा निर्दिष्ट न हो, <strong>big-endian</strong> (उच्च-क्रम बाइट पहले) होते हैं</li>
+<li>X25519 कुंजियाँ <strong>little-endian</strong> (निम्न-क्रम बाइट पहले) होती हैं (32 बाइट)</li>
+</ul>
+<h3 id="परमणकत-एनकरपशन-chacha20-poly1305">प्रमाणीकृत एन्क्रिप्शन (ChaCha20-Poly1305)</h3>
+<p><strong>एन्क्रिप्शन फ़ंक्शन:</strong></p>
+<pre tabindex="0"><code>AEAD_ChaCha20_Poly1305(key, nonce, associatedData, plaintext)
+  → (ciphertext || MAC)
+</code></pre><p><strong>पैरामीटर्स:</strong> - <code>key</code>: KDF (कुंजी व्युत्पन्न करने वाला फ़ंक्शन) से प्राप्त 32-बाइट साइफ़र कुंजी - <code>nonce</code>: 12 बाइट (4 शून्य बाइट + 8-बाइट काउंटर, लिटिल-एंडियन) - <code>associatedData</code>: हैंडशेक चरण में 32-बाइट हैश; डेटा चरण में शून्य-लंबाई - <code>plaintext</code>: एन्क्रिप्ट करने हेतु डेटा (0+ बाइट)</p>
+<p><strong>आउटपुट:</strong> - Ciphertext (कूट-पाठ): plaintext (स्पष्ट पाठ) जितनी ही लंबाई - MAC (Message Authentication Code, संदेश प्रमाणीकरण कोड): 16 बाइट्स (Poly1305 authentication tag, प्रमाणीकरण टैग)</p>
+<p><strong>Nonce (एक-बार-प्रयोग संख्या) प्रबंधन:</strong> - काउंटर प्रत्येक cipher instance के लिए 0 से शुरू होता है - उस दिशा में प्रत्येक AEAD (Authenticated Encryption with Associated Data) ऑपरेशन के लिए बढ़ाया जाता है - डेटा चरण में Alice→Bob और Bob→Alice के लिए अलग-अलग काउंटर - काउंटर के 2^64 - 1 तक पहुँचने से पहले कनेक्शन समाप्त करना होगा</p>
+<h2 id="सदश-1-sessionrequest-सतर-अनरध">संदेश 1: SessionRequest (सत्र अनुरोध)</h2>
+<p>एलिस बॉब से कनेक्शन शुरू करती है।</p>
+<p><strong>Noise प्रचालन (क्रिप्टोग्राफ़िक हैंडशेक प्रोटोकॉल)</strong>: <code>e, es</code> (अस्थायी कुंजी निर्माण और आदान-प्रदान)</p>
+<h3 id="र-फरमट">रॉ फ़ॉर्मेट</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    AES-256-CBC Encrypted X (32B)      +
+|    Key: RH_B, IV: Bob&#39;s published IV  |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame (48 bytes)        +
+|    Plaintext: 32B (X + options)       |
++    k from KDF-1, n=0, ad=h            +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
++    Length specified in options         +
+|    0 to 65535 - 80 bytes              |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>आकार सीमाएँ:</strong> - न्यूनतम: 80 बाइट (32 AES + 48 AEAD) - अधिकतम: कुल 65535 बाइट - <strong>विशेष मामला</strong>: &ldquo;NTCP&rdquo; पतों से जुड़ते समय अधिकतम 287 बाइट (संस्करण पहचान)</p>
+<h3 id="डकरपट-क-गई-समगर">डिक्रिप्ट की गई सामग्री</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    X (Alice ephemeral public key)     +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|           Options Block               |
++             (16 bytes)                +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="वकलप-बलक-16-बइट-big-endian-सबस-महततवपरण-बइट-पहल">विकल्प ब्लॉक (16 बाइट, big-endian (सबसे महत्त्वपूर्ण बाइट पहले))</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| id | ver|  padLen | m3p2len | Rsvd(0) |
++----+----+----+----+----+----+----+----+
+|        tsA        |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+
+id      : 1 byte  - Network ID (2 for mainnet, 16-254 for testnets)
+ver     : 1 byte  - Protocol version (currently 2)
+padLen  : 2 bytes - Padding length in this message (0-65455)
+m3p2len : 2 bytes - Length of SessionConfirmed part 2 frame
+Rsvd    : 2 bytes - Reserved, set to 0
+tsA     : 4 bytes - Unix timestamp (seconds since epoch)
+Reserved: 4 bytes - Reserved, set to 0
+</code></pre><p><strong>महत्वपूर्ण फ़ील्ड:</strong> - <strong>Network ID</strong> (नेटवर्क पहचानकर्ता) (since 0.9.42): क्रॉस-नेटवर्क कनेक्शनों का त्वरित अस्वीकार - <strong>m3p2len</strong>: संदेश 3 भाग 2 का सटीक आकार (भेजते समय मेल खाना चाहिए)</p>
+<h3 id="कज-वयतपतत-फकशन-kdf-1">कुंजी व्युत्पत्ति फ़ंक्शन (KDF-1)</h3>
+<p><strong>प्रोटोकॉल प्रारंभ करें:</strong></p>
+<pre tabindex="0"><code>protocol_name = &#34;Noise_XKaesobfse+hs2+hs3_25519_ChaChaPoly_SHA256&#34;
+h = SHA256(protocol_name)
+ck = h  // Chaining key initialized to hash
+</code></pre><p><strong>MixHash (मिक्सहैश) संचालन:</strong></p>
+<pre tabindex="0"><code>h = SHA256(h)                    // Null prologue
+h = SHA256(h || rs)              // Bob&#39;s static key (known)
+h = SHA256(h || e.pubkey)        // Alice&#39;s ephemeral key X
+// h is now the associated data for message 1 AEAD
+</code></pre><p><strong>MixKey प्रचालन (es पैटर्न):</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Alice.ephemeral_private, Bob.static_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 1
+// ck is retained for message 2 KDF
+</code></pre><h3 id="करयनवयन-सबध-टपपणय">कार्यान्वयन संबंधी टिप्पणियाँ</h3>
+<ol>
+<li><strong>AES अस्पष्टिकरण</strong>: केवल DPI (Deep Packet Inspection) प्रतिरोध के लिए प्रयुक्त; Bob के router हैश और IV के साथ कोई भी व्यक्ति X को डिक्रिप्ट कर सकता है</li>
+<li><strong>रीप्ले रोकथाम</strong>: Bob को कम-से-कम 2*D सेकंड तक X मानों (या उनके एन्क्रिप्टेड समकक्ष) को कैश करना चाहिए (D = घड़ी का अधिकतम विचलन)</li>
+<li><strong>टाइमस्टैम्प सत्यापन</strong>: Bob को उन कनेक्शनों को अस्वीकार करना चाहिए जिनमें |tsA - current_time| &gt; D हो (आम तौर पर D = 60 सेकंड)</li>
+<li><strong>कर्व सत्यापन</strong>: Bob को सत्यापित करना चाहिए कि X एक वैध X25519 पॉइंट है</li>
+<li><strong>त्वरित अस्वीकृति</strong>: डिक्रिप्शन से पहले Bob X[31] &amp; 0x80 == 0 की जाँच कर सकता है (वैध X25519 कुंजियों में MSB (सर्वाधिक महत्वपूर्ण बिट) क्लियर होता है)</li>
+<li><strong>त्रुटि प्रबंधन</strong>: किसी भी विफलता पर, Bob यादृच्छिक टाइमआउट और यादृच्छिक बाइट पढ़ने के बाद TCP RST के साथ कनेक्शन बंद करता है</li>
+<li><strong>बफ़रिंग</strong>: दक्षता के लिए Alice को पूरा संदेश (पैडिंग सहित) एक साथ फ्लश करना चाहिए</li>
+</ol>
+<h2 id="सदश-2-sessioncreated">संदेश 2: SessionCreated</h2>
+<p>Bob, Alice को उत्तर देता है।</p>
+<p><strong>Noise ऑपरेशन्स</strong>: <code>e, ee</code> (ephemeral-ephemeral DH — दो अस्थायी कुंजियों के बीच Diffie-Hellman)</p>
+<h3 id="र-फरमट-1">रॉ फ़ॉर्मेट</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    AES-256-CBC Encrypted Y (32B)      +
+|    Key: RH_B, IV: AES state from msg1 |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame (48 bytes)        +
+|    Plaintext: 32B (Y + options)       |
++    k from KDF-2, n=0, ad=h            +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
++    Length specified in options         +
+|    0 to 65535 - 80 bytes              |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="डकरपट-क-गई-समगर-1">डिक्रिप्ट की गई सामग्री</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    Y (Bob ephemeral public key)       +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|           Options Block               |
++             (16 bytes)                +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="वकलप-बलक-16-बइटस-big-endian-सरवधक-महततवपरण-बइट-पहल">विकल्प ब्लॉक (16 बाइट्स, big-endian (सर्वाधिक महत्त्वपूर्ण बाइट पहले))</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Rsvd(0) | padLen  |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+|        tsB        |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+
+Rsvd    : 2 bytes - Reserved, set to 0
+padLen  : 2 bytes - Padding length in this message
+Reserved: 10 bytes - Reserved, set to 0
+tsB     : 4 bytes - Unix timestamp (seconds since epoch)
+</code></pre><h3 id="कज-वयतपतत-फकशन-kdf-2">कुंजी व्युत्पत्ति फ़ंक्शन (KDF-2)</h3>
+<p><strong>MixHash ऑपरेशन्स:</strong></p>
+<pre tabindex="0"><code>h = SHA256(h || encrypted_payload_msg1)  // 32-byte ciphertext
+if (msg1_padding_length &gt; 0):
+    h = SHA256(h || padding_from_msg1)
+h = SHA256(h || e.pubkey)                // Bob&#39;s ephemeral key Y
+// h is now the associated data for message 2 AEAD
+</code></pre><p><strong>MixKey ऑपरेशन (ee pattern):</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Bob.ephemeral_private, Alice.ephemeral_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 2
+// ck is retained for message 3 KDF
+</code></pre><p><strong>मेमोरी साफ़-सफाई:</strong></p>
+<pre tabindex="0"><code>// Overwrite ephemeral keys after ee DH
+Alice.ephemeral_public = zeros(32)
+Alice.ephemeral_private = zeros(32)  // Bob side
+Bob.received_ephemeral = zeros(32)    // Bob side
+</code></pre><h3 id="करयनवयन-सबध-टपपणय-1">कार्यान्वयन संबंधी टिप्पणियाँ</h3>
+<ol>
+<li><strong>AES चेनिंग</strong>: Y एन्क्रिप्शन संदेश 1 से AES-CBC (ब्लॉक-चेनिंग मोड वाला Advanced Encryption Standard) स्टेट का उपयोग करता है (रिसेट नहीं किया जाता)</li>
+<li><strong>रीप्ले रोकथाम</strong>: Alice को Y मानों को कम-से-कम 2*D सेकंड तक कैश करना चाहिए</li>
+<li><strong>टाइमस्टैम्प सत्यापन</strong>: |tsB - current_time| &gt; D होने पर Alice को अस्वीकार करना चाहिए</li>
+<li><strong>कर्व सत्यापन</strong>: Alice को सत्यापित करना चाहिए कि Y एक मान्य X25519 (एलीप्टिक-कर्व की-एक्सचेंज एल्गोरिद्म) बिंदु है</li>
+<li><strong>त्रुटि प्रबंधन</strong>: किसी भी विफलता पर Alice TCP RST (TCP कनेक्शन रीसेट पैकेट) भेजकर कनेक्शन बंद करती है</li>
+<li><strong>बफ़रिंग</strong>: Bob को पूरा संदेश एक साथ flush (आउटपुट बफ़र को तुरंत भेजना) करना चाहिए</li>
+</ol>
+<h2 id="सदश-3-sessionconfirmed-सतर-क-पषट">संदेश 3: SessionConfirmed (सत्र की पुष्टि)</h2>
+<p>Alice सत्र की पुष्टि करती है और RouterInfo भेजती है।</p>
+<p><strong>Noise ऑपरेशन्स</strong>: <code>s, se</code> (स्थिर कुंजी प्रकटीकरण और स्थिर-क्षणिक Diffie-Hellman (कुंजी विनिमय))</p>
+<h3 id="दवभगय-सरचन">द्विभागीय संरचना</h3>
+<p>संदेश 3 <strong>दो अलग-अलग AEAD (Authenticated Encryption with Associated Data—संबद्ध डेटा के साथ प्रमाणीकृत एन्क्रिप्शन) फ्रेम</strong> से बना है:</p>
+<ol>
+<li><strong>भाग 1</strong>: Alice की कूटबद्ध स्थिर कुंजी सहित 48-बाइट का नियत फ्रेम</li>
+<li><strong>भाग 2</strong>: RouterInfo, विकल्प, और पैडिंग सहित चर लंबाई वाला फ्रेम</li>
+</ol>
+<h3 id="कचच-पररप">कच्चा प्रारूप</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|    ChaChaPoly Frame 1 (48 bytes)      |
++    Plaintext: Alice static key (32B)  +
+|    k from KDF-2, n=1, ad=h            |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame 2 (variable)      +
+|    Length specified in msg1.m3p2len   |
++    k from KDF-3, n=0, ad=h            +
+|    Plaintext: RouterInfo + padding    |
++                                       +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>आकार प्रतिबंध:</strong> - भाग 1: ठीक 48 बाइट्स (32 सादा पाठ + 16 MAC (Message Authentication Code—संदेश प्रमाणीकरण कोड)) - भाग 2: लंबाई संदेश 1 (m3p2len फील्ड) में निर्दिष्ट - कुल अधिकतम: 65535 बाइट्स (भाग 1 अधिकतम 48, अतः भाग 2 अधिकतम 65487)</p>
+<h3 id="डकरपट-क-गई-समगर-2">डिक्रिप्ट की गई सामग्री</h3>
+<p><strong>भाग 1:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    S (Alice static public key)        +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>भाग 2:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|    Block: RouterInfo (required)       |
++    Type=2, contains Alice&#39;s RI         +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+|    Block: Options (optional)          |
++    Type=1, padding parameters          +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Block: Padding (optional)          |
++    Type=254, random data               +
+|    MUST be last block if present      |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="कज-वयतपतत-फकशन-kdf-3">कुंजी व्युत्पत्ति फ़ंक्शन (KDF-3)</h3>
+<p><strong>भाग 1 (s पैटर्न):</strong></p>
+<pre tabindex="0"><code>h = SHA256(h || encrypted_payload_msg2)  // 32-byte ciphertext
+if (msg2_padding_length &gt; 0):
+    h = SHA256(h || padding_from_msg2)
+
+// Encrypt static key with message 2 cipher key
+ciphertext = AEAD_ChaCha20_Poly1305(k_msg2, n=1, h, Alice.static_public)
+h = SHA256(h || ciphertext)  // 48 bytes (32 + 16)
+// h is now the associated data for message 3 part 2
+</code></pre><p><strong>भाग 2 (se पैटर्न):</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Alice.static_private, Bob.ephemeral_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 3 part 2
+// ck is retained for data phase KDF
+
+ciphertext = AEAD_ChaCha20_Poly1305(k, n=0, h, payload)
+h = SHA256(h || ciphertext)
+// h is retained for SipHash KDF
+</code></pre><p><strong>मेमोरी क्लीनअप:</strong></p>
+<pre tabindex="0"><code>// Overwrite Bob&#39;s ephemeral key after se DH
+Alice.received_ephemeral = zeros(32)  // Alice side
+Bob.ephemeral_public = zeros(32)       // Bob side
+Bob.ephemeral_private = zeros(32)      // Bob side
+</code></pre><h3 id="करयनवयन-सबध-टपपणय-2">कार्यान्वयन संबंधी टिप्पणियाँ</h3>
+<ol>
+<li><strong>RouterInfo सत्यापन</strong>: Bob को हस्ताक्षर, टाइमस्टैम्प, और कुंजी की सुसंगतता सत्यापित करना चाहिए</li>
+<li><strong>कुंजी मिलान</strong>: Bob को सत्यापित करना चाहिए कि भाग 1 में Alice की स्थिर कुंजी RouterInfo में कुंजी से मेल खाती है</li>
+<li><strong>स्थिर कुंजी का स्थान</strong>: NTCP या NTCP2 के RouterAddress में मिलते-जुलते &ldquo;s&rdquo; पैरामीटर की तलाश करें</li>
+<li><strong>ब्लॉक क्रम</strong>: RouterInfo सबसे पहले होना चाहिए, Options दूसरे स्थान पर (यदि उपस्थित हो), और Padding सबसे अंतिम (यदि उपस्थित हो)</li>
+<li><strong>लंबाई नियोजन</strong>: Alice को सुनिश्चित करना चाहिए कि संदेश 1 में m3p2len ठीक-ठीक भाग 2 की लंबाई से मेल खाए</li>
+<li><strong>बफरिंग</strong>: Alice को दोनों भागों को एक ही TCP send के रूप में साथ में फ्लश करना चाहिए</li>
+<li><strong>वैकल्पिक चेनिंग</strong>: दक्षता के लिए Alice तुरंत data phase frame (डेटा चरण का फ्रेम) जोड़ सकती है</li>
+</ol>
+<h2 id="डट-चरण">डेटा चरण</h2>
+<p>हैंडशेक पूरा होने के बाद, सभी संदेश परिवर्ती-लंबाई AEAD (संबद्ध डेटा के साथ प्रमाणित एन्क्रिप्शन) फ़्रेम का उपयोग करते हैं, जिनमें लंबाई फ़ील्ड को गोपित किया गया होता है।</p>
+<h3 id="कज-वयतपतत-फकशन-डट-चरण">कुंजी व्युत्पत्ति फ़ंक्शन (डेटा चरण)</h3>
+<p><strong>Split Function (Noise) (विभाजन फ़ंक्शन, Noise प्रोटोकॉल):</strong></p>
+<pre tabindex="0"><code>// Generate transmit and receive keys
+zerolen = &#34;&#34;  // Zero-length byte array
+temp_key = HMAC-SHA256(ck, zerolen)
+
+// Alice transmits to Bob
+k_ab = HMAC-SHA256(temp_key, byte(0x01))
+
+// Bob transmits to Alice  
+k_ba = HMAC-SHA256(temp_key, k_ab || byte(0x02))
+
+// Cleanup
+ck = zeros(32)
+temp_key = zeros(32)
+</code></pre><p><strong>SipHash कुंजी व्युत्पत्ति:</strong></p>
+<pre tabindex="0"><code>// Generate additional symmetric key for SipHash
+ask_master = HMAC-SHA256(temp_key, &#34;ask&#34; || byte(0x01))
+
+// &#34;siphash&#34; is 7 bytes US-ASCII
+temp_key2 = HMAC-SHA256(ask_master, h || &#34;siphash&#34;)
+sip_master = HMAC-SHA256(temp_key2, byte(0x01))
+
+// Alice to Bob SipHash keys
+temp_key3 = HMAC-SHA256(sip_master, zerolen)
+sipkeys_ab = HMAC-SHA256(temp_key3, byte(0x01))
+sipk1_ab = sipkeys_ab[0:7]   // 8 bytes, little-endian
+sipk2_ab = sipkeys_ab[8:15]  // 8 bytes, little-endian
+sipiv_ab = sipkeys_ab[16:23] // 8 bytes, IV
+
+// Bob to Alice SipHash keys
+sipkeys_ba = HMAC-SHA256(temp_key3, sipkeys_ab || byte(0x02))
+sipk1_ba = sipkeys_ba[0:7]   // 8 bytes, little-endian
+sipk2_ba = sipkeys_ba[8:15]  // 8 bytes, little-endian
+sipiv_ba = sipkeys_ba[16:23] // 8 bytes, IV
+</code></pre><h3 id="फरम-सरचन">फ्रेम संरचना</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|Obfs Len |                             |
++----+----+    ChaChaPoly Frame         +
+|    Encrypted Block Data               |
++    k_ab (Alice→Bob) or k_ba (Bob→Alice)|
+|    Nonce starts at 0, increments      |
++    No associated data (empty string)  +
+|                                       |
+~           .   .   .                   ~
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Poly1305 MAC (16 bytes)            |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>फ़्रेम सीमाएँ:</strong> - न्यूनतम: 18 बाइट्स (2 obfuscated length (अस्पष्ट की गई लंबाई) + 0 साधारण-पाठ + 16 MAC (Message Authentication Code, संदेश प्रमाणीकरण कोड)) - अधिकतम: 65537 बाइट्स (2 obfuscated length + 65535 फ़्रेम) - अनुशंसित: प्रति फ़्रेम कुछ KB (प्राप्तकर्ता की विलंबता को न्यूनतम रखें)</p>
+<h3 id="siphash-एक-कज-आधरत-तज-हश-फकशन-लबई-क-असपषटकरण">SipHash (एक कुंजी-आधारित तेज़ हैश फ़ंक्शन) लंबाई का अस्पष्टकरण</h3>
+<p><strong>उद्देश्य</strong>: DPI (Deep Packet Inspection, गहन पैकेट निरीक्षण) द्वारा फ़्रेम सीमाओं की पहचान को रोकना</p>
+<p><strong>एल्गोरिदम:</strong></p>
+<pre tabindex="0"><code>// Initialization (per direction)
+IV[0] = sipiv  // From KDF
+
+// For each frame:
+IV[n] = SipHash-2-4(sipk1, sipk2, IV[n-1])
+Mask[n] = IV[n][0:1]  // First 2 bytes of IV
+ObfuscatedLength = ActualLength XOR Mask[n]
+
+// Send 2-byte ObfuscatedLength, then ActualLength bytes
+</code></pre><p><strong>डिकोडिंग:</strong></p>
+<pre tabindex="0"><code>// Receiver maintains identical IV chain
+IV[n] = SipHash-2-4(sipk1, sipk2, IV[n-1])
+Mask[n] = IV[n][0:1]
+ActualLength = ObfuscatedLength XOR Mask[n]
+// Read ActualLength bytes (includes 16-byte MAC)
+</code></pre><p><strong>नोट्स:</strong> - प्रत्येक दिशा के लिए अलग-अलग IV (इनिशियलाइज़ेशन वेक्टर) चेन (Alice→Bob और Bob→Alice) - यदि SipHash uint64 लौटाता है, तो मास्क के रूप में सबसे कम महत्वपूर्ण 2 बाइट्स का उपयोग करें - uint64 को little-endian बाइट्स में बदलकर अगले IV के रूप में उपयोग करें</p>
+<h3 id="बलक-पररप">ब्लॉक प्रारूप</h3>
+<p>प्रत्येक फ़्रेम में शून्य या अधिक ब्लॉक होते हैं:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|Type| Length  |       Data              |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type  : 1 byte  - Block type identifier
+Length: 2 bytes - Big-endian, data size (0-65516)
+Data  : Variable length payload
+</code></pre><p><strong>आकार सीमाएँ:</strong> - अधिकतम फ़्रेम: 65535 बाइट्स (MAC सहित) - अधिकतम ब्लॉक स्थान: 65519 बाइट्स (फ़्रेम - 16-बाइट MAC) - अधिकतम एकल ब्लॉक: 65519 बाइट्स (3-बाइट हेडर + 65516 डेटा)</p>
+<h3 id="बलक-परकर">ब्लॉक प्रकार</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Name</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DateTime</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Time synchronization (4-byte timestamp)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Options</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding parameters, dummy traffic</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo delivery/flooding</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">I2NP</td><td style="border:1px solid var(--color-border); padding:0.5rem;">I2NP message with shortened header</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Termination</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Explicit connection close</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">224-253</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Experimental features</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">254</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Random padding (must be last)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">255</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Future extensions</td></tr>
+  </tbody>
+</table>
+**ब्लॉक क्रमबद्धता के नियम:** - **संदेश 3 भाग 2**: RouterInfo, Options (वैकल्पिक), Padding (वैकल्पिक) - कोई अन्य प्रकार नहीं - **डेटा चरण**: निम्न अपवादों को छोड़कर किसी भी क्रम में:   - Padding उपस्थित होने पर अंतिम ब्लॉक होना चाहिए   - Termination उपस्थित होने पर (Padding को छोड़कर) अंतिम ब्लॉक होना चाहिए - प्रति फ्रेम एक से अधिक I2NP ब्लॉकों की अनुमति है - प्रति फ्रेम एक से अधिक Padding ब्लॉकों की अनुमति नहीं है
+<h3 id="बलक-परकर-0-datetime">ब्लॉक प्रकार 0: DateTime</h3>
+<p>घड़ी विचलन का पता लगाने के लिए समय समकालिकरण।</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+
+| 0  |    4    |     timestamp     |
++----+----+----+----+----+----+----+
+
+Type     : 0
+Length   : 4 (big-endian)
+Timestamp: 4 bytes, Unix seconds (big-endian)
+</code></pre><p><strong>कार्यान्वयन</strong>: clock bias (घड़ी का ऑफ़सेट) का संचय रोकने हेतु निकटतम सेकंड तक राउंड करें।</p>
+<h3 id="बलक-परकर-1-वकलप">ब्लॉक प्रकार 1: विकल्प</h3>
+<p>पैडिंग और traffic shaping (नेटवर्क ट्रैफ़िक को नियंत्रित करने की तकनीक) पैरामीटर।</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 1  |  size   |tmin|tmax|rmin|rmax|tdmy|
++----+----+----+----+----+----+----+----+
+|tdmy|  rdmy   |  tdelay |  rdelay |    |
++----+----+----+----+----+----+----+    +
+|         more_options (TBD)            |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type  : 1
+Length: 12+ bytes (big-endian)
+</code></pre><p><strong>पैडिंग अनुपात</strong> (4.4 fixed-point float (स्थिर-बिंदु फ्लोट), value/16.0): - <code>tmin</code>: प्रेषण का न्यूनतम पैडिंग अनुपात (0.0 - 15.9375) - <code>tmax</code>: प्रेषण का अधिकतम पैडिंग अनुपात (0.0 - 15.9375) - <code>rmin</code>: प्राप्ति का न्यूनतम पैडिंग अनुपात (0.0 - 15.9375) - <code>rmax</code>: प्राप्ति का अधिकतम पैडिंग अनुपात (0.0 - 15.9375)</p>
+<p><strong>उदाहरण:</strong> - 0x00 = 0% पैडिंग - 0x01 = 6.25% पैडिंग - 0x10 = 100% पैडिंग (1:1 अनुपात) - 0x80 = 800% पैडिंग (8:1 अनुपात)</p>
+<p><strong>डमी ट्रैफ़िक:</strong> - <code>tdmy</code>: भेजने की अधिकतम स्वीकृत दर (2 बाइट्स, बाइट्स/सेकंड औसत) - <code>rdmy</code>: प्राप्त करने के लिए अनुरोधित दर (2 बाइट्स, बाइट्स/सेकंड औसत)</p>
+<p><strong>विलंब सम्मिलन:</strong> - <code>tdelay</code>: सम्मिलित करने हेतु अधिकतम स्वीकार्य (2 बाइट, मिलीसेकंड में औसत) - <code>rdelay</code>: अनुरोधित विलंब (2 बाइट, मिलीसेकंड में औसत)</p>
+<p><strong>दिशानिर्देश:</strong> - न्यूनतम मान वांछित ट्रैफ़िक विश्लेषण प्रतिरोध दर्शाते हैं - अधिकतम मान बैंडविड्थ सीमाएँ दर्शाते हैं - प्रेषक को प्राप्तकर्ता की अधिकतम सीमा का सम्मान करना चाहिए - प्रेषक, सीमाओं के भीतर, प्राप्तकर्ता की न्यूनतम सीमा का भी सम्मान कर सकता है - कोई प्रवर्तन तंत्र नहीं है; कार्यान्वयन भिन्न हो सकते हैं</p>
+<h3 id="बलक-परकर-2-routerinfo-router-क-जनकर">ब्लॉक प्रकार 2: RouterInfo (router की जानकारी)</h3>
+<p>netdb को भरने और फ्लडिंग के लिए RouterInfo का प्रेषण.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 2  |  size   |flg |    RouterInfo     |
++----+----+----+----+                   +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type : 2
+Length: Flag (1 byte) + RouterInfo size
+Flag : Bit 0 = flood request (1) or local store (0)
+       Bits 1-7 = Reserved, set to 0
+</code></pre><p><strong>उपयोग:</strong></p>
+<p><strong>Message 3 के भाग 2 में</strong> (हैंडशेक): - Alice अपनी RouterInfo (router की जानकारी) Bob को भेजती है - Flood bit आमतौर पर 0 (स्थानीय भंडारण) - RouterInfo gzip से संकुचित नहीं है</p>
+<p><strong>डेटा चरण में:</strong> - दोनों पक्षों में से कोई भी अपना अद्यतन RouterInfo भेज सकता है - Flood बिट = 1: floodfill वितरण का अनुरोध (यदि प्राप्तकर्ता floodfill है) - Flood बिट = 0: केवल स्थानीय netdb में भंडारण</p>
+<p><strong>सत्यापन आवश्यकताएँ:</strong> 1. सत्यापित करें कि हस्ताक्षर प्रकार समर्थित है 2. RouterInfo हस्ताक्षर सत्यापित करें 3. सत्यापित करें कि टाइमस्टैम्प स्वीकार्य सीमा के भीतर है 4. हैंडशेक के लिए: सत्यापित करें कि स्थिर कुंजी NTCP2 address के &ldquo;s&rdquo; पैरामीटर से मेल खाती है 5. डेटा चरण के लिए: सत्यापित करें कि router hash session peer (सत्र सहकर्मी) से मेल खाता है 6. केवल प्रकाशित पतों वाले RouterInfos को flood (प्रसारित) करें</p>
+<p><strong>नोट्स:</strong> - कोई ACK तंत्र नहीं है (आवश्यक होने पर reply token के साथ I2NP DatabaseStore का उपयोग करें) - तृतीय-पक्ष RouterInfos शामिल हो सकते हैं (floodfill का उपयोग) - gzip से संपीड़ित नहीं है (I2NP DatabaseStore के विपरीत)</p>
+<h3 id="बलक-परकर-3-i2np-सदश">ब्लॉक प्रकार 3: I2NP संदेश</h3>
+<p>संक्षिप्त 9-बाइट हेडर वाला I2NP संदेश।</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 3  |  size   |type|    msg_id         |
++----+----+----+----+----+----+----+----+
+|   expiration  |     I2NP payload      |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type      : 3
+Length    : 9 + payload_size (big-endian)
+Type      : 1 byte, I2NP message type
+Msg_ID    : 4 bytes, big-endian, I2NP message ID
+Expiration: 4 bytes, big-endian, Unix timestamp (seconds)
+Payload   : I2NP message body (length = size - 9)
+</code></pre><p><strong>NTCP1 से अंतर:</strong> - समाप्ति समय: 4 बाइट्स (सेकंड) बनाम 8 बाइट्स (मिलीसेकंड) - लंबाई: शामिल नहीं (ब्लॉक की लंबाई से निकाली जा सकती है) - चेकसम: शामिल नहीं (AEAD अखंडता प्रदान करता है) - हेडर: 9 बाइट्स बनाम 16 बाइट्स (44% कमी)</p>
+<p><strong>खंडन:</strong> - I2NP संदेशों को ब्लॉकों के पार कदापि खंडित नहीं किया जाना चाहिए - I2NP संदेशों को फ्रेमों के पार कदापि खंडित नहीं किया जाना चाहिए - प्रति फ्रेम एक से अधिक I2NP ब्लॉकों की अनुमति है</p>
+<h3 id="बलक-परकर-4-समपन">ब्लॉक प्रकार 4: समापन</h3>
+<p>कारण कोड सहित स्पष्ट कनेक्शन बंद।</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 4  |  size   |  valid_frames_recv    |
++----+----+----+----+----+----+----+----+
+| (continued) |rsn |   additional_data   |
++----+----+----+----+                   +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type            : 4
+Length          : 9+ bytes (big-endian)
+Valid_Frames_Recv: 8 bytes, big-endian (receive nonce value)
+                  0 if error in handshake phase
+Reason          : 1 byte (see table below)
+Additional_Data : Optional (format unspecified, for debugging)
+</code></pre><p><strong>कारण कोड:</strong></p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Code</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Reason</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Phase</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Normal close / unspecified</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Termination received</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Idle timeout</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Router shutdown</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data phase AEAD failure</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">5</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Incompatible options</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">6</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Incompatible signature type</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">7</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Clock skew</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">8</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding violation</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">9</td><td style="border:1px solid var(--color-border); padding:0.5rem;">AEAD framing error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Payload format error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">11</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 1 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 2 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">13</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 3 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">14</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Intra-frame read timeout</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">15</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo signature verification fail</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">16</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Static key parameter mismatch</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">17</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Banned</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+  </tbody>
+</table>
+**नियम:** - समापन ब्लॉक फ्रेम में अंतिम non-padding ब्लॉक होना अनिवार्य है - प्रति फ्रेम अधिकतम एक समापन ब्लॉक - प्रेषक को भेजने के बाद कनेक्शन बंद कर देना चाहिए - प्राप्तकर्ता को प्राप्त करने के बाद कनेक्शन बंद कर देना चाहिए
+<p><strong>त्रुटि प्रबंधन:</strong> - हैंडशेक त्रुटियाँ: आमतौर पर TCP RST (कनेक्शन रीसेट) के साथ बंद करें (कोई टर्मिनेशन ब्लॉक नहीं) - डेटा चरण AEAD (प्रमाणित एन्क्रिप्शन विद संबद्ध डेटा) त्रुटियाँ: यादृच्छिक टाइमआउट + यादृच्छिक रीड, फिर टर्मिनेशन भेजें - सुरक्षा प्रक्रियाओं के लिए &ldquo;AEAD Error Handling&rdquo; अनुभाग देखें</p>
+<h3 id="बलक-परकर-254-पडग">ब्लॉक प्रकार 254: पैडिंग</h3>
+<p>ट्रैफ़िक विश्लेषण के प्रतिरोध के लिए यादृच्छिक padding (भराव डेटा)।</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|254 |  size   |     random_data       |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type: 254
+Length: 0-65516 bytes (big-endian)
+Data: Cryptographically random bytes
+</code></pre><p><strong>नियम:</strong> - यदि मौजूद हो, तो पैडिंग फ़्रेम में अंतिम ब्लॉक होना अनिवार्य है - शून्य-लंबाई पैडिंग की अनुमति है - प्रति फ़्रेम केवल एक पैडिंग ब्लॉक की अनुमति है - केवल पैडिंग वाली फ़्रेमों की अनुमति है - Options block से सहमति से तय किए गए पैरामीटरों का पालन किया जाना चाहिए</p>
+<p><strong>संदेश 1-2 में पैडिंग:</strong> - AEAD (Authenticated Encryption with Associated Data — संबद्ध डेटा सहित प्रमाणीकरणयुक्त एन्क्रिप्शन) फ्रेम के बाहर (स्पष्ट-पाठ) - अगले संदेश की hash chain (हैश शृंखला) में शामिल (प्रमाणित) - छेड़छाड़ का पता तब चलता है जब अगले संदेश की AEAD विफल होती है</p>
+<p><strong>Message 3+ और डेटा चरण में पैडिंग:</strong> - AEAD फ्रेम के अंदर (एन्क्रिप्टेड और प्रमाणित) - ट्रैफ़िक शेपिंग और आकार को अस्पष्ट करने के लिए उपयोग किया जाता है</p>
+<h2 id="aead-सबदध-डट-सहत-परमणत-एनकरपशन-तरट-परबधन">AEAD (संबद्ध डेटा सहित प्रमाणित एन्क्रिप्शन) त्रुटि प्रबंधन</h2>
+<p><strong>अत्यावश्यक सुरक्षा आवश्यकताएँ:</strong></p>
+<h3 id="हडशक-चरण-सदश-1-3">हैंडशेक चरण (संदेश 1-3)</h3>
+<p><strong>ज्ञात संदेश आकार:</strong> - संदेश का आकार पूर्वनिर्धारित होता है या पहले से निर्दिष्ट किया जाता है - AEAD (Authenticated Encryption with Associated Data, प्रमाणीकरण-सहित एन्क्रिप्शन व संबद्ध डेटा) प्रमाणीकरण विफलता असंदिग्ध होती है</p>
+<p><strong>Message 1 विफलता पर Bob की प्रतिक्रिया:</strong> 1. यादृच्छिक टाइमआउट सेट करें (सीमा कार्यान्वयन-निर्भर, सुझाव: 100-500ms) 2. बाइट्स की यादृच्छिक संख्या पढ़ें (सीमा कार्यान्वयन-निर्भर, सुझाव: 1KB-64KB) 3. TCP RST के साथ कनेक्शन बंद करें (कोई प्रतिक्रिया नहीं) 4. स्रोत IP को अस्थायी रूप से ब्लैकलिस्ट करें 5. दीर्घकालिक प्रतिबंधों के लिए बारंबार विफलताओं को ट्रैक करें</p>
+<p><strong>Alice की Message 2 विफलता पर प्रतिक्रिया:</strong> 1. TCP RST के साथ तुरंत कनेक्शन बंद करें 2. Bob को कोई प्रतिक्रिया नहीं</p>
+<p><strong>Message 3 की विफलता पर Bob की प्रतिक्रिया:</strong> 1. TCP RST (TCP में कनेक्शन रीसेट संकेत) के साथ तुरंत कनेक्शन बंद करें 2. Alice को कोई प्रतिक्रिया नहीं</p>
+<h3 id="डट-चरण-1">डेटा चरण</h3>
+<p><strong>अस्पष्टित संदेश का आकार:</strong> - लंबाई फ़ील्ड SipHash (एक कुंजीयुक्त हैश फ़ंक्शन) द्वारा अस्पष्टित है - अमान्य लंबाई या AEAD (संबद्ध डेटा सहित प्रमाणित एन्क्रिप्शन) विफलता यह संकेत कर सकती है:   - हमलावर द्वारा जांच-पड़ताल   - नेटवर्क में डेटा क्षति   - असमन्वित SipHash IV (Initialization Vector—आरंभीकरण वेक्टर)   - दुर्भावनापूर्ण पीयर</p>
+<p><strong>AEAD या लंबाई त्रुटि पर प्रतिक्रिया:</strong> 1. यादृच्छिक टाइमआउट सेट करें (सुझाव 100-500ms) 2. बाइट्स की यादृच्छिक संख्या पढ़ें (सुझाव 1KB-64KB) 3. कारण कोड 4 (AEAD विफलता) या 9 (फ्रेमिंग त्रुटि) के साथ समापन ब्लॉक भेजें 4. कनेक्शन बंद करें</p>
+<p><strong>Decryption Oracle (त्रुटि/टाइमिंग संकेतों के दुरुपयोग से डिक्रिप्शन-संबंधी जानकारी निकालने वाला हमला) की रोकथाम:</strong> - यादृच्छिक टाइमआउट से पहले पीयर को कभी भी त्रुटि प्रकार प्रकट न करें - AEAD (संबद्ध डेटा सहित प्रमाणित एन्क्रिप्शन) जाँच से पहले लंबाई सत्यापन को कभी न छोड़ें - अमान्य लंबाई को AEAD विफलता के समान ही मानें - दोनों त्रुटियों के लिए समान त्रुटि-प्रबंधन पथ का उपयोग करें</p>
+<p><strong>कार्यान्वयन संबंधी विचार:</strong> - यदि AEAD त्रुटियाँ दुर्लभ हों, तो कुछ कार्यान्वयन जारी रह सकते हैं - बार-बार त्रुटियों के बाद समाप्त करें (सुझावित सीमा: प्रति घंटे 3-5 त्रुटियाँ) - त्रुटि पुनर्प्राप्ति और सुरक्षा के बीच संतुलन</p>
+<h2 id="परकशत-routerinfo-router-सबध-जनकर">प्रकाशित RouterInfo (router संबंधी जानकारी)</h2>
+<h3 id="router-पत-क-पररप">Router पते का प्रारूप</h3>
+<p>NTCP2 समर्थन को विशिष्ट विकल्पों के साथ प्रकाशित RouterAddress प्रविष्टियों के माध्यम से घोषित किया जाता है।</p>
+<p><strong>ट्रांसपोर्ट शैली:</strong> - <code>&quot;NTCP2&quot;</code> - इस पोर्ट पर केवल NTCP2 - <code>&quot;NTCP&quot;</code> - इस पोर्ट पर NTCP और NTCP2 दोनों (स्वतः पहचान)   - <strong>नोट</strong>: NTCP (v1) का समर्थन 0.9.50 (मई 2021) में हटाया गया   - &ldquo;NTCP&rdquo; शैली अब अप्रचलित है; &ldquo;NTCP2&rdquo; का उपयोग करें</p>
+<h3 id="आवशयक-वकलप">आवश्यक विकल्प</h3>
+<p><strong>सभी प्रकाशित NTCP2 पते:</strong></p>
+<ol>
+<li>
+<p><strong><code>host</code></strong> - IP पता (IPv4 या IPv6) या होस्टनेम</p>
+<ul>
+<li>प्रारूप: मानक IP संकेतन या डोमेन नाम</li>
+<li>outbound-only (सिर्फ बाहर जाने वाले कनेक्शनों के लिए) या छिपे हुए routers के लिए इसे छोड़ा जा सकता है</li>
+</ul>
+</li>
+<li>
+<p><strong><code>port</code></strong> - TCP पोर्ट संख्या</p>
+<ul>
+<li>प्रारूप: पूर्णांक, 1-65535</li>
+<li>आउटबाउंड-ओनली या हिडन routers के लिए इसे छोड़ा जा सकता है</li>
+</ul>
+</li>
+<li>
+<p><strong><code>s</code></strong> - स्थिर सार्वजनिक कुंजी (X25519)</p>
+<ul>
+<li>प्रारूप: Base64-एन्कोडेड, 44 अक्षर</li>
+<li>एन्कोडिंग: I2P Base64 वर्णमाला</li>
+<li>स्रोत: 32-बाइट X25519 सार्वजनिक कुंजी, little-endian (लिटल-एंडियन बाइट क्रम)</li>
+</ul>
+</li>
+<li>
+<p><strong><code>i</code></strong> - AES के लिए Initialization Vector (आरंभिक वेक्टर)</p>
+<ul>
+<li>प्रारूप: Base64-एन्कोडेड, 24 वर्ण</li>
+<li>एन्कोडिंग: I2P Base64 वर्णमाला</li>
+<li>स्रोत: 16-बाइट IV, बिग-एंडियन</li>
+</ul>
+</li>
+<li>
+<p><strong><code>v</code></strong> - प्रोटोकॉल संस्करण</p>
+<ul>
+<li>प्रारूप: पूर्णांक या कॉमा से अलग किए गए पूर्णांक</li>
+<li>वर्तमान: <code>&quot;2&quot;</code></li>
+<li>भविष्य: <code>&quot;2,3&quot;</code> (संख्यात्मक क्रम में होना चाहिए)</li>
+</ul>
+</li>
+</ol>
+<p><strong>वैकल्पिक विकल्प:</strong></p>
+<ol start="6">
+<li>
+<p><strong><code>caps</code></strong> - क्षमताएँ (0.9.50 से)</p>
+<ul>
+<li>प्रारूप: क्षमता वर्णों की स्ट्रिंग</li>
+<li>मान:
+<ul>
+<li><code>&quot;4&quot;</code> - IPv4 आउटबाउंड क्षमता</li>
+<li><code>&quot;6&quot;</code> - IPv6 आउटबाउंड क्षमता</li>
+<li><code>&quot;46&quot;</code> - दोनों IPv4 और IPv6 (अनुशंसित क्रम)</li>
+</ul>
+</li>
+<li>यदि <code>host</code> प्रकाशित हो तो आवश्यक नहीं</li>
+<li>छिपे/फायरवॉल वाले routers के लिए उपयोगी</li>
+</ul>
+</li>
+<li>
+<p><strong><code>cost</code></strong> - पते की प्राथमिकता</p>
+<ul>
+<li>प्रारूप: पूर्णांक (Integer), 0-255</li>
+<li>कम मान = उच्च प्राथमिकता</li>
+<li>अनुशंसित: सामान्य पते के लिए 5-10</li>
+<li>अनुशंसित: अप्रकाशित पते के लिए 14</li>
+</ul>
+</li>
+</ol>
+<h3 id="उदहरण-routeraddress-परवषटय">उदाहरण RouterAddress प्रविष्टियाँ</h3>
+<p><strong>प्रकाशित IPv4 पता:</strong></p>
+<pre tabindex="0"><code>&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;192.0.2.1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>छिपा Router (केवल आउटबाउंड):</strong></p>
+<pre tabindex="0"><code>&lt;Address cost=&#34;14&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;v&gt;2&lt;/v&gt;
+    &lt;caps&gt;4&lt;/caps&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>डुअल-स्टैक Router:</strong></p>
+<pre tabindex="0"><code>&lt;!-- IPv4 Address --&gt;
+&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;192.0.2.1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+
+&lt;!-- IPv6 Address (same keys, same port) --&gt;
+&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;2001:db8::1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>महत्वपूर्ण नियम:</strong> - <strong>एक ही पोर्ट</strong> वाले कई NTCP2 पतों के लिए <strong>एक समान</strong> <code>s</code>, <code>i</code>, और <code>v</code> मानों का उपयोग करना अनिवार्य है - अलग-अलग पोर्ट अलग कुंजियों का उपयोग कर सकते हैं - डुअल-स्टैक routers को अलग-अलग IPv4 और IPv6 पते प्रकाशित करने चाहिए</p>
+<h3 id="अपरकशत-ntcp2-पत">अप्रकाशित NTCP2 पता</h3>
+<p><strong>केवल आउटबाउंड Routers के लिए:</strong></p>
+<p>यदि कोई router आने वाली NTCP2 कनेक्शनों को स्वीकार नहीं करता, लेकिन आउटबाउंड कनेक्शनों को आरंभ करता है, तो उसे फिर भी निम्न के साथ एक RouterAddress प्रकाशित करना अनिवार्य है:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;Address</span> <span style="color:#a6e22e">cost=</span><span style="color:#e6db74">&#34;14&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;transport_style&gt;</span>NTCP2<span style="color:#f92672">&lt;/transport_style&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;options&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;s&gt;</span>9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=<span style="color:#f92672">&lt;/s&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;v&gt;</span>2<span style="color:#f92672">&lt;/v&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/options&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/Address&gt;</span>
+</span></span></code></pre></div><p><strong>उद्देश्य:</strong> - हैंडशेक के दौरान Bob को Alice की स्थिर कुंजी सत्यापित करने की अनुमति देता है - संदेश 3 भाग 2 के RouterInfo सत्यापन के लिए आवश्यक - <code>i</code>, <code>host</code>, या <code>port</code> की आवश्यकता नहीं (केवल आउटबाउंड)</p>
+<p><strong>विकल्प:</strong> - पहले से प्रकाशित &ldquo;NTCP&rdquo; या SSU पते में <code>s</code> और <code>v</code> जोड़ें</p>
+<h3 id="सरवजनक-कज-और-iv-initialization-vector-आरभक-वकटर-रटशन">सार्वजनिक कुंजी और IV (Initialization Vector, आरंभिक वेक्टर) रोटेशन</h3>
+<p><strong>महत्वपूर्ण सुरक्षा नीति:</strong></p>
+<p><strong>सामान्य नियम:</strong> 1. <strong>router चल रहा हो तो कभी रोटेट न करें</strong> 2. <strong>कुंजी और IV (Initialization Vector, आरंभीकरण वैक्टर) को स्थायी रूप से संग्रहीत करें</strong> रीस्टार्ट्स के दौरान भी 3. <strong>पिछले डाउनटाइम को ट्रैक करें</strong> रोटेशन की पात्रता निर्धारित करने के लिए</p>
+<p><strong>रोटेशन से पहले न्यूनतम डाउनटाइम:</strong></p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Router Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Min Downtime</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Published NTCP2 address</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>1 month</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Many routers cache RouterInfo</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Published SSU only (no NTCP2)</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>1 day</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Moderate caching</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">No published addresses (hidden)</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>2 hours</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Minimal impact</td></tr>
+  </tbody>
+</table>
+**अतिरिक्त ट्रिगर्स:** - स्थानीय IP पता परिवर्तन: डाउनटाइम की परवाह किए बिना बदल सकता है - Router "rekey" (नया Router हैश): नई कुंजियाँ उत्पन्न करता है
+<p><strong>औचित्य:</strong> - कुंजी परिवर्तनों के माध्यम से पुनरारंभ समय उजागर होने से रोकता है - कैश की गई RouterInfos (router सूचना रिकॉर्ड) को स्वाभाविक रूप से समाप्त होने देता है - नेटवर्क की स्थिरता बनाए रखता है - असफल कनेक्शन प्रयासों को कम करता है</p>
+<p><strong>कार्यान्वयन:</strong> 1. कुंजी, IV, और पिछले शटडाउन का टाइमस्टैम्प स्थायी रूप से संग्रहीत करें 2. स्टार्टअप पर, downtime = current_time - last_shutdown की गणना करें 3. यदि downtime &gt; router प्रकार के लिए न्यूनतम से अधिक है, तो रोटेट किया जा सकता है 4. यदि IP बदल गया है या rekeying (कुंजी पुनर्निर्धारण) किया जा रहा है, तो रोटेट किया जा सकता है 5. अन्यथा, पिछली कुंजी और IV का पुन: उपयोग करें</p>
+<p><strong>IV Rotation (IV रोटेशन):</strong> - कुंजी रोटेशन के समान नियम लागू होते हैं - केवल प्रकाशित पतों में मौजूद (छिपे हुए routers में नहीं) - जब भी कुंजी बदले, IV बदलना अनुशंसित है</p>
+<h2 id="ससकरण-पहचन">संस्करण पहचान</h2>
+<p><strong>संदर्भ:</strong> जब <code>transportStyle=&quot;NTCP&quot;</code> (लेगेसी) हो, Bob एक ही पोर्ट पर NTCP v1 और v2 दोनों का समर्थन करता है और उसे प्रोटोकॉल संस्करण का स्वतः पता लगाना चाहिए।</p>
+<p><strong>डिटेक्शन एल्गोरिदम:</strong></p>
+<pre tabindex="0"><code>1. Wait for at least 64 bytes (minimum NTCP2 message 1 size)
+
+2. If received ≥ 288 bytes:
+   → Connection is NTCP version 1 (NTCP1 message 1 is 288 bytes)
+
+3. If received &lt; 288 bytes:
+   
+   Option A (conservative, pre-NTCP2 majority):
+   a. Wait additional short time (e.g., 100-500ms)
+   b. If total received ≥ 288 bytes → NTCP1
+   c. Otherwise → Attempt NTCP2 decode
+   
+   Option B (aggressive, post-NTCP2 majority):
+   a. Attempt NTCP2 decode immediately:
+      - Decrypt first 32 bytes (X key) with AES-256-CBC
+      - Verify valid X25519 point (X[31] &amp; 0x80 == 0)
+      - Verify AEAD frame
+   b. If decode succeeds → NTCP2
+   c. If decode fails → Wait for more data or NTCP1
+</code></pre><p><strong>तेज़ MSB (सबसे महत्त्वपूर्ण बिट) जाँच:</strong> - AES डिक्रिप्शन से पहले, यह जाँचें: <code>encrypted_X[31] &amp; 0x80 == 0</code> - मान्य X25519 कुंजियों में उच्च बिट clear (शून्य) होता है - विफलता इंगित करती है कि यह संभवतः NTCP1 (या हमला) है - विफलता पर probing resistance (प्रोबिंग के प्रति प्रतिरोध) लागू करें (random timeout + read)</p>
+<p><strong>कार्यान्वयन आवश्यकताएँ:</strong></p>
+<ol>
+<li>
+<p><strong>Alice की ज़िम्मेदारी:</strong></p>
+<ul>
+<li>&ldquo;NTCP&rdquo; पते से जुड़ते समय, संदेश 1 को अधिकतम 287 बाइट्स तक सीमित करें</li>
+<li>पूरे संदेश 1 को बफर करें और एक ही बार में फ्लश करें</li>
+<li>एकल TCP पैकेट में डिलीवरी की संभावना बढ़ती है</li>
+</ul>
+</li>
+<li>
+<p><strong>Bob की ज़िम्मेदारियाँ:</strong></p>
+<ul>
+<li>संस्करण तय करने से पहले प्राप्त डेटा को बफर करें</li>
+<li>उचित timeout (समयसीमा) हैंडलिंग लागू करें</li>
+<li>तेज़ संस्करण पहचान के लिए TCP_NODELAY का उपयोग करें</li>
+<li>संस्करण का पता चलने के बाद पूरे संदेश 2 को एक ही बार में बफर करें और फ्लश करें</li>
+</ul>
+</li>
+</ol>
+<p><strong>सुरक्षा संबंधी विचार:</strong> - सेगमेंटेशन हमले: Bob को TCP segmentation (TCP पैकेटों का खंडन) के प्रति प्रतिरोधी होना चाहिए - प्रोबिंग हमले (जांच-परख आधारित): विफलताओं पर यादृच्छिक विलंब और बाइट-पठन लागू करें - DoS (Denial of Service, सेवा-अस्वीकरण) की रोकथाम: एक साथ लंबित कनेक्शनों की सीमा निर्धारित करें - रीड टाइमआउट्स: प्रति-रीड और कुल दोनों (&ldquo;slowloris&rdquo; (धीमी-कनेक्शन हमला) सुरक्षा)</p>
+<h2 id="clock-skew-ससटम-घड-क-अतर-दशनरदश">Clock Skew (सिस्टम घड़ी का अंतर) दिशानिर्देश</h2>
+<p><strong>टाइमस्टैम्प फ़ील्ड:</strong> - संदेश 1: <code>tsA</code> (Alice का टाइमस्टैम्प) - संदेश 2: <code>tsB</code> (Bob का टाइमस्टैम्प) - संदेश 3+: वैकल्पिक DateTime ब्लॉक्स</p>
+<p><strong>अधिकतम Skew (विचलन) (D):</strong> - सामान्य: <strong>±60 सेकंड</strong> - प्रत्येक कार्यान्वयन के अनुसार विन्यास योग्य - Skew &gt; D आमतौर पर घातक होता है</p>
+<h3 id="बब-क-हडलग-सदश-1">बॉब की हैंडलिंग (संदेश 1)</h3>
+<pre tabindex="0"><code>1. Receive tsA from Alice
+2. skew = tsA - current_time
+3. If |skew| &gt; D:
+   a. Still send message 2 (allows Alice to calculate skew)
+   b. Include tsB in message 2
+   c. Do NOT initiate handshake completion
+   d. Optionally: Temporary ban Alice&#39;s IP
+   e. After message 2 sent, close connection
+
+4. If |skew| ≤ D:
+   a. Continue handshake normally
+</code></pre><p><strong>औचित्य:</strong> skew (घड़ी का अंतर) होने पर भी संदेश 2 भेजना Alice को घड़ी-संबंधित समस्याओं का निदान करने में सक्षम बनाता है।</p>
+<h3 id="ऐलस-क-हडलग-सदश-2">ऐलिस की हैंडलिंग (संदेश 2)</h3>
+<pre tabindex="0"><code>1. Receive tsB from Bob
+2. RTT = (current_time_now - tsA_sent)
+3. adjusted_skew = (tsB - current_time_now) - (RTT / 2)
+4. If |adjusted_skew| &gt; D:
+   a. Close connection immediately
+   b. If local clock suspect: Adjust clock or use external time source
+   c. If Bob&#39;s clock suspect: Temporary ban Bob
+   d. Log for operator review
+5. If |adjusted_skew| ≤ D:
+   a. Continue handshake normally
+   b. Optionally: Track skew for time synchronization
+</code></pre><p><strong>RTT (राउंड-ट्रिप टाइम) समायोजन:</strong> - गणना किए गए skew (घड़ी का विचलन) से आधा RTT घटाएँ - नेटवर्क प्रसार विलंब को ध्यान में रखता है - skew का अधिक सटीक आकलन</p>
+<h3 id="बब-क-परससकरण-सदश-3">बॉब का प्रसंस्करण (संदेश 3)</h3>
+<pre tabindex="0"><code>1. If message 3 received (unlikely if skew exceeded in message 1)
+2. Recalculate skew = tsA_received - current_time
+3. If |adjusted_skew| &gt; D:
+   a. Send termination block (reason code 7: clock skew)
+   b. Close connection
+   c. Ban Alice for period (e.g., 1-24 hours)
+</code></pre><h3 id="समय-समकलकरण">समय समकालिकरण</h3>
+<p><strong>DateTime ब्लॉक्स (डेटा चरण):</strong> - समय-समय पर DateTime ब्लॉक भेजें (type 0) - प्राप्तकर्ता इसे घड़ी समायोजन के लिए उपयोग कर सकता है - timestamp (समय-मुद्रा) को निकटतम सेकंड तक राउंड करें (बायस से बचें)</p>
+<p><strong>बाहरी समय स्रोत:</strong> - NTP (Network Time Protocol) - सिस्टम क्लॉक समकालिकरण - I2P नेटवर्क सर्वसम्मति समय</p>
+<p><strong>घड़ी समायोजन रणनीतियाँ:</strong> - यदि स्थानीय घड़ी गलत है: सिस्टम समय समायोजित करें या ऑफ़सेट का उपयोग करें - यदि समकक्षों की घड़ियाँ लगातार गलत हैं: समकक्ष-संबंधी समस्या को चिह्नित करें - नेटवर्क स्वास्थ्य निगरानी के लिए स्क्यू (समय विचलन) आँकड़ों को ट्रैक करें</p>
+<h2 id="सरकष-गणधरम">सुरक्षा गुणधर्म</h2>
+<h3 id="forward-secrecy-अगरसकरय-गपनयत">Forward Secrecy (अग्रसक्रिय गोपनीयता)</h3>
+<p><strong>निम्न के माध्यम से प्राप्त:</strong> - Ephemeral Diffie-Hellman key exchange (X25519; अस्थायी Diffie-Hellman कुंजी विनिमय) - तीन DH ऑपरेशन्स: es, ee, se (Noise XK pattern; Noise प्रोटोकॉल का XK हैंडशेक पैटर्न) - हैंडशेक पूरा होने के बाद अस्थायी कुंजियाँ नष्ट कर दी जाती हैं</p>
+<p><strong>गोपनीयता का क्रम:</strong> - संदेश 1: स्तर 2 (forward secrecy (कुंजी से समझौता हो जाने के बाद भी पुराने संदेश सुरक्षित रहने का गुण) प्रेषक के समझौते की स्थिति में) - संदेश 2: स्तर 1 (अस्थायी प्राप्तकर्ता) - संदेश 3+: स्तर 5 (मजबूत forward secrecy)</p>
+<p><strong>Perfect Forward Secrecy (पूर्व सत्रों की गोपनीयता सुनिश्चित करने वाला गुण):</strong> - दीर्घकालिक स्थिर कुंजियों का समझौता होने पर भी पिछले सत्रों की कुंजियाँ उजागर नहीं होतीं - प्रत्येक सत्र अद्वितीय अस्थायी कुंजियों का उपयोग करता है - अस्थायी निजी कुंजियों का कभी पुनः उपयोग नहीं होता - कुंजी सहमति के बाद मेमोरी की सफ़ाई</p>
+<p><strong>सीमाएँ:</strong> - संदेश 1 असुरक्षित है यदि Bob की स्थिर कुंजी से समझौता हो जाए (लेकिन Alice के समझौते के बावजूद forward secrecy (आगे की गोपनीयता) बनी रहती है) - संदेश 1 पर रीप्ले हमले संभव हैं (टाइमस्टैम्प और रीप्ले कैश से शमन किया जाता है)</p>
+<h3 id="परमणकरण">प्रमाणीकरण</h3>
+<p><strong>परस्पर प्रमाणीकरण:</strong> - Alice का प्रमाणीकरण संदेश 3 में स्थायी कुंजी द्वारा - Bob का प्रमाणीकरण स्थायी निजी कुंजी के स्वामित्व से (सफल हैंडशेक से अप्रत्यक्ष रूप से)</p>
+<p><strong>Key Compromise Impersonation (KCI) प्रतिरोध:</strong> - प्रमाणीकरण स्तर 2 (KCI के प्रति प्रतिरोधी) - हमलावर Alice की static private key (स्थायी निजी कुंजी) होने पर भी Alice का प्रतिरूपण नहीं कर सकता (Alice की ephemeral key (अल्पकालिक कुंजी) के बिना) - हमलावर Bob की static private key होने पर भी Bob का प्रतिरूपण नहीं कर सकता (Bob की ephemeral key के बिना)</p>
+<p><strong>स्थिर कुंजी सत्यापन:</strong> - Alice को पहले से Bob की स्थिर कुंजी पता होती है (RouterInfo से) - Bob संदेश 3 में यह सत्यापित करता है कि Alice की स्थिर कुंजी RouterInfo से मेल खाती है - मैन-इन-द-मिडल हमलों को रोकता है</p>
+<h3 id="टरफक-वशलषण-क-परत-परतरधक-कषमत">ट्रैफ़िक विश्लेषण के प्रति प्रतिरोधक क्षमता</h3>
+<p><strong>DPI (Deep Packet Inspection: गहन पैकेट निरीक्षण) प्रतिरोधक उपाय:</strong> 1. <strong>AES Obfuscation:</strong> अल्पकालिक कुंजियाँ एन्क्रिप्ट की जाती हैं, आउटपुट यादृच्छिक दिखाई देता है 2. <strong>SipHash Length Obfuscation:</strong> फ्रेम की लंबाइयाँ प्लेनटेक्स्ट में नहीं होतीं 3. <strong>Random Padding:</strong> संदेश आकार परिवर्तनीय, कोई स्थिर पैटर्न नहीं 4. <strong>Encrypted Frames:</strong> सारा पेलोड ChaCha20 से एन्क्रिप्ट किया गया है</p>
+<p><strong>रीप्ले हमले की रोकथाम:</strong> - टाइमस्टैम्प सत्यापन (±60 सेकंड) - अल्पकालिक कुंजियों का रीप्ले कैश (जीवनकाल 2*D) - Nonce (एक-बार उपयोग संख्या) में वृद्धि सत्र के भीतर पैकेट रीप्ले को रोकती है</p>
+<p><strong>प्रोबिंग प्रतिरोध:</strong> - AEAD (Authenticated Encryption with Associated Data - संबद्ध डेटा के साथ प्रमाणित एन्क्रिप्शन) विफलताओं पर यादृच्छिक टाइमआउट - कनेक्शन बंद करने से पहले यादृच्छिक बाइट पढ़ना - हैंडशेक विफलताओं पर कोई प्रतिक्रिया नहीं - बार-बार विफलताओं पर IP ब्लैकलिस्टिंग</p>
+<p><strong>पैडिंग दिशानिर्देश:</strong> - संदेश 1-2: क्लियरटेक्स्ट पैडिंग (प्रमाणित) - संदेश 3+: AEAD (प्रमाणीकरणयुक्त संबद्ध डेटा सहित एन्क्रिप्शन) फ़्रेम्स के भीतर एन्क्रिप्टेड पैडिंग - नेगोशिएट किए गए पैडिंग पैरामीटर्स (Options block) - केवल पैडिंग वाले फ़्रेम्स अनुमत हैं</p>
+<h3 id="denial-of-service-सव-वचन-शमन">Denial of Service (सेवा-वंचन) शमन</h3>
+<p><strong>कनेक्शन सीमाएँ:</strong> - अधिकतम सक्रिय कनेक्शन (क्रियान्वयन-निर्भर) - अधिकतम लंबित हैंडशेक (उदा., 100-1000) - प्रति-IP कनेक्शन सीमाएँ (उदा., 3-10 एक साथ)</p>
+<p><strong>संसाधन सुरक्षा:</strong> - DH (Diffie-Hellman) संचालन दर-सीमित (गणनात्मक रूप से महँगा) - रीड टाइमआउट प्रति-सॉकेट और कुल - &ldquo;Slowloris&rdquo; (धीमे कनेक्शन-आधारित हमला) से सुरक्षा (कुल समय सीमाएँ) - दुरुपयोग पर IP ब्लैकलिस्टिंग</p>
+<p><strong>त्वरित अस्वीकृति:</strong> - Network ID असंगति → तत्काल बंद - अमान्य X25519 बिंदु → डिक्रिप्शन से पहले त्वरित MSB (सबसे महत्वपूर्ण बिट) जाँच - समय-चिह्न सीमा से बाहर → किसी गणना के बिना बंद - AEAD (संबद्ध डेटा सहित प्रमाणित एन्क्रिप्शन) विफलता → कोई प्रतिक्रिया नहीं, यादृच्छिक विलंब</p>
+<p><strong>प्रोबिंग प्रतिरोधक क्षमता:</strong> - यादृच्छिक टाइमआउट: 100-500ms (कार्यान्वयन-निर्भर) - यादृच्छिक रीड: 1KB-64KB (कार्यान्वयन-निर्भर) - हमलावर को कोई त्रुटि जानकारी नहीं - TCP RST (तुरंत कनेक्शन रीसेट संकेत) के साथ बंद करें (कोई FIN handshake नहीं)</p>
+<h3 id="करपटगरफक-सरकष">क्रिप्टोग्राफिक सुरक्षा</h3>
+<p><strong>एल्गोरिद्म:</strong> - <strong>X25519</strong>: 128-बिट सुरक्षा, दीर्घवृत्तीय वक्र DH (Curve25519) - <strong>ChaCha20</strong>: 256-बिट कुंजी वाला स्ट्रीम सिफर - <strong>Poly1305</strong>: सूचना-सैद्धांतिक रूप से सुरक्षित MAC (संदेश प्रमाणीकरण कोड) - <strong>SHA-256</strong>: 128-बिट टक्कर प्रतिरोध, 256-बिट पूर्व-छवि प्रतिरोध - <strong>HMAC-SHA256</strong>: कुंजी व्युत्पत्ति हेतु PRF (छद्म‑यादृच्छिक फलन)</p>
+<p><strong>कुंजी आकार:</strong> - स्थिर कुंजियाँ: 32 बाइट (256 बिट) - अल्पकालिक कुंजियाँ: 32 बाइट (256 बिट) - कूटलेखन कुंजियाँ: 32 बाइट (256 बिट) - MAC: 16 बाइट (128 बिट)</p>
+<p><strong>ज्ञात समस्याएँ:</strong> - ChaCha20 nonce (एक-बार-प्रयोग संख्या) का पुनः उपयोग विनाशकारी है (काउंटर बढ़ाकर रोका जाता है) - X25519 में छोटे उपसमूह से संबंधित समस्याएँ हैं (कर्व सत्यापन द्वारा कम की जाती हैं) - SHA-256 सैद्धांतिक रूप से length extension (लंबाई-विस्तार) के प्रति असुरक्षित है (HMAC में शोषण योग्य नहीं)</p>
+<p><strong>कोई ज्ञात कमजोरियाँ नहीं (अक्टूबर 2025 तक):</strong> - Noise Protocol Framework (एन्क्रिप्टेड हैंडशेक बनाने के लिए क्रिप्टोग्राफिक ढांचा) का व्यापक विश्लेषण - ChaCha20-Poly1305 (प्रमाणित एन्क्रिप्शन एल्गोरिदम) TLS 1.3 (Transport Layer Security का संस्करण 1.3) में प्रयुक्त - X25519 (कुंजी-विनिमय एलिप्टिक-कर्व एल्गोरिदम) आधुनिक प्रोटोकॉल में मानक - क्रिप्टोग्राफिक निर्माण पर कोई व्यावहारिक हमला नहीं</p>
+<h2 id="सदरभ">संदर्भ</h2>
+<h3 id="मखय-वनरदश">मुख्य विनिर्देश</h3>
+<ul>
+<li><strong><a href="../../../../hi/docs/specs/ntcp2/">NTCP2 Specification</a>
+</strong> - आधिकारिक I2P विनिर्देश</li>
+<li><strong><a href="../../../../hi/proposals/111-ntcp-2/">Proposal 111</a>
+</strong> - औचित्य सहित मूल डिज़ाइन दस्तावेज़</li>
+<li><strong><a href="https://noiseprotocol.org/noise.html">Noise Protocol Framework</a>
+</strong> - संशोधन 33 (2017-10-04)</li>
+</ul>
+<h3 id="कटलखन-मनक">कूटलेखन मानक</h3>
+<ul>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc7748">RFC 7748</a>
+</strong> - सुरक्षा के लिए अण्डाकार वक्र (X25519)</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc7539">RFC 7539</a>
+</strong> - IETF प्रोटोकॉलों के लिए ChaCha20 और Poly1305</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc8439">RFC 8439</a>
+</strong> - ChaCha20-Poly1305 (RFC 7539 को अप्रचलित करता है)</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc2104">RFC 2104</a>
+</strong> - HMAC: संदेश प्रमाणीकरण के लिए कुंजी-आधारित हैशिंग</li>
+<li><strong><a href="https://www.131002.net/siphash/">SipHash</a>
+</strong> - हैश फ़ंक्शन अनुप्रयोगों के लिए SipHash-2-4</li>
+</ul>
+<h3 id="सबधत-i2p-वनरदश">संबंधित I2P विनिर्देश</h3>
+<ul>
+<li><strong><a href="../../../../hi/docs/specs/i2np/">I2NP विनिर्देश</a>
+</strong> - I2P नेटवर्क प्रोटोकॉल संदेश प्रारूप</li>
+<li><strong><a href="../../../../hi/docs/specs/common-structures/">सामान्य संरचनाएँ</a>
+</strong> - RouterInfo (राउटर की जानकारी), RouterAddress (राउटर का पता) के प्रारूप</li>
+<li><strong><a href="../../../../hi/docs/legacy/ssu/">SSU ट्रांसपोर्ट</a>
+</strong> - UDP ट्रांसपोर्ट (मूल, अब SSU2)</li>
+<li><strong><a href="../../../../hi/proposals/147-transport-network-id-check/">प्रस्ताव 147</a>
+</strong> - ट्रांसपोर्ट नेटवर्क ID जाँच (0.9.42)</li>
+</ul>
+<h3 id="करयनवयन-सदरभ">कार्यान्वयन संदर्भ</h3>
+<ul>
+<li><strong><a href="https://github.com/i2p/i2p.i2p">I2P Java</a>
+</strong> - संदर्भ कार्यान्वयन (Java)</li>
+<li><strong><a href="https://github.com/PurpleI2P/i2pd">i2pd</a>
+</strong> - C++ कार्यान्वयन</li>
+<li><strong><a href="../../../../hi/blog/">I2P रिलीज़ नोट्स</a>
+</strong> - संस्करण इतिहास और अद्यतन</li>
+</ul>
+<h3 id="ऐतहसक-सदरभ">ऐतिहासिक संदर्भ</h3>
+<ul>
+<li><strong><a href="https://en.wikipedia.org/wiki/Station-to-Station_protocol">Station-To-Station Protocol (STS)</a>
+</strong> - Noise framework (क्रिप्टोग्राफ़िक हैंडशेक का ढांचा) के लिए प्रेरणा</li>
+<li><strong><a href="https://gitlab.com/yawning/obfs4">obfs4</a>
+</strong> - Pluggable transport (अदल-बदल योग्य ट्रैफ़िक-छिपाव माध्यम) (SipHash आधारित लंबाई-छिपाव का पूर्व उदाहरण)</li>
+</ul>
+<h2 id="करयनवयन-दशनरदश">कार्यान्वयन दिशानिर्देश</h2>
+<h3 id="अनवरय-आवशयकतए">अनिवार्य आवश्यकताएँ</h3>
+<p><strong>अनुपालन हेतु:</strong></p>
+<ol>
+<li>
+<p><strong>पूर्ण हैंडशेक लागू करें:</strong></p>
+<ul>
+<li>सही KDF chains (Key Derivation Function यानी कुंजी व्युत्पत्ति फ़ंक्शन की श्रृंखलाएँ) के साथ सभी तीन संदेशों का समर्थन करें</li>
+<li>सभी AEAD tags (सम्बद्ध डेटा सहित प्रमाणीकरणयुक्त एन्क्रिप्शन के टैग) को सत्यापित करें</li>
+<li>सुनिश्चित करें कि X25519 points (एलिप्टिक-कर्व X25519 के बिंदु) वैध हैं</li>
+</ul>
+</li>
+<li>
+<p><strong>डेटा चरण लागू करें:</strong></p>
+<ul>
+<li>SipHash लंबाई अस्पष्टकरण (दोनों दिशाओं में)</li>
+<li>सभी ब्लॉक प्रकार: 0 (DateTime), 1 (Options), 2 (RouterInfo), 3 (I2NP), 4 (Termination), 254 (Padding)</li>
+<li>उचित nonce (एक-बार-प्रयोग संख्या) प्रबंधन (अलग-अलग काउंटर)</li>
+</ul>
+</li>
+<li>
+<p><strong>सुरक्षा विशेषताएँ:</strong></p>
+<ul>
+<li>रीप्ले रोकथाम (अल्पकालिक कुंजियों को 2*D के लिए कैश करना)</li>
+<li>टाइमस्टैम्प सत्यापन (डिफ़ॉल्ट ±60 सेकंड)</li>
+<li>संदेश 1-2 में यादृच्छिक पैडिंग</li>
+<li>AEAD (संबद्ध डेटा सहित प्रमाणित एन्क्रिप्शन) त्रुटि प्रबंधन यादृच्छिक टाइमआउट्स के साथ</li>
+</ul>
+</li>
+<li>
+<p><strong>RouterInfo (router की सूचना) प्रकाशन:</strong></p>
+<ul>
+<li>स्थिर कुंजी (&ldquo;s&rdquo;), IV (Initialization Vector—आरंभीकरण वेक्टर) (&ldquo;i&rdquo;), और संस्करण (&ldquo;v&rdquo;) प्रकाशित करें</li>
+<li>नीति के अनुसार कुंजियों का आवर्तन करें</li>
+<li>छिपे हुए routers के लिए capabilities फ़ील्ड (&ldquo;caps&rdquo;) का समर्थन करें</li>
+</ul>
+</li>
+<li>
+<p><strong>नेटवर्क संगतता:</strong></p>
+<ul>
+<li>नेटवर्क ID फ़ील्ड का समर्थन करें (वर्तमान में मुख्य नेटवर्क के लिए 2)</li>
+<li>मौजूदा Java और i2pd कार्यान्वयनों के साथ परस्पर-संचालित हों</li>
+<li>IPv4 और IPv6 दोनों को संभालें</li>
+</ul>
+</li>
+</ol>
+<h3 id="अनशसत-परथए">अनुशंसित प्रथाएँ</h3>
+<p><strong>प्रदर्शन अनुकूलन:</strong></p>
+<ol>
+<li>
+<p><strong>बफ़रिंग रणनीति:</strong></p>
+<ul>
+<li>पूरे संदेशों को एक साथ फ्लश करें (संदेश 1, 2, 3)</li>
+<li>हैंडशेक संदेशों के लिए TCP_NODELAY का उपयोग करें</li>
+<li>कई डेटा ब्लॉकों को एकल फ्रेम में बफ़र करें</li>
+<li>फ्रेम का आकार कुछ KB तक सीमित रखें (प्राप्तकर्ता लेटेंसी को न्यूनतम करें)</li>
+</ul>
+</li>
+<li>
+<p><strong>कनेक्शन प्रबंधन:</strong></p>
+<ul>
+<li>जहाँ संभव हो कनेक्शनों का पुनः उपयोग करें</li>
+<li>कनेक्शन पूलिंग लागू करें</li>
+<li>कनेक्शन स्वास्थ्य की निगरानी करें (DateTime blocks (तिथि-समय ब्लॉक्स))</li>
+</ul>
+</li>
+<li>
+<p><strong>मेमोरी प्रबंधन:</strong></p>
+<ul>
+<li>उपयोग के बाद संवेदनशील डेटा को शून्य करें (ephemeral keys (अस्थायी कुंजियाँ), DH results (Diffie-Hellman के परिणाम))</li>
+<li>समवर्ती हैंडशेक की सीमा तय करें (DoS (Denial-of-Service/सेवा-अस्वीकरण) की रोकथाम)</li>
+<li>बार-बार होने वाले आवंटन के लिए मेमोरी पूल का उपयोग करें</li>
+</ul>
+</li>
+</ol>
+<p><strong>सुरक्षा सुदृढ़ीकरण:</strong></p>
+<ol>
+<li>
+<p><strong>प्रोबिंग प्रतिरोध:</strong></p>
+<ul>
+<li>यादृच्छिक टाइमआउट: 100-500ms</li>
+<li>यादृच्छिक बाइट रीड्स: 1KB-64KB</li>
+<li>बार-बार विफलताओं पर IP ब्लैकलिस्टिंग</li>
+<li>पीयर्स को कोई त्रुटि विवरण नहीं</li>
+</ul>
+</li>
+<li>
+<p><strong>संसाधन सीमाएँ:</strong></p>
+<ul>
+<li>प्रति IP अधिकतम कनेक्शन: 3-10</li>
+<li>अधिकतम लंबित हैंडशेक: 100-1000</li>
+<li>पठन समयसीमाएँ: प्रति ऑपरेशन 30-60 सेकंड</li>
+<li>कुल कनेक्शन समयसीमा: हैंडशेक के लिए 5 मिनट</li>
+</ul>
+</li>
+<li>
+<p><strong>कुंजी प्रबंधन:</strong></p>
+<ul>
+<li>स्थिर कुंजी और IV (Initialization Vector—प्रारंभन वेक्टर) का स्थायी भंडारण</li>
+<li>सुरक्षित यादृच्छिक उत्पत्ति (cryptographic RNG)</li>
+<li>रोटेशन नीतियों का कड़ाई से पालन करें</li>
+<li>अस्थायी कुंजियों का कभी पुनः उपयोग न करें</li>
+</ul>
+</li>
+</ol>
+<p><strong>निगरानी और निदान:</strong></p>
+<ol>
+<li>
+<p><strong>मेट्रिक्स:</strong></p>
+<ul>
+<li>हैंडशेक की सफलता/विफलता दरें</li>
+<li>AEAD (प्रमाणित एन्क्रिप्शन, संबद्ध डेटा सहित) त्रुटि दरें</li>
+<li>क्लॉक स्क्यू का वितरण</li>
+<li>कनेक्शन अवधि के आँकड़े</li>
+</ul>
+</li>
+<li>
+<p><strong>लॉगिंग:</strong></p>
+<ul>
+<li>हैंडशेक विफलताओं को कारण कोड सहित लॉग करें</li>
+<li>क्लॉक स्क्यू घटनाओं को लॉग करें</li>
+<li>प्रतिबंधित IP पतों को लॉग करें</li>
+<li>संवेदनशील कुंजी सामग्री को कभी भी लॉग न करें</li>
+</ul>
+</li>
+<li>
+<p><strong>परीक्षण:</strong></p>
+<ul>
+<li>KDF (कुंजी व्युत्पत्ति फ़ंक्शन) श्रृंखलाओं के लिए यूनिट परीक्षण</li>
+<li>अन्य कार्यान्वयनों के साथ एकीकरण परीक्षण</li>
+<li>पैकेट हैंडलिंग के लिए Fuzzing (अनियमित इनपुट परीक्षण)</li>
+<li>DoS (सेवा-अस्वीकरण हमला) प्रतिरोधक क्षमता के लिए लोड परीक्षण</li>
+</ul>
+</li>
+</ol>
+<h3 id="आम-गलतय">आम गलतियाँ</h3>
+<p><strong>बचने योग्य गंभीर त्रुटियाँ:</strong></p>
+<ol>
+<li>
+<p><strong>Nonce (एक बार प्रयुक्त संख्या) का पुन:उपयोग:</strong></p>
+<ul>
+<li>सत्र के दौरान nonce काउंटर को कभी रीसेट न करें</li>
+<li>प्रत्येक दिशा के लिए अलग-अलग काउंटर का उपयोग करें</li>
+<li>2^64 - 1 तक पहुँचने से पहले समाप्त करें</li>
+</ul>
+</li>
+<li>
+<p><strong>कुंजी रोटेशन:</strong></p>
+<ul>
+<li>जब router चल रहा हो, तब कभी कुंजियों को रोटेट न करें</li>
+<li>विभिन्न सत्रों के बीच अस्थायी (ephemeral) कुंजियों का पुन: उपयोग कभी न करें</li>
+<li>न्यूनतम डाउनटाइम के नियमों का पालन करें</li>
+</ul>
+</li>
+<li>
+<p><strong>टाइमस्टैम्प प्रबंधन:</strong></p>
+<ul>
+<li>अवधि-समाप्त टाइमस्टैम्प कभी स्वीकार न करें</li>
+<li>समय विचलन की गणना करते समय RTT (राउंड-ट्रिप टाइम) के अनुसार हमेशा समायोजन करें</li>
+<li>DateTime टाइमस्टैम्प को सेकंड तक राउंड करें</li>
+</ul>
+</li>
+<li>
+<p><strong>AEAD (Authenticated Encryption with Associated Data - प्रमाणित एन्क्रिप्शन विद एसोसिएटेड डेटा) त्रुटियाँ:</strong></p>
+<ul>
+<li>हमलावर को कभी भी त्रुटि के प्रकार का खुलासा न करें</li>
+<li>बंद करने से पहले हमेशा एक यादृच्छिक टाइमआउट का उपयोग करें</li>
+<li>अमान्य लंबाई को AEAD विफलता के समान समझें</li>
+</ul>
+</li>
+<li>
+<p><strong>पैडिंग:</strong></p>
+<ul>
+<li>सहमत सीमाओं के बाहर कभी भी पैडिंग न भेजें</li>
+<li>पैडिंग ब्लॉक को हमेशा सबसे अंत में रखें</li>
+<li>प्रति फ़्रेम कभी भी एक से अधिक पैडिंग ब्लॉक न हों</li>
+</ul>
+</li>
+<li>
+<p><strong>RouterInfo:</strong></p>
+<ul>
+<li>हमेशा यह सत्यापित करें कि static key (स्थिर कुंजी) RouterInfo से मेल खाती है</li>
+<li>प्रकाशित पतों के बिना RouterInfos को कभी भी प्रसारित न करें</li>
+<li>हमेशा हस्ताक्षरों को सत्यापित करें</li>
+</ul>
+</li>
+</ol>
+<h3 id="परकषण-करयपरणल">परीक्षण कार्यप्रणाली</h3>
+<p><strong>यूनिट परीक्षण:</strong></p>
+<ol>
+<li>
+<p><strong>क्रिप्टोग्राफ़िक प्रिमिटिव्स:</strong></p>
+<ul>
+<li>X25519, ChaCha20, Poly1305, SHA-256 के लिए परीक्षण वेक्टर</li>
+<li>HMAC-SHA256 के परीक्षण वेक्टर</li>
+<li>SipHash-2-4 के परीक्षण वेक्टर</li>
+</ul>
+</li>
+<li>
+<p><strong>KDF चेन:</strong></p>
+<ul>
+<li>तीनों संदेशों के लिए ज्ञात-उत्तर परीक्षण</li>
+<li>चेनिंग कुंजी के प्रसार का सत्यापन करें</li>
+<li>SipHash IV निर्माण का परीक्षण करें</li>
+</ul>
+</li>
+<li>
+<p><strong>संदेश पार्सिंग:</strong></p>
+<ul>
+<li>मान्य संदेश डिकोडिंग</li>
+<li>अमान्य संदेश अस्वीकृति</li>
+<li>सीमा स्थितियाँ (रिक्त, अधिकतम आकार)</li>
+</ul>
+</li>
+</ol>
+<p><strong>एकीकरण परीक्षण:</strong></p>
+<ol>
+<li>
+<p><strong>हैंडशेक:</strong></p>
+<ul>
+<li>सफल तीन-संदेश आदान-प्रदान</li>
+<li>क्लॉक-स्क्यू के आधार पर अस्वीकृति</li>
+<li>रीप्ले हमले की पहचान</li>
+<li>अमान्य कुंजी की अस्वीकृति</li>
+</ul>
+</li>
+<li>
+<p><strong>डेटा चरण:</strong></p>
+<ul>
+<li>I2NP संदेश स्थानांतरण</li>
+<li>RouterInfo आदान-प्रदान</li>
+<li>पैडिंग का प्रबंधन</li>
+<li>समापन संदेश</li>
+</ul>
+</li>
+<li>
+<p><strong>अंतरसंचालनीयता:</strong></p>
+<ul>
+<li>Java I2P के साथ परीक्षण करें</li>
+<li>i2pd के साथ परीक्षण करें</li>
+<li>IPv4 और IPv6 का परीक्षण करें</li>
+<li>प्रकाशित और छिपे हुए routers का परीक्षण करें</li>
+</ul>
+</li>
+</ol>
+<p><strong>सुरक्षा परीक्षण:</strong></p>
+<ol>
+<li>
+<p><strong>नकारात्मक परीक्षण:</strong></p>
+<ul>
+<li>अमान्य AEAD (संबद्ध डेटा सहित प्रमाणित एन्क्रिप्शन) टैग</li>
+<li>रीप्ले किए गए संदेश</li>
+<li>क्लॉक स्क्यू हमले</li>
+<li>गलत-संरूपित फ़्रेम</li>
+</ul>
+</li>
+<li>
+<p><strong>DoS (सेवा-अस्वीकरण) परीक्षण:</strong></p>
+<ul>
+<li>कनेक्शन फ्लडिंग</li>
+<li>Slowloris हमले (धीमे-कनेक्शन आधारित)</li>
+<li>CPU पर अत्यधिक भार (अत्यधिक DH (Diffie-Hellman कुंजी-विनिमय))</li>
+<li>मेमोरी समाप्ति</li>
+</ul>
+</li>
+<li>
+<p><strong>फज़िंग (Fuzzing):</strong></p>
+<ul>
+<li>यादृच्छिक हैंडशेक संदेश</li>
+<li>यादृच्छिक डेटा चरण फ्रेम</li>
+<li>यादृच्छिक ब्लॉक प्रकार और आकार</li>
+<li>अमान्य क्रिप्टोग्राफिक मान</li>
+</ul>
+</li>
+</ol>
+<h3 id="ntcp-टरसपरट-परटकल-स-मइगरशन">NTCP (ट्रांसपोर्ट प्रोटोकॉल) से माइग्रेशन</h3>
+<p><strong>पुराने NTCP (I2P का TCP-आधारित ट्रांसपोर्ट प्रोटोकॉल) के समर्थन हेतु (अब हटा दिया गया):</strong></p>
+<p>NTCP (version 1) को I2P 0.9.50 (मई 2021) में हटा दिया गया था। सभी वर्तमान कार्यान्वयनों को NTCP2 का समर्थन करना आवश्यक है। ऐतिहासिक टिप्पणियाँ:</p>
+<ol>
+<li>
+<p><strong>संक्रमण अवधि (2018-2021):</strong></p>
+<ul>
+<li>0.9.36: NTCP2 पेश किया गया (डिफ़ॉल्ट रूप से निष्क्रिय)</li>
+<li>0.9.37: NTCP2 डिफ़ॉल्ट रूप से सक्षम</li>
+<li>0.9.40: NTCP अप्रचलित घोषित किया गया</li>
+<li>0.9.50: NTCP हटा दिया गया</li>
+</ul>
+</li>
+<li>
+<p><strong>संस्करण पहचान:</strong></p>
+<ul>
+<li>&ldquo;NTCP&rdquo; transportStyle दोनों संस्करणों का समर्थन दर्शाता था</li>
+<li>&ldquo;NTCP2&rdquo; transportStyle केवल NTCP2 को दर्शाता था</li>
+<li>संदेश आकार के माध्यम से स्वचालित पहचान (287 बनाम 288 बाइट्स)</li>
+</ul>
+</li>
+<li>
+<p><strong>वर्तमान स्थिति:</strong></p>
+<ul>
+<li>सभी routers को NTCP2 का समर्थन करना अनिवार्य है</li>
+<li>&ldquo;NTCP&rdquo; transportStyle अब अप्रचलित है</li>
+<li>केवल &ldquo;NTCP2&rdquo; transportStyle का उपयोग करें</li>
+</ul>
+</li>
+</ol>
+<h2 id="परशषट-a-noise-xk-pattern-noise-परटकल-फरमवरक-क-xk-हडशक-पटरन">परिशिष्ट A: Noise XK Pattern (Noise प्रोटोकॉल फ़्रेमवर्क का XK हैंडशेक पैटर्न)</h2>
+<p><strong>मानक Noise XK पैटर्न:</strong></p>
+<pre tabindex="0"><code>XK(s, rs):
+  &lt;- s
+  ...
+  -&gt; e, es
+  &lt;- e, ee
+  -&gt; s, se
+</code></pre><p><strong>व्याख्या:</strong></p>
+<ul>
+<li><code>&lt;-</code> : उत्तरदाता (Bob) से प्रारंभकर्ता (Alice) को संदेश</li>
+<li><code>-&gt;</code> : प्रारंभकर्ता (Alice) से उत्तरदाता (Bob) को संदेश</li>
+<li><code>s</code> : स्थिर कुंजी (दीर्घकालिक पहचान कुंजी)</li>
+<li><code>rs</code> : रिमोट स्थिर कुंजी (पीयर की स्थिर कुंजी, पहले से ज्ञात)</li>
+<li><code>e</code> : अस्थायी कुंजी (सत्र-विशिष्ट, आवश्यकतानुसार उत्पन्न)</li>
+<li><code>es</code> : अस्थायी-स्थिर DH (डिफी-हेल्मन कुंजी-सहमति) (Alice अस्थायी × Bob स्थिर)</li>
+<li><code>ee</code> : अस्थायी-अस्थायी DH (Alice अस्थायी × Bob अस्थायी)</li>
+<li><code>se</code> : स्थिर-अस्थायी DH (Alice स्थिर × Bob अस्थायी)</li>
+</ul>
+<p><strong>कुंजी सहमति क्रम:</strong></p>
+<ol>
+<li><strong>पूर्व-संदेश:</strong> Alice को Bob की static public key (स्थैतिक सार्वजनिक कुंजी) ज्ञात है (RouterInfo से)</li>
+<li><strong>संदेश 1:</strong> Alice ephemeral key (क्षणिक कुंजी) भेजती है, es DH निष्पादित करती है</li>
+<li><strong>संदेश 2:</strong> Bob ephemeral key भेजता है, ee DH निष्पादित करता है</li>
+<li><strong>संदेश 3:</strong> Alice static key (स्थैतिक कुंजी) प्रकट करती है, se DH निष्पादित करती है</li>
+</ol>
+<p><strong>सुरक्षा विशेषताएँ:</strong></p>
+<ul>
+<li>Alice प्रमाणित: हाँ (message 3 द्वारा)</li>
+<li>Bob प्रमाणित: हाँ (स्थिर निजी कुंजी के पास होने से)</li>
+<li>Forward secrecy (आगे की गोपनीयता): हाँ (क्षणिक कुंजियाँ नष्ट कर दी जाती हैं)</li>
+<li>KCI resistance (Known-Compromise Impersonation प्रतिरोध): हाँ (प्रमाणीकरण स्तर 2)</li>
+</ul>
+<h2 id="परशषट-ब-base64-encoding-बइनर-डट-क-ascii-पठ-म-बदलन-क-मनक-वध">परिशिष्ट बी: Base64 Encoding (बाइनरी डेटा को ASCII-पाठ में बदलने की मानक विधि)</h2>
+<p><strong>I2P Base64 (64-आधारित एन्कोडिंग) वर्णमाला:</strong></p>
+<pre tabindex="0"><code>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-~
+</code></pre><p><strong>Standard Base64 से अंतर:</strong> - वर्ण 62-63: <code>-~</code> <code>+/</code> के बजाय - पैडिंग: समान (<code>=</code>) या संदर्भ के अनुसार छोड़ी जा सकती है</p>
+<p><strong>NTCP2 में उपयोग:</strong> - स्थिर कुंजी (&ldquo;s&rdquo;): 32 बाइट्स → 44 अक्षर (बिना पैडिंग) - IV (इनिशियलाइज़ेशन वेक्टर) (&ldquo;i&rdquo;): 16 बाइट्स → 24 अक्षर (बिना पैडिंग)</p>
+<p><strong>एन्कोडिंग उदाहरण:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 32-byte static key (hex): </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># f4489e1bb0597b39ca6cbf5ad9f5f1f09043e02d96cb9aa6a63742b3462429aa</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2P Base64 encoded:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=</span>
+</span></span></code></pre></div><h2 id="परशषट-c-पकट-कपचर-वशलषण">परिशिष्ट C: पैकेट कैप्चर विश्लेषण</h2>
+<p><strong>NTCP2 ट्रैफ़िक की पहचान:</strong></p>
+<ol>
+<li>
+<p><strong>TCP हैंडशेक:</strong></p>
+<ul>
+<li>मानक TCP SYN, SYN-ACK, ACK</li>
+<li>गंतव्य पोर्ट आमतौर पर 8887 या इसी तरह</li>
+</ul>
+</li>
+<li>
+<p><strong>संदेश 1 (SessionRequest):</strong></p>
+<ul>
+<li>एलिस से पहला एप्लिकेशन डेटा</li>
+<li>80-65535 बाइट (आमतौर पर कुछ सौ)</li>
+<li>यादृच्छिक प्रतीत होता है (AES से एन्क्रिप्ट की गई अस्थायी कुंजी)</li>
+<li>यदि &ldquo;NTCP&rdquo; पते से कनेक्ट हो रहे हों तो अधिकतम 287 बाइट</li>
+</ul>
+</li>
+<li>
+<p><strong>संदेश 2 (SessionCreated):</strong></p>
+<ul>
+<li>Bob से प्रतिक्रिया</li>
+<li>80-65535 बाइट (आमतौर पर कुछ सौ)</li>
+<li>यह भी यादृच्छिक प्रतीत होता है</li>
+</ul>
+</li>
+<li>
+<p><strong>संदेश 3 (SessionConfirmed - सत्र पुष्टि):</strong></p>
+<ul>
+<li>Alice से</li>
+<li>48 बाइट + परिवर्ती (RouterInfo का आकार + पैडिंग)</li>
+<li>आम तौर पर 1-4 KB</li>
+</ul>
+</li>
+<li>
+<p><strong>डेटा चरण:</strong></p>
+<ul>
+<li>परिवर्ती लंबाई के फ़्रेम</li>
+<li>लंबाई फ़ील्ड अस्पष्ट किया गया (यादृच्छिक प्रतीत होता है)</li>
+<li>कूटबद्ध पेलोड</li>
+<li>पैडिंग आकार को अप्रत्याशित बनाती है</li>
+</ul>
+</li>
+</ol>
+<p><strong>DPI (गहन पैकेट निरीक्षण) से बचाव:</strong> - कोई सादा-पाठ हेडर नहीं - कोई स्थिर पैटर्न नहीं - लंबाई फ़ील्ड अस्पष्ट किए गए - रैंडम पैडिंग आकार-आधारित heuristics (अनुमान-नियम) को तोड़ती है</p>
+<p><strong>NTCP से तुलना:</strong> - NTCP संदेश 1 हमेशा 288 बाइट का होता है (पहचानने योग्य) - NTCP2 संदेश 1 का आकार बदलता रहता है (पहचानने योग्य नहीं) - NTCP में पहचानने योग्य पैटर्न थे - NTCP2 को DPI (डीप पैकेट निरीक्षण) का प्रतिरोध करने के लिए डिज़ाइन किया गया है</p>
+<h2 id="परशषट-d-ससकरण-इतहस">परिशिष्ट D: संस्करण इतिहास</h2>
+<p><strong>मुख्य मील के पत्थर:</strong></p>
+<ul>
+<li><strong>0.9.36</strong> (अगस्त 23, 2018): NTCP2 का परिचय कराया गया, डिफ़ॉल्ट रूप से निष्क्रिय</li>
+<li><strong>0.9.37</strong> (अक्टूबर 4, 2018): NTCP2 डिफ़ॉल्ट रूप से सक्षम</li>
+<li><strong>0.9.40</strong> (मई 20, 2019): NTCP को अप्रचलित घोषित किया गया</li>
+<li><strong>0.9.42</strong> (अगस्त 27, 2019): Network ID फ़ील्ड जोड़ी गई (प्रस्ताव 147)</li>
+<li><strong>0.9.50</strong> (मई 17, 2021): NTCP को हटा दिया गया, क्षमताओं के लिए समर्थन जोड़ा गया</li>
+<li><strong>2.10.0</strong> (सितंबर 9, 2025): नवीनतम स्थिर रिलीज़</li>
+</ul>
+<p><strong>प्रोटोकॉल स्थिरता:</strong> - 0.9.50 से कोई पिछली संगतता तोड़ने वाले परिवर्तन नहीं - प्रोबिंग प्रतिरोध में निरंतर सुधार - प्रदर्शन और विश्वसनीयता पर ध्यान - Post-quantum cryptography (क्वांटम कंप्यूटिंग-प्रतिरोधी कूटलेखन) विकासाधीन (डिफ़ॉल्ट रूप से सक्षम नहीं)</p>
+<p><strong>वर्तमान ट्रांसपोर्ट स्थिति:</strong> - NTCP2: अनिवार्य TCP ट्रांसपोर्ट - SSU2: अनिवार्य UDP ट्रांसपोर्ट - NTCP (v1): हटाया गया - SSU (v1): हटाया गया</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../hi/docs/specs/red25519-signature-scheme/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">Red25519 डिजिटल हस्ताक्षर योजना</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../hi/docs/specs/i2np/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">I2P नेटवर्क प्रोटोकॉल (I2NP)</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/hi/docs/specs/ntcp2.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">I2P समाचार से अपडेट रहें:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="अपना ईमेल दर्ज करें" required>
+                            <button type="submit">सदस्यता लें</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>त्वरित लिंक</h3>
+                <ul>
+                    <li><a href="../../../../hi/financial-support/">दान करें</a></li>
+                    <li><a href="../../../../hi/docs/overview/intro/">I2P परिचय</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>समुदाय</h3>
+                <ul>
+                    <li><a href="../../../../hi/get-involved/">शामिल हो जाइए</a></li>
+                    <li><a href="../../../../hi/blog/">ब्लॉग</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">आधिकारिक फोरम</a></li>
+                    <li><a href="../../../../hi/contact/">संपर्क करें</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>संसाधन</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P मेट्रिक्स</a></li>
+                    <li><a href="../../../../hi/papers/">अनुसंधान</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">गिटलैब</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">स्टॉर्मीक्लाउड</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 इनविज़िबल इंटरनेट प्रोजेक्ट। क्रिएटिव कॉमन्स के अंतर्गत लाइसेंस।</p>
+            <div class="footer-links">
+                <a href="../../../../hi/privacy/">गोपनीयता</a>
+                <a href="../../../../hi/terms/">शर्तें</a>
+                <a href="../../../../hi/about/media/">प्रेस</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="बंद करें">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>सामुदायिक पोल</h2>
+            <p class="modal-subtitle">हम आपसे सुनना पसंद करेंगे</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                आपका वोट I2P के भविष्य को आकार देने में मदद करता है।
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

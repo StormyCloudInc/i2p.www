@@ -1,0 +1,2482 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Giao thức máy khách I2P (I2CP) | I2P - Dự án Internet vô hình</title>
+
+    <meta name="description" content="Cách các ứng dụng thương lượng các phiên, tunnels và LeaseSets với I2P router.">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Giao thức máy khách I2P (I2CP) | I2P - Dự án Internet vô hình">
+    <meta property="og:description" content="Cách các ứng dụng thương lượng các phiên, tunnels và LeaseSets với I2P router.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/vi/docs/specs/i2cp/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Trang I2P Beta Đã Hoạt Động Gửi báo cáo lỗi tới stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Đóng banner" title="Đóng banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../vi/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../vi/about/" class="">Giới thiệu</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../vi/about/">Tổng quan</a></li>
+                            <li><a href="../../../../vi/papers/">Bài Nghiên Cứu</a></li>
+                            <li><a href="../../../../vi/about/media/">Báo chí</a></li>
+                            <li><a href="../../../../vi/contact/">Liên hệ</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../vi/docs/" class="active">Tài liệu</a></li>
+                    <li><a href="../../../../vi/downloads/" class="">Tải xuống</a></li>
+                    <li><a href="../../../../vi/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../vi/get-involved/" class="">Tham gia</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../vi/get-involved/">Tổng quan</a></li>
+                            <li><a href="../../../../vi/feedback/">Đề xuất Tính năng</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">vi</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/i2cp/"
+                                class="lang-option">Tiếng Anh</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/i2cp/"
+                                class="lang-option">Tiếng Tây Ban Nha</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/i2cp/"
+                                class="lang-option">Tiếng Hàn</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/i2cp/"
+                                class="lang-option">Tiếng Trung</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/i2cp/"
+                                class="lang-option">Tiếng Nga</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/i2cp/"
+                                class="lang-option">Tiếng Séc</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/i2cp/"
+                                class="lang-option">Tiếng Đức</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/i2cp/"
+                                class="lang-option">Tiếng Pháp</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/i2cp/"
+                                class="lang-option">Tiếng Thổ Nhĩ Kỳ</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/i2cp/"
+                                class="lang-option active">Tiếng Việt</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/i2cp/"
+                                class="lang-option">Tiếng Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/i2cp/"
+                                class="lang-option">Tiếng Ả Rập</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/i2cp/"
+                                class="lang-option">Tiếng Bồ Đào Nha</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../vi/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../vi/downloads/" class="btn btn-primary">Tải I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tổng-quan">Tổng quan</a></li>
+    <li><a href="#ngữ-cảnh-triển-khai">Ngữ cảnh triển khai</a>
+      <ul>
+        <li><a href="#hiện-thực-bằng-java">Hiện thực bằng Java</a></li>
+        <li><a href="#triển-khai-bằng-c">Triển khai bằng C++</a></li>
+        <li><a href="#các-ứng-dụng-khách-không-dùng-java">Các ứng dụng khách không dùng Java</a></li>
+      </ul>
+    </li>
+    <li><a href="#thiết-lập-kết-nối">Thiết lập kết nối</a>
+      <ul>
+        <li><a href="#1-kết-nối-tcp">1. Kết nối TCP</a></li>
+        <li><a href="#2-bắt-tay-giao-thức">2. Bắt tay giao thức</a></li>
+      </ul>
+    </li>
+    <li><a href="#các-mẫu-luồng-thông-điệp">Các mẫu luồng thông điệp</a>
+      <ul>
+        <li><a href="#thông-điệp-gửi-đi-máy-khách-gửi-tới-điểm-đến-từ-xa">Thông điệp gửi đi (Máy khách gửi tới điểm đến từ xa)</a></li>
+        <li><a href="#thông-điệp-đến-router-giao-cho-ứng-dụng-khách">Thông điệp đến (Router giao cho ứng dụng khách)</a></li>
+      </ul>
+    </li>
+    <li><a href="#các-cấu-trúc-dữ-liệu-phổ-biến">Các cấu trúc dữ liệu phổ biến</a>
+      <ul>
+        <li><a href="#phần-đầu-bản-tin-i2cp">Phần đầu bản tin I2CP</a></li>
+        <li><a href="#id-phiên">ID phiên</a></li>
+        <li><a href="#id-thông-điệp">ID thông điệp</a></li>
+        <li><a href="#định-dạng-payload-dữ-liệu-tải">Định dạng payload (dữ liệu tải)</a></li>
+        <li><a href="#cấu-trúc-sessionconfig-cấu-hình-phiên">Cấu trúc SessionConfig (cấu hình phiên)</a></li>
+      </ul>
+    </li>
+    <li><a href="#các-tùy-chọn-cấu-hình-cốt-lõi">Các tùy chọn cấu hình cốt lõi</a>
+      <ul>
+        <li><a href="#cấu-hình-tunnel">Cấu hình Tunnel</a></li>
+        <li><a href="#xử-lý-thông-điệp">Xử lý thông điệp</a></li>
+        <li><a href="#cấu-hình-leaseset">Cấu hình LeaseSet</a></li>
+      </ul>
+    </li>
+    <li><a href="#các-loại-mã-hóa">Các loại mã hóa</a>
+      <ul>
+        <li><a href="#các-loại-mã-hóa-được-hỗ-trợ">Các loại mã hóa được hỗ trợ</a></li>
+        <li><a href="#chi-tiết-về-kiểu-mã-hóa">Chi tiết về kiểu mã hóa</a></li>
+        <li><a href="#chiến-lược-di-chuyển">Chiến lược di chuyển</a></li>
+      </ul>
+    </li>
+    <li><a href="#leaseset2-và-các-tính-năng-nâng-cao">LeaseSet2 và các tính năng nâng cao</a>
+      <ul>
+        <li><a href="#tùy-chọn-leaseset2-định-dạng-leaseset-thế-hệ-thứ-hai-kể-từ-0938">Tùy chọn LeaseSet2 (định dạng LeaseSet thế hệ thứ hai) (kể từ 0.9.38)</a></li>
+        <li><a href="#bản-ghi-dịch-vụ-từ-0966">Bản ghi dịch vụ (từ 0.9.66)</a></li>
+      </ul>
+    </li>
+    <li><a href="#nhiều-phiên-từ-0921">Nhiều phiên (từ 0.9.21)</a>
+      <ul>
+        <li><a href="#các-đặc-tính-của-subsession-phiên-con">Các đặc tính của Subsession (phiên con)</a></li>
+        <li><a href="#trường-hợp-sử-dụng-subsession-phiên-con">Trường hợp sử dụng Subsession (phiên con)</a></li>
+        <li><a href="#vòng-đời-subsession-phiên-con">Vòng đời Subsession (phiên con)</a></li>
+        <li><a href="#xử-lý-id-phiên">Xử lý ID phiên</a></li>
+      </ul>
+    </li>
+    <li><a href="#danh-mục-thông-điệp">Danh mục thông điệp</a>
+      <ul>
+        <li><a href="#tóm-tắt-các-loại-thông-điệp">Tóm tắt các loại thông điệp</a></li>
+        <li><a href="#chi-tiết-chính-của-thông-điệp">Chi tiết chính của thông điệp</a></li>
+      </ul>
+    </li>
+    <li><a href="#lịch-sử-phiên-bản-giao-thức">Lịch sử phiên bản giao thức</a>
+      <ul>
+        <li><a href="#phát-hiện-phiên-bản">Phát hiện phiên bản</a></li>
+        <li><a href="#dòng-thời-gian-các-tính-năng">Dòng thời gian các tính năng</a></li>
+        <li><a href="#xác-thực">Xác thực</a></li>
+        <li><a href="#độ-lệch-đồng-hồ">Độ lệch đồng hồ</a></li>
+        <li><a href="#xử-lý-khóa-riêng">Xử lý khóa riêng</a></li>
+        <li><a href="#hết-hạn-thông-điệp">Hết hạn thông điệp</a></li>
+        <li><a href="#quản-lý-session-tag-thẻ-phiên">Quản lý Session Tag (thẻ phiên)</a></li>
+      </ul>
+    </li>
+    <li><a href="#thực-hành-tốt-nhất">Thực hành tốt nhất</a>
+      <ul>
+        <li><a href="#dành-cho-các-nhà-phát-triển-ứng-dụng-khách">Dành cho các nhà phát triển ứng dụng khách</a></li>
+        <li><a href="#dành-cho-các-nhà-phát-triển-router">Dành cho các nhà phát triển Router</a></li>
+      </ul>
+    </li>
+    <li><a href="#gỡ-lỗi-và-khắc-phục-sự-cố">Gỡ lỗi và khắc phục sự cố</a>
+      <ul>
+        <li><a href="#các-vấn-đề-thường-gặp">Các vấn đề thường gặp</a></li>
+        <li><a href="#thông-báo-chẩn-đoán">Thông báo chẩn đoán</a></li>
+      </ul>
+    </li>
+    <li><a href="#các-đặc-tả-liên-quan">Các đặc tả liên quan</a></li>
+    <li><a href="#các-đề-xuất-được-tham-chiếu">Các đề xuất được tham chiếu</a></li>
+    <li><a href="#tài-liệu-tham-chiếu-javadocs">Tài liệu tham chiếu Javadocs</a></li>
+    <li><a href="#tóm-tắt-ngừng-hỗ-trợ">Tóm tắt ngừng hỗ trợ</a>
+      <ul>
+        <li><a href="#các-thông-điệp-lỗi-thời-không-được-sử-dụng">Các thông điệp lỗi thời (Không được sử dụng)</a></li>
+        <li><a href="#các-tùy-chọn-đã-lỗi-thời">Các tùy chọn đã lỗi thời</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../vi/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../vi/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../vi/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Giao thức máy khách I2P (I2CP)</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Bản dịch này được tạo bằng máy học và có thể không chính xác 100%.</span>
+    
+    
+    <a href="../../../../en/docs/specs/i2cp/" class="disclaimer-link">Xem phiên bản tiếng Anh</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Giao thức máy khách I2P (I2CP)</h1>
+                    
+                        <p class="article-description">Cách các ứng dụng thương lượng các phiên, tunnels và LeaseSets với I2P router.</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="tổng-quan">Tổng quan</h2>
+<p>I2CP là giao thức điều khiển cấp thấp giữa một I2P router và bất kỳ tiến trình khách nào. Nó xác định một sự phân tách trách nhiệm nghiêm ngặt:</p>
+<ul>
+<li><strong>Router</strong>: Quản lý định tuyến, mật mã học, vòng đời tunnel, và các thao tác cơ sở dữ liệu mạng</li>
+<li><strong>Ứng dụng khách</strong>: Chọn các thuộc tính ẩn danh, cấu hình tunnels, và gửi/nhận thông điệp</li>
+</ul>
+<p>Tất cả giao tiếp diễn ra qua một socket TCP duy nhất (tùy chọn được bọc TLS), cho phép các hoạt động bất đồng bộ, song công hoàn toàn.</p>
+<p><strong>Phiên bản giao thức</strong>: I2CP sử dụng một byte phiên bản giao thức <code>0x2A</code> (42 ở dạng thập phân) được gửi trong quá trình thiết lập kết nối ban đầu. Byte phiên bản này đã giữ ổn định kể từ khi giao thức ra đời.</p>
+<p><strong>Trạng thái hiện tại</strong>: Đặc tả này áp dụng chính xác cho router phiên bản 0.9.67 (phiên bản API 0.9.67), phát hành vào 2025-09.</p>
+<h2 id="ngữ-cảnh-triển-khai">Ngữ cảnh triển khai</h2>
+<h3 id="hiện-thực-bằng-java">Hiện thực bằng Java</h3>
+<p>Bản triển khai tham chiếu nằm trong Java I2P: - SDK phía client: gói <code>i2p.jar</code> - Phần triển khai Router: gói <code>router.jar</code> - <a href="http://docs.i2p-projekt.de/javadoc/">Javadocs</a>
+</p>
+<p>Khi ứng dụng khách và router chạy trong cùng một JVM, các thông điệp I2CP được truyền dưới dạng đối tượng Java mà không cần tuần tự hóa. Các ứng dụng khách bên ngoài sử dụng giao thức đã tuần tự hóa qua TCP.</p>
+<h3 id="triển-khai-bằng-c">Triển khai bằng C++</h3>
+<p>i2pd (router I2P viết bằng C++) cũng triển khai I2CP bên ngoài để phục vụ các kết nối của máy khách.</p>
+<h3 id="các-ứng-dụng-khách-không-dùng-java">Các ứng dụng khách không dùng Java</h3>
+<p>Hiện <strong>không có triển khai không dùng Java nào đã biết</strong> cho một thư viện client I2CP hoàn chỉnh. Các ứng dụng không dùng Java nên thay vào đó sử dụng các giao thức cấp cao hơn:</p>
+<ul>
+<li><strong>SAM (Nhắn tin ẩn danh đơn giản) v3</strong>: Giao diện dựa trên socket với các thư viện cho nhiều ngôn ngữ</li>
+<li><strong>BOB (Cầu mở cơ bản)</strong>: Giải pháp thay thế đơn giản hơn cho SAM</li>
+</ul>
+<p>Các giao thức cấp cao hơn này tự xử lý sự phức tạp của I2CP bên trong và đồng thời cung cấp thư viện streaming (cho các kết nối kiểu TCP) và thư viện datagram (cho các kết nối kiểu UDP).</p>
+<h2 id="thiết-lập-kết-nối">Thiết lập kết nối</h2>
+<h3 id="1-kết-nối-tcp">1. Kết nối TCP</h3>
+<p>Kết nối tới cổng I2CP của router: - Mặc định: <code>127.0.0.1:7654</code> - Có thể cấu hình qua cài đặt của router - Lớp bọc TLS tùy chọn (rất khuyến nghị cho các kết nối từ xa)</p>
+<h3 id="2-bắt-tay-giao-thức">2. Bắt tay giao thức</h3>
+<p><strong>Bước 1</strong>: Gửi byte phiên bản giao thức <code>0x2A</code></p>
+<p><strong>Bước 2</strong>: Đồng bộ thời gian</p>
+<pre tabindex="0"><code>Client → Router: GetDateMessage
+Router → Client: SetDateMessage
+</code></pre><p>router trả về dấu thời gian hiện tại của nó và chuỗi phiên bản I2CP API (kể từ 0.8.7).</p>
+<p><strong>Bước 3</strong>: Xác thực (nếu được bật)</p>
+<p>Kể từ 0.9.11, xác thực có thể được đưa vào GetDateMessage (thông điệp lấy ngày/giờ) thông qua một Mapping (ánh xạ) chứa: - <code>i2cp.username</code> - <code>i2cp.password</code></p>
+<p>Từ phiên bản 0.9.16, khi tính năng xác thực được bật, việc xác thực <strong>phải</strong> được hoàn tất thông qua GetDateMessage trước khi bất kỳ bản tin nào khác được gửi đi.</p>
+<p><strong>Bước 4</strong>: Tạo phiên</p>
+<pre tabindex="0"><code>Client → Router: CreateSessionMessage (contains SessionConfig)
+Router → Client: SessionStatusMessage (status=Created)
+</code></pre><p><strong>Bước 5</strong>: Tín hiệu sẵn sàng của tunnel</p>
+<pre tabindex="0"><code>Router → Client: RequestVariableLeaseSetMessage
+</code></pre><p>Thông báo này cho biết rằng các tunnel vào đã được thiết lập. Router sẽ KHÔNG gửi thông báo này cho đến khi có ít nhất một tunnel vào VÀ một tunnel ra tồn tại.</p>
+<p><strong>Bước 6</strong>: Công bố LeaseSet</p>
+<pre tabindex="0"><code>Client → Router: CreateLeaseSet2Message
+</code></pre><p>Lúc này, phiên đã hoạt động hoàn toàn để gửi và nhận thông điệp.</p>
+<h2 id="các-mẫu-luồng-thông-điệp">Các mẫu luồng thông điệp</h2>
+<h3 id="thông-điệp-gửi-đi-máy-khách-gửi-tới-điểm-đến-từ-xa">Thông điệp gửi đi (Máy khách gửi tới điểm đến từ xa)</h3>
+<p><strong>Với i2cp.messageReliability=none</strong>:</p>
+<pre tabindex="0"><code>Client → Router: SendMessageMessage (nonce=0)
+[No acknowledgments]
+</code></pre><p><strong>Với i2cp.messageReliability=BestEffort</strong>:</p>
+<pre tabindex="0"><code>Client → Router: SendMessageMessage (nonce&gt;0)
+Router → Client: MessageStatusMessage (status=Accepted)
+Router → Client: MessageStatusMessage (status=Success or Failure)
+</code></pre><h3 id="thông-điệp-đến-router-giao-cho-ứng-dụng-khách">Thông điệp đến (Router giao cho ứng dụng khách)</h3>
+<p><strong>Với i2cp.fastReceive=true</strong> (mặc định từ 0.9.4):</p>
+<pre tabindex="0"><code>Router → Client: MessagePayloadMessage
+[No acknowledgment required]
+</code></pre><p><strong>Với i2cp.fastReceive=false</strong> (ĐÃ LỖI THỜI):</p>
+<pre tabindex="0"><code>Router → Client: MessageStatusMessage (status=Available)
+Client → Router: ReceiveMessageBeginMessage
+Router → Client: MessagePayloadMessage
+Client → Router: ReceiveMessageEndMessage
+</code></pre><p>Các máy khách hiện đại nên luôn sử dụng chế độ nhận nhanh.</p>
+<h2 id="các-cấu-trúc-dữ-liệu-phổ-biến">Các cấu trúc dữ liệu phổ biến</h2>
+<h3 id="phần-đầu-bản-tin-i2cp">Phần đầu bản tin I2CP</h3>
+<p>Tất cả các thông điệp I2CP sử dụng phần đầu chung này:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Body Length (4 bytes)                 |
++----+----+----+----+----+----+----+----+
+|Type|  Message Body (variable)        |
++----+----+----+----+----+----+----+----+
+</code></pre><ul>
+<li><strong>Độ dài phần thân</strong>: Số nguyên 4 byte, chỉ độ dài của phần thân thông điệp (không bao gồm phần tiêu đề)</li>
+<li><strong>Loại</strong>: Số nguyên 1 byte, định danh kiểu thông điệp</li>
+<li><strong>Phần thân thông điệp</strong>: 0+ byte, định dạng thay đổi theo loại thông điệp</li>
+</ul>
+<p><strong>Giới hạn kích thước thông điệp</strong>: Tối đa khoảng 64 KB.</p>
+<h3 id="id-phiên">ID phiên</h3>
+<p>Số nguyên 2 byte dùng để định danh duy nhất một phiên trên một router.</p>
+<p><strong>Giá trị đặc biệt</strong>: <code>0xFFFF</code> cho biết &ldquo;không có phiên&rdquo; (được dùng khi tra cứu tên máy chủ mà chưa có phiên được thiết lập).</p>
+<h3 id="id-thông-điệp">ID thông điệp</h3>
+<p>Số nguyên 4 byte được router tạo ra để định danh duy nhất một thông điệp trong một phiên.</p>
+<p><strong>Quan trọng</strong>: ID thông điệp <strong>không</strong> duy nhất ở phạm vi toàn cục, mà chỉ duy nhất trong phạm vi một phiên. Chúng cũng khác với nonce (giá trị ngẫu nhiên dùng một lần) do máy khách tạo ra.</p>
+<h3 id="định-dạng-payload-dữ-liệu-tải">Định dạng payload (dữ liệu tải)</h3>
+<p>Nội dung thông điệp (payload) được nén bằng gzip với header gzip chuẩn 10 byte: - Bắt đầu bằng: <code>0x1F 0x8B 0x08</code> (RFC 1952) - Kể từ 0.7.1: Các phần chưa dùng của header gzip chứa thông tin về giao thức, from-port (cổng nguồn) và to-port (cổng đích) - Điều này cho phép truyền phát và các datagram (gói tin không kết nối) trên cùng một đích</p>
+<p><strong>Điều khiển nén</strong>: Đặt <code>i2cp.gzip=false</code> để tắt nén (đặt mức nỗ lực gzip về 0). Phần đầu gzip vẫn được bao gồm, nhưng với chi phí phụ trội do nén ở mức tối thiểu.</p>
+<h3 id="cấu-trúc-sessionconfig-cấu-hình-phiên">Cấu trúc SessionConfig (cấu hình phiên)</h3>
+<p>Định nghĩa cấu hình cho một phiên máy khách:</p>
+<pre tabindex="0"><code>+----------------------------------+
+| Destination                      |
++----------------------------------+
+| Mapping (configuration options)  |
++----------------------------------+
+| Creation Date                    |
++----------------------------------+
+| Signature                        |
++----------------------------------+
+</code></pre><p><strong>Yêu cầu quan trọng</strong>: 1. <strong>Ánh xạ phải được sắp xếp theo khóa</strong> để xác minh chữ ký 2. <strong>Ngày tạo</strong> phải nằm trong ±30 giây so với thời gian hiện tại của router 3. <strong>Chữ ký</strong> được tạo bởi SigningPrivateKey của Destination (địa chỉ đích trong I2P)</p>
+<p><strong>Chữ ký ngoại tuyến</strong> (tính đến 0.9.38):</p>
+<p>Nếu sử dụng ký ngoại tuyến, Mapping (bản ánh xạ) phải chứa: - <code>i2cp.leaseSetOfflineExpiration</code> - <code>i2cp.leaseSetTransientPublicKey</code> - <code>i2cp.leaseSetOfflineSignature</code></p>
+<p>Sau đó, Signature được tạo bởi SigningPrivateKey tạm thời.</p>
+<h2 id="các-tùy-chọn-cấu-hình-cốt-lõi">Các tùy chọn cấu hình cốt lõi</h2>
+<h3 id="cấu-hình-tunnel">Cấu hình Tunnel</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Option</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Default</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>inbound.length</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Number of hops for inbound tunnels</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>outbound.length</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Number of hops for outbound tunnels</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>inbound.lengthVariance</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Random variance in hop count (since 0.7.6)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>outbound.lengthVariance</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Random variance in hop count (since 0.7.6)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>inbound.quantity</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Number of concurrent inbound tunnels</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>outbound.quantity</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Number of concurrent outbound tunnels</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>inbound.backupQuantity</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Standby inbound tunnels (hot spares)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>outbound.backupQuantity</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Standby outbound tunnels (hot spares)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>inbound.allowZeroHop</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">true</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Allow 0-hop tunnels (disable for full anonymity)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>outbound.allowZeroHop</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">true</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Allow 0-hop tunnels (disable for full anonymity)</td>
+    </tr>
+  </tbody>
+</table>
+**Ghi chú**: - Các giá trị của `quantity` > 6 yêu cầu các peer chạy 0.9.0+ và làm tăng đáng kể mức sử dụng tài nguyên - Đặt `backupQuantity` thành 1-2 cho các dịch vụ có tính sẵn sàng cao - Các tunnels 0-hop đánh đổi ẩn danh để giảm độ trễ nhưng hữu ích cho việc thử nghiệm
+<h3 id="xử-lý-thông-điệp">Xử lý thông điệp</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Option</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Default</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>clientMessageTimeout</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">60000&nbsp;ms</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Legacy timeout for message delivery</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.messageReliability</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">BestEffort</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>None</code>, <code>BestEffort</code>, or <code>Guaranteed</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.fastReceive</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">true</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Skip ReceiveMessageBegin/End handshake (default since 0.9.4)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.gzip</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">true</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Enable gzip compression of message payloads</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>outbound.priority</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Priority for outbound scheduling (-25 to +25)</td>
+    </tr>
+  </tbody>
+</table>
+**Độ tin cậy của thông điệp**: - `None`: Không có xác nhận từ router (mặc định của thư viện streaming kể từ 0.8.1) - `BestEffort`: Router gửi thông báo chấp nhận + thành công/thất bại - `Guaranteed`: Chưa được triển khai (hiện hoạt động giống BestEffort)
+<p><strong>Ghi đè theo từng thông điệp</strong> (kể từ 0.9.14): - Trong một phiên với <code>messageReliability=none</code>, đặt một nonce (giá trị ngẫu nhiên dùng một lần) khác 0 sẽ yêu cầu thông báo đã giao cho thông điệp cụ thể đó - Đặt nonce=0 trong một phiên <code>BestEffort</code> sẽ tắt thông báo cho thông điệp đó</p>
+<h3 id="cấu-hình-leaseset">Cấu hình LeaseSet</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Option</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Default</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.dontPublishLeaseSet</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">false</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Disable automatic LeaseSet publication (for client-only destinations)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetType</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">LeaseSet variant: 1 = standard, 3 = LS2, 5 = encrypted, 7 = meta</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetEncType</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Comma-separated encryption type codes (see below)</td>
+    </tr>
+  </tbody>
+</table>
+### Thẻ phiên ElGamal/AES kiểu cũ
+<p>Các tùy chọn này chỉ áp dụng cho mã hóa ElGamal kiểu cũ:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Option</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Default</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>crypto.lowTagThreshold</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">30</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Minimum session tags before replenishing</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>crypto.tagsToSend</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">40</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Number of tags to send in a batch</td>
+    </tr>
+  </tbody>
+</table>
+**Lưu ý**: Các máy khách ECIES-X25519 sử dụng một cơ chế ratchet (cơ chế cập nhật khóa dần theo từng bước) khác và bỏ qua các tùy chọn này.
+<h2 id="các-loại-mã-hóa">Các loại mã hóa</h2>
+<p>I2CP hỗ trợ nhiều cơ chế mã hóa đầu-cuối thông qua tùy chọn <code>i2cp.leaseSetEncType</code>. Có thể chỉ định nhiều loại (phân tách bằng dấu phẩy) để hỗ trợ cả các peer (nút ngang hàng) hiện đại và tương thích cũ.</p>
+<h3 id="các-loại-mã-hóa-được-hỗ-trợ">Các loại mã hóa được hỗ trợ</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Algorithm</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Key Size</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Since</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElGamal/AES+SessionTags</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2048-bit ElGamal</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Legacy</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1-3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">-</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">-</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Unused</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES-X25519-AEAD-Ratchet</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">32-byte X25519</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.46</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current Standard</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">5</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES-X25519-AEAD-Ratchet + ML-KEM-768 hybrid</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">32&nbsp;+&nbsp;PQ</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.67</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Beta</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">6</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES-X25519-AEAD-Ratchet + ML-KEM-1024 hybrid</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">32&nbsp;+&nbsp;PQ</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.67</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Beta</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">7</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved (likely ML-KEM-512 hybrid)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">32&nbsp;+&nbsp;PQ</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Future</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Planned</td>
+    </tr>
+  </tbody>
+</table>
+**Cấu hình khuyến nghị**:
+<pre tabindex="0"><code>i2cp.leaseSetEncType=4,0
+</code></pre><p>Điều này cung cấp X25519 (thuật toán trao đổi khóa dựa trên đường cong elliptic Curve25519; được ưu tiên) cùng với phương án dự phòng ElGamal (lược đồ mật mã khóa công khai) để bảo đảm khả năng tương thích.</p>
+<h3 id="chi-tiết-về-kiểu-mã-hóa">Chi tiết về kiểu mã hóa</h3>
+<p><strong>Loại 0 - ElGamal/AES+SessionTags (thẻ phiên)</strong>: - khóa công khai ElGamal 2048-bit (256 byte) - mã hóa đối xứng AES-256 - session tags 32 byte được gửi theo từng lô - mức tiêu tốn CPU, băng thông và bộ nhớ cao - đang được loại bỏ dần trên toàn mạng</p>
+<p><strong>Loại 4 - ECIES-X25519-AEAD-Ratchet</strong>: - Trao đổi khóa X25519 (khóa 32 byte) - ChaCha20/Poly1305 AEAD - Double ratchet kiểu Signal (cơ chế tăng tiến khóa kép kiểu Signal) - Thẻ phiên 8 byte (so với 32 byte của ElGamal) - Thẻ được tạo qua PRNG đồng bộ (không gửi trước) - Giảm overhead ~92% so với ElGamal - Tiêu chuẩn cho I2P hiện đại (hầu hết routers dùng cơ chế này)</p>
+<p><strong>Loại 5-6 - Post-Quantum Hybrid (lai hậu lượng tử)</strong>: - Kết hợp X25519 với ML-KEM (NIST FIPS 203) - Cung cấp bảo mật kháng lượng tử - ML-KEM-768 cho cân bằng giữa bảo mật/hiệu năng - ML-KEM-1024 cho mức bảo mật tối đa - Kích thước thông điệp lớn hơn do thành phần khóa hậu lượng tử (PQ) - Hỗ trợ ở cấp độ mạng vẫn đang được triển khai</p>
+<h3 id="chiến-lược-di-chuyển">Chiến lược di chuyển</h3>
+<p>Mạng I2P đang tích cực chuyển đổi từ ElGamal (loại 0) sang X25519 (loại 4):</p>
+<ul>
+<li>NTCP → NTCP2 (đã hoàn tất)</li>
+<li>SSU → SSU2 (đã hoàn tất)</li>
+<li>ElGamal tunnels → X25519 tunnels (đã hoàn tất)</li>
+<li>ElGamal đầu-cuối → ECIES-X25519 (phần lớn đã hoàn tất)</li>
+</ul>
+<h2 id="leaseset2-và-các-tính-năng-nâng-cao">LeaseSet2 và các tính năng nâng cao</h2>
+<h3 id="tùy-chọn-leaseset2-định-dạng-leaseset-thế-hệ-thứ-hai-kể-từ-0938">Tùy chọn LeaseSet2 (định dạng LeaseSet thế hệ thứ hai) (kể từ 0.9.38)</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Option</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Since</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetType</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.38</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Specifies LeaseSet variant (1, 3, 5, 7)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetEncType</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.38</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Encryption types supported (comma-separated)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetAuthType</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.41</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Per-client authentication: 0 = none, 1 = DH, 2 = PSK</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetPrivKey</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.41</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">X25519 private key for decrypting LS2 with auth</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetSecret</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.39</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Base64 secret for blinded addresses</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetTransientPublicKey</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.38</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Transient signing key for offline signatures</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetPrivateKey</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.18</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Persistent LeaseSet encryption keys (type:key pairs)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetOption.nnn</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.66</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Service records (proposal 167)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetClient.dh.nnn</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.41</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">DH client auth material (indexed from 0)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetClient.psk.nnn</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.41</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">PSK client auth material (indexed from 0)</td>
+    </tr>
+  </tbody>
+</table>
+### Địa chỉ bị làm mù
+<p>Kể từ 0.9.39, các đích (Destination) có thể sử dụng các địa chỉ &ldquo;blinded&rdquo; (địa chỉ được làm mù) (định dạng b33) thay đổi định kỳ: - Yêu cầu <code>i2cp.leaseSetSecret</code> để bảo vệ bằng mật khẩu - Tùy chọn xác thực theo từng máy khách - Xem các đề xuất 123 và 149 để biết chi tiết</p>
+<h3 id="bản-ghi-dịch-vụ-từ-0966">Bản ghi dịch vụ (từ 0.9.66)</h3>
+<p>LeaseSet2 hỗ trợ các tùy chọn bản ghi dịch vụ (đề xuất 167):</p>
+<pre tabindex="0"><code>i2cp.leaseSetOption.0=_smtp._tcp=1 86400 0 0 25 mail.example.b32.i2p
+</code></pre><p>Định dạng tuân theo kiểu bản ghi DNS SRV nhưng đã được điều chỉnh cho I2P.</p>
+<h2 id="nhiều-phiên-từ-0921">Nhiều phiên (từ 0.9.21)</h2>
+<p>Một kết nối I2CP duy nhất có thể duy trì nhiều phiên:</p>
+<p><strong>Phiên chính</strong>: Phiên đầu tiên được tạo trên một kết nối <strong>Các phiên phụ</strong>: Các phiên bổ sung chia sẻ nhóm tunnel của phiên chính</p>
+<h3 id="các-đặc-tính-của-subsession-phiên-con">Các đặc tính của Subsession (phiên con)</h3>
+<ol>
+<li><strong>Tunnels dùng chung</strong>: Sử dụng cùng các pool tunnel vào/ra như phiên chính</li>
+<li><strong>Khóa mã hóa dùng chung</strong>: Phải dùng các khóa mã hóa LeaseSet giống hệt nhau</li>
+<li><strong>Khóa ký khác nhau</strong>: Phải dùng các khóa ký của Destination (đích trong I2P) khác nhau</li>
+<li><strong>Không có bảo đảm ẩn danh</strong>: Được liên kết rõ ràng với phiên chính (cùng router, cùng tunnels)</li>
+</ol>
+<h3 id="trường-hợp-sử-dụng-subsession-phiên-con">Trường hợp sử dụng Subsession (phiên con)</h3>
+<p>Cho phép giao tiếp với các đích sử dụng các loại chữ ký khác nhau: - Chính: chữ ký EdDSA (hiện đại) - Subsession (phiên phụ): chữ ký DSA (tương thích với hệ thống cũ)</p>
+<h3 id="vòng-đời-subsession-phiên-con">Vòng đời Subsession (phiên con)</h3>
+<p><strong>Tạo lập</strong>:</p>
+<pre tabindex="0"><code>Client → Router: CreateSessionMessage
+Router → Client: SessionStatusMessage (unique Session ID)
+Router → Client: RequestVariableLeaseSetMessage (separate for each destination)
+Client → Router: CreateLeaseSet2Message (separate for each destination)
+</code></pre><p><strong>Hủy</strong>: - Hủy một phiên con: Giữ nguyên phiên chính - Hủy phiên chính: Hủy tất cả các phiên con và đóng kết nối - DisconnectMessage (Thông điệp ngắt kết nối): Hủy tất cả các phiên</p>
+<h3 id="xử-lý-id-phiên">Xử lý ID phiên</h3>
+<p>Hầu hết các thông điệp I2CP chứa một trường Session ID. Ngoại lệ: - DestLookup / DestReply (đã lỗi thời, hãy dùng HostLookup / HostReply) - GetBandwidthLimits / BandwidthLimits (phản hồi không gắn với phiên)</p>
+<p><strong>Quan trọng</strong>: Các ứng dụng khách không nên đồng thời có nhiều thông điệp CreateSession đang chờ xử lý, vì không thể đối chiếu một cách chắc chắn các phản hồi với các yêu cầu.</p>
+<h2 id="danh-mục-thông-điệp">Danh mục thông điệp</h2>
+<h3 id="tóm-tắt-các-loại-thông-điệp">Tóm tắt các loại thông điệp</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Name</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Direction</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Since</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">CreateSession</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ReconfigureSession</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">DestroySession</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">CreateLeaseSet</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">5</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SendMessage</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">6</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ReceiveMessageBegin</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">7</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ReceiveMessageEnd</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">8</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">GetBandwidthLimits</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">20</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SessionStatus</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">21</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">RequestLeaseSet</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">22</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">MessageStatus</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">23</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">BandwidthLimits</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">29</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ReportAbuse</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bidirectional</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Unused</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">30</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Disconnect</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bidirectional</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">31</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">MessagePayload</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">32</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">GetDate</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">33</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SetDate</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">34</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">DestLookup</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">35</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">DestReply</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">36</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SendMessageExpires</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">37</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">RequestVariableLeaseSet</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.7</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">38</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">HostLookup</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.11</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">39</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">HostReply</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.11</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">41</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">CreateLeaseSet2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.39</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">42</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">BlindingInfo</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.43</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+  </tbody>
+</table>
+**Chú giải**: C = Máy khách, R = Router
+<h3 id="chi-tiết-chính-của-thông-điệp">Chi tiết chính của thông điệp</h3>
+<h4 id="createsessionmessage-thông-điệp-khởi-tạo-phiên-loại-1">CreateSessionMessage (thông điệp khởi tạo phiên) (Loại 1)</h4>
+<p><strong>Mục đích</strong>: Khởi tạo một phiên I2CP mới</p>
+<p><strong>Nội dung</strong>: Cấu trúc SessionConfig</p>
+<p><strong>Phản hồi</strong>: SessionStatusMessage (status=Created hoặc Invalid)</p>
+<p><strong>Yêu cầu</strong>: - Date trong SessionConfig phải trong vòng ±30 giây so với thời gian của router - Bảng ánh xạ phải được sắp xếp theo khóa để xác minh chữ ký - Destination (đích trong I2P) không được có một phiên đang hoạt động từ trước</p>
+<h4 id="requestvariableleasesetmessage-loại-37">RequestVariableLeaseSetMessage (Loại 37)</h4>
+<p><strong>Mục đích</strong>: Router yêu cầu máy khách ủy quyền cho các tunnel đầu vào</p>
+<p><strong>Nội dung</strong>: - ID phiên - Số lượng Lease (bản ghi thuê đường hầm trong I2P) - Mảng các cấu trúc Lease (mỗi cấu trúc có thời điểm hết hạn riêng)</p>
+<p><strong>Phản hồi</strong>: CreateLeaseSet2Message (thông điệp tạo LeaseSet2)</p>
+<p><strong>Ý nghĩa</strong>: Đây là tín hiệu cho biết phiên đang hoạt động. Router chỉ gửi điều này sau khi: 1. Ít nhất một tunnel vào đã được thiết lập 2. Ít nhất một tunnel ra đã được thiết lập</p>
+<p><strong>Khuyến nghị về thời gian chờ</strong>: Các ứng dụng khách nên hủy phiên nếu không nhận được thông điệp này trong vòng từ 5 phút trở lên kể từ khi tạo phiên.</p>
+<h4 id="createleaseset2message-loại-41">CreateLeaseSet2Message (Loại 41)</h4>
+<p><strong>Mục đích</strong>: Ứng dụng khách công bố LeaseSet lên cơ sở dữ liệu mạng (netDb)</p>
+<p><strong>Nội dung</strong>: - ID phiên - byte loại LeaseSet (1, 3, 5, hoặc 7) - LeaseSet hoặc LeaseSet2 hoặc EncryptedLeaseSet hoặc MetaLeaseSet - Số lượng khóa riêng - Danh sách khóa riêng (một khóa cho mỗi khóa công khai trong LeaseSet, cùng thứ tự)</p>
+<p><strong>Khóa riêng</strong>: Cần thiết để giải mã các garlic messages (thông điệp theo mô hình &lsquo;garlic&rsquo; của I2P) đến. Định dạng:</p>
+<pre tabindex="0"><code>Encryption type (2 bytes)
+Key length (2 bytes)
+Private key data (variable)
+</code></pre><p><strong>Lưu ý</strong>: Thay thế CreateLeaseSetMessage (type 4) đã lỗi thời, vốn không hỗ trợ: - Các biến thể LeaseSet2 - Mã hóa không phải ElGamal - Nhiều loại mã hóa - LeaseSets được mã hóa - Khóa ký ngoại tuyến</p>
+<h4 id="sendmessageexpiresmessage-thông-điệp-thông-báo-việc-gửi-tin-nhắn-đã-hết-hạn-loại-36">SendMessageExpiresMessage (thông điệp thông báo việc gửi tin nhắn đã hết hạn) (Loại 36)</h4>
+<p><strong>Mục đích</strong>: Gửi thông điệp tới đích đến kèm thời hạn hết hiệu lực và các tùy chọn nâng cao</p>
+<p><strong>Nội dung</strong>: - ID phiên - Đích - Tải (được nén gzip) - Nonce (số dùng một lần) (4 byte) - Cờ (2 byte) - xem bên dưới - Ngày hết hạn (6 byte, rút gọn từ 8)</p>
+<p><strong>Trường cờ</strong> (2 byte, thứ tự bit 15&hellip;0):</p>
+<p><strong>Các bit 15-11</strong>: Không sử dụng, phải là 0</p>
+<p><strong>Bits 10-9</strong>: Ghi đè độ tin cậy của thông điệp (không sử dụng, dùng nonce (giá trị dùng một lần) thay thế)</p>
+<p><strong>Bit 8</strong>: Không đóng gói kèm LeaseSet - 0: Router có thể đóng gói kèm LeaseSet trong garlic (một cơ chế thông điệp/mã hóa trong I2P) - 1: Không đóng gói kèm LeaseSet</p>
+<p><strong>Các bit 7-4</strong>: Ngưỡng thẻ thấp (chỉ áp dụng cho ElGamal, bị bỏ qua đối với ECIES)</p>
+<pre tabindex="0"><code>0000 = Use session settings
+0001 = 2 tags
+0010 = 3 tags
+...
+1111 = 192 tags
+</code></pre><p><strong>Các bit 3-0</strong>: Các thẻ cần gửi nếu cần (chỉ dùng với ElGamal (thuật toán mã hóa khóa công khai ElGamal), bị bỏ qua trong ECIES (Elliptic Curve Integrated Encryption Scheme - hệ mã tích hợp đường cong elliptic))</p>
+<pre tabindex="0"><code>0000 = Use session settings
+0001 = 2 tags
+0010 = 4 tags
+...
+1111 = 160 tags
+</code></pre><h4 id="messagestatusmessage-loại-22">MessageStatusMessage (Loại 22)</h4>
+<p><strong>Mục đích</strong>: Thông báo cho ứng dụng khách về trạng thái chuyển phát thông điệp</p>
+<p><strong>Nội dung</strong>: - ID phiên - ID thông điệp (được router tạo ra) - Mã trạng thái (1 byte) - Kích thước (4 byte, chỉ áp dụng khi status=0) - Nonce (giá trị dùng một lần; 4 byte, khớp nonce SendMessage của máy khách)</p>
+<p><strong>Mã trạng thái</strong> (Thông điệp gửi đi):</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Code</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Name</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Meaning</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Accepted</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Router accepted message</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Success</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Best Effort Success</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Probable delivery</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Success</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Guaranteed Success</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Probable delivery</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Success</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">6</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Local Success</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Delivered to local client</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Success</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Best Effort Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Probable failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">5</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Guaranteed Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Generic failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">7</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Local Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Local delivery failed</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">8</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Router Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Router shutdown/error</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">9</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Network Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">No network connectivity</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">10</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bad Session</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Invalid/closed session</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">11</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bad Message</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Invalid payload</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">12</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bad Options</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Invalid options/expiration</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">13</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Overflow Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Queue/buffer full</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">14</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Message Expired</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Expired before send</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">15</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bad Local LeaseSet</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Local LeaseSet problem</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">16</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">No Local Tunnels</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">No tunnels available</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">17</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Unsupported Encryption</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Incompatible encryption</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">18</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bad Destination</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Invalid remote destination</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">19</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bad Leaseset</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Invalid remote LeaseSet</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">20</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Expired Leaseset</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Remote LeaseSet expired</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">21</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">No Leaseset</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Remote LeaseSet not found</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">22</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Meta Leaseset</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Cannot send to meta LS</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">23</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Loopback Denied</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Same source and destination</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+  </tbody>
+</table>
+**Mã thành công**: 1, 2, 4, 6 **Mã thất bại**: Tất cả các mã khác
+<p><strong>Mã trạng thái 0</strong> (ĐÃ NGỪNG SỬ DỤNG): Thông điệp sẵn có (đến, fast receive (nhận nhanh) bị vô hiệu hóa)</p>
+<h4 id="hostlookupmessage-loại-38">HostLookupMessage (Loại 38)</h4>
+<p><strong>Mục đích</strong>: Tra cứu đích theo tên máy chủ hoặc mã băm (thay thế DestLookup)</p>
+<p><strong>Nội dung</strong>: - ID phiên (hoặc 0xFFFF nếu không có phiên) - ID yêu cầu (4 byte) - Thời gian chờ tính bằng mili giây (4 byte, giá trị tối thiểu khuyến nghị: 10000) - Loại yêu cầu (1 byte) - Khóa tra cứu (Hash, chuỗi hostname, hoặc Destination (đích I2P))</p>
+<p><strong>Các loại yêu cầu</strong>:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Lookup Key</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Returns</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Since</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Hash</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Destination</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Hostname String</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Destination</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Hash</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Destination + Options</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.66</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Hostname String</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Destination + Options</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.66</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Destination</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Destination + Options</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.66</td>
+    </tr>
+  </tbody>
+</table>
+Các loại 2-4 trả về các tùy chọn LeaseSet (đề xuất 167) nếu có.
+<p><strong>Phản hồi</strong>: HostReplyMessage</p>
+<h4 id="hostreplymessage-loại-39">HostReplyMessage (Loại 39)</h4>
+<p><strong>Mục đích</strong>: Phản hồi cho HostLookupMessage (thông điệp tra cứu máy chủ)</p>
+<p><strong>Nội dung</strong>: - ID phiên - ID yêu cầu - Mã kết quả (1 byte) - Destination (điểm đích) (xuất hiện khi thành công, đôi khi trong một số lỗi cụ thể) - Ánh xạ (chỉ cho các kiểu tra cứu 2-4, có thể để trống)</p>
+<p><strong>Mã kết quả</strong>:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Code</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Name</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Success</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Lookup succeeded</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Generic failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Lookup Password Required</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Blinded address requires password</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Private Key Required</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Blinded address requires private key</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Password and Key Required</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Blinded address requires both</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">5</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">LeaseSet Decryption Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Cannot decrypt LeaseSet</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">6</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">LeaseSet Lookup Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">LeaseSet not found in netdb</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">7</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Lookup Type Unsupported</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Router doesn't support this type</td>
+    </tr>
+  </tbody>
+</table>
+#### BlindingInfoMessage (thông điệp thông tin blinding) (Loại 42)
+<p><strong>Mục đích</strong>: Thông báo cho router về các yêu cầu xác thực cho blinded destination (đích được che giấu định danh bằng kỹ thuật blinding) (kể từ 0.9.43)</p>
+<p><strong>Nội dung</strong>: - ID phiên - Cờ (1 byte) - Kiểu điểm cuối (1 byte): 0=Băm, 1=tên máy chủ, 2=Destination (đích trong I2P), 3=SigType+Key - Loại chữ ký mù (2 byte) - Thời gian hết hạn (4 byte, số giây kể từ Unix epoch) - Dữ liệu điểm cuối (thay đổi tùy theo loại) - Khóa riêng (32 byte, chỉ khi bit cờ 0 được đặt) - Mật khẩu tra cứu (String, chỉ khi bit cờ 4 được đặt)</p>
+<p><strong>Cờ</strong> (thứ tự bit 76543210):</p>
+<ul>
+<li><strong>Bit 0</strong>: 0=tất cả, 1=theo từng máy khách</li>
+<li><strong>Các bit 3-1</strong>: Lược đồ xác thực (nếu bit 0=1): 000=DH, 001=PSK</li>
+<li><strong>Bit 4</strong>: 1=yêu cầu bí mật</li>
+<li><strong>Các bit 7-5</strong>: Không sử dụng, đặt thành 0</li>
+</ul>
+<p><strong>Không có phản hồi</strong>: Router xử lý âm thầm</p>
+<p><strong>Trường hợp sử dụng</strong>: Trước khi gửi đến đích mù (địa chỉ b33), máy khách phải thực hiện một trong hai: 1. Tra cứu b33 qua HostLookup, HOẶC 2. Gửi thông điệp BlindingInfo</p>
+<p>Nếu đích (Destination) yêu cầu xác thực, BlindingInfo là bắt buộc.</p>
+<h4 id="reconfiguresessionmessage-thông-điệp-cấu-hình-lại-phiên-loại-2">ReconfigureSessionMessage (thông điệp cấu hình lại phiên) (Loại 2)</h4>
+<p><strong>Mục đích</strong>: Cập nhật cấu hình phiên sau khi tạo</p>
+<p><strong>Nội dung</strong>: - Session ID - SessionConfig (chỉ cần các tùy chọn đã thay đổi)</p>
+<p><strong>Phản hồi</strong>: SessionStatusMessage (thông điệp trạng thái phiên) (status=Updated or Invalid)</p>
+<p><strong>Ghi chú</strong>: - Router hợp nhất cấu hình mới với cấu hình hiện có - Tùy chọn Tunnel (<code>inbound.*</code>, <code>outbound.*</code>) luôn được áp dụng - Một số tùy chọn có thể là bất biến sau khi tạo phiên - Thời gian phải nằm trong ±30 giây so với thời gian của router - Bảng ánh xạ phải được sắp xếp theo khóa</p>
+<h4 id="destroysessionmessage-loại-3">DestroySessionMessage (Loại 3)</h4>
+<p><strong>Mục đích</strong>: Kết thúc phiên</p>
+<p><strong>Nội dung</strong>: ID phiên</p>
+<p><strong>Phản hồi dự kiến</strong>: SessionStatusMessage (status=Destroyed)</p>
+<p><strong>Hành vi thực tế</strong> (Java I2P đến 0.9.66): - Router không bao giờ gửi SessionStatus(Destroyed) - Nếu không còn phiên nào: Gửi DisconnectMessage - Nếu còn subsessions (các phiên con): Không phản hồi</p>
+<p><strong>Quan trọng</strong>: Hành vi của Java I2P lệch khỏi đặc tả. Các triển khai nên thận trọng khi hủy các subsessions (tiểu phiên) riêng lẻ.</p>
+<h4 id="disconnectmessage-thông-điệp-ngắt-kết-nối-loại-30">DisconnectMessage (thông điệp ngắt kết nối) (Loại 30)</h4>
+<p><strong>Mục đích</strong>: Thông báo rằng kết nối sắp bị chấm dứt</p>
+<p><strong>Nội dung</strong>: Chuỗi lý do</p>
+<p><strong>Tác động</strong>: Tất cả các phiên trên kết nối bị hủy, socket (điểm cuối giao tiếp mạng) được đóng</p>
+<p><strong>Hiện thực</strong>: Chủ yếu từ router → máy khách trong Java I2P</p>
+<h2 id="lịch-sử-phiên-bản-giao-thức">Lịch sử phiên bản giao thức</h2>
+<h3 id="phát-hiện-phiên-bản">Phát hiện phiên bản</h3>
+<p>Phiên bản giao thức I2CP được trao đổi trong các thông điệp Get/SetDate (kể từ 0.8.7). Đối với các router cũ hơn, thông tin về phiên bản không khả dụng.</p>
+<p><strong>Chuỗi phiên bản</strong>: Cho biết phiên bản API “core”, không nhất thiết là phiên bản router.</p>
+<h3 id="dòng-thời-gian-các-tính-năng">Dòng thời gian các tính năng</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Version</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Key Features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.67</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">PQ Hybrid ML-KEM (enc types 5-7) in LeaseSet</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.66</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Host lookup/reply extensions (proposal 167), service records</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.62</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">MessageStatus loopback error code</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.46</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">X25519 (enc type 4) in LeaseSet, ECIES end-to-end</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.43</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">BlindingInfo message, extended HostReply failure codes</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.41</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">EncryptedLeaseSet options, Meta LS error code</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.39</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">CreateLeaseSet2 message, RedDSA Ed25519 support</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.38</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Preliminary LS2 support (format changed in 0.9.39)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.21</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Multiple sessions on single connection</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.20</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Additional SetDate messages for clock shifts</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.16</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Authentication required before other messages (when enabled)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.15</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">EdDSA Ed25519 signature type</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.14</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Per-message reliability override with nonzero nonce</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.12</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECDSA P-256/384/521 signature types, RSA support</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.11</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">HostLookup/HostReply messages, auth in GetDate</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.7</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">RequestVariableLeaseSet message</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.5</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Additional MessageStatus codes</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.4</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Fast receive mode default, nonce=0 allowed</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.2</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SendMessageExpires flag tag bits</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">16 leases per LeaseSet (up from 6)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.8.7</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Version strings in Get/SetDate</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.8.4</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SendMessageExpires flag bits</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.8.3</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">DestLookup in standard session, concurrent lookups</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.8.1</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>messageReliability=none</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.7.2</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">GetBandwidthLimits, BandwidthLimits</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.7.1</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SendMessageExpires, ReconfigureSession, ports in gzip header</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.7</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">DestLookup, DestReply</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.6.5-</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Original protocol features</td>
+    </tr>
+  </tbody>
+</table>
+## Các cân nhắc bảo mật
+<h3 id="xác-thực">Xác thực</h3>
+<p><strong>Mặc định</strong>: Không yêu cầu xác thực <strong>Tùy chọn</strong>: Xác thực bằng tên người dùng/mật khẩu (kể từ 0.9.11) <strong>Bắt buộc</strong>: Khi được bật, quá trình xác thực phải hoàn tất trước các thông điệp khác (kể từ 0.9.16)</p>
+<p><strong>Kết nối từ xa</strong>: Luôn sử dụng TLS (<code>i2cp.SSL=true</code>) để bảo vệ thông tin xác thực và khóa riêng.</p>
+<h3 id="độ-lệch-đồng-hồ">Độ lệch đồng hồ</h3>
+<p>SessionConfig Date (ngày trong cấu hình phiên) phải nằm trong khoảng ±30 giây so với thời gian của router, nếu không phiên sẽ bị từ chối. Hãy dùng Get/SetDate (lấy/đặt ngày) để đồng bộ.</p>
+<h3 id="xử-lý-khóa-riêng">Xử lý khóa riêng</h3>
+<p>CreateLeaseSet2Message chứa các khóa riêng để giải mã các thông điệp đến. Các khóa này phải:</p>
+<ul>
+<li>Được truyền một cách an toàn (TLS cho các kết nối từ xa)</li>
+<li>Được router lưu trữ an toàn</li>
+<li>Được xoay vòng khi bị xâm phạm</li>
+</ul>
+<h3 id="hết-hạn-thông-điệp">Hết hạn thông điệp</h3>
+<p>Luôn dùng SendMessageExpires (không phải SendMessage) để thiết lập thời điểm hết hạn tường minh. Điều này: - Ngăn thông điệp bị xếp hàng vô thời hạn - Giảm tiêu thụ tài nguyên - Cải thiện độ tin cậy</p>
+<h3 id="quản-lý-session-tag-thẻ-phiên">Quản lý Session Tag (thẻ phiên)</h3>
+<p><strong>ElGamal</strong> (đã lỗi thời): - Các thẻ phải được truyền theo lô - Mất thẻ gây lỗi giải mã - Chi phí bộ nhớ cao</p>
+<p><strong>ECIES-X25519</strong> (hiện tại): - Thẻ được tạo thông qua PRNG (bộ tạo số giả ngẫu nhiên) được đồng bộ - Không cần truyền trước - Kháng chịu mất thông điệp - Chi phí phụ trội thấp hơn đáng kể</p>
+<h2 id="thực-hành-tốt-nhất">Thực hành tốt nhất</h2>
+<h3 id="dành-cho-các-nhà-phát-triển-ứng-dụng-khách">Dành cho các nhà phát triển ứng dụng khách</h3>
+<ol>
+<li>
+<p><strong>Sử dụng Chế độ Nhận Nhanh</strong>: Luôn đặt <code>i2cp.fastReceive=true</code> (hoặc dựa vào giá trị mặc định)</p>
+</li>
+<li>
+<p><strong>Ưu tiên ECIES-X25519 (lược đồ mã hóa khóa công khai tích hợp dựa trên đường cong elliptic X25519)</strong>: Cấu hình <code>i2cp.leaseSetEncType=4,0</code> để đạt hiệu năng tốt nhất mà vẫn đảm bảo khả năng tương thích</p>
+</li>
+<li>
+<p><strong>Thiết lập thời gian hết hạn tường minh</strong>: Sử dụng SendMessageExpires, không phải SendMessage</p>
+</li>
+<li>
+<p><strong>Xử lý Subsessions (các phiên con) một cách cẩn trọng</strong>: Lưu ý rằng subsessions không cung cấp tính ẩn danh giữa các destinations (đích đến)</p>
+</li>
+<li>
+<p><strong>Hết thời gian khi tạo phiên</strong>: Hủy phiên nếu không nhận được RequestVariableLeaseSet (thông điệp yêu cầu leaseSet biến đổi) trong vòng 5 phút</p>
+</li>
+<li>
+<p><strong>Sắp xếp Configuration Mappings (các ánh xạ cấu hình)</strong>: Luôn sắp xếp các khóa của Mapping trước khi ký SessionConfig (cấu hình phiên)</p>
+</li>
+<li>
+<p><strong>Sử dụng số lượng Tunnel phù hợp</strong>: Không đặt <code>quantity</code> &gt; 6 trừ khi cần thiết</p>
+</li>
+<li>
+<p><strong>Cân nhắc SAM/BOB cho các ngôn ngữ không phải Java</strong>: Triển khai SAM thay vì sử dụng trực tiếp I2CP</p>
+</li>
+</ol>
+<h3 id="dành-cho-các-nhà-phát-triển-router">Dành cho các nhà phát triển Router</h3>
+<ol>
+<li>
+<p><strong>Xác thực mốc thời gian</strong>: Bắt buộc cửa sổ ±30 giây đối với các mốc thời gian trong SessionConfig</p>
+</li>
+<li>
+<p><strong>Giới hạn kích thước thông điệp</strong>: Bắt buộc kích thước thông điệp tối đa ~64 KB</p>
+</li>
+<li>
+<p><strong>Hỗ trợ nhiều phiên</strong>: Triển khai hỗ trợ subsession (phiên phụ) theo đặc tả 0.9.21</p>
+</li>
+<li>
+<p><strong>Gửi RequestVariableLeaseSet kịp thời</strong>: Chỉ sau khi cả inbound và outbound tunnels đều tồn tại</p>
+</li>
+<li>
+<p><strong>Xử lý các thông điệp đã bị loại bỏ dần (deprecated)</strong>: Chấp nhận nhưng không khuyến khích sử dụng ReceiveMessageBegin/End</p>
+</li>
+<li>
+<p><strong>Hỗ trợ ECIES-X25519 (lược đồ mã hóa ECIES dùng X25519)</strong>: Ưu tiên mã hóa loại 4 cho các triển khai mới</p>
+</li>
+</ol>
+<h2 id="gỡ-lỗi-và-khắc-phục-sự-cố">Gỡ lỗi và khắc phục sự cố</h2>
+<h3 id="các-vấn-đề-thường-gặp">Các vấn đề thường gặp</h3>
+<p><strong>Phiên bị từ chối (không hợp lệ)</strong>: - Kiểm tra độ lệch đồng hồ (phải nằm trong ±30 giây) - Xác minh ánh xạ được sắp xếp theo khóa - Đảm bảo đích chưa được sử dụng</p>
+<p><strong>Không có RequestVariableLeaseSet</strong>: - Router có thể đang xây dựng tunnels (chờ tối đa 5 phút) - Kiểm tra sự cố kết nối mạng - Xác minh có đủ kết nối peer (nút ngang hàng)</p>
+<p><strong>Lỗi chuyển phát thông điệp</strong>: - Kiểm tra các mã MessageStatus để biết lý do lỗi cụ thể - Xác minh LeaseSet từ xa (tập hợp thông tin đường hầm đến) đã được công bố và còn hiệu lực - Đảm bảo các loại mã hóa tương thích</p>
+<p><strong>Vấn đề Subsession (phiên phụ)</strong>: - Xác minh phiên chính được tạo trước - Xác nhận dùng cùng khóa mã hóa - Kiểm tra các khóa ký riêng biệt</p>
+<h3 id="thông-báo-chẩn-đoán">Thông báo chẩn đoán</h3>
+<p><strong>GetBandwidthLimits</strong>: Truy vấn giới hạn băng thông của router <strong>HostLookup</strong>: Kiểm tra phân giải tên và tính sẵn sàng của LeaseSet <strong>MessageStatus</strong>: Theo dõi việc chuyển phát thông điệp từ đầu đến cuối</p>
+<h2 id="các-đặc-tả-liên-quan">Các đặc tả liên quan</h2>
+<ul>
+<li><strong>Cấu trúc chung</strong>: /docs/specs/common-structures/</li>
+<li><strong>I2NP (Giao thức mạng)</strong>: /docs/specs/i2np/</li>
+<li><strong>ECIES-X25519</strong>: /docs/specs/ecies/</li>
+<li><strong>Tạo Tunnel</strong>: /docs/specs/implementation/</li>
+<li><strong>Thư viện Streaming (truyền dòng)</strong>: /docs/specs/streaming/</li>
+<li><strong>Thư viện Datagram (gói tin)</strong>: /docs/api/datagrams/</li>
+<li><strong>SAM v3</strong>: /docs/api/samv3/</li>
+</ul>
+<h2 id="các-đề-xuất-được-tham-chiếu">Các đề xuất được tham chiếu</h2>
+<ul>
+<li><a href="../../../../vi/proposals/123-new-netdb-entries/">Đề xuất 123</a>
+: LeaseSets được mã hóa và xác thực</li>
+<li><a href="../../../../vi/proposals/144-ecies-x25519-aead-ratchet/">Đề xuất 144</a>
+: ECIES-X25519-AEAD-Ratchet (cơ chế mã hóa lai dùng ECIES và X25519 với AEAD và ratchet)</li>
+<li><a href="../../../../vi/proposals/149-b32-encrypted-ls2/">Đề xuất 149</a>
+: Định dạng địa chỉ bị làm mù (b33)</li>
+<li><a href="../../../../vi/proposals/152-ecies-tunnels/">Đề xuất 152</a>
+: Tạo tunnel X25519</li>
+<li><a href="../../../../vi/proposals/154-ecies-lookups/">Đề xuất 154</a>
+: Tra cứu cơ sở dữ liệu từ các đích ECIES (Destination)</li>
+<li><a href="../../../../vi/proposals/156-ecies-routers/">Đề xuất 156</a>
+: Di chuyển router sang ECIES-X25519</li>
+<li><a href="../../../../vi/proposals/161-ri-dest-padding/">Đề xuất 161</a>
+: Nén phần đệm của đích</li>
+<li><a href="../../../../vi/proposals/167-service-records/">Đề xuất 167</a>
+: Bản ghi dịch vụ LeaseSet</li>
+<li><a href="../../../../vi/proposals/169-pq-crypto/">Đề xuất 169</a>
+: Mật mã lai hậu lượng tử (ML-KEM)</li>
+</ul>
+<h2 id="tài-liệu-tham-chiếu-javadocs">Tài liệu tham chiếu Javadocs</h2>
+<ul>
+<li><a href="http://docs.i2p-projekt.de/javadoc/net/i2p/data/i2cp/package-summary.html">Gói I2CP</a>
+</li>
+<li><a href="http://docs.i2p-projekt.de/javadoc/net/i2p/data/i2cp/MessageStatusMessage.html">MessageStatusMessage</a>
+</li>
+<li><a href="http://docs.i2p-projekt.de/javadoc/net/i2p/client/package-summary.html">API máy khách</a>
+</li>
+</ul>
+<h2 id="tóm-tắt-ngừng-hỗ-trợ">Tóm tắt ngừng hỗ trợ</h2>
+<h3 id="các-thông-điệp-lỗi-thời-không-được-sử-dụng">Các thông điệp lỗi thời (Không được sử dụng)</h3>
+<ul>
+<li><strong>CreateLeaseSetMessage</strong> (loại 4): Sử dụng CreateLeaseSet2Message</li>
+<li><strong>RequestLeaseSetMessage</strong> (loại 21): Sử dụng RequestVariableLeaseSetMessage</li>
+<li><strong>ReceiveMessageBeginMessage</strong> (loại 6): Sử dụng chế độ nhận nhanh</li>
+<li><strong>ReceiveMessageEndMessage</strong> (loại 7): Sử dụng chế độ nhận nhanh</li>
+<li><strong>DestLookupMessage</strong> (loại 34): Sử dụng HostLookupMessage</li>
+<li><strong>DestReplyMessage</strong> (loại 35): Sử dụng HostReplyMessage</li>
+<li><strong>ReportAbuseMessage</strong> (loại 29): Chưa bao giờ được triển khai</li>
+</ul>
+<h3 id="các-tùy-chọn-đã-lỗi-thời">Các tùy chọn đã lỗi thời</h3>
+<ul>
+<li>Mã hóa ElGamal (loại 0): Chuyển sang ECIES-X25519 (loại 4)</li>
+<li>Chữ ký DSA: Chuyển sang EdDSA hoặc ECDSA</li>
+<li><code>i2cp.fastReceive=false</code>: Luôn sử dụng chế độ nhận nhanh</li>
+</ul>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../vi/docs/specs/streaming/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">Giao thức Streaming (giao thức truyền theo luồng)</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../vi/docs/specs/i2np/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">Giao thức mạng I2P (I2NP)</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/vi/docs/specs/i2cp.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Cập nhật tin tức I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Nhập email của bạn" required>
+                            <button type="submit">Đăng ký</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Liên kết nhanh</h3>
+                <ul>
+                    <li><a href="../../../../vi/financial-support/">Quyên góp</a></li>
+                    <li><a href="../../../../vi/docs/overview/intro/">Giới thiệu I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Cộng đồng</h3>
+                <ul>
+                    <li><a href="../../../../vi/get-involved/">Tham Gia</a></li>
+                    <li><a href="../../../../vi/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Diễn đàn chính thức</a></li>
+                    <li><a href="../../../../vi/contact/">Liên hệ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Tài nguyên</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Thống kê I2P</a></li>
+                    <li><a href="../../../../vi/papers/">Nghiên cứu</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Dự án Internet Vô hình. Được cấp phép theo Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../vi/privacy/">Quyền riêng tư</a>
+                <a href="../../../../vi/terms/">Điều khoản</a>
+                <a href="../../../../vi/about/media/">Báo chí</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Đóng">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Thăm dò ý kiến cộng đồng</h2>
+            <p class="modal-subtitle">Chúng tôi rất muốn nghe ý kiến từ bạn</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Phiếu bầu của bạn giúp định hình tương lai của I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

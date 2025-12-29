@@ -1,0 +1,3756 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>ECIES-X25519-AEAD-Ratchet | I2P - Проект невидимого интернета</title>
+
+    <meta name="description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="ECIES-X25519-AEAD-Ratchet | I2P - Проект невидимого интернета">
+    <meta property="og:description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/ru/proposals/144-ecies-x25519-aead-ratchet/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Бета-сайт I2P теперь доступен Сообщайте о проблемах с E-Mail на stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Закрыть баннер" title="Закрыть баннер">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../ru/" class="logo-link">
+                    <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../ru/about/" class="">О проекте</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../ru/about/">Обзор</a></li>
+                            <li><a href="../../../ru/papers/">Научные статьи</a></li>
+                            <li><a href="../../../ru/about/media/">Пресса</a></li>
+                            <li><a href="../../../ru/contact/">Связаться с нами</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../ru/docs/" class="">Документы</a></li>
+                    <li><a href="../../../ru/downloads/" class="">Загрузки</a></li>
+                    <li><a href="../../../ru/blog/" class="">Блог</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../ru/get-involved/" class="">Присоединиться</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../ru/get-involved/">Обзор</a></li>
+                            <li><a href="../../../ru/feedback/">Предложения по функциям</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">ru</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../en/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">Английский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../es/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">Испанский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ko/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">Корейский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../zh/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">Китайский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ru/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option active">Русский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../cs/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">Чешский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../de/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">Немецкий</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../fr/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">Французский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../tr/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">Турецкий</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../vi/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">Вьетнамский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../hi/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">Хинди</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ar/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">Арабский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../pt/proposals/144-ecies-x25519-aead-ratchet/"
+                                class="lang-option">Португальский</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../ru/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../ru/downloads/" class="btn btn-primary">Загрузить I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+<div class="proposals-page">
+    <div class="container">
+        
+        <nav class="breadcrumbs">
+            <a href="../../../ru/">Home</a>
+            <span class="separator">/</span>
+            <a href="../../../ru/proposals/">Proposals</a>
+            <span class="separator">/</span>
+            <span class="current">ECIES-X25519-AEAD-Ratchet</span>
+        </nav>
+
+        
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Этот перевод был создан с помощью машинного обучения и может быть не на 100% точным.</span>
+    
+    
+    <a href="../../../en/proposals/144-ecies-x25519-aead-ratchet/" class="disclaimer-link">Просмотреть английскую версию</a>
+    
+</div>
+
+
+
+        
+        <header class="proposal-header">
+            <div class="proposal-title-section">
+                <h1 class="proposal-title">ECIES-X25519-AEAD-Ratchet</h1>
+                <div class="proposal-number">Proposal 144</div>
+            </div>
+
+            
+            <div class="proposal-meta-box">
+                <div class="proposal-status status-закрыто">
+                    Закрыто
+                </div>
+
+                
+                <div class="proposal-info-grid">
+                    
+                    <div class="info-item">
+                        <span class="info-label">Author</span>
+                        <span class="info-value">zzz, chisana, orignal</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Created</span>
+                        <span class="info-value">2018-11-22</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Last Updated</span>
+                        <span class="info-value">2025-03-05</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Target Version</span>
+                        <span class="info-value">0.9.46</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Implemented In</span>
+                        <span class="info-value">0.9.46</span>
+                    </div>
+                    
+                </div>
+
+                
+                
+            </div>
+        </header>
+
+        
+        <div class="proposal-layout proposal-layout--with-toc">
+            
+            
+            <aside class="proposal-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#примечание">Примечание</a></li>
+    <li><a href="#обзор">Обзор</a>
+      <ul>
+        <li><a href="#current-elgamal-uses">Current ElGamal Uses</a></li>
+        <li><a href="#enctypes-in-key-certs">EncTypes in Key Certs</a></li>
+        <li><a href="#текущее-использование-elgamal">Текущее использование ElGamal</a></li>
+        <li><a href="#enctypes-в-key-certs">EncTypes в Key Certs</a></li>
+        <li><a href="#использование-асимметричной-криптографии">Использование асимметричной криптографии</a></li>
+        <li><a href="#цели">Цели</a></li>
+        <li><a href="#не-цели--вне-области-применения">Не-цели / Вне области применения</a></li>
+      </ul>
+    </li>
+    <li><a href="#detailed-proposal">Detailed Proposal</a>
+      <ul>
+        <li><a href="#обоснование">Обоснование</a></li>
+        <li><a href="#модель-угроз">Модель угроз</a></li>
+        <li><a href="#crypto-type">Crypto Type</a></li>
+        <li><a href="#обзор-криптографического-дизайна">Обзор криптографического дизайна</a></li>
+        <li><a href="#новые-криптографические-примитивы-для-i2p">Новые криптографические примитивы для I2P</a></li>
+        <li><a href="#тип-шифрования">Тип шифрования</a></li>
+        <li><a href="#фреймворк-протокола-noise">Фреймворк протокола Noise</a></li>
+        <li><a href="#дополнения-к-фреймворку">Дополнения к фреймворку</a></li>
+        <li><a href="#паттерны-рукопожатий">Паттерны рукопожатий</a></li>
+        <li><a href="#сессии">Сессии</a></li>
+        <li><a href="#контекст-сессии">Контекст сессии</a></li>
+        <li><a href="#связывание-входящих-и-исходящих-сессий">Связывание входящих и исходящих сессий</a></li>
+        <li><a href="#привязка-сессий-и-назначений">Привязка сессий и назначений</a></li>
+        <li><a href="#преимущества-привязки-и-сопряжения">Преимущества привязки и сопряжения</a></li>
+        <li><a href="#подтверждения-сообщений">Подтверждения сообщений</a></li>
+        <li><a href="#тайм-ауты-сессий">Тайм-ауты сессий</a></li>
+        <li><a href="#многоадресная-передача">Многоадресная передача</a></li>
+        <li><a href="#определения">Определения</a></li>
+        <li><a href="#1-формат-сообщения">1) Формат сообщения</a></li>
+        <li><a href="#обзор-текущего-формата-сообщений">Обзор текущего формата сообщений</a></li>
+        <li><a href="#обзор-формата-зашифрованных-данных">Обзор формата зашифрованных данных</a></li>
+        <li><a href="#новые-теги-сессий-и-сравнение-с-signal">Новые теги сессий и сравнение с Signal</a></li>
+        <li><a href="#1a-формат-новой-сессии">1a) Формат новой сессии</a></li>
+        <li><a href="#1b-новый-формат-сессии-с-привязкой">1b) Новый формат сессии (с привязкой)</a></li>
+        <li><a href="#новый-эфемерный-ключ-сессии">Новый эфемерный ключ сессии</a></li>
+        <li><a href="#статический-ключ">Статический ключ</a></li>
+        <li><a href="#полезная-нагрузка">Полезная нагрузка</a></li>
+        <li><a href="#1c-новый-формат-сессии-без-привязки">1c) Новый формат сессии (без привязки)</a></li>
+        <li><a href="#новый-эфемерный-ключ-сессии-1">Новый эфемерный ключ сессии</a></li>
+        <li><a href="#раздел-флагов-расшифрованные-данные">Раздел флагов Расшифрованные данные</a></li>
+        <li><a href="#полезная-нагрузка-1">Полезная нагрузка</a></li>
+        <li><a href="#1d-одноразовый-формат-без-привязки-или-сессии">1d) Одноразовый формат (без привязки или сессии)</a></li>
+        <li><a href="#одноразовый-ключ-новой-сессии">Одноразовый ключ новой сессии</a></li>
+        <li><a href="#раздел-флагов-расшифрованные-данные-1">Раздел флагов Расшифрованные данные</a></li>
+        <li><a href="#полезная-нагрузка-2">Полезная нагрузка</a></li>
+        <li><a href="#1f-kdf-для-сообщения-новой-сессии">1f) KDF для сообщения новой сессии</a></li>
+        <li><a href="#kdf-для-начального-chainkey">KDF для начального ChainKey</a></li>
+        <li><a href="#kdf-для-содержимого-зашифрованной-секции-флаговстатического-ключа">KDF для содержимого зашифрованной секции флагов/статического ключа</a></li>
+        <li><a href="#kdf-для-секции-полезной-нагрузки-со-статическим-ключом-alice">KDF для секции полезной нагрузки (со статическим ключом Alice)</a></li>
+        <li><a href="#kdf-для-секции-полезной-нагрузки-без-статического-ключа-alice">KDF для секции полезной нагрузки (без статического ключа Alice)</a></li>
+        <li><a href="#1g-формат-ответа-new-session-reply">1g) Формат ответа New Session Reply</a></li>
+        <li><a href="#тег-сессии">Тег сессии</a></li>
+        <li><a href="#ответ-нового-сеанса-с-эфемерным-ключом">Ответ нового сеанса с эфемерным ключом</a></li>
+        <li><a href="#полезная-нагрузка-3">Полезная нагрузка</a></li>
+        <li><a href="#kdf-для-reply-tagset">KDF для Reply TagSet</a></li>
+        <li><a href="#kdf-для-зашифрованного-содержимого-секции-reply-key">KDF для зашифрованного содержимого секции Reply Key</a></li>
+        <li><a href="#kdf-для-зашифрованного-содержимого-раздела-полезной-нагрузки">KDF для зашифрованного содержимого раздела полезной нагрузки</a></li>
+        <li><a href="#примечания">Примечания</a></li>
+        <li><a href="#1h-формат-существующей-сессии">1h) Формат существующей сессии</a></li>
+        <li><a href="#формат">Формат</a></li>
+        <li><a href="#полезная-нагрузка-4">Полезная нагрузка</a></li>
+        <li><a href="#2-ecies-x25519">2) ECIES-X25519</a></li>
+        <li><a href="#2a-elligator2">2a) Elligator2</a></li>
+        <li><a href="#формат-1">Формат</a></li>
+        <li><a href="#обоснование-1">Обоснование</a></li>
+        <li><a href="#примечания-1">Примечания</a></li>
+        <li><a href="#3-aead-chachapoly">3) AEAD (ChaChaPoly)</a></li>
+        <li><a href="#входные-данные-new-session-и-new-session-reply">Входные данные New Session и New Session Reply</a></li>
+        <li><a href="#входные-данные-существующей-сессии">Входные данные существующей сессии</a></li>
+        <li><a href="#зашифрованный-формат">Зашифрованный формат</a></li>
+        <li><a href="#примечания-2">Примечания</a></li>
+        <li><a href="#обработка-ошибок-aead">Обработка ошибок AEAD</a></li>
+        <li><a href="#обоснование-2">Обоснование</a></li>
+        <li><a href="#4-храповики">4) Храповики</a></li>
+        <li><a href="#номера-сообщений">Номера сообщений</a></li>
+        <li><a href="#пример-реализации">Пример реализации</a></li>
+        <li><a href="#4a-dh-ratchet">4a) DH Ratchet</a></li>
+        <li><a href="#payload-section-decrypted-data">Payload Section Decrypted data</a></li>
+        <li><a href="#unencrypted-data">Unencrypted data</a></li>
+        <li><a href="#block-ordering-rules">Block Ordering Rules</a></li>
+        <li><a href="#datetime">DateTime</a></li>
+        <li><a href="#4b-храповик-тегов-сессии">4b) Храповик тегов сессии</a></li>
+        <li><a href="#termination">Termination</a></li>
+        <li><a href="#4c-симметричный-ключевой-храповик">4c) Симметричный ключевой храповик</a></li>
+        <li><a href="#message-numbers">Message Numbers</a></li>
+        <li><a href="#5-полезная-нагрузка">5) Полезная нагрузка</a></li>
+        <li><a href="#раздел-полезной-нагрузки-расшифрованные-данные">Раздел полезной нагрузки Расшифрованные данные</a></li>
+        <li><a href="#незашифрованные-данные">Незашифрованные данные</a></li>
+        <li><a href="#правила-упорядочивания-блоков">Правила упорядочивания блоков</a></li>
+        <li><a href="#дата-и-время">Дата и время</a></li>
+        <li><a href="#зубчик-garlic">Зубчик Garlic</a></li>
+      </ul>
+    </li>
+    <li><a href="#typical-usage-patterns">Typical Usage Patterns</a>
+      <ul>
+        <li><a href="#завершение">Завершение</a></li>
+        <li><a href="#опции">Опции</a></li>
+        <li><a href="#номера-сообщений-1">Номера сообщений</a></li>
+        <li><a href="#следующий-публичный-ключ-dh-ratchet">Следующий публичный ключ DH Ratchet</a></li>
+        <li><a href="#подтверждение">Подтверждение</a></li>
+        <li><a href="#запрос-подтверждения">Запрос подтверждения</a></li>
+      </ul>
+    </li>
+    <li><a href="#implementation-considerations">Implementation Considerations</a>
+      <ul>
+        <li><a href="#заполнение">Заполнение</a></li>
+        <li><a href="#другие-типы-блоков">Другие типы блоков</a></li>
+        <li><a href="#будущая-работа">Будущая работа</a></li>
+        <li><a href="#x25519-only">X25519 Only</a></li>
+        <li><a href="#http-get">HTTP GET</a></li>
+        <li><a href="#http-post">HTTP POST</a></li>
+      </ul>
+    </li>
+    <li><a href="#analysis">Analysis</a>
+      <ul>
+        <li><a href="#отвечаемая-датаграмма">Отвечаемая датаграмма</a></li>
+        <li><a href="#множественные-необработанные-датаграммы">Множественные необработанные датаграммы</a></li>
+        <li><a href="#одиночная-raw-дейтаграмма">Одиночная Raw-дейтаграмма</a></li>
+        <li><a href="#долгоживущие-сессии">Долгоживущие сессии</a></li>
+        <li><a href="#cpu">CPU</a></li>
+        <li><a href="#защита">Защита</a></li>
+        <li><a href="#параметры">Параметры</a></li>
+        <li><a href="#классификация">Классификация</a></li>
+      </ul>
+    </li>
+    <li><a href="#related-changes">Related Changes</a>
+      <ul>
+        <li><a href="#только-x25519">Только X25519</a></li>
+        <li><a href="#x25519-с-общим-доступом-с-elgamalaessessiontags">X25519 с общим доступом с ElGamal/AES+SessionTags</a></li>
+        <li><a href="#ответы-на-уровне-протокола">Ответы на уровне протокола</a></li>
+        <li><a href="#create-leaseset2-message">Create Leaseset2 Message</a></li>
+        <li><a href="#накладные-расходы">Накладные расходы</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="proposal-main">
+                <article class="proposal-content">
+                    <h2 id="примечание">Примечание</h2>
+<p>Развертывание и тестирование сети в процессе. Возможны незначительные изменения. См. <a href="../../../ru/docs/specs/ecies/">SPEC</a>
+ для официальной спецификации.</p>
+<p>Следующие функции не реализованы по состоянию на версию 0.9.46:</p>
+<ul>
+<li>Блоки MessageNumbers, Options и Termination</li>
+<li>Ответы протокольного уровня</li>
+<li>Нулевой статический ключ</li>
+<li>Многоадресная рассылка</li>
+</ul>
+<h2 id="обзор">Обзор</h2>
+<p>Это предложение для первого нового типа сквозного шифрования с самого начала I2P, чтобы заменить ElGamal/AES+SessionTags <a href="../../../ru/docs/legacy/elgamal-aes/">Elg-AES</a>
+.</p>
+<p>Это основано на предыдущих работах следующим образом:</p>
+<ul>
+<li>Спецификация общих структур <a href="../../../ru/docs/specs/common-structures/">Common Structures</a>
+</li>
+<li>Спецификация <a href="../../../ru/docs/specs/i2np/">I2NP</a>
+, включая LS2</li>
+<li>ElGamal/AES+Session Tags <a href="../../../ru/docs/legacy/elgamal-aes/">Elg-AES</a>
+</li>
+<li><a href="http://zzz.i2p/topics/1768">http://zzz.i2p/topics/1768</a>
+ обзор новой асимметричной криптографии</li>
+<li>Низкоуровневый обзор криптографии <a href="../../../ru/docs/specs/cryptography/">CRYPTO-ELG</a>
+</li>
+<li>ECIES <a href="http://zzz.i2p/topics/2418">http://zzz.i2p/topics/2418</a>
+</li>
+<li><a href="../../../ru/docs/specs/ntcp2/">NTCP2</a>
+ <a href="../../../ru/proposals/111-ntcp-2/">Предложение 111</a>
+</li>
+<li>123 Новые записи netDB</li>
+<li>142 Новый криптографический шаблон</li>
+<li>Протокол <a href="https://noiseprotocol.org/noise.html">Noise</a>
+</li>
+<li>Алгоритм двойного храповика <a href="https://signal.org/docs/">Signal</a>
+</li>
+</ul>
+<p>Цель состоит в том, чтобы поддержать новое шифрование для сквозной связи от destination к destination.</p>
+<p>Дизайн будет использовать Noise handshake и фазу данных, включающую двойной храповик Signal.</p>
+<p>Все ссылки на Signal и Noise в данном предложении приводятся исключительно для справочной информации. Знание протоколов Signal и Noise не требуется для понимания или реализации данного предложения.</p>
+<h3 id="current-elgamal-uses">Current ElGamal Uses</h3>
+<p>Для обзора, публичные ключи ElGamal размером 256 байт могут быть найдены в следующих структурах данных. См. спецификацию общих структур.</p>
+<ul>
+<li>
+<p>В Router Identity
+Это ключ шифрования маршрутизатора.</p>
+</li>
+<li>
+<p>В Destination
+Публичный ключ destination использовался для старого i2cp-to-i2cp шифрования,
+которое было отключено в версии 0.6, в настоящее время не используется, за исключением
+IV для шифрования LeaseSet, что является устаревшим.
+Вместо этого используется публичный ключ в LeaseSet.</p>
+</li>
+<li>
+<p>В LeaseSet
+Это ключ шифрования назначения.</p>
+</li>
+<li>
+<p>В LS2
+Это ключ шифрования назначения.</p>
+</li>
+</ul>
+<h3 id="enctypes-in-key-certs">EncTypes in Key Certs</h3>
+<p>В качестве напоминания, мы добавили поддержку типов шифрования, когда добавляли поддержку типов подписи. Поле типа шифрования всегда равно нулю как в Destinations, так и в RouterIdentities. Стоит ли это когда-либо изменить — пока не определено. Обратитесь к спецификации общих структур <a href="../../../ru/docs/specs/common-structures/">Common Structures</a>
+.</p>
+<h3 id="текущее-использование-elgamal">Текущее использование ElGamal</h3>
+<p>В качестве обзора, мы используем ElGamal для:</p>
+<ol>
+<li>
+<p>Сообщения Tunnel Build (ключ находится в RouterIdentity)    Замена не рассматривается в данном предложении.    См. предложение 152 <a href="../../../ru/proposals/152-ecies-tunnels">Proposal 152</a>
+.</p>
+</li>
+<li>
+<p>Шифрование router-to-router сообщений netDb и других I2NP сообщений (Ключ находится в RouterIdentity)    Зависит от данного предложения.    Требует предложения для 1) также, или размещения ключа в опциях RI.</p>
+</li>
+<li>
+<p>Клиентское сквозное шифрование ElGamal+AES/SessionTag (ключ находится в LeaseSet, ключ Destination не используется)    Замена ПОКРЫВАЕТСЯ данным предложением.</p>
+</li>
+<li>
+<p>Эфемерный DH для NTCP1 и SSU    Замена не рассматривается в данном предложении.    См. предложение 111 для NTCP2.    Нет текущего предложения для SSU2.</p>
+</li>
+</ol>
+<h3 id="enctypes-в-key-certs">EncTypes в Key Certs</h3>
+<ul>
+<li>Обратная совместимость</li>
+<li>Требует и основывается на LS2 (предложение 123)</li>
+<li>Использование новой криптографии или примитивов, добавленных для NTCP2 (предложение 111)</li>
+<li>Не требуется новая криптография или примитивы для поддержки</li>
+<li>Сохранение разделения криптографии и подписи; поддержка всех текущих и будущих версий</li>
+<li>Включение новой криптографии для назначений</li>
+<li>Включение новой криптографии для router&rsquo;ов, но только для garlic сообщений - построение tunnel&rsquo;ей
+было бы отдельным предложением</li>
+<li>Не нарушать ничего, что полагается на 32-байтовые бинарные хеши назначений, например bittorrent</li>
+<li>Сохранение доставки сообщений 0-RTT с использованием ephemeral-static DH</li>
+<li>Не требовать буферизации / постановки в очередь сообщений на этом уровне протокола;
+продолжать поддерживать неограниченную доставку сообщений в обоих направлениях без ожидания ответа</li>
+<li>Переход на ephemeral-ephemeral DH после 1 RTT</li>
+<li>Сохранение обработки сообщений, поступивших не по порядку</li>
+<li>Сохранение 256-битной безопасности</li>
+<li>Добавление прямой секретности</li>
+<li>Добавление аутентификации (AEAD)</li>
+<li>Гораздо более эффективное использование CPU по сравнению с ElGamal</li>
+<li>Не полагаться на Java jbigi для эффективности DH</li>
+<li>Минимизация операций DH</li>
+<li>Гораздо более эффективное использование пропускной способности по сравнению с ElGamal (блок ElGamal 514 байт)</li>
+<li>Поддержка новой и старой криптографии в одном tunnel&rsquo;е при желании</li>
+<li>Получатель может эффективно отличать новую от старой криптографии, поступающей по
+одному tunnel&rsquo;у</li>
+<li>Другие не могут отличить новую от старой или будущей криптографии</li>
+<li>Исключение классификации длины новых против существующих сессий (поддержка padding&rsquo;а)</li>
+<li>Не требуется новых I2NP сообщений</li>
+<li>Замена контрольной суммы SHA-256 в AES payload на AEAD</li>
+<li>Поддержка привязки сессий передачи и приема, чтобы
+подтверждения могли происходить внутри протокола, а не только внеполосно.
+Это также позволит ответам иметь прямую секретность немедленно.</li>
+<li>Включение сквозного шифрования определенных сообщений (хранилища RouterInfo),
+которые мы в настоящее время не шифруем из-за нагрузки на CPU.</li>
+<li>Не изменять I2NP Garlic Message
+или формат инструкций доставки Garlic Message.</li>
+<li>Исключение неиспользуемых или избыточных полей в форматах Garlic Clove Set и Clove.</li>
+</ul>
+<p>Устранить несколько проблем с session tags, включая:</p>
+<ul>
+<li>Невозможность использовать AES до первого ответа</li>
+<li>Ненадежность и зависания при предположении доставки тегов</li>
+<li>Неэффективное использование пропускной способности, особенно при первой доставке</li>
+<li>Огромная неэффективность использования пространства для хранения тегов</li>
+<li>Огромные накладные расходы пропускной способности для доставки тегов</li>
+<li>Высокая сложность, трудность в реализации</li>
+<li>Трудность настройки для различных случаев использования
+(streaming против datagram, сервер против клиент, высокая против низкой пропускная способность)</li>
+<li>Уязвимости исчерпания памяти из-за доставки тегов</li>
+</ul>
+<h3 id="использование-асимметричной-криптографии">Использование асимметричной криптографии</h3>
+<ul>
+<li>Изменения формата LS2 (предложение 123 выполнено)</li>
+<li>Новый алгоритм ротации DHT или генерация общего случайного числа</li>
+<li>Новое шифрование для построения туннелей.
+См. предложение 152 <a href="../../../ru/proposals/152-ecies-tunnels">Proposal 152</a>
+.</li>
+<li>Новое шифрование для шифрования слоя туннелей.
+См. предложение 153 <a href="../../../ru/proposals/153-chacha20-layer-encryption">Proposal 153</a>
+.</li>
+<li>Методы шифрования, передачи и получения I2NP DLM / DSM / DSRM сообщений.
+Без изменений.</li>
+<li>Связь LS1-к-LS2 или ElGamal/AES-к-данному-предложению не поддерживается.
+Данное предложение представляет собой двунаправленный протокол.
+Назначения могут обрабатывать обратную совместимость, публикуя два leaseSet
+используя те же туннели, или поместить оба типа шифрования в LS2.</li>
+<li>Изменения модели угроз</li>
+<li>Детали реализации здесь не обсуждаются и остаются на усмотрение каждого проекта.</li>
+<li>(Оптимистично) Добавить расширения или хуки для поддержки multicast</li>
+</ul>
+<h3 id="цели">Цели</h3>
+<p>ElGamal/AES+SessionTag был нашим единственным end-to-end протоколом около 15 лет, практически без изменений в протоколе. Сейчас существуют криптографические примитивы, которые работают быстрее. Нам необходимо усилить безопасность протокола. Мы также разработали эвристические стратегии и обходные пути для минимизации накладных расходов памяти и пропускной способности протокола, но эти стратегии хрупкие, сложные в настройке и делают протокол еще более подверженным сбоям, что приводит к разрыву сессии.</p>
+<p>Примерно за тот же период времени спецификация ElGamal/AES+SessionTag и сопутствующая документация описывали, насколько затратной по пропускной способности является доставка session tags, и предлагали заменить доставку session tag на &ldquo;синхронизированный PRNG&rdquo;. Синхронизированный PRNG детерминированно генерирует одинаковые теги на обеих сторонах, выведенные из общего начального значения. Синхронизированный PRNG также можно назвать &ldquo;ratchet&rdquo;. Данное предложение (наконец) специфицирует этот ratchet механизм и исключает доставку тегов.</p>
+<p>Используя ratchet (синхронизированный PRNG) для генерации тегов сессии, мы устраняем накладные расходы на отправку тегов сессии в сообщении New Session и последующих сообщениях при необходимости. Для типичного набора тегов из 32 тегов это составляет 1КБ. Это также исключает хранение тегов сессии на стороне отправителя, тем самым сокращая требования к памяти вдвое.</p>
+<p>Полное двустороннее рукопожатие, аналогичное паттерну Noise IK, необходимо для предотвращения атак Key Compromise Impersonation (KCI). См. таблицу &ldquo;Payload Security Properties&rdquo; в Noise в <a href="https://noiseprotocol.org/noise.html">NOISE</a>
+. Для получения дополнительной информации о KCI см. статью <a href="https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf">https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf</a>
+</p>
+<h3 id="не-цели--вне-области-применения">Не-цели / Вне области применения</h3>
+<p>Модель угроз несколько отличается от модели для NTCP2 (предложение 111). Узлы MitM являются OBEP и IBGW и предполагается, что они имеют полный обзор текущей или исторической глобальной NetDB, сговариваясь с floodfill.</p>
+<p>Цель состоит в том, чтобы помешать этим MitM-атакам классифицировать трафик как сообщения новых и существующих сессий, или как новую криптографию против старой криптографии.</p>
+<h2 id="detailed-proposal">Detailed Proposal</h2>
+<p>Данное предложение определяет новый сквозной протокол для замены ElGamal/AES+SessionTags. Дизайн будет использовать хендшейк Noise и фазу данных, включающую двойной ratchet от Signal.</p>
+<h3 id="обоснование">Обоснование</h3>
+<p>Необходимо перепроектировать пять частей протокола:</p>
+<ul>
+<li>
+<ol>
+<li>Форматы контейнеров для новых и существующих сессий
+заменяются новыми форматами.</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>ElGamal (256-байтовые публичные ключи, 128-байтовые приватные ключи)
+заменяется на ECIES-X25519 (32-байтовые публичные и приватные ключи)</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>AES заменяется на
+AEAD_ChaCha20_Poly1305 (сокращенно ChaChaPoly ниже)</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>SessionTags будут заменены на ratchets,
+что по сути является криптографическим синхронизированным PRNG.</li>
+</ol>
+</li>
+<li>
+<ol start="5">
+<li>AES payload, как определено в спецификации ElGamal/AES+SessionTags,
+заменяется блочным форматом, аналогичным используемому в NTCP2.</li>
+</ol>
+</li>
+</ul>
+<p>Каждое из пяти изменений имеет свой раздел ниже.</p>
+<h3 id="модель-угроз">Модель угроз</h3>
+<p>Существующие реализации I2P router потребуют реализации следующих стандартных криптографических примитивов, которые не требуются для текущих протоколов I2P:</p>
+<ul>
+<li>ECIES (но это по сути X25519)</li>
+<li>Elligator2</li>
+</ul>
+<p>Существующие реализации I2P router, которые еще не реализовали <a href="../../../ru/docs/specs/ntcp2/">NTCP2</a>
+ (<a href="../../../ru/proposals/111-ntcp-2/">Proposal 111</a>
+), также потребуют реализации для:</p>
+<ul>
+<li>Генерация ключей X25519 и DH</li>
+<li>AEAD_ChaCha20_Poly1305 (сокращенно ChaChaPoly ниже)</li>
+<li>HKDF</li>
+</ul>
+<h3 id="crypto-type">Crypto Type</h3>
+<p>Тип криптографии (используемый в LS2) равен 4. Это указывает на 32-байтовый публичный ключ X25519 в формате little-endian и сквозной протокол, определенный здесь.</p>
+<p>Тип шифрования 0 — это ElGamal. Типы шифрования 1-3 зарезервированы для ECIES-ECDH-AES-SessionTag, см. предложение 145 <a href="../../../ru/proposals/145-ecies">Предложение 145</a>
+.</p>
+<h3 id="обзор-криптографического-дизайна">Обзор криптографического дизайна</h3>
+<p>Данное предложение предоставляет требования, основанные на Noise Protocol Framework <a href="https://noiseprotocol.org/noise.html">NOISE</a>
+ (Ревизия 34, 2018-07-11). Noise имеет схожие свойства с протоколом Station-To-Station <a href="https://en.wikipedia.org/wiki/Station-to-Station_protocol">STS</a>
+, который является основой для протокола <a href="../../../ru/docs/legacy/ssu/">SSU</a>
+. В терминологии Noise, Алиса является инициатором, а Боб — отвечающим.</p>
+<p>Данное предложение основано на протоколе Noise Noise_IK_25519_ChaChaPoly_SHA256. (Фактический идентификатор для начальной функции выведения ключей — &ldquo;Noise_IKelg2_25519_ChaChaPoly_SHA256&rdquo; для обозначения расширений I2P — см. раздел KDF 1 ниже) Этот протокол Noise использует следующие примитивы:</p>
+<ul>
+<li>
+<p>Interactive Handshake Pattern: IK
+Алиса немедленно передает свой статический ключ Бобу (I)
+Алиса уже знает статический ключ Боба (K)</p>
+</li>
+<li>
+<p>Односторонний паттерн рукопожатия: N
+Alice не передает свой статический ключ Bob (N)</p>
+</li>
+<li>
+<p>DH Function: X25519
+X25519 DH с длиной ключа 32 байта, как указано в <a href="https://tools.ietf.org/html/rfc7748">RFC-7748</a>
+.</p>
+</li>
+<li>
+<p>Cipher Function: ChaChaPoly
+AEAD_CHACHA20_POLY1305 как указано в <a href="https://tools.ietf.org/html/rfc7539">RFC-7539</a>
+ раздел 2.8.
+12-байтовый nonce, с первыми 4 байтами установленными в ноль.
+Идентично тому, что используется в <a href="../../../ru/docs/specs/ntcp2/">NTCP2</a>
+.</p>
+</li>
+<li>
+<p>Hash Function: SHA256
+Стандартный 32-байтный хеш, уже широко используемый в I2P.</p>
+</li>
+</ul>
+<h3 id="новые-криптографические-примитивы-для-i2p">Новые криптографические примитивы для I2P</h3>
+<p>Данное предложение определяет следующие улучшения для Noise_IK_25519_ChaChaPoly_SHA256. Они в целом следуют рекомендациям в разделе 13 <a href="https://noiseprotocol.org/noise.html">NOISE</a>
+.</p>
+<ol>
+<li>
+<p>Ключи cleartext ephemeral кодируются с помощью <a href="https://elligator.cr.yp.to/">Elligator2</a>
+.</p>
+</li>
+<li>
+<p>Ответ начинается с тега в открытом тексте.</p>
+</li>
+<li>
+<p>Формат полезной нагрузки определён для сообщений 1, 2 и фазы данных. Конечно, это не определено в Noise.</p>
+</li>
+</ol>
+<p>Все сообщения включают заголовок <a href="../../../ru/docs/specs/i2np/">I2NP</a>
+ Garlic Message. Фаза данных использует шифрование, похожее на фазу данных Noise, но не совместимое с ней.</p>
+<h3 id="тип-шифрования">Тип шифрования</h3>
+<p>Рукопожатия используют шаблоны рукопожатий <a href="https://noiseprotocol.org/noise.html">Noise</a>
+.</p>
+<p>Используется следующее соответствие букв:</p>
+<ul>
+<li>e = одноразовый эфемерный ключ</li>
+<li>s = статический ключ</li>
+<li>p = полезная нагрузка сообщения</li>
+</ul>
+<p>Одноразовые и несвязанные сессии похожи на паттерн Noise N.</p>
+<pre tabindex="0"><code>
+&lt;- s
+  ...
+  e es p -&gt;
+</code></pre><p>Связанные сессии подобны шаблону Noise IK.</p>
+<pre tabindex="0"><code>
+&lt;- s
+  ...
+  e es s ss p -&gt;
+  &lt;- tag e ee se
+  &lt;- p
+  p -&gt;
+</code></pre><h3 id="фреймворк-протокола-noise">Фреймворк протокола Noise</h3>
+<p>Текущий протокол ElGamal/AES+SessionTag является однонаправленным. На этом уровне получатель не знает, откуда пришло сообщение. Исходящие и входящие сессии не связаны между собой. Подтверждения передаются по внешнему каналу с использованием DeliveryStatusMessage (обернутого в GarlicMessage) в clove.</p>
+<p>В однонаправленном протоколе есть существенная неэффективность. Любой ответ также должен использовать дорогостоящее сообщение &lsquo;New Session&rsquo;. Это приводит к повышенному использованию пропускной способности, ЦП и памяти.</p>
+<p>Существуют также уязвимости безопасности в однонаправленном протоколе. Все сессии основаны на эфемерно-статическом DH. Без обратного пути у Боба нет способа &ldquo;переключить&rdquo; свой статический ключ на эфемерный ключ. Не зная, откуда пришло сообщение, невозможно использовать полученный эфемерный ключ для исходящих сообщений, поэтому первоначальный ответ также использует эфемерно-статический DH.</p>
+<p>Для данного предложения мы определяем два механизма создания двунаправленного протокола - &ldquo;сопряжение&rdquo; и &ldquo;привязка&rdquo;. Эти механизмы обеспечивают повышенную эффективность и безопасность.</p>
+<h3 id="дополнения-к-фреймворку">Дополнения к фреймворку</h3>
+<p>Как и в случае с ElGamal/AES+SessionTags, все входящие и исходящие сессии должны находиться в определенном контексте — либо в контексте router&rsquo;а, либо в контексте конкретного локального назначения. В Java I2P этот контекст называется Session Key Manager.</p>
+<p>Сессии не должны разделяться между контекстами, так как это позволило бы провести корреляцию между различными локальными направлениями или между локальным направлением и router&rsquo;ом.</p>
+<p>Когда данное назначение поддерживает как ElGamal/AES+SessionTags, так и данное предложение, оба типа сессий могут использовать общий контекст. См. раздел 1c) ниже.</p>
+<h3 id="паттерны-рукопожатий">Паттерны рукопожатий</h3>
+<p>Когда исходящая сессия создается у инициатора (Alice), новая входящая сессия создается и связывается с исходящей сессией, если только не ожидается ответа (например, сырые датаграммы).</p>
+<p>Новая входящая сессия всегда связывается с новой исходящей сессией, если только не запрашивается ответ (например, необработанные датаграммы).</p>
+<p>Если запрашивается ответ и он привязан к удаленному назначению или router, эта новая исходящая сессия привязывается к этому назначению или router и заменяет любую предыдущую исходящую сессию к этому назначению или router.</p>
+<p>Сопряжение входящих и исходящих сессий обеспечивает двунаправленный протокол с возможностью обновления DH ключей.</p>
+<h3 id="сессии">Сессии</h3>
+<p>Существует только одна исходящая сессия к данному адресату или router. Может существовать несколько текущих входящих сессий от данного адресата или router. Обычно, когда создается новая входящая сессия и на этой сессии получен трафик (что служит в качестве ACK), все остальные будут помечены для истечения срока действия относительно быстро, в течение минуты или около того. Проверяется значение предыдущих отправленных сообщений (PN), и если в предыдущей входящей сессии нет неполученных сообщений (в пределах размера окна), предыдущая сессия может быть удалена немедленно.</p>
+<p>Когда исходящая сессия создается у инициатора (Alice), она привязывается к удаленному Destination (Bob), и любая парная входящая сессия также будет привязана к удаленному Destination. По мере того как сессии проходят ratchet, они продолжают оставаться привязанными к удаленному Destination.</p>
+<p>Когда входящая сессия создается у получателя (Bob), она может быть привязана к удаленному Destination (Alice) по выбору Alice. Если Alice включает информацию о привязке (свой статический ключ) в сообщение New Session, сессия будет привязана к этому destination, и исходящая сессия будет создана и привязана к тому же Destination. По мере того как сессии ratchet, они продолжают оставаться привязанными к удаленному Destination.</p>
+<h3 id="контекст-сессии">Контекст сессии</h3>
+<p>Для обычного случая потоковой передачи мы ожидаем, что Алиса и Боб будут использовать протокол следующим образом:</p>
+<ul>
+<li>Алиса связывает свою новую исходящую сессию с новой входящей сессией, обе привязаны к конечному пункту назначения (Боб).</li>
+<li>Алиса включает информацию о связывании и подпись, а также запрос на ответ, в
+сообщение New Session, отправленное Бобу.</li>
+<li>Боб связывает свою новую входящую сессию с новой исходящей сессией, обе привязаны к конечному пункту назначения (Алиса).</li>
+<li>Боб отправляет ответ (подтверждение) Алисе в связанной сессии с ratchet к новому DH ключу.</li>
+<li>Алиса выполняет ratchet к новой исходящей сессии с новым ключом Боба, связанной с существующей входящей сессией.</li>
+</ul>
+<p>Привязывая входящую сессию к удаленному Destination и сопоставляя входящую сессию с исходящей сессией, привязанной к тому же Destination, мы получаем два основных преимущества:</p>
+<ol>
+<li>
+<p>Первоначальный ответ от Боба к Алисе использует эфемерный-эфемерный DH</p>
+</li>
+<li>
+<p>После того как Алиса получает ответ Боба и выполняет ratchet, все последующие сообщения от Алисы к Бобу используют ephemeral-ephemeral DH.</p>
+</li>
+</ol>
+<h3 id="связывание-входящих-и-исходящих-сессий">Связывание входящих и исходящих сессий</h3>
+<p>В ElGamal/AES+SessionTags, когда LeaseSet упаковывается как garlic clove, или доставляются теги, отправляющий router запрашивает ACK. Это отдельный garlic clove, содержащий сообщение DeliveryStatus. Для дополнительной безопасности сообщение DeliveryStatus оборачивается в Garlic Message. Этот механизм является внеполосным с точки зрения протокола.</p>
+<p>В новом протоколе, поскольку входящие и исходящие сессии спарены, мы можем иметь ACK внутри полосы. Отдельный clove не требуется.</p>
+<p>Явное подтверждение (ACK) — это просто сообщение Existing Session без блока I2NP. Однако в большинстве случаев явного подтверждения можно избежать, поскольку существует обратный трафик. Для реализаций может быть желательно подождать короткое время (возможно, сто миллисекунд) перед отправкой явного подтверждения, чтобы дать уровню потоков или приложений время на ответ.</p>
+<p>Реализации также должны будут отложить отправку любых ACK до тех пор, пока не будет обработан блок I2NP, поскольку Garlic Message может содержать Database Store Message с lease set. Актуальный lease set будет необходим для маршрутизации ACK, а удалённое назначение (содержащееся в lease set) будет необходимо для проверки связывающего статического ключа.</p>
+<h3 id="привязка-сессий-и-назначений">Привязка сессий и назначений</h3>
+<p>Исходящие сессии должны всегда истекать раньше входящих сессий. Как только исходящая сессия истекает и создается новая, будет создана также новая парная входящая сессия. Если была старая входящая сессия, ей будет позволено истечь.</p>
+<h3 id="преимущества-привязки-и-сопряжения">Преимущества привязки и сопряжения</h3>
+<p>Будет определено позже</p>
+<h3 id="подтверждения-сообщений">Подтверждения сообщений</h3>
+<p>Мы определяем следующие функции, соответствующие используемым криптографическим строительным блокам.</p>
+<p>ZEROLEN</p>
+<pre><code>zero-length byte array
+</code></pre>
+<p>CSRNG(n)</p>
+<pre><code>n-byte output from a cryptographically-secure random number generator.
+</code></pre>
+<p>H(p, d)</p>
+<pre><code>SHA-256 hash function that takes a personalization string p and data d, and
+produces an output of length 32 bytes.
+As defined in [NOISE](https://noiseprotocol.org/noise.html).
+|| below means append.
+
+Use SHA-256 as follows::
+
+    H(p, d) := SHA-256(p || d)
+</code></pre>
+<p>MixHash(d)</p>
+<pre><code>SHA-256 hash function that takes a previous hash h and new data d,
+and produces an output of length 32 bytes.
+|| below means append.
+
+Use SHA-256 as follows::
+
+    MixHash(d) := h = SHA-256(h || d)
+</code></pre>
+<p>ПОТОК</p>
+<pre><code>The ChaCha20/Poly1305 AEAD as specified in [RFC-7539](https://tools.ietf.org/html/rfc7539).
+S_KEY_LEN = 32 and S_IV_LEN = 12.
+
+ENCRYPT(k, n, plaintext, ad)
+    Encrypts plaintext using the cipher key k, and nonce n which MUST be unique for
+    the key k.
+    Associated data ad is optional.
+    Returns a ciphertext that is the size of the plaintext + 16 bytes for the HMAC.
+
+    The entire ciphertext must be indistinguishable from random if the key is secret.
+
+DECRYPT(k, n, ciphertext, ad)
+    Decrypts ciphertext using the cipher key k, and nonce n.
+    Associated data ad is optional.
+    Returns the plaintext.
+</code></pre>
+<p>DH</p>
+<pre><code>X25519 public key agreement system. Private keys of 32 bytes, public keys of 32
+bytes, produces outputs of 32 bytes. It has the following
+functions:
+
+GENERATE_PRIVATE()
+    Generates a new private key.
+
+DERIVE_PUBLIC(privkey)
+    Returns the public key corresponding to the given private key.
+
+GENERATE_PRIVATE_ELG2()
+    Generates a new private key that maps to a public key suitable for Elligator2 encoding.
+    Note that half of the randomly-generated private keys will not be suitable and must be discarded.
+
+ENCODE_ELG2(pubkey)
+    Returns the Elligator2-encoded public key corresponding to the given public key (inverse mapping).
+    Encoded keys are little endian.
+    Encoded key must be 256 bits indistinguishable from random data.
+    See Elligator2 section below for specification.
+
+DECODE_ELG2(pubkey)
+    Returns the public key corresponding to the given Elligator2-encoded public key.
+    See Elligator2 section below for specification.
+
+DH(privkey, pubkey)
+    Generates a shared secret from the given private and public keys.
+</code></pre>
+<p>HKDF(salt, ikm, info, n)</p>
+<pre><code>A cryptographic key derivation function which takes some input key material ikm (which
+should have good entropy but is not required to be a uniformly random string), a salt
+of length 32 bytes, and a context-specific 'info' value, and produces an output
+of n bytes suitable for use as key material.
+
+Use HKDF as specified in [RFC-5869](https://tools.ietf.org/html/rfc5869), using the HMAC hash function SHA-256
+as specified in [RFC-2104](https://tools.ietf.org/html/rfc2104). This means that SALT_LEN is 32 bytes max.
+</code></pre>
+<p>MixKey(d)</p>
+<pre><code>Use HKDF() with a previous chainKey and new data d, and
+sets the new chainKey and k.
+As defined in [NOISE](https://noiseprotocol.org/noise.html).
+
+Use HKDF as follows::
+
+    MixKey(d) := output = HKDF(chainKey, d, &quot;&quot;, 64)
+                 chainKey = output[0:31]
+                 k = output[32:63]
+</code></pre>
+<h3 id="тайм-ауты-сессий">Тайм-ауты сессий</h3>
+<h3 id="многоадресная-передача">Многоадресная передача</h3>
+<p>Сообщение Garlic, как указано в <a href="../../../ru/docs/specs/i2np/">I2NP</a>
+, имеет следующий вид. Поскольку цель дизайна заключается в том, чтобы промежуточные узлы не могли отличить новую криптографию от старой, этот формат не может изменяться, даже несмотря на то, что поле длины является избыточным. Формат показан с полным 16-байтовым заголовком, хотя фактический заголовок может иметь другой формат в зависимости от используемого транспорта.</p>
+<p>После расшифровки данные содержат серию Garlic Cloves и дополнительные данные, также известные как Clove Set.</p>
+<p>См. <a href="../../../ru/docs/specs/i2np/">I2NP</a>
+ для получения подробной информации и полной спецификации.</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |type|      msg_id       |  expiration
+  +----+----+----+----+----+----+----+----+
+                           |  size   |chks|
+  +----+----+----+----+----+----+----+----+
+  |      length       |                   |
+  +----+----+----+----+                   +
+  |          encrypted data               |
+  ~                                       ~
+  ~                                       ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+</code></pre><h3 id="определения">Определения</h3>
+<p>Текущий формат сообщений, используемый уже более 15 лет, — это ElGamal/AES+SessionTags. В ElGamal/AES+SessionTags существует два формата сообщений:</p>
+<ol>
+<li>
+<p>Новая сессия: - 514-байтовый блок ElGamal - блок AES (минимум 128 байт, кратно 16)</p>
+</li>
+<li>
+<p>Существующая сессия: - 32-байтовый Session Tag - AES блок (минимум 128 байт, кратно 16)</p>
+</li>
+</ol>
+<p>Минимальное дополнение до 128 реализовано в Java I2P, но не принудительно проверяется при получении.</p>
+<p>Эти сообщения инкапсулированы в I2NP garlic сообщение, которое содержит поле длины, поэтому длина известна.</p>
+<p>Обратите внимание, что не определено заполнение до длины, не кратной 16, поэтому New Session всегда (mod 16 == 2), а Existing Session всегда (mod 16 == 0). Нам нужно это исправить.</p>
+<p>Получатель сначала пытается найти первые 32 байта как Session Tag. Если найден, он расшифровывает блок AES. Если не найден, и данные имеют длину не менее (514+16), он пытается расшифровать блок ElGamal, и в случае успеха расшифровывает блок AES.</p>
+<h3 id="1-формат-сообщения">1) Формат сообщения</h3>
+<p>В Signal Double Ratchet заголовок содержит:</p>
+<ul>
+<li>DH: Текущий открытый ключ ratchet</li>
+<li>PN: Длина предыдущей цепи сообщений</li>
+<li>N: Номер сообщения</li>
+</ul>
+<p>«Цепочки отправки» Signal примерно эквивалентны нашим наборам тегов. Используя тег сессии, мы можем исключить большую часть этого.</p>
+<p>В New Session мы помещаем только публичный ключ в незашифрованный заголовок.</p>
+<p>В существующей сессии мы используем тег сессии для заголовка. Тег сессии связан с текущим открытым ключом ratchet и номером сообщения.</p>
+<p>В новых и существующих сессиях PN и N находятся в зашифрованном теле сообщения.</p>
+<p>В Signal всё постоянно движется по ratchet-механизму. Новый DH публичный ключ требует от получателя выполнить ratchet и отправить новый публичный ключ обратно, что также служит подтверждением получения публичного ключа. Для нас это было бы слишком много DH операций. Поэтому мы разделяем подтверждение полученного ключа и передачу нового публичного ключа. Любое сообщение, использующее session tag, сгенерированный из нового DH публичного ключа, является подтверждением. Мы передаём новый публичный ключ только тогда, когда хотим выполнить rekey.</p>
+<p>Максимальное количество сообщений перед тем, как DH должен выполнить ratchet, составляет 65535.</p>
+<p>При доставке ключа сессии мы выводим из него &ldquo;Набор Тегов&rdquo;, а не доставляем теги сессии отдельно. Набор Тегов может содержать до 65536 тегов. Однако получатели должны реализовывать стратегию &ldquo;предварительного просмотра&rdquo;, а не генерировать все возможные теги одновременно. Генерируйте не более N тегов после последнего корректно полученного тега. N может составлять максимум 128, но 32 или даже меньше может быть лучшим выбором.</p>
+<h3 id="обзор-текущего-формата-сообщений">Обзор текущего формата сообщений</h3>
+<p>Новый сессионный одноразовый публичный ключ (32 байта) Зашифрованные данные и MAC (оставшиеся байты)</p>
+<p>Сообщение New Session может содержать или не содержать статический открытый ключ отправителя. Если он включён, обратная сессия привязывается к этому ключу. Статический ключ следует включать, если ожидаются ответы, т.е. для потокового режима и датаграмм с возможностью ответа. Он не должен включаться для обычных датаграмм.</p>
+<p>Сообщение New Session похоже на односторонний шаблон Noise <a href="https://noiseprotocol.org/noise.html">NOISE</a>
+ &ldquo;N&rdquo; (если статический ключ не отправляется), или на двусторонний шаблон &ldquo;IK&rdquo; (если статический ключ отправляется).</p>
+<h3 id="обзор-формата-зашифрованных-данных">Обзор формата зашифрованных данных</h3>
+<p>Длина составляет 96 + длина полезной нагрузки. Зашифрованный формат:</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |   New Session Ephemeral Public Key    |
+  +             32 bytes                  +
+  |     Encoded with Elligator2           |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +         Static Key                    +
+  |       ChaCha20 encrypted data         |
+  +            32 bytes                   +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +    (MAC) for Static Key Section       +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for Payload Section     +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+
+  Public Key :: 32 bytes, little endian, Elligator2, cleartext
+
+  Static Key encrypted data :: 32 bytes
+
+  Payload Section encrypted data :: remaining data minus 16 bytes
+
+  MAC :: Poly1305 message authentication code, 16 bytes
+</code></pre><h3 id="новые-теги-сессий-и-сравнение-с-signal">Новые теги сессий и сравнение с Signal</h3>
+<p>Эфемерный ключ составляет 32 байта, закодированный с помощью Elligator2. Этот ключ никогда не используется повторно; новый ключ генерируется для каждого сообщения, включая повторные передачи.</p>
+<h3 id="1a-формат-новой-сессии">1a) Формат новой сессии</h3>
+<p>После расшифровки, статический ключ X25519 Алисы, 32 байта.</p>
+<h3 id="1b-новый-формат-сессии-с-привязкой">1b) Новый формат сессии (с привязкой)</h3>
+<p>Зашифрованная длина — это остаток данных. Расшифрованная длина на 16 меньше зашифрованной длины. Полезная нагрузка должна содержать блок DateTime и обычно содержит один или несколько блоков Garlic Clove. См. раздел полезной нагрузки ниже для формата и дополнительных требований.</p>
+<h3 id="новый-эфемерный-ключ-сессии">Новый эфемерный ключ сессии</h3>
+<p>Если ответ не требуется, статический ключ не отправляется.</p>
+<p>Длина составляет 96 + длина полезной нагрузки. Зашифрованный формат:</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |   New Session Ephemeral Public Key    |
+  +             32 bytes                  +
+  |     Encoded with Elligator2           |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +           Flags Section               +
+  |       ChaCha20 encrypted data         |
+  +            32 bytes                   +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for above section       +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for Payload Section     +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+
+  Public Key :: 32 bytes, little endian, Elligator2, cleartext
+
+  Flags Section encrypted data :: 32 bytes
+
+  Payload Section encrypted data :: remaining data minus 16 bytes
+
+  MAC :: Poly1305 message authentication code, 16 bytes
+</code></pre><h3 id="статический-ключ">Статический ключ</h3>
+<p>Эфемерный ключ Алисы. Эфемерный ключ состоит из 32 байт, закодированных с помощью Elligator2, little endian. Этот ключ никогда не переиспользуется; новый ключ генерируется для каждого сообщения, включая повторные передачи.</p>
+<h3 id="полезная-нагрузка">Полезная нагрузка</h3>
+<p>Секция Flags не содержит ничего. Она всегда составляет 32 байта, поскольку должна иметь ту же длину, что и статический ключ для сообщений New Session с привязкой. Bob определяет, является ли это статическим ключом или секцией flags, проверяя, равны ли все 32 байта нулю.</p>
+<p>TODO нужны ли здесь какие-либо флаги?</p>
+<h3 id="1c-новый-формат-сессии-без-привязки">1c) Новый формат сессии (без привязки)</h3>
+<p>Зашифрованная длина — это оставшаяся часть данных. Расшифрованная длина на 16 меньше зашифрованной длины. Полезная нагрузка должна содержать блок DateTime и обычно будет содержать один или несколько блоков Garlic Clove. Смотрите раздел полезной нагрузки ниже для формата и дополнительных требований.</p>
+<h3 id="новый-эфемерный-ключ-сессии-1">Новый эфемерный ключ сессии</h3>
+<p>Если ожидается отправка только одного сообщения, настройка сессии или статический ключ не требуются.</p>
+<p>Длина составляет 96 + длина полезной нагрузки. Зашифрованный формат:</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |       Ephemeral Public Key            |
+  +             32 bytes                  +
+  |     Encoded with Elligator2           |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +           Flags Section               +
+  |       ChaCha20 encrypted data         |
+  +            32 bytes                   +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for above section       +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for Payload Section     +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+
+  Public Key :: 32 bytes, little endian, Elligator2, cleartext
+
+  Flags Section encrypted data :: 32 bytes
+
+  Payload Section encrypted data :: remaining data minus 16 bytes
+
+  MAC :: Poly1305 message authentication code, 16 bytes
+</code></pre><h3 id="раздел-флагов-расшифрованные-данные">Раздел флагов Расшифрованные данные</h3>
+<p>Одноразовый ключ составляет 32 байта, закодированный с помощью Elligator2, little endian. Этот ключ никогда не используется повторно; новый ключ генерируется для каждого сообщения, включая повторные передачи.</p>
+<h3 id="полезная-нагрузка-1">Полезная нагрузка</h3>
+<p>Секция Flags не содержит ничего. Она всегда составляет 32 байта, поскольку должна иметь такую же длину, как статический ключ для сообщений New Session с привязкой. Bob определяет, является ли это статическим ключом или секцией flags, проверяя, являются ли все 32 байта нулями.</p>
+<p>TODO какие-то флаги нужны здесь?</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |                                       |
+  +             All zeros                 +
+  |              32 bytes                 |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  zeros:: All zeros, 32 bytes.
+</code></pre><h3 id="1d-одноразовый-формат-без-привязки-или-сессии">1d) Одноразовый формат (без привязки или сессии)</h3>
+<p>Зашифрованная длина — это оставшаяся часть данных. Расшифрованная длина на 16 меньше зашифрованной длины. Полезная нагрузка должна содержать блок DateTime и обычно содержит один или несколько блоков Garlic Clove. См. раздел полезной нагрузки ниже для формата и дополнительных требований.</p>
+<h3 id="одноразовый-ключ-новой-сессии">Одноразовый ключ новой сессии</h3>
+<h3 id="раздел-флагов-расшифрованные-данные-1">Раздел флагов Расшифрованные данные</h3>
+<p>Это стандартный <a href="https://noiseprotocol.org/noise.html">NOISE</a>
+ для IK с измененным именем протокола. Обратите внимание, что мы используем один и тот же инициализатор как для паттерна IK (связанные сессии), так и для паттерна N (несвязанные сессии).</p>
+<p>Название протокола изменено по двум причинам. Во-первых, чтобы указать, что эфемерные ключи кодируются с помощью Elligator2, и во-вторых, чтобы указать, что MixHash() вызывается перед вторым сообщением для смешивания значения тега.</p>
+<pre tabindex="0"><code>
+This is the &#34;e&#34; message pattern:
+
+  // Define protocol_name.
+  Set protocol_name = &#34;Noise_IKelg2+hs2_25519_ChaChaPoly_SHA256&#34;
+   (40 bytes, US-ASCII encoded, no NULL termination).
+
+  // Define Hash h = 32 bytes
+  h = SHA256(protocol_name);
+
+  Define ck = 32 byte chaining key. Copy the h data to ck.
+  Set chainKey = h
+
+  // MixHash(null prologue)
+  h = SHA256(h);
+
+  // up until here, can all be precalculated by Alice for all outgoing connections
+</code></pre><h3 id="полезная-нагрузка-2">Полезная нагрузка</h3>
+<pre tabindex="0"><code>
+This is the &#34;e&#34; message pattern:
+
+  // Bob&#39;s X25519 static keys
+  // bpk is published in leaseset
+  bsk = GENERATE_PRIVATE()
+  bpk = DERIVE_PUBLIC(bsk)
+
+  // Bob static public key
+  // MixHash(bpk)
+  // || below means append
+  h = SHA256(h || bpk);
+
+  // up until here, can all be precalculated by Bob for all incoming connections
+
+  // Alice&#39;s X25519 ephemeral keys
+  aesk = GENERATE_PRIVATE_ELG2()
+  aepk = DERIVE_PUBLIC(aesk)
+
+  // Alice ephemeral public key
+  // MixHash(aepk)
+  // || below means append
+  h = SHA256(h || aepk);
+
+  // h is used as the associated data for the AEAD in the New Session Message
+  // Retain the Hash h for the New Session Reply KDF
+  // eapk is sent in cleartext in the
+  // beginning of the New Session message
+  elg2_aepk = ENCODE_ELG2(aepk)
+  // As decoded by Bob
+  aepk = DECODE_ELG2(elg2_aepk)
+
+  End of &#34;e&#34; message pattern.
+
+  This is the &#34;es&#34; message pattern:
+
+  // Noise es
+  sharedSecret = DH(aesk, bpk) = DH(bsk, aepk)
+
+  // MixKey(DH())
+  //[chainKey, k] = MixKey(sharedSecret)
+  // ChaChaPoly parameters to encrypt/decrypt
+  keydata = HKDF(chainKey, sharedSecret, &#34;&#34;, 64)
+  chainKey = keydata[0:31]
+
+  // AEAD parameters
+  k = keydata[32:63]
+  n = 0
+  ad = h
+  ciphertext = ENCRYPT(k, n, flags/static key section, ad)
+
+  End of &#34;es&#34; message pattern.
+
+  This is the &#34;s&#34; message pattern:
+
+  // MixHash(ciphertext)
+  // Save for Payload section KDF
+  h = SHA256(h || ciphertext)
+
+  // Alice&#39;s X25519 static keys
+  ask = GENERATE_PRIVATE()
+  apk = DERIVE_PUBLIC(ask)
+
+  End of &#34;s&#34; message pattern.
+</code></pre><h3 id="1f-kdf-для-сообщения-новой-сессии">1f) KDF для сообщения новой сессии</h3>
+<pre tabindex="0"><code>
+This is the &#34;ss&#34; message pattern:
+
+  // Noise ss
+  sharedSecret = DH(ask, bpk) = DH(bsk, apk)
+
+  // MixKey(DH())
+  //[chainKey, k] = MixKey(sharedSecret)
+  // ChaChaPoly parameters to encrypt/decrypt
+  // chainKey from Static Key Section
+  Set sharedSecret = X25519 DH result
+  keydata = HKDF(chainKey, sharedSecret, &#34;&#34;, 64)
+  chainKey = keydata[0:31]
+
+  // AEAD parameters
+  k = keydata[32:63]
+  n = 0
+  ad = h
+  ciphertext = ENCRYPT(k, n, payload, ad)
+
+  End of &#34;ss&#34; message pattern.
+
+  // MixHash(ciphertext)
+  // Save for New Session Reply KDF
+  h = SHA256(h || ciphertext)
+</code></pre><h3 id="kdf-для-начального-chainkey">KDF для начального ChainKey</h3>
+<p>Обратите внимание, что это паттерн Noise &ldquo;N&rdquo;, но мы используем тот же инициализатор &ldquo;IK&rdquo;, что и для связанных сессий.</p>
+<p>Сообщения New Session не могут быть идентифицированы как содержащие статический ключ Alice или нет, пока статический ключ не будет расшифрован и проверен, чтобы определить, содержит ли он все нули. Поэтому получатель должен использовать конечный автомат &ldquo;IK&rdquo; для всех сообщений New Session. Если статический ключ состоит из всех нулей, шаблон сообщения &ldquo;ss&rdquo; должен быть пропущен.</p>
+<pre tabindex="0"><code>
+chainKey = from Flags/Static key section
+  k = from Flags/Static key section
+  n = 1
+  ad = h from Flags/Static key section
+  ciphertext = ENCRYPT(k, n, payload, ad)
+</code></pre><h3 id="kdf-для-содержимого-зашифрованной-секции-флаговстатического-ключа">KDF для содержимого зашифрованной секции флагов/статического ключа</h3>
+<p>В ответ на одно сообщение New Session может быть отправлено одно или несколько сообщений New Session Reply. Каждый ответ предваряется тегом, который генерируется из TagSet для сессии.</p>
+<p>Ответ New Session состоит из двух частей. Первая часть — это завершение handshake Noise IK с добавленным в начало тегом. Длина первой части составляет 56 байт. Вторая часть — это полезная нагрузка фазы данных. Длина второй части составляет 16 + длина полезной нагрузки.</p>
+<p>Общая длина составляет 72 + длина полезной нагрузки. Зашифрованный формат:</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |       Session Tag   8 bytes           |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +        Ephemeral Public Key           +
+  |                                       |
+  +            32 bytes                   +
+  |     Encoded with Elligator2           |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +  (MAC) for Key Section (no data)      +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for Payload Section     +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+
+  Tag :: 8 bytes, cleartext
+
+  Public Key :: 32 bytes, little endian, Elligator2, cleartext
+
+  MAC :: Poly1305 message authentication code, 16 bytes
+         Note: The ChaCha20 plaintext data is empty (ZEROLEN)
+
+  Payload Section encrypted data :: remaining data minus 16 bytes
+
+  MAC :: Poly1305 message authentication code, 16 bytes
+</code></pre><h3 id="kdf-для-секции-полезной-нагрузки-со-статическим-ключом-alice">KDF для секции полезной нагрузки (со статическим ключом Alice)</h3>
+<p>Тег генерируется в Session Tags KDF, как инициализировано в DH Initialization KDF ниже. Это связывает ответ с сессией. Session Key из DH Initialization не используется.</p>
+<h3 id="kdf-для-секции-полезной-нагрузки-без-статического-ключа-alice">KDF для секции полезной нагрузки (без статического ключа Alice)</h3>
+<p>Эфемерный ключ Боба. Эфемерный ключ состоит из 32 байт, закодированных с помощью Elligator2, little endian. Этот ключ никогда не используется повторно; новый ключ генерируется для каждого сообщения, включая повторные передачи.</p>
+<h3 id="1g-формат-ответа-new-session-reply">1g) Формат ответа New Session Reply</h3>
+<p>Зашифрованная длина — это оставшаяся часть данных. Расшифрованная длина на 16 меньше зашифрованной длины. Полезная нагрузка обычно содержит один или более блоков Garlic Clove. См. раздел полезной нагрузки ниже для формата и дополнительных требований.</p>
+<h3 id="тег-сессии">Тег сессии</h3>
+<p>Один или несколько тегов создаются из TagSet, который инициализируется с использованием KDF ниже, используя chainKey из сообщения New Session.</p>
+<pre tabindex="0"><code>
+// Generate tagset
+  tagsetKey = HKDF(chainKey, ZEROLEN, &#34;SessionReplyTags&#34;, 32)
+  tagset_nsr = DH_INITIALIZE(chainKey, tagsetKey)
+</code></pre><h3 id="ответ-нового-сеанса-с-эфемерным-ключом">Ответ нового сеанса с эфемерным ключом</h3>
+<pre tabindex="0"><code>
+// Keys from the New Session message
+  // Alice&#39;s X25519 keys
+  // apk and aepk are sent in original New Session message
+  // ask = Alice private static key
+  // apk = Alice public static key
+  // aesk = Alice ephemeral private key
+  // aepk = Alice ephemeral public key
+  // Bob&#39;s X25519 static keys
+  // bsk = Bob private static key
+  // bpk = Bob public static key
+
+  // Generate the tag
+  tagsetEntry = tagset_nsr.GET_NEXT_ENTRY()
+  tag = tagsetEntry.SESSION_TAG
+
+  // MixHash(tag)
+  h = SHA256(h || tag)
+
+  This is the &#34;e&#34; message pattern:
+
+  // Bob&#39;s X25519 ephemeral keys
+  besk = GENERATE_PRIVATE_ELG2()
+  bepk = DERIVE_PUBLIC(besk)
+
+  // Bob&#39;s ephemeral public key
+  // MixHash(bepk)
+  // || below means append
+  h = SHA256(h || bepk);
+
+  // elg2_bepk is sent in cleartext in the
+  // beginning of the New Session message
+  elg2_bepk = ENCODE_ELG2(bepk)
+  // As decoded by Bob
+  bepk = DECODE_ELG2(elg2_bepk)
+
+  End of &#34;e&#34; message pattern.
+
+  This is the &#34;ee&#34; message pattern:
+
+  // MixKey(DH())
+  //[chainKey, k] = MixKey(sharedSecret)
+  // ChaChaPoly parameters to encrypt/decrypt
+  // chainKey from original New Session Payload Section
+  sharedSecret = DH(aesk, bepk) = DH(besk, aepk)
+  keydata = HKDF(chainKey, sharedSecret, &#34;&#34;, 32)
+  chainKey = keydata[0:31]
+
+  End of &#34;ee&#34; message pattern.
+
+  This is the &#34;se&#34; message pattern:
+
+  // MixKey(DH())
+  //[chainKey, k] = MixKey(sharedSecret)
+  sharedSecret = DH(ask, bepk) = DH(besk, apk)
+  keydata = HKDF(chainKey, sharedSecret, &#34;&#34;, 64)
+  chainKey = keydata[0:31]
+
+  // AEAD parameters
+  k = keydata[32:63]
+  n = 0
+  ad = h
+  ciphertext = ENCRYPT(k, n, ZEROLEN, ad)
+
+  End of &#34;se&#34; message pattern.
+
+  // MixHash(ciphertext)
+  h = SHA256(h || ciphertext)
+
+  chainKey is used in the ratchet below.
+</code></pre><h3 id="полезная-нагрузка-3">Полезная нагрузка</h3>
+<p>Это похоже на первое сообщение Existing Session после разделения, но без отдельного тега. Дополнительно мы используем хеш, описанный выше, чтобы привязать полезную нагрузку к сообщению NSR.</p>
+<pre tabindex="0"><code>
+// split()
+  keydata = HKDF(chainKey, ZEROLEN, &#34;&#34;, 64)
+  k_ab = keydata[0:31]
+  k_ba = keydata[32:63]
+  tagset_ab = DH_INITIALIZE(chainKey, k_ab)
+  tagset_ba = DH_INITIALIZE(chainKey, k_ba)
+
+  // AEAD parameters for New Session Reply payload
+  k = HKDF(k_ba, ZEROLEN, &#34;AttachPayloadKDF&#34;, 32)
+  n = 0
+  ad = h
+  ciphertext = ENCRYPT(k, n, payload, ad)
+</code></pre><h3 id="kdf-для-reply-tagset">KDF для Reply TagSet</h3>
+<p>В ответ может быть отправлено несколько сообщений NSR, каждое с уникальными эфемерными ключами, в зависимости от размера ответа.</p>
+<p>Алиса и Боб должны использовать новые эфемерные ключи для каждого сообщения NS и NSR.</p>
+<p>Алиса должна получить одно из NSR сообщений Боба перед отправкой сообщений Existing Session (ES), а Боб должен получить ES сообщение от Алисы перед отправкой ES сообщений.</p>
+<p><code>chainKey</code> и <code>k</code> из NSR Payload Section Боба используются в качестве входных данных для начальных ES DH Ratchets (в обоих направлениях, см. DH Ratchet KDF).</p>
+<p>Боб должен сохранять только Существующие Сессии для ES-сообщений, полученных от Алисы. Любые другие созданные входящие и исходящие сессии (для множественных NSR) должны быть немедленно уничтожены после получения первого ES-сообщения от Алисы для данной сессии.</p>
+<h3 id="kdf-для-зашифрованного-содержимого-секции-reply-key">KDF для зашифрованного содержимого секции Reply Key</h3>
+<p>Тег сессии (8 байт) Зашифрованные данные и MAC (см. раздел 3 ниже)</p>
+<h3 id="kdf-для-зашифрованного-содержимого-раздела-полезной-нагрузки">KDF для зашифрованного содержимого раздела полезной нагрузки</h3>
+<p>Зашифровано:</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |       Session Tag                     |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +              (MAC)                    +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+
+  Session Tag :: 8 bytes, cleartext
+
+  Payload Section encrypted data :: remaining data minus 16 bytes
+
+  MAC :: Poly1305 message authentication code, 16 bytes
+</code></pre><h3 id="примечания">Примечания</h3>
+<p>Зашифрованная длина - это остаток данных. Расшифрованная длина на 16 меньше зашифрованной длины. См. раздел полезной нагрузки ниже для формата и требований.</p>
+<p>KDF</p>
+<pre tabindex="0"><code>See AEAD section below.
+
+  // AEAD parameters for Existing Session payload
+  k = The 32-byte session key associated with this session tag
+  n = The message number N in the current chain, as retrieved from the associated Session Tag.
+  ad = The session tag, 8 bytes
+  ciphertext = ENCRYPT(k, n, payload, ad)
+</code></pre><h3 id="1h-формат-существующей-сессии">1h) Формат существующей сессии</h3>
+<p>Формат: 32-байтовые публичные и приватные ключи, little-endian.</p>
+<p>Обоснование: Используется в <a href="../../../ru/docs/specs/ntcp2/">NTCP2</a>
+.</p>
+<h3 id="формат">Формат</h3>
+<p>В стандартных рукопожатиях Noise первые сообщения рукопожатия в каждом направлении начинаются с эфемерных ключей, которые передаются открытым текстом. Поскольку валидные ключи X25519 можно отличить от случайных данных, злоумышленник посередине может отличить эти сообщения от сообщений Existing Session, которые начинаются со случайных тегов сессии. В <a href="../../../ru/docs/specs/ntcp2/">NTCP2</a>
+ (<a href="../../../ru/proposals/111-ntcp-2/">Proposal 111</a>
+) мы использовали низкозатратную функцию XOR с использованием внеполосного статического ключа для обфускации ключа. Однако модель угроз здесь отличается; мы не хотим позволять любому MitM использовать какие-либо средства для подтверждения назначения трафика или для различения первых сообщений рукопожатия от сообщений Existing Session.</p>
+<p>Поэтому используется <a href="https://elligator.cr.yp.to/">Elligator2</a>
+ для преобразования эфемерных ключей в сообщениях New Session и New Session Reply, чтобы они были неотличимы от равномерно случайных строк.</p>
+<h3 id="полезная-нагрузка-4">Полезная нагрузка</h3>
+<p>32-байтовые публичные и приватные ключи. Закодированные ключи имеют порядок байтов little endian.</p>
+<p>Как определено в <a href="https://elligator.cr.yp.to/">Elligator2</a>
+, закодированные ключи неотличимы от 254 случайных битов. Нам требуется 256 случайных битов (32 байта). Поэтому кодирование и декодирование определяются следующим образом:</p>
+<p>Кодирование:</p>
+<pre tabindex="0"><code>
+ENCODE_ELG2() Definition
+
+  // Encode as defined in Elligator2 specification
+  encodedKey = encode(pubkey)
+  // OR in 2 random bits to MSB
+  randomByte = CSRNG(1)
+  encodedKey[31] |= (randomByte &amp; 0xc0)
+</code></pre><p>Декодирование:</p>
+<pre tabindex="0"><code>
+DECODE_ELG2() Definition
+
+  // Mask out 2 random bits from MSB
+  encodedKey[31] &amp;= 0x3f
+  // Decode as defined in Elligator2 specification
+  pubkey = decode(encodedKey)
+</code></pre><h3 id="2-ecies-x25519">2) ECIES-X25519</h3>
+<p>Требуется для предотвращения классификации трафика со стороны OBEP и IBGW.</p>
+<h3 id="2a-elligator2">2a) Elligator2</h3>
+<p>Elligator2 удваивает среднее время генерации ключей, поскольку половина закрытых ключей приводит к открытым ключам, которые не подходят для кодирования с помощью Elligator2. Кроме того, время генерации ключей является неограниченным с экспоненциальным распределением, поскольку генератор должен продолжать повторные попытки до тех пор, пока не будет найдена подходящая пара ключей.</p>
+<p>Эти накладные расходы можно контролировать, выполняя генерацию ключей заранее в отдельном потоке, чтобы поддерживать пул подходящих ключей.</p>
+<p>Генератор выполняет функцию ENCODE_ELG2() для определения пригодности. Поэтому генератор должен сохранять результат ENCODE_ELG2(), чтобы не пришлось вычислять его снова.</p>
+<p>Кроме того, неподходящие ключи могут быть добавлены в пул ключей, используемых для <a href="../../../ru/docs/specs/ntcp2/">NTCP2</a>
+, где Elligator2 не используется. Вопросы безопасности такого подхода требуют дальнейшего определения.</p>
+<h3 id="формат-1">Формат</h3>
+<p>AEAD с использованием ChaCha20 и Poly1305, как в <a href="../../../ru/docs/specs/ntcp2/">NTCP2</a>
+. Это соответствует <a href="https://tools.ietf.org/html/rfc7539">RFC-7539</a>
+, который также аналогично используется в TLS <a href="https://tools.ietf.org/html/rfc7905">RFC-7905</a>
+.</p>
+<h3 id="обоснование-1">Обоснование</h3>
+<p>Входные данные для функций шифрования/дешифрования блока AEAD в сообщении New Session:</p>
+<pre tabindex="0"><code>
+k :: 32 byte cipher key
+       See New Session and New Session Reply KDFs above.
+
+  n :: Counter-based nonce, 12 bytes.
+       n = 0
+
+  ad :: Associated data, 32 bytes.
+        The SHA256 hash of the preceding data, as output from mixHash()
+
+  data :: Plaintext data, 0 or more bytes
+</code></pre><h3 id="примечания-1">Примечания</h3>
+<p>Входные данные для функций шифрования/дешифрования блока AEAD в сообщении Existing Session:</p>
+<pre tabindex="0"><code>
+k :: 32 byte session key
+       As looked up from the accompanying session tag.
+
+  n :: Counter-based nonce, 12 bytes.
+       Starts at 0 and incremented for each message when transmitting.
+       For the receiver, the value
+       as looked up from the accompanying session tag.
+       First four bytes are always zero.
+       Last eight bytes are the message number (n), little-endian encoded.
+       Maximum value is 65535.
+       Session must be ratcheted when N reaches that value.
+       Higher values must never be used.
+
+  ad :: Associated data
+        The session tag
+
+  data :: Plaintext data, 0 or more bytes
+</code></pre><h3 id="3-aead-chachapoly">3) AEAD (ChaChaPoly)</h3>
+<p>Выходные данные функции шифрования, входные данные функции расшифровки:</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |       ChaCha20 encrypted data         |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +              (MAC)                    +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+
+  encrypted data :: Same size as plaintext data, 0 - 65519 bytes
+
+  MAC :: Poly1305 message authentication code, 16 bytes
+</code></pre><h3 id="входные-данные-new-session-и-new-session-reply">Входные данные New Session и New Session Reply</h3>
+<ul>
+<li>
+<p>Поскольку ChaCha20 является потоковым шифром, открытые тексты не нужно дополнять.
+Дополнительные байты ключевого потока отбрасываются.</p>
+</li>
+<li>
+<p>Ключ для шифра (256 бит) согласовывается с помощью SHA256 KDF.
+Детали KDF для каждого сообщения описаны в отдельных разделах ниже.</p>
+</li>
+<li>
+<p>Фреймы ChaChaPoly имеют известный размер, поскольку они инкапсулированы в сообщение данных I2NP.</p>
+</li>
+<li>
+<p>Для всех сообщений
+паддинг находится внутри фрейма
+аутентифицированных данных.</p>
+</li>
+</ul>
+<h3 id="входные-данные-существующей-сессии">Входные данные существующей сессии</h3>
+<p>Все полученные данные, которые не прошли проверку AEAD, должны быть отброшены. Ответ не возвращается.</p>
+<h3 id="зашифрованный-формат">Зашифрованный формат</h3>
+<p>Используется в <a href="../../../ru/docs/specs/ntcp2/">NTCP2</a>
+.</p>
+<h3 id="примечания-2">Примечания</h3>
+<p>Мы по-прежнему используем session tags, как и раньше, но теперь мы используем ratchets для их генерации. Session tags также имели опцию повторного создания ключей, которую мы так и не реализовали. Так что это как double ratchet, но мы так и не сделали второй.</p>
+<p>Здесь мы определяем нечто похожее на Double Ratchet от Signal. Теги сессии генерируются детерминированно и идентично на стороне получателя и отправителя.</p>
+<p>Используя симметричный храповик ключей/тегов, мы устраняем использование памяти для хранения тегов сессии на стороне отправителя. Мы также устраняем потребление пропускной способности при отправке наборов тегов. Использование на стороне получателя все еще значительно, но мы можем сократить его дополнительно, поскольку мы уменьшим тег сессии с 32 байт до 8 байт.</p>
+<p>Мы не используем шифрование заголовков, как указано (и опционально) в Signal, вместо этого мы используем теги сессий.</p>
+<p>Используя DH ratchet, мы достигаем прямой секретности (forward secrecy), которая никогда не была реализована в ElGamal/AES+SessionTags.</p>
+<p>Примечание: Одноразовый открытый ключ New Session не является частью ratchet, его единственная функция — зашифровать начальный DH ratchet ключ Алисы.</p>
+<h3 id="обработка-ошибок-aead">Обработка ошибок AEAD</h3>
+<p>Double Ratchet обрабатывает потерянные или поступившие не по порядку сообщения, включая в каждый заголовок сообщения тег. Получатель ищет индекс тега, это номер сообщения N. Если сообщение содержит блок Message Number со значением PN, получатель может удалить любые теги выше этого значения в предыдущем наборе тегов, сохраняя при этом пропущенные теги из предыдущего набора тегов на случай, если пропущенные сообщения поступят позже.</p>
+<h3 id="обоснование-2">Обоснование</h3>
+<p>Мы определяем следующие структуры данных и функции для реализации этих ratchet.</p>
+<p>TAGSET_ENTRY</p>
+<pre><code>A single entry in a TAGSET.
+
+INDEX
+    An integer index, starting with 0
+
+SESSION_TAG
+    An identifier to go out on the wire, 8 bytes
+
+SESSION_KEY
+    A symmetric key, never goes on the wire, 32 bytes
+</code></pre>
+<p>НАБОР ТЕГОВ</p>
+<pre><code>A collection of TAGSET_ENTRIES.
+
+CREATE(key, n)
+    Generate a new TAGSET using initial cryptographic key material of 32 bytes.
+    The associated session identifier is provided.
+    The initial number of of tags to create is specified; this is generally 0 or 1
+    for an outgoing session.
+    LAST_INDEX = -1
+    EXTEND(n) is called.
+
+EXTEND(n)
+    Generate n more TAGSET_ENTRIES by calling EXTEND() n times.
+
+EXTEND()
+    Generate one more TAGSET_ENTRY, unless the maximum number SESSION_TAGS have
+    already been generated.
+    If LAST_INDEX is greater than or equal to 65535, return.
+    ++ LAST_INDEX
+    Create a new TAGSET_ENTRY with the LAST_INDEX value and the calculated SESSION_TAG.
+    Calls RATCHET_TAG() and (optionally) RATCHET_KEY().
+    For inbound sessions, the calculation of the SESSION_KEY may
+    be deferred and calculated in GET_SESSION_KEY().
+    Calls EXPIRE()
+
+EXPIRE()
+    Remove tags and keys that are too old, or if the TAGSET size exceeds some limit.
+
+RATCHET_TAG()
+    Calculates the next SESSION_TAG based on the last SESSION_TAG.
+
+RATCHET_KEY()
+    Calculates the next SESSION_KEY based on the last SESSION_KEY.
+
+SESSION
+    The associated session.
+
+CREATION_TIME
+    When the TAGSET was created.
+
+LAST_INDEX
+    The last TAGSET_ENTRY INDEX generated by EXTEND().
+
+GET_NEXT_ENTRY()
+    Used for outgoing sessions only.
+    EXTEND(1) is called if there are no remaining TAGSET_ENTRIES.
+    If EXTEND(1) did nothing, the max of 65535 TAGSETS have been used,
+    and return an error.
+    Returns the next unused TAGSET_ENTRY.
+
+GET_SESSION_KEY(sessionTag)
+    Used for incoming sessions only.
+    Returns the TAGSET_ENTRY containing the sessionTag.
+    If found, the TAGSET_ENTRY is removed.
+    If the SESSION_KEY calculation was deferred, it is calculated now.
+    If there are few TAGSET_ENTRIES remaining, EXTEND(n) is called.
+</code></pre>
+<h3 id="4-храповики">4) Храповики</h3>
+<p>Ratchets, но не так быстро, как Signal. Мы отделяем подтверждение получения ключа от генерации нового ключа. При обычном использовании Алиса и Боб будут каждый выполнять ratchet (дважды) немедленно в New Session, но больше ratchet выполнять не будут.</p>
+<p>Обратите внимание, что ratchet предназначен для одного направления и генерирует цепочку ratchet для New Session tag / ключа сообщения для этого направления. Для генерации ключей для обоих направлений необходимо выполнить ratchet дважды.</p>
+<p>Вы делаете ratchet каждый раз, когда генерируете и отправляете новый ключ. Вы делаете ratchet каждый раз, когда получаете новый ключ.</p>
+<p>Алиса выполняет один ratchet при создании несвязанной исходящей сессии, она не создает входящую сессию (несвязанная сессия не подразумевает ответа).</p>
+<p>Bob выполняет ratchet один раз при создании несвязанной входящей сессии и не создает соответствующую исходящую сессию (несвязанная сессия не поддерживает ответы).</p>
+<p>Алиса продолжает отправлять сообщения New Session (NS) Бобу до получения одного из сообщений New Session Reply (NSR) от Боба. Затем она использует результаты KDF секции Payload из NSR в качестве входных данных для механизмов ratchet сессии (см. DH Ratchet KDF) и начинает отправлять сообщения Existing Session (ES).</p>
+<p>Для каждого полученного сообщения NS Боб создает новую входящую сессию, используя результаты KDF секции полезной нагрузки ответа в качестве входных данных для нового входящего и исходящего ES DH Ratchet.</p>
+<p>Для каждого требуемого ответа Боб отправляет Алисе NSR сообщение с ответом в полезной нагрузке. Обязательно, чтобы Боб использовал новые эфемерные ключи для каждого NSR.</p>
+<p>Боб должен получить ES сообщение от Алисы на одной из входящих сессий, прежде чем создавать и отправлять ES сообщения на соответствующей исходящей сессии.</p>
+<p>Алиса должна использовать таймер для получения NSR-сообщения от Боба. Если время таймера истекает, сессия должна быть удалена.</p>
+<p>Чтобы избежать атаки KCI и/или истощения ресурсов, при которой злоумышленник отбрасывает NSR ответы Боба, заставляя Алису продолжать отправлять NS сообщения, Алиса должна избегать запуска новых сессий к Бобу после определённого количества повторных попыток из-за истечения таймера.</p>
+<p>Алиса и Боб выполняют DH ratchet для каждого полученного блока NextKey.</p>
+<p>Алиса и Боб каждый генерируют новые наборы тегов и два симметричных ключа после каждого DH ratchet. Для каждого нового ES сообщения в данном направлении, Алиса и Боб продвигают теги сессии и симметричные ключи ratchet.</p>
+<p>Частота DH ratchets после первоначального handshake зависит от реализации. Хотя протокол устанавливает ограничение в 65535 сообщений до того, как потребуется ratchet, более частое ratcheting (основанное на количестве сообщений, прошедшем времени или и том, и другом) может обеспечить дополнительную безопасность.</p>
+<p>После финального handshake KDF на связанных сессиях, Bob и Alice должны выполнить функцию Noise Split() на результирующем CipherState для создания независимых симметричных ключей и ключей цепочки тегов для входящих и исходящих сессий.</p>
+<h4 id="key-and-tag-set-ids">KEY AND TAG SET IDS</h4>
+<p>Номера ID ключей и наборов тегов используются для идентификации ключей и наборов тегов. ID ключей используются в блоках NextKey для идентификации отправленного или используемого ключа. ID наборов тегов используются (вместе с номером сообщения) в блоках ACK для идентификации подтверждаемого сообщения. ID как ключей, так и наборов тегов применяются к наборам тегов для одного направления. Номера ID ключей и наборов тегов должны быть последовательными.</p>
+<p>В первых наборах тегов, используемых для сессии в каждом направлении, идентификатор набора тегов равен 0. Блоки NextKey не были отправлены, поэтому идентификаторы ключей отсутствуют.</p>
+<p>Для начала DH ratchet отправитель передает новый блок NextKey с идентификатором ключа 0. Получатель отвечает новым блоком NextKey с идентификатором ключа 0. Затем отправитель начинает использовать новый набор тегов с идентификатором набора тегов 1.</p>
+<p>Последующие наборы тегов генерируются аналогично. Для всех наборов тегов, используемых после обменов NextKey, номер набора тегов равен (1 + идентификатор ключа Alice + идентификатор ключа Bob).</p>
+<p>Идентификаторы ключей и наборов тегов начинаются с 0 и увеличиваются последовательно. Максимальный идентификатор набора тегов — 65535. Максимальный идентификатор ключа — 32767. Когда набор тегов почти исчерпан, отправитель набора тегов должен инициировать обмен NextKey. Когда набор тегов 65535 почти исчерпан, отправитель набора тегов должен инициировать новую сессию, отправив сообщение New Session.</p>
+<p>При максимальном размере потокового сообщения 1730 и при условии отсутствия повторных передач, теоретический максимальный объем передачи данных с использованием одного набора тегов составляет 1730 * 65536 ~= 108 МБ. Фактический максимум будет ниже из-за повторных передач.</p>
+<p>Теоретический максимум передачи данных со всеми 65536 доступными наборами тегов, до того как сессия должна быть отброшена и заменена, составляет 64K * 108 МБ ~= 6,9 ТБ.</p>
+<h4 id="dh-ratchet-message-flow">DH RATCHET MESSAGE FLOW</h4>
+<p>Следующий обмен ключами для набора тегов должен быть инициирован отправителем этих тегов (владельцем исходящего набора тегов). Получатель (владелец входящего набора тегов) ответит. При типичном HTTP GET трафике на прикладном уровне Боб отправит больше сообщений и будет выполнять ratchet первым, инициируя обмен ключами; диаграмма ниже это показывает. Когда Алиса выполняет ratchet, то же самое происходит в обратном порядке.</p>
+<p>Первый набор тегов, используемый после рукопожатия NS/NSR, это набор тегов 0. Когда набор тегов 0 почти исчерпан, новые ключи должны быть обменены в обоих направлениях для создания набора тегов 1. После этого новый ключ отправляется только в одном направлении.</p>
+<p>Для создания набора тегов 2 отправитель тега посылает новый ключ, а получатель тега отправляет ID своего старого ключа в качестве подтверждения. Обе стороны выполняют DH.</p>
+<p>Для создания набора тегов 3 отправитель тега отправляет идентификатор своего старого ключа и запрашивает новый ключ у получателя тега. Обе стороны выполняют DH.</p>
+<p>Последующие наборы тегов генерируются так же, как наборы тегов 2 и 3. Номер набора тегов равен (1 + идентификатор ключа отправителя + идентификатор ключа получателя).</p>
+<pre tabindex="0"><code>
+Tag Sender                    Tag Receiver
+
+                   ... use tag set #0 ...
+
+
+  (Tagset #0 almost empty)
+  (generate new key #0)
+
+  Next Key, forward, request reverse, with key #0  --------&gt;
+  (repeat until next key received)
+
+                              (generate new key #0, do DH, create IB Tagset #1)
+
+          &lt;-------------      Next Key, reverse, with key #0
+                              (repeat until tag received on new tagset)
+
+  (do DH, create OB Tagset #1)
+
+
+                   ... use tag set #1 ...
+
+
+  (Tagset #1 almost empty)
+  (generate new key #1)
+
+  Next Key, forward, with key #1        --------&gt;
+  (repeat until next key received)
+
+                              (reuse key #0, do DH, create IB Tagset #2)
+
+          &lt;--------------     Next Key, reverse, id 0
+                              (repeat until tag received on new tagset)
+
+  (do DH, create OB Tagset #2)
+
+
+                   ... use tag set #2 ...
+
+
+  (Tagset #2 almost empty)
+  (reuse key #1)
+
+  Next Key, forward, request reverse, id 1  --------&gt;
+  (repeat until next key received)
+
+                              (generate new key #1, do DH, create IB Tagset #3)
+
+          &lt;--------------     Next Key, reverse, with key #1
+
+  (do DH, create OB Tagset #3)
+  (reuse key #1, do DH, create IB Tagset #3)
+
+
+                   ... use tag set #3 ...
+
+
+       After tag set 3, repeat the above
+       patterns as shown for tag sets 2 and 3.
+
+       To create a new even-numbered tag set, the sender sends a new key
+       to the receiver. The receiver sends his old key ID
+       back as an acknowledgement.
+
+       To create a new odd-numbered tag set, the sender sends a reverse request
+       to the receiver. The receiver sends a new reverse key to the sender.
+</code></pre><p>После завершения DH ratchet для исходящего набора тегов и создания нового исходящего набора тегов, он должен использоваться немедленно, а старый исходящий набор тегов может быть удален.</p>
+<p>После завершения DH ratchet для входящего tagset и создания нового входящего tagset, получатель должен прослушивать теги в обоих tagsets и удалить старый tagset через короткое время, примерно через 3 минуты.</p>
+<p>Сводка прогрессии набора тегов и идентификаторов ключей представлена в таблице ниже. * указывает на то, что генерируется новый ключ.</p>
+<table>
+  <thead>
+      <tr>
+          <th>New Tag Set ID</th>
+          <th>Sender key ID</th>
+          <th>Rcvr key ID</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>0</td>
+          <td>n/a</td>
+          <td>n/a</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0 *</td>
+          <td>0 *</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>1 *</td>
+          <td>0</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>1</td>
+          <td>1 *</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>2 *</td>
+          <td>1</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>2</td>
+          <td>2 *</td>
+      </tr>
+      <tr>
+          <td>&hellip;</td>
+          <td>&hellip;</td>
+          <td>&hellip;</td>
+      </tr>
+      <tr>
+          <td>65534</td>
+          <td>32767 *</td>
+          <td>32766</td>
+      </tr>
+      <tr>
+          <td>65535</td>
+          <td>32767</td>
+          <td>32767 *</td>
+      </tr>
+      <tr>
+          <td>Номера ID наборов ключей и тегов должны быть последовательными.</td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="dh-initialization-kdf">DH INITIALIZATION KDF</h4>
+<p>Это определение DH_INITIALIZE(rootKey, k) для одного направления. Оно создает tagset и &ldquo;следующий корневой ключ&rdquo;, который будет использоваться для последующего DH ratchet при необходимости.</p>
+<p>Мы используем DH инициализацию в трех местах. Во-первых, мы используем ее для генерации набора тегов для New Session Replies. Во-вторых, мы используем ее для генерации двух наборов тегов, по одному для каждого направления, для использования в сообщениях Existing Session. Наконец, мы используем ее после DH Ratchet для генерации нового набора тегов в одном направлении для дополнительных сообщений Existing Session.</p>
+<pre tabindex="0"><code>
+Inputs:
+  1) rootKey = chainKey from Payload Section
+  2) k from the New Session KDF or split()
+
+  // KDF_RK(rk, dh_out)
+  keydata = HKDF(rootKey, k, &#34;KDFDHRatchetStep&#34;, 64)
+
+  // Output 1: The next Root Key (KDF input for the next DH ratchet)
+  nextRootKey = keydata[0:31]
+  // Output 2: The chain key to initialize the new
+  // session tag and symmetric key ratchets
+  // for the tag set
+  ck = keydata[32:63]
+
+  // session tag and symmetric key chain keys
+  keydata = HKDF(ck, ZEROLEN, &#34;TagAndKeyGenKeys&#34;, 64)
+  sessTag_ck = keydata[0:31]
+  symmKey_ck = keydata[32:63]
+</code></pre><h4 id="dh-ratchet-kdf">DH RATCHET KDF</h4>
+<p>Это используется после обмена новыми DH ключами в блоках NextKey, до того как набор тегов исчерпан.</p>
+<pre tabindex="0"><code>
+
+// Tag sender generates new X25519 ephemeral keys
+  // and sends rapk to tag receiver in a NextKey block
+  rask = GENERATE_PRIVATE()
+  rapk = DERIVE_PUBLIC(rask)
+  
+  // Tag receiver generates new X25519 ephemeral keys
+  // and sends rbpk to Tag sender in a NextKey block
+  rbsk = GENERATE_PRIVATE()
+  rbpk = DERIVE_PUBLIC(rbsk)
+
+  sharedSecret = DH(rask, rbpk) = DH(rbsk, rapk)
+  tagsetKey = HKDF(sharedSecret, ZEROLEN, &#34;XDHRatchetTagSet&#34;, 32)
+  rootKey = nextRootKey // from previous tagset in this direction
+  newTagSet = DH_INITIALIZE(rootKey, tagsetKey)
+</code></pre><h3 id="номера-сообщений">Номера сообщений</h3>
+<p>Ratchets для каждого сообщения, как в Signal. Ratchet тега сессии синхронизирован с ratchet симметричного ключа, но ratchet ключа получателя может &ldquo;отставать&rdquo;, чтобы сэкономить память.</p>
+<p>Передатчик выполняет ratchet один раз для каждого передаваемого сообщения. Дополнительные теги хранить не требуется. Передатчик также должен вести счетчик для &lsquo;N&rsquo; — номера сообщения в текущей цепи. Значение &lsquo;N&rsquo; включается в отправляемое сообщение. См. определение блока Message Number.</p>
+<p>Получатель должен продвинуть ratchet вперед на максимальный размер окна и сохранить теги в &ldquo;наборе тегов&rdquo;, который связан с сессией. После получения сохраненный тег может быть отброшен, и если нет предыдущих неполученных тегов, окно может быть продвинуто. Получатель должен хранить значение &lsquo;N&rsquo;, связанное с каждым тегом сессии, и проверять, что номер в отправленном сообщении соответствует этому значению. См. определение блока Message Number.</p>
+<h4 id="kdf">KDF</h4>
+<p>Это определение RATCHET_TAG().</p>
+<pre tabindex="0"><code>
+Inputs:
+  1) Session Tag Chain key sessTag_ck
+     First time: output from DH ratchet
+     Subsequent times: output from previous session tag ratchet
+
+  Generated:
+  2) input_key_material = SESSTAG_CONSTANT
+     Must be unique for this tag set (generated from chain key),
+     so that the sequence isn&#39;t predictable, since session tags
+     go out on the wire in plaintext.
+
+  Outputs:
+  1) N (the current session tag number)
+  2) the session tag (and symmetric key, probably)
+  3) the next Session Tag Chain Key (KDF input for the next session tag ratchet)
+
+  Initialization:
+  keydata = HKDF(sessTag_ck, ZEROLEN, &#34;STInitialization&#34;, 64)
+  // Output 1: Next chain key
+  sessTag_chainKey = keydata[0:31]
+  // Output 2: The constant
+  SESSTAG_CONSTANT = keydata[32:63]
+
+  // KDF_ST(ck, constant)
+  keydata_0 = HKDF(sessTag_chainkey, SESSTAG_CONSTANT, &#34;SessionTagKeyGen&#34;, 64)
+  // Output 1: Next chain key
+  sessTag_chainKey_0 = keydata_0[0:31]
+  // Output 2: The session tag
+  // or more if tag is longer than 8 bytes
+  tag_0 = keydata_0[32:39]
+
+  // repeat as necessary to get to tag_n
+  keydata_n = HKDF(sessTag_chainKey_(n-1), SESSTAG_CONSTANT, &#34;SessionTagKeyGen&#34;, 64)
+  // Output 1: Next chain key
+  sessTag_chainKey_n = keydata_n[0:31]
+  // Output 2: The session tag
+  // or more if tag is longer than 8 bytes
+  tag_n = keydata_n[32:39]
+</code></pre><h3 id="пример-реализации">Пример реализации</h3>
+<p>Ratchets для каждого сообщения, как в Signal. Каждый симметричный ключ имеет связанный номер сообщения и тег сессии. Ratchet ключа сессии синхронизирован с симметричным ratchet тега, но ratchet ключа получателя может &ldquo;отставать&rdquo;, чтобы сэкономить память.</p>
+<p>Передатчик делает один поворот ratchet для каждого отправленного сообщения. Дополнительные ключи хранить не требуется.</p>
+<p>Когда получатель получает тег сессии, если он еще не продвинул симметричный ключевой ratchet до связанного ключа, он должен &ldquo;догнать&rdquo; связанный ключ. Получатель вероятно будет кэшировать ключи для любых предыдущих тегов, которые еще не были получены. После получения сохраненный ключ может быть отброшен, и если нет предыдущих неполученных тегов, окно может быть продвинуто.</p>
+<p>Для эффективности механизмы session tag и симметричного ключа разделены, чтобы механизм session tag мог опережать механизм симметричного ключа. Это также обеспечивает дополнительную безопасность, поскольку session tag передаются по сети.</p>
+<h4 id="kdf-1">KDF</h4>
+<p>Это определение RATCHET_KEY().</p>
+<pre tabindex="0"><code>
+Inputs:
+  1) Symmetric Key Chain key symmKey_ck
+     First time: output from DH ratchet
+     Subsequent times: output from previous symmetric key ratchet
+
+  Generated:
+  2) input_key_material = SYMMKEY_CONSTANT = ZEROLEN
+     No need for uniqueness. Symmetric keys never go out on the wire.
+     TODO: Set a constant anyway?
+
+  Outputs:
+  1) N (the current session key number)
+  2) the session key
+  3) the next Symmetric Key Chain Key (KDF input for the next symmetric key ratchet)
+
+  // KDF_CK(ck, constant)
+  SYMMKEY_CONSTANT = ZEROLEN
+  // Output 1: Next chain key
+  keydata_0 = HKDF(symmKey_ck, SYMMKEY_CONSTANT, &#34;SymmetricRatchet&#34;, 64)
+  symmKey_chainKey_0 = keydata_0[0:31]
+  // Output 2: The symmetric key
+  k_0 = keydata_0[32:63]
+
+  // repeat as necessary to get to k[n]
+  keydata_n = HKDF(symmKey_chainKey_(n-1), SYMMKEY_CONSTANT, &#34;SymmetricRatchet&#34;, 64)
+  // Output 1: Next chain key
+  symmKey_chainKey_n = keydata_n[0:31]
+  // Output 2: The symmetric key
+  k_n = keydata_n[32:63]
+</code></pre><h3 id="4a-dh-ratchet">4a) DH Ratchet</h3>
+<p>Это заменяет формат секции AES, определённый в спецификации ElGamal/AES+SessionTags.</p>
+<p>Используется тот же формат блока, который определён в спецификации <a href="../../../ru/docs/specs/ntcp2/">NTCP2</a>
+. Отдельные типы блоков определяются по-разному.</p>
+<p>Существуют опасения, что поощрение разработчиков к совместному использованию кода может привести к проблемам с парсингом. Разработчики должны тщательно рассмотреть преимущества и риски совместного использования кода и убедиться, что правила упорядочивания и валидных блоков отличаются для двух контекстов.</p>
+<h3 id="payload-section-decrypted-data">Payload Section Decrypted data</h3>
+<p>Зашифрованная длина — это оставшаяся часть данных. Расшифрованная длина на 16 меньше зашифрованной длины. Поддерживаются все типы блоков. Типичное содержимое включает следующие блоки:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Payload Block Type</th>
+          <th>Type Number</th>
+          <th>Block Length</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>DateTime</td>
+          <td>0</td>
+          <td>7</td>
+      </tr>
+      <tr>
+          <td>Termination (TBD)</td>
+          <td>4</td>
+          <td>9 typ.</td>
+      </tr>
+      <tr>
+          <td>Options (TBD)</td>
+          <td>5</td>
+          <td>21+</td>
+      </tr>
+      <tr>
+          <td>Message Number (TBD)</td>
+          <td>6</td>
+          <td>TBD</td>
+      </tr>
+      <tr>
+          <td>Next Key</td>
+          <td>7</td>
+          <td>3 or 35</td>
+      </tr>
+      <tr>
+          <td>ACK</td>
+          <td>8</td>
+          <td>4 typ.</td>
+      </tr>
+      <tr>
+          <td>ACK Request</td>
+          <td>9</td>
+          <td>3</td>
+      </tr>
+      <tr>
+          <td>Garlic Clove</td>
+          <td>11</td>
+          <td>varies</td>
+      </tr>
+      <tr>
+          <td>Padding</td>
+          <td>254</td>
+          <td>varies</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="unencrypted-data">Unencrypted data</h3>
+<p>В зашифрованном кадре содержится ноль или более блоков. Каждый блок содержит однобайтовый идентификатор, двухбайтовую длину и ноль или более байтов данных.</p>
+<p>Для расширяемости получатели ДОЛЖНЫ игнорировать блоки с неизвестными номерами типов и рассматривать их как заполнение.</p>
+<p>Зашифрованные данные имеют максимальный размер 65535 байт, включая 16-байтовый заголовок аутентификации, поэтому максимальный размер незашифрованных данных составляет 65519 байт.</p>
+<p>(Тег аутентификации Poly1305 не показан):</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |blk |  size   |       data             |
+  +----+----+----+                        +
+  |                                       |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |blk |  size   |       data             |
+  +----+----+----+                        +
+  |                                       |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  ~               .   .   .               ~
+
+  blk :: 1 byte
+         0 datetime
+         1-3 reserved
+         4 termination
+         5 options
+         6 previous message number
+         7 next session key
+         8 ack
+         9 ack request
+         10 reserved
+         11 Garlic Clove
+         224-253 reserved for experimental features
+         254 for padding
+         255 reserved for future extension
+  size :: 2 bytes, big endian, size of data to follow, 0 - 65516
+  data :: the data
+
+  Maximum ChaChaPoly frame is 65535 bytes.
+  Poly1305 tag is 16 bytes
+  Maximum total block size is 65519 bytes
+  Maximum single block size is 65519 bytes
+  Block type is 1 byte
+  Block length is 2 bytes
+  Maximum single block data size is 65516 bytes.
+</code></pre><h3 id="block-ordering-rules">Block Ordering Rules</h3>
+<p>В сообщении New Session блок DateTime является обязательным и должен быть первым блоком.</p>
+<p>Другие разрешенные блоки:</p>
+<ul>
+<li>Garlic Clove (тип 11)</li>
+<li>Параметры (тип 5)</li>
+<li>Заполнение (тип 254)</li>
+</ul>
+<p>В сообщении New Session Reply блоки не требуются.</p>
+<p>Другие разрешенные блоки:</p>
+<ul>
+<li>Garlic Clove (тип 11)</li>
+<li>Параметры (тип 5)</li>
+<li>Заполнение (тип 254)</li>
+</ul>
+<p>Никакие другие блоки не разрешены. Дополнение, если присутствует, должно быть последним блоком.</p>
+<p>В сообщении Existing Session блоки не требуются, и порядок не определен, за исключением следующих требований:</p>
+<p>Блок Termination, если присутствует, должен быть последним блоком, за исключением блока Padding. Блок Padding, если присутствует, должен быть последним блоком.</p>
+<p>В одном кадре может быть несколько блоков Garlic Clove. В одном кадре может быть до двух блоков Next Key. Несколько блоков Padding не допускается в одном кадре. Другие типы блоков, вероятно, не будут иметь несколько блоков в одном кадре, но это не запрещено.</p>
+<h3 id="datetime">DateTime</h3>
+<p>Срок истечения. Помогает предотвратить повторные ответы. Боб должен проверить, что сообщение является свежим, используя данную временную метку. Боб должен реализовать фильтр Блума или другой механизм для предотвращения атак повторного воспроизведения, если время действительно. Обычно включается только в сообщения New Session.</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+
+  | 0  |    4    |     timestamp     |
+  +----+----+----+----+----+----+----+
+
+  blk :: 0
+  size :: 2 bytes, big endian, value = 4
+  timestamp :: Unix timestamp, unsigned seconds.
+               Wraps around in 2106
+</code></pre><h3 id="4b-храповик-тегов-сессии">4b) Храповик тегов сессии</h3>
+<p>Один расшифрованный Garlic Clove, как указано в <a href="../../../ru/docs/specs/i2np/">I2NP</a>
+, с изменениями для удаления полей, которые не используются или являются избыточными. Предупреждение: Этот формат значительно отличается от формата для ElGamal/AES. Каждый clove является отдельным блоком полезной нагрузки. Garlic Cloves не могут быть фрагментированы между блоками или между фреймами ChaChaPoly.</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  | 11 |  size   |                        |
+  +----+----+----+                        +
+  |      Delivery Instructions            |
+  ~                                       ~
+  ~                                       ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |type|  Message_ID       | Expiration   
+  +----+----+----+----+----+----+----+----+
+       |      I2NP Message body           |
+  +----+                                  +
+  ~                                       ~
+  ~                                       ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  size :: size of all data to follow
+
+  Delivery Instructions :: As specified in
+         the Garlic Clove section of [I2NP](/docs/specs/i2np/).
+         Length varies but is typically 1, 33, or 37 bytes
+
+  type :: I2NP message type
+
+  Message_ID :: 4 byte `Integer` I2NP message ID
+
+  Expiration :: 4 bytes, seconds since the epoch
+</code></pre><p>Примечания:</p>
+<ul>
+<li>
+<p>Разработчики должны обеспечить, что при чтении блока
+некорректные или вредоносные данные не приведут к выходу
+чтения за границы блока в следующий блок.</p>
+</li>
+<li>
+<p>Формат Clove Set, указанный в <a href="../../../ru/docs/specs/i2np/">I2NP</a>
+, не используется.
+Каждый clove содержится в своем собственном блоке.</p>
+</li>
+<li>
+<p>Заголовок I2NP сообщения составляет 9 байт, с идентичным форматом
+тому, что используется в <a href="../../../ru/docs/specs/ntcp2/">NTCP2</a>
+.</p>
+</li>
+<li>
+<p>Certificate, Message ID и Expiration из определения Garlic Message в <a href="../../../ru/docs/specs/i2np/">I2NP</a>
+ не включены.</p>
+</li>
+<li>
+<p>Certificate, Clove ID и Expiration из
+определения Garlic Clove в <a href="../../../ru/docs/specs/i2np/">I2NP</a>
+ не включены.</p>
+</li>
+</ul>
+<p>Обоснование:</p>
+<ul>
+<li>Сертификаты никогда не использовались.</li>
+<li>Отдельные ID сообщений и clove ID никогда не использовались.</li>
+<li>Отдельные сроки истечения никогда не использовались.</li>
+<li>Общая экономия по сравнению со старыми форматами Clove Set и Clove
+составляет приблизительно 35 байт для 1 clove, 54 байта для 2 clove
+и 73 байта для 3 clove.</li>
+<li>Формат блоков является расширяемым, и любые новые поля могут быть добавлены
+как новые типы блоков.</li>
+</ul>
+<h3 id="termination">Termination</h3>
+<p>Реализация необязательна. Закрыть сессию. Это должен быть последний блок без padding в кадре. Больше сообщений в этой сессии отправлено не будет.</p>
+<p>Не разрешено в NS или NSR. Включается только в сообщения Existing Session.</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  | 4  |  size   | rsn|     addl data     |
+  +----+----+----+----+                   +
+  ~               .   .   .               ~
+  +----+----+----+----+----+----+----+----+
+
+  blk :: 4
+  size :: 2 bytes, big endian, value = 1 or more
+  rsn :: reason, 1 byte:
+         0: normal close or unspecified
+         1: termination received
+         others: optional, impementation-specific
+  addl data :: optional, 0 or more bytes, for future expansion, debugging,
+               or reason text.
+               Format unspecified and may vary based on reason code.
+</code></pre><h3 id="4c-симметричный-ключевой-храповик">4c) Симметричный ключевой храповик</h3>
+<p>НЕ РЕАЛИЗОВАНО, для дальнейшего изучения. Передавать обновленные опции. Опции включают различные параметры для сессии. Смотрите раздел &ldquo;Анализ длины тега сессии&rdquo; ниже для получения дополнительной информации.</p>
+<p>Блок опций может иметь переменную длину, поскольку может присутствовать more_options.</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  | 5  |  size   |ver |flg |STL |STimeout |
+  +----+----+----+----+----+----+----+----+
+  |  SOTW   |  RITW   |tmin|tmax|rmin|rmax|
+  +----+----+----+----+----+----+----+----+
+  |  tdmy   |  rdmy   |  tdelay |  rdelay |
+  +----+----+----+----+----+----+----+----+
+  |              more_options             |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  blk :: 5
+  size :: 2 bytes, big endian, size of options to follow, 21 bytes minimum
+  ver :: Protocol version, must be 0
+  flg :: 1 byte flags
+         bits 7-0: Unused, set to 0 for future compatibility
+  STL :: Session tag length (must be 8), other values unimplemented
+  STimeout :: Session idle timeout (seconds), big endian
+  SOTW :: Sender Outbound Tag Window, 2 bytes big endian
+  RITW :: Receiver Inbound Tag Window 2 bytes big endian
+
+  tmin, tmax, rmin, rmax :: requested padding limits
+      tmin and rmin are for desired resistance to traffic analysis.
+      tmax and rmax are for bandwidth limits.
+      tmin and tmax are the transmit limits for the router sending this options block.
+      rmin and rmax are the receive limits for the router sending this options block.
+      Each is a 4.4 fixed-point float representing 0 to 15.9375
+      (or think of it as an unsigned 8-bit integer divided by 16.0).
+      This is the ratio of padding to data. Examples:
+      Value of 0x00 means no padding
+      Value of 0x01 means add 6 percent padding
+      Value of 0x10 means add 100 percent padding
+      Value of 0x80 means add 800 percent (8x) padding
+      Alice and Bob will negotiate the minimum and maximum in each direction.
+      These are guidelines, there is no enforcement.
+      Sender should honor receiver&#39;s maximum.
+      Sender may or may not honor receiver&#39;s minimum, within bandwidth constraints.
+
+  tdmy: Max dummy traffic willing to send, 2 bytes big endian, bytes/sec average
+  rdmy: Requested dummy traffic, 2 bytes big endian, bytes/sec average
+  tdelay: Max intra-message delay willing to insert, 2 bytes big endian, msec average
+  rdelay: Requested intra-message delay, 2 bytes big endian, msec average
+
+  more_options :: Format undefined, for future use
+</code></pre><p>SOTW — это рекомендация отправителя получателю относительно окна входящих тегов получателя (максимальное упреждение). RITW — это заявление отправителя об окне входящих тегов (максимальное упреждение), которое он планирует использовать. Каждая сторона затем устанавливает или корректирует упреждение на основе некоторого минимума, максимума или другого расчета.</p>
+<p>Примечания:</p>
+<ul>
+<li>Поддержка нестандартной длины тегов сессии, надеюсь,
+никогда не потребуется.</li>
+<li>Окно тегов - это MAX_SKIP в документации Signal.</li>
+</ul>
+<p>Проблемы:</p>
+<ul>
+<li>Согласование опций находится в разработке (TBD).</li>
+<li>Значения по умолчанию находятся в разработке (TBD).</li>
+<li>Опции заполнения и задержки скопированы из NTCP2,
+но эти опции там не были полностью реализованы или изучены.</li>
+</ul>
+<h3 id="message-numbers">Message Numbers</h3>
+<p>Реализация необязательна. Длина (количество отправленных сообщений) в предыдущем наборе тегов (PN). Получатель может немедленно удалить теги с номерами выше PN из предыдущего набора тегов. Получатель может удалить теги с номерами меньше или равными PN из предыдущего набора тегов через короткое время (например, 2 минуты).</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+
+  | 6  |  size   |  PN    |
+ +----+----+----+----+----+
+
+  blk :: 6
+  size :: 2
+  PN :: 2 bytes big endian. The index of the last tag sent in the previous tag set.
+</code></pre><p>Примечания:</p>
+<ul>
+<li>Максимальный PN равен 65535.</li>
+<li>Определения PN равны определению Signal, минус один.
+Это аналогично тому, что делает Signal, но в Signal PN и N находятся в заголовке.
+Здесь они находятся в зашифрованном теле сообщения.</li>
+<li>Не отправляйте этот блок в наборе тегов 0, поскольку предыдущего набора тегов не было.</li>
+</ul>
+<h3 id="5-полезная-нагрузка">5) Полезная нагрузка</h3>
+<p>Следующий ключ DH ratchet находится в полезной нагрузке и является необязательным. Мы не выполняем ratchet каждый раз. (Это отличается от signal, где он находится в заголовке и отправляется каждый раз)</p>
+<p>Для первого ratchet, Key ID = 0.</p>
+<p>Не разрешено в NS или NSR. Включается только в сообщения существующих сессий.</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  | 7  |  size   |flag|  key ID |         |
+  +----+----+----+----+----+----+         +
+  |                                       |
+  +                                       +
+  |     Next DH Ratchet Public Key        |
+  +                                       +
+  |                                       |
+  +                             +----+----+
+  |                             |
+  +----+----+----+----+----+----+
+
+  blk :: 7
+  size :: 3 or 35
+  flag :: 1 byte flags
+          bit order: 76543210
+          bit 0: 1 for key present, 0 for no key present
+          bit 1: 1 for reverse key, 0 for forward key
+          bit 2: 1 to request reverse key, 0 for no request
+                 only set if bit 1 is 0
+          bits 7-2: Unused, set to 0 for future compatibility
+  key ID :: The key ID of this key. 2 bytes, big endian
+            0 - 32767
+  Public Key :: The next X25519 public key, 32 bytes, little endian
+                Only if bit 0 is 1
+</code></pre><p>Примечания:</p>
+<ul>
+<li>Key ID — это инкрементный счетчик для локального ключа, используемого для данного набора тегов, начинающийся с 0.</li>
+<li>ID не должен изменяться, если не изменяется ключ.</li>
+<li>Это может быть не строго необходимо, но полезно для отладки.
+Signal не использует key ID.</li>
+<li>Максимальный Key ID равен 32767.</li>
+<li>В редких случаях, когда наборы тегов в обоих направлениях изменяются одновременно, кадр будет содержать два блока Next Key — один для прямого ключа и один для обратного ключа.</li>
+<li>Номера ID ключей и наборов тегов должны быть последовательными.</li>
+<li>Подробности см. в разделе DH Ratchet выше.</li>
+</ul>
+<h3 id="раздел-полезной-нагрузки-расшифрованные-данные">Раздел полезной нагрузки Расшифрованные данные</h3>
+<p>Это отправляется только в том случае, если был получен блок запроса подтверждения. Может присутствовать несколько подтверждений для подтверждения нескольких сообщений.</p>
+<p>Не разрешено в NS или NSR. Включается только в сообщения Existing Session.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  | 8  |  size   |tagsetid |   N     |    |
+  +----+----+----+----+----+----+----+    +
+  |             more acks                 |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  blk :: 8
+  size :: 4 * number of acks to follow, minimum 1 ack
+  for each ack:
+  tagsetid :: 2 bytes, big endian, from the message being acked
+  N :: 2 bytes, big endian, from the message being acked
+</code></pre><p>Примечания:</p>
+<ul>
+<li>ID набора тегов и N уникально идентифицируют подтверждаемое сообщение.</li>
+<li>В первых наборах тегов, используемых для сессии в каждом направлении, ID набора тегов равен 0.</li>
+<li>NextKey блоки не были отправлены, поэтому ID ключей отсутствуют.</li>
+<li>Для всех наборов тегов, используемых после обмена NextKey, номер набора тегов равен (1 + ID ключа Alice + ID ключа Bob).</li>
+</ul>
+<h3 id="незашифрованные-данные">Незашифрованные данные</h3>
+<p>Запросить подтверждение в полосе передачи. Для замены внеполосного сообщения DeliveryStatus в Garlic Clove.</p>
+<p>Если запрашивается явное подтверждение, текущий ID набора тегов и номер сообщения (N) возвращаются в блоке подтверждения.</p>
+<p>Не разрешено в NS или NSR. Включается только в сообщения Existing Session.</p>
+<pre tabindex="0"><code>
++----+----+----+----+
+  |  9 |  size   |flg |
+  +----+----+----+----+
+
+  blk :: 9
+  size :: 1
+  flg :: 1 byte flags
+         bits 7-0: Unused, set to 0 for future compatibility
+</code></pre><h3 id="правила-упорядочивания-блоков">Правила упорядочивания блоков</h3>
+<p>Все заполнение находится внутри AEAD-фреймов. TODO Заполнение внутри AEAD должно приблизительно соответствовать согласованным параметрам. TODO Alice отправила свои запрошенные параметры tx/rx min/max в сообщении NS. TODO Bob отправил свои запрошенные параметры tx/rx min/max в сообщении NSR. Обновленные опции могут быть отправлены во время фазы данных. См. информацию о блоке опций выше.</p>
+<p>Если присутствует, этот блок должен быть последним в кадре.</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |254 |  size   |      padding           |
+  +----+----+----+                        +
+  |                                       |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  blk :: 254
+  size :: 2 bytes, big endian, 0-65516
+  padding :: zeros or random data
+</code></pre><p>Примечания:</p>
+<ul>
+<li>Заполнение нулями допустимо, так как данные будут зашифрованы.</li>
+<li>Стратегии заполнения пока не определены.</li>
+<li>Фреймы, содержащие только заполнение, разрешены.</li>
+<li>По умолчанию заполнение составляет 0-15 байт.</li>
+<li>См. блок options для согласования параметра заполнения</li>
+<li>См. блок options для параметров минимального/максимального заполнения</li>
+<li>Реакция router на нарушение согласованного заполнения зависит от реализации.</li>
+</ul>
+<h3 id="дата-и-время">Дата и время</h3>
+<p>Реализации должны игнорировать неизвестные типы блоков для обеспечения прямой совместимости.</p>
+<h3 id="зубчик-garlic">Зубчик Garlic</h3>
+<ul>
+<li>Длина заполнения должна определяться либо для каждого сообщения отдельно на основе оценок распределения длин, либо должны добавляться случайные задержки. Эти контрмеры должны быть включены для противодействия DPI, поскольку размеры сообщений иначе раскрыли бы, что I2P трафик передается транспортным протоколом. Точная схема заполнения является областью будущей работы, Приложение A предоставляет больше информации по этой теме.</li>
+</ul>
+<h2 id="typical-usage-patterns">Typical Usage Patterns</h2>
+<h3 id="завершение">Завершение</h3>
+<p>Это наиболее типичный случай использования, и большинство случаев потокового использования не-HTTP будут идентичны этому случаю. Отправляется небольшое начальное сообщение, следует ответ, и дополнительные сообщения отправляются в обоих направлениях.</p>
+<p>HTTP GET запрос обычно помещается в одно I2NP сообщение. Alice отправляет небольшой запрос с одним новым Session сообщением, включая reply leaseset. Alice включает немедленный ratchet к новому ключу. Включает подпись для привязки к назначению. Подтверждение не запрашивается.</p>
+<p>Боб выполняет ratchet немедленно.</p>
+<p>Алиса выполняет ratchet немедленно.</p>
+<p>Продолжает работу с этими сессиями.</p>
+<pre tabindex="0"><code>
+Alice                           Bob
+
+  New Session (1b)     -------------------&gt;
+  with ephemeral key 1
+  with static key for binding
+  with next key
+  with bundled HTTP GET
+  with bundled LS
+  without bundled Delivery Status Message
+
+  any retransmissions, same as above
+
+  following messages may arrive in any order:
+
+  &lt;--------------     New Session Reply (1g)
+                      with Bob ephemeral key 1
+                      with bundled HTTP reply part 1
+
+  &lt;--------------     New Session Reply (1g)
+                      with Bob ephemeral key 2
+                      with bundled HTTP reply part 2
+
+  &lt;--------------     New Session Reply (1g)
+                      with Bob ephemeral key 3
+                      with bundled HTTP reply part 3
+
+  After reception of any of these messages,
+  Alice switches to use Existing Session messages,
+  creates a new inbound + outbound session pair,
+  and ratchets.
+
+
+  Existing Session     -------------------&gt;
+  with bundled streaming ack
+
+
+  Existing Session     -------------------&gt;
+  with bundled streaming ack
+
+
+  After reception of any of these messages,
+  Bob switches to use Existing Session messages.
+
+
+  &lt;--------------     Existing Session
+                      with bundled HTTP reply part 4
+
+
+  Existing Session     -------------------&gt;
+  with bundled streaming ack
+
+  &lt;--------------     Existing Session
+                      with bundled HTTP reply part 5
+</code></pre><h3 id="опции">Опции</h3>
+<p>У Алисы есть три варианта:</p>
+<ol>
+<li>
+<p>Отправить только первое сообщение (размер окна = 1), как в HTTP GET. Не рекомендуется.</p>
+</li>
+<li>
+<p>Отправлять до окна потоковой передачи, но используя тот же открытый ключ в открытом виде, закодированный Elligator2. Все сообщения содержат один и тот же следующий открытый ключ (ratchet). Это будет видно для OBGW/IBEP, поскольку все они начинаются с одного и того же открытого текста. Процесс протекает как в 1). Не рекомендуется.</p>
+</li>
+<li>
+<p>Рекомендуемая реализация. Отправлять до размера окна потока, но используя разный Elligator2-кодированный открытый публичный ключ (сессия) для каждого. Все сообщения содержат один и тот же следующий публичный ключ (ratchet). Это не будет видно для OBGW/IBEP, поскольку все они начинаются с разного открытого текста. Боб должен распознать, что все они содержат один и тот же следующий публичный ключ, и ответить всем с тем же ratchet. Алиса использует этот следующий публичный ключ и продолжает.</p>
+</li>
+</ol>
+<p>Поток сообщений варианта 3:</p>
+<pre tabindex="0"><code>
+Alice                           Bob
+
+  New Session (1b)     -------------------&gt;
+  with ephemeral key 1
+  with static key for binding
+  with bundled HTTP POST part 1
+  with bundled LS
+  without bundled Delivery Status Message
+
+
+  New Session (1b)     -------------------&gt;
+  with ephemeral key 2
+  with static key for binding
+  with bundled HTTP POST part 2
+  with bundled LS
+  without bundled Delivery Status Message
+
+
+  New Session (1b)     -------------------&gt;
+  with ephemeral key 3
+  with static key for binding
+  with bundled HTTP POST part 3
+  with bundled LS
+  without bundled Delivery Status Message
+
+
+  following messages can arrive in any order:
+
+  &lt;--------------     New Session Reply (1g)
+                      with Bob ephemeral key 1
+                      with bundled streaming ack
+
+  &lt;--------------     New Session Reply (1g)
+                      with Bob ephemeral key 2
+                      with bundled streaming ack
+
+  After reception of any of these messages,
+  Alice switches to use Existing Session messages,
+  creates a new inbound + outbound session pair,
+  and ratchets.
+
+
+  following messages can arrive in any order:
+
+
+  Existing Session     -------------------&gt;
+  with bundled HTTP POST part 4
+
+  Existing Session     -------------------&gt;
+  with next key
+  with bundled HTTP POST part 5
+
+
+  After reception of any of these messages,
+  Bob switches to use Existing Session messages.
+
+
+  &lt;--------------     Existing Session
+                      with bundled streaming ack
+
+  After reception of any of this message,
+  Alice switches to use Existing Session messages,
+  and Alice ratchets.
+
+
+  Existing Session     -------------------&gt;
+  with next key
+  with bundled HTTP POST part 4
+
+  after reception of this message, Bob ratchets
+
+  Existing Session     -------------------&gt;
+  with next key
+  with bundled HTTP POST part 5
+
+  &lt;--------------     Existing Session
+                      with bundled streaming ack
+</code></pre><h3 id="номера-сообщений-1">Номера сообщений</h3>
+<p>Одно сообщение с ожиданием одного ответа. Могут быть отправлены дополнительные сообщения или ответы.</p>
+<p>Аналогично HTTP GET, но с меньшими опциями для размера окна тегов сессии и времени жизни. Возможно, не запрашивать ratchet.</p>
+<pre tabindex="0"><code>
+Alice                           Bob
+
+  New Session (1b)     -------------------&gt;
+  with static key for binding
+  with next key
+  with bundled repliable datagram
+  with bundled LS
+  without bundled Delivery Status Message
+
+
+  &lt;--------------     New Session Reply (1g)
+                      with Bob ephemeral key
+                      with bundled reply part 1
+
+  &lt;--------------     New Session Reply (1g)
+                      with Bob ephemeral key
+                      with bundled reply part 2
+
+  After reception of either message,
+  Alice switches to use Existing Session messages,
+  and ratchets.
+
+  If the Existing Session message arrives first,
+  Alice ratchets on the existing inbound and outbound
+  sessions.
+
+  When the New Session Reply arrives, Alice
+  sets the existing inbound session to expire,
+  creates a new inbound and outbound session,
+  and sends Existing Session messages on
+  the new outbound session.
+
+  Alice keeps the expiring inbound session
+  around for a while to process the Existing Session
+  message sent to Alice.
+  If all expected original Existing Session message replies
+  have been processed, Alice can expire the original
+  inbound session immediately.
+
+  if there are any other messages:
+
+  Existing Session     -------------------&gt;
+  with bundled message
+
+  Existing Session     -------------------&gt;
+  with bundled streaming ack
+
+  &lt;--------------     Existing Session
+                      with bundled message
+</code></pre><h3 id="следующий-публичный-ключ-dh-ratchet">Следующий публичный ключ DH Ratchet</h3>
+<p>Множественные анонимные сообщения, без ожидания ответов.</p>
+<p>В данном сценарии Алиса запрашивает сессию, но без привязки. Отправляется сообщение новой сессии. Reply LS не включается в пакет. Reply DSM включается в пакет (это единственный случай использования, который требует включенных в пакет DSM). Next key не включается. Reply или ratchet не запрашиваются. Ratchet не отправляется. Опции устанавливают окно session tags в ноль.</p>
+<pre tabindex="0"><code>
+Alice                           Bob
+
+  New Session (1c)     -------------------&gt;
+  with bundled message
+  without bundled LS
+  with bundled Delivery Status Message 1
+
+  New Session (1c)     -------------------&gt;
+  with bundled message
+  without bundled LS
+  with bundled Delivery Status Message 2
+
+  New Session (1c)     -------------------&gt;
+  with bundled message
+  without bundled LS
+  with bundled Delivery Status Message 3
+ 
+  following messages can arrive in any order:
+
+  &lt;--------------     Delivery Status Message 1
+
+  &lt;--------------     Delivery Status Message 2
+
+  &lt;--------------     Delivery Status Message 3
+
+  After reception of any of these messages,
+  Alice switches to use Existing Session messages.
+
+  Existing Session     -------------------&gt;
+
+  Existing Session     -------------------&gt;
+
+  Existing Session     -------------------&gt;
+</code></pre><h3 id="подтверждение">Подтверждение</h3>
+<p>Одиночное анонимное сообщение без ожидания ответа.</p>
+<p>Одноразовое сообщение отправлено. Никакие ответные LS или DSM не включены. Следующий ключ не включен. Ответ или ratchet не запрашивается. Ratchet не отправляется. Параметры устанавливают окно тегов сессии в ноль.</p>
+<pre tabindex="0"><code>
+Alice                           Bob
+
+  One-Time Message (1d)   -------------------&gt;
+  with bundled message
+  without bundled LS
+  without bundled Delivery Status Message
+</code></pre><h3 id="запрос-подтверждения">Запрос подтверждения</h3>
+<p>Долговременные сессии могут выполнить ratchet или запросить ratchet в любое время для поддержания прямой секретности с этого момента времени. Сессии должны выполнить ratchet при приближении к лимиту отправленных сообщений на сессию (65535).</p>
+<h2 id="implementation-considerations">Implementation Considerations</h2>
+<h3 id="заполнение">Заполнение</h3>
+<p>Как и в случае с существующим протоколом ElGamal/AES+SessionTag, реализации должны ограничивать хранение session tag и защищаться от атак исчерпания памяти.</p>
+<p>Некоторые рекомендуемые стратегии включают:</p>
+<ul>
+<li>Жёсткий лимит на количество хранимых меток сеанса</li>
+<li>Агрессивное истечение неактивных входящих сеансов при нехватке памяти</li>
+<li>Ограничение на количество входящих сеансов, привязанных к одному удалённому адресату</li>
+<li>Адаптивное уменьшение окна меток сеанса и удаление старых неиспользуемых меток
+при нехватке памяти</li>
+<li>Отказ от ratchet по запросу при нехватке памяти</li>
+</ul>
+<h3 id="другие-типы-блоков">Другие типы блоков</h3>
+<p>Рекомендуемые параметры и таймауты:</p>
+<ul>
+<li>Размер tagset NSR: 12 tsmin и tsmax</li>
+<li>Размер tagset ES 0: tsmin 24, tsmax 160</li>
+<li>Размер tagset ES (1+): 160 tsmin и tsmax</li>
+<li>Таймаут tagset NSR: 3 минуты для получателя</li>
+<li>Таймаут tagset ES: 8 минут для отправителя, 10 минут для получателя</li>
+<li>Удаление предыдущего tagset ES через: 3 минуты</li>
+<li>Опережающий просмотр tagset для тега N: min(tsmax, tsmin + N/4)</li>
+<li>Обрезка tagset позади тега N: min(tsmax, tsmin + N/4) / 2</li>
+<li>Отправка следующего ключа на теге: TBD</li>
+<li>Отправка следующего ключа после времени жизни tagset: TBD</li>
+<li>Замена сессии при получении NS после: 3 минуты</li>
+<li>Максимальное расхождение часов: от -5 минут до +2 минут</li>
+<li>Длительность фильтра повторов NS: 5 минут</li>
+<li>Размер заполнения: 0-15 байт (другие стратегии TBD)</li>
+</ul>
+<h3 id="будущая-работа">Будущая работа</h3>
+<p>Ниже приведены рекомендации по классификации входящих сообщений.</p>
+<h3 id="x25519-only">X25519 Only</h3>
+<p>В туннеле, который используется исключительно с этим протоколом, выполняйте идентификацию так же, как это делается в настоящее время с ElGamal/AES+SessionTags:</p>
+<p>Сначала обработайте исходные данные как тег сессии и найдите этот тег сессии. Если найден, расшифруйте, используя сохранённые данные, связанные с этим тегом сессии.</p>
+<p>Если не найден, обрабатывайте исходные данные как открытый ключ DH и nonce. Выполните операцию DH и указанную KDF, и попытайтесь расшифровать оставшиеся данные.</p>
+<h3 id="http-get">HTTP GET</h3>
+<p>В туннеле, который поддерживает как этот протокол, так и ElGamal/AES+SessionTags, классифицируйте входящие сообщения следующим образом:</p>
+<p>Из-за недостатка в спецификации ElGamal/AES+SessionTags, блок AES не дополняется до случайной длины, не кратной 16. Поэтому длина сообщений Existing Session по модулю 16 всегда равна 0, а длина сообщений New Session по модулю 16 всегда равна 2 (поскольку блок ElGamal имеет длину 514 байт).</p>
+<p>Если длина по модулю 16 не равна 0 или 2, обрабатывайте исходные данные как session tag и выполните поиск session tag. Если найден, расшифруйте, используя сохраненные данные, связанные с этим session tag.</p>
+<p>Если не найден, и длина по модулю 16 не равна 0 или 2, рассматривать исходные данные как открытый ключ DH и nonce. Выполнить операцию DH и указанную KDF, и попытаться расшифровать оставшиеся данные. (основываясь на относительном составе трафика и относительных затратах операций X25519 и ElGamal DH, этот шаг может быть выполнен последним)</p>
+<p>В противном случае, если длина по модулю 16 равна 0, обрабатывайте исходные данные как тег сеанса ElGamal/AES и выполните поиск тега сеанса. Если найден, расшифруйте, используя сохранённые данные, связанные с этим тегом сеанса.</p>
+<p>Если не найдено, и данные составляют не менее 642 (514 + 128) байтов в длину, и длина по модулю 16 равна 2, рассматривайте исходные данные как блок ElGamal. Попытайтесь расшифровать оставшиеся данные.</p>
+<p>Обратите внимание, что если спецификация ElGamal/AES+SessionTag будет обновлена для поддержки заполнения, не кратного 16, то потребуется делать это по-другому.</p>
+<h3 id="http-post">HTTP POST</h3>
+<p>Первоначальные реализации полагаются на двунаправленный трафик на более высоких уровнях. То есть, реализации предполагают, что трафик в противоположном направлении вскоре будет передан, что заставит любой требуемый ответ на уровне ECIES.</p>
+<p>Однако определенный трафик может быть однонаправленным или иметь очень низкую пропускную способность, так что отсутствует трафик более высокого уровня для генерации своевременного ответа.</p>
+<p>Получение сообщений NS и NSR требует ответа; получение блоков ACK Request и Next Key также требует ответа.</p>
+<p>Сложная реализация может запустить таймер при получении одного из этих сообщений, которое требует ответа, и сгенерировать &ldquo;пустой&rdquo; ответ (без блока Garlic Clove) на уровне ECIES, если обратный трафик не отправляется в течение короткого периода времени (например, 1 секунда).</p>
+<p>Также может быть целесообразным установить еще более короткий таймаут для ответов на сообщения NS и NSR, чтобы как можно быстрее перенести трафик на эффективные сообщения ES.</p>
+<h2 id="analysis">Analysis</h2>
+<h3 id="отвечаемая-датаграмма">Отвечаемая датаграмма</h3>
+<p>Накладные расходы на сообщения для первых двух сообщений в каждом направлении составляют следующее. Это предполагает только одно сообщение в каждом направлении перед ACK, или что любые дополнительные сообщения отправляются спекулятивно как сообщения Existing Session. Если нет спекулятивных подтверждений доставленных тегов сессии, накладные расходы старого протокола намного выше.</p>
+<p>Для анализа нового протокола не предполагается заполнение. Не предполагается объединённый leaseSet.</p>
+<h3 id="множественные-необработанные-датаграммы">Множественные необработанные датаграммы</h3>
+<p>Сообщение новой сессии, одинаковое в каждом направлении:</p>
+<pre tabindex="0"><code>
+ElGamal block:
+  514 bytes
+
+  AES block:
+  - 2 byte tag count
+  - 1024 bytes of tags (32 typical)
+  - 4 byte payload size
+  - 32 byte hash of payload
+  - 1 byte flags
+  - 1 byte clove count
+  - 33 byte Garlic deliv. inst.
+  - 16 byte I2NP header
+  - 15 byte clove cert, id, exp.
+  - 15 byte msg cert, id, exp.
+  - 0 byte padding assuming 1936 byte message
+  1143 total
+
+  Total:
+  1657 bytes
+</code></pre><p>Существующие сообщения сессии, одинаковые в каждом направлении:</p>
+<pre tabindex="0"><code>
+AES block:
+  - 32 byte session tag
+  - 2 byte tag count
+  - 4 byte payload size
+  - 32 byte hash of payload
+  - 1 byte flags
+  - 1 byte clove count
+  - 33 byte Garlic deliv. inst.
+  - 16 byte I2NP header
+  - 15 byte msg cert, id, exp.
+  - 15 byte clove cert, id, exp.
+  - 0 byte padding assuming 1936 byte message
+  151 total
+</code></pre><pre tabindex="0"><code>Four message total (two each direction)
+  3616 bytes overhead
+</code></pre><h3 id="одиночная-raw-дейтаграмма">Одиночная Raw-дейтаграмма</h3>
+<p>Сообщение Alice-to-Bob New Session:</p>
+<pre tabindex="0"><code>
+- 32 byte ephemeral public key
+  - 32 byte static public key
+  - 16 byte Poly1305 MAC
+  - 7 byte DateTime block
+  - 3 byte Garlic block overhead
+  - 9 byte I2NP header
+  - 33 byte Garlic deliv. inst.
+  - 16 byte Poly1305 MAC
+
+  Total:
+  148 bytes overhead
+</code></pre><p>Сообщение ответа новой сессии от Bob к Alice:</p>
+<pre tabindex="0"><code>
+- 8 byte session tag
+  - 32 byte ephemeral public key
+  - 16 byte Poly1305 MAC
+  - 3 byte Garlic block overhead
+  - 9 byte I2NP header
+  - 33 byte Garlic deliv. inst.
+  - 16 byte Poly1305 MAC
+
+  Total:
+  117 bytes overhead
+</code></pre><p>Существующие сообщения сессии, одинаковые в каждом направлении:</p>
+<pre tabindex="0"><code>
+- 8 byte session tag
+  - 3 byte Garlic block overhead
+  - 9 byte I2NP header
+  - 33 byte Garlic deliv. inst.
+  - 16 byte Poly1305 MAC
+
+  Total:
+  69 bytes
+</code></pre><h3 id="долгоживущие-сессии">Долгоживущие сессии</h3>
+<p>Всего четыре сообщения (по два в каждом направлении):</p>
+<pre tabindex="0"><code>
+372 bytes
+  90% (approx. 10x) reduction compared to ElGamal/AES+SessionTags
+</code></pre><p>Только handshake:</p>
+<pre tabindex="0"><code>
+ElGamal: 1657 + 1657 = 3314 bytes
+  Ratchet: 148 _ 117 = 265 bytes
+  92% (approx. 12x) reduction compared to ElGamal/AES+SessionTags
+</code></pre><p>Долгосрочный итог (исключая handshake-соединения):</p>
+<pre tabindex="0"><code>ElGamal: 151 + 32 byte tag sent previously = 183 bytes
+  Ratchet: 69 bytes
+  64% (approx. 3x) reduction compared to ElGamal/AES+SessionTags
+</code></pre><h3 id="cpu">CPU</h3>
+<p>TODO обновить этот раздел после стабилизации предложения.</p>
+<p>Следующие криптографические операции требуются каждой стороной для обмена сообщениями New Session и New Session Reply:</p>
+<ul>
+<li>HMAC-SHA256: 3 на HKDF, всего TBD</li>
+<li>ChaChaPoly: по 2 каждому</li>
+<li>Генерация ключей X25519: 2 для Alice, 1 для Bob</li>
+<li>X25519 DH: по 3 каждому</li>
+<li>Проверка подписи: 1 (Bob)</li>
+</ul>
+<p>Алиса вычисляет 5 ECDH на связанную сессию (минимум), 2 для каждого NS сообщения Бобу, и 3 для каждого NSR сообщения Боба.</p>
+<p>Боб также вычисляет 6 ECDH на связанную сессию: 3 для каждого NS сообщения Алисы и 3 для каждого из своих NSR сообщений.</p>
+<p>Следующие криптографические операции требуются каждой стороной для каждого сообщения Existing Session:</p>
+<ul>
+<li>HKDF: 2</li>
+<li>ChaChaPoly: 1</li>
+</ul>
+<h3 id="защита">Защита</h3>
+<p>Текущая длина тега сессии составляет 32 байта. Мы пока не нашли никакого обоснования для этой длины, но продолжаем исследовать архивы. Приведенное выше предложение определяет новую длину тега как 8 байт. Анализ, обосновывающий 8-байтовый тег, выглядит следующим образом:</p>
+<p>Предполагается, что храповик тегов сессии генерирует случайные, равномерно распределенные теги. Не существует криптографических причин для конкретной длины тега сессии. Храповик тегов сессии синхронизируется с храповиком симметричных ключей, но генерирует независимый от него вывод. Выводы двух храповиков могут иметь разную длину.</p>
+<p>Поэтому единственной проблемой является коллизия тегов сессии. Предполагается, что реализации не будут пытаться обрабатывать коллизии, пробуя расшифровку с обеими сессиями; реализации просто свяжут тег либо с предыдущей, либо с новой сессией, а любое сообщение, полученное с этим тегом в другой сессии, будет отброшено после неудачной расшифровки.</p>
+<p>Цель состоит в том, чтобы выбрать длину тега сессии, которая достаточно велика для минимизации риска коллизий, но достаточно мала для минимизации использования памяти.</p>
+<p>Это предполагает, что реализации ограничивают хранение тегов сессий для предотвращения атак истощения памяти. Это также значительно снизит вероятность того, что злоумышленник сможет создать коллизии. См. раздел &ldquo;Соображения по реализации&rdquo; ниже.</p>
+<p>В худшем случае предположим загруженный сервер с 64 новыми входящими сессиями в секунду. Предположим время жизни тега входящей сессии 15 минут (как сейчас, вероятно, следует уменьшить). Предположим окно тега входящей сессии равное 32. 64 * 15 * 60 * 32 = 1,843,200 тегов. Текущий максимум входящих тегов в Java I2P составляет 750,000 и, насколько нам известно, никогда не был достигнут.</p>
+<p>Целевой показатель коллизий тегов сессий 1 на миллион (1e-6), вероятно, является достаточным. Вероятность потери сообщения по пути из-за перегрузки сети значительно выше этого показателя.</p>
+<p>Ссылка: <a href="https://en.wikipedia.org/wiki/Birthday_paradox">https://en.wikipedia.org/wiki/Birthday_paradox</a>
+ раздел с таблицей вероятностей.</p>
+<p>С 32-байтовыми session tag (256 бит) пространство session tag составляет 1.2e77. Вероятность коллизии с вероятностью 1e-18 требует 4.8e29 записей. Вероятность коллизии с вероятностью 1e-6 требует 4.8e35 записей. 1.8 миллиона tag по 32 байта каждый составляет примерно 59 МБ общего объема.</p>
+<p>С 16-байтовыми session tags (128 бит) пространство session tag составляет 3.4e38. Вероятность коллизии с вероятностью 1e-18 требует 2.6e10 записей. Вероятность коллизии с вероятностью 1e-6 требует 2.6e16 записей. 1.8 миллиона тегов по 16 байт каждый составляет около 30 МБ в общей сложности.</p>
+<p>С 8-байтными session tags (64 бита) пространство session tag составляет 1.8e19. Вероятность коллизии с вероятностью 1e-18 требует 6.1 записей. Вероятность коллизии с вероятностью 1e-6 требует 6.1e6 (6,100,000) записей. 1.8 миллиона тегов по 8 байт каждый составляет около 15 МБ общего объема.</p>
+<p>6,1 миллиона активных тегов - это более чем в 3 раза больше нашей оценки наихудшего сценария в 1,8 миллиона тегов. Таким образом, вероятность коллизии составила бы менее одного на миллион. Поэтому мы заключаем, что 8-байтовых session tags достаточно. Это приводит к 4-кратному сокращению места для хранения в дополнение к 2-кратному сокращению из-за того, что transmit tags не сохраняются. Таким образом, у нас будет 8-кратное сокращение использования памяти session tag по сравнению с ElGamal/AES+SessionTags.</p>
+<p>Чтобы сохранить гибкость в случае неправильности этих предположений, мы включим поле длины тега сессии в опции, чтобы длина по умолчанию могла быть переопределена для каждой сессии отдельно. Мы не ожидаем реализации динамического согласования длины тегов, если это не будет абсолютно необходимо.</p>
+<p>Реализации должны, как минимум, распознавать коллизии тегов сессии, корректно их обрабатывать и вести логи или подсчет количества коллизий. Хотя это по-прежнему крайне маловероятно, они будут гораздо более вероятными, чем при использовании ElGamal/AES+SessionTags, и могут реально произойти.</p>
+<h3 id="параметры">Параметры</h3>
+<p>Используя в два раза больше сессий в секунду (128) и в два раза больший tag window (64), мы получаем в 4 раза больше тегов (7.4 миллиона). Максимум для вероятности коллизии один на миллион составляет 6.1 миллиона тегов. 12-байтовые (или даже 10-байтовые) теги обеспечили бы огромный запас прочности.</p>
+<p>Однако является ли шанс коллизии один на миллион хорошей целью? Намного больший, чем вероятность быть отброшенным по пути, не представляет большой пользы. Цель ложных срабатываний для Java DecayingBloomFilter составляет примерно 1 к 10,000, но даже 1 к 1000 не вызывает серьёзных опасений. Снижая цель до 1 к 10,000, остаётся достаточный запас с 8-байтовыми тегами.</p>
+<h3 id="классификация">Классификация</h3>
+<p>Отправитель генерирует теги и ключи на лету, поэтому хранение не требуется. Это сокращает общие требования к хранилищу вдвое по сравнению с ElGamal/AES. Теги ECIES составляют 8 байт вместо 32 для ElGamal/AES. Это сокращает общие требования к хранилищу еще в 4 раза. Сессионные ключи для каждого тега не хранятся на получателе, за исключением «пропусков», которые минимальны при разумных скоростях потерь.</p>
+<p>Сокращение времени истечения тегов на 33% обеспечивает еще 33% экономии при условии коротких сессий.</p>
+<p>Таким образом, общая экономия места по сравнению с ElGamal/AES составляет коэффициент 10,7, или 92%.</p>
+<h2 id="related-changes">Related Changes</h2>
+<h3 id="только-x25519">Только X25519</h3>
+<p>Поиск в базе данных из ECIES-адресатов: См. <a href="../../../ru/proposals/154-ecies-lookups">Предложение 154</a>
+, теперь включено в <a href="../../../ru/docs/specs/i2np/">I2NP</a>
+ для релиза 0.9.46.</p>
+<p>Данное предложение требует поддержки LS2 для публикации открытого ключа X25519 с leaseSet. Никаких изменений в спецификации LS2 в <a href="../../../ru/docs/specs/i2np/">I2NP</a>
+ не требуется. Вся поддержка была спроектирована, специфицирована и реализована в <a href="../../../ru/proposals/123-new-netdb-entries">Предложении 123</a>
+, которое было внедрено в версии 0.9.38.</p>
+<h3 id="x25519-с-общим-доступом-с-elgamalaessessiontags">X25519 с общим доступом с ElGamal/AES+SessionTags</h3>
+<p>Никаких. Данное предложение требует поддержки LS2 и установки свойства в опциях I2CP для активации. Никаких изменений в спецификациях <a href="../../../ru/docs/specs/i2cp/">I2CP</a>
+ не требуется. Вся поддержка была спроектирована, специфицирована и реализована в <a href="../../../ru/proposals/123-new-netdb-entries">Предложении 123</a>
+, внедрённом в версии 0.9.38.</p>
+<p>Опция, необходимая для включения ECIES, представляет собой единственное свойство I2CP для I2CP, BOB, SAM или i2ptunnel.</p>
+<p>Типичные значения: i2cp.leaseSetEncType=4 только для ECIES или i2cp.leaseSetEncType=4,0 для двойных ключей ECIES и ElGamal.</p>
+<h3 id="ответы-на-уровне-протокола">Ответы на уровне протокола</h3>
+<p>Этот раздел скопирован из <a href="../../../ru/proposals/123-new-netdb-entries">Предложения 123</a>
+.</p>
+<p>Опция в SessionConfig Mapping:</p>
+<pre tabindex="0"><code>  i2cp.leaseSetEncType=nnn[,nnn]  The encryption types to be used.
+                                  0: ElGamal
+                                  1-3: See proposal 145
+                                  4: This proposal.
+</code></pre><h3 id="create-leaseset2-message">Create Leaseset2 Message</h3>
+<p>Это предложение требует LS2, который поддерживается начиная с версии 0.9.38. Никаких изменений в спецификации <a href="../../../ru/docs/specs/i2cp/">I2CP</a>
+ не требуется. Вся поддержка была спроектирована, специфицирована и реализована в <a href="../../../ru/proposals/123-new-netdb-entries">Предложении 123</a>
+, внедрённом в версии 0.9.38.</p>
+<h3 id="накладные-расходы">Накладные расходы</h3>
+<p>Любой router, поддерживающий LS2 с двойными ключами (версия 0.9.38 или выше), должен поддерживать подключение к точкам назначения с двойными ключами.</p>
+<p>ECIES-only адресаты потребуют, чтобы большинство floodfill было обновлено до версии 0.9.46 для получения зашифрованных ответов на запросы. См. <a href="../../../ru/proposals/154-ecies-lookups">Proposal 154</a>
+.</p>
+<p>Destination-ы только с ECIES могут подключаться только к другим destination-ам, которые также используют только ECIES или имеют двойные ключи.</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    <a href="../../../ru/proposals/" class="page-nav-link">
+                        ← Back to Proposals
+                    </a>
+                    
+                    
+                    
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                            
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <a href="../../../proposals/144-ecies-x25519-aead-ratchet.txt" class="page-nav-link" download>
+                        Download Source (.txt)
+                    </a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.proposals-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.proposal-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.proposal-title-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.proposal-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-text);
+}
+
+.proposal-number {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+ 
+.proposal-meta-box {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.proposal-status {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+ 
+.status-open {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-open {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-accepted {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-accepted {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-finished {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-finished {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-closed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-closed {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.dark .status-rejected {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.status-draft,
+.status-needs-revision,
+.status-dead,
+.status-needs-research {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-draft,
+.dark .status-needs-revision,
+.dark .status-dead,
+.dark .status-needs-research {
+    background: #78350f;
+    color: #fde047;
+}
+
+.status-meta,
+.status-informational,
+.status-reserve {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+.dark .status-meta,
+.dark .status-informational,
+.dark .status-reserve {
+    background: #581c87;
+    color: #e879f9;
+}
+
+ 
+.proposal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.info-value {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+ 
+.proposal-relationships {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-md);
+}
+
+.relationship {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.relationship:last-child {
+    margin-bottom: 0;
+}
+
+.relationship-label {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    min-width: 120px;
+}
+
+.relationship-value {
+    color: var(--color-text);
+}
+
+ 
+.proposal-layout {
+    display: block;
+}
+
+.proposal-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.proposal-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.proposal-main {
+    min-width: 0;
+}
+
+ 
+.proposal-content {
+    line-height: 1.8;
+    color: var(--color-text);
+    max-width: 900px;
+}
+
+.proposal-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content ul,
+.proposal-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.proposal-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.proposal-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.proposal-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.proposal-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.proposal-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin-left: 0;
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+.proposal-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.proposal-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+.proposal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content table th {
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.proposal-content table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.proposal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+ 
+.page-nav {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.page-nav-link {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+ 
+@media (max-width: 1024px) {
+    .proposal-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .proposal-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .proposal-title {
+        font-size: 1.75rem;
+    }
+
+    .proposal-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Следите за новостями I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Введите ваш email" required>
+                            <button type="submit">Подписаться</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Быстрые ссылки</h3>
+                <ul>
+                    <li><a href="../../../ru/financial-support/">Пожертвовать</a></li>
+                    <li><a href="../../../ru/docs/overview/intro/">Введение в I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Сообщество</h3>
+                <ul>
+                    <li><a href="../../../ru/get-involved/">Присоединяйтесь</a></li>
+                    <li><a href="../../../ru/blog/">Блог</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Официальные форумы</a></li>
+                    <li><a href="../../../ru/contact/">Контакты</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Ресурсы</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P Метрики</a></li>
+                    <li><a href="../../../ru/papers/">Исследование</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Проект Невидимый Интернет. Лицензировано под Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../ru/privacy/">Конфиденциальность</a>
+                <a href="../../../ru/terms/">Условия</a>
+                <a href="../../../ru/about/media/">Пресса</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Закрыть">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Опрос сообщества</h2>
+            <p class="modal-subtitle">Мы хотели бы услышать ваше мнение</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Ваш голос помогает формировать будущее I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

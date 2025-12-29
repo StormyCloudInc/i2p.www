@@ -1,0 +1,4026 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Protocoles de Cryptographie Post-Quantique | I2P - Le projet Internet invisible</title>
+
+    <meta name="description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Protocoles de Cryptographie Post-Quantique | I2P - Le projet Internet invisible">
+    <meta property="og:description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/fr/proposals/169-pq-crypto/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Site Bêta I2P Maintenant En Ligne Signaler les problèmes e-mail à stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Fermer la bannière" title="Fermer la bannière">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../fr/" class="logo-link">
+                    <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../fr/about/" class="">À propos</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../fr/about/">Aperçu</a></li>
+                            <li><a href="../../../fr/papers/">Articles de recherche</a></li>
+                            <li><a href="../../../fr/about/media/">Presse</a></li>
+                            <li><a href="../../../fr/contact/">Contactez-nous</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../fr/docs/" class="">Docs</a></li>
+                    <li><a href="../../../fr/downloads/" class="">Téléchargements</a></li>
+                    <li><a href="../../../fr/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../fr/get-involved/" class="">S&#39;impliquer</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../fr/get-involved/">Aperçu</a></li>
+                            <li><a href="../../../fr/feedback/">Suggestions de fonctionnalités</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">fr</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../en/proposals/169-pq-crypto/"
+                                class="lang-option">Anglais</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../es/proposals/169-pq-crypto/"
+                                class="lang-option">Espagnol</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ko/proposals/169-pq-crypto/"
+                                class="lang-option">Coréen</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../zh/proposals/169-pq-crypto/"
+                                class="lang-option">Chinois</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ru/proposals/169-pq-crypto/"
+                                class="lang-option">Russe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../cs/proposals/169-pq-crypto/"
+                                class="lang-option">Tchèque</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../de/proposals/169-pq-crypto/"
+                                class="lang-option">Allemand</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../fr/proposals/169-pq-crypto/"
+                                class="lang-option active">Français</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../tr/proposals/169-pq-crypto/"
+                                class="lang-option">Turc</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../vi/proposals/169-pq-crypto/"
+                                class="lang-option">Vietnamien</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../hi/proposals/169-pq-crypto/"
+                                class="lang-option">Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ar/proposals/169-pq-crypto/"
+                                class="lang-option">Arabe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../pt/proposals/169-pq-crypto/"
+                                class="lang-option">Portugais</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../fr/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../fr/downloads/" class="btn btn-primary">Obtenir I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+<div class="proposals-page">
+    <div class="container">
+        
+        <nav class="breadcrumbs">
+            <a href="../../../fr/">Home</a>
+            <span class="separator">/</span>
+            <a href="../../../fr/proposals/">Proposals</a>
+            <span class="separator">/</span>
+            <span class="current">Protocoles de Cryptographie Post-Quantique</span>
+        </nav>
+
+        
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Cette traduction a été générée par apprentissage automatique et peut ne pas être exacte à 100%.</span>
+    
+    
+    <a href="../../../en/proposals/169-pq-crypto/" class="disclaimer-link">Voir la version anglaise</a>
+    
+</div>
+
+
+
+        
+        <header class="proposal-header">
+            <div class="proposal-title-section">
+                <h1 class="proposal-title">Protocoles de Cryptographie Post-Quantique</h1>
+                <div class="proposal-number">Proposal 169</div>
+            </div>
+
+            
+            <div class="proposal-meta-box">
+                <div class="proposal-status status-ouvert">
+                    Ouvert
+                </div>
+
+                
+                <div class="proposal-info-grid">
+                    
+                    <div class="info-item">
+                        <span class="info-label">Author</span>
+                        <span class="info-value">zzz, orignal, drzed, eyedeekay</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Created</span>
+                        <span class="info-value">2025-01-21</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Last Updated</span>
+                        <span class="info-value">2025-06-12</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Target Version</span>
+                        <span class="info-value">0.9.80</span>
+                    </div>
+                    
+
+                    
+                </div>
+
+                
+                
+            </div>
+        </header>
+
+        
+        <div class="proposal-layout proposal-layout--with-toc">
+            
+            
+            <aside class="proposal-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#aperçu">Aperçu</a></li>
+    <li><a href="#objectifs">Objectifs</a></li>
+    <li><a href="#objectifs-exclus">Objectifs exclus</a></li>
+    <li><a href="#modèle-de-menaces">Modèle de menaces</a></li>
+    <li><a href="#protocoles-affectés">Protocoles affectés</a></li>
+    <li><a href="#conception">Conception</a>
+      <ul>
+        <li><a href="#key-exchange">Key Exchange</a></li>
+        <li><a href="#signatures">Signatures</a></li>
+        <li><a href="#legal-combinations">Legal Combinations</a></li>
+        <li><a href="#new-crypto-required">New Crypto Required</a></li>
+        <li><a href="#alternatives">Alternatives</a></li>
+        <li><a href="#rosenpass">Rosenpass</a></li>
+      </ul>
+    </li>
+    <li><a href="#specification">Specification</a>
+      <ul>
+        <li><a href="#échange-de-clés">Échange de clés</a></li>
+        <li><a href="#signatures-1">Signatures</a></li>
+        <li><a href="#combinaisons-légales">Combinaisons légales</a></li>
+        <li><a href="#nouvelle-cryptographie-requise">Nouvelle cryptographie requise</a></li>
+        <li><a href="#alternatives-1">Alternatives</a></li>
+        <li><a href="#rosenpass-1">Rosenpass</a></li>
+        <li><a href="#key-certificates">Key Certificates</a></li>
+        <li><a href="#structures-communes">Structures Communes</a></li>
+        <li><a href="#publickey">PublicKey</a></li>
+        <li><a href="#cléprivée">CléPrivée</a></li>
+        <li><a href="#signingpublickey">SigningPublicKey</a></li>
+        <li><a href="#signingprivatekey">SigningPrivateKey</a></li>
+        <li><a href="#signature">Signature</a></li>
+        <li><a href="#certificats-de-clé">Certificats de Clé</a></li>
+        <li><a href="#tailles-des-destinations">Tailles des destinations</a></li>
+        <li><a href="#tailles-des-routerident">Tailles des RouterIdent</a></li>
+        <li><a href="#modèles-de-négociation">Modèles de négociation</a></li>
+      </ul>
+    </li>
+    <li><a href="#overhead-analysis">Overhead Analysis</a>
+      <ul>
+        <li><a href="#kdf-de-négociation-noise">KDF de négociation Noise</a></li>
+        <li><a href="#signatures-2">Signatures</a></li>
+      </ul>
+    </li>
+    <li><a href="#security-analysis">Security Analysis</a>
+      <ul>
+        <li><a href="#handshakes">Handshakes</a></li>
+        <li><a href="#signatures-3">Signatures</a></li>
+      </ul>
+    </li>
+    <li><a href="#type-preferences">Type Preferences</a></li>
+    <li><a href="#implementation-notes">Implementation Notes</a>
+      <ul>
+        <li><a href="#library-support">Library Support</a></li>
+        <li><a href="#signing-variants">Signing Variants</a></li>
+        <li><a href="#reliability">Reliability</a></li>
+        <li><a href="#structure-sizes">Structure Sizes</a></li>
+        <li><a href="#netdb">NetDB</a></li>
+        <li><a href="#ratchet">Ratchet</a></li>
+        <li><a href="#ratchet-1">Ratchet</a></li>
+        <li><a href="#ssu2">SSU2</a></li>
+      </ul>
+    </li>
+    <li><a href="#router-compatibility">Router Compatibility</a>
+      <ul>
+        <li><a href="#transport-names">Transport Names</a></li>
+        <li><a href="#router-enc-types">Router Enc. Types</a></li>
+        <li><a href="#ntcp2">NTCP2</a></li>
+        <li><a href="#ls-enc-types">LS Enc. Types</a></li>
+        <li><a href="#dest-sig-types">Dest. Sig. Types</a></li>
+      </ul>
+    </li>
+    <li><a href="#spécification">Spécification</a></li>
+    <li><a href="#migration">Migration</a></li>
+    <li><a href="#issues-1">Issues</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="proposal-main">
+                <article class="proposal-content">
+                    <h2 id="aperçu">Aperçu</h2>
+<p>Bien que la recherche et la compétition pour une cryptographie post-quantique (PQ) appropriée se soient poursuivies pendant une décennie, les choix ne sont devenus clairs que récemment.</p>
+<p>Nous avons commencé à examiner les implications de la cryptographie PQ en 2022 <a href="http://zzz.i2p/topics/3294">zzz.i2p</a>
+.</p>
+<p>Les normes TLS ont ajouté le support du chiffrement hybride au cours des deux dernières années et il est maintenant utilisé pour une portion significative du trafic chiffré sur internet grâce au support dans Chrome et Firefox <a href="https://blog.cloudflare.com/pq-2024/">Cloudflare</a>
+.</p>
+<p>Le NIST a récemment finalisé et publié les algorithmes recommandés pour la cryptographie post-quantique <a href="https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards">NIST</a>
+. Plusieurs bibliothèques de cryptographie courantes prennent désormais en charge les standards NIST ou publieront leur support dans un avenir proche.</p>
+<p>Les deux <a href="https://blog.cloudflare.com/pq-2024/">Cloudflare</a>
+ et <a href="https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards">NIST</a>
+ recommandent que la migration commence immédiatement. Voir également la FAQ PQ 2022 de la NSA <a href="https://media.defense.gov/2022/Sep/07/2003071836/-1/-1/0/CSI_CNSA_2.0_FAQ_.PDF">NSA</a>
+. I2P devrait être un leader en sécurité et en cryptographie. Il est temps maintenant d&rsquo;implémenter les algorithmes recommandés. En utilisant notre système flexible de types cryptographiques et de types de signature, nous ajouterons des types pour la cryptographie hybride, et pour les signatures PQ et hybrides.</p>
+<h2 id="objectifs">Objectifs</h2>
+<ul>
+<li>Sélectionner des algorithmes résistants aux PQ</li>
+<li>Ajouter des algorithmes PQ uniquement et hybrides aux protocoles I2P lorsque approprié</li>
+<li>Définir plusieurs variantes</li>
+<li>Sélectionner les meilleures variantes après implémentation, tests, analyse et recherche</li>
+<li>Ajouter le support de manière incrémentale et avec rétrocompatibilité</li>
+</ul>
+<h2 id="objectifs-exclus">Objectifs exclus</h2>
+<ul>
+<li>Ne pas modifier les protocoles de chiffrement unidirectionnel (Noise N)</li>
+<li>Ne pas abandonner SHA256, non menacé à court terme par PQ</li>
+<li>Ne pas sélectionner les variantes préférées finales pour le moment</li>
+</ul>
+<h2 id="modèle-de-menaces">Modèle de menaces</h2>
+<ul>
+<li>Routeurs au OBEP ou IBGW, possiblement en collusion,
+stockant les messages garlic pour déchiffrement ultérieur (confidentialité persistante)</li>
+<li>Observateurs réseau
+stockant les messages de transport pour déchiffrement ultérieur (confidentialité persistante)</li>
+<li>Participants réseau forgeant des signatures pour RI, LS, streaming, datagrammes,
+ou autres structures</li>
+</ul>
+<h2 id="protocoles-affectés">Protocoles affectés</h2>
+<p>Nous modifierons les protocoles suivants, approximativement dans l&rsquo;ordre de développement. Le déploiement global se déroulera probablement de fin 2025 à mi-2027. Voir la section Priorités et déploiement ci-dessous pour plus de détails.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Protocol / Feature</th>
+          <th>Status</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Hybrid MLKEM Ratchet and LS</td>
+          <td>Approved 2026-06; beta target 2025-08; release target 2025-11</td>
+      </tr>
+      <tr>
+          <td>Hybrid MLKEM NTCP2</td>
+          <td>Some details to be finalized</td>
+      </tr>
+      <tr>
+          <td>Hybrid MLKEM SSU2</td>
+          <td>Some details to be finalized</td>
+      </tr>
+      <tr>
+          <td>MLDSA SigTypes 12-14</td>
+          <td>Proposal is stable but may not be finalized until 2026</td>
+      </tr>
+      <tr>
+          <td>MLDSA Dests</td>
+          <td>Tested on live net, requires net upgrade for floodfill support</td>
+      </tr>
+      <tr>
+          <td>Hybrid SigTypes 15-17</td>
+          <td>Preliminary</td>
+      </tr>
+      <tr>
+          <td>Hybrid Dests</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="conception">Conception</h2>
+<p>Nous prendrons en charge les standards NIST FIPS 203 et 204 <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">FIPS 203</a>
+ <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+ qui sont basés sur, mais NON compatibles avec, CRYSTALS-Kyber et CRYSTALS-Dilithium (versions 3.1, 3, et antérieures).</p>
+<h3 id="key-exchange">Key Exchange</h3>
+<p>Nous prendrons en charge l&rsquo;échange de clés hybride dans les protocoles suivants :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Proto</th>
+          <th>Noise Type</th>
+          <th>Support PQ only?</th>
+          <th>Support Hybrid?</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>NTCP2</td>
+          <td>XK</td>
+          <td>no</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>SSU2</td>
+          <td>XK</td>
+          <td>no</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>Ratchet</td>
+          <td>IK</td>
+          <td>no</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>TBM</td>
+          <td>N</td>
+          <td>no</td>
+          <td>no</td>
+      </tr>
+      <tr>
+          <td>NetDB</td>
+          <td>N</td>
+          <td>no</td>
+          <td>no</td>
+      </tr>
+      <tr>
+          <td>PQ KEM fournit uniquement des clés éphémères, et ne prend pas en charge directement les échanges de clés statiques tels que Noise XK et IK.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>Noise N n&rsquo;utilise pas d&rsquo;échange de clés bidirectionnel et n&rsquo;est donc pas adapté au chiffrement hybride.</p>
+<p>Nous ne prendrons donc en charge que le chiffrement hybride, pour NTCP2, SSU2, et Ratchet. Nous définirons les trois variantes ML-KEM comme dans <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">FIPS 203</a>
+, pour un total de 3 nouveaux types de chiffrement. Les types hybrides ne seront définis qu&rsquo;en combinaison avec X25519.</p>
+<p>Les nouveaux types de chiffrement sont :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Code</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+      </tr>
+      <tr>
+          <td>La surcharge sera substantielle. Les tailles typiques des messages 1 et 2 (pour XK et IK) sont actuellement d&rsquo;environ 100 octets (avant toute charge utile supplémentaire). Cela augmentera de 8x à 15x selon l&rsquo;algorithme.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="signatures">Signatures</h3>
+<p>Nous prendrons en charge les signatures PQ et hybrides dans les structures suivantes :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Support PQ only?</th>
+          <th>Support Hybrid?</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>RouterInfo</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>LeaseSet</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>Streaming SYN/SYNACK/Close</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>Repliable Datagrams</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>Datagram2 (prop. 163)</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>I2CP create session msg</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>SU3 files</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>X.509 certificates</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>Java keystores</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>Nous prendrons donc en charge les signatures PQ uniquement et hybrides. Nous définirons les trois variantes ML-DSA comme dans <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+, trois variantes hybrides avec Ed25519, et trois variantes PQ uniquement avec prehash pour les fichiers SU3 seulement, soit 9 nouveaux types de signature au total. Les types hybrides ne seront définis qu&rsquo;en combinaison avec Ed25519. Nous utiliserons le ML-DSA standard, PAS les variantes pre-hash (HashML-DSA), sauf pour les fichiers SU3.</td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>Nous utiliserons la variante de signature &ldquo;hedged&rdquo; ou randomisée, et non la variante &ldquo;déterministe&rdquo;, telle que définie dans <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+ section 3.4. Cela garantit que chaque signature est différente, même lorsqu&rsquo;elle porte sur les mêmes données, et fournit une protection supplémentaire contre les attaques par canaux auxiliaires. Consultez la section des notes d&rsquo;implémentation ci-dessous pour des détails supplémentaires sur les choix d&rsquo;algorithme, notamment l&rsquo;encodage et le contexte.</p>
+<p>Les nouveaux types de signature sont :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Code</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>12</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>13</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>14</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>15</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>17</td>
+      </tr>
+      <tr>
+          <td>MLDSA44ph</td>
+          <td>18</td>
+      </tr>
+      <tr>
+          <td>MLDSA65ph</td>
+          <td>19</td>
+      </tr>
+      <tr>
+          <td>MLDSA87ph</td>
+          <td>20</td>
+      </tr>
+      <tr>
+          <td>Les certificats X.509 et autres encodages DER utiliseront les structures composites et OID définis dans <a href="https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/">IETF draft</a>
+.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>La surcharge sera substantielle. Les tailles typiques de destination Ed25519 et d&rsquo;identité de router sont de 391 octets. Celles-ci augmenteront de 3,5x à 6,8x selon l&rsquo;algorithme. Les signatures Ed25519 font 64 octets. Celles-ci augmenteront de 38x à 76x selon l&rsquo;algorithme. Les RouterInfo signés typiques, leaseSet, datagrammes avec réponse, et messages de streaming signés font environ 1KB. Ceux-ci augmenteront de 3x à 8x selon l&rsquo;algorithme.</p>
+<p>Comme les nouveaux types d&rsquo;identités de destination et de router ne contiendront pas de remplissage, ils ne seront pas compressibles. Les tailles des destinations et des identités de router qui sont compressées en gzip durant le transit augmenteront de 12x à 38x selon l&rsquo;algorithme.</p>
+<h3 id="legal-combinations">Legal Combinations</h3>
+<p>Pour les Destinations, les nouveaux types de signature sont pris en charge avec tous les types de chiffrement dans le leaseSet. Définissez le type de chiffrement dans le certificat de clé sur NONE (255).</p>
+<p>Pour les RouterIdentities, le type de chiffrement ElGamal est obsolète. Les nouveaux types de signature sont pris en charge uniquement avec le chiffrement X25519 (type 4). Les nouveaux types de chiffrement seront indiqués dans les RouterAddresses. Le type de chiffrement dans le certificat de clé continuera d&rsquo;être de type 4.</p>
+<h3 id="new-crypto-required">New Crypto Required</h3>
+<ul>
+<li>ML-KEM (anciennement CRYSTALS-Kyber) <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">FIPS 203</a>
+</li>
+<li>ML-DSA (anciennement CRYSTALS-Dilithium) <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+</li>
+<li>SHA3-128 (anciennement Keccak-256) <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS 202</a>
+ Utilisé uniquement pour SHAKE128</li>
+<li>SHA3-256 (anciennement Keccak-512) <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS 202</a>
+</li>
+<li>SHAKE128 et SHAKE256 (extensions XOF de SHA3-128 et SHA3-256) <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS 202</a>
+</li>
+</ul>
+<p>Les vecteurs de test pour SHA3-256, SHAKE128 et SHAKE256 sont disponibles à l&rsquo;adresse <a href="https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values">NIST</a>
+.</p>
+<p>Notez que la bibliothèque Java bouncycastle prend en charge tout ce qui précède. La prise en charge par la bibliothèque C++ se trouve dans OpenSSL 3.5 <a href="https://openssl-library.org/post/2025-02-04-release-announcement-3.5/">OpenSSL</a>
+.</p>
+<h3 id="alternatives">Alternatives</h3>
+<p>Nous ne prendrons pas en charge <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf">FIPS 205</a>
+ (Sphincs+), c&rsquo;est beaucoup beaucoup plus lent et plus volumineux que ML-DSA. Nous ne prendrons pas en charge le prochain FIPS206 (Falcon), il n&rsquo;est pas encore standardisé. Nous ne prendrons pas en charge NTRU ou d&rsquo;autres candidats PQ qui n&rsquo;ont pas été standardisés par le NIST.</p>
+<h3 id="rosenpass">Rosenpass</h3>
+<p>Il existe des recherches <a href="https://eprint.iacr.org/2020/379.pdf">paper</a>
+ sur l&rsquo;adaptation de Wireguard (IK) pour la cryptographie PQ pure, mais plusieurs questions restent ouvertes dans ce document. Par la suite, cette approche a été implémentée sous le nom de Rosenpass <a href="https://rosenpass.eu/">Rosenpass</a>
+ <a href="https://raw.githubusercontent.com/rosenpass/rosenpass/papers-pdf/whitepaper.pdf">whitepaper</a>
+ pour Wireguard PQ.</p>
+<p>Rosenpass utilise une négociation similaire à Noise KK avec des clés statiques Classic McEliece 460896 prépartagées (500 Ko chacune) et des clés éphémères Kyber-512 (essentiellement MLKEM-512). Comme les textes chiffrés Classic McEliece ne font que 188 octets, et que les clés publiques et textes chiffrés Kyber-512 sont de taille raisonnable, les deux messages de négociation tiennent dans un MTU UDP standard. La clé partagée de sortie (osk) de la négociation PQ KK est utilisée comme clé prépartagée d&rsquo;entrée (psk) pour la négociation Wireguard IK standard. Il y a donc deux négociations complètes au total, une purement PQ et une purement X25519.</p>
+<p>Nous ne pouvons faire aucune de ces choses pour remplacer nos handshakes XK et IK car :</p>
+<ul>
+<li>Nous ne pouvons pas faire KK, Bob n&rsquo;a pas la clé statique d&rsquo;Alice</li>
+<li>Les clés statiques de 500KB sont beaucoup trop volumineuses</li>
+<li>Nous ne voulons pas d&rsquo;aller-retour supplémentaire</li>
+</ul>
+<p>Il y a beaucoup de bonnes informations dans le livre blanc, et nous l&rsquo;examinerons pour des idées et de l&rsquo;inspiration. TODO.</p>
+<h2 id="specification">Specification</h2>
+<h3 id="échange-de-clés">Échange de clés</h3>
+<p>Mettez à jour les sections et tableaux dans le document des structures communes <a href="../../../fr/docs/specs/common-structures/">/docs/specs/common-structures/</a>
+ comme suit :</p>
+<h3 id="signatures-1">Signatures</h3>
+<p>Les nouveaux types de clés publiques sont :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Public Key Length</th>
+          <th>Since</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM512</td>
+          <td>800</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM768</td>
+          <td>1184</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024</td>
+          <td>1568</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_CT</td>
+          <td>768</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_CT</td>
+          <td>1088</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_CT</td>
+          <td>1568</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>NONE</td>
+          <td>0</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for destinations with PQ sig types only, not for RIs or Leasesets</td>
+      </tr>
+      <tr>
+          <td>Les clés publiques hybrides sont la clé X25519. Les clés publiques KEM sont la clé PQ éphémère envoyée d&rsquo;Alice à Bob. L&rsquo;encodage et l&rsquo;ordre des octets sont définis dans <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">FIPS 203</a>
+.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>Les clés MLKEM*_CT ne sont pas vraiment des clés publiques, elles sont le &ldquo;texte chiffré&rdquo; envoyé de Bob à Alice lors de la négociation Noise. Elles sont listées ici par souci d&rsquo;exhaustivité.</p>
+<h3 id="combinaisons-légales">Combinaisons légales</h3>
+<p>Les nouveaux types de Private Key sont :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Private Key Length</th>
+          <th>Since</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM512</td>
+          <td>1632</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM768</td>
+          <td>2400</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024</td>
+          <td>3168</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>Les clés privées hybrides sont les clés X25519. Les clés privées KEM sont uniquement pour Alice. L&rsquo;encodage KEM et l&rsquo;ordre des octets sont définis dans <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">FIPS 203</a>
+.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="nouvelle-cryptographie-requise">Nouvelle cryptographie requise</h3>
+<p>Les nouveaux types de clés publiques de signature sont :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Length (bytes)</th>
+          <th>Since</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>1312</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>1952</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>2592</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>1344</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>1984</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>2624</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44ph</td>
+          <td>1344</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures</td>
+      </tr>
+      <tr>
+          <td>MLDSA65ph</td>
+          <td>1984</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures</td>
+      </tr>
+      <tr>
+          <td>MLDSA87ph</td>
+          <td>2624</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures</td>
+      </tr>
+      <tr>
+          <td>Les clés publiques de signature hybrides sont la clé Ed25519 suivie de la clé PQ, comme dans <a href="https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/">IETF draft</a>
+. L&rsquo;encodage et l&rsquo;ordre des octets sont définis dans <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="alternatives-1">Alternatives</h3>
+<p>Les nouveaux types de Signing Private Key sont :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Length (bytes)</th>
+          <th>Since</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>2560</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>4032</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>4896</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>2592</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>4064</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>4928</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44ph</td>
+          <td>2592</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures. See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65ph</td>
+          <td>4064</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures. See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87ph</td>
+          <td>4928</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures. See proposal 169</td>
+      </tr>
+      <tr>
+          <td>Les clés privées de signature hybrides sont la clé Ed25519 suivie de la clé PQ, comme dans <a href="https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/">IETF draft</a>
+. L&rsquo;encodage et l&rsquo;ordre des octets sont définis dans <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="rosenpass-1">Rosenpass</h3>
+<p>Les nouveaux types de Signature sont :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Length (bytes)</th>
+          <th>Since</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>2420</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>3309</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>4627</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>2484</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>3373</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>4691</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44ph</td>
+          <td>2484</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures. See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65ph</td>
+          <td>3373</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures. See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87ph</td>
+          <td>4691</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures. See proposal 169</td>
+      </tr>
+      <tr>
+          <td>Les signatures hybrides sont la signature Ed25519 suivie de la signature PQ, comme dans <a href="https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/">IETF draft</a>
+. Les signatures hybrides sont vérifiées en vérifiant les deux signatures, et échouent si l&rsquo;une d&rsquo;entre elles échoue. L&rsquo;encodage et l&rsquo;ordre des octets sont définis dans <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="key-certificates">Key Certificates</h3>
+<p>Les nouveaux types de clés publiques de signature sont :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>Total Public Key Length</th>
+          <th>Since</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>12</td>
+          <td>1312</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>13</td>
+          <td>1952</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>14</td>
+          <td>2592</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>15</td>
+          <td>1344</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>16</td>
+          <td>1984</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>17</td>
+          <td>2624</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44ph</td>
+          <td>18</td>
+          <td>n/a</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files</td>
+      </tr>
+      <tr>
+          <td>MLDSA65ph</td>
+          <td>19</td>
+          <td>n/a</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files</td>
+      </tr>
+      <tr>
+          <td>MLDSA87ph</td>
+          <td>20</td>
+          <td>n/a</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files</td>
+      </tr>
+      <tr>
+          <td>Les nouveaux types de clés publiques cryptographiques sont :</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>Total Public Key Length</th>
+          <th>Since</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>NONE</td>
+          <td>255</td>
+          <td>0</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>Les types de clés hybrides ne sont JAMAIS inclus dans les certificats de clé ; seulement dans les leaseSets.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>Pour les destinations avec des types de signature Hybrid ou PQ, utilisez NONE (type 255) pour le type de chiffrement, mais il n&rsquo;y a pas de clé crypto, et toute la section principale de 384 octets est pour la clé de signature.</p>
+<h3 id="structures-communes">Structures Communes</h3>
+<p>Voici les longueurs pour les nouveaux types de Destination. Le type de chiffrement pour tous est NONE (type 255) et la longueur de clé de chiffrement est traitée comme 0. La section entière de 384 octets est utilisée pour la première partie de la clé publique de signature. NOTE : Ceci est différent de la spécification pour les types de signature ECDSA_SHA512_P521 et RSA, où nous avons maintenu la clé ElGamal de 256 octets dans la destination même si elle n&rsquo;était pas utilisée.</p>
+<p>Pas de remplissage. La longueur totale est de 7 + longueur totale de la clé. La longueur du certificat de clé est de 4 + longueur de clé excédentaire.</p>
+<p>Exemple de flux d&rsquo;octets de destination de 1319 octets pour MLDSA44 :</p>
+<p>skey[0:383] 5 (932 &raquo; 8) (932 &amp; 0xff) 00 12 00 255 skey[384:1311]</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>Total Public Key Length</th>
+          <th>Main</th>
+          <th>Excess</th>
+          <th>Total Dest Length</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>12</td>
+          <td>1312</td>
+          <td>384</td>
+          <td>928</td>
+          <td>1319</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>13</td>
+          <td>1952</td>
+          <td>384</td>
+          <td>1568</td>
+          <td>1959</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>14</td>
+          <td>2592</td>
+          <td>384</td>
+          <td>2208</td>
+          <td>2599</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>15</td>
+          <td>1344</td>
+          <td>384</td>
+          <td>960</td>
+          <td>1351</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>16</td>
+          <td>1984</td>
+          <td>384</td>
+          <td>1600</td>
+          <td>1991</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>17</td>
+          <td>2624</td>
+          <td>384</td>
+          <td>2240</td>
+          <td>2631</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="publickey">PublicKey</h3>
+<p>Voici les longueurs pour les nouveaux types de Destination. Le type Enc pour tous est X25519 (type 4). Toute la section de 352 octets après la clé publique X25519 est utilisée pour la première partie de la clé publique de signature. Pas de rembourrage. La longueur totale est 39 + longueur totale de la clé. La longueur du certificat de clé est 4 + longueur de clé excédentaire.</p>
+<p>Exemple de flux d&rsquo;octets d&rsquo;identité de routeur de 1351 octets pour MLDSA44 :</p>
+<p>enckey[0:31] skey[0:351] 5 (960 &raquo; 8) (960 &amp; 0xff) 00 12 00 4 skey[352:1311]</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>Total Public Key Length</th>
+          <th>Main</th>
+          <th>Excess</th>
+          <th>Total RouterIdent Length</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>12</td>
+          <td>1312</td>
+          <td>352</td>
+          <td>960</td>
+          <td>1351</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>13</td>
+          <td>1952</td>
+          <td>352</td>
+          <td>1600</td>
+          <td>1991</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>14</td>
+          <td>2592</td>
+          <td>352</td>
+          <td>2240</td>
+          <td>2631</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>15</td>
+          <td>1344</td>
+          <td>352</td>
+          <td>992</td>
+          <td>1383</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>16</td>
+          <td>1984</td>
+          <td>352</td>
+          <td>1632</td>
+          <td>2023</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>17</td>
+          <td>2624</td>
+          <td>352</td>
+          <td>2272</td>
+          <td>2663</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="cléprivée">CléPrivée</h3>
+<p>Les handshakes utilisent les motifs de handshake <a href="https://noiseprotocol.org/noise.html">Noise Protocol</a>
+.</p>
+<p>La correspondance de lettres suivante est utilisée :</p>
+<ul>
+<li>e = clé éphémère à usage unique</li>
+<li>s = clé statique</li>
+<li>p = charge utile du message</li>
+<li>e1 = clé PQ éphémère à usage unique, envoyée d&rsquo;Alice à Bob</li>
+<li>ekem1 = le texte chiffré KEM, envoyé de Bob à Alice</li>
+</ul>
+<p>Les modifications suivantes à XK et IK pour la confidentialité parfaite hybride (hfs) sont spécifiées dans <a href="https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf">Noise HFS spec</a>
+ section 5 :</p>
+<pre tabindex="0"><code>XK:                       XKhfs:
+  &lt;- s                      &lt;- s
+  ...                       ...
+  -&gt; e, es, p               -&gt; e, es, e1, p
+  &lt;- e, ee, p               &lt;- e, ee, ekem1, p
+  -&gt; s, se                  -&gt; s, se
+  &lt;- p                      &lt;- p
+  p -&gt;                      p -&gt;
+
+
+  IK:                       IKhfs:
+  &lt;- s                      &lt;- s
+  ...                       ...
+  -&gt; e, es, s, ss, p       -&gt; e, es, e1, s, ss, p
+  &lt;- tag, e, ee, se, p     &lt;- tag, e, ee, ekem1, se, p
+  &lt;- p                     &lt;- p
+  p -&gt;                     p -&gt;
+
+  e1 and ekem1 are encrypted. See pattern definitions below.
+  NOTE: e1 and ekem1 are different sizes (unlike X25519)
+</code></pre><p>Le motif e1 est défini comme suit, tel que spécifié dans <a href="https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf">Noise HFS spec</a>
+ section 4 :</p>
+<pre tabindex="0"><code>For Alice:
+  (encap_key, decap_key) = PQ_KEYGEN()
+
+  // EncryptAndHash(encap_key)
+  ciphertext = ENCRYPT(k, n, encap_key, ad)
+  n++
+  MixHash(ciphertext)
+
+  For Bob:
+
+  // DecryptAndHash(ciphertext)
+  encap_key = DECRYPT(k, n, ciphertext, ad)
+  n++
+  MixHash(ciphertext)
+</code></pre><p>Le motif ekem1 est défini comme suit, tel que spécifié dans <a href="https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf">Noise HFS spec</a>
+ section 4 :</p>
+<pre tabindex="0"><code>For Bob:
+
+  (kem_ciphertext, kem_shared_key) = ENCAPS(encap_key)
+
+  // EncryptAndHash(kem_ciphertext)
+  ciphertext = ENCRYPT(k, n, kem_ciphertext, ad)
+  MixHash(ciphertext)
+
+  // MixKey
+  MixKey(kem_shared_key)
+
+
+  For Alice:
+
+  // DecryptAndHash(ciphertext)
+  kem_ciphertext = DECRYPT(k, n, ciphertext, ad)
+  MixHash(ciphertext)
+
+  // MixKey
+  kem_shared_key = DECAPS(kem_ciphertext, decap_key)
+  MixKey(kem_shared_key)
+</code></pre><h3 id="signingpublickey">SigningPublicKey</h3>
+<h4 id="issues">Issues</h4>
+<ul>
+<li>Devrions-nous changer la fonction de hachage du handshake ? Voir <a href="https://kerkour.com/fast-secure-hash-function-sha256-sha512-sha3-blake3">comparison</a>
+.
+SHA256 n&rsquo;est pas vulnérable à PQ, mais si nous voulons mettre à niveau
+notre fonction de hachage, c&rsquo;est le moment, pendant que nous changeons d&rsquo;autres choses.
+La proposition SSH IETF actuelle <a href="https://datatracker.ietf.org/doc/draft-ietf-sshm-mlkem-hybrid-kex/">IETF draft</a>
+ est d&rsquo;utiliser MLKEM768
+avec SHA256, et MLKEM1024 avec SHA384. Cette proposition inclut
+une discussion des considérations de sécurité.</li>
+<li>Devrions-nous arrêter d&rsquo;envoyer des données ratchet 0-RTT (autres que le LS) ?</li>
+<li>Devrions-nous basculer le ratchet de IK vers XK si nous n&rsquo;envoyons pas de données 0-RTT ?</li>
+</ul>
+<h4 id="overview">Overview</h4>
+<p>Cette section s&rsquo;applique aux protocoles IK et XK.</p>
+<p>La poignée de main hybride est définie dans <a href="https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf">Noise HFS spec</a>
+. Le premier message, d&rsquo;Alice vers Bob, contient e1, la clé d&rsquo;encapsulation, avant la charge utile du message. Ceci est traité comme une clé statique supplémentaire ; appelez EncryptAndHash() dessus (en tant qu&rsquo;Alice) ou DecryptAndHash() (en tant que Bob). Ensuite, traitez la charge utile du message comme d&rsquo;habitude.</p>
+<p>Le deuxième message, de Bob à Alice, contient ekem1, le texte chiffré, avant la charge utile du message. Celui-ci est traité comme une clé statique supplémentaire ; appelez EncryptAndHash() dessus (en tant que Bob) ou DecryptAndHash() (en tant qu&rsquo;Alice). Ensuite, calculez le kem_shared_key et appelez MixKey(kem_shared_key). Puis traitez la charge utile du message comme d&rsquo;habitude.</p>
+<h4 id="defined-ml-kem-operations">Defined ML-KEM Operations</h4>
+<p>Nous définissons les fonctions suivantes correspondant aux blocs de construction cryptographiques utilisés comme défini dans <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">FIPS 203</a>
+.</p>
+<p>(encap_key, decap_key) = PQ_KEYGEN()</p>
+<pre><code>Alice creates the encapsulation and decapsulation keys
+The encapsulation key is sent in message 1.
+encap_key and decap_key sizes vary based on ML-KEM variant.
+</code></pre>
+<p>(ciphertext, kem_shared_key) = ENCAPS(encap_key)</p>
+<pre><code>Bob calculates the ciphertext and shared key,
+using the ciphertext received in message 1.
+The ciphertext is sent in message 2.
+ciphertext size varies based on ML-KEM variant.
+The kem_shared_key is always 32 bytes.
+</code></pre>
+<p>kem_shared_key = DECAPS(ciphertext, decap_key)</p>
+<pre><code>Alice calculates the shared key,
+using the ciphertext received in message 2.
+The kem_shared_key is always 32 bytes.
+</code></pre>
+<p>Notez que l&rsquo;encap_key et le ciphertext sont tous deux chiffrés à l&rsquo;intérieur des blocs ChaCha/Poly dans les messages 1 et 2 de la négociation Noise. Ils seront déchiffrés dans le cadre du processus de négociation.</p>
+<p>La kem_shared_key est mélangée dans la clé de chaînage avec MixHash(). Voir ci-dessous pour les détails.</p>
+<h4 id="alice-kdf-for-message-1">Alice KDF for Message 1</h4>
+<p>Pour XK : Après le motif de message &rsquo;es&rsquo; et avant la charge utile, ajouter :</p>
+<p>OU</p>
+<p>Pour IK : Après le motif de message &rsquo;es&rsquo; et avant le motif de message &rsquo;s&rsquo;, ajouter :</p>
+<pre tabindex="0"><code>This is the &#34;e1&#34; message pattern:
+  (encap_key, decap_key) = PQ_KEYGEN()
+
+  // EncryptAndHash(encap_key)
+  // AEAD parameters
+  k = keydata[32:63]
+  n = 0
+  ad = h
+  ciphertext = ENCRYPT(k, n, encap_key, ad)
+  n++
+
+  // MixHash(ciphertext)
+  h = SHA256(h || ciphertext)
+
+
+  End of &#34;e1&#34; message pattern.
+
+  NOTE: For the next section (payload for XK or static key for IK),
+  the keydata and chain key remain the same,
+  and n now equals 1 (instead of 0 for non-hybrid).
+</code></pre><h4 id="bob-kdf-for-message-1">Bob KDF for Message 1</h4>
+<p>Pour XK : Après le modèle de message &rsquo;es&rsquo; et avant la charge utile, ajouter :</p>
+<p>OU</p>
+<p>Pour IK : Après le motif de message &rsquo;es&rsquo; et avant le motif de message &rsquo;s&rsquo;, ajouter :</p>
+<pre tabindex="0"><code>This is the &#34;e1&#34; message pattern:
+
+  // DecryptAndHash(encap_key_section)
+  // AEAD parameters
+  k = keydata[32:63]
+  n = 0
+  ad = h
+  encap_key = DECRYPT(k, n, encap_key_section, ad)
+  n++
+
+  // MixHash(encap_key_section)
+  h = SHA256(h || encap_key_section)
+
+  End of &#34;e1&#34; message pattern.
+
+  NOTE: For the next section (payload for XK or static key for IK),
+  the keydata and chain key remain the same,
+  and n now equals 1 (instead of 0 for non-hybrid).
+</code></pre><h4 id="bob-kdf-for-message-2">Bob KDF for Message 2</h4>
+<p>Pour XK : Après le motif de message &rsquo;ee&rsquo; et avant la charge utile, ajouter :</p>
+<p>OU</p>
+<p>Pour IK : Après le pattern de message &rsquo;ee&rsquo; et avant le pattern de message &lsquo;se&rsquo;, ajouter :</p>
+<pre tabindex="0"><code>This is the &#34;ekem1&#34; message pattern:
+
+  (kem_ciphertext, kem_shared_key) = ENCAPS(encap_key)
+
+  // EncryptAndHash(kem_ciphertext)
+  // AEAD parameters
+  k = keydata[32:63]
+  n = 0
+  ad = h
+  ciphertext = ENCRYPT(k, n, kem_ciphertext, ad)
+
+  // MixHash(ciphertext)
+  h = SHA256(h || ciphertext)
+
+  // MixKey(kem_shared_key)
+  keydata = HKDF(chainKey, kem_shared_key, &#34;&#34;, 64)
+  chainKey = keydata[0:31]
+
+  End of &#34;ekem1&#34; message pattern.
+</code></pre><h4 id="alice-kdf-for-message-2">Alice KDF for Message 2</h4>
+<p>Après le modèle de message &rsquo;ee&rsquo; (et avant le modèle de message &lsquo;ss&rsquo; pour IK), ajouter :</p>
+<pre tabindex="0"><code>This is the &#34;ekem1&#34; message pattern:
+
+  // DecryptAndHash(kem_ciphertext_section)
+  // AEAD parameters
+  k = keydata[32:63]
+  n = 0
+  ad = h
+  kem_ciphertext = DECRYPT(k, n, kem_ciphertext_section, ad)
+
+  // MixHash(kem_ciphertext_section)
+  h = SHA256(h || kem_ciphertext_section)
+
+  // MixKey(kem_shared_key)
+  kem_shared_key = DECAPS(kem_ciphertext, decap_key)
+  keydata = HKDF(chainKey, kem_shared_key, &#34;&#34;, 64)
+  chainKey = keydata[0:31]
+
+  End of &#34;ekem1&#34; message pattern.
+</code></pre><h4 id="kdf-for-message-3-xk-only">KDF for Message 3 (XK only)</h4>
+<p>inchangé</p>
+<h4 id="kdf-for-split">KDF for split()</h4>
+<p>inchangé</p>
+<h3 id="signingprivatekey">SigningPrivateKey</h3>
+<p>Mettre à jour la spécification ECIES-Ratchet <a href="../../../fr/docs/specs/ecies/">/docs/specs/ecies/</a>
+ comme suit :</p>
+<h4 id="noise-identifiers">Noise identifiers</h4>
+<ul>
+<li>&ldquo;Noise_IKhfselg2_25519+MLKEM512_ChaChaPoly_SHA256&rdquo;</li>
+<li>&ldquo;Noise_IKhfselg2_25519+MLKEM768_ChaChaPoly_SHA256&rdquo;</li>
+<li>&ldquo;Noise_IKhfselg2_25519+MLKEM1024_ChaChaPoly_SHA256&rdquo;</li>
+</ul>
+<h4 id="1b-new-session-format-with-binding">1b) New session format (with binding)</h4>
+<p>Changements : Le ratchet actuel contenait la clé statique dans la première section ChaCha, et la charge utile dans la seconde section. Avec ML-KEM, il y a maintenant trois sections. La première section contient la clé publique PQ chiffrée. La deuxième section contient la clé statique. La troisième section contient la charge utile.</p>
+<p>Format chiffré :</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |   New Session Ephemeral Public Key    |
+  +             32 bytes                  +
+  |     Encoded with Elligator2           |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +           ML-KEM encap_key            +
+  |       ChaCha20 encrypted data         |
+  +      (see table below for length)     +
+  |                                       |
+  ~                                       ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +    (MAC) for encap_key Section        +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +           X25519 Static Key           +
+  |       ChaCha20 encrypted data         |
+  +             32 bytes                  +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +    (MAC) for Static Key Section       +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for Payload Section     +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Format décrypté :</p>
+<pre tabindex="0"><code>Payload Part 1:
+
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +       ML-KEM encap_key                +
+  |                                       |
+  +      (see table below for length)     +
+  |                                       |
+  ~                                       ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  Payload Part 2:
+
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +       X25519 Static Key               +
+  |                                       |
+  +      (32 bytes)                       +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  Payload Part 3:
+
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |                                       |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Tailles :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>X len</th>
+          <th>Msg 1 len</th>
+          <th>Msg 1 Enc len</th>
+          <th>Msg 1 Dec len</th>
+          <th>PQ key len</th>
+          <th>pl len</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519</td>
+          <td>4</td>
+          <td>32</td>
+          <td>96+pl</td>
+          <td>64+pl</td>
+          <td>pl</td>
+          <td>&ndash;</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+          <td>32</td>
+          <td>912+pl</td>
+          <td>880+pl</td>
+          <td>800+pl</td>
+          <td>800</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+          <td>32</td>
+          <td>1296+pl</td>
+          <td>1360+pl</td>
+          <td>1184+pl</td>
+          <td>1184</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+          <td>32</td>
+          <td>1680+pl</td>
+          <td>1648+pl</td>
+          <td>1568+pl</td>
+          <td>1568</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>Notez que la charge utile doit contenir un bloc DateTime, donc la taille minimale de la charge utile est de 7. Les tailles minimales du message 1 peuvent être calculées en conséquence.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="1g-new-session-reply-format">1g) New Session Reply format</h4>
+<p>Changements : Le ratchet actuel a une charge utile vide pour la première section ChaCha, et la charge utile dans la seconde section. Avec ML-KEM, il y a maintenant trois sections. La première section contient le texte chiffré PQ crypté. La seconde section a une charge utile vide. La troisième section contient la charge utile.</p>
+<p>Format chiffré :</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |       Session Tag   8 bytes           |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +        Ephemeral Public Key           +
+  |                                       |
+  +            32 bytes                   +
+  |     Encoded with Elligator2           |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  | ChaCha20 encrypted ML-KEM ciphertext  |
+  +      (see table below for length)     +
+  ~                                       ~
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +  (MAC) for ciphertext Section         +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +  (MAC) for key Section (no data)      +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for Payload Section     +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Format décrypté :</p>
+<pre tabindex="0"><code>Payload Part 1:
+
+
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +       ML-KEM ciphertext               +
+  |                                       |
+  +      (see table below for length)     +
+  |                                       |
+  ~                                       ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  Payload Part 2:
+
+  empty
+
+  Payload Part 3:
+
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |                                       |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Tailles :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>Y len</th>
+          <th>Msg 2 len</th>
+          <th>Msg 2 Enc len</th>
+          <th>Msg 2 Dec len</th>
+          <th>PQ CT len</th>
+          <th>opt len</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519</td>
+          <td>4</td>
+          <td>32</td>
+          <td>72+pl</td>
+          <td>32+pl</td>
+          <td>pl</td>
+          <td>&ndash;</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+          <td>32</td>
+          <td>856+pl</td>
+          <td>816+pl</td>
+          <td>768+pl</td>
+          <td>768</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+          <td>32</td>
+          <td>1176+pl</td>
+          <td>1136+pl</td>
+          <td>1088+pl</td>
+          <td>1088</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+          <td>32</td>
+          <td>1656+pl</td>
+          <td>1616+pl</td>
+          <td>1568+pl</td>
+          <td>1568</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>Notez que bien que le message 2 ait normalement une charge utile non nulle, la spécification ratchet <a href="../../../fr/docs/specs/ecies/">/docs/specs/ecies/</a>
+ ne l&rsquo;exige pas, donc la taille minimale de charge utile est de 0. Les tailles minimales du message 2 peuvent être calculées en conséquence.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="signature">Signature</h3>
+<p>Mettez à jour la spécification NTCP2 <a href="../../../fr/docs/specs/ntcp2/">/docs/specs/ntcp2/</a>
+ comme suit :</p>
+<h4 id="noise-identifiers-1">Noise identifiers</h4>
+<ul>
+<li>&ldquo;Noise_XKhfsaesobfse+hs2+hs3_25519+MLKEM512_ChaChaPoly_SHA256&rdquo;</li>
+<li>&ldquo;Noise_XKhfsaesobfse+hs2+hs3_25519+MLKEM768_ChaChaPoly_SHA256&rdquo;</li>
+<li>&ldquo;Noise_XKhfsaesobfse+hs2+hs3_25519+MLKEM1024_ChaChaPoly_SHA256&rdquo;</li>
+</ul>
+<h4 id="1-sessionrequest">1) SessionRequest</h4>
+<p>Changements : Le NTCP2 actuel ne contient que les options dans la section ChaCha. Avec ML-KEM, la section ChaCha contiendra également la clé publique PQ chiffrée.</p>
+<p>Contenu brut :</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |                                       |
+  +        obfuscated with RH_B           +
+  |       AES-CBC-256 encrypted X         |
+  +             (32 bytes)                +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |   ChaChaPoly frame (MLKEM)            |
+  +      (see table below for length)     +
+  |   k defined in KDF for message 1      |
+  +   n = 0                               +
+  |   see KDF for associated data         |
+  ~   n = 0                               ~
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |   ChaChaPoly frame (options)          |
+  +         32 bytes                      +
+  |   k defined in KDF for message 1      |
+  +   n = 0                               +
+  |   see KDF for associated data         |
+  +----+----+----+----+----+----+----+----+
+  |     unencrypted authenticated         |
+  ~         padding (optional)            ~
+  |     length defined in options block   |
+  +----+----+----+----+----+----+----+----+
+
+  Same as before except add a second ChaChaPoly frame
+</code></pre><p>Données non chiffrées (tag d&rsquo;authentification Poly1305 non affiché) :</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |                   X                   |
+  +              (32 bytes)               +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |           ML-KEM encap_key            |
+  +      (see table below for length)     +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |               options                 |
+  +              (16 bytes)               +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |     unencrypted authenticated         |
+  +         padding (optional)            +
+  |     length defined in options block   |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Tailles :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>X len</th>
+          <th>Msg 1 len</th>
+          <th>Msg 1 Enc len</th>
+          <th>Msg 1 Dec len</th>
+          <th>PQ key len</th>
+          <th>opt len</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519</td>
+          <td>4</td>
+          <td>32</td>
+          <td>64+pad</td>
+          <td>32</td>
+          <td>16</td>
+          <td>&ndash;</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+          <td>32</td>
+          <td>880+pad</td>
+          <td>848</td>
+          <td>816</td>
+          <td>800</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+          <td>32</td>
+          <td>1264+pad</td>
+          <td>1232</td>
+          <td>1200</td>
+          <td>1184</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+          <td>32</td>
+          <td>1648+pad</td>
+          <td>1616</td>
+          <td>1584</td>
+          <td>1568</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>Note : Les codes de type sont destinés à un usage interne uniquement. Les routers resteront de type 4, et la prise en charge sera indiquée dans les adresses de router.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="2-sessioncreated">2) SessionCreated</h4>
+<p>Changements : Le NTCP2 actuel contient uniquement les options de la section ChaCha. Avec ML-KEM, la section ChaCha contiendra également la clé publique PQ chiffrée.</p>
+<p>Contenu brut :</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |                                       |
+  +        obfuscated with RH_B           +
+  |       AES-CBC-256 encrypted Y         |
+  +              (32 bytes)               +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |   ChaChaPoly frame (MLKEM)            |
+  +   Encrypted and authenticated data    +
+  -      (see table below for length)     -
+  +   k defined in KDF for message 2      +
+  |   n = 0; see KDF for associated data  |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |   ChaChaPoly frame (options)          |
+  +   Encrypted and authenticated data    +
+  -           32 bytes                    -
+  +   k defined in KDF for message 2      +
+  |   n = 0; see KDF for associated data  |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |     unencrypted authenticated         |
+  +         padding (optional)            +
+  |     length defined in options block   |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  Same as before except add a second ChaChaPoly frame
+</code></pre><p>Données non chiffrées (tag d&rsquo;authentification Poly1305 non affiché) :</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |                  Y                    |
+  +              (32 bytes)               +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |           ML-KEM Ciphertext           |
+  +      (see table below for length)     +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |               options                 |
+  +              (16 bytes)               +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |     unencrypted authenticated         |
+  +         padding (optional)            +
+  |     length defined in options block   |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Tailles :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>Y len</th>
+          <th>Msg 2 len</th>
+          <th>Msg 2 Enc len</th>
+          <th>Msg 2 Dec len</th>
+          <th>PQ CT len</th>
+          <th>opt len</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519</td>
+          <td>4</td>
+          <td>32</td>
+          <td>64+pad</td>
+          <td>32</td>
+          <td>16</td>
+          <td>&ndash;</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+          <td>32</td>
+          <td>848+pad</td>
+          <td>816</td>
+          <td>784</td>
+          <td>768</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+          <td>32</td>
+          <td>1136+pad</td>
+          <td>1104</td>
+          <td>1104</td>
+          <td>1088</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+          <td>32</td>
+          <td>1616+pad</td>
+          <td>1584</td>
+          <td>1584</td>
+          <td>1568</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>Remarque : Les codes de type sont destinés à un usage interne uniquement. Les routers resteront de type 4, et le support sera indiqué dans les adresses de router.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="3-sessionconfirmed">3) SessionConfirmed</h4>
+<p>Inchangé</p>
+<h4 id="key-derivation-function-kdf-for-data-phase">Key Derivation Function (KDF) (for data phase)</h4>
+<p>Inchangé</p>
+<h3 id="certificats-de-clé">Certificats de Clé</h3>
+<p>Mettre à jour la spécification SSU2 <a href="../../../fr/docs/specs/ssu2/">/docs/specs/ssu2/</a>
+ comme suit :</p>
+<h4 id="noise-identifiers-2">Noise identifiers</h4>
+<ul>
+<li>&ldquo;Noise_XKhfschaobfse+hs1+hs2+hs3_25519+MLKEM512_ChaChaPoly_SHA256&rdquo;</li>
+<li>&ldquo;Noise_XKhfschaobfse+hs1+hs2+hs3_25519+MLKEM768_ChaChaPoly_SHA256&rdquo;</li>
+<li>&ldquo;Noise_XKhfschaobfse+hs1+hs2+hs3_25519+MLKEM1024_ChaChaPoly_SHA256&rdquo;</li>
+</ul>
+<h4 id="long-header">Long Header</h4>
+<p>L&rsquo;en-tête long fait 32 octets. Il est utilisé avant qu&rsquo;une session ne soit créée, pour Token Request, SessionRequest, SessionCreated, et Retry. Il est également utilisé pour les messages Peer Test et Hole Punch hors session.</p>
+<p>TODO : Nous pourrions utiliser en interne le champ version et utiliser 3 pour MLKEM512 et 4 pour MLKEM768. Ne faisons-nous cela que pour les types 0 et 1 ou pour les 6 types ?</p>
+<p>Avant le chiffrement d&rsquo;en-tête :</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |      Destination Connection ID        |
+  +----+----+----+----+----+----+----+----+
+  |   Packet Number   |type| ver| id |flag|
+  +----+----+----+----+----+----+----+----+
+  |        Source Connection ID           |
+  +----+----+----+----+----+----+----+----+
+  |                 Token                 |
+  +----+----+----+----+----+----+----+----+
+
+  Destination Connection ID :: 8 bytes, unsigned big endian integer
+
+  Packet Number :: 4 bytes, unsigned big endian integer
+
+  type :: The message type = 0, 1, 7, 9, 10, or 11
+
+  ver :: The protocol version, equal to 2
+         TODO We could internally use the version field and use 3 for MLKEM512 and 4 for MLKEM768.
+
+  id :: 1 byte, the network ID (currently 2, except for test networks)
+
+  flag :: 1 byte, unused, set to 0 for future compatibility
+
+  Source Connection ID :: 8 bytes, unsigned big endian integer
+
+  Token :: 8 bytes, unsigned big endian integer
+</code></pre><h4 id="short-header">Short Header</h4>
+<p>inchangé</p>
+<h4 id="sessionrequest-type-0">SessionRequest (Type 0)</h4>
+<p>Changements : Le SSU2 actuel ne contient que les données de bloc dans la section ChaCha. Avec ML-KEM, la section ChaCha contiendra également la clé publique PQ chiffrée.</p>
+<p>Contenu brut :</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |  Long Header bytes 0-15, ChaCha20     |
+  +  encrypted with Bob intro key         +
+  |    See Header Encryption KDF          |
+  +----+----+----+----+----+----+----+----+
+  |  Long Header bytes 16-31, ChaCha20    |
+  +  encrypted with Bob intro key n=0     +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +       X, ChaCha20 encrypted           +
+  |       with Bob intro key n=0          |
+  +              (32 bytes)               +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |   ChaCha20 encrypted data (MLKEM)     |
+  +          (length varies)              +
+  |  k defined in KDF for Session Request |
+  +  n = 0                                +
+  |  see KDF for associated data          |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |   ChaCha20 encrypted data (payload)   |
+  +          (length varies)              +
+  |  k defined in KDF for Session Request |
+  +  n = 0                                +
+  |  see KDF for associated data          |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +        Poly1305 MAC (16 bytes)        +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Données non chiffrées (tag d&rsquo;authentification Poly1305 non affiché) :</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |      Destination Connection ID        |
+  +----+----+----+----+----+----+----+----+
+  |   Packet Number   |type| ver| id |flag|
+  +----+----+----+----+----+----+----+----+
+  |        Source Connection ID           |
+  +----+----+----+----+----+----+----+----+
+  |                 Token                 |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |                   X                   |
+  +              (32 bytes)               +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |           ML-KEM encap_key            |
+  +      (see table below for length)     +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |     Noise payload (block data)        |
+  +          (length varies)              +
+  |     see below for allowed blocks      |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Tailles, sans inclure la surcharge IP :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>X len</th>
+          <th>Msg 1 len</th>
+          <th>Msg 1 Enc len</th>
+          <th>Msg 1 Dec len</th>
+          <th>PQ key len</th>
+          <th>pl len</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519</td>
+          <td>4</td>
+          <td>32</td>
+          <td>80+pl</td>
+          <td>16+pl</td>
+          <td>pl</td>
+          <td>&ndash;</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+          <td>32</td>
+          <td>896+pl</td>
+          <td>832+pl</td>
+          <td>800+pl</td>
+          <td>800</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+          <td>32</td>
+          <td>1280+pl</td>
+          <td>1216+pl</td>
+          <td>1184+pl</td>
+          <td>1184</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+          <td>n/a</td>
+          <td>too big</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Note : Les codes de type sont uniquement à usage interne. Les routers resteront de type 4, et la prise en charge sera indiquée dans les adresses de router.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>MTU minimum pour MLKEM768_X25519 : Environ 1316 pour IPv4 et 1336 pour IPv6.</p>
+<h4 id="sessioncreated-type-1">SessionCreated (Type 1)</h4>
+<p>Modifications : Le SSU2 actuel ne contient que les données de bloc dans la section ChaCha. Avec ML-KEM, la section ChaCha contiendra également la clé publique PQ chiffrée.</p>
+<p>Contenu brut :</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |  Long Header bytes 0-15, ChaCha20     |
+  +  encrypted with Bob intro key and     +
+  | derived key, see Header Encryption KDF|
+  +----+----+----+----+----+----+----+----+
+  |  Long Header bytes 16-31, ChaCha20    |
+  +  encrypted with derived key n=0       +
+  |  See Header Encryption KDF            |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +       Y, ChaCha20 encrypted           +
+  |       with derived key n=0            |
+  +              (32 bytes)               +
+  |       See Header Encryption KDF       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |   ChaCha20 data (MLKEM)               |
+  +   Encrypted and authenticated data    +
+  |  length varies                        |
+  +  k defined in KDF for Session Created +
+  |  n = 0; see KDF for associated data   |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |   ChaCha20 data (payload)             |
+  +   Encrypted and authenticated data    +
+  |  length varies                        |
+  +  k defined in KDF for Session Created +
+  |  n = 0; see KDF for associated data   |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +        Poly1305 MAC (16 bytes)        +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Données non chiffrées (tag d&rsquo;authentification Poly1305 non affiché) :</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |      Destination Connection ID        |
+  +----+----+----+----+----+----+----+----+
+  |   Packet Number   |type| ver| id |flag|
+  +----+----+----+----+----+----+----+----+
+  |        Source Connection ID           |
+  +----+----+----+----+----+----+----+----+
+  |                 Token                 |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |                  Y                    |
+  +              (32 bytes)               +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |           ML-KEM Ciphertext           |
+  +      (see table below for length)     +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |     Noise payload (block data)        |
+  +          (length varies)              +
+  |      see below for allowed blocks     |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Tailles, sans inclure la surcharge IP :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>Y len</th>
+          <th>Msg 2 len</th>
+          <th>Msg 2 Enc len</th>
+          <th>Msg 2 Dec len</th>
+          <th>PQ CT len</th>
+          <th>pl len</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519</td>
+          <td>4</td>
+          <td>32</td>
+          <td>80+pl</td>
+          <td>16+pl</td>
+          <td>pl</td>
+          <td>&ndash;</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+          <td>32</td>
+          <td>864+pl</td>
+          <td>800+pl</td>
+          <td>768+pl</td>
+          <td>768</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+          <td>32</td>
+          <td>1184+pl</td>
+          <td>1118+pl</td>
+          <td>1088+pl</td>
+          <td>1088</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+          <td>n/a</td>
+          <td>too big</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Note : Les codes de type sont uniquement à usage interne. Les routers resteront de type 4, et le support sera indiqué dans les adresses de router.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>MTU minimum pour MLKEM768_X25519 : Environ 1316 pour IPv4 et 1336 pour IPv6.</p>
+<h4 id="sessionconfirmed-type-2">SessionConfirmed (Type 2)</h4>
+<p>inchangé</p>
+<h4 id="kdf-for-data-phase">KDF for data phase</h4>
+<p>inchangé</p>
+<h4 id="problèmes">Problèmes</h4>
+<p>Les blocs Relay, les blocs Peer Test, et les messages Peer Test contiennent tous des signatures. Malheureusement, les signatures PQ sont plus volumineuses que le MTU. Il n&rsquo;existe actuellement aucun mécanisme pour fragmenter les blocs Relay ou Peer Test ou les messages sur plusieurs paquets UDP. Le protocole doit être étendu pour supporter la fragmentation. Cela sera fait dans une proposition séparée à déterminer. Jusqu&rsquo;à ce que cela soit terminé, Relay et Peer Test ne seront pas supportés.</p>
+<h4 id="aperçu-1">Aperçu</h4>
+<p>Nous pourrions utiliser en interne le champ de version et utiliser 3 pour MLKEM512 et 4 pour MLKEM768.</p>
+<p>Pour les messages 1 et 2, MLKEM768 augmenterait la taille des paquets au-delà du MTU minimum de 1280. Probablement qu&rsquo;on ne le prendrait simplement pas en charge pour cette connexion si le MTU était trop bas.</p>
+<p>Pour les messages 1 et 2, MLKEM1024 augmenterait la taille des paquets au-delà du MTU maximum de 1500. Cela nécessiterait de fragmenter les messages 1 et 2, et ce serait une grosse complication. Probablement qu&rsquo;on ne le fera pas.</p>
+<p>Relay et Test de Pair : Voir ci-dessus</p>
+<h3 id="tailles-des-destinations">Tailles des destinations</h3>
+<p>TODO : Existe-t-il un moyen plus efficace de définir la signature/vérification pour éviter de copier la signature ?</p>
+<h3 id="tailles-des-routerident">Tailles des RouterIdent</h3>
+<p>À FAIRE</p>
+<p><a href="https://datatracker.ietf.org/doc/draft-ietf-lamps-dilithium-certificates/">IETF draft</a>
+ section 8.1 interdit HashML-DSA dans les certificats X.509 et n&rsquo;assigne pas d&rsquo;OID pour HashML-DSA, en raison de complexités d&rsquo;implémentation et de sécurité réduite.</p>
+<p>Pour les signatures PQ uniquement des fichiers SU3, utilisez les OID définis dans <a href="https://datatracker.ietf.org/doc/draft-ietf-lamps-dilithium-certificates/">IETF draft</a>
+ des variantes sans pré-hachage pour les certificats. Nous ne définissons pas de signatures hybrides des fichiers SU3, car nous pourrions avoir à hacher les fichiers deux fois (bien que HashML-DSA et X2559 utilisent la même fonction de hachage SHA512). De plus, concaténer deux clés et signatures dans un certificat X.509 serait complètement non-standard.</p>
+<p>Notez que nous interdisons la signature Ed25519 des fichiers SU3, et bien que nous ayons défini la signature Ed25519ph, nous ne nous sommes jamais mis d&rsquo;accord sur un OID pour celle-ci, ni ne l&rsquo;avons utilisée.</p>
+<p>Les types de signature normaux sont interdits pour les fichiers SU3 ; utilisez les variantes ph (prehash).</p>
+<h3 id="modèles-de-négociation">Modèles de négociation</h3>
+<p>La nouvelle taille maximale de Destination sera de 2599 (3468 en base 64).</p>
+<p>Mettre à jour les autres documents qui donnent des conseils sur les tailles de Destination, notamment :</p>
+<ul>
+<li>SAMv3</li>
+<li>Bittorrent</li>
+<li>Directives pour les développeurs</li>
+<li>Nommage / carnet d&rsquo;adresses / serveurs de saut</li>
+<li>Autres documents</li>
+</ul>
+<h2 id="overhead-analysis">Overhead Analysis</h2>
+<h3 id="kdf-de-négociation-noise">KDF de négociation Noise</h3>
+<p>Augmentation de taille (octets) :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Pubkey (Msg 1)</th>
+          <th>Cipertext (Msg 2)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>+816</td>
+          <td>+784</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>+1200</td>
+          <td>+1104</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>+1584</td>
+          <td>+1584</td>
+      </tr>
+      <tr>
+          <td>Vitesse :</td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>Vitesses telles que rapportées par <a href="https://blog.cloudflare.com/pq-2024/">Cloudflare</a>
+ :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Relative speed</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519 DH/keygen</td>
+          <td>baseline</td>
+      </tr>
+      <tr>
+          <td>MLKEM512</td>
+          <td>2.25x faster</td>
+      </tr>
+      <tr>
+          <td>MLKEM768</td>
+          <td>1.5x faster</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024</td>
+          <td>1x (same)</td>
+      </tr>
+      <tr>
+          <td>XK</td>
+          <td>4x DH (keygen + 3 DH)</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>4x DH + 2x PQ (keygen + enc/dec) = 4.9x DH = 22% slower</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>4x DH + 2x PQ (keygen + enc/dec) = 5.3x DH = 32% slower</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>4x DH + 2x PQ (keygen + enc/dec) = 6x DH = 50% slower</td>
+      </tr>
+      <tr>
+          <td>Résultats de tests préliminaires en Java :</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Relative DH/encaps</th>
+          <th>DH/decaps</th>
+          <th>keygen</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519</td>
+          <td>baseline</td>
+          <td>baseline</td>
+          <td>baseline</td>
+      </tr>
+      <tr>
+          <td>MLKEM512</td>
+          <td>29x faster</td>
+          <td>22x faster</td>
+          <td>17x faster</td>
+      </tr>
+      <tr>
+          <td>MLKEM768</td>
+          <td>17x faster</td>
+          <td>14x faster</td>
+          <td>9x faster</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024</td>
+          <td>12x faster</td>
+          <td>10x faster</td>
+          <td>6x faster</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="signatures-2">Signatures</h3>
+<p>Taille :</p>
+<p>Tailles typiques des clés, signatures, RIdent, Dest ou augmentations de taille (Ed25519 inclus pour référence) en supposant un type de chiffrement X25519 pour les RI. Taille ajoutée pour un Router Info, LeaseSet, datagrammes répondables, et chacun des deux paquets de streaming (SYN et SYN ACK) listés. Les Destinations et Leasesets actuels contiennent un remplissage répété et sont compressibles en transit. Les nouveaux types ne contiennent pas de remplissage et ne seront pas compressibles, résultant en une augmentation de taille beaucoup plus importante en transit. Voir la section conception ci-dessus.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Pubkey</th>
+          <th>Sig</th>
+          <th>Key+Sig</th>
+          <th>RIdent</th>
+          <th>Dest</th>
+          <th>RInfo</th>
+          <th>LS/Streaming/Datagram (each msg)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>EdDSA_SHA512_Ed25519</td>
+          <td>32</td>
+          <td>64</td>
+          <td>96</td>
+          <td>391</td>
+          <td>391</td>
+          <td>baseline</td>
+          <td>baseline</td>
+      </tr>
+      <tr>
+          <td>MLDSA44</td>
+          <td>1312</td>
+          <td>2420</td>
+          <td>3732</td>
+          <td>1351</td>
+          <td>1319</td>
+          <td>+3316</td>
+          <td>+3284</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>1952</td>
+          <td>3309</td>
+          <td>5261</td>
+          <td>1991</td>
+          <td>1959</td>
+          <td>+5668</td>
+          <td>+5636</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>2592</td>
+          <td>4627</td>
+          <td>7219</td>
+          <td>2631</td>
+          <td>2599</td>
+          <td>+7072</td>
+          <td>+7040</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>1344</td>
+          <td>2484</td>
+          <td>3828</td>
+          <td>1383</td>
+          <td>1351</td>
+          <td>+3412</td>
+          <td>+3380</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>1984</td>
+          <td>3373</td>
+          <td>5357</td>
+          <td>2023</td>
+          <td>1991</td>
+          <td>+5668</td>
+          <td>+5636</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>2624</td>
+          <td>4691</td>
+          <td>7315</td>
+          <td>2663</td>
+          <td>2631</td>
+          <td>+7488</td>
+          <td>+7456</td>
+      </tr>
+      <tr>
+          <td>Vitesse :</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>Vitesses telles que rapportées par <a href="https://blog.cloudflare.com/pq-2024/">Cloudflare</a>
+ :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Relative speed sign</th>
+          <th>verify</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>EdDSA_SHA512_Ed25519</td>
+          <td>baseline</td>
+          <td>baseline</td>
+      </tr>
+      <tr>
+          <td>MLDSA44</td>
+          <td>5x slower</td>
+          <td>2x faster</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>???</td>
+          <td>???</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>???</td>
+          <td>???</td>
+      </tr>
+      <tr>
+          <td>Résultats de tests préliminaires en Java :</td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Relative speed sign</th>
+          <th>verify</th>
+          <th>keygen</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>EdDSA_SHA512_Ed25519</td>
+          <td>baseline</td>
+          <td>baseline</td>
+          <td>baseline</td>
+      </tr>
+      <tr>
+          <td>MLDSA44</td>
+          <td>4.6x slower</td>
+          <td>1.7x faster</td>
+          <td>2.6x faster</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>8.1x slower</td>
+          <td>same</td>
+          <td>1.5x faster</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>11.1x slower</td>
+          <td>1.5x slower</td>
+          <td>same</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="security-analysis">Security Analysis</h2>
+<p>Les catégories de sécurité NIST sont résumées dans <a href="https://www.nccoe.nist.gov/sites/default/files/2023-08/pqc-light-at-the-end-of-the-tunnel-presentation.pdf">NIST presentation</a>
+ diapositive 10. Critères préliminaires : Notre catégorie de sécurité NIST minimale devrait être 2 pour les protocoles hybrides et 3 pour PQ uniquement.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Category</th>
+          <th>As Secure As</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>AES128</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>SHA256</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>AES192</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>SHA384</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>AES256</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="handshakes">Handshakes</h3>
+<p>Ce sont tous des protocoles hybrides. Il faut probablement privilégier MLKEM768 ; MLKEM512 n&rsquo;est pas suffisamment sécurisé.</p>
+<p>Catégories de sécurité NIST <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">FIPS 203</a>
+ :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Algorithm</th>
+          <th>Security Category</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLKEM512</td>
+          <td>1</td>
+      </tr>
+      <tr>
+          <td>MLKEM768</td>
+          <td>3</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024</td>
+          <td>5</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="signatures-3">Signatures</h3>
+<p>Cette proposition définit à la fois les types de signature hybrides et PQ uniquement. MLDSA44 hybride est préférable à MLDSA65 PQ uniquement. Les tailles de clés et de signatures pour MLDSA65 et MLDSA87 sont probablement trop importantes pour nous, du moins au début.</p>
+<p>Catégories de sécurité NIST <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+ :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Algorithm</th>
+          <th>Security Category</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>2</td>
+      </tr>
+      <tr>
+          <td>MLKEM67</td>
+          <td>3</td>
+      </tr>
+      <tr>
+          <td>MLKEM87</td>
+          <td>5</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="type-preferences">Type Preferences</h2>
+<p>Bien que nous définirons et implémenterons 3 types de chiffrement et 9 types de signature, nous prévoyons de mesurer les performances pendant le développement, et d&rsquo;analyser davantage les effets de l&rsquo;augmentation de la taille des structures. Nous continuerons également à rechercher et surveiller les développements dans d&rsquo;autres projets et protocoles.</p>
+<p>Après un an ou plus de développement, nous tenterons de nous fixer sur un type préféré ou par défaut pour chaque cas d&rsquo;usage. La sélection nécessitera de faire des compromis entre bande passante, CPU et niveau de sécurité estimé. Tous les types peuvent ne pas être adaptés ou autorisés pour tous les cas d&rsquo;usage.</p>
+<p>Les préférences préliminaires sont les suivantes, sous réserve de modifications :</p>
+<p>Chiffrement : MLKEM768_X25519</p>
+<p>Signatures : MLDSA44_EdDSA_SHA512_Ed25519</p>
+<p>Les restrictions préliminaires sont les suivantes, sous réserve de modifications :</p>
+<p>Chiffrement : MLKEM1024_X25519 non autorisé pour SSU2</p>
+<p>Signatures : MLDSA87 et la variante hybride probablement trop volumineux ; MLDSA65 et la variante hybride peuvent être trop volumineux</p>
+<h2 id="implementation-notes">Implementation Notes</h2>
+<h3 id="library-support">Library Support</h3>
+<p>Les bibliothèques Bouncycastle, BoringSSL et WolfSSL prennent désormais en charge MLKEM et MLDSA. Le support OpenSSL sera disponible dans leur version 3.5 le 8 avril 2025 <a href="https://openssl-library.org/post/2025-02-04-release-announcement-3.5/">OpenSSL</a>
+.</p>
+<p>La bibliothèque Noise de southernstorm.com adaptée par Java I2P contenait un support préliminaire pour les handshakes hybrides, mais nous l&rsquo;avons supprimé car inutilisé ; nous devrons le rajouter et le mettre à jour pour correspondre à <a href="https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf">Noise HFS spec</a>
+.</p>
+<h3 id="signing-variants">Signing Variants</h3>
+<p>Nous utiliserons la variante de signature &ldquo;hedged&rdquo; ou randomisée, et non la variante &ldquo;déterministe&rdquo;, telle que définie dans <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+ section 3.4. Ceci garantit que chaque signature est différente, même pour les mêmes données, et fournit une protection supplémentaire contre les attaques par canaux auxiliaires. Bien que <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+ spécifie que la variante &ldquo;hedged&rdquo; est celle par défaut, cela peut ou ne peut pas être vrai dans diverses bibliothèques. Les implémenteurs doivent s&rsquo;assurer que la variante &ldquo;hedged&rdquo; est utilisée pour la signature.</p>
+<p>Nous utilisons le processus de signature normal (appelé Pure ML-DSA Signature Generation) qui encode le message en interne sous la forme 0x00 || len(ctx) || ctx || message, où ctx est une valeur optionnelle de taille 0x00..0xFF. Nous n&rsquo;utilisons aucun contexte optionnel. len(ctx) == 0. Ce processus est défini dans <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+ Algorithme 2 étape 10 et Algorithme 3 étape 5. Notez que certains vecteurs de test publiés peuvent nécessiter la définition d&rsquo;un mode où le message n&rsquo;est pas encodé.</p>
+<h3 id="reliability">Reliability</h3>
+<p>L&rsquo;augmentation de la taille entraînera beaucoup plus de fragmentation de tunnel pour les stockages NetDB, les établissements de connexion streaming, et autres messages. Vérifiez les changements de performance et de fiabilité.</p>
+<h3 id="structure-sizes">Structure Sizes</h3>
+<p>Trouvez et vérifiez tout code qui limite la taille en octets des informations de router et des leaseSets.</p>
+<h3 id="netdb">NetDB</h3>
+<p>Examiner et possiblement réduire le maximum de LS/RI stockés en RAM ou sur disque, pour limiter l&rsquo;augmentation du stockage. Augmenter les exigences minimales de bande passante pour les floodfills ?</p>
+<h3 id="ratchet">Ratchet</h3>
+<h4 id="opérations-ml-kem-définies">Opérations ML-KEM Définies</h4>
+<p>La classification/détection automatique de multiples protocoles sur les mêmes tunnels devrait être possible basée sur une vérification de la longueur du message 1 (New Session Message). En utilisant MLKEM512_X25519 comme exemple, la longueur du message 1 est de 816 octets plus grande que le protocole ratchet actuel, et la taille minimale du message 1 (avec seulement une charge utile DateTime incluse) est de 919 octets. La plupart des tailles de message 1 avec le ratchet actuel ont une charge utile de moins de 816 octets, donc elles peuvent être classifiées comme ratchet non-hybride. Les gros messages sont probablement des POSTs qui sont rares.</p>
+<p>Donc la stratégie recommandée est :</p>
+<ul>
+<li>Si le message 1 fait moins de 919 octets, c&rsquo;est le protocole ratchet actuel.</li>
+<li>Si le message 1 fait 919 octets ou plus, c&rsquo;est probablement MLKEM512_X25519.
+Essayez d&rsquo;abord MLKEM512_X25519, et si cela échoue, essayez le protocole ratchet actuel.</li>
+</ul>
+<p>Cela devrait nous permettre de prendre en charge efficacement le ratchet standard et le ratchet hybride sur la même destination, tout comme nous avons précédemment pris en charge ElGamal et ratchet sur la même destination. Par conséquent, nous pouvons migrer vers le protocole hybride MLKEM beaucoup plus rapidement que si nous ne pouvions pas prendre en charge les protocoles duaux pour la même destination, car nous pouvons ajouter la prise en charge MLKEM aux destinations existantes.</p>
+<p>Les combinaisons prises en charge requises sont :</p>
+<ul>
+<li>X25519 + MLKEM512</li>
+<li>X25519 + MLKEM768</li>
+<li>X25519 + MLKEM1024</li>
+</ul>
+<p>Les combinaisons suivantes peuvent être complexes, et ne sont PAS requises d&rsquo;être supportées, mais peuvent l&rsquo;être, selon l&rsquo;implémentation :</p>
+<ul>
+<li>Plus d&rsquo;un MLKEM</li>
+<li>ElG + un ou plusieurs MLKEM</li>
+<li>X25519 + un ou plusieurs MLKEM</li>
+<li>ElG + X25519 + un ou plusieurs MLKEM</li>
+</ul>
+<p>Nous ne pouvons pas tenter de prendre en charge plusieurs algorithmes MLKEM (par exemple, MLKEM512_X25519 et MLKEM_768_X25519) sur la même destination. Choisissez-en un seul ; cependant, cela dépend de notre sélection d&rsquo;une variante MLKEM préférée, afin que les tunnels clients HTTP puissent en utiliser une. Dépendant de l&rsquo;implémentation.</p>
+<p>Nous POUVONS tenter de prendre en charge trois algorithmes (par exemple X25519, MLKEM512_X25519, et MLKEM769_X25519) sur la même destination. La classification et la stratégie de nouvelle tentative peuvent être trop complexes. La configuration et l&rsquo;interface utilisateur de configuration peuvent être trop complexes. Dépendant de l&rsquo;implémentation.</p>
+<p>Nous ne tenterons probablement PAS de prendre en charge les algorithmes ElGamal et hybrides sur la même destination. ElGamal est obsolète, et ElGamal + hybride uniquement (sans X25519) n&rsquo;a pas beaucoup de sens. De plus, les messages de nouvelle session ElGamal et hybrides sont tous deux volumineux, donc les stratégies de classification devraient souvent essayer les deux déchiffrements, ce qui serait inefficace. Dépendant de l&rsquo;implémentation.</p>
+<p>Les clients peuvent utiliser les mêmes clés statiques X25519 ou des clés différentes pour les protocoles X25519 et hybride sur les mêmes tunnels, selon l&rsquo;implémentation.</p>
+<h4 id="alice-kdf-pour-le-message-1">Alice KDF pour le Message 1</h4>
+<p>La spécification ECIES permet les Garlic Messages dans la charge utile du New Session Message, ce qui permet la livraison 0-RTT du paquet de streaming initial, généralement un HTTP GET, avec le leaseset du client. Cependant, la charge utile du New Session Message n&rsquo;a pas de confidentialité persistante. Comme cette proposition met l&rsquo;accent sur la confidentialité persistante améliorée pour le ratchet, les implémentations peuvent ou devraient reporter l&rsquo;inclusion de la charge utile de streaming, ou du message de streaming complet, jusqu&rsquo;au premier Existing Session Message. Ceci se ferait au détriment de la livraison 0-RTT. Les stratégies peuvent également dépendre du type de trafic ou du type de tunnel, ou de GET vs. POST, par exemple. Dépendant de l&rsquo;implémentation.</p>
+<h4 id="bob-kdf-pour-le-message-1">Bob KDF pour le Message 1</h4>
+<p>MLKEM, MLDSA, ou les deux sur la même destination, augmenteront considérablement la taille du Message de Nouvelle Session, comme décrit ci-dessus. Cela peut diminuer significativement la fiabilité de la livraison des Messages de Nouvelle Session à travers les tunnels, où ils doivent être fragmentés en plusieurs messages de tunnel de 1024 octets. Le succès de la livraison est proportionnel au nombre exponentiel de fragments. Les implémentations peuvent utiliser diverses stratégies pour limiter la taille du message, au détriment de la livraison 0-RTT. Dépendant de l&rsquo;implémentation.</p>
+<h3 id="ratchet-1">Ratchet</h3>
+<p>Nous pouvons définir le MSB de la clé éphémère (key[31] &amp; 0x80) dans la requête de session pour indiquer qu&rsquo;il s&rsquo;agit d&rsquo;une connexion hybride. Cela nous permettrait d&rsquo;exécuter à la fois NTCP standard et NTCP hybride sur le même port. Seule une variante hybride serait prise en charge, et annoncée dans l&rsquo;adresse du router. Par exemple, v=2,3 ou v=2,4 ou v=2,5.</p>
+<p>Si nous ne faisons pas cela, nous avons besoin d&rsquo;une adresse/port de transport différent, et un nouveau nom de protocole tel que &ldquo;NTCP1PQ1&rdquo;.</p>
+<p>Note : Les codes de type sont uniquement à usage interne. Les routers resteront de type 4, et le support sera indiqué dans les adresses des routers.</p>
+<p>TODO</p>
+<h3 id="ssu2">SSU2</h3>
+<p>PEUT nécessiter une adresse/port de transport différent, mais espérons que non, nous avons un en-tête avec des flags pour le message 1. Nous pourrions utiliser en interne le champ version et utiliser 3 pour MLKEM512 et 4 pour MLKEM768. Peut-être que simplement v=2,3,4 dans l&rsquo;adresse serait suffisant. Mais nous avons besoin d&rsquo;identifiants pour les deux nouveaux algorithmes : 3a, 3b ?</p>
+<p>Vérifiez et confirmez que SSU2 peut gérer le RI fragmenté sur plusieurs paquets (6-8 ?). i2pd ne supporte actuellement que 2 fragments maximum ?</p>
+<p>Note : Les codes de type sont uniquement à usage interne. Les routers resteront de type 4, et le support sera indiqué dans les adresses de router.</p>
+<p>À FAIRE</p>
+<h2 id="router-compatibility">Router Compatibility</h2>
+<h3 id="transport-names">Transport Names</h3>
+<p>Nous n&rsquo;aurons probablement pas besoin de nouveaux noms de transport, si nous pouvons exécuter à la fois la version standard et hybride sur le même port, avec des indicateurs de version.</p>
+<p>Si nous avons besoin de nouveaux noms de transport, ils seraient :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Transport</th>
+          <th>Type</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>NTCP2PQ1</td>
+          <td>MLKEM512_X25519</td>
+      </tr>
+      <tr>
+          <td>NTCP2PQ2</td>
+          <td>MLKEM768_X25519</td>
+      </tr>
+      <tr>
+          <td>NTCP2PQ3</td>
+          <td>MLKEM1024_X25519</td>
+      </tr>
+      <tr>
+          <td>SSU2PQ1</td>
+          <td>MLKEM512_X25519</td>
+      </tr>
+      <tr>
+          <td>SSU2PQ2</td>
+          <td>MLKEM768_X25519</td>
+      </tr>
+      <tr>
+          <td>Notez que SSU2 ne peut pas prendre en charge MLKEM1024, il est trop volumineux.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="router-enc-types">Router Enc. Types</h3>
+<p>Nous avons plusieurs alternatives à considérer :</p>
+<h4 id="bob-kdf-pour-le-message-2">Bob KDF pour le Message 2</h4>
+<p>Non recommandé. Utilisez uniquement les nouveaux transports listés ci-dessus qui correspondent au type de router. Les anciens routers ne peuvent pas se connecter, construire des tunnels à travers, ou envoyer des messages netDb vers. Il faudrait plusieurs cycles de version pour déboguer et assurer le support avant d&rsquo;activer par défaut. Pourrait prolonger le déploiement d&rsquo;un an ou plus par rapport aux alternatives ci-dessous.</p>
+<h4 id="alice-kdf-pour-message-2">Alice KDF pour Message 2</h4>
+<p>Recommandé. Comme PQ n&rsquo;affecte pas la clé statique X25519 ou les protocoles de handshake N, nous pourrions laisser les routers en type 4, et simplement annoncer de nouveaux transports. Les routers plus anciens pourraient encore se connecter, construire des tunnels à travers, ou envoyer des messages netDb vers.</p>
+<h4 id="kdf-pour-le-message-3-xk-uniquement">KDF pour le Message 3 (XK uniquement)</h4>
+<p>Les routeurs de type 4 pourraient annoncer à la fois des adresses NTCP2 et NTCP2PQ*. Celles-ci pourraient utiliser la même clé statique et d&rsquo;autres paramètres, ou non. Elles devront probablement être sur des ports différents ; il serait très difficile de supporter à la fois les protocoles NTCP2 et NTCP2PQ* sur le même port, car il n&rsquo;y a pas d&rsquo;en-tête ou de tramage qui permettrait à Bob de classifier et de tramer le message Session Request entrant.</p>
+<p>Des ports et adresses séparés seront difficiles pour Java mais simples pour i2pd.</p>
+<h4 id="kdf-pour-split">KDF pour split()</h4>
+<p>Les routers de type 4 pourraient annoncer à la fois des adresses SSU2 et SSU2PQ*. Avec des drapeaux d&rsquo;en-tête ajoutés, Bob pourrait identifier le type de transport entrant dans le premier message. Par conséquent, nous pourrions prendre en charge à la fois SSU2 et SSUPQ* sur le même port.</p>
+<p>Celles-ci pourraient être publiées sous des adresses séparées (comme i2pd l&rsquo;a fait lors de transitions précédentes) ou dans la même adresse avec un paramètre indiquant le support PQ (comme Java i2p l&rsquo;a fait lors de transitions précédentes).</p>
+<p>Si dans la même adresse, ou sur le même port dans des adresses différentes, ceux-ci utiliseraient la même clé statique et les autres paramètres. Si dans des adresses différentes avec des ports différents, ceux-ci pourraient utiliser la même clé statique et les autres paramètres, ou pas.</p>
+<p>Des ports et adresses séparés seront difficiles pour Java mais simples pour i2pd.</p>
+<h4 id="recommendations">Recommendations</h4>
+<p>À FAIRE</p>
+<h3 id="ntcp2">NTCP2</h3>
+<h4 id="identificateurs-noise">Identificateurs Noise</h4>
+<p>Les routers plus anciens vérifient les RI et ne peuvent donc pas se connecter, construire des tunnels à travers, ou envoyer des messages netdb à. Il faudrait plusieurs cycles de versions pour déboguer et assurer le support avant d&rsquo;activer par défaut. Ce seraient les mêmes problèmes que le déploiement du type de chiffrement 5/6/7 ; pourrait prolonger le déploiement d&rsquo;un an ou plus par rapport à l&rsquo;alternative de déploiement du type de chiffrement type 4 listée ci-dessus.</p>
+<p>Aucune alternative.</p>
+<h3 id="ls-enc-types">LS Enc. Types</h3>
+<h4 id="1b-nouveau-format-de-session-avec-liaison">1b) Nouveau format de session (avec liaison)</h4>
+<p>Ces clés peuvent être présentes dans le LS avec des clés X25519 de type 4 plus anciennes. Les routeurs plus anciens ignoreront les clés inconnues.</p>
+<p>Les destinations peuvent prendre en charge plusieurs types de clés, mais seulement en effectuant des déchiffrements d&rsquo;essai du message 1 avec chaque clé. La surcharge peut être atténuée en maintenant des compteurs de déchiffrements réussis pour chaque clé, et en essayant d&rsquo;abord la clé la plus utilisée. Java I2P utilise cette stratégie pour ElGamal+X25519 sur la même destination.</p>
+<h3 id="dest-sig-types">Dest. Sig. Types</h3>
+<h4 id="1g-format-de-réponse-de-nouvelle-session">1g) Format de réponse de nouvelle session</h4>
+<p>Les routeurs vérifient les signatures des leaseSets et ne peuvent donc pas se connecter ou recevoir des leaseSets pour les destinations de type 12-17. Il faudrait plusieurs cycles de version pour déboguer et garantir la prise en charge avant d&rsquo;activer par défaut.</p>
+<p>Aucune alternative.</p>
+<h2 id="spécification">Spécification</h2>
+<p>Les données les plus précieuses sont le trafic de bout en bout, chiffré avec ratchet. En tant qu&rsquo;observateur externe entre les sauts de tunnel, cela est chiffré deux fois de plus, avec le chiffrement de tunnel et le chiffrement de transport. En tant qu&rsquo;observateur externe entre OBEP et IBGW, cela n&rsquo;est chiffré qu&rsquo;une fois de plus, avec le chiffrement de transport. En tant que participant OBEP ou IBGW, ratchet est le seul chiffrement. Cependant, comme les tunnels sont unidirectionnels, capturer les deux messages dans la négociation ratchet nécessiterait des routeurs complices, à moins que les tunnels ne soient construits avec l&rsquo;OBEP et l&rsquo;IBGW sur le même routeur.</p>
+<p>Le modèle de menace PQ le plus préoccupant actuellement est le stockage du trafic aujourd&rsquo;hui, pour un déchiffrement dans de très nombreuses années (confidentialité persistante). Une approche hybride protégerait contre cela.</p>
+<p>Le modèle de menace PQ de compromission des clés d&rsquo;authentification dans un délai raisonnable (disons quelques mois) puis d&rsquo;usurpation de l&rsquo;authentification ou de déchiffrement en quasi-temps réel, est beaucoup plus éloigné ? Et c&rsquo;est à ce moment-là que nous voudrions migrer vers des clés statiques PQC.</p>
+<p>Donc, le modèle de menace PQ le plus précoce est le stockage de trafic par OBEP/IBGW pour un déchiffrement ultérieur. Nous devrions implémenter le ratchet hybride en premier.</p>
+<p>Ratchet est la priorité la plus élevée. Les transports sont les suivants. Les signatures sont la priorité la plus faible.</p>
+<p>Le déploiement des signatures sera également reporté d&rsquo;un an ou plus par rapport au déploiement du chiffrement, car aucune rétrocompatibilité n&rsquo;est possible. De plus, l&rsquo;adoption de MLDSA dans l&rsquo;industrie sera standardisée par le CA/Browser Forum et les Autorités de Certification. Les CA ont d&rsquo;abord besoin du support des modules de sécurité matériels (HSM), qui n&rsquo;est actuellement pas disponible <a href="https://cabforum.org/2024/10/10/2024-10-10-minutes-of-the-code-signing-certificate-working-group/">CA/Browser Forum</a>
+. Nous nous attendons à ce que le CA/Browser Forum guide les décisions sur les choix de paramètres spécifiques, y compris s&rsquo;il faut supporter ou exiger les signatures composites <a href="https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/">IETF draft</a>
+.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Milestone</th>
+          <th>Target</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Ratchet beta</td>
+          <td>Late 2025</td>
+      </tr>
+      <tr>
+          <td>Select best enc type</td>
+          <td>Early 2026</td>
+      </tr>
+      <tr>
+          <td>NTCP2 beta</td>
+          <td>Early 2026</td>
+      </tr>
+      <tr>
+          <td>SSU2 beta</td>
+          <td>Mid 2026</td>
+      </tr>
+      <tr>
+          <td>Ratchet production</td>
+          <td>Mid 2026</td>
+      </tr>
+      <tr>
+          <td>Ratchet default</td>
+          <td>Late 2026</td>
+      </tr>
+      <tr>
+          <td>Signature beta</td>
+          <td>Late 2026</td>
+      </tr>
+      <tr>
+          <td>NTCP2 production</td>
+          <td>Late 2026</td>
+      </tr>
+      <tr>
+          <td>SSU2 production</td>
+          <td>Early 2027</td>
+      </tr>
+      <tr>
+          <td>Select best sig type</td>
+          <td>Early 2027</td>
+      </tr>
+      <tr>
+          <td>NTCP2 default</td>
+          <td>Early 2027</td>
+      </tr>
+      <tr>
+          <td>SSU2 default</td>
+          <td>Mid 2027</td>
+      </tr>
+      <tr>
+          <td>Signature production</td>
+          <td>Mid 2027</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="migration">Migration</h2>
+<p>Si nous ne pouvons pas prendre en charge à la fois les anciens et nouveaux protocoles ratchet sur les mêmes tunnels, la migration sera beaucoup plus difficile.</p>
+<p>Nous devrions pouvoir simplement essayer l&rsquo;un puis l&rsquo;autre, comme nous l&rsquo;avons fait avec X25519, pour être prouvé.</p>
+<h2 id="issues-1">Issues</h2>
+<ul>
+<li>Sélection du hash Noise - rester avec SHA256 ou faire une mise à niveau ?
+SHA256 devrait être valable encore 20-30 ans, pas menacé par PQ,
+Voir <a href="https://csrc.nist.gov/csrc/media/Presentations/2022/update-on-post-quantum-encryption-and-cryptographi/Day%202%20-%20230pm%20Chen%20PQC%20ISPAB.pdf">NIST presentation</a>
+ et <a href="https://www.nccoe.nist.gov/sites/default/files/2023-08/pqc-light-at-the-end-of-the-tunnel-presentation.pdf">NIST presentation</a>
+.
+Si SHA256 est cassé, nous avons de pires problèmes (netdb).</li>
+<li>NTCP2 port séparé, adresse router séparée</li>
+<li>SSU2 relay / test de pair</li>
+<li>SSU2 champ de version</li>
+<li>SSU2 version d&rsquo;adresse router</li>
+</ul>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    <a href="../../../fr/proposals/" class="page-nav-link">
+                        ← Back to Proposals
+                    </a>
+                    
+                    
+                    
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                            
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <a href="../../../proposals/169-pq-crypto.txt" class="page-nav-link" download>
+                        Download Source (.txt)
+                    </a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.proposals-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.proposal-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.proposal-title-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.proposal-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-text);
+}
+
+.proposal-number {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+ 
+.proposal-meta-box {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.proposal-status {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+ 
+.status-open {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-open {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-accepted {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-accepted {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-finished {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-finished {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-closed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-closed {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.dark .status-rejected {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.status-draft,
+.status-needs-revision,
+.status-dead,
+.status-needs-research {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-draft,
+.dark .status-needs-revision,
+.dark .status-dead,
+.dark .status-needs-research {
+    background: #78350f;
+    color: #fde047;
+}
+
+.status-meta,
+.status-informational,
+.status-reserve {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+.dark .status-meta,
+.dark .status-informational,
+.dark .status-reserve {
+    background: #581c87;
+    color: #e879f9;
+}
+
+ 
+.proposal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.info-value {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+ 
+.proposal-relationships {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-md);
+}
+
+.relationship {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.relationship:last-child {
+    margin-bottom: 0;
+}
+
+.relationship-label {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    min-width: 120px;
+}
+
+.relationship-value {
+    color: var(--color-text);
+}
+
+ 
+.proposal-layout {
+    display: block;
+}
+
+.proposal-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.proposal-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.proposal-main {
+    min-width: 0;
+}
+
+ 
+.proposal-content {
+    line-height: 1.8;
+    color: var(--color-text);
+    max-width: 900px;
+}
+
+.proposal-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content ul,
+.proposal-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.proposal-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.proposal-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.proposal-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.proposal-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.proposal-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin-left: 0;
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+.proposal-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.proposal-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+.proposal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content table th {
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.proposal-content table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.proposal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+ 
+.page-nav {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.page-nav-link {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+ 
+@media (max-width: 1024px) {
+    .proposal-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .proposal-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .proposal-title {
+        font-size: 1.75rem;
+    }
+
+    .proposal-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Restez informé des actualités I2P :</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Entrez votre email" required>
+                            <button type="submit">S&#39;abonner</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Liens Rapides</h3>
+                <ul>
+                    <li><a href="../../../fr/financial-support/">Faire un don</a></li>
+                    <li><a href="../../../fr/docs/overview/intro/">Introduction à I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Communauté</h3>
+                <ul>
+                    <li><a href="../../../fr/get-involved/">Participez</a></li>
+                    <li><a href="../../../fr/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Forums Officiels</a></li>
+                    <li><a href="../../../fr/contact/">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Ressources</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Mesures I2P</a></li>
+                    <li><a href="../../../fr/papers/">Recherche</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Le Projet Internet Invisible. Sous licence Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../fr/privacy/">Confidentialité</a>
+                <a href="../../../fr/terms/">Conditions d&#39;utilisation</a>
+                <a href="../../../fr/about/media/">Presse</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Fermer">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Sondage de la communauté</h2>
+            <p class="modal-subtitle">Nous aimerions avoir de vos nouvelles</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Votre vote aide à façonner l&#39;avenir d&#39;I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

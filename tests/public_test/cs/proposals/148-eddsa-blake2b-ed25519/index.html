@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>RedDSA-BLAKE2b-Ed25519 | I2P - Projekt neviditelného internetu</title>
+
+    <meta name="description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="RedDSA-BLAKE2b-Ed25519 | I2P - Projekt neviditelného internetu">
+    <meta property="og:description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/cs/proposals/148-eddsa-blake2b-ed25519/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P Beta stránky jsou nyní spuštěny. Problémy s e-mailem hlaste na stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Zavřít banner" title="Zavřít banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../cs/" class="logo-link">
+                    <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../cs/about/" class="">O aplikaci</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../cs/about/">Přehled</a></li>
+                            <li><a href="../../../cs/papers/">Výzkumné práce</a></li>
+                            <li><a href="../../../cs/about/media/">Pro média</a></li>
+                            <li><a href="../../../cs/contact/">Kontaktujte nás</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../cs/docs/" class="">Dokumentace</a></li>
+                    <li><a href="../../../cs/downloads/" class="">Ke stažení</a></li>
+                    <li><a href="../../../cs/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../cs/get-involved/" class="">Zapojte se</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../cs/get-involved/">Přehled</a></li>
+                            <li><a href="../../../cs/feedback/">Návrhy funkcí</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">cs</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../en/proposals/148-eddsa-blake2b-ed25519/"
+                                class="lang-option">Angličtina</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../es/proposals/148-eddsa-blake2b-ed25519/"
+                                class="lang-option">Španělština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ko/proposals/148-eddsa-blake2b-ed25519/"
+                                class="lang-option">Korejština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../zh/proposals/148-eddsa-blake2b-ed25519/"
+                                class="lang-option">Čínština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ru/proposals/148-eddsa-blake2b-ed25519/"
+                                class="lang-option">Ruština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../cs/proposals/148-eddsa-blake2b-ed25519/"
+                                class="lang-option active">Čeština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../de/proposals/148-eddsa-blake2b-ed25519/"
+                                class="lang-option">Němčina</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../fr/proposals/148-eddsa-blake2b-ed25519/"
+                                class="lang-option">Francouzština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../tr/proposals/148-eddsa-blake2b-ed25519/"
+                                class="lang-option">Turečtina</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../vi/proposals/148-eddsa-blake2b-ed25519/"
+                                class="lang-option">Vietnamština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../hi/proposals/148-eddsa-blake2b-ed25519/"
+                                class="lang-option">Hindština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ar/proposals/148-eddsa-blake2b-ed25519/"
+                                class="lang-option">Arabština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../pt/proposals/148-eddsa-blake2b-ed25519/"
+                                class="lang-option">Portugalština</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../cs/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../cs/downloads/" class="btn btn-primary">Získat I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+<div class="proposals-page">
+    <div class="container">
+        
+        <nav class="breadcrumbs">
+            <a href="../../../cs/">Home</a>
+            <span class="separator">/</span>
+            <a href="../../../cs/proposals/">Proposals</a>
+            <span class="separator">/</span>
+            <span class="current">RedDSA-BLAKE2b-Ed25519</span>
+        </nav>
+
+        
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Tento překlad byl vytvořen pomocí strojového učení a nemusí být 100% přesný.</span>
+    
+    
+    <a href="../../../en/proposals/148-eddsa-blake2b-ed25519/" class="disclaimer-link">Zobrazit anglickou verzi</a>
+    
+</div>
+
+
+
+        
+        <header class="proposal-header">
+            <div class="proposal-title-section">
+                <h1 class="proposal-title">RedDSA-BLAKE2b-Ed25519</h1>
+                <div class="proposal-number">Proposal 148</div>
+            </div>
+
+            
+            <div class="proposal-meta-box">
+                <div class="proposal-status status-otevřít">
+                    Otevřít
+                </div>
+
+                
+                <div class="proposal-info-grid">
+                    
+                    <div class="info-item">
+                        <span class="info-label">Author</span>
+                        <span class="info-value">zzz</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Created</span>
+                        <span class="info-value">2019-03-12</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Last Updated</span>
+                        <span class="info-value">2019-04-11</span>
+                    </div>
+                    
+
+                    
+
+                    
+                </div>
+
+                
+                
+            </div>
+        </header>
+
+        
+        <div class="proposal-layout proposal-layout--with-toc">
+            
+            
+            <aside class="proposal-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#přehled">Přehled</a></li>
+    <li><a href="#motivace">Motivace</a>
+      <ul>
+        <li><a href="#length-extension-attacks">Length Extension Attacks</a></li>
+        <li><a href="#cross-protocol-attacks">Cross-Protocol Attacks</a></li>
+        <li><a href="#útoky-rozšířením-délky">Útoky rozšířením délky</a></li>
+        <li><a href="#útoky-mezi-protokoly">Útoky mezi protokoly</a></li>
+      </ul>
+    </li>
+    <li><a href="#goals">Goals</a></li>
+    <li><a href="#design">Design</a></li>
+    <li><a href="#justification">Justification</a></li>
+    <li><a href="#specification">Specification</a>
+      <ul>
+        <li><a href="#identifikace-duplicitních-zpráv">Identifikace duplicitních zpráv</a></li>
+        <li><a href="#rychlost">Rychlost</a></li>
+        <li><a href="#personalizations">Personalizations</a></li>
+      </ul>
+    </li>
+    <li><a href="#cíle">Cíle</a></li>
+    <li><a href="#návrh">Návrh</a></li>
+    <li><a href="#odůvodnění">Odůvodnění</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="proposal-main">
+                <article class="proposal-content">
+                    <h2 id="přehled">Přehled</h2>
+<p>Tento návrh přidává nový typ podpisu používající BLAKE2b-512 s personalizačními řetězci a soli, aby nahradil SHA-512. Toto eliminuje tři třídy možných útoků.</p>
+<h2 id="motivace">Motivace</h2>
+<p>Během diskusí a návrhu NTCP2 (návrh 111) a LS2 (návrh 123) jsme krátce zvažovali různé možné útoky a způsoby, jak jim zabránit. Tři z těchto útoků jsou útoky rozšíření délky (Length Extension Attacks), útoky mezi protokoly (Cross-Protocol Attacks) a identifikace duplicitních zpráv (Duplicate Message Identification).</p>
+<p>Pro NTCP2 i LS2 jsme se rozhodli, že tyto útoky nebyly přímo relevantní pro dané návrhy a jakákoli řešení by byla v rozporu s cílem minimalizovat nové primitiva. Také jsme zjistili, že rychlost hashovacích funkcí v těchto protokolech nebyla důležitým faktorem v našich rozhodnutích. Proto jsme řešení většinou odložili na samostatný návrh. Ačkoli jsme do specifikace LS2 přidali některé personalizační funkce, nevyžadovali jsme žádné nové hashovací funkce.</p>
+<p>Mnoho projektů, jako je <a href="https://github.com/zcash/zips/tree/master/protocol/protocol.pdf">ZCash</a>
+, používá hashovací funkce a algoritmy pro podepisování založené na novějších algoritmech, které nejsou zranitelné vůči následujícím útokům.</p>
+<h3 id="length-extension-attacks">Length Extension Attacks</h3>
+<p>SHA-256 a SHA-512 jsou zranitelné vůči <a href="https://en.wikipedia.org/wiki/Length_extension_attack">útokům rozšíření délky (LEA)</a>
+. Jedná se o případ, kdy jsou podepsána skutečná data, nikoli hash dat. Ve většině I2P protokolů (streaming, datagramy, netDb a další) jsou podepsána skutečná data. Jednou výjimkou jsou soubory SU3, kde je podepsán hash. Další výjimkou jsou podepsané datagramy pro DSA (typ podpisu 0), kde je podepsán hash. U ostatních typů podpisů podepsaných datagramů jsou podepsána data.</p>
+<h3 id="cross-protocol-attacks">Cross-Protocol Attacks</h3>
+<p>Podepsaná data v I2P protokolech mohou být zranitelná vůči Cross-Protocol Attacks (CPA) kvůli nedostatku oddělení domén. To umožňuje útočníkovi použít data přijatá v jednom kontextu (například podepsaný datagram) a předložit je jako platná, podepsaná data v jiném kontextu (například streaming nebo síťová databáze). I když je nepravděpodobné, že by podepsaná data z jednoho kontextu byla analyzována jako platná data v jiném kontextu, je obtížné nebo nemožné analyzovat všechny situace, abychom si byli jisti. Navíc v některých kontextech může být možné, aby útočník přiměl oběť podepsat speciálně vytvořená data, která by mohla být platnými daty v jiném kontextu. Opět je obtížné nebo nemožné analyzovat všechny situace, abychom si byli jisti.</p>
+<h3 id="útoky-rozšířením-délky">Útoky rozšířením délky</h3>
+<p>Protokoly I2P mohou být zranitelné vůči Duplicate Message Identification (DMI). To může umožnit útočníkovi identifikovat, že dvě podepsané zprávy mají stejný obsah, i když jsou tyto zprávy a jejich podpisy šifrované. Ačkoli je to kvůli šifrovacím metodám používaným v I2P nepravděpodobné, je obtížné nebo nemožné analyzovat všechny situace, abychom to věděli jistě. Použitím hash funkce, která poskytuje metodu pro přidání náhodné soli, budou všechny podpisy odlišné i při podepisování stejných dat. Zatímco Red25519 jak je definováno v návrhu 123 přidává náhodnou sůl do hash funkce, toto neřeší problém pro nešifrované leaseSet.</p>
+<h3 id="útoky-mezi-protokoly">Útoky mezi protokoly</h3>
+<p>Ačkoli to není hlavní motivací pro tento návrh, SHA-512 je relativně pomalé a jsou k dispozici rychlejší hashovací funkce.</p>
+<h2 id="goals">Goals</h2>
+<ul>
+<li>Zabránit výše uvedeným útokům</li>
+<li>Minimalizovat použití nových kryptografických primitiv</li>
+<li>Používat ověřené, standardní kryptografické primitiva</li>
+<li>Používat standardní křivky</li>
+<li>Používat rychlejší primitiva, pokud jsou dostupná</li>
+</ul>
+<h2 id="design">Design</h2>
+<p>Upravte existující typ podpisu RedDSA_SHA512_Ed25519 tak, aby používal BLAKE2b-512 namísto SHA-512. Přidejte jedinečné personalizační řetězce pro každý případ použití. Nový typ podpisu může být použit jak pro neoslepené, tak pro oslepené leaseSety.</p>
+<h2 id="justification">Justification</h2>
+<ul>
+<li><a href="https://blake2.net/blake2.pdf">BLAKE2b</a>
+ není zranitelný vůči LEA.</li>
+<li>BLAKE2b poskytuje standardní způsob přidání personalizačních řetězců pro doménovou separaci</li>
+<li>BLAKE2b poskytuje standardní způsob přidání náhodné soli pro prevenci DMI.</li>
+<li>BLAKE2b je rychlejší než SHA-256 a SHA-512 (i MD5) na moderním hardwaru,
+podle <a href="https://blake2.net/blake2.pdf">specifikace BLAKE2</a>
+.</li>
+<li>Ed25519 je stále náš nejrychlejší typ podpisu, mnohem rychlejší než ECDSA, alespoň v Javě.</li>
+<li><a href="http://cr.yp.to/papers.html#ed25519">Ed25519</a>
+ vyžaduje 512bitovou kryptografickou hashovací funkci.
+Nespecifikuje SHA-512. BLAKE2b je stejně vhodný pro hashovací funkci.</li>
+<li>BLAKE2b je široce dostupný v knihovnách pro mnoho programovacích jazyků, jako je Noise.</li>
+</ul>
+<h2 id="specification">Specification</h2>
+<p>Používejte unkeyed BLAKE2b-512 podle <a href="https://blake2.net/blake2.pdf">specifikace BLAKE2</a>
+ se salt a personalizací. Všechna použití BLAKE2b podpisů budou používat 16-znakový personalizační řetězec.</p>
+<p>Při použití v RedDSA_BLAKE2b_Ed25519 podepisování je náhodná sůl povolena, není však nutná, protože algoritmus podpisu přidává 80 bajtů náhodných dat (viz návrh 123). Pokud je to žádoucí, při hashování dat pro výpočet r nastavte novou BLAKE2b 16-bajtovou náhodnou sůl pro každý podpis. Při výpočtu S resetujte sůl na výchozí hodnotu všech nul.</p>
+<p>Při použití v RedDSA_BLAKE2b_Ed25519 verifikaci nepoužívejte náhodnou sůl, použijte výchozí hodnotu samých nul.</p>
+<p>Funkce salt a personalizace nejsou specifikovány v <a href="https://tools.ietf.org/html/rfc7693">RFC 7693</a>
+; použijte tyto funkce podle specifikace v <a href="https://blake2.net/blake2.pdf">BLAKE2 specification</a>
+.</p>
+<h3 id="identifikace-duplicitních-zpráv">Identifikace duplicitních zpráv</h3>
+<p>Pro RedDSA_BLAKE2b_Ed25519 nahraďte hashovací funkci SHA-512 v RedDSA_SHA512_Ed25519 (typ podpisu 11, jak je definováno v návrhu 123) funkcí BLAKE2b-512. Žádné další změny.</p>
+<p>Nepotřebujeme náhradu za EdDSA_SHA512_Ed25519ph (typ podpisu 8) pro su3 soubory, protože předhashovaná verze EdDSA není zranitelná vůči LEA. EdDSA_SHA512_Ed25519 (typ podpisu 7) není podporován pro su3 soubory.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>Since</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>RedDSA_BLAKE2b_Ed25519</td>
+          <td>12</td>
+          <td>TBD</td>
+          <td>For Router Identities, Destinations and encrypted leasesets only; never used for Router Identities</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="rychlost">Rychlost</h3>
+<p>Následující se vztahuje na nový typ podpisu.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Data Type</th>
+          <th>Length</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Hash</td>
+          <td>64</td>
+      </tr>
+      <tr>
+          <td>Private Key</td>
+          <td>32</td>
+      </tr>
+      <tr>
+          <td>Public Key</td>
+          <td>32</td>
+      </tr>
+      <tr>
+          <td>Signature</td>
+          <td>64</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="personalizations">Personalizations</h3>
+<p>Pro zajištění separace domén pro různá použití podpisů budeme používat funkci personalizace BLAKE2b.</p>
+<p>Všechna použití BLAKE2b podpisů budou používat 16znakový personalizační řetězec. Jakákoli nová použití musí být přidána do tabulky zde s jedinečnou personalizací.</p>
+<p>NTCP 1 a SSU handshake použité níže jsou pro podepsaná data definovaná v samotném handshake. Podepsané RouterInfo v DatabaseStore zprávách budou používat personalizaci NetDb Entry, stejně jako kdyby byly uloženy v NetDB.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Usage</th>
+          <th>16 Byte Personalization</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>I2CP SessionConfig</td>
+          <td>&ldquo;I2CP_SessionConf&rdquo;</td>
+      </tr>
+      <tr>
+          <td>NetDB Entries (RI, LS, LS2)</td>
+          <td>&ldquo;network_database&rdquo;</td>
+      </tr>
+      <tr>
+          <td>NTCP 1 handshake</td>
+          <td>&ldquo;NTCP_1_handshake&rdquo;</td>
+      </tr>
+      <tr>
+          <td>Signed Datagrams</td>
+          <td>&ldquo;sign_datagramI2P&rdquo;</td>
+      </tr>
+      <tr>
+          <td>Streaming</td>
+          <td>&ldquo;streaming_i2psig&rdquo;</td>
+      </tr>
+      <tr>
+          <td>SSU handshake</td>
+          <td>&ldquo;SSUHandshakeSign&rdquo;</td>
+      </tr>
+      <tr>
+          <td>SU3 Files</td>
+          <td>n/a, not supported</td>
+      </tr>
+      <tr>
+          <td>Unit tests</td>
+          <td>&ldquo;test1234test5678&rdquo;</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="cíle">Cíle</h2>
+<h2 id="návrh">Návrh</h2>
+<ul>
+<li>Alternativa 1: Proposal 146;
+Poskytuje odolnost proti LEA</li>
+<li>Alternativa 2: <a href="https://tools.ietf.org/html/rfc8032">Ed25519ctx v RFC 8032</a>
+;
+Poskytuje odolnost proti LEA a personalizaci.
+Standardizováno, ale používá to někdo?
+Viz <a href="https://tools.ietf.org/html/rfc8032">RFC 8032</a>
+ a <a href="https://moderncrypto.org/mail-archive/curves/2017/000925.html">tuto diskusi</a>
+.</li>
+<li>Je pro nás užitečné &ldquo;keyed&rdquo; hashování?</li>
+</ul>
+<h2 id="odůvodnění">Odůvodnění</h2>
+<p>Stejně jako při zavádění předchozích typů podpisů.</p>
+<p>Plánujeme změnit nové routery z typu 7 na typ 12 jako výchozí. Plánujeme postupně migrovat existující routery z typu 7 na typ 12 pomocí procesu &ldquo;rekeying&rdquo;, který se používá po zavedení typu 7. Plánujeme změnit nové destinace z typu 7 na typ 12 jako výchozí. Plánujeme změnit nové šifrované destinace z typu 11 na typ 13 jako výchozí.</p>
+<p>Budeme podporovat blinding z typů 7, 11 a 12 na typ 12. Nebudeme podporovat blinding z typu 12 na typ 11.</p>
+<p>Nové routery by mohly začít používat nový typ podpisu jako výchozí po několika měsících. Nové destinace by mohly začít používat nový typ podpisu jako výchozí možná po roce.</p>
+<p>Pro minimální verzi routeru 0.9.TBD musí routery zajistit:</p>
+<ul>
+<li>Neukládejte (ani nezaplavujte) RI nebo LS s novým typem podpisu do routerů starších než verze 0.9.TBD.</li>
+<li>Při ověřování netdb store nevytahujte RI nebo LS s novým typem podpisu z routerů starších než verze 0.9.TBD.</li>
+<li>Routery s novým typem podpisu ve svém RI se nemusí být schopny připojit k routerům starším než verze 0.9.TBD,
+ať už přes NTCP, NTCP2, nebo SSU.</li>
+<li>Streaming spojení a podepsané datagramy nebudou fungovat s routery staršími než verze 0.9.TBD,
+ale neexistuje způsob, jak to zjistit, takže nový typ podpisu by neměl být používán jako výchozí po dobu
+několika měsíců či let po vydání verze 0.9.TBD.</li>
+</ul>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    <a href="../../../cs/proposals/" class="page-nav-link">
+                        ← Back to Proposals
+                    </a>
+                    
+                    
+                    
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                            
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <a href="../../../proposals/148-eddsa-blake2b-ed25519.txt" class="page-nav-link" download>
+                        Download Source (.txt)
+                    </a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.proposals-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.proposal-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.proposal-title-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.proposal-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-text);
+}
+
+.proposal-number {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+ 
+.proposal-meta-box {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.proposal-status {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+ 
+.status-open {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-open {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-accepted {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-accepted {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-finished {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-finished {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-closed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-closed {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.dark .status-rejected {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.status-draft,
+.status-needs-revision,
+.status-dead,
+.status-needs-research {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-draft,
+.dark .status-needs-revision,
+.dark .status-dead,
+.dark .status-needs-research {
+    background: #78350f;
+    color: #fde047;
+}
+
+.status-meta,
+.status-informational,
+.status-reserve {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+.dark .status-meta,
+.dark .status-informational,
+.dark .status-reserve {
+    background: #581c87;
+    color: #e879f9;
+}
+
+ 
+.proposal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.info-value {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+ 
+.proposal-relationships {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-md);
+}
+
+.relationship {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.relationship:last-child {
+    margin-bottom: 0;
+}
+
+.relationship-label {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    min-width: 120px;
+}
+
+.relationship-value {
+    color: var(--color-text);
+}
+
+ 
+.proposal-layout {
+    display: block;
+}
+
+.proposal-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.proposal-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.proposal-main {
+    min-width: 0;
+}
+
+ 
+.proposal-content {
+    line-height: 1.8;
+    color: var(--color-text);
+    max-width: 900px;
+}
+
+.proposal-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content ul,
+.proposal-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.proposal-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.proposal-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.proposal-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.proposal-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.proposal-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin-left: 0;
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+.proposal-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.proposal-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+.proposal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content table th {
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.proposal-content table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.proposal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+ 
+.page-nav {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.page-nav-link {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+ 
+@media (max-width: 1024px) {
+    .proposal-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .proposal-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .proposal-title {
+        font-size: 1.75rem;
+    }
+
+    .proposal-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Zůstaňte informováni o novinkách I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Zadejte svůj email" required>
+                            <button type="submit">Odebírat</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Rychlé odkazy</h3>
+                <ul>
+                    <li><a href="../../../cs/financial-support/">Darovat</a></li>
+                    <li><a href="../../../cs/docs/overview/intro/">Úvod do I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Komunita</h3>
+                <ul>
+                    <li><a href="../../../cs/get-involved/">Zapojte se</a></li>
+                    <li><a href="../../../cs/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Oficiální fóra</a></li>
+                    <li><a href="../../../cs/contact/">Kontaktujte nás</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Zdroje</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P Metriky</a></li>
+                    <li><a href="../../../cs/papers/">Výzkum</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Projekt Neviditelný Internet. Licencováno pod Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../cs/privacy/">Ochrana soukromí</a>
+                <a href="../../../cs/terms/">Podmínky</a>
+                <a href="../../../cs/about/media/">Tisk</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Zavřít">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Komunitní anketa</h2>
+            <p class="modal-subtitle">Rádi bychom o vás slyšeli</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Váš hlas pomáhá utvářet budoucnost I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

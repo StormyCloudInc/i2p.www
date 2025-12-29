@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Réunion des développeurs I2P - 26 décembre 2006 | I2P - Le projet Internet invisible</title>
+
+    <meta name="description" content="Compte rendu de la réunion de développement I2P du 26 décembre 2006.">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Réunion des développeurs I2P - 26 décembre 2006 | I2P - Le projet Internet invisible">
+    <meta property="og:description" content="Compte rendu de la réunion de développement I2P du 26 décembre 2006.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/fr/blog/2006/12/26/r%C3%A9union-des-d%C3%A9veloppeurs-i2p-26-d%C3%A9cembre-2006/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Site Bêta I2P Maintenant En Ligne Signaler les problèmes e-mail à stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Fermer la bannière" title="Fermer la bannière">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../../../fr/" class="logo-link">
+                    <img src="../../../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../../../fr/about/" class="">À propos</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../../../fr/about/">Aperçu</a></li>
+                            <li><a href="../../../../../../fr/papers/">Articles de recherche</a></li>
+                            <li><a href="../../../../../../fr/about/media/">Presse</a></li>
+                            <li><a href="../../../../../../fr/contact/">Contactez-nous</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../../../fr/docs/" class="">Docs</a></li>
+                    <li><a href="../../../../../../fr/downloads/" class="">Téléchargements</a></li>
+                    <li><a href="../../../../../../fr/blog/" class="active">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../../../fr/get-involved/" class="">S&#39;impliquer</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../../../fr/get-involved/">Aperçu</a></li>
+                            <li><a href="../../../../../../fr/feedback/">Suggestions de fonctionnalités</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">fr</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../en/blog/2006/12/26/i2p-dev-meeting-december-26-2006/"
+                                class="lang-option">Anglais</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../es/blog/2006/12/26/reuni%C3%B3n-de-desarrolladores-de-i2p-26-de-diciembre-de-2006/"
+                                class="lang-option">Espagnol</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ko/blog/2006/12/26/i2p-%EA%B0%9C%EB%B0%9C%EC%9E%90-%ED%9A%8C%EC%9D%98-2006%EB%85%84-12%EC%9B%94-26%EC%9D%BC/"
+                                class="lang-option">Coréen</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../zh/blog/2006/12/26/i2p-%E5%BC%80%E5%8F%91%E8%80%85%E4%BC%9A%E8%AE%AE-2006%E5%B9%B412%E6%9C%8826%E6%97%A5/"
+                                class="lang-option">Chinois</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ru/blog/2006/12/26/%D0%B2%D1%81%D1%82%D1%80%D0%B5%D1%87%D0%B0-%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2-i2p-26-%D0%B4%D0%B5%D0%BA%D0%B0%D0%B1%D1%80%D1%8F-2006/"
+                                class="lang-option">Russe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../cs/blog/2006/12/26/setk%C3%A1n%C3%AD-v%C3%BDvoj%C3%A1%C5%99%C5%AF-i2p-26.-prosince-2006/"
+                                class="lang-option">Tchèque</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../de/blog/2006/12/26/i2p-entwicklertreffen-26.-dezember-2006/"
+                                class="lang-option">Allemand</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../fr/blog/2006/12/26/r%C3%A9union-des-d%C3%A9veloppeurs-i2p-26-d%C3%A9cembre-2006/"
+                                class="lang-option active">Français</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../tr/blog/2006/12/26/i2p-geli%C5%9Ftirici-toplant%C4%B1s%C4%B1-26-aral%C4%B1k-2006/"
+                                class="lang-option">Turc</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../vi/blog/2006/12/26/cu%E1%BB%99c-h%E1%BB%8Dp-nh%C3%A0-ph%C3%A1t-tri%E1%BB%83n-i2p-ng%C3%A0y-26-th%C3%A1ng-12-n%C4%83m-2006/"
+                                class="lang-option">Vietnamien</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../hi/blog/2006/12/26/i2p-%E0%A4%A1%E0%A5%87%E0%A4%B5%E0%A4%B2%E0%A4%AA%E0%A4%B0-%E0%A4%AC%E0%A5%88%E0%A4%A0%E0%A4%95-26-%E0%A4%A6%E0%A4%BF%E0%A4%B8%E0%A4%82%E0%A4%AC%E0%A4%B0-2006/"
+                                class="lang-option">Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ar/blog/2006/12/26/%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9-%D9%85%D8%B7%D9%88%D8%B1%D9%8A-i2p-26-%D8%AF%D9%8A%D8%B3%D9%85%D8%A8%D8%B1-2006/"
+                                class="lang-option">Arabe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../pt/blog/2006/12/26/reuni%C3%A3o-de-desenvolvedores-do-i2p-26-de-dezembro-de-2006/"
+                                class="lang-option">Portugais</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../../../fr/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../../../fr/downloads/" class="btn btn-primary">Obtenir I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+<article class="blog-post">
+    <div class="container">
+        <div class="post-header">
+            <div class="post-meta-row">
+                
+                <time class="post-date" datetime="2006-12-26">
+                    December 26, 2006
+                </time>
+                
+
+                
+                <div class="post-categories">
+                    
+                    <span class="category-badge">meeting</span>
+                    
+                </div>
+                
+            </div>
+
+            <h1 class="post-title">Réunion des développeurs I2P - 26 décembre 2006</h1>
+
+            
+            <div class="post-author">By jrandom</div>
+            
+        </div>
+
+        <div class="post-content">
+            <h2 id="récapitulatif-rapide">Récapitulatif rapide</h2>
+<p class="attendees-inline"><strong>Présents:</strong> bar, Complication2, gloin, hottuna, jrandom</p>
+<h2 id="journal-de-réunion">Journal de réunion</h2>
+<div class="irc-log"> 15:02 &lt;jrandom&gt; 0) salut 15:02 &lt;jrandom&gt; 1) État du réseau 15:02 &lt;jrandom&gt; 2) Syndie 1.000a 15:02 &lt;jrandom&gt; 3) ??? 15:02 &lt;jrandom&gt; 0) salut 15:02  * jrandom fait coucou 15:02 &lt;jrandom&gt; les notes d'état hebdomadaires sont publiées à http://dev.i2p.net/pipermail/i2p/2006-December/001324.html 15:03 &lt;jrandom&gt; passons directement à 1) état du réseau 15:03 &lt;Complication2&gt; Oh, j'ai complètement oublié que c'était mardi 15:03 &lt;jrandom&gt; les choses se passent plutôt bien, comme mentionné, même si mon router a finalement redémarré après 45 jours de fonctionnement 15:04 &lt;jrandom&gt; (mais franchement, je serais très content si on pouvait avoir régulièrement des périodes de fonctionnement de plus d’un mois :) 15:04 &lt;Complication2&gt; L'état du réseau est un peu plus instable qu'avant pour moi, mais c'est parce qu'un de mes routers I2P a un problème récurrent (environ une fois tous les 10 jours) 15:04 &lt;Complication2&gt; L'autre router tient un mois de fonctionnement, mais ce n'est pas un router très chargé 15:05 &lt;Complication2&gt; Plutôt modeste, en fait 15:05 &lt;jrandom&gt; stats.i2p a montré un taux de réussite des builds légèrement réduit la semaine dernière, mais c'est peut-être simplement saisonnier 15:07 &lt;+fox&gt; &lt;hottuna&gt; Ive been getting some weird wrapper log messages 15:07 &lt;+fox&gt; &lt;hottuna&gt; INFO   | jvm 1    | 2006/12/26 01:00:00 | 2006-dec-26 00:00:00 org.mortbay.util.RolloverFileOutputStream removeOldFiles 15:07 &lt;+fox&gt; &lt;hottuna&gt; INFO   | jvm 1    | 2006/12/26 01:00:00 | INFO: Log age 2006_09_26.request.log 15:07 &lt;+fox&gt; &lt;hottuna&gt; INFO   | jvm 1    | 2006/12/26 01:00:00 | 2006-dec-26 00:00:00 org.mortbay.util.RolloverFileOutputStream removeOldFiles 15:07 &lt;jrandom&gt; irc continue de bien fonctionner malgré tout, même avec des tunnels à 3 sauts 15:07 &lt;jrandom&gt; oh intéressant, hottuna, ça ressemble à des traces verbeuses de commons-logging 15:08 &lt;jrandom&gt; (jetty utilise son propre logger, pas le nôtre) 15:08 &lt;+fox&gt; &lt;hottuna&gt; rien d'inquiétant alors ..  15:08 &lt;+fox&gt; &lt;hottuna&gt; mais je n'ai toujours pas fait tourner mon router à cause d'une pénurie de bande passante 15:09 &lt;jrandom&gt; par 'starvation' tu entends « pas assez de BW pour I2P », ou « I2P utilise trop de BW » ? 15:11 &lt;+fox&gt; &lt;hottuna&gt; Eh bien, les deux, mais comme je fais tourner I2P pour donner de la BW, la première me correspond mieux 15:11 &lt;jrandom&gt; ah heh, ok 15:11 &lt;+fox&gt; &lt;hottuna&gt; Je viens de lancer Syndie pour la première fois et je me sens un peu dépassé, je ne sais pas trop par où commencer 15:11 &lt;+fox&gt; &lt;hottuna&gt; joli détail d'avoir ajouté l'archive standard 15:13 &lt;jrandom&gt; merci :) il y a beaucoup à faire pour réduire cette sensation d'être dépassé, mais traitons ça quand nous passons à 2) Syndie 1.000a :) 15:13 &lt;jrandom&gt; 1.000a est sortie, téléchargez et profitez-en ! 15:14 &lt;jrandom&gt; l'expérience « out of the box » devrait être en gros : installer, démarrer, « add the standard archive », dire à Syndie de se synchroniser avec l'archive standard « now » (puis cliquer sur save), et il commencera à récupérer les messages 15:15 &lt;jrandom&gt; il ajoutera une ligne à ce tableau sous le bouton save, une par message et une par forum - un clic droit sur les messages et les forums les ouvre, ou vous pouvez parcourir via le menu Forum-&gt;Read all 15:15 &lt;bar&gt; félicitations pour la release alpha de Syndie, tu as travaillé dur et longtemps dessus. respect. 15:16 &lt;Complication2&gt; Pareil ici. Base de données impressionnante et interface très prometteuse. :) 15:16 &lt;+fox&gt; &lt;hottuna&gt; J'utilise Syndie en ce moment et je lis l'épique billet sur la direction de Syndie et I2P 15:16 &lt;gloin&gt; au fait, build.xml contient une valeur en dur: build.xml:    &lt;property name="swt.win32" value="../swt-I20061214-1445-win32-win32-x86/swt.jar" /&gt; 15:16 &lt;jrandom&gt; merci, il y a beaucoup à faire pour amener Syndie là où il doit être, mais c'est un début 15:17 &lt;+fox&gt; &lt;hottuna&gt; il reste beaucoup de travail sur l'ergonomie, mais tu as déjà fait un grand chemin 15:17 &lt;jrandom&gt; gloin: oui, 3 d'entre elles (swt.win32, swt.osx, and swt.linux32) - elles ne sont utilisées que pour « ant dist » 15:18 &lt;Complication2&gt; au fait, « ant » exécute-t-il par défaut « ant clean jar » ? 15:18  * Complication2 vérifie 15:18 &lt;jrandom&gt; hottuna: c'est là que toi (et vous tous :) intervenez - j'ai la tête plongée dans les entrailles de Syndie, donc il m'est souvent difficile d'avoir le bon recul pour rendre Syndie plus utilisable 15:19 &lt;jrandom&gt; j'ai besoin de vos avis, retours et suggestions pour améliorer les choses 15:19 &lt;Complication2&gt; Aha, vérification des dépendances et jar 15:19 &lt;Complication2&gt; (sans la partie nettoyage) 15:19 &lt;jrandom&gt; exact, Complication2, pas de 'clean' par défaut 15:21 &lt;gloin&gt; est-ce que « ant dist » construit des versions pour linux, win32, etc. ? 15:21 &lt;jrandom&gt; gloin: oui, ça construit des installateurs, des fichiers .exe, etc 15:22 &lt;jrandom&gt; si vous voulez simplement builder et lancer Syndie pour votre usage, « ant jar » puis copier lib/syndie.jar dans votre installation de Syndie, ou « ant run » pour le lancer sur place 15:23 &lt;Complication2&gt; zut, j'ai zappé la cible « run » alors 15:23 &lt;jrandom&gt; (en spécifiant les options nécessaires -Dswt.dir=/blah, ou en les plaçant dans le (nouveau) fichier nbproject/private/private.properties sous la forme swt.dir=/blah/) 15:23 &lt;Complication2&gt; J'ai bricolé un run.sh :D 15:24 &lt;Complication2&gt; deux lignes seulement, donc rien de chronophage 15:24 &lt;jrandom&gt; ça marche aussi :) 15:24 &lt;Complication2&gt; Oui, « ant run » a bien fonctionné 15:24 &lt;gloin&gt; ant run semble fonctionner, l'install linux32.exe se plaint d'un swt manquant. 15:24 &lt;Complication2&gt; Je viens de tester 15:26 &lt;jrandom&gt; hmm gloin, et swt.jar existe dans le répertoire lib de l'installation de Syndie ? 15:27 &lt;gloin&gt; oui. 15:28 &lt;jrandom&gt; et tu lances « java -jar /some/path/to/that/syndie/bin/syndie.exe »?  ou tu parles de l'installateur Linux ? 15:29 &lt;gloin&gt; l'installateur était OK. il a créé le répertoire syndie-1.000a. 15:31 &lt;gloin&gt; Exception in thread "main" java.lang.UnsatisfiedLinkError: no swt-pi-gtk-3235 in java.library.path 15:33 &lt;Complication2&gt; Une petite question (je teste le binaire Linux) 15:33 &lt;jrandom&gt; hmm, est-ce qu'il a créé libswt-pi-gtk-3235.so dans /tmp/ gloin ? 15:33 &lt;Complication2&gt; Où obtenir la clé publique « 393F2DF9 » ? 15:33 &lt;jrandom&gt; c'est une bonne question...  15:34 &lt;gloin&gt; qui ? quand ? 15:34 &lt;gloin&gt; pour l'instant, il n'y a pas de  libswt-pi-gtk-3235.so dans /tmp/ 15:35 &lt;jrandom&gt; gloin: le nouveau swt (3.3M4) livré avec Syndie extrait les bibliothèques natives dans /tmp/ quand il ne peut pas les trouver 15:36 &lt;jrandom&gt; gloin: peux-tu exécuter (cd ~/syndie-1.000a/ ; java -cp lib/syndie.jar:lib/swt.jar:lib/hsqldb.jar syndie.gui.SWTUI ) et voir si ça les trouve ? 15:36 &lt;jrandom&gt; Complication2: ça sera publié sur les différents keyservers et sur le site web après la réunion 15:37 &lt;Complication2&gt; Merci :) 15:37 &lt;jrandom&gt; (elle est sur mes trousseaux de clés qui ne sont pas accessibles depuis ma machine Windows) 15:37 &lt;Complication2&gt; Entre-temps, j'ai constaté par des moyens plus classiques que mon téléchargement du binaire s'était effectivement interrompu prématurément 15:37  * Complication2 récupère la fin à nouveau 15:38 &lt;gloin&gt; non. Peut-être que je vais reconstruire l'installateur 15:39 &lt;jrandom&gt; gloin: peux-tu vérifier swt.jar pour t'assurer qu'il contient libswt-pi-gtk-3235.so (jar tvf lib/swt.jar) ? 15:40 &lt;jrandom&gt; dans tous les cas, on continuera à déboguer au fur et à mesure 15:41 &lt;gloin&gt; il n'y est pas. 15:41 &lt;jrandom&gt; c'est à peu près tout pour Syndie 1.000a - il y aura bien sûr des mises à jour au fil du temps, et elles seront annoncées en réunions ou par mail 15:42 &lt;jrandom&gt; (il existe des téléchargements bien plus petits pour mettre à niveau Syndie que les 4-5+ Mo complets - voir syndie.i2p.net/downloads/) 15:42 &lt;+fox&gt; &lt;hottuna&gt; quelle est l'URL des archives Syndie sur le réseau I2P ? 15:43 &lt;jrandom&gt; gloin: peux-tu m'envoyer en privé la sortie de « jar tvf » ? 15:43 &lt;jrandom&gt; hottuna: http://archive.syndie.i2p/ 15:43 &lt;+fox&gt; &lt;hottuna&gt; merci 15:45 &lt;jrandom&gt; (notez que archive.syndie.i2p / syndie.i2p.net:8080 sont simplement des instances de Syndie avec le serveur HTTP intégré en fonctionnement) 15:45 &lt;+fox&gt; &lt;hottuna&gt; oh :) mortel :) 15:45 &lt;+fox&gt; &lt;hottuna&gt; oh au fait, l'horloge de Syndie ne correspond pas à l'horloge de mon système 15:46 &lt;jrandom&gt; donc, n'importe qui peut faire tourner sa propre archive Syndie et laisser les gens s'y synchroniser - donnez-leur simplement un lien vers votre archive (ce que vous pouvez faire via irc/html/etc., ou dans Syndie lui-même avec un 'archive link'/une référence) 15:46 &lt;jrandom&gt; l'horloge de Syndie ? 15:46 &lt;+fox&gt; &lt;hottuna&gt; ou les horodatages des messages dans Syndie 15:47 &lt;+fox&gt; &lt;hottuna&gt; attends une seconde. . maintenant ils semblent corrects.. 15:47 &lt;+fox&gt; &lt;hottuna&gt; après un redémarrage 15:52 &lt;gloin&gt; comment construire un serveur d'archive headless (sans interface graphique) ? Je suppose que import.cgi n'est plus « supporté » ? 15:53 &lt;jrandom&gt; oui, import.cgi est incompatible avec la dernière version - tu peux faire tourner un serveur headless avec une installation normale de Syndie en lançant Syndie « --cli », ce qui le fait fonctionner avec le moteur texte.  15:55 &lt;jrandom&gt; le serveur http intégré peut être lancé depuis le moteur texte via la commande 'httpserv' (http://syndie.i2p.net/manual.html#general_httpserv ) 15:55 &lt;gloin&gt; merci beaucoup. 15:56 &lt;jrandom&gt; si tu remets ton archive en ligne, c'est moi qui devrais te remercier :) 15:57 &lt;gloin&gt; puh.. même avec une GUI, ça a l'air compliqué :) 15:58 &lt;jrandom&gt; oui, vous avez du pain sur la planche - aidez à le rendre utilisable et utile :) 15:59 &lt;jrandom&gt; on aura beaucoup d'autres points à couvrir à mesure que les gens vont tester et que des problèmes vont apparaître, mais pour l'instant, n'hésitez pas à plonger, à poster, et à voir ce qui se passe 15:59 &lt;jrandom&gt; glissons vers 3) ???, quelqu'un a autre chose à aborder pour la réunion ? 16:00 &lt;Complication2&gt; J'ai testé l'installeur binaire Linux, il fonctionne bien 16:00 &lt;Complication2&gt; C'est seulement curieux que lorsqu'il a essayé de créer un raccourci dans le menu KDE, le raccourci s'est retrouvé dans le groupe « Development » 16:00 &lt;Complication2&gt; Avec NetBeans et compagnie 16:01 &lt;Complication2&gt; Je peux me tromper, mais il me semble qu'il disait qu'il allait essayer de créer un groupe appelé Syndie... 16:01 &lt;jrandom&gt; ah, oui.  izpack et les empaqueteurs/installateurs Java travaillent encore sur l'intégration KDE 16:02 &lt;Complication2&gt; Bref, détail mineur 16:02 &lt;Complication2&gt; Mais je voulais le mentionner au cas où 16:02 &lt;jrandom&gt; il /devrait/ créer un groupe Syndie, mais comme tu peux le voir, le menu KDE n'a pas de dossiers par application (il a des catégories d'applis, puis des dossiers par application) 16:02 &lt;jrandom&gt; ça devrait être corrigé quand izpack le corrigera (c'est sur leur radar) 16:03 &lt;Complication2&gt; D'accord 16:03 &lt;Complication2&gt; Quoi qu'il en soit, le raccourci est apparu, et le raccourci de l'uninstalleur aussi 16:03 &lt;jrandom&gt; wewt 16:03 &lt;Complication2&gt; Et l'uninstalleur a bien fonctionné aussi (je l'ai utilisé puisque je compile généralement à partir des sources) 16:03 &lt;Complication2&gt; =uninstaller 16:04 &lt;bar&gt; j'ai deux questions, légèrement liées l'une à l'autre 16:04 &lt;bar&gt; 1. des plans sur le moment où l'on va supprimer l'ancien Syndie ? 16:04 &lt;bar&gt; 2. pourrait-on avoir une passerelle I2P, syndie.i2p, vers syndie.i2p.net, ou est-ce que cela entrerait en conflit avec l'ancienne infrastructure Syndie ? 16:05 &lt;Complication2&gt; Pour le 2, je pense qu'actuellement ça entrerait en conflit 16:06 &lt;jrandom&gt; hmm, je n'y ai pas beaucoup réfléchi.  je suis tenté de dire « on supprime, on déplace tout le monde vers le nouveau Syndie tout de suite tout de suite » :) 16:07 &lt;Complication2&gt; ...en allant à « http://archive.syndie.i2p » via « localhost:4444 » 16:07 &lt;bar&gt; la raison pour laquelle je demande, c'est que c'est parfois un peu pénible d'avoir à utiliser squid.i2p pour accéder aux pages web de Syndie 16:07 &lt;jrandom&gt; ah, compris.  ok, je peux rediriger syndie.i2p vers syndie.i2p.net, et les utilisateurs de l'ancien Syndie pourront toujours utiliser syndiemedia.i2p 16:09 &lt;bar&gt; chouette :) 16:09 &lt;Complication2&gt; oh, tu parlais des pages web 16:10 &lt;Complication2&gt; je pensais que tu parlais de l'archive :) 16:10 &lt;bar&gt; exact, Complication2, désolé de ne pas avoir été clair là-dessus 16:10 &lt;gloin&gt; son propre forum est-il sa propre identité ? 16:11 &lt;Complication2&gt; Il y a bien une identité / un pseudonyme par défaut créé dans une nouvelle instance de Syndie 16:11 &lt;Complication2&gt; Je ne suis pas sûr qu'il crée automatiquement un forum 16:11 &lt;jrandom&gt; gloin: chaque identité a un forum (et chaque forum appartient à une identité) 16:12 &lt;jrandom&gt; un forum, dans Syndie, n'est qu'une clé publique 16:12 &lt;jrandom&gt; (tout comme un auteur) 16:12 &lt;Complication2&gt; J'ai oublié comment j'avais fait, et c'était en octobre avec l'interface texte de toute façon, je crois :) 16:12 &lt;jrandom&gt; ((dans la base de données et le code, ils sont tous deux appelés 'channels', mais l'UI parle de forums et d'auteurs/nyms)) 16:13 &lt;bar&gt; sur le sujet de la fermeture de l'ancien Syndie, puis-je suggérer quelque chose comme « le laisser en ligne encore un mois mais fermer l'archive aux nouveaux posts, en laissant une note informative » 16:14 &lt;gloin&gt; la GUI me permet seulement de créer des forums. Est-ce que cela signifie que, si je veux que tu puisses poster dans mon forum, j'autorise le forum de jrandom et non la personne jrandom ? 16:15 &lt;Complication2&gt; Ou peut-être même le laisser ouvert un court moment après avoir posté la note, afin que si quelqu'un en a désespérément besoin à ce stade (gasp !), il puisse encore échanger quelques données pendant un petit moment 16:15 &lt;jrandom&gt; gloin: les forums et les identités sont la même chose - quand tu crées un nouveau forum, tu crées une nouvelle identité (et pour autoriser jrandom, la personne, à poster dans ton forum, autorise le forum de jrandom) 16:15 &lt;jrandom&gt; ça semble raisonnable, Complication2 et bar 16:17 &lt;jrandom&gt; gloin: ce truc n'est clairement pas évident, et nous devons beaucoup travailler pour le simplifier 16:21 &lt;Complication2&gt; Oups, je n'avais pas remarqué plusieurs suggestions d'optimisation d'I2Phex par striker sur l'ancien Syndie 16:21  * Complication2 fait des copies locales 16:23 &lt;jrandom&gt; :)  l'ancien Syndie restera toujours accessible à syndiemedia.i2p/ et syndie.i2p.net:8000/  16:23 &lt;jrandom&gt; ok, quelqu'un a autre chose pour la réunion ? 16:25 &lt;gloin&gt; Dans la configuration du forum, je peux définir le niveau de confidentialité (all/auth/passphrase). Mais pour chaque message je peux aussi le définir. Qu'est-ce qui prime ? 16:27 &lt;jrandom&gt; les deux comptent, mais pour l'instant je recommande de laisser la confidentialité du forum en 'public' (puisque je n'ai pas encore écrit la GUI pour les forums protégés par passphrase, seulement pour les messages protégés par passphrase) 16:27 &lt;jrandom&gt; la confidentialité du forum couvre les métadonnées du forum (liens vers d'autres sites, clés embarquées, etc), tandis que les messages individuels ont leur propre politique 16:33 &lt;jrandom&gt; (syndie.i2p --&gt; syndie.i2p.net à partir de maintenant, syndiemedia.i2p pointe toujours vers syndie.i2p.net:8000/) 16:33 &lt;jrandom&gt; ok, s'il n'y a rien d'autre pour la réunion 16:33  * jrandom conclut 16:33  * jrandom *baf* déclare la réunion close </div>
+
+        </div>
+
+        <div class="post-navigation">
+            <a href="../../../../../../fr/blog" class="back-to-blog">← Back to Blog</a>
+        </div>
+    </div>
+</article>
+
+<style>
+.blog-post {
+    padding: var(--spacing-2xl) 0;
+}
+
+.post-header {
+    margin-bottom: var(--spacing-2xl);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.post-meta-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.post-date {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.post-categories {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.category-badge {
+    padding: 0.25rem 0.625rem;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.post-title {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.2;
+}
+
+.post-author {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+}
+
+.post-content {
+    max-width: 800px;
+    margin: 0 auto var(--spacing-2xl);
+    line-height: 1.8;
+    font-size: 1.0625rem;
+}
+
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.post-content h2 {
+    font-size: 1.875rem;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.post-content h3 {
+    font-size: 1.5rem;
+}
+
+.post-content h4 {
+    font-size: 1.25rem;
+}
+
+.post-content ul,
+.post-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.post-content li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.post-content pre {
+    background-color: var(--color-bg-secondary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin: var(--spacing-lg) 0;
+    border: 1px solid var(--color-border);
+}
+
+.post-content code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+}
+
+.post-content pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.post-content :not(pre) > code {
+    background-color: var(--color-bg-tertiary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+}
+
+.post-navigation {
+    max-width: 800px;
+    margin: var(--spacing-2xl) auto 0;
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.back-to-blog {
+    color: var(--color-primary);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: gap var(--transition-fast);
+}
+
+.back-to-blog:hover {
+    gap: var(--spacing-sm);
+}
+
+@media (max-width: 768px) {
+    .post-meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+
+    .post-title {
+        font-size: 2rem;
+    }
+
+    .post-content {
+        font-size: 1rem;
+    }
+}
+</style>
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Restez informé des actualités I2P :</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Entrez votre email" required>
+                            <button type="submit">S&#39;abonner</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Liens Rapides</h3>
+                <ul>
+                    <li><a href="../../../../../../fr/financial-support/">Faire un don</a></li>
+                    <li><a href="../../../../../../fr/docs/overview/intro/">Introduction à I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Communauté</h3>
+                <ul>
+                    <li><a href="../../../../../../fr/get-involved/">Participez</a></li>
+                    <li><a href="../../../../../../fr/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Forums Officiels</a></li>
+                    <li><a href="../../../../../../fr/contact/">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Ressources</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Mesures I2P</a></li>
+                    <li><a href="../../../../../../fr/papers/">Recherche</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Le Projet Internet Invisible. Sous licence Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../../../fr/privacy/">Confidentialité</a>
+                <a href="../../../../../../fr/terms/">Conditions d&#39;utilisation</a>
+                <a href="../../../../../../fr/about/media/">Presse</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Fermer">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Sondage de la communauté</h2>
+            <p class="modal-subtitle">Nous aimerions avoir de vos nouvelles</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Votre vote aide à façonner l&#39;avenir d&#39;I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

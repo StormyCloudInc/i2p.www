@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>网络数据库 | I2P - 隐形互联网项目</title>
+
+    <meta name="description" content="理解 I2P 的分布式网络数据库（netDb） - 一种用于 router 联系信息与目的地（Destination）查找的专用 DHT（分布式哈希表）">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="网络数据库 | I2P - 隐形互联网项目">
+    <meta property="og:description" content="理解 I2P 的分布式网络数据库（netDb） - 一种用于 router 联系信息与目的地（Destination）查找的专用 DHT（分布式哈希表）">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/zh/docs/overview/network-database/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P 测试版网站现已上线 电子邮件问题请发送至 stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="关闭横幅" title="关闭横幅">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../zh/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../zh/about/" class="">关于</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../zh/about/">概览</a></li>
+                            <li><a href="../../../../zh/papers/">研究论文</a></li>
+                            <li><a href="../../../../zh/about/media/">媒体</a></li>
+                            <li><a href="../../../../zh/contact/">联系我们</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../zh/docs/" class="active">文档</a></li>
+                    <li><a href="../../../../zh/downloads/" class="">下载</a></li>
+                    <li><a href="../../../../zh/blog/" class="">博客</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../zh/get-involved/" class="">参与其中</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../zh/get-involved/">概览</a></li>
+                            <li><a href="../../../../zh/feedback/">功能建议</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">zh</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/overview/network-database/"
+                                class="lang-option">英语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/overview/network-database/"
+                                class="lang-option">西班牙语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/overview/network-database/"
+                                class="lang-option">韩语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/overview/network-database/"
+                                class="lang-option active">中文</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/overview/network-database/"
+                                class="lang-option">俄语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/overview/network-database/"
+                                class="lang-option">捷克语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/overview/network-database/"
+                                class="lang-option">德语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/overview/network-database/"
+                                class="lang-option">法语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/overview/network-database/"
+                                class="lang-option">土耳其语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/overview/network-database/"
+                                class="lang-option">越南语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/overview/network-database/"
+                                class="lang-option">印地语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/overview/network-database/"
+                                class="lang-option">阿拉伯语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/overview/network-database/"
+                                class="lang-option">葡萄牙语</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../zh/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../zh/downloads/" class="btn btn-primary">获取I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-概述">1. 概述</a></li>
+    <li><a href="#2-routerinfo路由器信息">2. RouterInfo（路由器信息）</a>
+      <ul>
+        <li><a href="#21-能力标志位">2.1 能力标志位</a></li>
+        <li><a href="#25-家族选项">2.5 家族选项</a></li>
+        <li><a href="#26-routerinfo路由器信息过期">2.6 RouterInfo（路由器信息）过期</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-leaseset用于描述目的地可达性与入站-tunnel-租约的元数据">3. LeaseSet（用于描述目的地可达性与入站 tunnel 租约的元数据）</a>
+      <ul>
+        <li><a href="#31-leaseset-变体">3.1 LeaseSet 变体</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-引导">4. 引导</a></li>
+    <li><a href="#5-floodfill-机制">5. Floodfill 机制</a>
+      <ul>
+        <li><a href="#51-floodfill-选择加入要求">5.1 Floodfill 选择加入要求</a></li>
+        <li><a href="#52-floodfill-角色">5.2 Floodfill 角色</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-kademlia-接近度度量">6. Kademlia 接近度度量</a>
+      <ul>
+        <li><a href="#61-键空间轮换">6.1 键空间轮换</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-网络数据库分段">7. 网络数据库分段</a>
+      <ul>
+        <li><a href="#71-分段策略">7.1 分段策略</a></li>
+      </ul>
+    </li>
+    <li><a href="#8-存储验证与查找">8. 存储、验证与查找</a>
+      <ul>
+        <li><a href="#81-将-routerinfo路由器信息存储到对等节点">8.1 将 RouterInfo（路由器信息）存储到对等节点</a></li>
+        <li><a href="#82-向对等节点存储-leaseset">8.2 向对等节点存储 LeaseSet</a></li>
+        <li><a href="#83-floodfill-选择">8.3 Floodfill 选择</a></li>
+        <li><a href="#84-将-routerinfo路由信息存储到-floodfills">8.4 将 RouterInfo（路由信息）存储到 floodfills</a></li>
+        <li><a href="#85-将-leaseset-存储到-floodfills">8.5 将 LeaseSet 存储到 Floodfills</a></li>
+        <li><a href="#86-洪泛过程">8.6 洪泛过程</a></li>
+        <li><a href="#87-routerinfo路由器信息与-leaseset-查找">8.7 RouterInfo（路由器信息）与 LeaseSet 查找</a></li>
+        <li><a href="#88-迭代查找">8.8 迭代查找</a></li>
+        <li><a href="#89-验证">8.9 验证</a></li>
+        <li><a href="#810-探索">8.10 探索</a></li>
+      </ul>
+    </li>
+    <li><a href="#9-多宿主">9. 多宿主</a></li>
+    <li><a href="#10-威胁分析">10. 威胁分析</a>
+      <ul>
+        <li><a href="#101-通用缓解措施">10.1 通用缓解措施</a></li>
+        <li><a href="#102-缓慢或无响应的-routers">10.2 缓慢或无响应的 Routers</a></li>
+        <li><a href="#103-女巫攻击-完整键空间">10.3 女巫攻击 (完整键空间)</a></li>
+        <li><a href="#104-sybil-攻击部分键空间">10.4 Sybil 攻击（部分键空间）</a></li>
+        <li><a href="#105-引导攻击">10.5 引导攻击</a></li>
+        <li><a href="#106-查询捕获">10.6 查询捕获</a></li>
+        <li><a href="#107-信息泄露">10.7 信息泄露</a></li>
+      </ul>
+    </li>
+    <li><a href="#11-未来工作">11. 未来工作</a></li>
+    <li><a href="#12-参考文献">12. 参考文献</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../zh/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../zh/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../zh/docs/overview/">Overview</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">网络数据库</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">此翻译是使用机器学习生成的，可能不是100%准确。</span>
+    
+    
+    <a href="../../../../en/docs/overview/network-database/" class="disclaimer-link">查看英文版本</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">网络数据库</h1>
+                    
+                        <p class="article-description">理解 I2P 的分布式网络数据库（netDb） - 一种用于 router 联系信息与目的地（Destination）查找的专用 DHT（分布式哈希表）</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-03
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <hr>
+<h2 id="1-概述">1. 概述</h2>
+<p><strong>netDb</strong> 是一个专用的分布式数据库，仅包含两类数据： - <strong>RouterInfos</strong> – router 的联系信息 - <strong>LeaseSets</strong> – 目的地的联系信息</p>
+<p>所有数据都经过密码学签名且可验证。每个条目都包含存活性信息，用于丢弃过时条目并替换陈旧条目，从而防范某些类别的攻击。</p>
+<p>分发采用 <strong>floodfill</strong> 机制，其中一部分 routers 负责维护分布式数据库。</p>
+<hr>
+<h2 id="2-routerinfo路由器信息">2. RouterInfo（路由器信息）</h2>
+<p>当 routers 需要联系其他 routers 时，它们会交换包含以下内容的 <strong>RouterInfo</strong> 包：</p>
+<ul>
+<li><strong>Router 身份</strong> – 加密密钥、签名密钥、证书</li>
+<li><strong>联系地址</strong> – 如何联系该 router</li>
+<li><strong>发布时间戳</strong> – 该信息的发布时间</li>
+<li><strong>任意文本选项</strong> – 能力标志与设置</li>
+<li><strong>密码学签名</strong> – 证明真实性</li>
+</ul>
+<h3 id="21-能力标志位">2.1 能力标志位</h3>
+<p>各 Router 会通过其 RouterInfo（Router 信息）中的字母代码来通告其能力：</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Flag</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>f</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Floodfill participation</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>R</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Reachable</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>U</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Unreachable</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>D</strong>, <strong>E</strong>, <strong>G</strong>, <strong>H</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Various capability indicators</td>
+    </tr>
+  </tbody>
+</table>
+### 2.2 带宽分类
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Code</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Bandwidth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>K</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Under 12 KBps</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>L</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">12–48 KBps (default)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>M</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">48–64 KBps</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>N</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">64–128 KBps</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>O</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">128–256 KBps</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>P</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">256–2000 KBps</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>X</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Over 2000 KBps</td>
+    </tr>
+  </tbody>
+</table>
+### 2.3 网络ID取值
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Value</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Reserved</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Current Network (default)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Reserved for Future Networks</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">3–15</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Forks and Test Networks</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">16–254</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Reserved</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">255</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Reserved</td>
+    </tr>
+  </tbody>
+</table>
+### 2.4 RouterInfo 统计
+<p>Routers 发布可选的健康统计数据，用于网络分析： - 探索性 tunnel 构建成功/拒绝/超时率 - 1 小时平均参与 tunnel 数量</p>
+<p>统计数据遵循 <code>stat_(statname).(statperiod)</code> 格式，值以分号分隔。</p>
+<p><strong>示例统计：</strong></p>
+<pre tabindex="0"><code>stat_tunnel.buildExploratoryExpire.60m = 0;0;0;53.14
+stat_tunnel.buildExploratoryReject.60m = 0;0;0;15.51
+stat_tunnel.buildExploratorySuccess.60m = 0;0;0;31.35
+stat_tunnel.participatingTunnels.60m = 289.20
+</code></pre><p>Floodfill routers 还可能发布：<code>netdb.knownLeaseSets</code> 和 <code>netdb.knownRouters</code></p>
+<h3 id="25-家族选项">2.5 家族选项</h3>
+<p>自 0.9.24 版本起，routers 可以声明家族成员关系（同一运营者）：</p>
+<ul>
+<li><strong>family</strong>: 家族名称</li>
+<li><strong>family.key</strong>: 签名类型代码与 base64 编码的签名公钥拼接而成</li>
+<li><strong>family.sig</strong>: 对家族名称与 32 字节的 router 哈希的签名</li>
+</ul>
+<p>同一家族中的多个 router 不会用于同一个 tunnel。</p>
+<h3 id="26-routerinfo路由器信息过期">2.6 RouterInfo（路由器信息）过期</h3>
+<ul>
+<li>启动后的第一个小时内不过期</li>
+<li>当已存储的 RouterInfos（路由信息对象）不超过 25 个时不过期</li>
+<li>随着本地存储数量增加，过期时间会缩短（少于 120 个 routers 时为 72 小时；300 个 routers 时约为 30 小时）</li>
+<li>SSU 引介者约在 1 小时后过期</li>
+<li>Floodfills 对所有本地 RouterInfos 使用 1 小时的过期时间</li>
+</ul>
+<hr>
+<h2 id="3-leaseset用于描述目的地可达性与入站-tunnel-租约的元数据">3. LeaseSet（用于描述目的地可达性与入站 tunnel 租约的元数据）</h2>
+<p><strong>LeaseSets</strong> 会记录针对特定目的地的 tunnel 入口点，并指定：</p>
+<ul>
+<li><strong>Tunnel 网关 router 身份</strong></li>
+<li><strong>4 字节的 tunnel ID</strong></li>
+<li><strong>Tunnel 过期时间</strong></li>
+</ul>
+<p>LeaseSets 包含： - <strong>Destination</strong> – 加密密钥、签名密钥、证书 - <strong>附加加密公钥</strong> – 用于端到端 garlic encryption（大蒜加密） - <strong>附加签名公钥</strong> – 用于吊销（当前未使用） - <strong>密码学签名</strong></p>
+<h3 id="31-leaseset-变体">3.1 LeaseSet 变体</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>Unpublished</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Destinations used only for outgoing connections aren't published to floodfill routers</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>Revoked</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Published with zero leases, signed by additional signing key (not fully implemented)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>LeaseSet2 (LS2)</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">As of 0.9.38, supports new encryption types, multiple encryption types, options, offline signing keys ([Proposal 123](/proposals/123-new-netdb-entries/))</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>Meta LeaseSet</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Tree-like DHT structure for multihomed services, supporting hundreds/thousands of destinations with long expirations (up to 18.2 hours)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>Encrypted LeaseSet (LS1)</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">All leases encrypted with separate key; only those with the key can decode and contact the destination</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><strong>Encrypted LeaseSet (LS2)</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">As of 0.9.38, destination hidden with only blinded public key and expiration visible to floodfill</td>
+    </tr>
+  </tbody>
+</table>
+### 3.2 LeaseSet 过期
+<p>常规 LeaseSets 会在其最晚的租约到期时过期。LeaseSet2 的到期时间在头部中指定。EncryptedLeaseSet 和 MetaLeaseSet 的到期时间可能不同，并可能会施加最大值限制。</p>
+<hr>
+<h2 id="4-引导">4. 引导</h2>
+<p>去中心化的 netDb 需要至少一个对等节点引用才能接入。<strong>Reseeding（重新引导）</strong> 会从志愿者的 netDb 目录中获取 RouterInfo 文件（<code>routerInfo-$hash.dat</code>）。首次启动会自动从随机选取的硬编码 URL 获取。</p>
+<hr>
+<h2 id="5-floodfill-机制">5. Floodfill 机制</h2>
+<p>floodfill netDb 采用简单的分布式存储：将数据发送给最接近的 floodfill 节点。当非 floodfill 节点发送存储消息（store）时，floodfill 会将其转发给与该特定键最接近的那部分 floodfill 节点。</p>
+<p>Floodfill 的参与情况在 RouterInfo 中以能力标志（<code>f</code>）表示。</p>
+<h3 id="51-floodfill-选择加入要求">5.1 Floodfill 选择加入要求</h3>
+<p>不同于 Tor 的硬编码的可信目录服务器，I2P 的 floodfill（在 I2P 中用于分发 netDb 的节点角色）集合是<strong>不受信任的</strong>，并且会随着时间变化。</p>
+<p>Floodfill 仅会在满足以下要求的高带宽 router 上自动启用: - 至少 128 KBytes/sec 的共享带宽 (手动配置) - 必须通过额外的健康检查 (出站消息队列时间、作业延迟)</p>
+<p>当前的自动选择加入带来约<strong>6% 的网络 floodfill 参与率</strong>。</p>
+<p>手动配置的 floodfill 与自动志愿成为 floodfill 的 routers 并存。当 floodfill 数量低于阈值时，高带宽的 routers 会自动志愿成为 floodfill。当 floodfill 数量过多时，它们会停止充当 floodfill。</p>
+<h3 id="52-floodfill-角色">5.2 Floodfill 角色</h3>
+<p>除了接受 netDb 的存储操作并响应查询之外，floodfills 还执行标准的 router 功能。它们更高的带宽通常意味着更高的 tunnel 参与度，但这与数据库服务并无直接关系。</p>
+<hr>
+<h2 id="6-kademlia-接近度度量">6. Kademlia 接近度度量</h2>
+<p>netDb 使用基于 XOR（异或）的 <strong>Kademlia 风格</strong> 距离度量。RouterIdentity 或 Destination 的 SHA256 哈希用于生成 Kademlia 键（LS2 加密的 LeaseSets 除外；对于这类情况，键为对“类型字节 3 与盲化公钥拼接”的 SHA256）。</p>
+<h3 id="61-键空间轮换">6.1 键空间轮换</h3>
+<p>为了提高 Sybil 攻击成本，系统不使用 <code>SHA256(key)</code>，而是使用：</p>
+<pre tabindex="0"><code>SHA256(key + yyyyMMdd)
+</code></pre><p>其中，日期是一个 8 字节的 ASCII UTC 日期。这会生成 <strong>routing key（路由密钥）</strong>，在每天的 UTC 午夜更换——称为 <strong>keyspace rotation（密钥空间轮换）</strong>。</p>
+<p>Routing keys（路由密钥）从不会在 I2NP 消息中传输；它们仅用于本地距离判定。</p>
+<hr>
+<h2 id="7-网络数据库分段">7. 网络数据库分段</h2>
+<p>传统的 Kademlia DHT 无法保证存储信息的不可关联性。I2P 通过实现<strong>分段</strong>来防止将客户端 tunnels 与 routers 关联起来的攻击。</p>
+<h3 id="71-分段策略">7.1 分段策略</h3>
+<p>router 会跟踪：</p>
+<ul>
+<li>条目是通过 client tunnel 到达，还是直接到达</li>
+<li>如果是通过 tunnel，到达的是哪个 client tunnel/目标</li>
+<li>会跟踪通过多个 tunnel 到达的情况</li>
+<li>会区分存储与查找的回复</li>
+</ul>
+<p>Java 和 C++ 的实现都使用： - 一个 <strong>&ldquo;Main&rdquo; netDb</strong>，用于在 router 上下文中进行直接查找/floodfill 操作 - 在客户端上下文中的 <strong>&ldquo;Client Network Databases&rdquo;</strong> 或 <strong>&ldquo;Sub-Databases&rdquo;</strong>，用于捕获发送到客户端 tunnel 的条目</p>
+<p>客户端的 netDbs（网络数据库）仅在客户端的生命周期内存在，只包含客户端 tunnel（隧道）条目。来自客户端 tunnel 的条目不能与直接到达的条目重叠。</p>
+<p>每个 netDb 都会记录条目是以存储（可响应查找请求）的形式到达，还是以查找回复（仅在此前已向同一目标存储过时才响应）的形式到达。客户端从不使用主 netDb 中的条目来回答查询，只会使用客户端网络数据库条目。</p>
+<p>综合策略会将 netDb <strong>分片</strong>，以抵御客户端与 router 的关联攻击。</p>
+<hr>
+<h2 id="8-存储验证与查找">8. 存储、验证与查找</h2>
+<h3 id="81-将-routerinfo路由器信息存储到对等节点">8.1 将 RouterInfo（路由器信息）存储到对等节点</h3>
+<p>在 NTCP（I2P 基于 TCP 的传输协议）或 SSU 传输连接初始化期间用于交换本地 RouterInfo（路由器信息）的 I2NP <code>DatabaseStoreMessage</code>。</p>
+<h3 id="82-向对等节点存储-leaseset">8.2 向对等节点存储 LeaseSet</h3>
+<p>包含本地 LeaseSet 的 I2NP <code>DatabaseStoreMessage</code> 会通过捆绑在 Destination 流量中的、经由 garlic encryption（I2P 特有的“garlic”聚合加密）加密的消息定期交换，从而在无需进行 LeaseSet 查找的情况下即可获得响应。</p>
+<h3 id="83-floodfill-选择">8.3 Floodfill 选择</h3>
+<p><code>DatabaseStoreMessage</code> 会被发送到最接近当前路由键的 floodfill。通过本地数据库搜索来找到最近的 floodfill。即使实际上并非最近，泛洪也会通过向多个 floodfill 发送，使其“更接近”。</p>
+<p>传统 Kademlia 在插入之前使用“find-closest（查找最近）”搜索。尽管 I2NP 缺少此类消息，routers 仍可通过将键的最低有效位取反（<code>key ^ 0x01</code>）来进行迭代式搜索，以确保真正发现最近邻节点。</p>
+<h3 id="84-将-routerinfo路由信息存储到-floodfills">8.4 将 RouterInfo（路由信息）存储到 floodfills</h3>
+<p>router 通过直接连接到一个 floodfill，发送带有非零 Reply Token 的 I2NP <code>DatabaseStoreMessage</code> 来发布 RouterInfo（路由信息）。该消息未进行端到端的 garlic encryption（直接连接，无中间节点）。floodfill 使用 Reply Token 作为 Message ID，回复一个 <code>DeliveryStatusMessage</code>。</p>
+<p>routers 也可能通过探索型 tunnel 发送 RouterInfo（连接数限制、不兼容、隐藏 IP）。floodfill 节点在过载时可能会拒绝此类存储请求。</p>
+<h3 id="85-将-leaseset-存储到-floodfills">8.5 将 LeaseSet 存储到 Floodfills</h3>
+<p>LeaseSet（I2P 租约集合）的存储比 RouterInfo（I2P 路由信息记录）更为敏感。Routers（I2P 路由器）必须防止 LeaseSet 与其自身发生关联。</p>
+<p>Routers 通过出站客户端 tunnel 发送带非零 Reply Token（回复令牌）的 <code>DatabaseStoreMessage</code> 来发布 LeaseSet。该消息使用 Destination&rsquo;s Session Key Manager（Destination 的会话密钥管理器）进行端到端的 garlic encryption，从而对该 tunnel 的出站端点不可见。floodfill 通过入站 tunnel 返回 <code>DeliveryStatusMessage</code> 进行回复。</p>
+<h3 id="86-洪泛过程">8.6 洪泛过程</h3>
+<p>floodfill（目录填充节点）在本地存储之前，会使用依赖于负载、netdb 大小及其他因素的自适应准则验证 RouterInfo/LeaseSet。</p>
+<p>在接收到有效的较新数据后，floodfill 会查找与路由键最近的 3 个 floodfill router，并对其进行&quot;flood&quot;传播。它会通过直接连接发送带零 Reply Token（回复令牌）的 I2NP <code>DatabaseStoreMessage</code>。其他 router 不会回复，也不会再次泛洪。</p>
+<p><strong>重要约束：</strong> - Floodfills 不得通过 tunnels 进行泛洪；仅允许直接连接 - Floodfills 从不泛洪已过期的 LeaseSet，或发布超过一小时的 RouterInfo（路由器信息数据结构）</p>
+<h3 id="87-routerinfo路由器信息与-leaseset-查找">8.7 RouterInfo（路由器信息）与 LeaseSet 查找</h3>
+<p>I2NP <code>DatabaseLookupMessage</code> 会向 floodfill routers（负责存储和传播 netdb 的特殊 router）请求 netdb 条目。查询通过出站探索 tunnel 发送；回复会指定入站探索 tunnel 作为返回路径。</p>
+<p>查询通常会并行发送到两个距离所请求键最近的“良好”的 floodfill routers。</p>
+<ul>
+<li><strong>本地匹配</strong>: 接收 I2NP <code>DatabaseStoreMessage</code> 响应</li>
+<li><strong>无本地匹配</strong>: 接收 I2NP <code>DatabaseSearchReplyMessage</code>，其中包含接近该键的其他 floodfill router 的引用</li>
+</ul>
+<p>自 0.9.5 起，LeaseSet 查找使用端到端 garlic encryption。由于 ElGamal 的开销，RouterInfo（路由信息）查找未加密，因此容易遭受出站端点嗅探。</p>
+<p>自 0.9.7 起，查找响应包含会话密钥和标签，从而对入站网关隐藏响应。</p>
+<h3 id="88-迭代查找">8.8 迭代查找</h3>
+<p>0.8.9 之前：两个并行的冗余查找，不使用递归或迭代路由。</p>
+<p>自 0.8.9 起：<strong>迭代查找</strong> 采用无冗余实现——更高效、更可靠，且更适合 floodfill 知识不完整的情况。随着网络规模增长且 routers 了解的 floodfills 更少，查找的复杂度趋近于 O(log n)。</p>
+<p>即使没有更近的节点引用，迭代查询也会继续，从而防止恶意黑洞行为。当前的最大查询次数和超时设置仍然适用。</p>
+<h3 id="89-验证">8.9 验证</h3>
+<p><strong>RouterInfo 验证</strong>: 自 0.9.7.1 起已禁用，以防止 &ldquo;Practical Attacks Against the I2P Network&rdquo; 论文中描述的攻击。</p>
+<p><strong>LeaseSet 验证</strong>: Routers 等待约 10 秒，然后通过出站客户端 tunnel 向不同的 floodfill 进行查找。端到端的 garlic encryption（大蒜式加密，一种将多条消息封装在一起的 I2P 加密方式）使其对出站端点不可见。响应通过入站 tunnels 返回。</p>
+<p>自 0.9.7 起，回复以会话密钥/标签隐藏（session key/tag hiding）的方式加密，从而对入站网关（inbound gateway）不可见。</p>
+<h3 id="810-探索">8.10 探索</h3>
+<p><strong>探索（Exploration）</strong> 涉及使用随机键进行 netdb 查询，以发现新的 routers。Floodfills 会返回包含与所请求键接近的非 floodfill router 哈希的 <code>DatabaseSearchReplyMessage</code>。Exploration 查询会在 <code>DatabaseLookupMessage</code> 中设置一个特殊标志位。</p>
+<hr>
+<h2 id="9-多宿主">9. 多宿主</h2>
+<p>使用相同私钥/公钥（传统的 <code>eepPriv.dat</code>）的 Destination（目标地址）可以在多个 router 上同时托管。每个实例都会定期发布已签名的 LeaseSet；对查找请求的响应会返回最新发布的 LeaseSet。 在 LeaseSet 的最长有效期为 10 分钟的情况下，中断最多持续约 10 分钟。</p>
+<p>自 0.9.38 起，<strong>Meta LeaseSets</strong>（元 LeaseSet，指可聚合多个 Destination 的 LeaseSet 类型）支持使用提供相同服务的独立 Destinations（I2P 目的地标识）的大型多宿主服务。Meta LeaseSet 条目可以是 Destinations 或其他 Meta LeaseSets，且有效期可长达 18.2 小时，从而允许数百/数千个 Destinations 承载相同的服务。</p>
+<hr>
+<h2 id="10-威胁分析">10. 威胁分析</h2>
+<p>目前约有 1700 个 floodfill routers 正在运行。随着网络的增长，大多数攻击变得更难实施，或影响更小。</p>
+<h3 id="101-通用缓解措施">10.1 通用缓解措施</h3>
+<ul>
+<li><strong>增长</strong>: 更多的 floodfill routers 会使攻击更难实施或影响更小</li>
+<li><strong>冗余</strong>: 所有 netdb 条目会通过泛洪存储在距离该密钥最近的 3 个 floodfill routers 上</li>
+<li><strong>签名</strong>: 所有条目均由创建者签名；无法伪造</li>
+</ul>
+<h3 id="102-缓慢或无响应的-routers">10.2 缓慢或无响应的 Routers</h3>
+<p>Routers 为 floodfills 维护扩展的对等节点档案统计信息： - 平均响应时间 - 查询应答百分比 - 存储验证成功百分比 - 上次成功存储 - 上次成功查找 - 上次响应</p>
+<p>router 在为选择最近的 floodfill 判定 &ldquo;goodness&rdquo;（优良度）时，会使用这些度量指标。完全无响应的 router 会被迅速识别并规避；部分恶意的 router 则带来更大的挑战。</p>
+<h3 id="103-女巫攻击-完整键空间">10.3 女巫攻击 (完整键空间)</h3>
+<p>攻击者可能在整个键空间中创建大量 floodfill routers，从而实施一种有效的拒绝服务（DoS）攻击。</p>
+<p>If 行为不足以被指定为&quot;bad&quot;，可能的应对包括: - 通过控制台新闻、网站、论坛公布并汇编不良 router 哈希/IP 列表 - 在全网启用 floodfill (&ldquo;用更多的 Sybil（女巫攻击）对抗 Sybil&rdquo;) - 在新软件版本中硬编码&quot;bad&quot;列表 - 改进 peer profile（对等节点画像）的指标与阈值以便自动识别 - 基于 IP 网段的资格限制，禁止同一 IP 网段内存在多个 floodfill - 基于订阅的自动黑名单（类似 Tor 的共识）</p>
+<p>更大的网络会使这变得更难。</p>
+<h3 id="104-sybil-攻击部分键空间">10.4 Sybil 攻击（部分键空间）</h3>
+<p>攻击者可能创建 8–15 个在键空间中紧密聚集的 floodfill routers。针对该键空间的所有查找/存储都会被定向到攻击者的 routers，从而能够对特定的 I2P 站点实施 DoS（拒绝服务）攻击。</p>
+<p>由于键空间对加密的 SHA256 哈希进行索引，攻击者需要采用暴力穷举，才能生成与目标在键空间中足够接近的 routers。</p>
+<p><strong>防御</strong>：Kademlia（分布式哈希表 DHT 算法）的接近度算法会随时间变化，使用 <code>SHA256(key + YYYYMMDD)</code>，并在 UTC 午夜每日变更。这样的<strong>键空间轮换</strong>迫使攻击者每天重新构建其攻击。</p>
+<blockquote>
+<p><strong>注意</strong>: 最新研究表明，密钥空间轮换的效果并不显著——攻击者可以预先计算 router 哈希值，只需几个 routers 即可在轮换后半小时内对密钥空间的部分区域实施日蚀。</p></blockquote>
+<p>每日轮换的后果：分布式 netdb 在轮换后的几分钟内会变得不可靠——在新的最近 router 接收到存储条目之前，查询会失败。</p>
+<h3 id="105-引导攻击">10.5 引导攻击</h3>
+<p>攻击者可能接管 reseed 网站（用于新节点初始引导获取网络信息的站点），或诱骗开发者添加带有敌意的 reseed 网站，从而使新的 router 在启动时进入被隔离/多数控制的网络。</p>
+<p><strong>已实施的防御措施：</strong> - 从多个 reseed（重新播种）站点获取 RouterInfo 子集，而不是单一站点 - 网络外部的 reseed 监控定期轮询站点 - 自 0.9.14 起，reseed 数据包为签名的 zip 文件，并对下载的签名进行验证（参见 <a href="../../../../zh/docs/specs/updates">su3 specification</a>
+）</p>
+<h3 id="106-查询捕获">10.6 查询捕获</h3>
+<p>Floodfill routers 可能会通过所返回的引用将对等节点&quot;引导&quot;至攻击者控制的 routers。</p>
+<p>由于频率较低，通过探索获得的可能性不大；router 获取对等节点引用主要依赖于正常的 tunnel 构建。</p>
+<p>自 0.8.9 起，已实现迭代查找。<code>DatabaseSearchReplyMessage</code> 中返回的 floodfill 引用如果更接近查找键，则会被继续跟进。发起请求的 router 不会信任这些引用所声称的接近度。即便没有更近的键，查找仍会继续，直到超时或达到查询上限，从而防止恶意黑洞攻击。</p>
+<h3 id="107-信息泄露">10.7 信息泄露</h3>
+<p>I2P 中的 DHT（分布式哈希表）信息泄露需要进一步调查。Floodfill routers 会通过观察查询来收集信息。当恶意节点占比达到 20% 时，先前描述的 Sybil 攻击威胁会因多种原因而变得严重。</p>
+<hr>
+<h2 id="11-未来工作">11. 未来工作</h2>
+<ul>
+<li>对额外的 netDb 查询和响应进行端到端加密</li>
+<li>更好的查询响应跟踪方法</li>
+<li>针对键空间轮换可靠性问题的缓解方法</li>
+</ul>
+<hr>
+<h2 id="12-参考文献">12. 参考文献</h2>
+<ul>
+<li><a href="../../../../zh/docs/specs/common-structures/">通用结构规范</a>
+ – RouterInfo（路由器信息）和 LeaseSet（租约集合）结构</li>
+<li><a href="../../../../zh/docs/specs/i2np/">I2NP（I2P 网络协议）规范</a>
+ – 数据库消息类型</li>
+<li><a href="../../../../zh/proposals/123-new-netdb-entries">提案 123：新的 netDb（网络数据库）条目</a>
+ – LeaseSet2（第二代 LeaseSet）规范</li>
+<li><a href="../../../../zh/docs/netdb/">历史 netDb 讨论</a>
+ – 开发历史和已归档的讨论</li>
+</ul>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../zh/docs/overview/performance/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">性能</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../zh/docs/overview/%E6%9C%AF%E8%AF%AD%E8%A1%A8/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">术语表</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/zh/docs/overview/network-database.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">保持关注 I2P 新闻：</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="输入您的邮箱" required>
+                            <button type="submit">订阅</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>快速链接</h3>
+                <ul>
+                    <li><a href="../../../../zh/financial-support/">捐赠</a></li>
+                    <li><a href="../../../../zh/docs/overview/intro/">I2P介绍</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>社区</h3>
+                <ul>
+                    <li><a href="../../../../zh/get-involved/">参与其中</a></li>
+                    <li><a href="../../../../zh/blog/">博客</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">官方论坛</a></li>
+                    <li><a href="../../../../zh/contact/">联系我们</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>资源</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P 指标</a></li>
+                    <li><a href="../../../../zh/papers/">研究</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 隐形互联网计划。在 Creative Commons 许可下。</p>
+            <div class="footer-links">
+                <a href="../../../../zh/privacy/">隐私</a>
+                <a href="../../../../zh/terms/">条款</a>
+                <a href="../../../../zh/about/media/">媒体</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="关闭">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>社区投票</h2>
+            <p class="modal-subtitle">我们很想听听您的意见</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                您的投票将帮助塑造 I2P 的未来。
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

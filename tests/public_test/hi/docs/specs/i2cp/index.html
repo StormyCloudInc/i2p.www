@@ -1,0 +1,2476 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>I2P क्लाइंट प्रोटोकॉल (I2CP) | I2P - अदृश्य इंटरनेट परियोजना</title>
+
+    <meta name="description" content="एप्लिकेशन I2P router के साथ सेशन्स, tunnels, और LeaseSets का नेगोशिएशन कैसे करते हैं।">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="I2P क्लाइंट प्रोटोकॉल (I2CP) | I2P - अदृश्य इंटरनेट परियोजना">
+    <meta property="og:description" content="एप्लिकेशन I2P router के साथ सेशन्स, tunnels, और LeaseSets का नेगोशिएशन कैसे करते हैं।">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/hi/docs/specs/i2cp/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P बीटा साइट अब लाइव है समस्याओं के लिए ई-मेल करें stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="बैनर बंद करें" title="बैनर बंद करें">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../hi/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../hi/about/" class="">के बारे में</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../hi/about/">समीक्षा</a></li>
+                            <li><a href="../../../../hi/papers/">अनुसंधान पत्र</a></li>
+                            <li><a href="../../../../hi/about/media/">प्रेस</a></li>
+                            <li><a href="../../../../hi/contact/">संपर्क करें</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../hi/docs/" class="active">दस्तावेज़</a></li>
+                    <li><a href="../../../../hi/downloads/" class="">डाउनलोड्स</a></li>
+                    <li><a href="../../../../hi/blog/" class="">ब्लॉग</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../hi/get-involved/" class="">शामिल हों</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../hi/get-involved/">समीक्षा</a></li>
+                            <li><a href="../../../../hi/feedback/">फीचर सुझाव</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">hi</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/i2cp/"
+                                class="lang-option">अंग्रेजी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/i2cp/"
+                                class="lang-option">स्पेनिश</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/i2cp/"
+                                class="lang-option">कोरियाई</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/i2cp/"
+                                class="lang-option">चीनी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/i2cp/"
+                                class="lang-option">रूसी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/i2cp/"
+                                class="lang-option">चेक</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/i2cp/"
+                                class="lang-option">जर्मन</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/i2cp/"
+                                class="lang-option">फ्रेंच</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/i2cp/"
+                                class="lang-option">तुर्की</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/i2cp/"
+                                class="lang-option">वियतनामी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/i2cp/"
+                                class="lang-option active">हिन्दी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/i2cp/"
+                                class="lang-option">अरबी</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/i2cp/"
+                                class="lang-option">पुर्तगाली</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../hi/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../hi/downloads/" class="btn btn-primary">I2P प्राप्त करें</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#अवलकन">अवलोकन</a></li>
+    <li><a href="#करयनवयन-सदरभ">कार्यान्वयन संदर्भ</a>
+      <ul>
+        <li><a href="#जव-करयनवयन">जावा कार्यान्वयन</a></li>
+        <li><a href="#c-करयनवयन">C++ कार्यान्वयन</a></li>
+        <li><a href="#गरjava-कलइटस">गैर‑Java क्लाइंट्स</a></li>
+      </ul>
+    </li>
+    <li><a href="#कनकशन-सथपन">कनेक्शन स्थापना</a>
+      <ul>
+        <li><a href="#1-tcp-कनकशन">1. TCP कनेक्शन</a></li>
+        <li><a href="#2-परटकल-हडशक">2. प्रोटोकॉल हैंडशेक</a></li>
+      </ul>
+    </li>
+    <li><a href="#सदश-परवह-पटरन">संदेश प्रवाह पैटर्न</a>
+      <ul>
+        <li><a href="#परषत-सदश-कलइट-दरसथ-गतवय-क-भजत-ह">प्रेषित संदेश (क्लाइंट दूरस्थ गंतव्य को भेजता है)</a></li>
+        <li><a href="#आन-वल-सदश-router-कलइट-तक-पहचत-ह">आने वाला संदेश (Router क्लाइंट तक पहुँचाता है)</a></li>
+      </ul>
+    </li>
+    <li><a href="#समनय-डट-सरचनए">सामान्य डेटा संरचनाएँ</a>
+      <ul>
+        <li><a href="#i2cp-सदश-शरषलख">I2CP संदेश शीर्षलेख</a></li>
+        <li><a href="#सशन-आईड">सेशन आईडी</a></li>
+        <li><a href="#सदश-आईड">संदेश आईडी</a></li>
+        <li><a href="#पलड-पररप">पेलोड प्रारूप</a></li>
+        <li><a href="#sessionconfig-सरचन">SessionConfig संरचना</a></li>
+      </ul>
+    </li>
+    <li><a href="#मखय-कनफगरशन-वकलप">मुख्य कॉन्फ़िगरेशन विकल्प</a>
+      <ul>
+        <li><a href="#tunnel-वनयस">Tunnel विन्यास</a></li>
+        <li><a href="#सदश-परबधन">संदेश प्रबंधन</a></li>
+        <li><a href="#leaseset-वनयस">LeaseSet विन्यास</a></li>
+      </ul>
+    </li>
+    <li><a href="#एनकरपशन-क-परकर">एन्क्रिप्शन के प्रकार</a>
+      <ul>
+        <li><a href="#समरथत-एनकरपशन-परकर">समर्थित एन्क्रिप्शन प्रकार</a></li>
+        <li><a href="#एनकरपशन-परकर-क-ववरण">एन्क्रिप्शन प्रकार के विवरण</a></li>
+        <li><a href="#सथनतरण-रणनत">स्थानांतरण रणनीति</a></li>
+      </ul>
+    </li>
+    <li><a href="#leaseset2-और-उननत-वशषतए">LeaseSet2 और उन्नत विशेषताएँ</a>
+      <ul>
+        <li><a href="#leaseset2-वकलप-0938-स">LeaseSet2 विकल्प (0.9.38 से)</a></li>
+        <li><a href="#सव-रकरड-0966-स">सेवा रिकॉर्ड (0.9.66 से)</a></li>
+      </ul>
+    </li>
+    <li><a href="#एकधक-सतर-0921-स">एकाधिक सत्र (0.9.21 से)</a>
+      <ul>
+        <li><a href="#उपसतर-क-वशषतए">उपसत्र की विशेषताएँ</a></li>
+        <li><a href="#subsession-उप-सतर-उपयग-परकरण">Subsession (उप-सत्र) उपयोग-प्रकरण</a></li>
+        <li><a href="#subsession-उप-सतर-क-जवनचकर">Subsession (उप-सत्र) का जीवनचक्र</a></li>
+        <li><a href="#सतर-id-परबधन">सत्र ID प्रबंधन</a></li>
+      </ul>
+    </li>
+    <li><a href="#सदश-कटलग">संदेश कैटलॉग</a>
+      <ul>
+        <li><a href="#सदश-परकर-क-सरश">संदेश प्रकारों का सारांश</a></li>
+        <li><a href="#मखय-सदश-क-ववरण">मुख्य संदेश के विवरण</a></li>
+      </ul>
+    </li>
+    <li><a href="#परटकल-ससकरण-इतहस">प्रोटोकॉल संस्करण इतिहास</a>
+      <ul>
+        <li><a href="#ससकरण-पहचन">संस्करण पहचान</a></li>
+        <li><a href="#वशषतओ-क-समयरख">विशेषताओं की समयरेखा</a></li>
+        <li><a href="#परमणकरण">प्रमाणीकरण</a></li>
+        <li><a href="#घड-क-वचलन">घड़ी का विचलन</a></li>
+        <li><a href="#नज-कज-क-परबधन">निजी कुंजी का प्रबंधन</a></li>
+        <li><a href="#सदश-क-समपत">संदेश की समाप्ति</a></li>
+        <li><a href="#सतर-टग-परबधन">सत्र टैग प्रबंधन</a></li>
+      </ul>
+    </li>
+    <li><a href="#सरवततम-परथए">सर्वोत्तम प्रथाएँ</a>
+      <ul>
+        <li><a href="#कलइट-डवलपरस-क-लए">क्लाइंट डेवलपर्स के लिए</a></li>
+        <li><a href="#router-डवलपरस-क-लए">Router डेवलपर्स के लिए</a></li>
+      </ul>
+    </li>
+    <li><a href="#डबगग-और-समसय-नवरण">डीबगिंग और समस्या निवारण</a>
+      <ul>
+        <li><a href="#समनय-समसयए">सामान्य समस्याएँ</a></li>
+        <li><a href="#नदन-सदश">निदान संदेश</a></li>
+      </ul>
+    </li>
+    <li><a href="#सबधत-वनरदश">संबंधित विनिर्देश</a></li>
+    <li><a href="#सदरभत-परसतव">संदर्भित प्रस्ताव</a></li>
+    <li><a href="#javadoc-सदरभ">Javadoc संदर्भ</a></li>
+    <li><a href="#अपरचलन-सरश">अप्रचलन सारांश</a>
+      <ul>
+        <li><a href="#अपरचलत-सदश-उपयग-न-कर">अप्रचलित संदेश (उपयोग न करें)</a></li>
+        <li><a href="#अपरचलत-वकलप">अप्रचलित विकल्प</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../hi/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../hi/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../hi/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">I2P क्लाइंट प्रोटोकॉल (I2CP)</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">यह अनुवाद मशीन लर्निंग का उपयोग करके उत्पन्न किया गया था और 100% सटीक नहीं हो सकता है।</span>
+    
+    
+    <a href="../../../../en/docs/specs/i2cp/" class="disclaimer-link">अंग्रेज़ी संस्करण देखें</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">I2P क्लाइंट प्रोटोकॉल (I2CP)</h1>
+                    
+                        <p class="article-description">एप्लिकेशन I2P router के साथ सेशन्स, tunnels, और LeaseSets का नेगोशिएशन कैसे करते हैं।</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="अवलकन">अवलोकन</h2>
+<p>I2CP I2P router और किसी भी क्लाइंट प्रक्रिया के बीच निम्न-स्तरीय नियंत्रण प्रोटोकॉल है। यह जिम्मेदारियों का सख्त पृथक्करण परिभाषित करता है:</p>
+<ul>
+<li><strong>Router</strong>: रूटिंग, क्रिप्टोग्राफी, tunnels के जीवनचक्र, और नेटवर्क डेटाबेस संचालन का प्रबंधन करता है</li>
+<li><strong>क्लाइंट</strong>: अनामिकता गुणों का चयन करता है, tunnels को कॉन्फ़िगर करता है, और संदेश भेजता/प्राप्त करता है</li>
+</ul>
+<p>संपूर्ण संचार एकल TCP socket (नेटवर्क कनेक्शन का एंडपॉइंट) के माध्यम से होता है (वैकल्पिक रूप से TLS-wrapped (TLS द्वारा संरक्षित)), जो असमकालिक, full-duplex (दो-तरफ़ा समानांतर संचार) संचालन को सक्षम बनाता है।</p>
+<p><strong>प्रोटोकॉल संस्करण</strong>: I2CP प्रारंभिक कनेक्शन स्थापना के दौरान भेजे जाने वाले प्रोटोकॉल संस्करण बाइट <code>0x2A</code> (दशमलव में 42) का उपयोग करता है। यह संस्करण बाइट प्रोटोकॉल की शुरुआत से स्थिर बना हुआ है।</p>
+<p><strong>वर्तमान स्थिति</strong>: यह विनिर्देशन router संस्करण 0.9.67 (API संस्करण 0.9.67) के लिए सटीक है, जो 2025-09 में जारी हुआ।</p>
+<h2 id="करयनवयन-सदरभ">कार्यान्वयन संदर्भ</h2>
+<h3 id="जव-करयनवयन">जावा कार्यान्वयन</h3>
+<p>संदर्भ कार्यान्वयन Java I2P में है:</p>
+<ul>
+<li>क्लाइंट SDK: <code>i2p.jar</code> पैकेज</li>
+<li>router कार्यान्वयन: <code>router.jar</code> पैकेज</li>
+<li><a href="http://docs.i2p-projekt.de/javadoc/">Javadocs</a>
+</li>
+</ul>
+<p>जब क्लाइंट और router एक ही JVM में चलते हैं, तो I2CP संदेशों को serialization (डेटा को बाइट अनुक्रम में बदलना) के बिना Java ऑब्जेक्ट्स के रूप में पास किया जाता है। बाहरी क्लाइंट TCP पर serialized प्रोटोकॉल का उपयोग करते हैं।</p>
+<h3 id="c-करयनवयन">C++ कार्यान्वयन</h3>
+<p>i2pd (C++ I2P router) क्लाइंट कनेक्शनों के लिए I2CP को बाहरी रूप से भी इम्प्लीमेंट करता है।</p>
+<h3 id="गरjava-कलइटस">गैर‑Java क्लाइंट्स</h3>
+<p>एक पूर्ण I2CP क्लाइंट लाइब्रेरी के <strong>कोई ज्ञात गैर-जावा कार्यान्वयन</strong> नहीं हैं। गैर-जावा अनुप्रयोगों को इसके बजाय उच्च-स्तरीय प्रोटोकॉल का उपयोग करना चाहिए:</p>
+<ul>
+<li><strong>SAM (Simple Anonymous Messaging) v3</strong>: सॉकेट-आधारित इंटरफेस, कई भाषाओं में उपलब्ध लाइब्रेरीज़ के साथ</li>
+<li><strong>BOB (Basic Open Bridge)</strong>: SAM का सरल विकल्प</li>
+</ul>
+<p>ये उच्च-स्तरीय प्रोटोकॉल I2CP की जटिलता को आंतरिक रूप से संभालते हैं और साथ ही स्ट्रीमिंग लाइब्रेरी (TCP जैसी कनेक्शनों के लिए) और डेटाग्राम लाइब्रेरी (UDP जैसी कनेक्शनों के लिए) भी प्रदान करते हैं।</p>
+<h2 id="कनकशन-सथपन">कनेक्शन स्थापना</h2>
+<h3 id="1-tcp-कनकशन">1. TCP कनेक्शन</h3>
+<p>router के I2CP पोर्ट से कनेक्ट करें: - डिफ़ॉल्ट: <code>127.0.0.1:7654</code> - router सेटिंग्स के माध्यम से कॉन्फ़िगर किया जा सकता है - वैकल्पिक TLS wrapper (रैपर) (दूरस्थ कनेक्शनों के लिए दृढ़तापूर्वक अनुशंसित)</p>
+<h3 id="2-परटकल-हडशक">2. प्रोटोकॉल हैंडशेक</h3>
+<p><strong>चरण 1</strong>: प्रोटोकॉल संस्करण बाइट <code>0x2A</code> भेजें</p>
+<p><strong>चरण 2</strong>: घड़ी समकालन</p>
+<pre tabindex="0"><code>Client → Router: GetDateMessage
+Router → Client: SetDateMessage
+</code></pre><p>router अपना वर्तमान समय-चिह्न और I2CP API संस्करण स्ट्रिंग लौटाता है (0.8.7 से)।</p>
+<p><strong>चरण 3</strong>: प्रमाणीकरण (यदि सक्षम हो)</p>
+<p>0.9.11 से, प्रमाणीकरण को GetDateMessage (तारीख प्राप्त करने वाला संदेश) में ऐसी Mapping (मैपिंग) के माध्यम से शामिल किया जा सकता है, जिसमें निम्नलिखित हों: - <code>i2cp.username</code> - <code>i2cp.password</code></p>
+<p>संस्करण 0.9.16 से, जब प्रमाणीकरण सक्षम होता है, तो अन्य कोई संदेश भेजे जाने से पहले प्रमाणीकरण को GetDateMessage के माध्यम से <strong>अवश्य</strong> पूरा किया जाना है।</p>
+<p><strong>चरण 4</strong>: सत्र निर्माण</p>
+<pre tabindex="0"><code>Client → Router: CreateSessionMessage (contains SessionConfig)
+Router → Client: SessionStatusMessage (status=Created)
+</code></pre><p><strong>चरण 5</strong>: Tunnel तैयार होने का संकेत</p>
+<pre tabindex="0"><code>Router → Client: RequestVariableLeaseSetMessage
+</code></pre><p>यह संदेश संकेत देता है कि inbound tunnels बन चुके हैं। router इसे तब तक नहीं भेजेगा जब तक कम से कम एक inbound और एक outbound tunnel मौजूद न हों।</p>
+<p><strong>चरण 6</strong>: LeaseSet का प्रकाशन</p>
+<pre tabindex="0"><code>Client → Router: CreateLeaseSet2Message
+</code></pre><p>इस चरण में, सत्र संदेश भेजने और प्राप्त करने के लिए पूर्ण रूप से क्रियाशील है।</p>
+<h2 id="सदश-परवह-पटरन">संदेश प्रवाह पैटर्न</h2>
+<h3 id="परषत-सदश-कलइट-दरसथ-गतवय-क-भजत-ह">प्रेषित संदेश (क्लाइंट दूरस्थ गंतव्य को भेजता है)</h3>
+<p><strong>i2cp.messageReliability=none के साथ</strong>:</p>
+<pre tabindex="0"><code>Client → Router: SendMessageMessage (nonce=0)
+[No acknowledgments]
+</code></pre><p><strong>i2cp.messageReliability=BestEffort के साथ</strong>:</p>
+<pre tabindex="0"><code>Client → Router: SendMessageMessage (nonce&gt;0)
+Router → Client: MessageStatusMessage (status=Accepted)
+Router → Client: MessageStatusMessage (status=Success or Failure)
+</code></pre><h3 id="आन-वल-सदश-router-कलइट-तक-पहचत-ह">आने वाला संदेश (Router क्लाइंट तक पहुँचाता है)</h3>
+<p><strong>i2cp.fastReceive=true होने पर</strong> (0.9.4 से डिफ़ॉल्ट):</p>
+<pre tabindex="0"><code>Router → Client: MessagePayloadMessage
+[No acknowledgment required]
+</code></pre><p><strong>i2cp.fastReceive=false के साथ</strong> (अप्रचलित):</p>
+<pre tabindex="0"><code>Router → Client: MessageStatusMessage (status=Available)
+Client → Router: ReceiveMessageBeginMessage
+Router → Client: MessagePayloadMessage
+Client → Router: ReceiveMessageEndMessage
+</code></pre><p>आधुनिक क्लाइंट्स को हमेशा fast receive mode (तेज़ प्राप्ति मोड) का उपयोग करना चाहिए।</p>
+<h2 id="समनय-डट-सरचनए">सामान्य डेटा संरचनाएँ</h2>
+<h3 id="i2cp-सदश-शरषलख">I2CP संदेश शीर्षलेख</h3>
+<p>सभी I2CP संदेश इस सामान्य हेडर का उपयोग करते हैं:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Body Length (4 bytes)                 |
++----+----+----+----+----+----+----+----+
+|Type|  Message Body (variable)        |
++----+----+----+----+----+----+----+----+
+</code></pre><ul>
+<li><strong>बॉडी लंबाई</strong>: 4-बाइट पूर्णांक, केवल संदेश बॉडी की लंबाई (हेडर को छोड़कर)</li>
+<li><strong>प्रकार</strong>: 1-बाइट पूर्णांक, संदेश प्रकार पहचानकर्ता</li>
+<li><strong>संदेश बॉडी</strong>: 0+ बाइट्स, प्रारूप संदेश प्रकार के अनुसार बदलता है</li>
+</ul>
+<p><strong>संदेश आकार की सीमा</strong>: अधिकतम लगभग 64 KB.</p>
+<h3 id="सशन-आईड">सेशन आईडी</h3>
+<p>2-बाइट का पूर्णांक, जो router पर किसी सत्र की अद्वितीय पहचान करता है।</p>
+<p><strong>विशेष मान</strong>: <code>0xFFFF</code> &ldquo;कोई सत्र नहीं&rdquo; का संकेत करता है (स्थापित सत्र के बिना hostname लुकअप्स के लिए उपयोग किया जाता है)।</p>
+<h3 id="सदश-आईड">संदेश आईडी</h3>
+<p>किसी सत्र के भीतर किसी संदेश की अद्वितीय पहचान के लिए router द्वारा उत्पन्न 4-बाइट पूर्णांक।</p>
+<p><strong>महत्वपूर्ण</strong>: संदेश आईडी वैश्विक रूप से अद्वितीय <strong>नहीं</strong> हैं; वे केवल एक सत्र के भीतर अद्वितीय हैं। वे क्लाइंट द्वारा उत्पन्न nonce (एक बार प्रयुक्त यादृच्छिक संख्या) से भी भिन्न हैं।</p>
+<h3 id="पलड-पररप">पेलोड प्रारूप</h3>
+<p>संदेश पेलोड मानक 10-बाइट gzip हेडर के साथ gzip से संपीड़ित होते हैं: - शुरुआत होती है: <code>0x1F 0x8B 0x08</code> (RFC 1952) - 0.7.1 से: gzip हेडर के अप्रयुक्त हिस्सों में प्रोटोकॉल, from-port, और to-port की जानकारी शामिल होती है - यह एक ही गंतव्य पर स्ट्रीमिंग और डेटाग्राम को सक्षम करता है</p>
+<p><strong>संपीड़न नियंत्रण</strong>: संपीड़न को अक्षम करने के लिए <code>i2cp.gzip=false</code> सेट करें (gzip effort (प्रयास) को 0 पर सेट करता है)। gzip हेडर अभी भी शामिल रहता है, लेकिन संपीड़न ओवरहेड न्यूनतम रहता है।</p>
+<h3 id="sessionconfig-सरचन">SessionConfig संरचना</h3>
+<p>क्लाइंट सत्र के लिए विन्यास परिभाषित करता है:</p>
+<pre tabindex="0"><code>+----------------------------------+
+| Destination                      |
++----------------------------------+
+| Mapping (configuration options)  |
++----------------------------------+
+| Creation Date                    |
++----------------------------------+
+| Signature                        |
++----------------------------------+
+</code></pre><p><strong>महत्वपूर्ण आवश्यकताएँ</strong>: 1. <strong>मैपिंग को कुंजी के आधार पर क्रमबद्ध होना चाहिए</strong> हस्ताक्षर सत्यापन के लिए 2. <strong>निर्माण तिथि</strong> router के वर्तमान समय से ±30 सेकंड के भीतर होनी चाहिए 3. <strong>हस्ताक्षर</strong> Destination (I2P में गंतव्य पहचान/एंडपॉइंट) के SigningPrivateKey (हस्ताक्षर करने वाली निजी कुंजी) द्वारा बनाया जाता है</p>
+<p><strong>ऑफ़लाइन हस्ताक्षर</strong> (संस्करण 0.9.38 के अनुसार):</p>
+<p>यदि आप ऑफ़लाइन साइनिंग का उपयोग कर रहे हैं, तो मैपिंग में शामिल होना चाहिए: - <code>i2cp.leaseSetOfflineExpiration</code> - <code>i2cp.leaseSetTransientPublicKey</code> - <code>i2cp.leaseSetOfflineSignature</code></p>
+<p>फिर हस्ताक्षर अस्थायी SigningPrivateKey द्वारा उत्पन्न किया जाता है.</p>
+<h2 id="मखय-कनफगरशन-वकलप">मुख्य कॉन्फ़िगरेशन विकल्प</h2>
+<h3 id="tunnel-वनयस">Tunnel विन्यास</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Option</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Default</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>inbound.length</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Number of hops for inbound tunnels</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>outbound.length</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Number of hops for outbound tunnels</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>inbound.lengthVariance</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Random variance in hop count (since 0.7.6)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>outbound.lengthVariance</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Random variance in hop count (since 0.7.6)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>inbound.quantity</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Number of concurrent inbound tunnels</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>outbound.quantity</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Number of concurrent outbound tunnels</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>inbound.backupQuantity</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Standby inbound tunnels (hot spares)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>outbound.backupQuantity</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Standby outbound tunnels (hot spares)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>inbound.allowZeroHop</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">true</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Allow 0-hop tunnels (disable for full anonymity)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>outbound.allowZeroHop</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">true</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Allow 0-hop tunnels (disable for full anonymity)</td>
+    </tr>
+  </tbody>
+</table>
+**टिप्पणियाँ**: - `quantity` के लिए मान > 6 को 0.9.0+ चलाने वाले पीयर्स की आवश्यकता होती है और यह संसाधन उपयोग को उल्लेखनीय रूप से बढ़ा देता है - उच्च-उपलब्धता सेवाओं के लिए `backupQuantity` को 1-2 पर सेट करें - Zero-hop tunnels (शून्य-हॉप tunnels) में विलंबता कम करने के लिए गुमनामी का त्याग किया जाता है, लेकिन ये परीक्षण के लिए उपयोगी हैं
+<h3 id="सदश-परबधन">संदेश प्रबंधन</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Option</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Default</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>clientMessageTimeout</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">60000&nbsp;ms</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Legacy timeout for message delivery</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.messageReliability</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">BestEffort</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>None</code>, <code>BestEffort</code>, or <code>Guaranteed</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.fastReceive</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">true</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Skip ReceiveMessageBegin/End handshake (default since 0.9.4)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.gzip</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">true</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Enable gzip compression of message payloads</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>outbound.priority</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Priority for outbound scheduling (-25 to +25)</td>
+    </tr>
+  </tbody>
+</table>
+**संदेश विश्वसनीयता**: - `None`: router से कोई स्वीकृति नहीं (0.8.1 से स्ट्रीमिंग लाइब्रेरी का डिफ़ॉल्ट) - `BestEffort`: router स्वीकृति + सफलता/विफलता सूचनाएँ भेजता है - `Guaranteed`: लागू नहीं (वर्तमान में BestEffort की तरह व्यवहार करता है)
+<p><strong>प्रति-संदेश ओवरराइड</strong> (0.9.14 से): - <code>messageReliability=none</code> वाले सत्र में, शून्य से भिन्न nonce (एक-बार-प्रयोग होने वाली अद्वितीय संख्या) सेट करने पर उस विशिष्ट संदेश के लिए डिलीवरी सूचना का अनुरोध होता है - <code>BestEffort</code> सत्र में nonce=0 सेट करने से उस संदेश के लिए सूचनाएँ निष्क्रिय हो जाती हैं</p>
+<h3 id="leaseset-वनयस">LeaseSet विन्यास</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Option</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Default</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.dontPublishLeaseSet</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">false</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Disable automatic LeaseSet publication (for client-only destinations)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetType</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">LeaseSet variant: 1 = standard, 3 = LS2, 5 = encrypted, 7 = meta</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetEncType</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Comma-separated encryption type codes (see below)</td>
+    </tr>
+  </tbody>
+</table>
+### लेगेसी ElGamal/AES सेशन टैग्स
+<p>ये विकल्प केवल पुराने ElGamal एन्क्रिप्शन के लिए प्रासंगिक हैं:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Option</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Default</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>crypto.lowTagThreshold</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">30</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Minimum session tags before replenishing</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>crypto.tagsToSend</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">40</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Number of tags to send in a batch</td>
+    </tr>
+  </tbody>
+</table>
+**नोट**: ECIES-X25519 क्लाइंट एक अलग ratchet mechanism (क्रमिक कुंजी-परिवर्तन तंत्र) का उपयोग करते हैं और इन विकल्पों को नज़रअंदाज़ करते हैं।
+<h2 id="एनकरपशन-क-परकर">एन्क्रिप्शन के प्रकार</h2>
+<p>I2CP <code>i2cp.leaseSetEncType</code> विकल्प के माध्यम से कई एंड-टू-एंड एन्क्रिप्शन पद्धतियों का समर्थन करता है। आधुनिक और पुराने समकक्षों दोनों का समर्थन करने के लिए कई प्रकार (कॉमा से अलग करके) निर्दिष्ट किए जा सकते हैं।</p>
+<h3 id="समरथत-एनकरपशन-परकर">समर्थित एन्क्रिप्शन प्रकार</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Algorithm</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Key Size</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Since</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElGamal/AES+SessionTags</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2048-bit ElGamal</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Legacy</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1-3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">-</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">-</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Unused</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES-X25519-AEAD-Ratchet</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">32-byte X25519</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.46</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current Standard</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">5</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES-X25519-AEAD-Ratchet + ML-KEM-768 hybrid</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">32&nbsp;+&nbsp;PQ</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.67</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Beta</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">6</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES-X25519-AEAD-Ratchet + ML-KEM-1024 hybrid</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">32&nbsp;+&nbsp;PQ</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.67</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Beta</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">7</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved (likely ML-KEM-512 hybrid)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">32&nbsp;+&nbsp;PQ</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Future</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Planned</td>
+    </tr>
+  </tbody>
+</table>
+**अनुशंसित विन्यास**:
+<pre tabindex="0"><code>i2cp.leaseSetEncType=4,0
+</code></pre><p>यह X25519 (वांछित; एक आधुनिक elliptic-curve key agreement एल्गोरिद्म) को अनुकूलता के लिए ElGamal (एक सार्वजनिक-कुंजी क्रिप्टोसिस्टम) फॉलबैक के साथ प्रदान करता है।</p>
+<h3 id="एनकरपशन-परकर-क-ववरण">एन्क्रिप्शन प्रकार के विवरण</h3>
+<p><strong>प्रकार 0 - ElGamal/AES+SessionTags</strong>: - 2048-बिट ElGamal सार्वजनिक कुंजियाँ (256 बाइट) - AES-256 सममित एन्क्रिप्शन - 32-बाइट session tags (अस्थायी सत्र-टोकन) बैचों में भेजे जाते हैं - उच्च CPU, बैंडविड्थ और मेमोरी ओवरहेड - पूरे नेटवर्क में चरणबद्ध रूप से हटाया जा रहा है</p>
+<p><strong>प्रकार 4 - ECIES-X25519-AEAD-Ratchet</strong>: - X25519 कुंजी विनिमय (32-बाइट कुंजियाँ) - ChaCha20/Poly1305 AEAD (Authenticated Encryption with Associated Data, संबद्ध डेटा सहित प्रमाणित एन्क्रिप्शन) - Signal-style double ratchet (डबल रैचेट, Signal जैसा कुंजी-अपडेट तंत्र) - 8-बाइट सेशन टैग (ElGamal के लिए 32-बाइट के मुकाबले) - टैग synchronized PRNG (pseudorandom number generator, छद्म-यादृच्छिक संख्या जनक) के माध्यम से उत्पन्न किए जाते हैं (पहले से नहीं भेजे जाते) - ~92% ओवरहेड में कमी (ElGamal की तुलना में) - आधुनिक I2P के लिए मानक (अधिकांश routers इसका उपयोग करते हैं)</p>
+<p><strong>प्रकार 5-6 - पोस्ट-क्वांटम हाइब्रिड</strong>: - X25519 को ML-KEM (कुंजी एन्कैप्सुलेशन तंत्र) (NIST FIPS 203) के साथ संयोजित करता है - क्वांटम-प्रतिरोधी सुरक्षा प्रदान करता है - संतुलित सुरक्षा/प्रदर्शन के लिए ML-KEM-768 - अधिकतम सुरक्षा के लिए ML-KEM-1024 - PQ (पोस्ट-क्वांटम) कुंजी सामग्री के कारण संदेश आकार बड़े होते हैं - नेटवर्क समर्थन का परिनियोजन अभी भी जारी है</p>
+<h3 id="सथनतरण-रणनत">स्थानांतरण रणनीति</h3>
+<p>I2P नेटवर्क सक्रिय रूप से ElGamal (प्रकार 0) से X25519 (प्रकार 4) में माइग्रेट हो रहा है: - NTCP → NTCP2 (पूर्ण) - SSU → SSU2 (पूर्ण) - ElGamal tunnels → X25519 tunnels (पूर्ण) - ElGamal end-to-end (छोर-से-छोर) → ECIES-X25519 (अधिकांशतः पूर्ण)</p>
+<h2 id="leaseset2-और-उननत-वशषतए">LeaseSet2 और उन्नत विशेषताएँ</h2>
+<h3 id="leaseset2-वकलप-0938-स">LeaseSet2 विकल्प (0.9.38 से)</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Option</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Since</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetType</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.38</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Specifies LeaseSet variant (1, 3, 5, 7)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetEncType</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.38</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Encryption types supported (comma-separated)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetAuthType</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.41</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Per-client authentication: 0 = none, 1 = DH, 2 = PSK</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetPrivKey</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.41</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">X25519 private key for decrypting LS2 with auth</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetSecret</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.39</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Base64 secret for blinded addresses</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetTransientPublicKey</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.38</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Transient signing key for offline signatures</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetPrivateKey</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.18</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Persistent LeaseSet encryption keys (type:key pairs)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetOption.nnn</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.66</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Service records (proposal 167)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetClient.dh.nnn</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.41</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">DH client auth material (indexed from 0)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>i2cp.leaseSetClient.psk.nnn</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.41</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">PSK client auth material (indexed from 0)</td>
+    </tr>
+  </tbody>
+</table>
+### Blinded Addresses (क्रिप्टोग्राफिक ब्लाइंडिंग के जरिए छुपाए गए पते)
+<p>संस्करण 0.9.39 से, गंतव्य &ldquo;blinded&rdquo; पते (b33 format) का उपयोग कर सकते हैं जो समय-समय पर बदलते हैं: - पासवर्ड सुरक्षा के लिए <code>i2cp.leaseSetSecret</code> आवश्यक है - प्रति-क्लाइंट वैकल्पिक प्रमाणीकरण - विवरण के लिए प्रस्ताव 123 और 149 देखें</p>
+<h3 id="सव-रकरड-0966-स">सेवा रिकॉर्ड (0.9.66 से)</h3>
+<p>LeaseSet2 सेवा रिकॉर्ड विकल्पों का समर्थन करता है (प्रस्ताव 167):</p>
+<pre tabindex="0"><code>i2cp.leaseSetOption.0=_smtp._tcp=1 86400 0 0 25 mail.example.b32.i2p
+</code></pre><p>प्रारूप DNS SRV रिकॉर्ड शैली का अनुसरण करता है, लेकिन I2P के लिए अनुकूलित है।</p>
+<h2 id="एकधक-सतर-0921-स">एकाधिक सत्र (0.9.21 से)</h2>
+<p>एकल I2CP कनेक्शन कई सत्रों को बनाए रख सकता है:</p>
+<p><strong>प्राथमिक सत्र</strong>: किसी कनेक्शन पर बनाया गया पहला सत्र <strong>उप-सत्र</strong>: वे अतिरिक्त सत्र जो प्राथमिक सत्र के tunnel पूल को साझा करते हैं</p>
+<h3 id="उपसतर-क-वशषतए">उपसत्र की विशेषताएँ</h3>
+<ol>
+<li><strong>साझा Tunnels</strong>: प्राथमिक वाले ही इनबाउंड/आउटबाउंड tunnel pools का उपयोग करें</li>
+<li><strong>साझा एन्क्रिप्शन कुंजियाँ</strong>: एकसमान LeaseSet एन्क्रिप्शन कुंजियों का उपयोग करना अनिवार्य है</li>
+<li><strong>भिन्न हस्ताक्षर कुंजियाँ</strong>: अलग-अलग Destination (गंतव्य) हस्ताक्षर कुंजियों का उपयोग करना अनिवार्य है</li>
+<li><strong>गुमनामी की कोई गारंटी नहीं</strong>: प्राथमिक सत्र से स्पष्ट रूप से जुड़ा हुआ (उसी router, वही tunnels)</li>
+</ol>
+<h3 id="subsession-उप-सतर-उपयग-परकरण">Subsession (उप-सत्र) उपयोग-प्रकरण</h3>
+<p>विभिन्न हस्ताक्षर प्रकारों का उपयोग करने वाले गंतव्यों के साथ संचार सक्षम करें: - प्राथमिक: EdDSA हस्ताक्षर (आधुनिक) - उप-सत्र: DSA हस्ताक्षर (पुराने संस्करणों के साथ अनुकूलता)</p>
+<h3 id="subsession-उप-सतर-क-जवनचकर">Subsession (उप-सत्र) का जीवनचक्र</h3>
+<p><strong>निर्माण</strong>:</p>
+<pre tabindex="0"><code>Client → Router: CreateSessionMessage
+Router → Client: SessionStatusMessage (unique Session ID)
+Router → Client: RequestVariableLeaseSetMessage (separate for each destination)
+Client → Router: CreateLeaseSet2Message (separate for each destination)
+</code></pre><p><strong>समापन</strong>: - उप-सत्र को समाप्त करना: प्राथमिक सत्र अक्षुण्ण रहता है - प्राथमिक सत्र को समाप्त करना: सभी उप-सत्रों को समाप्त कर देता है और कनेक्शन बंद करता है - DisconnectMessage (डिस्कनेक्ट संदेश): सभी सत्रों को समाप्त कर देता है</p>
+<h3 id="सतर-id-परबधन">सत्र ID प्रबंधन</h3>
+<p>अधिकांश I2CP संदेशों में एक Session ID फ़ील्ड शामिल होती है. अपवाद: - DestLookup / DestReply (अप्रचलित, HostLookup / HostReply का उपयोग करें) - GetBandwidthLimits / BandwidthLimits (प्रतिक्रिया सत्र-विशिष्ट नहीं है)</p>
+<p><strong>महत्वपूर्ण</strong>: क्लाइंट्स को एक साथ कई CreateSession संदेश लंबित नहीं रखने चाहिए, क्योंकि प्रतिक्रियाओं को अनुरोधों से निश्चित रूप से संबद्ध नहीं किया जा सकता।</p>
+<h2 id="सदश-कटलग">संदेश कैटलॉग</h2>
+<h3 id="सदश-परकर-क-सरश">संदेश प्रकारों का सारांश</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Name</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Direction</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Since</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">CreateSession</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ReconfigureSession</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">DestroySession</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">CreateLeaseSet</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">5</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SendMessage</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">6</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ReceiveMessageBegin</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">7</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ReceiveMessageEnd</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">8</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">GetBandwidthLimits</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">20</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SessionStatus</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">21</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">RequestLeaseSet</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">22</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">MessageStatus</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">23</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">BandwidthLimits</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">29</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ReportAbuse</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bidirectional</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Unused</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">30</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Disconnect</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bidirectional</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">31</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">MessagePayload</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">32</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">GetDate</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">33</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SetDate</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">34</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">DestLookup</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">35</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">DestReply</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">36</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SendMessageExpires</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">37</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">RequestVariableLeaseSet</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.7</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">38</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">HostLookup</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.11</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">39</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">HostReply</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">R → C</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.11</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">41</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">CreateLeaseSet2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.39</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">42</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">BlindingInfo</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">C → R</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.43</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Current</td>
+    </tr>
+  </tbody>
+</table>
+**कुंजी**: C = क्लाइंट, R = Router
+<h3 id="मखय-सदश-क-ववरण">मुख्य संदेश के विवरण</h3>
+<h4 id="createsessionmessage-परकर-1">CreateSessionMessage (प्रकार 1)</h4>
+<p><strong>उद्देश्य</strong>: एक नया I2CP सत्र प्रारंभ करें</p>
+<p><strong>सामग्री</strong>: SessionConfig (सत्र विन्यास) संरचना</p>
+<p><strong>प्रतिक्रिया</strong>: SessionStatusMessage (status=Created या Invalid)</p>
+<p><strong>आवश्यकताएँ</strong>: - SessionConfig में दिनांक router समय से ±30 सेकंड के भीतर होना चाहिए - हस्ताक्षर सत्यापन के लिए मैपिंग को कुंजी के आधार पर क्रमबद्ध होना चाहिए - Destination (गंतव्य) के पास पहले से कोई सक्रिय सत्र नहीं होना चाहिए</p>
+<h4 id="requestvariableleasesetmessage-परकर-37">RequestVariableLeaseSetMessage (प्रकार 37)</h4>
+<p><strong>उद्देश्य</strong>: Router inbound tunnels के लिए क्लाइंट से प्राधिकरण का अनुरोध करता है</p>
+<p><strong>सामग्री</strong>: - सत्र आईडी - Lease (लीज़) की संख्या - Lease संरचनाओं की array (प्रत्येक का अपना अलग समाप्ति समय)</p>
+<p><strong>प्रतिक्रिया</strong>: CreateLeaseSet2Message</p>
+<p><strong>महत्त्व</strong>: यह संकेत दर्शाता है कि सत्र कार्यरत है। router इसे केवल तब भेजता है जब: 1. कम-से-कम एक इनबाउंड tunnel निर्मित हो 2. कम-से-कम एक आउटबाउंड tunnel निर्मित हो</p>
+<p><strong>समय-सीमा अनुशंसा</strong>: यदि सत्र बनाए जाने के 5+ मिनट के भीतर यह संदेश प्राप्त नहीं होता है, तो क्लाइंट्स को सत्र को समाप्त कर देना चाहिए।</p>
+<h4 id="createleaseset2message-परकर-41">CreateLeaseSet2Message (प्रकार 41)</h4>
+<p><strong>उद्देश्य</strong>: क्लाइंट LeaseSet को नेटवर्क डेटाबेस में प्रकाशित करता है</p>
+<p><strong>सामग्री</strong>: - सत्र ID - LeaseSet प्रकार बाइट (1, 3, 5, या 7) - LeaseSet या LeaseSet2 या EncryptedLeaseSet या MetaLeaseSet - निजी कुंजियों की संख्या - निजी कुंजी सूची (LeaseSet में प्रत्येक सार्वजनिक कुंजी के लिए एक, उसी क्रम में)</p>
+<p><strong>निजी कुंजियाँ</strong>: आने वाले garlic संदेश (I2P का बंडल संदेश) को डिक्रिप्ट करने के लिए आवश्यक। प्रारूप:</p>
+<pre tabindex="0"><code>Encryption type (2 bytes)
+Key length (2 bytes)
+Private key data (variable)
+</code></pre><p><strong>नोट</strong>: अप्रचलित CreateLeaseSetMessage (type 4) को प्रतिस्थापित करता है, जो निम्नलिखित को संभाल नहीं सकता: - LeaseSet2 वैरिएंट - गैर-ElGamal एन्क्रिप्शन - एकाधिक एन्क्रिप्शन प्रकार - एन्क्रिप्टेड LeaseSets - ऑफ़लाइन साइनिंग कुंजियाँ</p>
+<h4 id="sendmessageexpiresmessage-परकर-36">SendMessageExpiresMessage (प्रकार 36)</h4>
+<p><strong>उद्देश्य</strong>: समाप्ति समय और उन्नत विकल्पों सहित गंतव्य पर संदेश भेजें</p>
+<p><strong>सामग्री</strong>: - सत्र ID - गंतव्य - पेलोड (gzipped) - नॉन्स (4 बाइट) - फ्लैग्स (2 बाइट) - नीचे देखें - समाप्ति तिथि (6 बाइट, 8 से ट्रंकेट किया गया)</p>
+<p><strong>फ़्लैग्स फ़ील्ड</strong> (2 बाइट, बिट क्रम 15&hellip;0):</p>
+<p><strong>बिट्स 15-11</strong>: अप्रयुक्त, 0 होना अनिवार्य है</p>
+<p><strong>Bits 10-9</strong>: संदेश की विश्वसनीयता ओवरराइड (अप्रयुक्त, इसके बजाय nonce (एक-बार उपयोग की जाने वाली अद्वितीय संख्या) का उपयोग करें)</p>
+<p><strong>बिट 8</strong>: LeaseSet को बंडल न करें - 0: Router LeaseSet को garlic में बंडल कर सकता है - 1: LeaseSet को बंडल न करें</p>
+<p><strong>बिट 7-4</strong>: टैग की निम्न सीमा (केवल ElGamal पर लागू, ECIES में अनदेखा)</p>
+<pre tabindex="0"><code>0000 = Use session settings
+0001 = 2 tags
+0010 = 3 tags
+...
+1111 = 192 tags
+</code></pre><p><strong>बिट्स 3-0</strong>: आवश्यकता होने पर भेजे जाने वाले टैग (केवल ElGamal के लिए, ECIES में अनदेखा किया जाता है)</p>
+<pre tabindex="0"><code>0000 = Use session settings
+0001 = 2 tags
+0010 = 4 tags
+...
+1111 = 160 tags
+</code></pre><h4 id="messagestatusmessage-सदश-सथत-सदश-परकर-22">MessageStatusMessage (संदेश स्थिति संदेश) (प्रकार 22)</h4>
+<p><strong>उद्देश्य</strong>: संदेश की डिलीवरी स्थिति के बारे में क्लाइंट को सूचित करना</p>
+<p><strong>सामग्री</strong>: - सेशन ID - मैसेज ID (router द्वारा जनित) - स्टेटस कोड (1 बाइट) - आकार (4 बाइट, सिर्फ status=0 के लिए प्रासंगिक) - नॉन्स (4 बाइट, क्लाइंट के SendMessage nonce से मेल खाता है)</p>
+<p><strong>स्थिति कोड</strong> (प्रेषित संदेश):</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Code</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Name</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Meaning</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Accepted</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Router accepted message</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Success</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Best Effort Success</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Probable delivery</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Success</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Guaranteed Success</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Probable delivery</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Success</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">6</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Local Success</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Delivered to local client</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Success</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Best Effort Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Probable failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">5</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Guaranteed Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Generic failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">7</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Local Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Local delivery failed</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">8</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Router Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Router shutdown/error</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">9</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Network Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">No network connectivity</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">10</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bad Session</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Invalid/closed session</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">11</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bad Message</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Invalid payload</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">12</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bad Options</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Invalid options/expiration</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">13</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Overflow Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Queue/buffer full</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">14</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Message Expired</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Expired before send</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">15</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bad Local LeaseSet</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Local LeaseSet problem</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">16</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">No Local Tunnels</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">No tunnels available</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">17</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Unsupported Encryption</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Incompatible encryption</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">18</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bad Destination</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Invalid remote destination</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">19</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bad Leaseset</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Invalid remote LeaseSet</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">20</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Expired Leaseset</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Remote LeaseSet expired</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">21</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">No Leaseset</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Remote LeaseSet not found</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">22</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Meta Leaseset</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Cannot send to meta LS</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">23</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Loopback Denied</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Same source and destination</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+    </tr>
+  </tbody>
+</table>
+**सफलता कोड**: 1, 2, 4, 6 **विफलता कोड**: अन्य सभी
+<p><strong>स्टेटस कोड 0</strong> (अप्रचलित): उपलब्ध संदेश (आने वाला, तेज़ प्राप्ति निष्क्रिय)</p>
+<h4 id="hostlookupmessage-परकर-38">HostLookupMessage (प्रकार 38)</h4>
+<p><strong>उद्देश्य</strong>: होस्टनेम या हैश द्वारा डेस्टिनेशन लुकअप (DestLookup का स्थान लेता है)</p>
+<p><strong>सामग्री</strong>: - सत्र ID (या सत्र न होने पर 0xFFFF) - अनुरोध ID (4 बाइट) - मिलीसेकंड में टाइमआउट (4 बाइट, अनुशंसित न्यूनतम: 10000) - अनुरोध प्रकार (1 बाइट) - लुकअप कुंजी (Hash, hostname String, या Destination)</p>
+<p><strong>अनुरोध प्रकार</strong>:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Lookup Key</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Returns</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Since</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Hash</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Destination</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Hostname String</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Destination</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Original</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Hash</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Destination + Options</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.66</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Hostname String</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Destination + Options</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.66</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Destination</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Destination + Options</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.66</td>
+    </tr>
+  </tbody>
+</table>
+प्रकार 2-4 उपलब्ध होने पर LeaseSet विकल्प (प्रस्ताव 167) लौटाते हैं।
+<p><strong>प्रतिक्रिया</strong>: HostReplyMessage</p>
+<h4 id="hostreplymessage-परकर-39">HostReplyMessage (प्रकार 39)</h4>
+<p><strong>उद्देश्य</strong>: HostLookupMessage (होस्ट लुकअप संदेश) के प्रति प्रतिक्रिया</p>
+<p><strong>सामग्री</strong>: - सत्र ID - अनुरोध ID - परिणाम कोड (1 बाइट) - Destination (I2P पता/पहचान) (सफल होने पर मौजूद, कभी-कभी कुछ विशिष्ट विफलताओं में भी) - मैपिंग (केवल लुकअप प्रकार 2-4 के लिए, खाली हो सकता है)</p>
+<p><strong>परिणाम कोड</strong>:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Code</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Name</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Success</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Lookup succeeded</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Generic failure</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Lookup Password Required</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Blinded address requires password</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Private Key Required</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Blinded address requires private key</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Password and Key Required</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Blinded address requires both</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">5</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">LeaseSet Decryption Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Cannot decrypt LeaseSet</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">6</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">LeaseSet Lookup Failure</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">LeaseSet not found in netdb</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">7</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Lookup Type Unsupported</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Router doesn't support this type</td>
+    </tr>
+  </tbody>
+</table>
+#### BlindingInfoMessage (प्रकार 42)
+<p><strong>उद्देश्य</strong>: router को blinded destination (गोपनीयता हेतु छिपाई गई गंतव्य पहचान) के प्रमाणीकरण आवश्यकताओं के बारे में सूचित करना (since 0.9.43)</p>
+<p><strong>सामग्री</strong>: - सेशन ID - फ्लैग्स (1 बाइट) - एंडपॉइंट प्रकार (1 बाइट): 0=Hash, 1=hostname, 2=Destination, 3=SigType+Key - ब्लाइंडेड हस्ताक्षर प्रकार (2 बाइट) - समाप्ति (4 बाइट, एपोक से सेकंड) - एंडपॉइंट डेटा (प्रकार के अनुसार बदलता है) - प्राइवेट कुंजी (32 बाइट, केवल यदि फ्लैग बिट 0 सेट हो) - लुकअप पासवर्ड (String, केवल यदि फ्लैग बिट 4 सेट हो)</p>
+<p><strong>फ्लैग्स</strong> (बिट क्रम 76543210):</p>
+<ul>
+<li><strong>बिट 0</strong>: 0=सभी, 1=प्रति-क्लाइंट</li>
+<li><strong>बिट्स 3-1</strong>: प्रमाणीकरण योजना (यदि बिट 0=1): 000=DH (Diffie-Hellman), 001=PSK (Pre-Shared Key)</li>
+<li><strong>बिट 4</strong>: 1=सीक्रेट आवश्यक</li>
+<li><strong>बिट्स 7-5</strong>: अप्रयुक्त, 0 पर सेट करें</li>
+</ul>
+<p><strong>कोई प्रतिक्रिया नहीं</strong>: Router चुपचाप संसाधित करता है</p>
+<p><strong>उपयोग मामला</strong>: blinded destination (b33 address) पर भेजने से पहले, क्लाइंट को निम्न में से एक करना होगा: 1. HostLookup के माध्यम से b33 का लुकअप करें, या 2. BlindingInfo message भेजें</p>
+<p>यदि गंतव्य को प्रमाणीकरण की आवश्यकता है, तो BlindingInfo अनिवार्य है.</p>
+<h4 id="reconfiguresessionmessage-परकर-2">ReconfigureSessionMessage (प्रकार 2)</h4>
+<p><strong>उद्देश्य</strong>: निर्माण के बाद सत्र विन्यास को अद्यतन करना</p>
+<p><strong>सामग्री</strong>: - सेशन आईडी - SessionConfig (सेशन कॉन्फ़िगरेशन) (केवल बदले गए विकल्प आवश्यक)</p>
+<p><strong>प्रतिक्रिया</strong>: SessionStatusMessage (सेशन स्थिति संदेश) (status=Updated या Invalid)</p>
+<p><strong>नोट्स</strong>: - Router नई कॉन्फ़िगरेशन को मौजूदा कॉन्फ़िगरेशन के साथ मर्ज करता है - Tunnel विकल्प (<code>inbound.*</code>, <code>outbound.*</code>) हमेशा लागू किए जाते हैं - सत्र निर्माण के बाद कुछ विकल्प अपरिवर्तनीय हो सकते हैं - दिनांक router समय से ±30 सेकंड के भीतर होना चाहिए - मैपिंग को कुंजी के अनुसार क्रमबद्ध होना चाहिए</p>
+<h4 id="destroysessionmessage-सतर-समपत-सदश-परकर-3">DestroySessionMessage (सत्र समाप्ति संदेश) (प्रकार 3)</h4>
+<p><strong>उद्देश्य</strong>: सत्र समाप्त करना</p>
+<p><strong>सामग्री</strong>: सत्र आईडी</p>
+<p><strong>अपेक्षित प्रतिक्रिया</strong>: SessionStatusMessage (status=Destroyed)</p>
+<p><strong>वास्तविक व्यवहार</strong> (Java I2P 0.9.66 तक): - Router कभी SessionStatus(Destroyed) नहीं भेजता - यदि कोई सत्र शेष नहीं है: DisconnectMessage भेजता है - यदि subsessions (उप-सत्र) शेष हैं: कोई उत्तर नहीं</p>
+<p><strong>महत्वपूर्ण</strong>: Java I2P का व्यवहार विनिर्देश से भिन्न है। व्यक्तिगत उपसत्रों को समाप्त करते समय कार्यान्वयनों को सावधानी बरतनी चाहिए।</p>
+<h4 id="disconnectmessage-परकर-30">DisconnectMessage (प्रकार 30)</h4>
+<p><strong>उद्देश्य</strong>: यह सूचित करना कि कनेक्शन जल्द ही समाप्त होने वाला है</p>
+<p><strong>सामग्री</strong>: कारण स्ट्रिंग</p>
+<p><strong>प्रभाव</strong>: कनेक्शन पर मौजूद सभी सत्र नष्ट कर दिए जाते हैं, सॉकेट बंद हो जाता है</p>
+<p><strong>कार्यान्वयन</strong>: मुख्य रूप से Java I2P में router → क्लाइंट</p>
+<h2 id="परटकल-ससकरण-इतहस">प्रोटोकॉल संस्करण इतिहास</h2>
+<h3 id="ससकरण-पहचन">संस्करण पहचान</h3>
+<p>I2CP प्रोटोकॉल का संस्करण Get/SetDate संदेशों में आदान-प्रदान किया जाता है (0.8.7 से)। पुराने routers के लिए संस्करण संबंधी जानकारी उपलब्ध नहीं है।</p>
+<p><strong>संस्करण स्ट्रिंग</strong>: &ldquo;core&rdquo; API के संस्करण को दर्शाता है, यह जरूरी नहीं कि router संस्करण हो।</p>
+<h3 id="वशषतओ-क-समयरख">विशेषताओं की समयरेखा</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Version</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Key Features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.67</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">PQ Hybrid ML-KEM (enc types 5-7) in LeaseSet</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.66</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Host lookup/reply extensions (proposal 167), service records</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.62</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">MessageStatus loopback error code</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.46</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">X25519 (enc type 4) in LeaseSet, ECIES end-to-end</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.43</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">BlindingInfo message, extended HostReply failure codes</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.41</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">EncryptedLeaseSet options, Meta LS error code</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.39</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">CreateLeaseSet2 message, RedDSA Ed25519 support</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.38</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Preliminary LS2 support (format changed in 0.9.39)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.21</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Multiple sessions on single connection</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.20</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Additional SetDate messages for clock shifts</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.16</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Authentication required before other messages (when enabled)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.15</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">EdDSA Ed25519 signature type</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.14</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Per-message reliability override with nonzero nonce</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.12</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECDSA P-256/384/521 signature types, RSA support</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.11</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">HostLookup/HostReply messages, auth in GetDate</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.7</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">RequestVariableLeaseSet message</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.5</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Additional MessageStatus codes</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.4</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Fast receive mode default, nonce=0 allowed</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9.2</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SendMessageExpires flag tag bits</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.9</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">16 leases per LeaseSet (up from 6)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.8.7</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Version strings in Get/SetDate</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.8.4</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SendMessageExpires flag bits</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.8.3</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">DestLookup in standard session, concurrent lookups</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.8.1</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><code>messageReliability=none</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.7.2</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">GetBandwidthLimits, BandwidthLimits</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.7.1</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SendMessageExpires, ReconfigureSession, ports in gzip header</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.7</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">DestLookup, DestReply</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>0.6.5-</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Original protocol features</td>
+    </tr>
+  </tbody>
+</table>
+## सुरक्षा संबंधी विचार
+<h3 id="परमणकरण">प्रमाणीकरण</h3>
+<p><strong>डिफ़ॉल्ट</strong>: कोई प्रमाणीकरण आवश्यक नहीं <strong>वैकल्पिक</strong>: उपयोगकर्ता नाम/पासवर्ड प्रमाणीकरण (0.9.11 से) <strong>अनिवार्य</strong>: सक्रिय होने पर, अन्य संदेशों से पहले प्रमाणीकरण पूरा होना आवश्यक है (0.9.16 से)</p>
+<p><strong>दूरस्थ कनेक्शन</strong>: प्रमाण-पत्रों और निजी कुंजियों की सुरक्षा के लिए हमेशा TLS (ट्रांसपोर्ट लेयर सिक्योरिटी) (<code>i2cp.SSL=true</code>) का उपयोग करें।</p>
+<h3 id="घड-क-वचलन">घड़ी का विचलन</h3>
+<p>SessionConfig Date (सेशन कॉन्फ़िगरेशन की तिथि) router समय से ±30 सेकंड के भीतर होनी चाहिए, अन्यथा सेशन अस्वीकार कर दिया जाएगा. समय समकालित करने के लिए Get/SetDate का उपयोग करें.</p>
+<h3 id="नज-कज-क-परबधन">निजी कुंजी का प्रबंधन</h3>
+<p>CreateLeaseSet2Message में आने वाले संदेशों को डिक्रिप्ट करने के लिए निजी कुंजियाँ होती हैं। इन कुंजियों के लिए यह आवश्यक है: - सुरक्षित रूप से प्रेषित की जाएँ (दूरस्थ कनेक्शनों के लिए TLS) - router द्वारा सुरक्षित रूप से संग्रहीत की जाएँ - समझौता होने पर बदली जाएँ</p>
+<h3 id="सदश-क-समपत">संदेश की समाप्ति</h3>
+<p>स्पष्ट समाप्ति समय निर्धारित करने के लिए हमेशा SendMessageExpires (SendMessage नहीं) का उपयोग करें। यह: - संदेशों को अनिश्चितकाल तक कतार में पड़े रहने से रोकता है - संसाधन खपत को कम करता है - विश्वसनीयता में सुधार करता है</p>
+<h3 id="सतर-टग-परबधन">सत्र टैग प्रबंधन</h3>
+<p><strong>ElGamal</strong> (अप्रचलित): - टैगों को बैचों में भेजे जाने चाहिए - खोए हुए टैग डिक्रिप्शन विफलताओं का कारण बनते हैं - उच्च मेमोरी ओवरहेड (अतिरिक्त मेमोरी-खर्च)</p>
+<p><strong>ECIES-X25519</strong> (वर्तमान): - समकालिक PRNG (छद्म-यादृच्छिक संख्या जनक) के माध्यम से उत्पन्न टैग - पूर्व-प्रेषण की आवश्यकता नहीं - संदेश हानि के प्रति सहनशील - काफी कम ओवरहेड</p>
+<h2 id="सरवततम-परथए">सर्वोत्तम प्रथाएँ</h2>
+<h3 id="कलइट-डवलपरस-क-लए">क्लाइंट डेवलपर्स के लिए</h3>
+<ol>
+<li>
+<p><strong>फास्ट रिसीव मोड का उपयोग करें</strong>: हमेशा <code>i2cp.fastReceive=true</code> सेट करें (या डिफ़ॉल्ट पर भरोसा करें)</p>
+</li>
+<li>
+<p><strong>ECIES-X25519 (एलिप्टिक-curve आधारित एन्क्रिप्शन स्कीम) को प्राथमिकता दें</strong>: सर्वोत्तम प्रदर्शन और संगतता के लिए <code>i2cp.leaseSetEncType=4,0</code> कॉन्फ़िगर करें</p>
+</li>
+<li>
+<p><strong>स्पष्ट समाप्ति समय निर्धारित करें</strong>: SendMessageExpires का उपयोग करें, SendMessage नहीं</p>
+</li>
+<li>
+<p><strong>Subsessions (उप-सेशन) को सावधानीपूर्वक संभालें</strong>: ध्यान रखें कि subsessions destinations (गंतव्य) के बीच कोई अनामिकता प्रदान नहीं करते</p>
+</li>
+<li>
+<p><strong>सत्र निर्माण टाइमआउट</strong>: यदि 5 मिनट के भीतर RequestVariableLeaseSet (एक विशिष्ट संदेश/ऑब्जेक्ट का नाम) प्राप्त न हो, तो सत्र समाप्त करें</p>
+</li>
+<li>
+<p><strong>कॉन्फ़िगरेशन मैपिंग को क्रमबद्ध करें</strong>: SessionConfig पर हस्ताक्षर करने से पहले हमेशा मैपिंग कुंजियों को क्रमबद्ध करें</p>
+</li>
+<li>
+<p><strong>उचित Tunnel संख्या का उपयोग करें</strong>: आवश्यक न होने पर <code>quantity</code> &gt; 6 सेट न करें</p>
+</li>
+<li>
+<p><strong>नॉन-जावा के लिए SAM/BOB पर विचार करें</strong>: I2CP को सीधे लागू करने के बजाय SAM लागू करें</p>
+</li>
+</ol>
+<h3 id="router-डवलपरस-क-लए">Router डेवलपर्स के लिए</h3>
+<ol>
+<li>
+<p><strong>तिथियों का सत्यापन</strong>: SessionConfig की तिथियों पर ±30 सेकंड की समय-विंडो लागू करें</p>
+</li>
+<li>
+<p><strong>संदेश का आकार सीमित करें</strong>: ~64 KB का अधिकतम संदेश आकार लागू करें</p>
+</li>
+<li>
+<p><strong>एकाधिक सत्रों का समर्थन</strong>: 0.9.21 विनिर्देश के अनुसार subsession (उप-सत्र) समर्थन लागू करें</p>
+</li>
+<li>
+<p><strong>RequestVariableLeaseSet (I2NP संदेश) तुरंत भेजें</strong>: केवल तब जब दोनों इनबाउंड और आउटबाउंड tunnels बन चुके हों</p>
+</li>
+<li>
+<p><strong>Deprecated (अप्रचलित) संदेशों को संभालें</strong>: स्वीकार करें, लेकिन ReceiveMessageBegin/End के उपयोग को हतोत्साहित करें</p>
+</li>
+<li>
+<p><strong>ECIES-X25519 (X25519-आधारित Elliptic Curve Integrated Encryption Scheme, आधुनिक सार्वजनिक-कुंजी एन्क्रिप्शन)</strong>: नई तैनातियों के लिए टाइप 4 एन्क्रिप्शन को प्राथमिकता दें</p>
+</li>
+</ol>
+<h2 id="डबगग-और-समसय-नवरण">डीबगिंग और समस्या निवारण</h2>
+<h3 id="समनय-समसयए">सामान्य समस्याएँ</h3>
+<p><strong>सत्र अस्वीकृत (अमान्य)</strong>: - क्लॉक स्क्यू (±30 सेकंड के भीतर होना चाहिए) की जाँच करें - सत्यापित करें कि Mapping कुंजी के अनुसार क्रमबद्ध है - सुनिश्चित करें कि Destination पहले से उपयोग में न हो</p>
+<p><strong>RequestVariableLeaseSet नहीं</strong>: - Router संभवतः tunnels बना रहा है (अधिकतम 5 मिनट तक प्रतीक्षा करें) - नेटवर्क कनेक्टिविटी समस्याओं की जाँच करें - सुनिश्चित करें कि पर्याप्त पीयर कनेक्शन हैं</p>
+<p><strong>संदेश वितरण विफलताएँ</strong>: - विफलता के विशिष्ट कारण के लिए MessageStatus कोड जांचें - सत्यापित करें कि दूरस्थ LeaseSet प्रकाशित और वर्तमान है - सुनिश्चित करें कि एन्क्रिप्शन प्रकार संगत हों</p>
+<p><strong>उपसत्र से संबंधित समस्याएँ</strong>: - सत्यापित करें कि प्राथमिक सत्र पहले बनाया गया है - पुष्टि करें कि एन्क्रिप्शन कुंजियाँ समान हैं - जाँचें कि हस्ताक्षर कुंजियाँ भिन्न हैं</p>
+<h3 id="नदन-सदश">निदान संदेश</h3>
+<p><strong>GetBandwidthLimits</strong>: router की क्षमता की जानकारी प्राप्त करें <strong>HostLookup</strong>: नाम समाधान और LeaseSet (I2P में किसी गंतव्य के tunnels की लीज़ प्रविष्टियों का सेट) उपलब्धता का परीक्षण करें <strong>MessageStatus</strong>: संदेश वितरण को एंड-टू-एंड ट्रैक करें</p>
+<h2 id="सबधत-वनरदश">संबंधित विनिर्देश</h2>
+<ul>
+<li><strong>सामान्य संरचनाएँ</strong>: /docs/specs/common-structures/</li>
+<li><strong>I2NP (नेटवर्क प्रोटोकॉल)</strong>: /docs/specs/i2np/</li>
+<li><strong>ECIES-X25519</strong>: /docs/specs/ecies/</li>
+<li><strong>Tunnel निर्माण</strong>: /docs/specs/implementation/</li>
+<li><strong>स्ट्रीमिंग लाइब्रेरी</strong>: /docs/specs/streaming/</li>
+<li><strong>डेटाग्राम लाइब्रेरी</strong>: /docs/api/datagrams/</li>
+<li><strong>SAM v3</strong>: /docs/api/samv3/</li>
+</ul>
+<h2 id="सदरभत-परसतव">संदर्भित प्रस्ताव</h2>
+<ul>
+<li><a href="../../../../hi/proposals/123-new-netdb-entries/">प्रस्ताव 123</a>
+: एन्क्रिप्टेड LeaseSets और प्रमाणीकरण</li>
+<li><a href="../../../../hi/proposals/144-ecies-x25519-aead-ratchet/">प्रस्ताव 144</a>
+: ECIES-X25519-AEAD-Ratchet</li>
+<li><a href="../../../../hi/proposals/149-b32-encrypted-ls2/">प्रस्ताव 149</a>
+: ब्लाइंडेड पता प्रारूप (b33)</li>
+<li><a href="../../../../hi/proposals/152-ecies-tunnels/">प्रस्ताव 152</a>
+: X25519 tunnel निर्माण</li>
+<li><a href="../../../../hi/proposals/154-ecies-lookups/">प्रस्ताव 154</a>
+: ECIES डेस्टिनेशनों से डेटाबेस लुकअप्स</li>
+<li><a href="../../../../hi/proposals/156-ecies-routers/">प्रस्ताव 156</a>
+: Router का ECIES-X25519 की ओर माइग्रेशन</li>
+<li><a href="../../../../hi/proposals/161-ri-dest-padding/">प्रस्ताव 161</a>
+: डेस्टिनेशन पैडिंग संपीड़न</li>
+<li><a href="../../../../hi/proposals/167-service-records/">प्रस्ताव 167</a>
+: LeaseSet सर्विस रिकॉर्ड्स</li>
+<li><a href="../../../../hi/proposals/169-pq-crypto/">प्रस्ताव 169</a>
+: पोस्ट-क्वांटम हाइब्रिड क्रिप्टोग्राफी (ML-KEM)</li>
+</ul>
+<h2 id="javadoc-सदरभ">Javadoc संदर्भ</h2>
+<ul>
+<li><a href="http://docs.i2p-projekt.de/javadoc/net/i2p/data/i2cp/package-summary.html">I2CP पैकेज</a>
+</li>
+<li><a href="http://docs.i2p-projekt.de/javadoc/net/i2p/data/i2cp/MessageStatusMessage.html">MessageStatusMessage</a>
+</li>
+<li><a href="http://docs.i2p-projekt.de/javadoc/net/i2p/client/package-summary.html">क्लाइंट API</a>
+</li>
+</ul>
+<h2 id="अपरचलन-सरश">अप्रचलन सारांश</h2>
+<h3 id="अपरचलत-सदश-उपयग-न-कर">अप्रचलित संदेश (उपयोग न करें)</h3>
+<ul>
+<li><strong>CreateLeaseSetMessage</strong> (प्रकार 4): CreateLeaseSet2Message का उपयोग करें</li>
+<li><strong>RequestLeaseSetMessage</strong> (प्रकार 21): RequestVariableLeaseSetMessage का उपयोग करें</li>
+<li><strong>ReceiveMessageBeginMessage</strong> (प्रकार 6): तेज़ प्राप्ति मोड का उपयोग करें</li>
+<li><strong>ReceiveMessageEndMessage</strong> (प्रकार 7): तेज़ प्राप्ति मोड का उपयोग करें</li>
+<li><strong>DestLookupMessage</strong> (प्रकार 34): HostLookupMessage का उपयोग करें</li>
+<li><strong>DestReplyMessage</strong> (प्रकार 35): HostReplyMessage का उपयोग करें</li>
+<li><strong>ReportAbuseMessage</strong> (प्रकार 29): कभी कार्यान्वित नहीं किया गया</li>
+</ul>
+<h3 id="अपरचलत-वकलप">अप्रचलित विकल्प</h3>
+<ul>
+<li>ElGamal एन्क्रिप्शन (प्रकार 0): ECIES-X25519 (प्रकार 4) पर स्थानांतरित करें</li>
+<li>DSA हस्ताक्षर: EdDSA या ECDSA पर स्थानांतरित करें</li>
+<li><code>i2cp.fastReceive=false</code>: हमेशा तेज़ रिसीव मोड का उपयोग करें</li>
+</ul>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../hi/docs/specs/i2np/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">I2P नेटवर्क प्रोटोकॉल (I2NP)</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../hi/docs/specs/ecies-hybrid/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">ECIES-X25519-AEAD-Ratchet हाइब्रिड एन्क्रिप्शन</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/hi/docs/specs/i2cp.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">I2P समाचार से अपडेट रहें:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="अपना ईमेल दर्ज करें" required>
+                            <button type="submit">सदस्यता लें</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>त्वरित लिंक</h3>
+                <ul>
+                    <li><a href="../../../../hi/financial-support/">दान करें</a></li>
+                    <li><a href="../../../../hi/docs/overview/intro/">I2P परिचय</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>समुदाय</h3>
+                <ul>
+                    <li><a href="../../../../hi/get-involved/">शामिल हो जाइए</a></li>
+                    <li><a href="../../../../hi/blog/">ब्लॉग</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">आधिकारिक फोरम</a></li>
+                    <li><a href="../../../../hi/contact/">संपर्क करें</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>संसाधन</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P मेट्रिक्स</a></li>
+                    <li><a href="../../../../hi/papers/">अनुसंधान</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">गिटलैब</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">स्टॉर्मीक्लाउड</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 इनविज़िबल इंटरनेट प्रोजेक्ट। क्रिएटिव कॉमन्स के अंतर्गत लाइसेंस।</p>
+            <div class="footer-links">
+                <a href="../../../../hi/privacy/">गोपनीयता</a>
+                <a href="../../../../hi/terms/">शर्तें</a>
+                <a href="../../../../hi/about/media/">प्रेस</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="बंद करें">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>सामुदायिक पोल</h2>
+            <p class="modal-subtitle">हम आपसे सुनना पसंद करेंगे</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                आपका वोट I2P के भविष्य को आकार देने में मदद करता है।
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

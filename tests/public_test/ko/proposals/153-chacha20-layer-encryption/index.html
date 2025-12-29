@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>ChaCha 터널 레이어 암호화 | I2P - 보이지 않는 인터넷 프로젝트</title>
+
+    <meta name="description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="ChaCha 터널 레이어 암호화 | I2P - 보이지 않는 인터넷 프로젝트">
+    <meta property="og:description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/ko/proposals/153-chacha20-layer-encryption/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P 베타 사이트 현재 운영 중 문의사항은 stormycloud@mail.i2p로 이메일 주세요</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="배너 닫기" title="배너 닫기">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../ko/" class="logo-link">
+                    <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../ko/about/" class="">소개</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../ko/about/">개요</a></li>
+                            <li><a href="../../../ko/papers/">연구 논문</a></li>
+                            <li><a href="../../../ko/about/media/">보도자료</a></li>
+                            <li><a href="../../../ko/contact/">문의하기</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../ko/docs/" class="">문서</a></li>
+                    <li><a href="../../../ko/downloads/" class="">다운로드</a></li>
+                    <li><a href="../../../ko/blog/" class="">블로그</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../ko/get-involved/" class="">참여하기</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../ko/get-involved/">개요</a></li>
+                            <li><a href="../../../ko/feedback/">기능 제안</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">ko</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../en/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">영어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../es/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">스페인어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ko/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option active">한국어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../zh/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">중국어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ru/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">러시아어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../cs/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">체코어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../de/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">독일어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../fr/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">프랑스어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../tr/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">터키어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../vi/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">베트남어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../hi/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">힌디어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ar/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">아랍어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../pt/proposals/153-chacha20-layer-encryption/"
+                                class="lang-option">포르투갈어</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../ko/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../ko/downloads/" class="btn btn-primary">I2P 다운로드</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+<div class="proposals-page">
+    <div class="container">
+        
+        <nav class="breadcrumbs">
+            <a href="../../../ko/">Home</a>
+            <span class="separator">/</span>
+            <a href="../../../ko/proposals/">Proposals</a>
+            <span class="separator">/</span>
+            <span class="current">ChaCha 터널 레이어 암호화</span>
+        </nav>
+
+        
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">이 번역은 기계 학습을 사용하여 생성되었으며 100% 정확하지 않을 수 있습니다.</span>
+    
+    
+    <a href="../../../en/proposals/153-chacha20-layer-encryption/" class="disclaimer-link">영어 버전 보기</a>
+    
+</div>
+
+
+
+        
+        <header class="proposal-header">
+            <div class="proposal-title-section">
+                <h1 class="proposal-title">ChaCha 터널 레이어 암호화</h1>
+                <div class="proposal-number">Proposal 153</div>
+            </div>
+
+            
+            <div class="proposal-meta-box">
+                <div class="proposal-status status-open">
+                    Open
+                </div>
+
+                
+                <div class="proposal-info-grid">
+                    
+                    <div class="info-item">
+                        <span class="info-label">Author</span>
+                        <span class="info-value">chisana</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Created</span>
+                        <span class="info-value">2019-08-04</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Last Updated</span>
+                        <span class="info-value">2019-08-05</span>
+                    </div>
+                    
+
+                    
+
+                    
+                </div>
+
+                
+                
+            </div>
+        </header>
+
+        
+        <div class="proposal-layout proposal-layout--with-toc">
+            
+            
+            <aside class="proposal-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#개요">개요</a>
+      <ul>
+        <li><a href="#목표">목표</a></li>
+        <li><a href="#확립된-터널-메시지-처리">확립된 터널 메시지 처리</a></li>
+        <li><a href="#홉-간-메시지의-aead-암호화">홉 간 메시지의 AEAD 암호화</a></li>
+        <li><a href="#게이트웨이-및-터널-생성-프로세스">게이트웨이 및 터널 생성 프로세스</a></li>
+        <li><a href="#게이트웨이-전처리-및-암호화">게이트웨이 전처리 및 암호화</a></li>
+        <li><a href="#참가자-처리">참가자 처리</a></li>
+        <li><a href="#인바운드-엔드포인트-처리">인바운드 엔드포인트 처리</a></li>
+        <li><a href="#chacha20chacha20-poly1305-터널-레이어-암호화에-대한-보안-분석">ChaCha20+ChaCha20-Poly1305 터널 레이어 암호화에 대한 보안 분석</a></li>
+      </ul>
+    </li>
+    <li><a href="#참고-문헌">참고 문헌</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="proposal-main">
+                <article class="proposal-content">
+                    <h2 id="개요">개요</h2>
+<p>이 제안서는 제안서 152: ECIES 터널의 변경 사항을 기반으로 하며 이를 필요로 합니다.</p>
+<p>ECIES-X25519 터널에 대한 BuildRequestRecord 형식을 지원하는 홉을 통해 구축된 터널만 이 사양을 구현할 수 있습니다.</p>
+<p>이 사양은 터널 레이어 암호화 유형을 나타내고, 레이어 AEAD 키 전송을 위한 터널 빌드 옵션 형식을 필요로 합니다.</p>
+<h3 id="목표">목표</h3>
+<p>이 제안서의 목표는 다음과 같습니다:</p>
+<ul>
+<li>확립된 터널 IV 및 레이어 암호화를 위해 AES256/ECB+CBC를 ChaCha20으로 대체</li>
+<li>홉 간 AEAD 보호를 위해 ChaCha20-Poly1305 사용</li>
+<li>비터널 참가자에 의해 기존 터널 레이어 암호화로부터 탐지되지 않음</li>
+<li>전체 터널 메시지 길이에 대한 변경 없음</li>
+</ul>
+<h3 id="확립된-터널-메시지-처리">확립된 터널 메시지 처리</h3>
+<p>이 섹션은 다음의 변경 사항을 설명합니다:</p>
+<ul>
+<li>아웃바운드 및 인바운드 게이트웨이 전처리 및 암호화</li>
+<li>참가자 암호화 및 후처리</li>
+<li>아웃바운드 및 인바운드 엔드포인트 암호화 및 후처리</li>
+</ul>
+<p>현재 터널 메시지 처리에 대한 개요는 <a href="../../../ko/docs/specs/implementation/">Tunnel Implementation</a>
+ 사양을 참조하십시오.</p>
+<p>ChaCha20 레이어 암호화를 지원하는 라우터에 대한 변경만 논의합니다.</p>
+<p>혼합 터널에서 AES 레이어 암호화에 대한 변경은 고려하지 않습니다. 안전한 프로토콜이 마련되기 전까지 128비트 AES IV를 64비트 ChaCha20 nonce로 변환하는 것이 필요합니다. 블룸 필터가 전체 IV의 고유성을 보장하지만, 고유 IV의 첫 번째 절반은 동일할 수 있습니다.</p>
+<p>이는 레이어 암호화가 터널의 모든 홉에 대해 균일해야 하며, 터널 생성 과정에서 터널 빌드 옵션을 사용하여 확립되어야 함을 의미합니다.</p>
+<p>모든 게이트웨이 및 터널 참가자는 두 개의 독립된 nonce의 유효성을 검사하기 위한 블룸 필터를 유지해야 합니다.</p>
+<p>이 제안서 전반에 걸쳐 언급된 <code>nonceKey</code>는 AES 레이어 암호화에서 사용되는 <code>IVKey</code>를 대신합니다. 이는 제안서 152의 동일한 KDF를 사용하여 생성됩니다.</p>
+<h3 id="홉-간-메시지의-aead-암호화">홉 간 메시지의 AEAD 암호화</h3>
+<p>각 연속적인 홉 쌍에 대해 고유한 <code>AEADKey</code>가 추가로 생성되어야 합니다.
+이 키는 연속적인 홉 간에 ChaCha20-Poly1305 암호화 및 암호 해독에 사용됩니다.</p>
+<p>터널 메시지는 Poly1305 MAC을 수용하기 위해 내부 암호화 프레임의 길이를 16바이트 줄여야 합니다.</p>
+<p>메시지에 직접 AEAD를 사용할 수 없으며, 이는 아웃바운드 터널에 의해 필요한 반복적인 암호 해독이 필요하기 때문입니다.
+반복적인 암호 해독은 이제 사용하는 방식으로 ChaCha20으로만 달성할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>+----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>  |    Tunnel ID      |   tunnelNonce     |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>  | tunnelNonce cont. |    obfsNonce      |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>  |  obfsNonce cont.  |                   |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+                   +
+</span></span><span style="display:flex;"><span>  |                                       |
+</span></span><span style="display:flex;"><span>  +           Encrypted Data              +
+</span></span><span style="display:flex;"><span>  ~                                       ~
+</span></span><span style="display:flex;"><span>  |                                       |
+</span></span><span style="display:flex;"><span>  +                   +----+----+----+----+
+</span></span><span style="display:flex;"><span>  |                   |    Poly1305 MAC   |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+                   +  
+</span></span><span style="display:flex;"><span>  |                                       |
+</span></span><span style="display:flex;"><span>  +                   +----+----+----+----+
+</span></span><span style="display:flex;"><span>  |                   |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Tunnel ID :: `TunnelId`
+</span></span><span style="display:flex;"><span>         4 bytes
+</span></span><span style="display:flex;"><span>         다음 홉의 ID
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tunnelNonce ::
+</span></span><span style="display:flex;"><span>         8 bytes
+</span></span><span style="display:flex;"><span>         터널 레이어 nonce
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  obfsNonce ::
+</span></span><span style="display:flex;"><span>         8 bytes
+</span></span><span style="display:flex;"><span>         터널 레이어 nonce 암호화 nonce
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Encrypted Data ::
+</span></span><span style="display:flex;"><span>         992 bytes
+</span></span><span style="display:flex;"><span>         암호화된 터널 메시지
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Poly1305 MAC ::
+</span></span><span style="display:flex;"><span>         16 bytes
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  total size: 1028 Bytes
+</span></span></code></pre></div><p>내부 홉(선행 및 후속 홉 포함)은 이전 홉의 AEAD 레이어를 암호 해독하고 다음 홉에 AEAD 레이어를 암호화하기 위해 두 개의 <code>AEADKeys</code>를 갖게 됩니다.</p>
+<p>모든 내부 홉 참가자는 BuildRequestRecords에 64바이트 추가 키 자료를 포함합니다.</p>
+<p>아웃바운드 엔드포인트와 인바운드 게이트웨이는 서로 간의 메시지를 터널 레이어로 암호화하지 않기 때문에 추가적인 32바이트의 키데이터만 필요합니다.</p>
+<p>아웃바운드 게이트웨이는 <code>outAEAD</code> 키를 생성하며, 이는 첫 번째 아웃바운드 홉의 <code>inAEAD</code> 키와 동일합니다.</p>
+<p>인바운드 엔드포인트는 <code>inAEAD</code> 키를 생성하며, 이는 최종 인바운드 홉의 <code>outAEAD</code> 키와 동일합니다.</p>
+<p>내부 홉은 수신 메시지를 AEAD 암호 해독하고 발신 메시지를 암호화하기 위해 사용될 <code>inAEADKey</code> 및 <code>outAEADKey</code>를 수신합니다.</p>
+<p>예를 들어, OBGW, A, B, OBEP와 같은 터널의 내부 홉에서는:</p>
+<ul>
+<li>A의 <code>inAEADKey</code>는 OBGW의 <code>outAEADKey</code>와 동일합니다.</li>
+<li>B의 <code>inAEADKey</code>는 A의 <code>outAEADKey</code>와 동일합니다.</li>
+<li>B의 <code>outAEADKey</code>는 OBEP의 <code>inAEADKey</code>와 동일합니다.</li>
+</ul>
+<p>키는 홉 쌍 간에 고유합니다. 따라서 OBEP의 <code>inAEADKey</code>는 A의 <code>inAEADKey</code>와 다르고,
+A의 <code>outAEADKey</code>는 B의 <code>outAEADKey</code>와 다릅니다.</p>
+<h3 id="게이트웨이-및-터널-생성-프로세스">게이트웨이 및 터널 생성 프로세스</h3>
+<p>게이트웨이는 지침-프래그먼트 프레임 후에 Poly1305 MAC을 위해 공간을 예약하여 메시지를 동일한 방식으로 분할하고 번들할 것입니다.</p>
+<p>AEAD 프레임(및 MAC 포함)을 포함하는 내부 I2NP 메시지는 프래그먼트에 걸쳐 분할될 수 있지만,
+드롭된 프래그먼트는 엔드포인트에서 AEAD 암호화 해제 실패(MAC 검증 실패)로 이어질 것입니다.</p>
+<h3 id="게이트웨이-전처리-및-암호화">게이트웨이 전처리 및 암호화</h3>
+<p>터널이 ChaCha20 레이어 암호화를 지원할 때, 게이트웨이는 메시지 세트당 두 개의 64비트 nonce를 생성합니다.</p>
+<p>인바운드 터널:</p>
+<ul>
+<li>
+<p>IV 및 터널 메시지(들) ChaCha20으로 암호화하기</p>
+</li>
+<li>
+<p>터널 수명의 <code>tunnelNonce</code>와 <code>obfsNonce</code> 8바이트 사용</p>
+</li>
+<li>
+<p><code>tunnelNonce</code> 암호화를 위한 8바이트 <code>obfsNonce</code> 사용</p>
+</li>
+<li>
+<p>2^(64 - 1) - 1개의 메시지 세트 전의 터널 파괴: 2^63 - 1 = 9,223,372,036,854,775,807</p>
+<ul>
+<li>64비트 nonce의 충돌을 피하기 위한 nonce 제한</li>
+<li>이론적으로 도달할 수 불가능한 nonce 제한, 이는 약 ~15,372,286,728,091,294 메시지/초 동안 10분 터널에 걸쳐 있습니다.</li>
+</ul>
+</li>
+<li>
+<p>기대되는 요소 수에 따라 블룸 필터 조정 (128 메시지/초, 1024 메시지/초? TBD)</p>
+</li>
+</ul>
+<p>터널의 인바운드 게이트웨이(IBGW)는 다른 터널의 아웃바운드 엔드포인트(OBEP)로부터 수신된 메시지를 처리합니다.</p>
+<p>이 시점에서는, 가장 바깥쪽 메시지 레이어는 포인트-투-포인트 전송 암호화를 사용하여 암호화되어 있습니다.
+I2NP 메시지 헤더는 터널 레이어에서 OBEP와 IBGW에 보입니다.
+내부 I2NP 메시지는 종단간 세션 암호화를 사용하여 통합갈릭 마늘에 래핑되어 있습니다.</p>
+<p>IBGW는 메시지를 적절히 형식화된 터널 메시지로 전처리하고, 다음과 같이 암호화합니다:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// IBGW는 블룸 필터에서의 충돌을 피하기 위한 랜덤 nonce를 생성합니다.
+</span></span><span style="display:flex;"><span>  tunnelNonce = Random(len = 64-bits)
+</span></span><span style="display:flex;"><span>  obfsNonce = Random(len = 64-bits)
+</span></span><span style="display:flex;"><span>  // IBGW는 터널 nonce 및 레이어 키를 사용하여 전처리된 터널 메시지 각각을 ChaCha20으로 암호화합니다.
+</span></span><span style="display:flex;"><span>  encMsg = ChaCha20(msg = 터널 msg, 숫자다리를 터널 nonce, 키 = 레이어 키)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // ChaCha20-Poly1305 각 메시지의 암호화된 데이터 프레임을 터널 nonce 및 outAEADKey로 암호화합니다.
+</span></span><span style="display:flex;"><span>  (encMsg, MAC) = ChaCha20-Poly1305-Encrypt(msg = encMsg, nonce = tunnelNonce, key = outAEADKey)
+</span></span></code></pre></div><p>터널 메시지 형식은 16바이트 IV 대신 두 개의 8바이트 nonce를 사용하여 약간 변경될 것입니다.
+nonce 암호화를 위해 사용되는 <code>obfsNonce</code>는 8바이트 <code>tunnelNonce</code>에 추가되어,
+각 홉은 암호화된 <code>tunnelNonce</code> 및 홉의 <code>nonceKey</code>를 사용하여 암호화합니다.</p>
+<p>동작 예측된 각각의 홉에 대한 메시지 세트의 선암호 해독이 종료된 후, 아웃바운드 게이트웨이는
+각 터널 메시지의 암호문 부분을 <code>tunnelNonce</code> 및 초기 홉의 <code>outAEADKey</code>를 사용하여
+ChaCha20-Poly1305 AEAD 암호화합니다.</p>
+<p>아웃바운드 터널들:</p>
+<ul>
+<li>터널 메시지 반복 해독하기</li>
+<li>ChaCha20-Poly1305 터널 메시지 암호화된 프레임의 선암호 해독</li>
+<li>인바운드 터널과 동일한 레이어 nonce 규칙 사용</li>
+<li>전송된 터널 메시지 세트당 무작위 nonce 생성하기</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 메시지 세트당 고유하고 무작위 nonce를 생성하기
+</span></span><span style="display:flex;"><span>  tunnelNonce = Random(len = 64-bits)
+</span></span><span style="display:flex;"><span>  obfsNonce = Random(len = 64-bits)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // 각 홉에 대해, 이전 터널 nonce를 홉의 IV 키로 ChaCha20 처리
+</span></span><span style="display:flex;"><span>  tunnelNonce = ChaCha20(msg = 이전 터널 nonce, 숫자다리를 obfsNonce, 키 = 홉의 nonceKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // 각 홉에 대해, 터널 메시지를 홉의 터널 nonce 및 레이어 키로 ChaCha20 &#34;해독&#34;하기
+</span></span><span style="display:flex;"><span>  decMsg = ChaCha20(msg = 터널 msg(s), 숫자다리를 tunnelNonce, 키 = 홉의 layerKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // 각 홉에 대해, obfsNonce를 홉의 암호화된 tunnelNonce 및 nonceKey로 ChaCha20 &#34;해독&#34;하기
+</span></span><span style="display:flex;"><span>  obfsNonce = ChaCha20(msg = obfsNonce, 숫자다리를 tunnelNonce, 키 = 홉의 nonceKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // 홉 처리 후, ChaCha20-Poly1305 각 터널 메시지의 &#34;해독&#34;된 데이터 프레임을 첫 번째 홉의 암호화된 tunnelNonce 및 inAEADKey로 암호화
+</span></span><span style="display:flex;"><span>  (encMsg, MAC) = ChaCha20-Poly1305-Encrypt(msg = decMsg, 숫자다리를 첫 번째 홉의 암호화된 tunnelNonce, 키 = 첫 번째 홉의 inAEADKey / GW outAEADKey)
+</span></span></code></pre></div><h3 id="참가자-처리">참가자 처리</h3>
+<p>참가자는 각각의 수신 nonce의 고유성을 위해 소멸하는 블룸 필터로 처리 메시지를 추적할 것입니다.</p>
+<p>각 홉에서 터널 nonce를 한 번씩 암호화해야 합니다. 이는 비연속적 콜루징 홉들에 의해 발생할 수 있는 확인 공격을 방지하기 위한 조치입니다.</p>
+<p>홉은 수신된 nonce를 암호화하여 이전 및 이후 홉 간의 확인 공격을 방지합니다. 이는 비연속적 콜루징 홉들 사이에서 터널에 속한지 여부를 알 수 있는 것을 방지합니다.</p>
+<p>수신된 <code>tunnelNonce</code> 및 <code>obfsNonce</code>를 검증하기 위해서 참가자는 각각의 nonce를 블룸 필터에서 중복으로 확인합니다.</p>
+<p>검증 후, 참가자는 다음을 수행합니다:</p>
+<ul>
+<li>각 터널 메시지의 AEAD 암호화된 데이터 프레임을 수신된 <code>tunnelNonce</code> 및 <code>inAEADKey</code>로 ChaCha20-Poly1305 해독합니다.</li>
+<li>수신된 <code>obfsNonce</code> 및 암호화된 <code>tunnelNonce</code>와 함께 <code>nonceKey</code>를 사용하여 <code>tunnelNonce</code>를 ChaCha20으로 암호화합니다.</li>
+<li>암호화된 <code>tunnelNonce</code> 및 루프의 <code>layerKey</code>를 사용하여 각 터널 메시지의 암호화된 데이터 프레임을 ChaCha20으로 암호화합니다.</li>
+<li>암호화된 <code>tunnelNonce</code> 및 루프의 <code>outAEADKey</code>를 사용하여 각 터널 메시지의 암호화된 데이터 프레임을 ChaCha20-Poly1305로 암호화합니다.</li>
+<li>암호화된 <code>tunnelNonce</code> 및 루프의 <code>nonceKey</code>와 함께 <code>obfsNonce</code>를 ChaCha20으로 암호화합니다.</li>
+<li>다음 홉에 {<code>nextTunnelId</code>, 암호화된 (<code>tunnelNonce</code> || <code>obfsNonce</code>), AEAD 암호문 || MAC} 튜플을 전송합니다.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 확인을 위해, 터널 홉들은 수신된 각각의 nonce의 고유성을 블룸 필터에서 확인해야 합니다.
+</span></span><span style="display:flex;"><span>  // 확인 후, ChaCha20-Poly1305 터널 메시지의 암호화된 프레임을 힌트하여 AEAD 프레임을 해제합니다
+</span></span><span style="display:flex;"><span>  encTunMsg = ChaCha20-Poly1305-Decrypt(msg = 수신된 encMsg \|\| MAC, 숫자다리를 수신된 tunnelNonce, 키 = inAEADKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // obfsNonce와 루프의 nonceKey를 사용하여 tunnelNonce를 ChaCha20으로 암호화합니다.
+</span></span><span style="display:flex;"><span>  tunnelNonce = ChaCha20(msg = 수신된 tunnelNonce, 숫자다리를 수신된 obfsNonce, 키 = nonceKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // 터널 메시지의 암호화된 데이터 프레임을 터널 nonce 및 홉의 레이어 키로 ChaCha20 암호화합니다.
+</span></span><span style="display:flex;"><span>  encMsg = ChaCha20(msg = encTunMsg, 숫자다리를 tunnelNonce, 키 = layerKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // AEAD 보호를 위해, 또한 터널 메시지의 암호화된 데이터 프레임을 ChaCha20-Poly1305로 암호화합니다.
+</span></span><span style="display:flex;"><span>  // 암호화된 터널 nonce 및 홉의 outAEADKey로.
+</span></span><span style="display:flex;"><span>  (encMsg, MAC) = ChaCha20-Poly1305-Encrypt(msg = encMsg, 숫자다리를 tunnelNonce, 키 = outAEADKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // 고속 nonce 및 홉의 nonceKey와 함께 수신된 obfsNonce를 ChaCha20으로 암호화합니다.
+</span></span><span style="display:flex;"><span>  obfsNonce = ChaCha20(msg = obfsNonce, 숫자다리를 tunnelNonce, 키 = nonceKey)
+</span></span></code></pre></div><h3 id="인바운드-엔드포인트-처리">인바운드 엔드포인트 처리</h3>
+<p>ChaCha20 터널에 대해서는, 다음 체계를 사용하여 각 터널 메시지를 해독합니다:</p>
+<ul>
+<li>수신된 <code>tunnelNonce</code> 및 <code>obfsNonce</code>를 블룸 필터에 대해 독립적으로 확인합니다.</li>
+<li>수신된 <code>tunnelNonce</code> 및 <code>inAEADKey</code>을 사용하여 암호화된 데이터 프레임을 ChaCha20-Poly1305 해독합니다.</li>
+<li>수신된 <code>tunnelNonce</code> 및 홉의 <code>layerKey</code>를 사용하여 암호화된 데이터 프레임을 ChaCha20 해독합니다.</li>
+<li>홉의 <code>nonceKey</code> 및 수신된 <code>tunnelNonce</code>를 사용하여 <code>obfsNonce</code>를 ChaCha20 해독하여 이전 <code>obfsNonce</code>를 얻습니다.</li>
+<li>홉의 <code>nonceKey</code> 및 해독된 <code>obfsNonce</code>를 사용하여 수신된 <code>tunnelNonce</code>를 ChaCha20 해독하여 이전 <code>tunnelNonce</code>를 얻습니다.</li>
+<li>해독된 <code>tunnelNonce</code> 및 이전 홉의 <code>layerKey</code>를 사용하여 암호화된 데이터를 ChaCha20 해독합니다.</li>
+<li>터널의 각 홉에 대한 nonce 및 레이어 해독을 반복하여 IBGW로 돌아옵니다.</li>
+<li>AEAD 프레임 해독은 첫 번째 라운드에서만 필요합니다.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 첫 번째 라운드의 경우, ChaCha20-Poly1305로 각 메시지의 암호화된 데이터 프레임 + MAC을 해독
+</span></span><span style="display:flex;"><span>  msg = encTunMsg \|\| MAC
+</span></span><span style="display:flex;"><span>  tunnelNonce = 수신된 tunnelNonce
+</span></span><span style="display:flex;"><span>  encTunMsg = ChaCha20-Poly1305-Decrypt(msg, 숫자다리를 tunnelNonce, 키 = inAEADKey)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // 터널의 각 홉에 대해 IBGW로 되감는 동안 반복
+</span></span><span style="display:flex;"><span>  // 각 라운드에 대해, 각 메시지의 암호화된 데이터 프레임에서 홉의 레이어 암호화를 ChaCha20으로 해독
+</span></span><span style="display:flex;"><span>  // 각 홉에 대해 이전 라운드의 해독된 터널 nonce로 수신된 터널 nonce를 교체
+</span></span><span style="display:flex;"><span>  decMsg = ChaCha20(msg = encTunMsg, 숫자다리를 tunnelNonce, 키 = layerKey)
+</span></span><span style="display:flex;"><span>  obfsNonce = ChaCha20(msg = obfsNonce, 숫자다리를 tunnelNonce, 키 = nonceKey)
+</span></span><span style="display:flex;"><span>  tunnelNonce = ChaCha20(msg = tunnelNonce, 숫자다리를 obfsNonce, 키 = nonceKey)
+</span></span></code></pre></div><h3 id="chacha20chacha20-poly1305-터널-레이어-암호화에-대한-보안-분석">ChaCha20+ChaCha20-Poly1305 터널 레이어 암호화에 대한 보안 분석</h3>
+<p>AES256/ECB+AES256/CBC에서 ChaCha20+ChaCha20-Poly1305로 전환함으로써 다양한 이점과 새로운 보안 고려사항이 발생합니다.</p>
+<p>가장 중요한 보안 고려사항은 ChaCha20와 ChaCha20-Poly1305 nonce가 사용되는 동안 매 메시지마다 고유해야 한다는 것입니다.</p>
+<p>동일한 키를 사용하여 다른 메시지에 고유하지 않은 nonce를 사용하면 ChaCha20과 ChaCha20-Poly1305가 손상됩니다.</p>
+<p><code>obfsNonce</code>를 추가하면, 각 홉의 레이어 암호화를 위해 IBEP가 <code>tunnelNonce</code>를 해독하여 이전 nonce를 복구할 수 있습니다.</p>
+<p><code>tunnelNonce</code>와 함께 <code>obfsNonce</code>는 터널 홉에 새로운 정보를 노출하지 않으므로, <code>obfsNonce</code>는 암호화된 <code>tunnelNonce</code>로 암호화되기 때문입니다.
+이를 통해 IBEP는 이전 <code>obfsNonce</code>를 복구할 수도 있습니다.</p>
+<p>가장 큰 보안 장점은 ChaCha20에 대한 확인 또는 오라클 공격이 없으며, 홉 간 ChaCha20-Poly1305를 사용하면
+바깥 대역 MitM 공격자로부터의 암호문 조작에 대한 AEAD 보호가 추가됩니다.</p>
+<p>터널 레이어 암호화에서 키가 재사용될 때, AES256/ECB + AES256/CBC에 대한 실제적인 오라클 공격이 가능합니다.</p>
+<p>AES256/ECB에 대한 오라클 공격은 두 번의 암호화가 사용되고 암호화는 단일 블록(터널 IV)에 적용되기 때문에 작동하지 않습니다.</p>
+<p>AES256/CBC에 대한 패딩 오라클 공격은 패딩을 사용하지 않기 때문에 작동하지 않습니다. 만약 터널 메시지 길이가 비-모드-16 길이로 변경되더라도, 중복 IV가 거부되기 때문에 AES256/CBC는 여전히 취약하지 않습니다.</p>
+<p>두 공격 또한 같은 IV를 사용한 다중 오라클 호출을 허용하지 않음으로 인해 차단됩니다. 이는 중복 IV가 거부되기 때문입니다.</p>
+<h2 id="참고-문헌">참고 문헌</h2>
+<ul>
+<li><a href="../../../ko/docs/specs/implementation/">Tunnel-Implementation</a>
+</li>
+</ul>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    <a href="../../../ko/proposals/" class="page-nav-link">
+                        ← Back to Proposals
+                    </a>
+                    
+                    
+                    
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                            
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <a href="../../../proposals/153-chacha20-layer-encryption.txt" class="page-nav-link" download>
+                        Download Source (.txt)
+                    </a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.proposals-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.proposal-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.proposal-title-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.proposal-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-text);
+}
+
+.proposal-number {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+ 
+.proposal-meta-box {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.proposal-status {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+ 
+.status-open {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-open {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-accepted {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-accepted {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-finished {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-finished {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-closed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-closed {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.dark .status-rejected {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.status-draft,
+.status-needs-revision,
+.status-dead,
+.status-needs-research {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-draft,
+.dark .status-needs-revision,
+.dark .status-dead,
+.dark .status-needs-research {
+    background: #78350f;
+    color: #fde047;
+}
+
+.status-meta,
+.status-informational,
+.status-reserve {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+.dark .status-meta,
+.dark .status-informational,
+.dark .status-reserve {
+    background: #581c87;
+    color: #e879f9;
+}
+
+ 
+.proposal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.info-value {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+ 
+.proposal-relationships {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-md);
+}
+
+.relationship {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.relationship:last-child {
+    margin-bottom: 0;
+}
+
+.relationship-label {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    min-width: 120px;
+}
+
+.relationship-value {
+    color: var(--color-text);
+}
+
+ 
+.proposal-layout {
+    display: block;
+}
+
+.proposal-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.proposal-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.proposal-main {
+    min-width: 0;
+}
+
+ 
+.proposal-content {
+    line-height: 1.8;
+    color: var(--color-text);
+    max-width: 900px;
+}
+
+.proposal-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content ul,
+.proposal-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.proposal-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.proposal-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.proposal-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.proposal-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.proposal-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin-left: 0;
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+.proposal-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.proposal-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+.proposal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content table th {
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.proposal-content table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.proposal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+ 
+.page-nav {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.page-nav-link {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+ 
+@media (max-width: 1024px) {
+    .proposal-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .proposal-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .proposal-title {
+        font-size: 1.75rem;
+    }
+
+    .proposal-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">I2P 뉴스 받기:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="이메일을 입력하세요" required>
+                            <button type="submit">구독하기</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>빠른 링크</h3>
+                <ul>
+                    <li><a href="../../../ko/financial-support/">기부하기</a></li>
+                    <li><a href="../../../ko/docs/overview/intro/">I2P 소개</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>커뮤니티</h3>
+                <ul>
+                    <li><a href="../../../ko/get-involved/">참여하기</a></li>
+                    <li><a href="../../../ko/blog/">블로그</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">공식 포럼</a></li>
+                    <li><a href="../../../ko/contact/">연락처</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>리소스</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P 메트릭</a></li>
+                    <li><a href="../../../ko/papers/">연구</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">스톰이클라우드</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Invisible Internet Project. Creative Commons 라이선스 적용.</p>
+            <div class="footer-links">
+                <a href="../../../ko/privacy/">개인정보 처리방침</a>
+                <a href="../../../ko/terms/">이용 약관</a>
+                <a href="../../../ko/about/media/">언론</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="닫기">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>커뮤니티 설문 조사</h2>
+            <p class="modal-subtitle">귀하의 의견을 듣고 싶습니다</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                귀하의 투표는 I2P의 미래를 형성하는 데 도움이 됩니다.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

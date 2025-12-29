@@ -1,0 +1,2846 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Configuration du Router | I2P - Le projet Internet invisible</title>
+
+    <meta name="description" content="Options et formats de configuration pour les I2P routers et les clients I2P">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Configuration du Router | I2P - Le projet Internet invisible">
+    <meta property="og:description" content="Options et formats de configuration pour les I2P routers et les clients I2P">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/fr/docs/specs/configuration/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Site Bêta I2P Maintenant En Ligne Signaler les problèmes e-mail à stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Fermer la bannière" title="Fermer la bannière">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../fr/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../fr/about/" class="">À propos</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../fr/about/">Aperçu</a></li>
+                            <li><a href="../../../../fr/papers/">Articles de recherche</a></li>
+                            <li><a href="../../../../fr/about/media/">Presse</a></li>
+                            <li><a href="../../../../fr/contact/">Contactez-nous</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../fr/docs/" class="active">Docs</a></li>
+                    <li><a href="../../../../fr/downloads/" class="">Téléchargements</a></li>
+                    <li><a href="../../../../fr/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../fr/get-involved/" class="">S&#39;impliquer</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../fr/get-involved/">Aperçu</a></li>
+                            <li><a href="../../../../fr/feedback/">Suggestions de fonctionnalités</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">fr</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/configuration/"
+                                class="lang-option">Anglais</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/configuration/"
+                                class="lang-option">Espagnol</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/configuration/"
+                                class="lang-option">Coréen</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/configuration/"
+                                class="lang-option">Chinois</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/configuration/"
+                                class="lang-option">Russe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/configuration/"
+                                class="lang-option">Tchèque</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/configuration/"
+                                class="lang-option">Allemand</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/configuration/"
+                                class="lang-option active">Français</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/configuration/"
+                                class="lang-option">Turc</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/configuration/"
+                                class="lang-option">Vietnamien</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/configuration/"
+                                class="lang-option">Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/configuration/"
+                                class="lang-option">Arabe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/configuration/"
+                                class="lang-option">Portugais</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../fr/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../fr/downloads/" class="btn btn-primary">Obtenir I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#aperçu">Aperçu</a>
+      <ul>
+        <li><a href="#portée">Portée</a></li>
+        <li><a href="#notes-dimplémentation">Notes d’implémentation</a></li>
+      </ul>
+    </li>
+    <li><a href="#format-général-du-fichier-de-configuration">Format général du fichier de configuration</a>
+      <ul>
+        <li><a href="#spécification-du-format">Spécification du format</a></li>
+        <li><a href="#tri-des-fichiers">Tri des fichiers</a></li>
+        <li><a href="#détails-dimplémentation">Détails d’implémentation</a></li>
+        <li><a href="#exemples-de-formats">Exemples de formats</a></li>
+      </ul>
+    </li>
+    <li><a href="#configuration-de-la-bibliothèque-principale-et-du-router">Configuration de la bibliothèque principale et du router</a>
+      <ul>
+        <li><a href="#configuration-des-clients-clientsconfig">Configuration des clients (clients.config)</a></li>
+        <li><a href="#configuration-de-la-journalisation-loggerconfig">Configuration de la journalisation (logger.config)</a></li>
+        <li><a href="#configuration-du-plugin">Configuration du plugin</a></li>
+        <li><a href="#configuration-des-applications-web-webappsconfig">Configuration des applications Web (webapps.config)</a></li>
+        <li><a href="#configuration-du-router-routerconfig">Configuration du Router (router.config)</a></li>
+      </ul>
+    </li>
+    <li><a href="#fichiers-de-configuration-des-applications">Fichiers de configuration des applications</a>
+      <ul>
+        <li><a href="#configuration-du-carnet-dadresses-addressbookconfigtxt">Configuration du carnet d&rsquo;adresses (addressbook/config.txt)</a></li>
+        <li><a href="#configuration-di2psnark-i2psnarkconfigdi2psnarkconfig">Configuration d&rsquo;I2PSnark (i2psnark.config.d/i2psnark.config)</a></li>
+        <li><a href="#configuration-di2ptunnel-i2ptunnelconfig">Configuration d&rsquo;I2PTunnel (i2ptunnel.config)</a></li>
+      </ul>
+    </li>
+    <li><a href="#référence-de-configuration-di2ptunnel">Référence de configuration d&rsquo;I2PTunnel</a>
+      <ul>
+        <li><a href="#propriétés-de-base">Propriétés de base</a></li>
+        <li><a href="#configuration-du-proxy">Configuration du proxy</a></li>
+        <li><a href="#configuration-du-serveur">Configuration du serveur</a></li>
+        <li><a href="#options-spécifiques-au-client">Options spécifiques au client</a></li>
+        <li><a href="#options-i2cp-implémentation-di2ptunnel">Options I2CP (implémentation d&rsquo;I2PTunnel)</a></li>
+        <li><a href="#options-spécifiques-au-serveur">Options spécifiques au serveur</a></li>
+        <li><a href="#configuration-du-pool-de-threads">Configuration du pool de threads</a></li>
+        <li><a href="#options-du-client-http">Options du client HTTP</a></li>
+        <li><a href="#authentification-du-client-http">Authentification du client HTTP</a></li>
+        <li><a href="#authentification-du-proxy-de-sortie">Authentification du proxy de sortie</a></li>
+        <li><a href="#options-du-client-socks">Options du client SOCKS</a></li>
+        <li><a href="#options-du-serveur-http">Options du serveur HTTP</a></li>
+        <li><a href="#options-de-sécurité-du-serveur-http">Options de sécurité du serveur HTTP</a></li>
+        <li><a href="#options-du-serveur-irc">Options du serveur IRC</a></li>
+        <li><a href="#configuration-ssltls">Configuration SSL/TLS</a></li>
+        <li><a href="#options-génériques-pour-i2cp-et-le-streaming">Options génériques pour I2CP et le Streaming</a></li>
+        <li><a href="#exemple-complet-de-tunnel">Exemple complet de Tunnel</a></li>
+      </ul>
+    </li>
+    <li><a href="#historique-des-versions-et-chronologie-des-fonctionnalités">Historique des versions et chronologie des fonctionnalités</a>
+      <ul>
+        <li><a href="#version-0910-2013">Version 0.9.10 (2013)</a></li>
+        <li><a href="#version-0918-2015">Version 0.9.18 (2015)</a></li>
+        <li><a href="#version-0923-novembre-2015">Version 0.9.23 (novembre 2015)</a></li>
+        <li><a href="#version-0925-2015">Version 0.9.25 (2015)</a></li>
+        <li><a href="#version-0933-janvier-2018">Version 0.9.33 (janvier 2018)</a></li>
+        <li><a href="#version-0941-2019">Version 0.9.41 (2019)</a></li>
+        <li><a href="#version-0942-août-2019">Version 0.9.42 (août 2019)</a></li>
+        <li><a href="#version-0956-2021">Version 0.9.56 (2021)</a></li>
+        <li><a href="#version-0957-janvier-2023">Version 0.9.57 (janvier 2023)</a></li>
+        <li><a href="#version-260-juillet-2024">Version 2.6.0 (juillet 2024)</a></li>
+        <li><a href="#version-2100-septembre-2025---à-ce-jour">Version 2.10.0 (septembre 2025 - à ce jour)</a></li>
+      </ul>
+    </li>
+    <li><a href="#dépréciations-et-changements-rétro-incompatibles">Dépréciations et changements rétro-incompatibles</a>
+      <ul>
+        <li><a href="#dépréciations-critiques">Dépréciations critiques</a></li>
+        <li><a href="#modifications-de-larchitecture-de-configuration">Modifications de l&rsquo;architecture de configuration</a></li>
+        <li><a href="#versions-de-java-requises">Versions de Java requises</a></li>
+        <li><a href="#fonctionnalités-supprimées">Fonctionnalités supprimées</a></li>
+        <li><a href="#migrations-recommandées">Migrations recommandées</a></li>
+      </ul>
+    </li>
+    <li><a href="#références">Références</a>
+      <ul>
+        <li><a href="#documentation-officielle">Documentation officielle</a></li>
+        <li><a href="#code-source">Code source</a></li>
+        <li><a href="#ressources-de-la-communauté">Ressources de la communauté</a></li>
+        <li><a href="#documentation-de-lapi">Documentation de l&rsquo;API</a></li>
+        <li><a href="#statut-de-la-spécification">Statut de la spécification</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../fr/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../fr/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../fr/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Configuration du Router</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Cette traduction a été générée par apprentissage automatique et peut ne pas être exacte à 100%.</span>
+    
+    
+    <a href="../../../../en/docs/specs/configuration/" class="disclaimer-link">Voir la version anglaise</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Configuration du Router</h1>
+                    
+                        <p class="article-description">Options et formats de configuration pour les I2P routers et les clients I2P</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="aperçu">Aperçu</h2>
+<p>Ce document fournit une spécification technique exhaustive des fichiers de configuration I2P utilisés par le router et diverses applications. Il couvre les spécifications des formats de fichiers, les définitions des propriétés et les détails d’implémentation vérifiés par rapport au code source d’I2P et à la documentation officielle.</p>
+<h3 id="portée">Portée</h3>
+<ul>
+<li>Fichiers et formats de configuration du router</li>
+<li>Configurations des applications clientes</li>
+<li>Configurations de tunnel I2PTunnel</li>
+<li>Spécifications des formats de fichiers et implémentation</li>
+<li>Fonctionnalités spécifiques à une version et dépréciations</li>
+</ul>
+<h3 id="notes-dimplémentation">Notes d’implémentation</h3>
+<p>Les fichiers de configuration sont lus et écrits à l&rsquo;aide des méthodes <code>DataHelper.loadProps()</code> et <code>storeProps()</code> de la bibliothèque principale d&rsquo;I2P. Le format du fichier diffère sensiblement du format sérialisé utilisé dans les protocoles I2P (voir <a href="../../../../fr/docs/specs/common-structures/#type-mapping">Spécification des structures communes - Correspondance des types</a>
+).</p>
+<hr>
+<h2 id="format-général-du-fichier-de-configuration">Format général du fichier de configuration</h2>
+<p>Les fichiers de configuration I2P suivent un format Java Properties modifié, avec des exceptions et des contraintes spécifiques.</p>
+<h3 id="spécification-du-format">Spécification du format</h3>
+<p>Basé sur <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Properties.html#load%28java.io.InputStream%29">Java Properties</a>
+ avec les différences essentielles suivantes :</p>
+<h4 id="encodage">Encodage</h4>
+<ul>
+<li><strong>DOIT</strong> utiliser l&rsquo;encodage UTF-8 (PAS ISO-8859-1 comme dans les propriétés Java standard)</li>
+<li>Implémentation : Utilise les utilitaires <code>DataHelper.getUTF8()</code> pour toutes les opérations sur les fichiers</li>
+</ul>
+<h4 id="séquences-déchappement">Séquences d’échappement</h4>
+<ul>
+<li><strong>AUCUNE</strong> séquence d’échappement n’est reconnue (y compris le caractère de barre oblique inverse <code>\</code>)</li>
+<li>La continuation de ligne n’est <strong>PAS</strong> prise en charge</li>
+<li>Les caractères de barre oblique inverse sont traités comme des caractères littéraux</li>
+</ul>
+<h4 id="caractères-de-commentaire">Caractères de commentaire</h4>
+<ul>
+<li><code>#</code> introduit un commentaire à n&rsquo;importe quelle position sur une ligne</li>
+<li><code>;</code> introduit un commentaire <strong>uniquement</strong> lorsqu&rsquo;il est en colonne 1</li>
+<li><code>!</code> n&rsquo;introduit <strong>PAS</strong> un commentaire (diffère de Java Properties)</li>
+</ul>
+<h4 id="séparateurs-clé-valeur">Séparateurs clé-valeur</h4>
+<ul>
+<li><code>=</code> est le <strong>SEUL</strong> séparateur clé-valeur valide</li>
+<li><code>:</code> n&rsquo;est <strong>PAS</strong> reconnu comme séparateur</li>
+<li>Les caractères d&rsquo;espacement ne sont <strong>PAS</strong> reconnus comme des séparateurs</li>
+</ul>
+<h4 id="gestion-des-espaces-blancs">Gestion des espaces blancs</h4>
+<ul>
+<li>Les espaces blancs en début et en fin ne sont <strong>PAS</strong> supprimés pour les clés</li>
+<li>Les espaces blancs en début et en fin <strong>SONT</strong> supprimés pour les valeurs</li>
+</ul>
+<h4 id="traitement-des-lignes">Traitement des lignes</h4>
+<ul>
+<li>Les lignes sans <code>=</code> sont ignorées (traitées comme des commentaires ou des lignes vides)</li>
+<li>Les valeurs vides (<code>key=</code>) sont prises en charge à partir de la version 0.9.10</li>
+<li>Les clés avec des valeurs vides sont stockées et récupérées normalement</li>
+</ul>
+<h4 id="restrictions-de-caractères">Restrictions de caractères</h4>
+<p><strong>Les clés ne doivent PAS contenir</strong>: - <code>#</code> (signe dièse) - <code>=</code> (signe égal) - <code>\n</code> (caractère de saut de ligne) - Ne peuvent pas commencer par <code>;</code> (point-virgule)</p>
+<p><strong>Les valeurs ne doivent PAS contenir</strong>: - <code>#</code> (signe dièse/hash) - <code>\n</code> (caractère de saut de ligne) - Ne peuvent pas commencer ni se terminer par <code>\r</code> (retour chariot) - Ne peuvent pas commencer ni se terminer par des caractères d&rsquo;espacement (supprimés automatiquement)</p>
+<h3 id="tri-des-fichiers">Tri des fichiers</h3>
+<p>Les fichiers de configuration n&rsquo;ont pas besoin d&rsquo;être triés par clé. Cependant, la plupart des applications I2P trient les clés par ordre alphabétique lors de l&rsquo;écriture des fichiers de configuration afin de faciliter : - Édition manuelle - Opérations diff (comparaison) de contrôle de version - Lisibilité humaine</p>
+<h3 id="détails-dimplémentation">Détails d’implémentation</h3>
+<h4 id="lecture-des-fichiers-de-configuration">Lecture des fichiers de configuration</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// Method signature from net.i2p.data.DataHelper</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Properties <span style="color:#a6e22e">loadProps</span>(File file)
+</span></span></code></pre></div><p><strong>Comportement</strong>: - Lit des fichiers encodés en UTF-8 - Applique toutes les règles de format décrites ci-dessus - Valide les restrictions de caractères - Retourne un objet Properties vide si le fichier n&rsquo;existe pas - Lève une <code>IOException</code> en cas d&rsquo;erreurs de lecture</p>
+<h4 id="écriture-des-fichiers-de-configuration">Écriture des fichiers de configuration</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// Method signature from net.i2p.data.DataHelper</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">storeProps</span>(Properties props, File file)
+</span></span></code></pre></div><p><strong>Comportement</strong>: - Écrit des fichiers encodés en UTF-8 - Trie les clés par ordre alphabétique (sauf si OrderedProperties est utilisé) - Définit les permissions du fichier au mode 600 (lecture/écriture utilisateur uniquement) à partir de la version 0.8.1 - Lève <code>IllegalArgumentException</code> pour les caractères non valides dans les clés ou les valeurs - Lève <code>IOException</code> en cas d&rsquo;erreurs d&rsquo;écriture</p>
+<h4 id="validation-du-format">Validation du format</h4>
+<p>L&rsquo;implémentation effectue une validation stricte : - Les clés et les valeurs sont vérifiées afin de détecter les caractères interdits - Les entrées invalides provoquent des exceptions lors des opérations d&rsquo;écriture - La lecture ignore silencieusement les lignes mal formées (lignes sans <code>=</code>)</p>
+<h3 id="exemples-de-formats">Exemples de formats</h3>
+<h4 id="fichier-de-configuration-valide">Fichier de configuration valide</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># This is a comment</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">;</span> <span style="color:#e6db74">This is also a comment (column 1 only)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">key.with.dots</span><span style="color:#f92672">=</span><span style="color:#e6db74">value with spaces</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">another_key</span><span style="color:#f92672">=</span><span style="color:#e6db74">value=with=equals</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">empty.value</span><span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">numeric.value</span><span style="color:#f92672">=</span><span style="color:#e6db74">12345</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">unicode.value</span><span style="color:#f92672">=</span><span style="color:#e6db74">こんにちは</span>
+</span></span></code></pre></div><h4 id="exemples-de-configurations-invalides">Exemples de configurations invalides</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># INVALID: Key contains equals sign</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">invalid</span><span style="color:#f92672">=</span><span style="color:#e6db74">key=value</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># INVALID: Key contains hash</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">invalid#key</span><span style="color:#f92672">=</span><span style="color:#e6db74">value</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># INVALID: Value contains newline (implicit)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">key</span><span style="color:#f92672">=</span><span style="color:#e6db74">value</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">continues</span> <span style="color:#e6db74">here</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># INVALID: Semicolon comment not in column 1 (treated as key)</span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">;</span> <span style="color:#e6db74">not.a.comment=value</span>
+</span></span></code></pre></div><hr>
+<h2 id="configuration-de-la-bibliothèque-principale-et-du-router">Configuration de la bibliothèque principale et du router</h2>
+<h3 id="configuration-des-clients-clientsconfig">Configuration des clients (clients.config)</h3>
+<p><strong>Emplacement</strong>: <code>$I2P_CONFIG_DIR/clients.config</code> (ancien) ou <code>$I2P_CONFIG_DIR/clients.config.d/</code> (moderne)   <strong>Interface de configuration</strong>: console du router à <code>/configclients</code>   <strong>Changement de format</strong>: Version 0.9.42 (août 2019)</p>
+<h4 id="arborescence-des-répertoires-version-0942">Arborescence des répertoires (Version 0.9.42+)</h4>
+<p>À partir de la version 0.9.42, le fichier clients.config par défaut est automatiquement scindé en fichiers de configuration individuels :</p>
+<pre tabindex="0"><code>$I2P_CONFIG_DIR/
+├── clients.config.d/
+│   ├── 00-webConsole.config
+│   ├── 01-i2ptunnel.config
+│   ├── 02-i2psnark.config
+│   ├── 03-susidns.config
+│   └── ...
+└── clients.config (legacy, auto-migrated)
+</code></pre><p><strong>Comportement de migration</strong>: - Lors de la première exécution après la mise à niveau vers 0.9.42+, le fichier monolithique est scindé automatiquement - Les propriétés des fichiers scindés sont préfixées par <code>clientApp.0.</code> - L&rsquo;ancien format reste pris en charge pour la rétrocompatibilité - Le format scindé permet une paquetisation modulaire et la gestion des plugins</p>
+<h4 id="format-des-propriétés">Format des propriétés</h4>
+<p>Les lignes sont de la forme <code>clientApp.x.prop=val</code>, où <code>x</code> est le numéro de l&rsquo;application.</p>
+<p><strong>Exigences de numérotation des applications</strong>: - DOIT commencer par 0 - DOIT être consécutive (sans trous) - L&rsquo;ordre détermine la séquence de démarrage</p>
+<h4 id="propriétés-obligatoires">Propriétés obligatoires</h4>
+<h5 id="principal">principal</h5>
+<ul>
+<li><strong>Type</strong>: String (nom de classe entièrement qualifié)</li>
+<li><strong>Requis</strong>: Oui</li>
+<li><strong>Description</strong>: Selon le type de client (géré vs non géré), le constructeur ou la méthode <code>main()</code> de cette classe sera appelé</li>
+<li><strong>Exemple</strong>: <code>clientApp.0.main=net.i2p.router.web.RouterConsoleRunner</code></li>
+</ul>
+<h4 id="propriétés-facultatives">Propriétés facultatives</h4>
+<h5 id="nom">nom</h5>
+<ul>
+<li><strong>Type</strong>: Chaîne de caractères</li>
+<li><strong>Required</strong>: Non</li>
+<li><strong>Description</strong>: Nom affiché dans la console du router</li>
+<li><strong>Example</strong>: <code>clientApp.0.name=Router Console</code></li>
+</ul>
+<h5 id="arguments">arguments</h5>
+<ul>
+<li><strong>Type</strong>: Chaîne (séparée par des espaces ou des tabulations)</li>
+<li><strong>Obligatoire</strong>: Non</li>
+<li><strong>Description</strong>: Arguments transmis au constructeur de la classe principale ou à la méthode main()</li>
+<li><strong>Guillemets</strong>: Les arguments contenant des espaces ou des tabulations peuvent être mis entre guillemets avec <code>'</code> ou <code>&quot;</code></li>
+<li><strong>Exemple</strong>: <code>clientApp.0.args=-d $CONFIG/eepsite</code></li>
+</ul>
+<h5 id="délai">délai</h5>
+<ul>
+<li><strong>Type</strong>: Entier (secondes)</li>
+<li><strong>Obligatoire</strong>: Non</li>
+<li><strong>Par défaut</strong>: 120</li>
+<li><strong>Description</strong>: Nombre de secondes à attendre avant de démarrer le client</li>
+<li><strong>Surcharges</strong>: Écrasé par <code>onBoot=true</code> (fixe le délai à 0)</li>
+<li><strong>Valeurs spéciales</strong>:
+<ul>
+<li><code>&lt; 0</code>: Attendre que le router atteigne l&rsquo;état RUNNING, puis démarrer immédiatement dans un nouveau thread</li>
+<li><code>= 0</code>: Exécuter immédiatement dans le même thread (les exceptions se propagent vers la console)</li>
+<li><code>&gt; 0</code>: Démarrer après le délai dans un nouveau thread (les exceptions sont consignées dans les journaux, non propagées)</li>
+</ul>
+</li>
+</ul>
+<h5 id="onboot">onBoot</h5>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Required</strong>: Non</li>
+<li><strong>Default</strong>: false</li>
+<li><strong>Description</strong>: Impose un délai de 0, outrepasse le réglage explicite du délai</li>
+<li><strong>Use Case</strong>: Démarrer les services critiques immédiatement au démarrage du router</li>
+</ul>
+<h5 id="startonload">startOnLoad</h5>
+<ul>
+<li><strong>Type</strong>: booléen</li>
+<li><strong>Obligatoire</strong>: Non</li>
+<li><strong>Valeur par défaut</strong>: true</li>
+<li><strong>Description</strong>: Indique s&rsquo;il faut démarrer le client</li>
+<li><strong>Cas d&rsquo;utilisation</strong>: Désactiver les clients sans supprimer la configuration</li>
+</ul>
+<h4 id="propriétés-spécifiques-au-plugin">Propriétés spécifiques au plugin</h4>
+<p>Ces propriétés sont utilisées uniquement par les plugins (pas par les clients du noyau):</p>
+<h5 id="stopargs">stopargs</h5>
+<ul>
+<li><strong>Type</strong>: Chaîne de caractères (séparée par des espaces ou des tabulations)</li>
+<li><strong>Description</strong>: Arguments transmis pour arrêter le client</li>
+<li><strong>Variable Substitution</strong>: Oui (voir ci-dessous)</li>
+</ul>
+<h5 id="uninstallargs">uninstallargs</h5>
+<ul>
+<li><strong>Type</strong>: Chaîne (séparée par des espaces ou des tabulations)</li>
+<li><strong>Description</strong>: Arguments transmis pour désinstaller le client</li>
+<li><strong>Variable Substitution</strong>: Oui (voir ci-dessous)</li>
+</ul>
+<h5 id="classpath-chemin-de-classes">classpath (chemin de classes)</h5>
+<ul>
+<li><strong>Type</strong>: String (chemins séparés par des virgules)</li>
+<li><strong>Description</strong>: Éléments supplémentaires du classpath pour le client</li>
+<li><strong>Substitution de variables</strong>: Oui (voir ci-dessous)</li>
+</ul>
+<h4 id="substitution-de-variables-plugins-uniquement">Substitution de variables (plugins uniquement)</h4>
+<p>Les variables suivantes sont remplacées dans <code>args</code>, <code>stopargs</code>, <code>uninstallargs</code> et <code>classpath</code> pour les plugins :</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Variable</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Expands To</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$I2P</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Base I2P installation directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>/usr/share/i2p</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$CONFIG</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">User configuration directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>~/.i2p</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$PLUGIN</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Plugin directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>~/.i2p/plugins/foo</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$OS</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Operating system name</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>linux</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$ARCH</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Architecture name</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>amd64</code></td>
+    </tr>
+  </tbody>
+</table>
+**Remarque**: La substitution de variables est effectuée uniquement pour les plugins, pas pour les clients principaux.
+<h4 id="types-de-clients">Types de clients</h4>
+<h5 id="clients-gérés">Clients gérés</h5>
+<ul>
+<li>Le constructeur est appelé avec les paramètres <code>RouterContext</code> et <code>ClientAppManager</code></li>
+<li>Le client doit implémenter l&rsquo;interface <code>ClientApp</code></li>
+<li>Cycle de vie contrôlé par le router</li>
+<li>Peut être démarré, arrêté et redémarré dynamiquement</li>
+</ul>
+<h5 id="clients-non-gérés">Clients non gérés</h5>
+<ul>
+<li>La méthode <code>main(String[] args)</code> est appelée</li>
+<li>S&rsquo;exécute dans un fil d&rsquo;exécution séparé</li>
+<li>Le cycle de vie n&rsquo;est pas géré par le router</li>
+<li>Type de client hérité</li>
+</ul>
+<h4 id="exemple-de-configuration">Exemple de configuration</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Router Console (core client)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">net.i2p.router.web.RouterConsoleRunner</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Router Console</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.args</span><span style="color:#f92672">=</span><span style="color:#e6db74">-d $CONFIG/eepsite</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.delay</span><span style="color:#f92672">=</span><span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.onBoot</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2PTunnel (core client)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">net.i2p.i2ptunnel.TunnelControllerGroup</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.name</span><span style="color:#f92672">=</span><span style="color:#e6db74">I2PTunnel</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.args</span><span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.delay</span><span style="color:#f92672">=</span><span style="color:#e6db74">120</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plugin Example</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">org.example.plugin.PluginMain</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example Plugin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.args</span><span style="color:#f92672">=</span><span style="color:#e6db74">-config $PLUGIN/config.properties</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.stopargs</span><span style="color:#f92672">=</span><span style="color:#e6db74">-shutdown</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.uninstallargs</span><span style="color:#f92672">=</span><span style="color:#e6db74">-remove $PLUGIN</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/lib/plugin.jar,$PLUGIN/lib/dep.jar</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.delay</span><span style="color:#f92672">=</span><span style="color:#e6db74">240</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span></code></pre></div><hr>
+<h3 id="configuration-de-la-journalisation-loggerconfig">Configuration de la journalisation (logger.config)</h3>
+<p><strong>Emplacement</strong>: <code>$I2P_CONFIG_DIR/logger.config</code>   <strong>Interface de configuration</strong>: Console du router à <code>/configlogging</code></p>
+<h4 id="référence-des-propriétés">Référence des propriétés</h4>
+<h5 id="configuration-du-tampon-de-la-console">Configuration du tampon de la console</h5>
+<h6 id="loggerconsolebuffersize">logger.consoleBufferSize</h6>
+<ul>
+<li><strong>Type</strong>: Entier</li>
+<li><strong>Valeur par défaut</strong>: 20</li>
+<li><strong>Description</strong>: Nombre maximal de messages de journal à mettre en mémoire tampon dans la console</li>
+<li><strong>Plage</strong>: 1-1000 recommandé</li>
+</ul>
+<h5 id="formatage-de-la-date-et-de-lheure">Formatage de la date et de l&rsquo;heure</h5>
+<h6 id="loggerdateformat">logger.dateFormat</h6>
+<ul>
+<li><strong>Type</strong>: String (motif SimpleDateFormat)</li>
+<li><strong>Default</strong>: Selon la locale du système</li>
+<li><strong>Example</strong>: <code>HH:mm:ss.SSS</code></li>
+<li><strong>Documentation</strong>: <a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html">Java SimpleDateFormat</a>
+</li>
+</ul>
+<h5 id="niveaux-de-journalisation">Niveaux de journalisation</h5>
+<h6 id="loggerdefaultlevel">logger.defaultLevel</h6>
+<ul>
+<li><strong>Type</strong>: Énumération</li>
+<li><strong>Valeur par défaut</strong>: ERROR</li>
+<li><strong>Valeurs</strong>: <code>CRIT</code>, <code>ERROR</code>, <code>WARN</code>, <code>INFO</code>, <code>DEBUG</code></li>
+<li><strong>Description</strong>: Niveau de journalisation par défaut pour toutes les classes</li>
+</ul>
+<h6 id="loggerminimumonscreenlevel">logger.minimumOnScreenLevel</h6>
+<ul>
+<li><strong>Type</strong>: Énumération</li>
+<li><strong>Par défaut</strong>: CRIT</li>
+<li><strong>Valeurs</strong>: <code>CRIT</code>, <code>ERROR</code>, <code>WARN</code>, <code>INFO</code>, <code>DEBUG</code></li>
+<li><strong>Description</strong>: Niveau minimal pour les messages affichés à l&rsquo;écran</li>
+</ul>
+<h6 id="loggerrecordclass">logger.record.{class}</h6>
+<ul>
+<li><strong>Type</strong>: Énumération</li>
+<li><strong>Values</strong>: <code>CRIT</code>, <code>ERROR</code>, <code>WARN</code>, <code>INFO</code>, <code>DEBUG</code></li>
+<li><strong>Description</strong>: Surcharge du niveau de journalisation par classe</li>
+<li><strong>Example</strong>: <code>logger.record.net.i2p.router.transport.udp=DEBUG</code></li>
+</ul>
+<h5 id="options-daffichage">Options d’affichage</h5>
+<h6 id="loggerdisplayonscreen">logger.displayOnScreen</h6>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Par défaut</strong>: true</li>
+<li><strong>Description</strong>: Indique s’il faut afficher les messages de journal dans la sortie de la console</li>
+</ul>
+<h6 id="loggerdropduplicates">logger.dropDuplicates</h6>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Default</strong>: true</li>
+<li><strong>Description</strong>: Supprime les messages de journal consécutifs en double</li>
+</ul>
+<h6 id="loggerdroponoverflow">logger.dropOnOverflow</h6>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Valeur par défaut</strong>: faux</li>
+<li><strong>Description</strong>: Abandonner les messages lorsque le tampon est plein (plutôt que de bloquer)</li>
+</ul>
+<h5 id="comportement-de-vidage">Comportement de vidage</h5>
+<h6 id="loggerflushinterval">logger.flushInterval</h6>
+<ul>
+<li><strong>Type</strong>: Entier (secondes)</li>
+<li><strong>Par défaut</strong>: 29</li>
+<li><strong>Depuis</strong>: Version 0.9.18</li>
+<li><strong>Description</strong>: Fréquence à laquelle vider le tampon de journal sur le disque</li>
+</ul>
+<h5 id="configuration-du-format">Configuration du format</h5>
+<h6 id="loggerformat">logger.format</h6>
+<ul>
+<li><strong>Type</strong>: Chaîne (séquence de caractères)</li>
+<li><strong>Description</strong>: Modèle de format de message de journalisation</li>
+<li><strong>Format Characters</strong>:
+<ul>
+<li><code>d</code> = date/heure</li>
+<li><code>c</code> = nom de classe</li>
+<li><code>t</code> = nom du thread (fil d’exécution)</li>
+<li><code>p</code> = priorité (niveau de journalisation)</li>
+<li><code>m</code> = message</li>
+</ul>
+</li>
+<li><strong>Example</strong>: <code>dctpm</code> produit <code>[horodatage] [classe] [thread] [niveau] message</code></li>
+</ul>
+<h5 id="compression-version-0956">Compression (version 0.9.56+)</h5>
+<h6 id="loggergzip">logger.gzip</h6>
+<ul>
+<li><strong>Type</strong>: booléen</li>
+<li><strong>Par défaut</strong>: false</li>
+<li><strong>Depuis</strong>: Version 0.9.56</li>
+<li><strong>Description</strong>: Activer la compression gzip pour les fichiers journaux faisant l&rsquo;objet d&rsquo;une rotation</li>
+</ul>
+<h6 id="loggermingzipsize">logger.minGzipSize</h6>
+<ul>
+<li><strong>Type</strong>: Entier (octets)</li>
+<li><strong>Valeur par défaut</strong>: 65536</li>
+<li><strong>Depuis</strong>: Version 0.9.56</li>
+<li><strong>Description</strong>: Taille de fichier minimale pour déclencher la compression (64 Ko par défaut)</li>
+</ul>
+<h5 id="gestion-des-fichiers">Gestion des fichiers</h5>
+<h6 id="loggerlogbuffersize">logger.logBufferSize</h6>
+<ul>
+<li><strong>Type</strong>: Entier (octets)</li>
+<li><strong>Valeur par défaut</strong>: 1024</li>
+<li><strong>Description</strong>: Nombre maximal de messages à mettre en mémoire tampon avant de vider le tampon</li>
+</ul>
+<h6 id="loggerlogfilename">logger.logFileName</h6>
+<ul>
+<li><strong>Type</strong>: Chaîne (chemin de fichier)</li>
+<li><strong>Default</strong>: <code>logs/log-@.txt</code></li>
+<li><strong>Description</strong>: Modèle de nommage du fichier journal (<code>@</code> remplacé par le numéro de rotation)</li>
+</ul>
+<h6 id="loggerlogfilenameoverride">logger.logFilenameOverride</h6>
+<ul>
+<li><strong>Type</strong>: Chaîne de caractères (chemin de fichier)</li>
+<li><strong>Description</strong>: Remplacement du nom du fichier journal (désactive le schéma de rotation)</li>
+</ul>
+<h6 id="loggerlogfilesize">logger.logFileSize</h6>
+<ul>
+<li><strong>Type</strong>: Chaîne de caractères (taille avec unité)</li>
+<li><strong>Valeur par défaut</strong>: 10M</li>
+<li><strong>Unités</strong>: K (kilooctets), M (mégaoctets), G (gigaoctets)</li>
+<li><strong>Exemple</strong>: <code>50M</code>, <code>1G</code></li>
+</ul>
+<h6 id="loggerlogrotationlimit">logger.logRotationLimit</h6>
+<ul>
+<li><strong>Type</strong>: Entier</li>
+<li><strong>Par défaut</strong>: 2</li>
+<li><strong>Description</strong>: Numéro maximal de fichier de rotation (log-0.txt à log-N.txt)</li>
+</ul>
+<h4 id="exemple-de-configuration-1">Exemple de configuration</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Basic logging configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.consoleBufferSize</span><span style="color:#f92672">=</span><span style="color:#e6db74">50</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.dateFormat</span><span style="color:#f92672">=</span><span style="color:#e6db74">yyyy-MM-dd HH:mm:ss.SSS</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.defaultLevel</span><span style="color:#f92672">=</span><span style="color:#e6db74">WARN</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.displayOnScreen</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.dropDuplicates</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.dropOnOverflow</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Flushing and format</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.flushInterval</span><span style="color:#f92672">=</span><span style="color:#e6db74">30</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.format</span><span style="color:#f92672">=</span><span style="color:#e6db74">dctpm</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># File management</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.logBufferSize</span><span style="color:#f92672">=</span><span style="color:#e6db74">2048</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.logFileName</span><span style="color:#f92672">=</span><span style="color:#e6db74">logs/log-@.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.logFileSize</span><span style="color:#f92672">=</span><span style="color:#e6db74">25M</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.logRotationLimit</span><span style="color:#f92672">=</span><span style="color:#e6db74">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Compression (0.9.56+)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.gzip</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.minGzipSize</span><span style="color:#f92672">=</span><span style="color:#e6db74">131072</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># On-screen filtering</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.minimumOnScreenLevel</span><span style="color:#f92672">=</span><span style="color:#e6db74">ERROR</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Per-class overrides</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.record.net.i2p.router.transport</span><span style="color:#f92672">=</span><span style="color:#e6db74">INFO</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.record.net.i2p.router.tunnel</span><span style="color:#f92672">=</span><span style="color:#e6db74">DEBUG</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.record.net.i2p.crypto</span><span style="color:#f92672">=</span><span style="color:#e6db74">WARN</span>
+</span></span></code></pre></div><hr>
+<h3 id="configuration-du-plugin">Configuration du plugin</h3>
+<h4 id="configuration-individuelle-du-plugin-pluginspluginconfig">Configuration individuelle du plugin (plugins/*/plugin.config)</h4>
+<p><strong>Emplacement</strong>: <code>$I2P_CONFIG_DIR/plugins/{plugin-name}/plugin.config</code>   <strong>Format</strong>: Format de fichier de configuration I2P standard   <strong>Documentation</strong>: <a href="../../../../fr/docs/specs/plugin/">Spécification du plugin</a>
+</p>
+<h5 id="propriétés-requises">Propriétés requises</h5>
+<h6 id="nom-1">nom</h6>
+<ul>
+<li><strong>Type</strong>: Chaîne de caractères</li>
+<li><strong>Obligatoire</strong>: Oui</li>
+<li><strong>Description</strong>: Nom d&rsquo;affichage du plugin</li>
+<li><strong>Exemple</strong>: <code>name=I2P Plugin Example</code></li>
+</ul>
+<h6 id="clé">clé</h6>
+<ul>
+<li><strong>Type</strong>: Chaîne (clé publique)</li>
+<li><strong>Obligatoire</strong>: Oui (à omettre pour les plugins signés SU3)</li>
+<li><strong>Description</strong>: Clé publique de signature du plugin utilisée pour la vérification</li>
+<li><strong>Format</strong>: Clé de signature encodée en Base64</li>
+</ul>
+<h6 id="signataire">signataire</h6>
+<ul>
+<li><strong>Type</strong>: Chaîne de caractères</li>
+<li><strong>Required</strong>: Oui</li>
+<li><strong>Description</strong>: Identité du signataire du plugin</li>
+<li><strong>Example</strong>: <code>signer=user@example.i2p</code></li>
+</ul>
+<h6 id="version">version</h6>
+<ul>
+<li><strong>Type</strong>: Chaîne (format VersionComparator)</li>
+<li><strong>Required</strong>: Oui</li>
+<li><strong>Description</strong>: Version du plugin pour la vérification des mises à jour</li>
+<li><strong>Format</strong>: Versionnage sémantique ou format comparable personnalisé</li>
+<li><strong>Example</strong>: <code>version=1.2.3</code></li>
+</ul>
+<h5 id="propriétés-daffichage">Propriétés d’affichage</h5>
+<h6 id="date">date</h6>
+<ul>
+<li><strong>Type</strong>: Long (type entier 64 bits; horodatage Unix en millisecondes)</li>
+<li><strong>Description</strong>: Date de publication du plugin</li>
+</ul>
+<h6 id="auteur">auteur</h6>
+<ul>
+<li><strong>Type</strong>: Chaîne de caractères</li>
+<li><strong>Description</strong>: Nom de l&rsquo;auteur du plugin</li>
+</ul>
+<h6 id="websiteurl">websiteURL</h6>
+<ul>
+<li><strong>Type</strong>: Chaîne (URL)</li>
+<li><strong>Description</strong>: URL du site du plugin</li>
+</ul>
+<h6 id="updateurl">updateURL</h6>
+<ul>
+<li><strong>Type</strong> : Chaîne de caractères (URL)</li>
+<li><strong>Description</strong> : URL de vérification des mises à jour pour le plug-in</li>
+</ul>
+<h6 id="updateurlsu3">updateURL.su3</h6>
+<ul>
+<li><strong>Type</strong>: Chaîne (URL)</li>
+<li><strong>Since</strong>: Version 0.9.15</li>
+<li><strong>Description</strong>: URL de mise à jour au format SU3 (recommandée)</li>
+</ul>
+<h6 id="description">description</h6>
+<ul>
+<li><strong>Type</strong>: String</li>
+<li><strong>Description</strong>: Description du plugin en anglais</li>
+</ul>
+<h6 id="description_language">description_{language}</h6>
+<ul>
+<li><strong>Type</strong>: Chaîne de caractères</li>
+<li><strong>Description</strong>: Description localisée du plugin</li>
+<li><strong>Example</strong>: <code>description_de=Deutsche Beschreibung</code></li>
+</ul>
+<h6 id="licence">licence</h6>
+<ul>
+<li><strong>Type</strong>: Chaîne de caractères</li>
+<li><strong>Description</strong>: Identifiant de licence du plugin</li>
+<li><strong>Exemple</strong>: <code>license=Apache 2.0</code></li>
+</ul>
+<h5 id="propriétés-dinstallation">Propriétés d&rsquo;installation</h5>
+<h6 id="ne-pas-démarrer-après-linstallation">Ne pas démarrer après l’installation</h6>
+<ul>
+<li><strong>Type</strong>: booléen</li>
+<li><strong>Default</strong>: false</li>
+<li><strong>Description</strong>: Empêcher le démarrage automatique après l&rsquo;installation</li>
+</ul>
+<h6 id="redémarrage-du-router-requis">Redémarrage du router requis</h6>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Default</strong>: false</li>
+<li><strong>Description</strong>: Nécessite un redémarrage du router après l&rsquo;installation</li>
+</ul>
+<h6 id="installation-seule">installation seule</h6>
+<ul>
+<li><strong>Type</strong>: booléen</li>
+<li><strong>Par défaut</strong>: false</li>
+<li><strong>Description</strong>: Installer une seule fois (aucune mise à jour)</li>
+</ul>
+<h6 id="mise-à-jour-uniquement">mise à jour uniquement</h6>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Default</strong>: false</li>
+<li><strong>Description</strong>: Mettre à jour uniquement l&rsquo;installation existante (pas de nouvelle installation)</li>
+</ul>
+<h5 id="exemple-de-configuration-de-module-dextension">Exemple de configuration de module d&rsquo;extension</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Required properties</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example I2P Plugin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">signer</span><span style="color:#f92672">=</span><span style="color:#e6db74">developer@mail.i2p</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">version</span><span style="color:#f92672">=</span><span style="color:#e6db74">1.5.0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Display properties</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">author</span><span style="color:#f92672">=</span><span style="color:#e6db74">Plugin Developer</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">websiteURL</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://plugin.example.i2p</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">updateURL</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://plugin.example.i2p/update.xpi2p</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">updateURL.su3</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://plugin.example.i2p/update.su3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example plugin demonstrating configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description_de</span><span style="color:#f92672">=</span><span style="color:#e6db74">Beispiel-Plugin zur Demonstration der Konfiguration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">license</span><span style="color:#f92672">=</span><span style="color:#e6db74">MIT</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Installation behavior</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">dont-start-at-install</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router-restart-required</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span></code></pre></div><h4 id="configuration-globale-des-plugins-pluginsconfig">Configuration globale des plugins (plugins.config)</h4>
+<p><strong>Emplacement</strong>: <code>$I2P_CONFIG_DIR/plugins.config</code>   <strong>Objectif</strong>: activer/désactiver globalement les plugins installés</p>
+<h5 id="format-des-propriétés-1">Format des propriétés</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">plugin.{name}.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true|false</span>
+</span></span></code></pre></div><ul>
+<li><code>{name}</code>: Nom du plugin indiqué dans plugin.config</li>
+<li><code>startOnLoad</code>: Indique s&rsquo;il faut démarrer le plugin au démarrage du router</li>
+</ul>
+<h5 id="exemple">Exemple</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">plugin.i2psnark.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plugin.susimail.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plugin.susidns.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plugin.i2pbote.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span></code></pre></div><hr>
+<h3 id="configuration-des-applications-web-webappsconfig">Configuration des applications Web (webapps.config)</h3>
+<p><strong>Emplacement</strong>: <code>$I2P_CONFIG_DIR/webapps.config</code>   <strong>Objectif</strong>: Activer/désactiver et configurer des applications web</p>
+<h4 id="format-des-propriétés-2">Format des propriétés</h4>
+<h5 id="webappsnamestartonload">webapps.{name}.startOnLoad</h5>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Description</strong>: Indique s&rsquo;il faut démarrer l&rsquo;application web au lancement du router</li>
+<li><strong>Format</strong>: <code>webapps.{name}.startOnLoad=true|false</code></li>
+</ul>
+<h5 id="webappsnameclasspath">webapps.{name}.classpath</h5>
+<ul>
+<li><strong>Type</strong>: Chaîne (chemins séparés par des espaces ou des virgules)</li>
+<li><strong>Description</strong>: Éléments supplémentaires du classpath pour l&rsquo;application web</li>
+<li><strong>Format</strong>: <code>webapps.{name}.classpath=[paths]</code></li>
+</ul>
+<h4 id="substitution-de-variables">Substitution de variables</h4>
+<p>Les chemins prennent en charge les substitutions de variables suivantes :</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Variable</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Expands To</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Context</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$I2P</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Base I2P directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Core webapps</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$CONFIG</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">User config directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">All webapps</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$PLUGIN</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Plugin directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Plugin webapps</td>
+    </tr>
+  </tbody>
+</table>
+#### Résolution du classpath
+<ul>
+<li><strong>Applications web principales</strong>: Chemins relatifs à <code>$I2P/lib</code></li>
+<li><strong>Applications web des plugins</strong>: Chemins relatifs à <code>$CONFIG/plugins/{appname}/lib</code></li>
+</ul>
+<h4 id="exemple-de-configuration-2">Exemple de configuration</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Router console</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.routerconsole.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.routerconsole.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">routerconsole.jar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2PSnark</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.i2psnark.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.i2psnark.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">i2psnark.jar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># SusiDNS</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.susidns.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.susidns.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">susidns.jar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plugin webapp example</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.exampleplugin.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.exampleplugin.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/lib/webapp.jar,$PLUGIN/lib/deps.jar</span>
+</span></span></code></pre></div><hr>
+<h3 id="configuration-du-router-routerconfig">Configuration du Router (router.config)</h3>
+<p><strong>Emplacement</strong>: <code>$I2P_CONFIG_DIR/router.config</code>   <strong>Interface de configuration</strong>: Console du router à <code>/configadvanced</code>   <strong>Objectif</strong>: Paramètres essentiels du router et paramètres réseau</p>
+<h4 id="catégories-de-configuration">Catégories de configuration</h4>
+<h5 id="configuration-du-réseau">Configuration du réseau</h5>
+<p>Paramètres de bande passante :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">i2np.bandwidth.inboundKBytesPerSecond</span><span style="color:#f92672">=</span><span style="color:#e6db74">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.bandwidth.outboundKBytesPerSecond</span><span style="color:#f92672">=</span><span style="color:#e6db74">50</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.bandwidth.share.percentage</span><span style="color:#f92672">=</span><span style="color:#e6db74">80</span>
+</span></span></code></pre></div><p>Configuration des transports:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># NTCP (TCP-based transport)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.ntcp.port</span><span style="color:#f92672">=</span><span style="color:#e6db74">8887</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.ntcp.enable</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.ntcp.autoip</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># SSU (UDP-based transport)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.udp.port</span><span style="color:#f92672">=</span><span style="color:#e6db74">8887</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.udp.enable</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># UPnP/NAT-PMP</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.upnp.enable</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span></code></pre></div><h5 id="comportement-du-router">Comportement du router</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Tunnel participation</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.maxParticipatingTunnels</span><span style="color:#f92672">=</span><span style="color:#e6db74">200</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.sharePercentage</span><span style="color:#f92672">=</span><span style="color:#e6db74">80</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Updates</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.updatePolicy</span><span style="color:#f92672">=</span><span style="color:#e6db74">notify</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.updateURL</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://update.i2p2.i2p/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Network integration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.hiddenMode</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.clockSkewOffset</span><span style="color:#f92672">=</span><span style="color:#e6db74">0</span>
+</span></span></code></pre></div><h5 id="configuration-de-la-console">Configuration de la console</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Language and display</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">en</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.country</span><span style="color:#f92672">=</span><span style="color:#e6db74">US</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.summaryRefresh</span><span style="color:#f92672">=</span><span style="color:#e6db74">60</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Browser</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.browser</span><span style="color:#f92672">=</span><span style="color:#e6db74">default</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Security</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.enableCompression</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span></code></pre></div><h5 id="configuration-de-lheure">Configuration de l&rsquo;heure</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># NTP</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">time.disabled</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">time.sntpServerList</span><span style="color:#f92672">=</span><span style="color:#e6db74">0.pool.ntp.org,1.pool.ntp.org</span>
+</span></span></code></pre></div><p><strong>Remarque</strong>: La configuration du router est étendue. Consultez la console du router à <code>/configadvanced</code> pour la référence complète des propriétés.</p>
+<hr>
+<h2 id="fichiers-de-configuration-des-applications">Fichiers de configuration des applications</h2>
+<h3 id="configuration-du-carnet-dadresses-addressbookconfigtxt">Configuration du carnet d&rsquo;adresses (addressbook/config.txt)</h3>
+<p><strong>Emplacement</strong>: <code>$I2P_CONFIG_DIR/addressbook/config.txt</code>   <strong>Application</strong>: SusiDNS   <strong>Objectif</strong>: résolution des noms d&rsquo;hôte et gestion du carnet d&rsquo;adresses</p>
+<h4 id="emplacements-des-fichiers">Emplacements des fichiers</h4>
+<h5 id="router_addressbook">router_addressbook</h5>
+<ul>
+<li><strong>Par défaut</strong>: <code>../hosts.txt</code></li>
+<li><strong>Description</strong>: Carnet d&rsquo;adresses principal (noms d&rsquo;hôte à l&rsquo;échelle du système)</li>
+<li><strong>Format</strong>: Format standard du fichier hosts</li>
+</ul>
+<h5 id="privatehoststxt">privatehosts.txt</h5>
+<ul>
+<li><strong>Emplacement</strong>: <code>$I2P_CONFIG_DIR/addressbook/privatehosts.txt</code></li>
+<li><strong>Description</strong>: Correspondances de noms d’hôte privés</li>
+<li><strong>Priorité</strong>: La plus élevée (a priorité sur toutes les autres sources)</li>
+</ul>
+<h5 id="userhoststxt">userhosts.txt</h5>
+<ul>
+<li><strong>Emplacement</strong>: <code>$I2P_CONFIG_DIR/addressbook/userhosts.txt</code></li>
+<li><strong>Description</strong>: Correspondances de noms d’hôte ajoutées par l’utilisateur</li>
+<li><strong>Gestion</strong>: Via l’interface SusiDNS</li>
+</ul>
+<h5 id="hoststxt">hosts.txt</h5>
+<ul>
+<li><strong>Emplacement</strong>: <code>$I2P_CONFIG_DIR/addressbook/hosts.txt</code></li>
+<li><strong>Description</strong>: Carnet d&rsquo;adresses public téléchargé</li>
+<li><strong>Source</strong>: Flux d&rsquo;abonnement</li>
+</ul>
+<h4 id="service-de-noms">Service de noms</h4>
+<h5 id="blockfilenamingservice-par-défaut-depuis-088">BlockfileNamingService (Par défaut depuis 0.8.8)</h5>
+<p>Format de stockage: - <strong>Fichier</strong>: <code>hostsdb.blockfile</code> - <strong>Emplacement</strong>: <code>$I2P_CONFIG_DIR/addressbook/</code> - <strong>Performances</strong>: résolutions ~10x plus rapides que hosts.txt - <strong>Format</strong>: format de base de données binaire</p>
+<p>Service de noms hérité: - <strong>Format</strong>: Fichier hosts.txt en texte brut - <strong>Statut</strong>: Obsolète mais toujours pris en charge - <strong>Cas d&rsquo;usage</strong>: Édition manuelle, gestion de versions</p>
+<h4 id="règles-concernant-les-noms-dhôte">Règles concernant les noms d’hôte</h4>
+<p>Les noms d&rsquo;hôte I2P doivent être conformes à :</p>
+<ol>
+<li><strong>Exigence relative au TLD</strong>: Doit se terminer par <code>.i2p</code></li>
+<li><strong>Longueur maximale</strong>: 67 caractères au total</li>
+<li><strong>Jeu de caractères</strong>: <code>[a-z]</code>, <code>[0-9]</code>, <code>.</code> (point), <code>-</code> (tiret)</li>
+<li><strong>Casse</strong>: minuscules uniquement</li>
+<li><strong>Restrictions de début</strong>: Ne peut pas commencer par <code>.</code> ou <code>-</code></li>
+<li><strong>Motifs interdits</strong>: Ne peut pas contenir <code>..</code>, <code>.-</code> ou <code>-.</code> (depuis 0.6.1.33)</li>
+<li><strong>Réservé</strong>: Noms d’hôte Base32 <code>*.b32.i2p</code> (52 caractères de base32.b32.i2p)</li>
+</ol>
+<h5 id="exemples-valides">Exemples valides</h5>
+<pre tabindex="0"><code>example.i2p
+my-site.i2p
+test.example.i2p
+site123.i2p
+</code></pre><h5 id="exemples-non-valides">Exemples non valides</h5>
+<pre tabindex="0"><code>example.com          # Wrong TLD
+-invalid.i2p         # Starts with hyphen
+invalid..i2p         # Contains double dot
+invalid.-.i2p        # Contains dot-hyphen
+UPPERCASE.I2P        # Must be lowercase
+verylonghostnameover67charactersthatexceedsthemaximumlength.i2p  # Too long
+</code></pre><h4 id="gestion-des-abonnements">Gestion des abonnements</h4>
+<h5 id="subscriptionstxt">subscriptions.txt</h5>
+<ul>
+<li><strong>Emplacement</strong>: <code>$I2P_CONFIG_DIR/addressbook/subscriptions.txt</code></li>
+<li><strong>Format</strong>: Une URL par ligne</li>
+<li><strong>Par défaut</strong>: <code>http://i2p-projekt.i2p/hosts.txt</code></li>
+</ul>
+<h5 id="format-du-flux-dabonnement-depuis-la-version-0926">Format du flux d’abonnement (depuis la version 0.9.26)</h5>
+<p>Format de flux avancé avec des métadonnées:</p>
+<pre tabindex="0"><code>#
+# I2P Address Book Subscription Feed
+# Format: hostname=destination [#property=value ...]
+#
+
+example.i2p=base64destination #added=20250101 #src=manual
+another.i2p=base64destination #added=20250102 #src=feed1
+</code></pre><p>Propriétés des métadonnées: - <code>added</code>: Date d&rsquo;ajout du nom d&rsquo;hôte (format YYYYMMDD) - <code>src</code>: Identifiant de la source - <code>sig</code>: Signature facultative</p>
+<p><strong>Rétrocompatibilité</strong>: Le format simple hostname=destination est toujours pris en charge.</p>
+<h4 id="exemple-de-configuration-3">Exemple de configuration</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Address book locations</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router_addressbook</span><span style="color:#f92672">=</span><span style="color:#e6db74">../hosts.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">privatehosts.txt</span><span style="color:#f92672">=</span><span style="color:#e6db74">$CONFIG/addressbook/privatehosts.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">userhosts.txt</span><span style="color:#f92672">=</span><span style="color:#e6db74">$CONFIG/addressbook/userhosts.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">hosts.txt</span><span style="color:#f92672">=</span><span style="color:#e6db74">$CONFIG/addressbook/hosts.txt</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Naming service</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">naming.service</span><span style="color:#f92672">=</span><span style="color:#e6db74">BlockfileNamingService</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">naming.service.blockfile.location</span><span style="color:#f92672">=</span><span style="color:#e6db74">$CONFIG/addressbook/hostsdb.blockfile</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Subscriptions</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">subscriptions.txt</span><span style="color:#f92672">=</span><span style="color:#e6db74">$CONFIG/addressbook/subscriptions.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">subscriptions.schedule</span><span style="color:#f92672">=</span><span style="color:#e6db74">daily</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">subscriptions.proxy</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span></code></pre></div><hr>
+<h3 id="configuration-di2psnark-i2psnarkconfigdi2psnarkconfig">Configuration d&rsquo;I2PSnark (i2psnark.config.d/i2psnark.config)</h3>
+<p><strong>Emplacement</strong>: <code>$I2P_CONFIG_DIR/i2psnark.config.d/i2psnark.config</code>   <strong>Application</strong>: client BitTorrent I2PSnark   <strong>Interface de configuration</strong>: Interface Web à l&rsquo;adresse http://127.0.0.1:7657/i2psnark</p>
+<h4 id="arborescence-des-répertoires">Arborescence des répertoires</h4>
+<pre tabindex="0"><code>$I2P_CONFIG_DIR/i2psnark.config.d/
+├── i2psnark.config
+├── [torrent-hash-1]/
+│   └── *.config
+├── [torrent-hash-2]/
+│   └── *.config
+└── ...
+</code></pre><h4 id="configuration-principale-i2psnarkconfig">Configuration principale (i2psnark.config)</h4>
+<p>Configuration par défaut minimale:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.dir</span><span style="color:#f92672">=</span><span style="color:#e6db74">i2psnark</span>
+</span></span></code></pre></div><p>Propriétés supplémentaires gérées via l&rsquo;interface web:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Basic settings</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.dir</span><span style="color:#f92672">=</span><span style="color:#e6db74">i2psnark</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.autoStart</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.openTrackers</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Network settings</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.uploaders</span><span style="color:#f92672">=</span><span style="color:#e6db74">8</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.upBW</span><span style="color:#f92672">=</span><span style="color:#e6db74">40</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.seedPct</span><span style="color:#f92672">=</span><span style="color:#e6db74">100</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2CP settings</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.i2cpHost</span><span style="color:#f92672">=</span><span style="color:#e6db74">127.0.0.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.i2cpPort</span><span style="color:#f92672">=</span><span style="color:#e6db74">7654</span>
+</span></span></code></pre></div><h4 id="configuration-individuelle-du-torrent">Configuration individuelle du torrent</h4>
+<p><strong>Emplacement</strong>: <code>$I2P_CONFIG_DIR/i2psnark.config.d/[torrent-hash]/*.config</code>   <strong>Format</strong>: Paramètres par torrent   <strong>Gestion</strong>: Automatique (via l&rsquo;interface web)</p>
+<p>Les propriétés comprennent : - Paramètres de téléversement/téléchargement spécifiques au torrent - Priorités des fichiers - Informations du tracker - Limites du nombre de pairs</p>
+<p><strong>Remarque</strong>: Les paramètres des torrents sont principalement gérés via l&rsquo;interface web. La modification manuelle n&rsquo;est pas recommandée.</p>
+<h4 id="organisation-des-données-du-torrent">Organisation des données du torrent</h4>
+<p>Le stockage des données est distinct de la configuration :</p>
+<pre tabindex="0"><code>$I2P_CONFIG_DIR/i2psnark/          # Data directory
+├── *.torrent                       # Torrent metadata files
+├── *.torrent.downloaded/           # Downloaded file directories
+├── file1.dat                       # Direct file downloads
+└── ...
+
+$I2P_CONFIG_DIR/i2psnark.config.d/ # Configuration directory
+├── i2psnark.config                 # Main config
+└── [hashes]/                       # Per-torrent configs
+</code></pre><hr>
+<h3 id="configuration-di2ptunnel-i2ptunnelconfig">Configuration d&rsquo;I2PTunnel (i2ptunnel.config)</h3>
+<p><strong>Emplacement</strong>: <code>$I2P_CONFIG_DIR/i2ptunnel.config</code> (hérité) ou <code>$I2P_CONFIG_DIR/i2ptunnel.config.d/</code> (moderne)   <strong>Interface de configuration</strong>: Console du router à <code>/i2ptunnel</code>   <strong>Changement de format</strong>: Version 0.9.42 (août 2019)</p>
+<h4 id="structure-des-répertoires-version-0942">Structure des répertoires (Version 0.9.42+)</h4>
+<p>À partir de la version 0.9.42, le fichier i2ptunnel.config par défaut est automatiquement scindé :</p>
+<pre tabindex="0"><code>$I2P_CONFIG_DIR/
+├── i2ptunnel.config.d/
+│   ├── http-proxy/
+│   │   └── tunnel.config
+│   ├── irc-proxy/
+│   │   └── tunnel.config
+│   ├── ssh-service/
+│   │   └── tunnel.config
+│   └── ...
+└── i2ptunnel.config (legacy, auto-migrated)
+</code></pre><p><strong>Différence critique de format</strong>: - <strong>Format monolithique</strong>: Propriétés préfixées par <code>tunnel.N.</code> - <strong>Format scindé</strong>: Propriétés <strong>PAS</strong> préfixées (p. ex., <code>description=</code>, et non <code>tunnel.0.description=</code>)</p>
+<h4 id="comportement-de-migration">Comportement de migration</h4>
+<p>Lors de la première exécution après la mise à jour vers 0.9.42: 1. Le fichier i2ptunnel.config existant est lu 2. Des configurations de tunnel individuelles sont créées dans i2ptunnel.config.d/ 3. Les préfixes sont supprimés des propriétés dans les fichiers séparés 4. Le fichier d&rsquo;origine est sauvegardé 5. L&rsquo;ancien format reste pris en charge pour la rétrocompatibilité</p>
+<h4 id="sections-de-configuration">Sections de configuration</h4>
+<p>La configuration d’I2PTunnel est documentée en détail dans la section <a href="#i2ptunnel-configuration-reference">Référence de configuration d’I2PTunnel</a>
+ ci-dessous. Les descriptions des propriétés s’appliquent aux formats monolithique (<code>tunnel.N.property</code>) et séparé (<code>property</code>).</p>
+<hr>
+<h2 id="référence-de-configuration-di2ptunnel">Référence de configuration d&rsquo;I2PTunnel</h2>
+<p>Cette section fournit une référence technique complète pour toutes les propriétés de configuration d’I2PTunnel. Les propriétés sont présentées au format scindé (sans le préfixe <code>tunnel.N.</code>). Pour le format monolithique, préfixez toutes les propriétés avec <code>tunnel.N.</code> où N est le numéro du tunnel.</p>
+<p><strong>Important</strong>: Les propriétés décrites sous la forme <code>tunnel.N.option.i2cp.*</code> sont implémentées dans I2PTunnel (outil I2P de gestion des tunnels) et ne sont <strong>PAS</strong> prises en charge via d&rsquo;autres interfaces telles que le protocole I2CP ou SAM API.</p>
+<h3 id="propriétés-de-base">Propriétés de base</h3>
+<h4 id="tunnelndescription-description">tunnel.N.description (description)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne de caractères</li>
+<li><strong>Context</strong>: Tous les tunnels</li>
+<li><strong>Description</strong>: Description de tunnel lisible par l&rsquo;utilisateur pour l&rsquo;affichage dans l&rsquo;interface utilisateur</li>
+<li><strong>Example</strong>: <code>description=HTTP Proxy for outproxy access</code></li>
+</ul>
+<h4 id="tunnelnname-nom">tunnel.N.name (nom)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne de caractères</li>
+<li><strong>Contexte</strong>: Tous les tunnels</li>
+<li><strong>Obligatoire</strong>: Oui</li>
+<li><strong>Description</strong>: Identifiant de tunnel unique et nom d&rsquo;affichage</li>
+<li><strong>Exemple</strong>: <code>name=I2P HTTP Proxy</code></li>
+</ul>
+<h4 id="tunnelntype-type">tunnel.N.type (type)</h4>
+<ul>
+<li><strong>Type</strong>: Énumération</li>
+<li><strong>Contexte</strong>: Tous les tunnels</li>
+<li><strong>Obligatoire</strong>: Oui</li>
+<li><strong>Valeurs</strong>:
+<ul>
+<li><code>client</code> - tunnel client générique</li>
+<li><code>httpclient</code> - client proxy HTTP</li>
+<li><code>ircclient</code> - tunnel client IRC</li>
+<li><code>socksirctunnel</code> - proxy SOCKS IRC</li>
+<li><code>sockstunnel</code> - proxy SOCKS (version 4, 4a, 5)</li>
+<li><code>connectclient</code> - client proxy CONNECT</li>
+<li><code>streamrclient</code> - client Streamr</li>
+<li><code>server</code> - tunnel serveur générique</li>
+<li><code>httpserver</code> - tunnel serveur HTTP</li>
+<li><code>ircserver</code> - tunnel serveur IRC</li>
+<li><code>httpbidirserver</code> - serveur HTTP bidirectionnel</li>
+<li><code>streamrserver</code> - serveur Streamr</li>
+</ul>
+</li>
+</ul>
+<h4 id="tunnelninterface-interface">tunnel.N.interface (interface)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (adresse IP ou nom d’hôte)</li>
+<li><strong>Contexte</strong>: tunnels client uniquement</li>
+<li><strong>Par défaut</strong>: 127.0.0.1</li>
+<li><strong>Description</strong>: Interface locale à laquelle se lier pour les connexions entrantes</li>
+<li><strong>Note de sécurité</strong>: Se lier à 0.0.0.0 autorise les connexions distantes</li>
+<li><strong>Exemple</strong>: <code>interface=127.0.0.1</code></li>
+</ul>
+<h4 id="tunnelnlistenport-listenport">tunnel.N.listenPort (listenPort)</h4>
+<ul>
+<li><strong>Type</strong>: Entier</li>
+<li><strong>Contexte</strong>: Tunnels clients uniquement</li>
+<li><strong>Plage</strong>: 1-65535</li>
+<li><strong>Description</strong>: Port local d&rsquo;écoute pour les connexions client</li>
+<li><strong>Exemple</strong>: <code>listenPort=4444</code></li>
+</ul>
+<h4 id="tunnelntargethost-targethost">tunnel.N.targetHost (targetHost)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (adresse IP ou nom d&rsquo;hôte)</li>
+<li><strong>Contexte</strong>: Tunnels serveur uniquement</li>
+<li><strong>Description</strong>: Serveur local vers lequel rediriger les connexions</li>
+<li><strong>Exemple</strong>: <code>targetHost=127.0.0.1</code></li>
+</ul>
+<h4 id="tunnelntargetport-targetport">tunnel.N.targetPort (targetPort)</h4>
+<ul>
+<li><strong>Type</strong>: Entier</li>
+<li><strong>Context</strong>: Uniquement les tunnels serveur</li>
+<li><strong>Range</strong>: 1-65535</li>
+<li><strong>Description</strong>: Port sur targetHost auquel se connecter</li>
+<li><strong>Example</strong>: <code>targetPort=80</code></li>
+</ul>
+<h4 id="tunnelntargetdestination-targetdestination">tunnel.N.targetDestination (targetDestination)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne de caractères (destinations séparées par des virgules ou des espaces)</li>
+<li><strong>Contexte</strong>: Uniquement pour les tunnels clients</li>
+<li><strong>Format</strong>: <code>destination[:port][,destination[:port]]</code></li>
+<li><strong>Description</strong>: Destinations I2P auxquelles se connecter</li>
+<li><strong>Exemples</strong>:
+<ul>
+<li><code>targetDestination=example.i2p</code></li>
+<li><code>targetDestination=example.i2p:8080</code></li>
+<li><code>targetDestination=site1.i2p,site2.i2p:8080</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="tunnelni2cphost-i2cphost">tunnel.N.i2cpHost (i2cpHost)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (adresse IP ou nom d’hôte)</li>
+<li><strong>Par défaut</strong>: 127.0.0.1</li>
+<li><strong>Description</strong>: Adresse de l’interface I2CP du router I2P</li>
+<li><strong>Remarque</strong>: Ignoré lors de l’exécution dans le contexte du router</li>
+<li><strong>Exemple</strong>: <code>i2cpHost=127.0.0.1</code></li>
+</ul>
+<h4 id="tunnelni2cpport-i2cpport">tunnel.N.i2cpPort (i2cpPort)</h4>
+<ul>
+<li><strong>Type</strong>: Entier</li>
+<li><strong>Valeur par défaut</strong>: 7654</li>
+<li><strong>Plage</strong>: 1-65535</li>
+<li><strong>Description</strong>: Port I2CP du router I2P</li>
+<li><strong>Remarque</strong>: Ignoré lors de l&rsquo;exécution dans le contexte du router</li>
+<li><strong>Exemple</strong>: <code>i2cpPort=7654</code></li>
+</ul>
+<h4 id="tunnelnstartonload-startonload">tunnel.N.startOnLoad (startOnLoad)</h4>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Default</strong>: true</li>
+<li><strong>Description</strong>: Indique s&rsquo;il faut démarrer le tunnel au chargement d&rsquo;I2PTunnel</li>
+<li><strong>Example</strong>: <code>startOnLoad=true</code></li>
+</ul>
+<h3 id="configuration-du-proxy">Configuration du proxy</h3>
+<h4 id="tunnelnproxylist-proxylist">tunnel.N.proxyList (proxyList)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (noms d’hôte séparés par des virgules ou des espaces)</li>
+<li><strong>Contexte</strong>: Proxies HTTP et SOCKS uniquement</li>
+<li><strong>Description</strong>: Liste des hôtes d’outproxy (mandataire de sortie vers l’Internet classique)</li>
+<li><strong>Exemple</strong>: <code>proxyList=outproxy.example.i2p,backup.example.i2p</code></li>
+</ul>
+<h3 id="configuration-du-serveur">Configuration du serveur</h3>
+<h4 id="tunnelnprivkeyfile-privkeyfile">tunnel.N.privKeyFile (privKeyFile)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (chemin de fichier)</li>
+<li><strong>Context</strong>: Serveurs et tunnels clients persistants</li>
+<li><strong>Description</strong>: Fichier contenant les clés privées d&rsquo;une destination persistante</li>
+<li><strong>Path</strong>: Absolu ou relatif au répertoire de configuration d&rsquo;I2P</li>
+<li><strong>Example</strong>: <code>privKeyFile=eepsite/eepPriv.dat</code></li>
+</ul>
+<h4 id="tunnelnspoofedhost-spoofedhost">tunnel.N.spoofedHost (spoofedHost)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (nom d&rsquo;hôte)</li>
+<li><strong>Contexte</strong>: Serveurs HTTP uniquement</li>
+<li><strong>Par défaut</strong>: Nom d&rsquo;hôte Base32 de la destination</li>
+<li><strong>Description</strong>: Valeur de l&rsquo;en-tête Host transmise au serveur local</li>
+<li><strong>Exemple</strong>: <code>spoofedHost=example.i2p</code></li>
+</ul>
+<h4 id="tunnelnspoofedhostnnnn-spoofedhostnnnn">tunnel.N.spoofedHost.NNNN (spoofedHost.NNNN)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (nom d&rsquo;hôte)</li>
+<li><strong>Contexte</strong>: Serveurs HTTP uniquement</li>
+<li><strong>Description</strong>: Redéfinition de l&rsquo;hôte virtuel pour un port entrant spécifique</li>
+<li><strong>Cas d&rsquo;utilisation</strong>: Héberger plusieurs sites sur des ports différents</li>
+<li><strong>Exemple</strong>: <code>spoofedHost.8080=site1.example.i2p</code></li>
+</ul>
+<h3 id="options-spécifiques-au-client">Options spécifiques au client</h3>
+<h4 id="tunnelnsharedclient-sharedclient">tunnel.N.sharedClient (sharedClient)</h4>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Context</strong>: Tunnels client uniquement</li>
+<li><strong>Default</strong>: false</li>
+<li><strong>Description</strong>: Indique si plusieurs clients peuvent partager ce tunnel</li>
+<li><strong>Example</strong>: <code>sharedClient=false</code></li>
+</ul>
+<h4 id="tunnelnoptionpersistentclientkey-persistentclientkey">tunnel.N.option.persistentClientKey (persistentClientKey)</h4>
+<ul>
+<li><strong>Type</strong>: booléen</li>
+<li><strong>Contexte</strong>: Uniquement pour les tunnels clients</li>
+<li><strong>Valeur par défaut</strong>: false</li>
+<li><strong>Description</strong>: Stocker et réutiliser les clés de destination entre les redémarrages</li>
+<li><strong>Conflit</strong>: Incompatible avec <code>i2cp.newDestOnResume=true</code></li>
+<li><strong>Exemple</strong>: <code>option.persistentClientKey=true</code></li>
+</ul>
+<h3 id="options-i2cp-implémentation-di2ptunnel">Options I2CP (implémentation d&rsquo;I2PTunnel)</h3>
+<p><strong>Important</strong>: Ces propriétés sont préfixées par <code>option.i2cp.</code> mais sont <strong>implémentées dans I2PTunnel</strong>, et non dans la couche de protocole I2CP. Elles ne sont pas disponibles via I2CP ou les API SAM.</p>
+<h4 id="tunnelnoptioni2cpdelayopen-optioni2cpdelayopen">tunnel.N.option.i2cp.delayOpen (option.i2cp.delayOpen)</h4>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Context</strong>: Uniquement pour les tunnels client</li>
+<li><strong>Default</strong>: false</li>
+<li><strong>Description</strong>: Retarder la création du tunnel jusqu’à la première connexion</li>
+<li><strong>Use Case</strong>: Économiser des ressources pour les tunnels rarement utilisés</li>
+<li><strong>Example</strong>: <code>option.i2cp.delayOpen=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2cpnewdestonresume-optioni2cpnewdestonresume">tunnel.N.option.i2cp.newDestOnResume (option.i2cp.newDestOnResume)</h4>
+<ul>
+<li><strong>Type</strong>: booléen</li>
+<li><strong>Context</strong>: Tunnels client uniquement</li>
+<li><strong>Default</strong>: false</li>
+<li><strong>Requires</strong>: <code>i2cp.closeOnIdle=true</code></li>
+<li><strong>Conflict</strong>: Mutuellement exclusif avec <code>persistentClientKey=true</code></li>
+<li><strong>Description</strong>: Créer une nouvelle destination après expiration du délai d&rsquo;inactivité</li>
+<li><strong>Example</strong>: <code>option.i2cp.newDestOnResume=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2cpleasesetprivatekey-optioni2cpleasesetprivatekey">tunnel.N.option.i2cp.leaseSetPrivateKey (option.i2cp.leaseSetPrivateKey)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (clé encodée en base64)</li>
+<li><strong>Context</strong>: Uniquement pour les tunnels serveur</li>
+<li><strong>Description</strong>: Clé de chiffrement privée persistante du leaseSet (ensemble de baux)</li>
+<li><strong>Use Case</strong>: Maintenir un leaseSet chiffré cohérent entre les redémarrages</li>
+<li><strong>Example</strong>: <code>option.i2cp.leaseSetPrivateKey=AAAA...base64...</code></li>
+</ul>
+<h4 id="tunnelnoptioni2cpleasesetsigningprivatekey-optioni2cpleasesetsigningprivatekey">tunnel.N.option.i2cp.leaseSetSigningPrivateKey (option.i2cp.leaseSetSigningPrivateKey)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (sigtype:base64)</li>
+<li><strong>Context</strong>: Tunnels serveur uniquement</li>
+<li><strong>Format</strong>: <code>sigtype:base64key</code></li>
+<li><strong>Description</strong>: Clé privée persistante de signature du leaseset</li>
+<li><strong>Example</strong>: <code>option.i2cp.leaseSetSigningPrivateKey=7:AAAA...base64...</code></li>
+</ul>
+<h3 id="options-spécifiques-au-serveur">Options spécifiques au serveur</h3>
+<h4 id="tunnelnoptionenableuniquelocal-optionenableuniquelocal">tunnel.N.option.enableUniqueLocal (option.enableUniqueLocal)</h4>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Contexte</strong>: Uniquement pour les tunnels serveur</li>
+<li><strong>Valeur par défaut</strong>: false</li>
+<li><strong>Description</strong>: Utiliser une adresse IP locale unique par destination I2P distante</li>
+<li><strong>Cas d&rsquo;utilisation</strong>: Suivre les adresses IP des clients dans les journaux du serveur</li>
+<li><strong>Note de sécurité</strong>: Peut réduire l&rsquo;anonymat</li>
+<li><strong>Exemple</strong>: <code>option.enableUniqueLocal=false</code></li>
+</ul>
+<h4 id="tunnelnoptiontargetforportnnnn-optiontargetforportnnnn">tunnel.N.option.targetForPort.NNNN (option.targetForPort.NNNN)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (hostname:port)</li>
+<li><strong>Contexte</strong>: Uniquement pour les tunnels serveur</li>
+<li><strong>Description</strong>: Remplace targetHost/targetPort pour le port entrant NNNN</li>
+<li><strong>Cas d&rsquo;utilisation</strong>: Routage basé sur le port vers différents services locaux</li>
+<li><strong>Exemple</strong>: <code>option.targetForPort.8080=localhost:8080</code></li>
+</ul>
+<h3 id="configuration-du-pool-de-threads">Configuration du pool de threads</h3>
+<h4 id="tunnelnoptioni2ptunnelusepool-optioni2ptunnelusepool">tunnel.N.option.i2ptunnel.usePool (option.i2ptunnel.usePool)</h4>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Contexte</strong>: Tunnels serveur uniquement</li>
+<li><strong>Par défaut</strong>: true</li>
+<li><strong>Description</strong>: Utiliser un pool de threads pour la gestion des connexions</li>
+<li><strong>Remarque</strong>: Toujours false pour les serveurs standard (ignoré)</li>
+<li><strong>Exemple</strong>: <code>option.i2ptunnel.usePool=true</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelblockinghandlercount-optioni2ptunnelblockinghandlercount">tunnel.N.option.i2ptunnel.blockingHandlerCount (option.i2ptunnel.blockingHandlerCount)</h4>
+<ul>
+<li><strong>Type</strong>: Entier</li>
+<li><strong>Contexte</strong>: Uniquement pour les tunnels serveur</li>
+<li><strong>Valeur par défaut</strong>: 65</li>
+<li><strong>Description</strong>: Taille maximale du pool de threads</li>
+<li><strong>Remarque</strong>: Ignoré pour les serveurs standard</li>
+<li><strong>Exemple</strong>: <code>option.i2ptunnel.blockingHandlerCount=100</code></li>
+</ul>
+<h3 id="options-du-client-http">Options du client HTTP</h3>
+<h4 id="tunnelnoptioni2ptunnelhttpclientallowinternalssl-optioni2ptunnelhttpclientallowinternalssl">tunnel.N.option.i2ptunnel.httpclient.allowInternalSSL (option.i2ptunnel.httpclient.allowInternalSSL)</h4>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Contexte</strong>: Clients HTTP uniquement</li>
+<li><strong>Par défaut</strong>: false</li>
+<li><strong>Description</strong>: Autoriser les connexions SSL aux adresses .i2p</li>
+<li><strong>Exemple</strong>: <code>option.i2ptunnel.httpclient.allowInternalSSL=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientdisableaddresshelper-optioni2ptunnelhttpclientdisableaddresshelper">tunnel.N.option.i2ptunnel.httpclient.disableAddressHelper (option.i2ptunnel.httpclient.disableAddressHelper)</h4>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Contexte</strong>: clients HTTP uniquement</li>
+<li><strong>Par défaut</strong>: false</li>
+<li><strong>Description</strong>: Désactiver les liens address helper (assistant d’adresse) dans les réponses du proxy</li>
+<li><strong>Exemple</strong>: <code>option.i2ptunnel.httpclient.disableAddressHelper=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientjumpservers-optioni2ptunnelhttpclientjumpservers">tunnel.N.option.i2ptunnel.httpclient.jumpServers (option.i2ptunnel.httpclient.jumpServers)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (URL séparées par des virgules ou des espaces)</li>
+<li><strong>Contexte</strong>: clients HTTP uniquement</li>
+<li><strong>Description</strong>: URL de jump server (service de saut) pour la résolution de noms d&rsquo;hôte</li>
+<li><strong>Exemple</strong>: <code>option.i2ptunnel.httpclient.jumpServers=http://jump.i2p/jump,http://stats.i2p/jump</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientsendaccept-optioni2ptunnelhttpclientsendaccept">tunnel.N.option.i2ptunnel.httpclient.sendAccept (option.i2ptunnel.httpclient.sendAccept)</h4>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Contexte</strong>: Clients HTTP uniquement</li>
+<li><strong>Valeur par défaut</strong>: false</li>
+<li><strong>Description</strong>: Transmettre les en-têtes Accept-* (sauf Accept et Accept-Encoding)</li>
+<li><strong>Exemple</strong>: <code>option.i2ptunnel.httpclient.sendAccept=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientsendreferer-optioni2ptunnelhttpclientsendreferer">tunnel.N.option.i2ptunnel.httpclient.sendReferer (option.i2ptunnel.httpclient.sendReferer)</h4>
+<ul>
+<li><strong>Type</strong>: booléen</li>
+<li><strong>Context</strong>: clients HTTP uniquement</li>
+<li><strong>Default</strong>: false</li>
+<li><strong>Description</strong>: Transmettre les en-têtes Referer via le proxy</li>
+<li><strong>Privacy Note</strong>: Peut divulguer des informations</li>
+<li><strong>Example</strong>: <code>option.i2ptunnel.httpclient.sendReferer=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientsenduseragent-optioni2ptunnelhttpclientsenduseragent">tunnel.N.option.i2ptunnel.httpclient.sendUserAgent (option.i2ptunnel.httpclient.sendUserAgent)</h4>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Context</strong>: Clients HTTP uniquement</li>
+<li><strong>Default</strong>: false</li>
+<li><strong>Description</strong>: Transmettre les en-têtes User-Agent via le proxy</li>
+<li><strong>Privacy Note</strong>: Peut divulguer des informations sur le navigateur</li>
+<li><strong>Example</strong>: <code>option.i2ptunnel.httpclient.sendUserAgent=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientsendvia-optioni2ptunnelhttpclientsendvia">tunnel.N.option.i2ptunnel.httpclient.sendVia (option.i2ptunnel.httpclient.sendVia)</h4>
+<ul>
+<li><strong>Type</strong>: booléen</li>
+<li><strong>Contexte</strong>: clients HTTP uniquement</li>
+<li><strong>Par défaut</strong>: false</li>
+<li><strong>Description</strong>: Transmettre les en-têtes Via à travers le proxy</li>
+<li><strong>Exemple</strong>: <code>option.i2ptunnel.httpclient.sendVia=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientssloutproxies-optioni2ptunnelhttpclientssloutproxies">tunnel.N.option.i2ptunnel.httpclient.SSLOutproxies (option.i2ptunnel.httpclient.SSLOutproxies)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (destinations séparées par des virgules ou des espaces)</li>
+<li><strong>Contexte</strong>: clients HTTP uniquement</li>
+<li><strong>Description</strong>: Outproxies (mandataires sortants) SSL internes au réseau pour HTTPS</li>
+<li><strong>Exemple</strong>: <code>option.i2ptunnel.httpclient.SSLOutproxies=ssl-outproxy.i2p</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunneluselocaloutproxy-optioni2ptunneluselocaloutproxy">tunnel.N.option.i2ptunnel.useLocalOutproxy (option.i2ptunnel.useLocalOutproxy)</h4>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Contexte</strong>: Clients HTTP uniquement</li>
+<li><strong>Par défaut</strong>: true</li>
+<li><strong>Description</strong>: Utiliser les greffons de proxy de sortie locaux enregistrés</li>
+<li><strong>Exemple</strong>: <code>option.i2ptunnel.useLocalOutproxy=true</code></li>
+</ul>
+<h3 id="authentification-du-client-http">Authentification du client HTTP</h3>
+<h4 id="tunnelnoptionproxyauth-optionproxyauth">tunnel.N.option.proxyAuth (option.proxyAuth)</h4>
+<ul>
+<li><strong>Type</strong>: Énumération</li>
+<li><strong>Contexte</strong>: Clients HTTP uniquement</li>
+<li><strong>Par défaut</strong>: false</li>
+<li><strong>Valeurs</strong>: <code>true</code>, <code>false</code>, <code>basic</code>, <code>digest</code></li>
+<li><strong>Description</strong>: Exiger une authentification locale pour l&rsquo;accès au proxy</li>
+<li><strong>Remarque</strong>: <code>true</code> est équivalent à <code>basic</code></li>
+<li><strong>Exemple</strong>: <code>option.proxyAuth=basic</code></li>
+</ul>
+<h4 id="tunnelnoptionproxyauthusermd5-optionproxyauthusermd5">tunnel.N.option.proxy.auth.USER.md5 (option.proxy.auth.USER.md5)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (hexadécimal en minuscules de 32 caractères)</li>
+<li><strong>Contexte</strong>: Clients HTTP uniquement</li>
+<li><strong>Nécessite</strong>: <code>proxyAuth=basic</code> ou <code>proxyAuth=digest</code></li>
+<li><strong>Description</strong>: Hachage MD5 du mot de passe de l&rsquo;utilisateur USER</li>
+<li><strong>Obsolescence</strong>: Utilisez SHA-256 à la place (0.9.56+)</li>
+<li><strong>Exemple</strong>: <code>option.proxy.auth.alice.md5=5f4dcc3b5aa765d61d8327deb882cf99</code></li>
+</ul>
+<h4 id="tunnelnoptionproxyauthusersha256-optionproxyauthusersha256">tunnel.N.option.proxy.auth.USER.sha256 (option.proxy.auth.USER.sha256)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (hexadécimal en minuscules de 64 caractères)</li>
+<li><strong>Contexte</strong>: Clients HTTP uniquement</li>
+<li><strong>Nécessite</strong>: <code>proxyAuth=digest</code></li>
+<li><strong>Depuis</strong>: Version 0.9.56</li>
+<li><strong>Norme</strong>: RFC 7616</li>
+<li><strong>Description</strong>: Hachage SHA-256 du mot de passe de l&rsquo;utilisateur USER</li>
+<li><strong>Exemple</strong>: <code>option.proxy.auth.alice.sha256=5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8</code></li>
+</ul>
+<h3 id="authentification-du-proxy-de-sortie">Authentification du proxy de sortie</h3>
+<h4 id="tunnelnoptionoutproxyauth-optionoutproxyauth">tunnel.N.option.outproxyAuth (option.outproxyAuth)</h4>
+<ul>
+<li><strong>Type</strong>: booléen</li>
+<li><strong>Contexte</strong>: clients HTTP uniquement</li>
+<li><strong>Valeur par défaut</strong>: false</li>
+<li><strong>Description</strong>: Envoyer les informations d’authentification à l’outproxy (proxy de sortie)</li>
+<li><strong>Exemple</strong>: <code>option.outproxyAuth=false</code></li>
+</ul>
+<h4 id="tunnelnoptionoutproxyusername-optionoutproxyusername">tunnel.N.option.outproxyUsername (option.outproxyUsername)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne</li>
+<li><strong>Context</strong>: Clients HTTP uniquement</li>
+<li><strong>Requires</strong>: <code>outproxyAuth=true</code></li>
+<li><strong>Description</strong>: Nom d&rsquo;utilisateur pour l&rsquo;authentification outproxy</li>
+<li><strong>Example</strong>: <code>option.outproxyUsername=user</code></li>
+</ul>
+<h4 id="tunnelnoptionoutproxypassword-optionoutproxypassword">tunnel.N.option.outproxyPassword (option.outproxyPassword)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne de caractères</li>
+<li><strong>Contexte</strong>: clients HTTP uniquement</li>
+<li><strong>Requiert</strong>: <code>outproxyAuth=true</code></li>
+<li><strong>Description</strong>: Mot de passe pour l’authentification de l’outproxy (proxy sortant I2P)</li>
+<li><strong>Sécurité</strong>: Stocké en clair</li>
+<li><strong>Exemple</strong>: <code>option.outproxyPassword=secret</code></li>
+</ul>
+<h3 id="options-du-client-socks">Options du client SOCKS</h3>
+<h4 id="tunnelnoptioni2ptunnelsocksproxydefault-optioni2ptunnelsocksproxydefault">tunnel.N.option.i2ptunnel.socks.proxy.default (option.i2ptunnel.socks.proxy.default)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (destinations séparées par des virgules ou des espaces)</li>
+<li><strong>Contexte</strong>: Uniquement pour les clients SOCKS</li>
+<li><strong>Description</strong>: Mandataires de sortie au sein du réseau pour les ports non spécifiés</li>
+<li><strong>Exemple</strong>: <code>option.i2ptunnel.socks.proxy.default=outproxy.i2p</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelsocksproxynnnn-optioni2ptunnelsocksproxynnnn">tunnel.N.option.i2ptunnel.socks.proxy.NNNN (option.i2ptunnel.socks.proxy.NNNN)</h4>
+<ul>
+<li><strong>Type</strong>: String (destinations séparées par des virgules ou des espaces)</li>
+<li><strong>Context</strong>: Clients SOCKS uniquement</li>
+<li><strong>Description</strong>: Outproxies (proxies de sortie) internes au réseau I2P spécifiquement pour le port NNNN</li>
+<li><strong>Example</strong>: <code>option.i2ptunnel.socks.proxy.443=ssl-outproxy.i2p</code></li>
+</ul>
+<h4 id="tunnelnoptionoutproxytype-optionoutproxytype">tunnel.N.option.outproxyType (option.outproxyType)</h4>
+<ul>
+<li><strong>Type</strong>: Enum</li>
+<li><strong>Contexte</strong>: clients SOCKS uniquement</li>
+<li><strong>Par défaut</strong>: socks</li>
+<li><strong>Depuis</strong>: Version 0.9.57</li>
+<li><strong>Valeurs</strong>: <code>socks</code>, <code>connect</code> (HTTPS)</li>
+<li><strong>Description</strong>: Type d&rsquo;outproxy (proxy de sortie) configuré</li>
+<li><strong>Exemple</strong>: <code>option.outproxyType=connect</code></li>
+</ul>
+<h3 id="options-du-serveur-http">Options du serveur HTTP</h3>
+<h4 id="tunnelnoptionmaxposts-optionmaxposts">tunnel.N.option.maxPosts (option.maxPosts)</h4>
+<ul>
+<li><strong>Type</strong>: Entier</li>
+<li><strong>Contexte</strong>: Serveurs HTTP uniquement</li>
+<li><strong>Par défaut</strong>: 0 (illimité)</li>
+<li><strong>Description</strong>: Nombre maximal de requêtes POST provenant d&rsquo;une Destination (identité I2P) unique par postCheckTime</li>
+<li><strong>Exemple</strong>: <code>option.maxPosts=10</code></li>
+</ul>
+<h4 id="tunnelnoptionmaxtotalposts-optionmaxtotalposts">tunnel.N.option.maxTotalPosts (option.maxTotalPosts)</h4>
+<ul>
+<li><strong>Type</strong>: Entier</li>
+<li><strong>Context</strong>: Serveurs HTTP uniquement</li>
+<li><strong>Default</strong>: 0 (illimité)</li>
+<li><strong>Description</strong>: Nombre maximal de requêtes POST provenant de toutes les destinations par intervalle postCheckTime</li>
+<li><strong>Example</strong>: <code>option.maxTotalPosts=50</code></li>
+</ul>
+<h4 id="tunnelnoptionpostchecktime-optionpostchecktime">tunnel.N.option.postCheckTime (option.postCheckTime)</h4>
+<ul>
+<li><strong>Type</strong>: Entier (secondes)</li>
+<li><strong>Contexte</strong>: serveurs HTTP uniquement</li>
+<li><strong>Par défaut</strong>: 300</li>
+<li><strong>Description</strong>: Fenêtre de temps pour la vérification des limites POST</li>
+<li><strong>Exemple</strong>: <code>option.postCheckTime=600</code></li>
+</ul>
+<h4 id="tunnelnoptionpostbantime-optionpostbantime">tunnel.N.option.postBanTime (option.postBanTime)</h4>
+<ul>
+<li><strong>Type</strong>: Entier (secondes)</li>
+<li><strong>Contexte</strong>: Serveurs HTTP uniquement</li>
+<li><strong>Par défaut</strong>: 1800</li>
+<li><strong>Description</strong>: Durée de bannissement après dépassement de maxPosts pour une destination donnée</li>
+<li><strong>Exemple</strong>: <code>option.postBanTime=3600</code></li>
+</ul>
+<h4 id="tunnelnoptionposttotalbantime-optionposttotalbantime">tunnel.N.option.postTotalBanTime (option.postTotalBanTime)</h4>
+<ul>
+<li><strong>Type</strong>: Entier (secondes)</li>
+<li><strong>Contexte</strong>: Serveurs HTTP uniquement</li>
+<li><strong>Valeur par défaut</strong>: 600</li>
+<li><strong>Description</strong>: Durée de bannissement après dépassement de maxTotalPosts</li>
+<li><strong>Exemple</strong>: <code>option.postTotalBanTime=1200</code></li>
+</ul>
+<h3 id="options-de-sécurité-du-serveur-http">Options de sécurité du serveur HTTP</h3>
+<h4 id="tunnelnoptionrejectinproxy-optionrejectinproxy">tunnel.N.option.rejectInproxy (option.rejectInproxy)</h4>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Contexte</strong>: Serveurs HTTP uniquement</li>
+<li><strong>Par défaut</strong>: false</li>
+<li><strong>Description</strong>: Refuser les connexions qui semblent passer par un inproxy (proxy entrant)</li>
+<li><strong>Exemple</strong>: <code>option.rejectInproxy=false</code></li>
+</ul>
+<h4 id="tunnelnoptionrejectreferer-optionrejectreferer">tunnel.N.option.rejectReferer (option.rejectReferer)</h4>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Contexte</strong>: Serveurs HTTP uniquement</li>
+<li><strong>Par défaut</strong>: false</li>
+<li><strong>Depuis</strong>: Version 0.9.25</li>
+<li><strong>Description</strong>: Refuser les connexions avec un en-tête Referer</li>
+<li><strong>Exemple</strong>: <code>option.rejectReferer=false</code></li>
+</ul>
+<h4 id="tunnelnoptionrejectuseragents-optionrejectuseragents">tunnel.N.option.rejectUserAgents (option.rejectUserAgents)</h4>
+<ul>
+<li><strong>Type</strong>: Booléen</li>
+<li><strong>Contexte</strong>: Serveurs HTTP uniquement</li>
+<li><strong>Valeur par défaut</strong>: false</li>
+<li><strong>Depuis</strong>: Version 0.9.25</li>
+<li><strong>Nécessite</strong>: la propriété <code>userAgentRejectList</code></li>
+<li><strong>Description</strong>: Rejette les connexions avec un User-Agent correspondant</li>
+<li><strong>Exemple</strong>: <code>option.rejectUserAgents=false</code></li>
+</ul>
+<h4 id="tunnelnoptionuseragentrejectlist-optionuseragentrejectlist">tunnel.N.option.userAgentRejectList (option.userAgentRejectList)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (chaînes de correspondance séparées par des virgules)</li>
+<li><strong>Contexte</strong>: Serveurs HTTP uniquement</li>
+<li><strong>Depuis</strong>: Version 0.9.25</li>
+<li><strong>Casse</strong>: Correspondance sensible à la casse</li>
+<li><strong>Spécial</strong>: &ldquo;none&rdquo; (depuis 0.9.33) correspond à un User-Agent vide</li>
+<li><strong>Description</strong>: Liste des motifs User-Agent à rejeter</li>
+<li><strong>Exemple</strong>: <code>option.userAgentRejectList=Mozilla,Opera,none</code></li>
+</ul>
+<h3 id="options-du-serveur-irc">Options du serveur IRC</h3>
+<h4 id="tunnelnoptionircserverfakehostname-optionircserverfakehostname">tunnel.N.option.ircserver.fakeHostname (option.ircserver.fakeHostname)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (modèle de nom d’hôte)</li>
+<li><strong>Contexte</strong>: Serveurs IRC uniquement</li>
+<li><strong>Valeur par défaut</strong>: <code>%f.b32.i2p</code></li>
+<li><strong>Jetons</strong>:
+<ul>
+<li><code>%f</code> = Hachage de destination base32 complet</li>
+<li><code>%c</code> = Hachage de destination masqué (voir cloakKey)</li>
+</ul>
+</li>
+<li><strong>Description</strong>: Format de nom d’hôte envoyé au serveur IRC</li>
+<li><strong>Exemple</strong>: <code>option.ircserver.fakeHostname=%c.irc.i2p</code></li>
+</ul>
+<h4 id="tunnelnoptionircservercloakkey-optionircservercloakkey">tunnel.N.option.ircserver.cloakKey (option.ircserver.cloakKey)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (phrase de passe)</li>
+<li><strong>Contexte</strong>: Serveurs IRC uniquement</li>
+<li><strong>Par défaut</strong>: Aléatoire par session</li>
+<li><strong>Restrictions</strong>: Pas de guillemets ni d’espaces</li>
+<li><strong>Description</strong>: Phrase de passe pour un masquage de nom d’hôte cohérent</li>
+<li><strong>Cas d’utilisation</strong>: Suivi persistant de l’utilisateur entre redémarrages/serveurs</li>
+<li><strong>Exemple</strong>: <code>option.ircserver.cloakKey=mysecretkey</code></li>
+</ul>
+<h4 id="tunnelnoptionircservermethod-optionircservermethod">tunnel.N.option.ircserver.method (option.ircserver.method)</h4>
+<ul>
+<li><strong>Type</strong>: Énumération</li>
+<li><strong>Contexte</strong>: Serveurs IRC uniquement</li>
+<li><strong>Valeur par défaut</strong>: user</li>
+<li><strong>Valeurs</strong>: <code>user</code>, <code>webirc</code></li>
+<li><strong>Description</strong>: Méthode d&rsquo;authentification pour le serveur IRC</li>
+<li><strong>Exemple</strong>: <code>option.ircserver.method=webirc</code></li>
+</ul>
+<h4 id="tunnelnoptionircserverwebircpassword-optionircserverwebircpassword">tunnel.N.option.ircserver.webircPassword (option.ircserver.webircPassword)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (mot de passe)</li>
+<li><strong>Context</strong>: Serveurs IRC uniquement</li>
+<li><strong>Requires</strong>: <code>method=webirc</code></li>
+<li><strong>Restrictions</strong>: Pas de guillemets ni d&rsquo;espaces</li>
+<li><strong>Description</strong>: Mot de passe pour l&rsquo;authentification du protocole WEBIRC</li>
+<li><strong>Example</strong>: <code>option.ircserver.webircPassword=webircpass</code></li>
+</ul>
+<h4 id="tunnelnoptionircserverwebircspoofip-optionircserverwebircspoofip">tunnel.N.option.ircserver.webircSpoofIP (option.ircserver.webircSpoofIP)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (adresse IP)</li>
+<li><strong>Contexte</strong>: Serveurs IRC uniquement</li>
+<li><strong>Requiert</strong>: <code>method=webirc</code></li>
+<li><strong>Description</strong>: Adresse IP usurpée pour le protocole WEBIRC</li>
+<li><strong>Exemple</strong>: <code>option.ircserver.webircSpoofIP=10.0.0.1</code></li>
+</ul>
+<h3 id="configuration-ssltls">Configuration SSL/TLS</h3>
+<h4 id="tunnelnoptionusessl-optionusessl">tunnel.N.option.useSSL (option.useSSL)</h4>
+<ul>
+<li><strong>Type</strong>: booléen</li>
+<li><strong>Valeur par défaut</strong>: false</li>
+<li><strong>Contexte</strong>: Tous les tunnels</li>
+<li><strong>Comportement</strong>:
+<ul>
+<li><strong>Serveurs</strong>: Utiliser SSL pour les connexions au serveur local</li>
+<li><strong>Clients</strong>: Exiger SSL de la part des clients locaux</li>
+</ul>
+</li>
+<li><strong>Exemple</strong>: <code>option.useSSL=false</code></li>
+</ul>
+<h4 id="tunnelnoptionkeystorefile-optionkeystorefile">tunnel.N.option.keystoreFile (option.keystoreFile)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne de caractères (chemin de fichier)</li>
+<li><strong>Contexte</strong>: Tunnels clients uniquement</li>
+<li><strong>Par défaut</strong>: <code>i2ptunnel-(random).ks</code></li>
+<li><strong>Chemin</strong>: Relatif à <code>$(I2P_CONFIG_DIR)/keystore/</code> s&rsquo;il n&rsquo;est pas absolu</li>
+<li><strong>Généré automatiquement</strong>: Créé s&rsquo;il n&rsquo;existe pas</li>
+<li><strong>Description</strong>: Fichier keystore (magasin de clés) contenant la clé privée SSL</li>
+<li><strong>Exemple</strong>: <code>option.keystoreFile=my-tunnel.ks</code></li>
+</ul>
+<h4 id="tunnelnoptionkeystorepassword-optionkeystorepassword">tunnel.N.option.keystorePassword (option.keystorePassword)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (mot de passe)</li>
+<li><strong>Context</strong>: Client tunnels uniquement</li>
+<li><strong>Default</strong>: changeit</li>
+<li><strong>Auto-generated</strong>: Mot de passe aléatoire si un nouveau magasin de clés est créé</li>
+<li><strong>Description</strong>: Mot de passe du magasin de clés SSL</li>
+<li><strong>Example</strong>: <code>option.keystorePassword=secretpassword</code></li>
+</ul>
+<h4 id="tunnelnoptionkeyalias-optionkeyalias">tunnel.N.option.keyAlias (option.keyAlias)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne de caractères (alias)</li>
+<li><strong>Contexte</strong>: Tunnels client uniquement</li>
+<li><strong>Généré automatiquement</strong>: Créé si une nouvelle clé est générée</li>
+<li><strong>Description</strong>: Alias de la clé privée dans le keystore (magasin de clés)</li>
+<li><strong>Exemple</strong>: <code>option.keyAlias=mytunnel-key</code></li>
+</ul>
+<h4 id="tunnelnoptionkeypassword-optionkeypassword">tunnel.N.option.keyPassword (option.keyPassword)</h4>
+<ul>
+<li><strong>Type</strong>: Chaîne (mot de passe)</li>
+<li><strong>Contexte</strong>: Uniquement pour les tunnels client</li>
+<li><strong>Généré automatiquement</strong>: Mot de passe aléatoire si une nouvelle clé est créée</li>
+<li><strong>Description</strong>: Mot de passe pour la clé privée dans le keystore (magasin de clés)</li>
+<li><strong>Exemple</strong>: <code>option.keyPassword=keypass123</code></li>
+</ul>
+<h3 id="options-génériques-pour-i2cp-et-le-streaming">Options génériques pour I2CP et le Streaming</h3>
+<p>Toutes les propriétés <code>tunnel.N.option.*</code> (non spécifiquement documentées ci-dessus) sont transmises à l&rsquo;interface I2CP et à la bibliothèque de streaming, avec le préfixe <code>tunnel.N.option.</code> supprimé.</p>
+<p><strong>Important</strong>: Ces options sont distinctes de celles spécifiques à I2PTunnel. Voir : - <a href="../../../../fr/docs/specs/i2cp/">Spécification I2CP</a>
+ - <a href="../../../../fr/docs/specs/streaming/">Spécification de la bibliothèque de streaming</a>
+</p>
+<p>Exemples d’options de streaming :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">option.i2cp.messageReliability</span><span style="color:#f92672">=</span><span style="color:#e6db74">BestEffort</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2p.streaming.connectDelay</span><span style="color:#f92672">=</span><span style="color:#e6db74">1000</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2p.streaming.maxWindowSize</span><span style="color:#f92672">=</span><span style="color:#e6db74">128</span>
+</span></span></code></pre></div><h3 id="exemple-complet-de-tunnel">Exemple complet de Tunnel</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># HTTP Proxy (split format without tunnel.N. prefix)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">I2P HTTP Proxy</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description</span><span style="color:#f92672">=</span><span style="color:#e6db74">HTTP proxy for accessing I2P sites and outproxy</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">httpclient</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">interface</span><span style="color:#f92672">=</span><span style="color:#e6db74">127.0.0.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">listenPort</span><span style="color:#f92672">=</span><span style="color:#e6db74">4444</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">targetDestination</span><span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">sharedClient</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2CP configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2cpHost</span><span style="color:#f92672">=</span><span style="color:#e6db74">127.0.0.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2cpPort</span><span style="color:#f92672">=</span><span style="color:#e6db74">7654</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># HTTP client options</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.allowInternalSSL</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.disableAddressHelper</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.jumpServers</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://stats.i2p/cgi-bin/jump.cgi</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.sendAccept</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.sendReferer</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.sendUserAgent</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Proxy authentication</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.proxyAuth</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Outproxy configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.SSLOutproxies</span><span style="color:#f92672">=</span><span style="color:#e6db74">false.i2p</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">proxyList</span><span style="color:#f92672">=</span><span style="color:#e6db74">false.i2p</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Client behavior</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.persistentClientKey</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2cp.delayOpen</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2CP tunnel options</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.inbound.length</span><span style="color:#f92672">=</span><span style="color:#e6db74">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.outbound.length</span><span style="color:#f92672">=</span><span style="color:#e6db74">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.inbound.quantity</span><span style="color:#f92672">=</span><span style="color:#e6db74">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.outbound.quantity</span><span style="color:#f92672">=</span><span style="color:#e6db74">2</span>
+</span></span></code></pre></div><hr>
+<h2 id="historique-des-versions-et-chronologie-des-fonctionnalités">Historique des versions et chronologie des fonctionnalités</h2>
+<h3 id="version-0910-2013">Version 0.9.10 (2013)</h3>
+<p><strong>Fonctionnalité</strong>: Prise en charge des valeurs vides dans les fichiers de configuration - Les clés avec des valeurs vides (<code>key=</code>) sont désormais prises en charge - Auparavant ignorées ou provoquaient des erreurs d&rsquo;analyse</p>
+<h3 id="version-0918-2015">Version 0.9.18 (2015)</h3>
+<p><strong>Fonctionnalité</strong>: Configuration de l’intervalle de vidage du journaliseur - Propriété: <code>logger.flushInterval</code> (29 secondes par défaut) - Réduit les E/S disque tout en maintenant une latence de journalisation acceptable</p>
+<h3 id="version-0923-novembre-2015">Version 0.9.23 (novembre 2015)</h3>
+<p><strong>Changement majeur</strong> : Java 7 requis au minimum - La prise en charge de Java 6 est terminée - Requis pour continuer à recevoir les mises à jour de sécurité</p>
+<h3 id="version-0925-2015">Version 0.9.25 (2015)</h3>
+<p><strong>Fonctionnalités</strong>: options de sécurité du serveur HTTP - <code>tunnel.N.option.rejectReferer</code> - Rejeter les connexions avec l&rsquo;en-tête Referer - <code>tunnel.N.option.rejectUserAgents</code> - Rejeter des en-têtes User-Agent spécifiques - <code>tunnel.N.option.userAgentRejectList</code> - Modèles de User-Agent à rejeter - <strong>Cas d&rsquo;utilisation</strong>: Limiter les robots d&rsquo;exploration et les clients indésirables</p>
+<h3 id="version-0933-janvier-2018">Version 0.9.33 (janvier 2018)</h3>
+<p><strong>Fonctionnalité</strong>: Filtrage amélioré de l’User-Agent - la chaîne <code>userAgentRejectList</code> &ldquo;none&rdquo; correspond à un User-Agent vide - Corrections de bogues supplémentaires pour i2psnark, i2ptunnel, streaming, SusiMail</p>
+<h3 id="version-0941-2019">Version 0.9.41 (2019)</h3>
+<p><strong>Dépréciation</strong>: Protocole BOB supprimé d&rsquo;Android - les utilisateurs Android doivent migrer vers SAM ou I2CP</p>
+<h3 id="version-0942-août-2019">Version 0.9.42 (août 2019)</h3>
+<p><strong>Changement majeur</strong>: Scission des fichiers de configuration - <code>clients.config</code> scindé en une structure de répertoires <code>clients.config.d/</code> - <code>i2ptunnel.config</code> scindé en une structure de répertoires <code>i2ptunnel.config.d/</code> - Migration automatique lors de la première exécution après mise à niveau - Permet l&rsquo;empaquetage modulaire et la gestion des plugins - L&rsquo;ancien format monolithique reste pris en charge</p>
+<p><strong>Fonctionnalités supplémentaires</strong>: - Améliorations des performances de SSU - Prévention inter-réseau (Proposition 147) - Prise en charge initiale des types de chiffrement</p>
+<h3 id="version-0956-2021">Version 0.9.56 (2021)</h3>
+<p><strong>Fonctionnalités</strong> : Améliorations de la sécurité et de la journalisation - <code>logger.gzip</code> - Compression Gzip pour les journaux en rotation (valeur par défaut : false) - <code>logger.minGzipSize</code> - Taille minimale pour la compression (valeur par défaut : 65536 octets) - <code>tunnel.N.option.proxy.auth.USER.sha256</code> - Authentification Digest SHA-256 (RFC 7616) - <strong>Sécurité</strong> : SHA-256 remplace MD5 pour l&rsquo;authentification Digest</p>
+<h3 id="version-0957-janvier-2023">Version 0.9.57 (janvier 2023)</h3>
+<p><strong>Fonctionnalité</strong>: configuration du type d’outproxy (proxy de sortie) SOCKS - <code>tunnel.N.option.outproxyType</code> - Sélection du type d’outproxy (socks|connect) - Valeur par défaut: socks - Prise en charge de HTTPS CONNECT pour les outproxies HTTPS</p>
+<h3 id="version-260-juillet-2024">Version 2.6.0 (juillet 2024)</h3>
+<p><strong>Changement incompatible</strong> : I2P via Tor bloqué - Connexions provenant des adresses IP des relais de sortie Tor désormais rejetées - <strong>Raison</strong> : Dégrade les performances d&rsquo;I2P, gaspille les ressources des relais de sortie Tor - <strong>Impact</strong> : Les utilisateurs accédant à I2P via des relais de sortie Tor seront bloqués - Les relais non-sortie et les clients Tor ne sont pas concernés</p>
+<h3 id="version-2100-septembre-2025---à-ce-jour">Version 2.10.0 (septembre 2025 - à ce jour)</h3>
+<p><strong>Fonctionnalités majeures</strong>: - <strong>Cryptographie post-quantique</strong> disponible (activation facultative via Hidden Service Manager (gestionnaire de service caché)) - <strong>Prise en charge du tracker UDP</strong> pour I2PSnark afin de réduire la charge du tracker - <strong>Stabilité du Hidden Mode (mode caché)</strong> améliorations pour réduire l’épuisement de RouterInfo - Améliorations du réseau pour les routers congestionnés - Traversée UPnP/NAT améliorée - Améliorations de NetDB avec suppression agressive des leaseset - Réductions de l’observabilité des événements du router</p>
+<p><strong>Configuration</strong>: Aucune nouvelle propriété de configuration ajoutée</p>
+<p><strong>Changement critique à venir</strong>: La prochaine version (probablement 2.11.0 ou 3.0.0) nécessitera Java 17 ou une version ultérieure</p>
+<hr>
+<h2 id="dépréciations-et-changements-rétro-incompatibles">Dépréciations et changements rétro-incompatibles</h2>
+<h3 id="dépréciations-critiques">Dépréciations critiques</h3>
+<h4 id="accès-i2p-over-tor-version-260">Accès I2P-over-Tor (Version 2.6.0+)</h4>
+<ul>
+<li><strong>Statut</strong>: BLOQUÉ depuis juillet 2024</li>
+<li><strong>Impact</strong>: Connexions depuis les adresses IP des nœuds de sortie Tor rejetées</li>
+<li><strong>Raison</strong>: Dégrade les performances du réseau I2P sans offrir d&rsquo;avantages en matière d&rsquo;anonymat</li>
+<li><strong>Affecte</strong>: Uniquement les nœuds de sortie Tor, pas les relais ni les clients Tor classiques</li>
+<li><strong>Alternative</strong>: Utiliser I2P ou Tor séparément, sans les combiner</li>
+</ul>
+<h4 id="authentification-digest-md5">Authentification Digest MD5</h4>
+<ul>
+<li><strong>Statut</strong>: Obsolète (utilisez SHA-256)</li>
+<li><strong>Propriété</strong>: <code>tunnel.N.option.proxy.auth.USER.md5</code></li>
+<li><strong>Raison</strong>: MD5 est cassé sur le plan cryptographique</li>
+<li><strong>Remplacement</strong>: <code>tunnel.N.option.proxy.auth.USER.sha256</code> (depuis 0.9.56)</li>
+<li><strong>Chronologie</strong>: MD5 toujours pris en charge mais déconseillé</li>
+</ul>
+<h3 id="modifications-de-larchitecture-de-configuration">Modifications de l&rsquo;architecture de configuration</h3>
+<h4 id="fichiers-de-configuration-monolithiques-version-0942">Fichiers de configuration monolithiques (Version 0.9.42+)</h4>
+<ul>
+<li><strong>Concernés</strong>: <code>clients.config</code>, <code>i2ptunnel.config</code></li>
+<li><strong>Statut</strong>: Déprécié au profit d’une structure de répertoires scindée</li>
+<li><strong>Migration</strong>: Automatique lors de la première exécution après la mise à niveau vers la version 0.9.42</li>
+<li><strong>Compatibilité</strong>: L’ancien format fonctionne toujours (rétrocompatible)</li>
+<li><strong>Recommandation</strong>: Utiliser le format scindé pour les nouvelles configurations</li>
+</ul>
+<h3 id="versions-de-java-requises">Versions de Java requises</h3>
+<h4 id="prise-en-charge-de-java-6">Prise en charge de Java 6</h4>
+<ul>
+<li><strong>Fin</strong>: Version 0.9.23 (novembre 2015)</li>
+<li><strong>Minimum</strong>: Java 7 requis depuis la version 0.9.23</li>
+</ul>
+<h4 id="exigence-java-17-à-venir">Exigence Java 17 (à venir)</h4>
+<ul>
+<li><strong>Statut</strong>: CHANGEMENT CRITIQUE À VENIR</li>
+<li><strong>Cible</strong>: Prochaine version majeure après 2.10.0 (probablement 2.11.0 ou 3.0.0)</li>
+<li><strong>Minimum actuel</strong>: Java 8</li>
+<li><strong>Action requise</strong>: Préparer la migration vers Java 17</li>
+<li><strong>Calendrier</strong>: Sera annoncé avec les notes de version</li>
+</ul>
+<h3 id="fonctionnalités-supprimées">Fonctionnalités supprimées</h3>
+<h4 id="protocole-bob-android">Protocole BOB (Android)</h4>
+<ul>
+<li><strong>Retiré</strong>: Version 0.9.41</li>
+<li><strong>Plateforme</strong>: Android uniquement</li>
+<li><strong>Alternative</strong>: protocoles SAM ou I2CP</li>
+<li><strong>Bureau</strong>: BOB (API simple pour clients I2P) toujours disponible sur les plateformes de bureau</li>
+</ul>
+<h3 id="migrations-recommandées">Migrations recommandées</h3>
+<ol>
+<li><strong>Authentification</strong>: Migrer de MD5 à SHA-256 pour l&rsquo;authentification Digest (authentification par condensat)</li>
+<li><strong>Format de configuration</strong>: Migrer vers une structure de répertoires séparée pour les clients et les tunnels</li>
+<li><strong>Environnement d&rsquo;exécution Java</strong>: Planifier la mise à niveau vers Java 17 avant la prochaine version majeure</li>
+<li><strong>Intégration à Tor</strong>: Ne pas acheminer I2P via les nœuds de sortie Tor</li>
+</ol>
+<hr>
+<h2 id="références">Références</h2>
+<h3 id="documentation-officielle">Documentation officielle</h3>
+<ul>
+<li><a href="../../../../fr/docs/specs/configuration/">Spécification de configuration I2P</a>
+ - Spécification officielle du format de fichier de configuration</li>
+<li><a href="../../../../fr/docs/specs/plugin/">Spécification des plugins I2P</a>
+ - Configuration et empaquetage des plugins</li>
+<li><a href="../../../../fr/docs/specs/common-structures/#type-mapping">Structures communes I2P - Correspondance des types</a>
+ - Format de sérialisation des données du protocole</li>
+<li><a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Properties.html#load%28java.io.InputStream%29">Format Java Properties</a>
+ - Spécification du format de base</li>
+</ul>
+<h3 id="code-source">Code source</h3>
+<ul>
+<li><a href="https://github.com/i2p/i2p.i2p">Dépôt du I2P Java Router</a>
+ - Miroir GitHub</li>
+<li><a href="https://i2pgit.org/I2P_Developers/i2p.i2p">Gitea des développeurs I2P</a>
+ - Dépôt officiel du code source d’I2P</li>
+<li><a href="https://github.com/i2p/i2p.i2p/blob/master/core/java/src/net/i2p/data/DataHelper.java">DataHelper.java</a>
+ - Implémentation de l’E/S des fichiers de configuration</li>
+</ul>
+<h3 id="ressources-de-la-communauté">Ressources de la communauté</h3>
+<ul>
+<li><a href="https://i2pforum.net/">Forum I2P</a>
+ - Discussions communautaires actives et assistance</li>
+<li><a href="../../../../fr/">Site web I2P</a>
+ - Site web officiel du projet</li>
+</ul>
+<h3 id="documentation-de-lapi">Documentation de l&rsquo;API</h3>
+<ul>
+<li><a href="https://i2pplus.github.io/javadoc/net/i2p/data/DataHelper.html">DataHelper JavaDoc</a>
+ - Documentation de l&rsquo;API pour les méthodes liées aux fichiers de configuration</li>
+</ul>
+<h3 id="statut-de-la-spécification">Statut de la spécification</h3>
+<ul>
+<li><strong>Dernière mise à jour de la spécification</strong>: janvier 2023 (version 0.9.57)</li>
+<li><strong>Version I2P actuelle</strong>: 2.10.0 (septembre 2025)</li>
+<li><strong>Précision technique</strong>: La spécification reste exacte jusqu’à la version 2.10.0 (aucune rupture de compatibilité)</li>
+<li><strong>Maintenance</strong>: Document évolutif mis à jour lorsque le format de configuration est modifié</li>
+</ul>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../fr/docs/specs/cryptography/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">Cryptographie de bas niveau</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../fr/docs/specs/subscription/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">Commandes du flux d&#39;abonnement aux adresses</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/fr/docs/specs/configuration.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Restez informé des actualités I2P :</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Entrez votre email" required>
+                            <button type="submit">S&#39;abonner</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Liens Rapides</h3>
+                <ul>
+                    <li><a href="../../../../fr/financial-support/">Faire un don</a></li>
+                    <li><a href="../../../../fr/docs/overview/intro/">Introduction à I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Communauté</h3>
+                <ul>
+                    <li><a href="../../../../fr/get-involved/">Participez</a></li>
+                    <li><a href="../../../../fr/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Forums Officiels</a></li>
+                    <li><a href="../../../../fr/contact/">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Ressources</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Mesures I2P</a></li>
+                    <li><a href="../../../../fr/papers/">Recherche</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Le Projet Internet Invisible. Sous licence Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../fr/privacy/">Confidentialité</a>
+                <a href="../../../../fr/terms/">Conditions d&#39;utilisation</a>
+                <a href="../../../../fr/about/media/">Presse</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Fermer">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Sondage de la communauté</h2>
+            <p class="modal-subtitle">Nous aimerions avoir de vos nouvelles</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Votre vote aide à façonner l&#39;avenir d&#39;I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

@@ -1,0 +1,2165 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Plugin-Paketformat | I2P - Das unsichtbare Internet-Projekt</title>
+
+    <meta name="description" content=".xpi2p / .su3 Regeln für die Paketierung von I2P-Plugins">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Plugin-Paketformat | I2P - Das unsichtbare Internet-Projekt">
+    <meta property="og:description" content=".xpi2p / .su3 Regeln für die Paketierung von I2P-Plugins">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/de/docs/specs/plugin/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P Beta-Seite jetzt live E-Mail-Probleme an stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Banner schließen" title="Banner schließen">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../de/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../de/about/" class="">Über</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../de/about/">Übersicht</a></li>
+                            <li><a href="../../../../de/papers/">Forschungspapiere</a></li>
+                            <li><a href="../../../../de/about/media/">Presse</a></li>
+                            <li><a href="../../../../de/contact/">Kontakt</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../de/docs/" class="active">Dokumente</a></li>
+                    <li><a href="../../../../de/downloads/" class="">Downloads</a></li>
+                    <li><a href="../../../../de/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../de/get-involved/" class="">Mitmachen</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../de/get-involved/">Übersicht</a></li>
+                            <li><a href="../../../../de/feedback/">Funktionsvorschläge</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">de</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/plugin/"
+                                class="lang-option">Englisch</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/plugin/"
+                                class="lang-option">Spanisch</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/plugin/"
+                                class="lang-option">Koreanisch</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/plugin/"
+                                class="lang-option">Chinesisch</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/plugin/"
+                                class="lang-option">Russisch</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/plugin/"
+                                class="lang-option">Tschechisch</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/plugin/"
+                                class="lang-option active">Deutsch</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/plugin/"
+                                class="lang-option">Französisch</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/plugin/"
+                                class="lang-option">Türkisch</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/plugin/"
+                                class="lang-option">Vietnamesisch</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/plugin/"
+                                class="lang-option">Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/plugin/"
+                                class="lang-option">Arabisch</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/plugin/"
+                                class="lang-option">Portugiesisch</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../de/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../de/downloads/" class="btn btn-primary">I2P Herunterladen</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#übersicht">Übersicht</a>
+      <ul>
+        <li><a href="#unterstützte-plugin-typen">Unterstützte Plugin-Typen</a></li>
+        <li><a href="#sicherheitsmodell">Sicherheitsmodell</a></li>
+      </ul>
+    </li>
+    <li><a href="#dateiformate">Dateiformate</a>
+      <ul>
+        <li><a href="#su3-format-dringend-empfohlen">SU3-Format (dringend empfohlen)</a></li>
+        <li><a href="#xpi2p-format-legacy-veraltet">XPI2P-Format (Legacy, veraltet)</a></li>
+      </ul>
+    </li>
+    <li><a href="#archivstruktur-und-pluginconfig">Archivstruktur und plugin.config</a>
+      <ul>
+        <li><a href="#erforderliche-dateien">Erforderliche Dateien</a></li>
+        <li><a href="#erforderliche-eigenschaften">Erforderliche Eigenschaften</a></li>
+        <li><a href="#optionale-metadaten-eigenschaften">Optionale Metadaten-Eigenschaften</a></li>
+        <li><a href="#variablenersetzung-in-update-urls">Variablenersetzung in Update-URLs</a></li>
+      </ul>
+    </li>
+    <li><a href="#verzeichnisstruktur">Verzeichnisstruktur</a>
+      <ul>
+        <li><a href="#standardlayout">Standardlayout</a></li>
+        <li><a href="#verzeichniszwecke">Verzeichniszwecke</a></li>
+      </ul>
+    </li>
+    <li><a href="#webapp-konfiguration">Webapp-Konfiguration</a>
+      <ul>
+        <li><a href="#webappsconfig-format">webapps.config-Format</a></li>
+        <li><a href="#bewährte-verfahren-für-webanwendungen">Bewährte Verfahren für Webanwendungen</a></li>
+      </ul>
+    </li>
+    <li><a href="#client-konfiguration">Client-Konfiguration</a>
+      <ul>
+        <li><a href="#clientsconfig-format">clients.config-Format</a></li>
+        <li><a href="#eigenschaftsreferenz">Eigenschaftsreferenz</a></li>
+        <li><a href="#shellservice-seit-0953--170">ShellService (seit 0.9.53 / 1.7.0)</a></li>
+      </ul>
+    </li>
+    <li><a href="#installationsprozess">Installationsprozess</a>
+      <ul>
+        <li><a href="#installationsablauf-für-benutzer">Installationsablauf für Benutzer</a></li>
+        <li><a href="#sicherheit-und-vertrauen">Sicherheit und Vertrauen</a></li>
+      </ul>
+    </li>
+    <li><a href="#aktualisierungsmechanismus">Aktualisierungsmechanismus</a>
+      <ul>
+        <li><a href="#ablauf-der-aktualisierungsprüfung">Ablauf der Aktualisierungsprüfung</a></li>
+        <li><a href="#versionsvergleich">Versionsvergleich</a></li>
+        <li><a href="#bewährte-verfahren-für-aktualisierungen">Bewährte Verfahren für Aktualisierungen</a></li>
+      </ul>
+    </li>
+    <li><a href="#klassenpfad-und-standardbibliotheken">Klassenpfad und Standardbibliotheken</a>
+      <ul>
+        <li><a href="#immer-im-klassenpfad-verfügbar">Immer im Klassenpfad verfügbar</a></li>
+        <li><a href="#nicht-im-klassenpfad-muss-angegeben-werden">Nicht im Klassenpfad (muss angegeben werden)</a></li>
+      </ul>
+    </li>
+    <li><a href="#anforderungen-an-die-java-version">Anforderungen an die Java-Version</a>
+      <ul>
+        <li><a href="#aktuelle-anforderungen-oktober-2025">Aktuelle Anforderungen (Oktober 2025)</a></li>
+        <li><a href="#kompatibilitätsstrategie-für-plugins">Kompatibilitätsstrategie für Plugins</a></li>
+        <li><a href="#bewährte-praktiken-für-die-kompilierung">Bewährte Praktiken für die Kompilierung</a></li>
+      </ul>
+    </li>
+    <li><a href="#pack200-komprimierung---veraltet">Pack200-Komprimierung - VERALTET</a>
+      <ul>
+        <li><a href="#kritisches-update-pack200-nicht-verwenden">Kritisches Update: Pack200 nicht verwenden</a></li>
+      </ul>
+    </li>
+    <li><a href="#signaturschlüssel-und-sicherheit">Signaturschlüssel und Sicherheit</a>
+      <ul>
+        <li><a href="#schlüsselgenerierung-su3-format">Schlüsselgenerierung (SU3-Format)</a></li>
+        <li><a href="#signieren-von-plugins">Signieren von Plugins</a></li>
+        <li><a href="#bewährte-verfahren-für-das-schlüsselmanagement">Bewährte Verfahren für das Schlüsselmanagement</a></li>
+        <li><a href="#veraltete-dsa-signierung-xpi2p">Veraltete DSA-Signierung (XPI2P)</a></li>
+      </ul>
+    </li>
+    <li><a href="#richtlinien-für-die-plugin-entwicklung">Richtlinien für die Plugin-Entwicklung</a>
+      <ul>
+        <li><a href="#wesentliche-bewährte-verfahren">Wesentliche bewährte Verfahren</a></li>
+        <li><a href="#erweiterte-überlegungen">Erweiterte Überlegungen</a></li>
+      </ul>
+    </li>
+    <li><a href="#eepsite-plugins">Eepsite-Plugins</a>
+      <ul>
+        <li><a href="#übersicht-1">Übersicht</a></li>
+        <li><a href="#architektur">Architektur</a></li>
+        <li><a href="#beispielstruktur">Beispielstruktur</a></li>
+        <li><a href="#variablensubstitution-in-jettyxml">Variablensubstitution in jetty.xml</a></li>
+        <li><a href="#beispiele">Beispiele</a></li>
+      </ul>
+    </li>
+    <li><a href="#konsolenintegration-1">Konsolenintegration</a>
+      <ul>
+        <li><a href="#links-der-übersichtsleiste">Links der Übersichtsleiste</a></li>
+        <li><a href="#konsolensymbole">Konsolensymbole</a></li>
+      </ul>
+    </li>
+    <li><a href="#internationalisierung">Internationalisierung</a>
+      <ul>
+        <li><a href="#übersetzungspakete">Übersetzungspakete</a></li>
+        <li><a href="#lokalisierte-zeichenketten-in-pluginconfig">Lokalisierte Zeichenketten in plugin.config</a></li>
+        <li><a href="#übersetzung-des-konsolen-themes">Übersetzung des Konsolen-Themes</a></li>
+      </ul>
+    </li>
+    <li><a href="#plattformspezifische-plugins">Plattformspezifische Plugins</a>
+      <ul>
+        <li><a href="#ansatz-mit-separaten-paketen">Ansatz mit separaten Paketen</a></li>
+        <li><a href="#ansatz-der-variablenersetzung">Ansatz der Variablenersetzung</a></li>
+        <li><a href="#betriebssystemerkennung-zur-laufzeit">Betriebssystemerkennung zur Laufzeit</a></li>
+      </ul>
+    </li>
+    <li><a href="#fehlerbehebung">Fehlerbehebung</a>
+      <ul>
+        <li><a href="#häufige-probleme">Häufige Probleme</a></li>
+        <li><a href="#debug-protokollierung">Debug-Protokollierung</a></li>
+      </ul>
+    </li>
+    <li><a href="#referenzinformationen">Referenzinformationen</a>
+      <ul>
+        <li><a href="#offizielle-spezifikationen">Offizielle Spezifikationen</a></li>
+        <li><a href="#i2p-versionsgeschichte">I2P-Versionsgeschichte</a></li>
+        <li><a href="#entwicklerressourcen">Entwicklerressourcen</a></li>
+        <li><a href="#community-unterstützung">Community-Unterstützung</a></li>
+      </ul>
+    </li>
+    <li><a href="#anhang-a-vollständiges-beispiel-für-pluginconfig">Anhang A: Vollständiges Beispiel für plugin.config</a></li>
+    <li><a href="#anhang-b-vollständiges-clientsconfig-beispiel">Anhang B: Vollständiges clients.config-Beispiel</a></li>
+    <li><a href="#anhang-c-vollständiges-webappsconfig-beispiel">Anhang C: Vollständiges webapps.config-Beispiel</a></li>
+    <li><a href="#anhang-d-migrations-checkliste-von-0953-auf-2100">Anhang D: Migrations-Checkliste (von 0.9.53 auf 2.10.0)</a>
+      <ul>
+        <li><a href="#erforderliche-änderungen">Erforderliche Änderungen</a></li>
+        <li><a href="#empfohlene-änderungen">Empfohlene Änderungen</a></li>
+        <li><a href="#optionale-erweiterungen">Optionale Erweiterungen</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../de/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../de/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../de/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Plugin-Paketformat</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Diese Übersetzung wurde mittels maschinellem Lernen erstellt und ist möglicherweise nicht 100% korrekt.</span>
+    
+    
+    <a href="../../../../en/docs/specs/plugin/" class="disclaimer-link">Englische Version anzeigen</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Plugin-Paketformat</h1>
+                    
+                        <p class="article-description">.xpi2p / .su3 Regeln für die Paketierung von I2P-Plugins</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="übersicht">Übersicht</h2>
+<p>I2P-Plugins sind signierte Archive, die die router-Funktionalität erweitern. Sie werden als <code>.xpi2p</code>- oder <code>.su3</code>-Dateien ausgeliefert, in <code>~/.i2p/plugins/&lt;name&gt;/</code> (oder unter Windows in <code>%APPDIR%\I2P\plugins\&lt;name&gt;\</code>) installiert und mit vollen router-Berechtigungen ohne Sandboxing ausgeführt.</p>
+<h3 id="unterstützte-plugin-typen">Unterstützte Plugin-Typen</h3>
+<ul>
+<li>Konsolen-Webanwendungen</li>
+<li>Neue eepsites mit cgi-bin, Webanwendungen</li>
+<li>Konsolen-Themes</li>
+<li>Konsolen-Übersetzungen</li>
+<li>Java-Programme (im selben Prozess oder in einer separaten JVM)</li>
+<li>Shell-Skripte und native Binärdateien</li>
+</ul>
+<h3 id="sicherheitsmodell">Sicherheitsmodell</h3>
+<p><strong>KRITISCH:</strong> Plugins laufen in derselben JVM mit identischen Berechtigungen wie der I2P router. Sie haben uneingeschränkten Zugriff auf: - Dateisystem (Lesen und Schreiben) - Router APIs und interner Zustand - Netzwerkverbindungen - Ausführung externer Programme</p>
+<p>Plugins sollten als vollständig vertrauenswürdiger Code behandelt werden. Benutzer müssen vor der Installation die Plugin-Quellen und -Signaturen verifizieren.</p>
+<hr>
+<h2 id="dateiformate">Dateiformate</h2>
+<h3 id="su3-format-dringend-empfohlen">SU3-Format (dringend empfohlen)</h3>
+<p><strong>Status:</strong> Aktiv, bevorzugtes Format seit I2P 0.9.15 (September 2014)</p>
+<p>Das Format <code>.su3</code> bietet: - <strong>RSA-4096-Signaturschlüssel</strong> (im Vergleich zu DSA-1024 in xpi2p) - Signatur im Dateiheader gespeichert - Magische Zahl: <code>I2Psu3</code> - Bessere Vorwärtskompatibilität</p>
+<p><strong>Struktur:</strong></p>
+<pre tabindex="0"><code>[SU3 Header with RSA-4096 signature]
+[ZIP Archive]
+  ├── plugin.config (required)
+  ├── console/
+  ├── lib/
+  ├── webapps/
+  └── [other plugin files]
+</code></pre><h3 id="xpi2p-format-legacy-veraltet">XPI2P-Format (Legacy, veraltet)</h3>
+<p><strong>Status:</strong> Unterstützt zur Abwärtskompatibilität, nicht für neue Plugins empfohlen</p>
+<p>Das <code>.xpi2p</code>-Format verwendet ältere kryptografische Signaturen:</p>
+<ul>
+<li><strong>DSA-1024-Signaturen</strong> (veraltet gemäß NIST-800-57)</li>
+<li>40-Byte-DSA-Signatur, der ZIP-Datei vorangestellt</li>
+<li>Erfordert das Feld <code>key</code> in plugin.config</li>
+</ul>
+<p><strong>Struktur:</strong></p>
+<pre tabindex="0"><code>[40-byte DSA signature]
+[16-byte version string (UTF-8, zero-padded)]
+[ZIP Archive]
+</code></pre><p><strong>Migrationspfad:</strong> Bei der Migration von xpi2p zu su3 stellen Sie während der Übergangsphase sowohl <code>updateURL</code> als auch <code>updateURL.su3</code> bereit. Moderne routers (0.9.15+) bevorzugen SU3 automatisch.</p>
+<hr>
+<h2 id="archivstruktur-und-pluginconfig">Archivstruktur und plugin.config</h2>
+<h3 id="erforderliche-dateien">Erforderliche Dateien</h3>
+<p><strong>plugin.config</strong> - Standard-I2P-Konfigurationsdatei mit Schlüssel-Wert-Paaren</p>
+<h3 id="erforderliche-eigenschaften">Erforderliche Eigenschaften</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Property</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Format</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>name</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Installation directory name, must match for updates</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Alphanumeric, no spaces</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>signer</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Developer contact information</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>user@mail.i2p</code> format recommended</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>version</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Plugin version for update comparison</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Max 16 bytes, parsed by VersionComparator</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>key</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">DSA public key (172 B64 chars ending with '=')</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Omit for SU3 format</strong></td></tr>
+  </tbody>
+</table>
+**Beispiele für Versionsformate:** - `1.2.3` - `1.2.3-4` - `2.0.0-beta.1`
+<p>Gültige Trennzeichen: <code>.</code> (Punkt), <code>-</code> (Bindestrich), <code>_</code> (Unterstrich)</p>
+<h3 id="optionale-metadaten-eigenschaften">Optionale Metadaten-Eigenschaften</h3>
+<h4 id="informationen-anzeigen">Informationen anzeigen</h4>
+<ul>
+<li><code>date</code> - Veröffentlichungsdatum (Zeitstempel als Java long)</li>
+<li><code>author</code> - Entwicklername (<code>user@mail.i2p</code> empfohlen)</li>
+<li><code>description</code> - Englische Beschreibung</li>
+<li><code>description_xx</code> - Lokalisierte Beschreibung (xx = Sprachcode)</li>
+<li><code>websiteURL</code> - Plugin-Homepage (<code>http://foo.i2p/</code>)</li>
+<li><code>license</code> - Lizenzkennung (z. B. &ldquo;Apache-2.0&rdquo;, &ldquo;GPL-3.0&rdquo;)</li>
+</ul>
+<h4 id="konfiguration-aktualisieren">Konfiguration aktualisieren</h4>
+<ul>
+<li><code>updateURL</code> - XPI2P-Update-URL (veraltet)</li>
+<li><code>updateURL.su3</code> - SU3-Update-URL (bevorzugt)</li>
+<li><code>min-i2p-version</code> - Erforderliche Mindestversion von I2P</li>
+<li><code>max-i2p-version</code> - Maximal kompatible I2P-Version</li>
+<li><code>min-java-version</code> - Mindest-Java-Version (z. B. <code>1.7</code>, <code>17</code>)</li>
+<li><code>min-jetty-version</code> - Mindest-Jetty-Version (verwenden Sie <code>6</code> für Jetty 6+)</li>
+<li><code>max-jetty-version</code> - Maximale Jetty-Version (verwenden Sie <code>5.99999</code> für Jetty 5)</li>
+</ul>
+<h4 id="installationsverhalten">Installationsverhalten</h4>
+<ul>
+<li><code>dont-start-at-install</code> - Standardwert <code>false</code>. Wenn <code>true</code>, erfordert manuellen Start</li>
+<li><code>router-restart-required</code> - Standardwert <code>false</code>. Informiert den Benutzer, dass nach dem Update ein Neustart erforderlich ist</li>
+<li><code>update-only</code> - Standardwert <code>false</code>. Schlägt fehl, wenn das Plugin noch nicht installiert ist</li>
+<li><code>install-only</code> - Standardwert <code>false</code>. Schlägt fehl, wenn das Plugin bereits installiert ist</li>
+<li><code>min-installed-version</code> - Erforderliche Mindestversion für das Update</li>
+<li><code>max-installed-version</code> - Maximale Version, die aktualisiert werden kann</li>
+<li><code>disableStop</code> - Standardwert <code>false</code>. Blendet die Stopp-Schaltfläche aus, wenn <code>true</code></li>
+</ul>
+<h4 id="konsolenintegration">Konsolenintegration</h4>
+<ul>
+<li><code>consoleLinkName</code> - Text für den Link in der Zusammenfassungsleiste der Konsole</li>
+<li><code>consoleLinkName_xx</code> - Lokalisierter Linktext (xx = Sprachcode)</li>
+<li><code>consoleLinkURL</code> - Ziel des Links (z. B. <code>/appname/index.jsp</code>)</li>
+<li><code>consoleLinkTooltip</code> - Tooltip-Text (unterstützt seit 0.7.12-6)</li>
+<li><code>consoleLinkTooltip_xx</code> - Lokalisierter Tooltip</li>
+<li><code>console-icon</code> - Pfad zu einem 32x32-Icon (unterstützt seit 0.9.20)</li>
+<li><code>icon-code</code> - Base64-codiertes 32x32-PNG für Plugins ohne Webressourcen (seit 0.9.25)</li>
+</ul>
+<h4 id="plattformanforderungen-nur-anzeige">Plattformanforderungen (nur Anzeige)</h4>
+<ul>
+<li><code>required-platform-OS</code> - Betriebssystemanforderung (nicht erzwungen)</li>
+<li><code>other-requirements</code> - Zusätzliche Anforderungen (z. B. &ldquo;Python 3.8+&rdquo;)</li>
+</ul>
+<h4 id="abhängigkeitsverwaltung-nicht-implementiert">Abhängigkeitsverwaltung (nicht implementiert)</h4>
+<ul>
+<li><code>depends</code> - kommagetrennte Plugin-Abhängigkeiten</li>
+<li><code>depends-version</code> - Versionsanforderungen für Abhängigkeiten</li>
+<li><code>langs</code> - Inhalte des Sprachpakets</li>
+<li><code>type</code> - Plugin-Typ (app/theme/locale/webapp)</li>
+</ul>
+<h3 id="variablenersetzung-in-update-urls">Variablenersetzung in Update-URLs</h3>
+<p><strong>Funktionsstatus:</strong> Verfügbar seit I2P 1.7.0 (0.9.53)</p>
+<p>Sowohl <code>updateURL</code> als auch <code>updateURL.su3</code> unterstützen plattformspezifische Variablen:</p>
+<p><strong>Variablen:</strong> - <code>$OS</code> - Betriebssystem: <code>windows</code>, <code>linux</code>, <code>mac</code> - <code>$ARCH</code> - Architektur: <code>386</code>, <code>amd64</code>, <code>arm64</code></p>
+<p><strong>Beispiel:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">updateURL.su3</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://foo.i2p/downloads/foo-$OS-$ARCH.su3</span>
+</span></span></code></pre></div><p><strong>Ergebnis unter Windows AMD64:</strong></p>
+<pre tabindex="0"><code>http://foo.i2p/downloads/foo-windows-amd64.su3
+</code></pre><p>Dies ermöglicht einzelne plugin.config-Dateien für plattformspezifische Builds.</p>
+<hr>
+<h2 id="verzeichnisstruktur">Verzeichnisstruktur</h2>
+<h3 id="standardlayout">Standardlayout</h3>
+<pre tabindex="0"><code>plugins/
+└── pluginname/
+    ├── plugin.config (required)
+    ├── console/
+    │   ├── locale/          # Translation JARs
+    │   ├── themes/          # Console themes
+    │   ├── webapps/         # Web applications
+    │   └── webapps.config   # Webapp configuration
+    ├── eepsite/
+    │   ├── cgi-bin/
+    │   ├── docroot/
+    │   ├── logs/
+    │   ├── webapps/
+    │   └── jetty.xml
+    ├── lib/
+    │   └── *.jar            # Plugin libraries
+    └── clients.config       # Client startup configuration
+</code></pre><h3 id="verzeichniszwecke">Verzeichniszwecke</h3>
+<p><strong>console/locale/</strong> - JAR-Dateien mit Ressourcenbündeln für I2P-Basisübersetzungen - Plugin-spezifische Übersetzungen sollten in <code>console/webapps/*.war</code> oder <code>lib/*.jar</code> liegen</p>
+<p><strong>console/themes/</strong> - Jedes Unterverzeichnis enthält ein vollständiges Konsolen-Theme - Automatisch zum Theme-Suchpfad hinzugefügt</p>
+<p><strong>console/webapps/</strong> - <code>.war</code>-Dateien zur Konsolenintegration - Wird automatisch gestartet, sofern nicht in <code>webapps.config</code> deaktiviert - Der WAR-Name muss nicht mit dem Plugin-Namen übereinstimmen</p>
+<p><strong>eepsite/</strong> - Vollständige eepsite mit eigener Jetty-Instanz - Erfordert eine <code>jetty.xml</code>-Konfiguration mit Variablenersetzung - Siehe zzzot- und pebble-Plugin-Beispiele</p>
+<p><strong>lib/</strong> - JAR-Bibliotheken für Plugins - Im Klassenpfad über <code>clients.config</code> oder <code>webapps.config</code> angeben</p>
+<hr>
+<h2 id="webapp-konfiguration">Webapp-Konfiguration</h2>
+<h3 id="webappsconfig-format">webapps.config-Format</h3>
+<p>Standard-I2P-Konfigurationsdatei zur Steuerung des Verhaltens der Web-App.</p>
+<p><strong>Syntax:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Disable autostart</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.warname.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Add classpath JARs (as of API 0.9.53, works for any warname)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.warname.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/lib/foo.jar,$I2P/lib/bar.jar</span>
+</span></span></code></pre></div><p><strong>Wichtige Hinweise:</strong> - Vor router 0.7.12-9 verwenden Sie <code>plugin.warname.startOnLoad</code> zur Kompatibilität - Vor API 0.9.53 funktionierte der Klassenpfad nur, wenn der WAR-Name mit dem Plugin-Namen übereinstimmte - Seit 0.9.53+ funktioniert der Klassenpfad für jeden Webanwendungsnamen</p>
+<h3 id="bewährte-verfahren-für-webanwendungen">Bewährte Verfahren für Webanwendungen</h3>
+<ol>
+<li>
+<p><strong>ServletContextListener-Implementierung</strong></p>
+<ul>
+<li><code>javax.servlet.ServletContextListener</code> zur Bereinigung implementieren</li>
+<li>Oder <code>destroy()</code> im Servlet überschreiben</li>
+<li>Stellt eine ordnungsgemäße Beendigung während Aktualisierungen und beim Stoppen des router sicher</li>
+</ul>
+</li>
+<li>
+<p><strong>Bibliotheksverwaltung</strong></p>
+<ul>
+<li>Gemeinsam genutzte JARs in <code>lib/</code> ablegen, nicht innerhalb der WAR</li>
+<li>Über den Klassenpfad in <code>webapps.config</code> referenzieren</li>
+<li>Ermöglicht die getrennte Installation/Aktualisierung von Plugins</li>
+</ul>
+</li>
+<li>
+<p><strong>Konflikte mit Bibliotheken vermeiden</strong></p>
+<ul>
+<li>Bündeln Sie niemals Jetty-, Tomcat- oder Servlet-JARs</li>
+<li>Bündeln Sie niemals JARs aus der Standard-I2P-Installation</li>
+<li>Prüfen Sie den Classpath-Abschnitt auf Standardbibliotheken</li>
+</ul>
+</li>
+<li>
+<p><strong>Kompilierungsanforderungen</strong></p>
+<ul>
+<li>Keine <code>.java</code>- oder <code>.jsp</code>-Quelldateien einbeziehen</li>
+<li>Alle JSPs vorkompilieren, um Startverzögerungen zu vermeiden</li>
+<li>Es kann nicht von der Verfügbarkeit eines Java-/JSP-Compilers ausgegangen werden</li>
+</ul>
+</li>
+<li>
+<p><strong>Servlet-API-Kompatibilität</strong></p>
+<ul>
+<li>I2P unterstützt Servlet 3.0 (seit 0.9.30)</li>
+<li><strong>Annotation-Scanning wird NICHT unterstützt</strong> (@WebContent)</li>
+<li>Der traditionelle Deployment-Deskriptor <code>web.xml</code> ist erforderlich</li>
+</ul>
+</li>
+<li>
+<p><strong>Jetty-Version</strong></p>
+<ul>
+<li>Aktuell: Jetty 9 (I2P 0.9.30+)</li>
+<li>Verwenden Sie <code>net.i2p.jetty.JettyStart</code> als Abstraktionsschicht</li>
+<li>Schützt vor Änderungen der Jetty-API</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="client-konfiguration">Client-Konfiguration</h2>
+<h3 id="clientsconfig-format">clients.config-Format</h3>
+<p>Definiert Clients (Dienste), die vom Plugin gestartet werden.</p>
+<p><strong>Grundlegender Client:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">com.example.PluginMain</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example Plugin Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.delay</span><span style="color:#f92672">=</span><span style="color:#e6db74">30</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.args</span><span style="color:#f92672">=</span><span style="color:#e6db74">arg1 arg2 $PLUGIN/config.properties</span>
+</span></span></code></pre></div><p><strong>Client mit Stoppen/Deinstallieren:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.stopargs</span><span style="color:#f92672">=</span><span style="color:#e6db74">stop</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.uninstallargs</span><span style="color:#f92672">=</span><span style="color:#e6db74">uninstall</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/lib/plugin.jar,$I2P/lib/i2p.jar</span>
+</span></span></code></pre></div><h3 id="eigenschaftsreferenz">Eigenschaftsreferenz</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Property</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>main</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Fully qualified class name implementing ClientApp interface</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>name</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Display name for user interface</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>delay</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Startup delay in seconds (default: 0)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>args</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Space-separated arguments passed to constructor</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>stopargs</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Arguments for shutdown (must handle gracefully)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>uninstallargs</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Arguments called before plugin deletion</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>classpath</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Comma-separated JAR paths</td></tr>
+  </tbody>
+</table>
+### Variablenersetzung
+<p>Die folgenden Variablen werden in <code>args</code>, <code>stopargs</code>, <code>uninstallargs</code> und <code>classpath</code> ersetzt:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Variable</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Replacement</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>$I2P</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">I2P base installation directory</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>$CONFIG</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">I2P configuration directory (typically <code>~/.i2p</code>)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>$PLUGIN</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">This plugin's directory (<code>$CONFIG/plugins/name</code>)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>$OS</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Operating system: <code>windows</code>, <code>linux</code>, <code>mac</code></td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;"><code>$ARCH</code></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Architecture: <code>386</code>, <code>amd64</code>, <code>arm64</code></td></tr>
+  </tbody>
+</table>
+### Verwaltete vs. nicht verwaltete Clients
+<p><strong>Verwaltete Clients (empfohlen seit 0.9.4):</strong> - Instanziiert von ClientAppManager - Verwaltet Referenz- und Zustandsverfolgung - Einfacheres Lebenszyklus-Management - Besseres Speichermanagement</p>
+<p><strong>Nicht verwaltete Clients:</strong> - Vom router gestartet, keine Zustandsverfolgung - Müssen mehrere Start-/Stopp-Aufrufe ordnungsgemäß behandeln - Zur Koordination statische Zustandsinformationen oder PID-Dateien verwenden - Beim Herunterfahren des router aufgerufen (seit 0.7.12-3)</p>
+<h3 id="shellservice-seit-0953--170">ShellService (seit 0.9.53 / 1.7.0)</h3>
+<p>Verallgemeinerte Lösung zum Ausführen externer Programme mit automatischer Zustandsverfolgung.</p>
+<p><strong>Funktionen:</strong> - Verwaltet den Prozesslebenszyklus - Kommuniziert mit ClientAppManager - Automatische PID-Verwaltung - Plattformübergreifende Unterstützung</p>
+<p><strong>Verwendung:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">net.i2p.apps.ShellService</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.args</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/bin/myservice.sh</span>
+</span></span></code></pre></div><p>Für plattformspezifische Skripte:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.args</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/bin/myservice-$OS.$ARCH</span>
+</span></span></code></pre></div><p><strong>Alternative (veraltet):</strong> Schreibe einen Java-Wrapper, der den Betriebssystemtyp prüft, und rufe <code>ShellCommand</code> mit der entsprechenden <code>.bat</code>- oder <code>.sh</code>-Datei auf.</p>
+<hr>
+<h2 id="installationsprozess">Installationsprozess</h2>
+<h3 id="installationsablauf-für-benutzer">Installationsablauf für Benutzer</h3>
+<ol>
+<li>Benutzer fügt die Plugin-URL auf der Plugin-Konfigurationsseite der Router Console (<code>/configplugins</code>) ein</li>
+<li>Router lädt die Plugin-Datei herunter</li>
+<li>Signaturprüfung (schlägt fehl, wenn der Schlüssel unbekannt ist und der Strict-Modus aktiviert ist)</li>
+<li>ZIP-Integritätsprüfung</li>
+<li>Extrahieren und Parsen von <code>plugin.config</code></li>
+<li>Überprüfung der Versionskompatibilität (<code>min-i2p-version</code>, <code>min-java-version</code>, usw.)</li>
+<li>Erkennung von Konflikten bei Webapp-Namen</li>
+<li>Vorhandenes Plugin stoppen, falls es sich um ein Update handelt</li>
+<li>Verzeichnisvalidierung (muss unter <code>plugins/</code> liegen)</li>
+<li>Alle Dateien in das Plugin-Verzeichnis extrahieren</li>
+<li><code>plugins.config</code> aktualisieren</li>
+<li>Plugin starten (außer wenn <code>dont-start-at-install=true</code>)</li>
+</ol>
+<h3 id="sicherheit-und-vertrauen">Sicherheit und Vertrauen</h3>
+<p><strong>Schlüsselverwaltung:</strong> - First-key-seen (erstmals gesehener Schlüssel) Vertrauensmodell für neue Signierer - Nur die Schlüssel von jrandom und zzz sind mitgeliefert - Seit 0.9.14.1 werden unbekannte Schlüssel standardmäßig abgelehnt - Eine erweiterte Eigenschaft kann dies für Entwicklungszwecke außer Kraft setzen</p>
+<p><strong>Installationsbeschränkungen:</strong> - Archive dürfen ausschließlich in das Plugin-Verzeichnis entpackt werden - Das Installationsprogramm lehnt Pfade außerhalb von <code>plugins/</code> ab - Plugins können nach der Installation auf Dateien an anderen Orten zugreifen - Kein Sandboxing oder Privilegien-Trennung</p>
+<hr>
+<h2 id="aktualisierungsmechanismus">Aktualisierungsmechanismus</h2>
+<h3 id="ablauf-der-aktualisierungsprüfung">Ablauf der Aktualisierungsprüfung</h3>
+<ol>
+<li>Router liest <code>updateURL.su3</code> (bevorzugt) oder <code>updateURL</code> aus plugin.config</li>
+<li>HTTP HEAD oder partielle GET-Anfrage, um die Bytes 41-56 abzurufen</li>
+<li>Versionsstring aus der entfernten Datei extrahieren</li>
+<li>Mit der installierten Version vergleichen, mithilfe von VersionComparator</li>
+<li>Falls neuer, den Benutzer auffordern oder automatisch herunterladen (abhängig von den Einstellungen)</li>
+<li>Plugin stoppen</li>
+<li>Update installieren</li>
+<li>Plugin starten (sofern die Benutzereinstellung nicht geändert wurde)</li>
+</ol>
+<h3 id="versionsvergleich">Versionsvergleich</h3>
+<p>Versionen werden als durch Punkt/Bindestrich/Unterstrich getrennte Komponenten interpretiert: - <code>1.2.3</code> &lt; <code>1.2.4</code> - <code>1.2.3</code> &lt; <code>1.2.3-1</code> - <code>2.0.0</code> &gt; <code>1.9.9</code></p>
+<p><strong>Maximale Länge:</strong> 16 Bytes (muss mit dem SUD/SU3-Header übereinstimmen)</p>
+<h3 id="bewährte-verfahren-für-aktualisierungen">Bewährte Verfahren für Aktualisierungen</h3>
+<ol>
+<li>Bei Releases die Versionsnummer immer erhöhen</li>
+<li>Update-Pfad von der vorherigen Version testen</li>
+<li>Bei größeren Änderungen <code>router-restart-required</code> berücksichtigen</li>
+<li>Während der Migration sowohl <code>updateURL</code> als auch <code>updateURL.su3</code> bereitstellen</li>
+<li>Für Tests ein Suffix der Buildnummer verwenden (<code>1.2.3-456</code>)</li>
+</ol>
+<hr>
+<h2 id="klassenpfad-und-standardbibliotheken">Klassenpfad und Standardbibliotheken</h2>
+<h3 id="immer-im-klassenpfad-verfügbar">Immer im Klassenpfad verfügbar</h3>
+<p>Die folgenden JAR-Dateien aus <code>$I2P/lib</code> sind für I2P 0.9.30+ immer im Klassenpfad:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">JAR</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Contents</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Plugin Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>i2p.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">Core API</td><td style="border:1px solid var(--color-border); padding:0.6rem;">Required for all plugins</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>mstreaming.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">Streaming API</td><td style="border:1px solid var(--color-border); padding:0.6rem;">Most plugins need</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>streaming.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">Streaming implementation</td><td style="border:1px solid var(--color-border); padding:0.6rem;">Most plugins need</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>i2ptunnel.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">I2PTunnel</td><td style="border:1px solid var(--color-border); padding:0.6rem;">HTTP/server plugins</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>router.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">Router internals</td><td style="border:1px solid var(--color-border); padding:0.6rem;">Rarely needed, avoid if possible</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>javax.servlet.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">Servlet 3.1, JSP 2.3 API</td><td style="border:1px solid var(--color-border); padding:0.6rem;">Plugins with servlets/JSPs</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>jasper-runtime.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">Jasper compiler/runtime</td><td style="border:1px solid var(--color-border); padding:0.6rem;">Plugins with JSPs</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>commons-el.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">EL 3.0 API</td><td style="border:1px solid var(--color-border); padding:0.6rem;">JSPs using expression language</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>jetty-i2p.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">Jetty utilities</td><td style="border:1px solid var(--color-border); padding:0.6rem;">Plugins starting Jetty</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>org.mortbay.jetty.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">Jetty 9 base</td><td style="border:1px solid var(--color-border); padding:0.6rem;">Custom Jetty instances</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>sam.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">SAM API</td><td style="border:1px solid var(--color-border); padding:0.6rem;">Rarely needed</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>addressbook.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">Subscription/blockfile</td><td style="border:1px solid var(--color-border); padding:0.6rem;">Use NamingService instead</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>routerconsole.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">Console libraries</td><td style="border:1px solid var(--color-border); padding:0.6rem;">Not public API, avoid</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>jbigi.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">Native crypto</td><td style="border:1px solid var(--color-border); padding:0.6rem;">Plugins should not need</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>systray.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">URL launcher</td><td style="border:1px solid var(--color-border); padding:0.6rem;">Rarely needed</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>wrapper.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">Service wrapper</td><td style="border:1px solid var(--color-border); padding:0.6rem;">Plugins should not need</td></tr>
+  </tbody>
+</table>
+### Besondere Hinweise
+<p><strong>commons-logging.jar:</strong> - Seit 0.9.30 leer - Vor 0.9.30: Apache Tomcat JULI - Vor 0.9.24: Commons Logging + JULI - Vor 0.9: Nur Commons Logging</p>
+<p><strong>jasper-compiler.jar:</strong> - Seit Jetty 6 (0.9) leer</p>
+<p><strong>systray4j.jar:</strong> - Entfernt in 0.9.26</p>
+<h3 id="nicht-im-klassenpfad-muss-angegeben-werden">Nicht im Klassenpfad (muss angegeben werden)</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">JAR</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Contents</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>jstl.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">Standard Taglib</td><td style="border:1px solid var(--color-border); padding:0.6rem;">JSP tag libraries</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.6rem;"><code>standard.jar</code></td><td style="border:1px solid var(--color-border); padding:0.6rem;">Standard Taglib</td><td style="border:1px solid var(--color-border); padding:0.6rem;">JSP tag libraries</td></tr>
+  </tbody>
+</table>
+### Spezifikation des Klassenpfads
+<p><strong>In clients.config:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/lib/mylib.jar,$I2P/lib/i2p.jar</span>
+</span></span></code></pre></div><p><strong>In webapps.config:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">webapps.mywebapp.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/lib/mylib.jar,$I2P/lib/jstl.jar</span>
+</span></span></code></pre></div><p><strong>Wichtig:</strong> Seit 0.7.13-3 sind Klassenpfade threadspezifisch, nicht JVM-weit. Geben Sie für jeden Client den vollständigen Klassenpfad an.</p>
+<hr>
+<h2 id="anforderungen-an-die-java-version">Anforderungen an die Java-Version</h2>
+<h3 id="aktuelle-anforderungen-oktober-2025">Aktuelle Anforderungen (Oktober 2025)</h3>
+<p><strong>I2P 2.10.0 und älter:</strong> - Mindestens: Java 7 (erforderlich seit 0.9.24, Januar 2016) - Empfohlen: Java 8 oder höher</p>
+<p><strong>I2P 2.11.0 und neuer (BEVORSTEHEND):</strong> - <strong>Mindestanforderung: Java 17+</strong> (angekündigt in den Versionshinweisen zu 2.9.0) - Warnung zwei Versionen im Voraus gegeben (2.9.0 → 2.10.0 → 2.11.0)</p>
+<h3 id="kompatibilitätsstrategie-für-plugins">Kompatibilitätsstrategie für Plugins</h3>
+<p><strong>Für maximale Kompatibilität (bis einschließlich I2P 2.10.x):</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;javac</span> <span style="color:#a6e22e">source=</span><span style="color:#e6db74">&#34;1.7&#34;</span> <span style="color:#a6e22e">target=</span><span style="color:#e6db74">&#34;1.7&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">min-java-version</span><span style="color:#f92672">=</span><span style="color:#e6db74">1.7</span>
+</span></span></code></pre></div><p><strong>Für Funktionen ab Java 8:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;javac</span> <span style="color:#a6e22e">source=</span><span style="color:#e6db74">&#34;1.8&#34;</span> <span style="color:#a6e22e">target=</span><span style="color:#e6db74">&#34;1.8&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">min-java-version</span><span style="color:#f92672">=</span><span style="color:#e6db74">1.8</span>
+</span></span></code></pre></div><p><strong>Für Funktionen in Java 11+:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;javac</span> <span style="color:#a6e22e">source=</span><span style="color:#e6db74">&#34;11&#34;</span> <span style="color:#a6e22e">target=</span><span style="color:#e6db74">&#34;11&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">min-java-version</span><span style="color:#f92672">=</span><span style="color:#e6db74">11</span>
+</span></span></code></pre></div><p><strong>Vorbereitung auf 2.11.0+:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;javac</span> <span style="color:#a6e22e">source=</span><span style="color:#e6db74">&#34;17&#34;</span> <span style="color:#a6e22e">target=</span><span style="color:#e6db74">&#34;17&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">min-java-version</span><span style="color:#f92672">=</span><span style="color:#e6db74">17</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">min-i2p-version</span><span style="color:#f92672">=</span><span style="color:#e6db74">2.11.0</span>
+</span></span></code></pre></div><h3 id="bewährte-praktiken-für-die-kompilierung">Bewährte Praktiken für die Kompilierung</h3>
+<p><strong>Beim Kompilieren mit einem neueren JDK für eine ältere Zielversion:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;javac</span> <span style="color:#a6e22e">source=</span><span style="color:#e6db74">&#34;1.7&#34;</span> <span style="color:#a6e22e">target=</span><span style="color:#e6db74">&#34;1.7&#34;</span> 
+</span></span><span style="display:flex;"><span>       <span style="color:#a6e22e">bootclasspath=</span><span style="color:#e6db74">&#34;${java7.home}/jre/lib/rt.jar&#34;</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#a6e22e">includeantruntime=</span><span style="color:#e6db74">&#34;false&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span></code></pre></div><p>Dies verhindert die Verwendung von APIs, die in der Ziel-Java-Version nicht verfügbar sind.</p>
+<hr>
+<h2 id="pack200-komprimierung---veraltet">Pack200-Komprimierung - VERALTET</h2>
+<h3 id="kritisches-update-pack200-nicht-verwenden">Kritisches Update: Pack200 nicht verwenden</h3>
+<p><strong>Status:</strong> Veraltet und entfernt</p>
+<p>Die ursprüngliche Spezifikation empfahl nachdrücklich die Pack200-Komprimierung zur Reduzierung der Größe um 60-65 %. <strong>Dies ist nicht mehr gültig.</strong></p>
+<p><strong>Zeitleiste:</strong> - <strong>JEP 336:</strong> Pack200 in Java 11 als veraltet markiert (September 2018) - <strong>JEP 367:</strong> Pack200 in Java 14 entfernt (März 2020)</p>
+<p><strong>Die offizielle Spezifikation für I2P-Updates besagt:</strong> &gt; &ldquo;JAR- und WAR-Dateien im ZIP-Archiv werden nicht mehr mit pack200 komprimiert, wie oben für &lsquo;su2&rsquo;-Dateien dokumentiert, da neuere Java-Laufzeitumgebungen dies nicht mehr unterstützen.&rdquo;</p>
+<p><strong>Was ist zu tun:</strong></p>
+<ol>
+<li><strong>pack200 umgehend aus den Build-Prozessen entfernen</strong></li>
+<li><strong>Standard-ZIP-Komprimierung verwenden</strong></li>
+<li><strong>Alternativen in Betracht ziehen:</strong>
+<ul>
+<li>ProGuard/R8 zur Code-Verkleinerung</li>
+<li>UPX für native Binärdateien</li>
+<li>Moderne Kompressionsalgorithmen (zstd, brotli), sofern ein eigener Entpacker bereitgestellt wird</li>
+</ul>
+</li>
+</ol>
+<p><strong>Für bestehende Plugins:</strong> - Alte routers (0.7.11-5 bis einschließlich Java 10) können pack200 weiterhin entpacken - Neue routers (Java 11+) können pack200 nicht entpacken - Plugins ohne pack200-Komprimierung neu veröffentlichen</p>
+<hr>
+<h2 id="signaturschlüssel-und-sicherheit">Signaturschlüssel und Sicherheit</h2>
+<h3 id="schlüsselgenerierung-su3-format">Schlüsselgenerierung (SU3-Format)</h3>
+<p>Verwenden Sie das Skript <code>makeplugin.sh</code> aus dem Repository i2p.scripts:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Generate new signing key</span>
+</span></span><span style="display:flex;"><span>./makeplugin.sh keygen
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Keys stored in ~/.i2p-plugin-keys/</span>
+</span></span></code></pre></div><p><strong>Wichtige Details:</strong> - Algorithmus: RSA_SHA512_4096 - Format: X.509-Zertifikat - Speicherformat: Java-Keystore-Format</p>
+<h3 id="signieren-von-plugins">Signieren von Plugins</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Create signed su3 file</span>
+</span></span><span style="display:flex;"><span>./makeplugin.sh sign myplugin.zip myplugin.su3 keyname
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verify signature</span>
+</span></span><span style="display:flex;"><span>./makeplugin.sh verify myplugin.su3
+</span></span></code></pre></div><h3 id="bewährte-verfahren-für-das-schlüsselmanagement">Bewährte Verfahren für das Schlüsselmanagement</h3>
+<ol>
+<li>
+<p><strong>Einmal generieren, für immer schützen</strong></p>
+<ul>
+<li>Routers lehnen doppelte Schlüsselnamen mit unterschiedlichen Schlüsseln ab</li>
+<li>Routers lehnen doppelte Schlüssel mit unterschiedlichen Schlüsselnamen ab</li>
+<li>Updates werden abgelehnt, wenn Schlüssel und Name nicht übereinstimmen</li>
+</ul>
+</li>
+<li>
+<p><strong>Sichere Speicherung</strong></p>
+<ul>
+<li>Sicheres Backup des Keystores erstellen</li>
+<li>Starke Passphrase verwenden</li>
+<li>Niemals in die Versionsverwaltung committen</li>
+</ul>
+</li>
+<li>
+<p><strong>Schlüsselrotation</strong></p>
+<ul>
+<li>Wird von der aktuellen Architektur nicht unterstützt</li>
+<li>Langfristige Schlüsselnutzung einplanen</li>
+<li>Multisignaturverfahren für die Teamentwicklung in Betracht ziehen</li>
+</ul>
+</li>
+</ol>
+<h3 id="veraltete-dsa-signierung-xpi2p">Veraltete DSA-Signierung (XPI2P)</h3>
+<p><strong>Status:</strong> Funktionsfähig, aber veraltet</p>
+<p>Vom xpi2p-Format verwendete DSA-1024-Signaturen: - 40-Byte-Signatur - 172 base64-Zeichen langer öffentlicher Schlüssel - NIST-800-57 empfiehlt mindestens (L=2048, N=224) - I2P verwendet schwächere (L=1024, N=160)</p>
+<p><strong>Empfehlung:</strong> Verwenden Sie stattdessen SU3 (I2P-Update-Paketformat) mit RSA-4096.</p>
+<hr>
+<h2 id="richtlinien-für-die-plugin-entwicklung">Richtlinien für die Plugin-Entwicklung</h2>
+<h3 id="wesentliche-bewährte-verfahren">Wesentliche bewährte Verfahren</h3>
+<ol>
+<li>
+<p><strong>Dokumentation</strong></p>
+<ul>
+<li>Ein klares README mit Installationsanleitung bereitstellen</li>
+<li>Konfigurationsoptionen und Standardwerte dokumentieren</li>
+<li>Bei jeder Veröffentlichung ein Änderungsprotokoll beifügen</li>
+<li>Erforderliche I2P/Java-Versionen angeben</li>
+</ul>
+</li>
+<li>
+<p><strong>Größenoptimierung</strong></p>
+<ul>
+<li>Nur erforderliche Dateien einschließen</li>
+<li>Niemals router JARs bündeln</li>
+<li>Installations- vs. Update-Pakete trennen (Bibliotheken in lib/)</li>
+<li><del>Pack200-Kompression verwenden</del> <strong>VERALTET - Standard-ZIP verwenden</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>Konfiguration</strong></p>
+<ul>
+<li>Niemals <code>plugin.config</code> zur Laufzeit ändern</li>
+<li>Verwenden Sie eine separate Konfigurationsdatei für Laufzeiteinstellungen</li>
+<li>Dokumentieren Sie die erforderlichen router-Einstellungen (SAM-Ports, tunnels, usw.)</li>
+<li>Respektieren Sie die vorhandene Konfiguration des Benutzers</li>
+</ul>
+</li>
+<li>
+<p><strong>Ressourcennutzung</strong></p>
+<ul>
+<li>Aggressiven Bandbreitenverbrauch als Voreinstellung vermeiden</li>
+<li>Angemessene Grenzen für die CPU-Auslastung implementieren</li>
+<li>Ressourcen beim Beenden bereinigen</li>
+<li>Daemon-Threads dort verwenden, wo es angebracht ist</li>
+</ul>
+</li>
+<li>
+<p><strong>Tests</strong></p>
+<ul>
+<li>Installieren/Aktualisieren/Deinstallieren auf allen Plattformen testen</li>
+<li>Updates von der vorherigen Version testen</li>
+<li>Während der Updates das Stoppen/Neustarten der Webapp überprüfen</li>
+<li>Mit der minimal unterstützten I2P-Version testen</li>
+</ul>
+</li>
+<li>
+<p><strong>Dateisystem</strong></p>
+<ul>
+<li>Schreiben Sie niemals in <code>$I2P</code> (kann schreibgeschützt sein)</li>
+<li>Schreiben Sie Laufzeitdaten in <code>$PLUGIN</code> oder <code>$CONFIG</code></li>
+<li>Verwenden Sie <code>I2PAppContext</code> zum Auffinden von Verzeichnissen</li>
+<li>Gehen Sie nicht von einem bestimmten <code>$CWD</code>-Pfad aus (aktuelles Arbeitsverzeichnis)</li>
+</ul>
+</li>
+<li>
+<p><strong>Kompatibilität</strong></p>
+<ul>
+<li>Standard-I2P-Klassen nicht duplizieren</li>
+<li>Klassen bei Bedarf erweitern, nicht ersetzen</li>
+<li><code>min-i2p-version</code>, <code>min-jetty-version</code> in plugin.config prüfen</li>
+<li>Mit älteren I2P-Versionen testen, falls diese unterstützt werden</li>
+</ul>
+</li>
+<li>
+<p><strong>Shutdown-Handhabung</strong></p>
+<ul>
+<li>Ordnungsgemäße <code>stopargs</code> in clients.config implementieren</li>
+<li>Shutdown-Hooks registrieren: <code>I2PAppContext.addShutdownTask()</code></li>
+<li>Mehrfache Start/Stop-Aufrufe sauber behandeln</li>
+<li>Alle Threads auf Daemon-Modus setzen</li>
+</ul>
+</li>
+<li>
+<p><strong>Sicherheit</strong></p>
+<ul>
+<li>Alle externen Eingaben validieren</li>
+<li>Niemals <code>System.exit()</code> aufrufen</li>
+<li>Die Privatsphäre der Benutzer respektieren</li>
+<li>Sichere Programmierpraktiken befolgen</li>
+</ul>
+</li>
+<li>
+<p><strong>Lizenzierung</strong></p>
+<ul>
+<li>Plugin-Lizenz klar angeben</li>
+<li>Lizenzen der mitgelieferten Bibliotheken respektieren</li>
+<li>Erforderliche Namensnennung beifügen</li>
+<li>Zugang zum Quellcode bereitstellen, falls erforderlich</li>
+</ul>
+</li>
+</ol>
+<h3 id="erweiterte-überlegungen">Erweiterte Überlegungen</h3>
+<p><strong>Zeitzonenbehandlung:</strong> - Router setzt die JVM-Zeitzone auf UTC - Tatsächliche Zeitzone des Benutzers: <code>I2PAppContext</code>-Eigenschaft <code>i2p.systemTimeZone</code></p>
+<p><strong>Verzeichniserkennung:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// Plugin directory</span>
+</span></span><span style="display:flex;"><span>String pluginDir <span style="color:#f92672">=</span> I2PAppContext.<span style="color:#a6e22e">getGlobalContext</span>()
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">getAppDir</span>().<span style="color:#a6e22e">getAbsolutePath</span>() <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/plugins/&#34;</span> <span style="color:#f92672">+</span> pluginName;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Or use $PLUGIN variable in clients.config args</span>
+</span></span></code></pre></div><p><strong>Versionsnummerierung:</strong> - Verwende semantische Versionierung (major.minor.patch) - Füge eine Build-Nummer für Tests hinzu (1.2.3-456) - Stelle sicher, dass die Version bei Updates monoton steigt</p>
+<p><strong>Zugriff auf router-Klassen:</strong> - Generell Abhängigkeiten von <code>router.jar</code> vermeiden - Stattdessen öffentliche APIs in <code>i2p.jar</code> verwenden - Künftiges I2P könnte den Zugriff auf router-Klassen einschränken</p>
+<p><strong>Vermeidung von JVM-Abstürzen (historisch):</strong> - Behoben in 0.7.13-3 - Classloader korrekt verwenden - Aktualisieren von JARs in einem laufenden Plugin vermeiden - Bei Bedarf so auslegen, dass beim Update ein Neustart erfolgt</p>
+<hr>
+<h2 id="eepsite-plugins">Eepsite-Plugins</h2>
+<h3 id="übersicht-1">Übersicht</h3>
+<p>Plugins können vollständige eepsites mit eigenen Jetty- und I2PTunnel-Instanzen bereitstellen.</p>
+<h3 id="architektur">Architektur</h3>
+<p><strong>Nicht versuchen:</strong> - In eine bestehende eepsite zu installieren - Mit der Standard-eepsite des router zusammenzuführen - Von der Verfügbarkeit einer einzelnen eepsite auszugehen</p>
+<p><strong>Stattdessen:</strong> - Neue I2PTunnel-Instanz starten (über die Kommandozeile) - Neue Jetty-Instanz starten - Beide in <code>clients.config</code> konfigurieren</p>
+<h3 id="beispielstruktur">Beispielstruktur</h3>
+<pre tabindex="0"><code>plugins/myeepsite/
+├── plugin.config
+├── clients.config          # Starts Jetty + I2PTunnel
+├── eepsite/
+│   ├── jetty.xml          # Requires variable substitution
+│   ├── docroot/
+│   ├── webapps/
+│   └── logs/
+└── lib/
+    └── [dependencies]
+</code></pre><h3 id="variablensubstitution-in-jettyxml">Variablensubstitution in jetty.xml</h3>
+<p>Verwenden Sie die Variable <code>$PLUGIN</code> für Pfade:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;Set</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;resourceBase&#34;</span><span style="color:#f92672">&gt;</span>$PLUGIN/eepsite/docroot<span style="color:#f92672">&lt;/Set&gt;</span>
+</span></span></code></pre></div><p>Der Router führt während des Plugin-Starts eine Ersetzung durch.</p>
+<h3 id="beispiele">Beispiele</h3>
+<p>Referenzimplementierungen: - <strong>zzzot-Plugin</strong> - Torrent-Tracker - <strong>pebble-Plugin</strong> - Blog-Plattform</p>
+<p>Beide sind auf der Plugin-Seite von zzz verfügbar (I2P-intern).</p>
+<hr>
+<h2 id="konsolenintegration-1">Konsolenintegration</h2>
+<h3 id="links-der-übersichtsleiste">Links der Übersichtsleiste</h3>
+<p>Klickbaren Link zur Zusammenfassungsleiste der Routerkonsole hinzufügen:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">consoleLinkName</span><span style="color:#f92672">=</span><span style="color:#e6db74">My Plugin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">consoleLinkURL</span><span style="color:#f92672">=</span><span style="color:#e6db74">/myplugin/</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">consoleLinkTooltip</span><span style="color:#f92672">=</span><span style="color:#e6db74">Open My Plugin Interface</span>
+</span></span></code></pre></div><p>Lokalisierte Versionen:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">consoleLinkName_de</span><span style="color:#f92672">=</span><span style="color:#e6db74">Mein Plugin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">consoleLinkTooltip_de</span><span style="color:#f92672">=</span><span style="color:#e6db74">Öffne Mein Plugin Schnittstelle</span>
+</span></span></code></pre></div><h3 id="konsolensymbole">Konsolensymbole</h3>
+<p><strong>Image-Datei (seit 0.9.20):</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">console-icon</span><span style="color:#f92672">=</span><span style="color:#e6db74">/myicon.png</span>
+</span></span></code></pre></div><p>Pfad relativ zu <code>consoleLinkURL</code>, falls angegeben (seit 0.9.53), andernfalls relativ zum Webapp-Namen.</p>
+<p><strong>Eingebettetes Icon (seit 0.9.25):</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">icon-code</span><span style="color:#f92672">=</span><span style="color:#e6db74">iVBORw0KGgoAAAANSUhEUgAAA...Base64EncodedPNG...</span>
+</span></span></code></pre></div><p>Erzeugen mit:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>base64 -w <span style="color:#ae81ff">0</span> icon-32x32.png
+</span></span></code></pre></div><p>Oder Java:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>java -cp i2p.jar net.i2p.data.Base64 encode icon.png
+</span></span></code></pre></div><p>Anforderungen: - 32x32 Pixel - PNG-Format - Base64-kodiert (keine Zeilenumbrüche)</p>
+<hr>
+<h2 id="internationalisierung">Internationalisierung</h2>
+<h3 id="übersetzungspakete">Übersetzungspakete</h3>
+<p><strong>Für I2P-Basisübersetzungen:</strong> - JARs in <code>console/locale/</code> ablegen - Beinhalten Resource-Bundles für bestehende I2P-Apps - Benennung: <code>messages_xx.properties</code> (xx = Sprachcode)</p>
+<p><strong>Für pluginspezifische Übersetzungen:</strong> - In <code>console/webapps/*.war</code> aufnehmen - Oder in <code>lib/*.jar</code> aufnehmen - Den Standardansatz mit dem Java ResourceBundle (Ressourcenbündel) verwenden</p>
+<h3 id="lokalisierte-zeichenketten-in-pluginconfig">Lokalisierte Zeichenketten in plugin.config</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">description</span><span style="color:#f92672">=</span><span style="color:#e6db74">My awesome plugin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description_de</span><span style="color:#f92672">=</span><span style="color:#e6db74">Mein tolles Plugin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description_fr</span><span style="color:#f92672">=</span><span style="color:#e6db74">Mon plugin génial</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description_es</span><span style="color:#f92672">=</span><span style="color:#e6db74">Mi plugin increíble</span>
+</span></span></code></pre></div><p>Unterstützte Felder: - <code>description_xx</code> - <code>consoleLinkName_xx</code> - <code>consoleLinkTooltip_xx</code></p>
+<h3 id="übersetzung-des-konsolen-themes">Übersetzung des Konsolen-Themes</h3>
+<p>Themes in <code>console/themes/</code> werden automatisch zum Suchpfad für Themes hinzugefügt.</p>
+<hr>
+<h2 id="plattformspezifische-plugins">Plattformspezifische Plugins</h2>
+<h3 id="ansatz-mit-separaten-paketen">Ansatz mit separaten Paketen</h3>
+<p>Verwenden Sie für jede Plattform unterschiedliche Plugin-Namen:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Windows package</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">myplugin-windows</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Linux package  </span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">myplugin-linux</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># macOS package</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">myplugin-mac</span>
+</span></span></code></pre></div><h3 id="ansatz-der-variablenersetzung">Ansatz der Variablenersetzung</h3>
+<p>Eine einzelne plugin.config mit Plattformvariablen:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">myplugin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">updateURL.su3</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://myplugin.i2p/downloads/myplugin-$OS-$ARCH.su3</span>
+</span></span></code></pre></div><p>In der Datei clients.config:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">net.i2p.apps.ShellService</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.args</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/bin/myapp-$OS-$ARCH</span>
+</span></span></code></pre></div><h3 id="betriebssystemerkennung-zur-laufzeit">Betriebssystemerkennung zur Laufzeit</h3>
+<p>Java-Ansatz für bedingte Ausführung:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>String os <span style="color:#f92672">=</span> System.<span style="color:#a6e22e">getProperty</span>(<span style="color:#e6db74">&#34;os.name&#34;</span>).<span style="color:#a6e22e">toLowerCase</span>();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (os.<span style="color:#a6e22e">contains</span>(<span style="color:#e6db74">&#34;win&#34;</span>)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Windows-specific code</span>
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (os.<span style="color:#a6e22e">contains</span>(<span style="color:#e6db74">&#34;nix&#34;</span>) <span style="color:#f92672">||</span> os.<span style="color:#a6e22e">contains</span>(<span style="color:#e6db74">&#34;nux&#34;</span>)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Linux-specific code</span>
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (os.<span style="color:#a6e22e">contains</span>(<span style="color:#e6db74">&#34;mac&#34;</span>)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// macOS-specific code</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<h2 id="fehlerbehebung">Fehlerbehebung</h2>
+<h3 id="häufige-probleme">Häufige Probleme</h3>
+<p><strong>Plugin startet nicht:</strong> 1. Überprüfe die I2P-Versionskompatibilität (<code>min-i2p-version</code>) 2. Überprüfe die Java-Version (<code>min-java-version</code>) 3. Überprüfe die router-Protokolle auf Fehler 4. Überprüfe, ob alle erforderlichen JARs im Classpath vorhanden sind</p>
+<p><strong>Webapp nicht erreichbar:</strong> 1. Bestätigen Sie, dass <code>webapps.config</code> die Webapp nicht deaktiviert 2. Prüfen Sie die Jetty-Versionskompatibilität (<code>min-jetty-version</code>) 3. Stellen Sie sicher, dass <code>web.xml</code> vorhanden ist (Annotation-Scanning wird nicht unterstützt) 4. Prüfen Sie auf konfliktierende Webapp-Namen</p>
+<p><strong>Update schlägt fehl:</strong> 1. Prüfen, ob die Versionsnummer erhöht wurde 2. Prüfen, ob die Signatur mit dem Signierschlüssel übereinstimmt 3. Sicherstellen, dass der Plugin-Name der installierten Version entspricht 4. Einstellungen <code>update-only</code>/<code>install-only</code> überprüfen</p>
+<p><strong>Externes Programm lässt sich nicht beenden:</strong> 1. ShellService für die automatische Lebenszyklusverwaltung verwenden 2. Ordnungsgemäße Behandlung von <code>stopargs</code> implementieren 3. Bereinigung der PID-Datei überprüfen 4. Prozessbeendigung überprüfen</p>
+<h3 id="debug-protokollierung">Debug-Protokollierung</h3>
+<p>Debug-Logging im router aktivieren:</p>
+<pre tabindex="0"><code>logger.record.net.i2p.router.web.ConfigPluginsHandler=DEBUG
+</code></pre><p>Protokolle prüfen:</p>
+<pre tabindex="0"><code>~/.i2p/logs/log-router-0.txt
+</code></pre><hr>
+<h2 id="referenzinformationen">Referenzinformationen</h2>
+<h3 id="offizielle-spezifikationen">Offizielle Spezifikationen</h3>
+<ul>
+<li><a href="../../../../de/docs/specs/plugin/">Plugin-Spezifikation</a>
+</li>
+<li><a href="../../../../de/docs/specs/configuration/">Konfigurationsformat</a>
+</li>
+<li><a href="../../../../de/docs/specs/updates/">Update-Spezifikation</a>
+</li>
+<li><a href="../../../../de/docs/specs/cryptography/">Kryptografie</a>
+</li>
+</ul>
+<h3 id="i2p-versionsgeschichte">I2P-Versionsgeschichte</h3>
+<p><strong>Aktuelle Version:</strong> - <strong>I2P 2.10.0</strong> (8. September 2025)</p>
+<p><strong>Wichtige Veröffentlichungen seit 0.9.53:</strong> - 2.10.0 (Sep 2025) - Ankündigung für Java 17+ - 2.9.0 (Jun 2025) - Warnung zu Java 17+ - 2.8.0 (Okt 2024) - Tests zu Post-Quanten-Kryptografie - 2.6.0 (Mai 2024) - Sperrung von I2P-over-Tor - 2.4.0 (Dez 2023) - NetDB-Sicherheitsverbesserungen - 2.2.0 (Mär 2023) - Überlastkontrolle - 2.1.0 (Jan 2023) - Netzwerkverbesserungen - 2.0.0 (Nov 2022) - SSU2-Transportprotokoll - 1.7.0/0.9.53 (Feb 2022) - ShellService, Variablensubstitution - 0.9.15 (Sep 2014) - SU3-Format eingeführt</p>
+<p><strong>Versionsnummerierung:</strong> - 0.9.x-Serie: Bis einschließlich Version 0.9.53 - 2.x-Serie: Ab 2.0.0 (Einführung von SSU2)</p>
+<h3 id="entwicklerressourcen">Entwicklerressourcen</h3>
+<p><strong>Quellcode:</strong> - Haupt-Repository: <a href="https://i2pgit.org/I2P_Developers/i2p.i2p">https://i2pgit.org/I2P_Developers/i2p.i2p</a>
+ - GitHub-Spiegel: <a href="https://github.com/i2p/i2p.i2p">https://github.com/i2p/i2p.i2p</a>
+</p>
+<p><strong>Plugin-Beispiele:</strong> - zzzot (BitTorrent-Tracker) - pebble (Blog-Plattform) - i2p-bote (serverlose E-Mail) - orchid (Tor-Client) - seedless (Peer-Austausch)</p>
+<p><strong>Build-Tools:</strong> - makeplugin.sh - Schlüsselgenerierung und Signierung - Im i2p.scripts-Repository zu finden - Automatisiert die Erstellung und Verifizierung von su3</p>
+<h3 id="community-unterstützung">Community-Unterstützung</h3>
+<p><strong>Foren:</strong> - <a href="https://i2pforum.net/">I2P Forum</a>
+ - <a href="http://zzz.i2p/">zzz.i2p</a>
+ (I2P-intern)</p>
+<p><strong>IRC/Chat:</strong> - #i2p-dev auf OFTC - I2P IRC im Netzwerk</p>
+<hr>
+<h2 id="anhang-a-vollständiges-beispiel-für-pluginconfig">Anhang A: Vollständiges Beispiel für plugin.config</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Required fields</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">example-plugin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">signer</span><span style="color:#f92672">=</span><span style="color:#e6db74">developer@mail.i2p</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">version</span><span style="color:#f92672">=</span><span style="color:#e6db74">1.2.3</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Update configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">updateURL.su3</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://example.i2p/plugins/example-$OS-$ARCH.su3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">min-i2p-version</span><span style="color:#f92672">=</span><span style="color:#e6db74">2.0.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">min-java-version</span><span style="color:#f92672">=</span><span style="color:#e6db74">17</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Display information</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">date</span><span style="color:#f92672">=</span><span style="color:#e6db74">1698796800000</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">author</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example Developer &lt;developer@mail.i2p&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">websiteURL</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://example.i2p/</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">license</span><span style="color:#f92672">=</span><span style="color:#e6db74">Apache-2.0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description</span><span style="color:#f92672">=</span><span style="color:#e6db74">An example I2P plugin demonstrating best practices</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description_de</span><span style="color:#f92672">=</span><span style="color:#e6db74">Ein Beispiel-I2P-Plugin zur Demonstration bewährter Praktiken</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description_es</span><span style="color:#f92672">=</span><span style="color:#e6db74">Un plugin I2P de ejemplo que demuestra las mejores prácticas</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Console integration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">consoleLinkName</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example Plugin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">consoleLinkName_de</span><span style="color:#f92672">=</span><span style="color:#e6db74">Beispiel-Plugin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">consoleLinkURL</span><span style="color:#f92672">=</span><span style="color:#e6db74">/example/</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">consoleLinkTooltip</span><span style="color:#f92672">=</span><span style="color:#e6db74">Open the Example Plugin control panel</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">consoleLinkTooltip_de</span><span style="color:#f92672">=</span><span style="color:#e6db74">Öffne das Beispiel-Plugin-Kontrollfeld</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console-icon</span><span style="color:#f92672">=</span><span style="color:#e6db74">/icon.png</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Installation behavior</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">dont-start-at-install</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router-restart-required</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Platform requirements (informational)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">required-platform-OS</span><span style="color:#f92672">=</span><span style="color:#e6db74">All platforms supported</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">other-requirements</span><span style="color:#f92672">=</span><span style="color:#e6db74">Requires 512MB free disk space</span>
+</span></span></code></pre></div><hr>
+<h2 id="anhang-b-vollständiges-clientsconfig-beispiel">Anhang B: Vollständiges clients.config-Beispiel</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Main service client (managed)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">com.example.plugin.MainService</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example Plugin Main Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.delay</span><span style="color:#f92672">=</span><span style="color:#e6db74">30</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.args</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/config.properties --port=7656</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.stopargs</span><span style="color:#f92672">=</span><span style="color:#e6db74">shutdown</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.uninstallargs</span><span style="color:#f92672">=</span><span style="color:#e6db74">cleanup</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/lib/example.jar,$I2P/lib/i2p.jar,$I2P/lib/mstreaming.jar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># External program via ShellService</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">net.i2p.apps.ShellService</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example Native Helper</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.delay</span><span style="color:#f92672">=</span><span style="color:#e6db74">35</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.args</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/bin/helper-$OS-$ARCH --config $PLUGIN/helper.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">$I2P/lib/i2p.jar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Jetty eepsite</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">net.i2p.jetty.JettyStart</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example Eepsite</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.delay</span><span style="color:#f92672">=</span><span style="color:#e6db74">40</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.args</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/eepsite/jetty.xml</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.stopargs</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/eepsite/jetty.xml stop</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/lib/example-web.jar,$I2P/lib/i2p.jar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2PTunnel for eepsite</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.3.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">net.i2p.i2ptunnel.TunnelControllerGroup</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.3.name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example Eepsite Tunnel</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.3.delay</span><span style="color:#f92672">=</span><span style="color:#e6db74">45</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.3.args</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/eepsite/i2ptunnel.config</span>
+</span></span></code></pre></div><hr>
+<h2 id="anhang-c-vollständiges-webappsconfig-beispiel">Anhang C: Vollständiges webapps.config-Beispiel</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Disable autostart for admin webapp</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.example-admin.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Main webapp with classpath</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.example.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.example.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/lib/example-core.jar,$PLUGIN/lib/commons-utils.jar,$I2P/lib/jstl.jar,$I2P/lib/standard.jar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Legacy support (pre-0.7.12-9)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plugin.example.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span></code></pre></div><hr>
+<h2 id="anhang-d-migrations-checkliste-von-0953-auf-2100">Anhang D: Migrations-Checkliste (von 0.9.53 auf 2.10.0)</h2>
+<h3 id="erforderliche-änderungen">Erforderliche Änderungen</h3>
+<ul>
+<li>
+<p><input disabled="" type="checkbox"> <strong>Pack200-Komprimierung aus dem Build-Prozess entfernen</strong></p>
+<ul>
+<li>pack200-Aufgaben aus Ant-/Maven-/Gradle-Skripten entfernen</li>
+<li>Vorhandene Plugins ohne pack200 erneut veröffentlichen</li>
+</ul>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> <strong>Java-Versionsanforderungen überprüfen</strong></p>
+<ul>
+<li>Erwägen, für neue Funktionen Java 11+ vorauszusetzen</li>
+<li>Planen, in I2P 2.11.0 Java 17+ zur Voraussetzung zu machen</li>
+<li>Die <code>min-java-version</code> in plugin.config aktualisieren</li>
+</ul>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> <strong>Dokumentation aktualisieren</strong></p>
+<ul>
+<li>Pack200-Verweise entfernen</li>
+<li>Java-Versionsanforderungen aktualisieren</li>
+<li>I2P-Versionsverweise aktualisieren (0.9.x → 2.x)</li>
+</ul>
+</li>
+</ul>
+<h3 id="empfohlene-änderungen">Empfohlene Änderungen</h3>
+<ul>
+<li>
+<p><input disabled="" type="checkbox"> <strong>Kryptografische Signaturen stärken</strong></p>
+<ul>
+<li>Von XPI2P (I2P-Plugin-Paketformat) zu SU3 (signiertes I2P-Update-/Datenpaketformat) migrieren, falls noch nicht geschehen</li>
+<li>RSA-4096-Schlüssel für neue Plugins verwenden</li>
+</ul>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> <strong>Neue Funktionen nutzen (bei Verwendung von 0.9.53+)</strong></p>
+<ul>
+<li>Verwenden Sie die Variablen <code>$OS</code> / <code>$ARCH</code> für plattformspezifische Updates</li>
+<li>Verwenden Sie ShellService (Dienst zum Ausführen externer Programme) für externe Programme</li>
+<li>Verwenden Sie den verbesserten Webapp-Classpath (Klassenpfad der Webanwendung; funktioniert mit jedem warname [Name der WAR-Datei])</li>
+</ul>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> <strong>Kompatibilität testen</strong></p>
+<ul>
+<li>Mit I2P 2.10.0 testen</li>
+<li>Mit Java 8, 11, 17 überprüfen</li>
+<li>Unter Windows, Linux, macOS prüfen</li>
+</ul>
+</li>
+</ul>
+<h3 id="optionale-erweiterungen">Optionale Erweiterungen</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Einen korrekten ServletContextListener implementieren</li>
+<li><input disabled="" type="checkbox"> Lokalisierte Beschreibungen hinzufügen</li>
+<li><input disabled="" type="checkbox"> Ein Konsolensymbol bereitstellen</li>
+<li><input disabled="" type="checkbox"> Die Handhabung des Herunterfahrens verbessern</li>
+<li><input disabled="" type="checkbox"> Umfassende Protokollierung hinzufügen</li>
+<li><input disabled="" type="checkbox"> Automatisierte Tests schreiben</li>
+</ul>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../de/docs/specs/red25519-signature-scheme/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">Red25519-Signaturschema</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../de/docs/specs/ntcp2/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">NTCP2 Transport</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/de/docs/specs/plugin.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Bleiben Sie über I2P-Neuigkeiten informiert:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Geben Sie Ihre E-Mail ein" required>
+                            <button type="submit">Abonnieren</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Schnellzugriff</h3>
+                <ul>
+                    <li><a href="../../../../de/financial-support/">Spenden</a></li>
+                    <li><a href="../../../../de/docs/overview/intro/">I2P Einführung</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Gemeinschaft</h3>
+                <ul>
+                    <li><a href="../../../../de/get-involved/">Mitmachen</a></li>
+                    <li><a href="../../../../de/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Offizielle Foren</a></li>
+                    <li><a href="../../../../de/contact/">Kontakt</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Ressourcen</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P Metriken</a></li>
+                    <li><a href="../../../../de/papers/">Forschung</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Das Invisible Internet Project. Lizenziert unter Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../de/privacy/">Datenschutz</a>
+                <a href="../../../../de/terms/">Bedingungen</a>
+                <a href="../../../../de/about/media/">Presse</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Schließen">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Community-Umfrage</h2>
+            <p class="modal-subtitle">Wir würden uns freuen, von Ihnen zu hören</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Ihre Stimme hilft dabei, die Zukunft von I2P zu gestalten.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

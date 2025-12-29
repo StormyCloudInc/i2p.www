@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Red25519 서명 스킴 | I2P - 보이지 않는 인터넷 프로젝트</title>
+
+    <meta name="description" content="블라인딩된 Destination(목적지) 생성을 위한 재랜덤화 가능한 서명 스킴">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Red25519 서명 스킴 | I2P - 보이지 않는 인터넷 프로젝트">
+    <meta property="og:description" content="블라인딩된 Destination(목적지) 생성을 위한 재랜덤화 가능한 서명 스킴">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/ko/docs/specs/red25519-signature-scheme/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P 베타 사이트 현재 운영 중 문의사항은 stormycloud@mail.i2p로 이메일 주세요</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="배너 닫기" title="배너 닫기">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../ko/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../ko/about/" class="">소개</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ko/about/">개요</a></li>
+                            <li><a href="../../../../ko/papers/">연구 논문</a></li>
+                            <li><a href="../../../../ko/about/media/">보도자료</a></li>
+                            <li><a href="../../../../ko/contact/">문의하기</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../ko/docs/" class="active">문서</a></li>
+                    <li><a href="../../../../ko/downloads/" class="">다운로드</a></li>
+                    <li><a href="../../../../ko/blog/" class="">블로그</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../ko/get-involved/" class="">참여하기</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ko/get-involved/">개요</a></li>
+                            <li><a href="../../../../ko/feedback/">기능 제안</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">ko</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">영어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">스페인어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/red25519-signature-scheme/"
+                                class="lang-option active">한국어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">중국어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">러시아어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">체코어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">독일어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">프랑스어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">터키어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">베트남어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">힌디어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">아랍어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/red25519-signature-scheme/"
+                                class="lang-option">포르투갈어</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../ko/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../ko/downloads/" class="btn btn-primary">I2P 다운로드</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#개요">개요</a></li>
+    <li><a href="#동기">동기</a></li>
+    <li><a href="#설계">설계</a>
+      <ul>
+        <li><a href="#핵심-서명-체계">핵심 서명 체계</a></li>
+        <li><a href="#ed25519타원곡선-전자서명-방식-키를-red25519reddsa-전자서명-방식로-변환하기">Ed25519(타원곡선 전자서명 방식) 키를 Red25519(RedDSA 전자서명 방식)로 변환하기</a></li>
+      </ul>
+    </li>
+    <li><a href="#명세">명세</a>
+      <ul>
+        <li><a href="#정의">정의</a></li>
+        <li><a href="#red25519암호학-알고리즘-명칭">Red25519(암호학 알고리즘 명칭)</a></li>
+        <li><a href="#인코딩과-디코딩">인코딩과 디코딩</a></li>
+        <li><a href="#reddsa랜덤화된-edwards-곡선-디지털-서명-알고리즘-함수">RedDSA(랜덤화된 Edwards-곡선 디지털 서명 알고리즘) 함수</a></li>
+        <li><a href="#변환-함수">변환 함수</a></li>
+      </ul>
+    </li>
+    <li><a href="#보안상의-영향">보안상의 영향</a>
+      <ul>
+        <li><a href="#보안-감사-상태">보안 감사 상태</a></li>
+      </ul>
+    </li>
+    <li><a href="#호환성">호환성</a></li>
+    <li><a href="#구현-참고-사항">구현 참고 사항</a></li>
+    <li><a href="#테스트-벡터">테스트 벡터</a>
+      <ul>
+        <li><a href="#테스트-벡터-1">테스트 벡터 1</a></li>
+        <li><a href="#테스트-벡터-2">테스트 벡터 2</a></li>
+      </ul>
+    </li>
+    <li><a href="#참고자료">참고자료</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../ko/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../ko/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../ko/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Red25519 서명 스킴</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">이 번역은 기계 학습을 사용하여 생성되었으며 100% 정확하지 않을 수 있습니다.</span>
+    
+    
+    <a href="../../../../en/docs/specs/red25519-signature-scheme/" class="disclaimer-link">영어 버전 보기</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Red25519 서명 스킴</h1>
+                    
+                        <p class="article-description">블라인딩된 Destination(목적지) 생성을 위한 재랜덤화 가능한 서명 스킴</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="개요">개요</h2>
+<p>이 문서는 블라인드할 수 있는 Destination(목적지)을 생성하기에 적합한 re-randomizable signature scheme(재랜덤화 가능한 서명 스킴)을 명세한다. 또한 기존 Ed25519 Destination을 블라인드하는 데에도 사용할 수 있으나, 효율성이 소폭 저하된다.</p>
+<p>Red25519는 0.9.39 버전(2019년 3월 21일 출시)부터 I2P routers에서 완전 지원됩니다. 17개월간의 실운영 배포를 거친 뒤, 본 사양은 0.9.47 버전(2020년 8월)에서 최종 확정되었습니다. 이 서명 스킴은 I2P 네트워크에서 서명 유형 11(RedDSA_SHA512_Ed25519)로 동작합니다.</p>
+<h2 id="동기">동기</h2>
+<p>Proposal 123 (New netDB Entries)는 Principle of Least Authority(최소 권한 원칙)를 구현한 암호화된 LeaseSet2 형식을 정의한다: 각 네트워크 참여자는 자신의 역할에 필요한 정보만 제공받는다. 특히, floodfill에 게시된 암호화된 LeaseSet2는 대상 Destination을 드러내지 않으며, Leases는 해당 Destination에 대한 사전 지식을 가진 사람만 열람할 수 있다. 그러나 floodfill은 여전히 게시 시 암호화된 LeaseSet2를 인증할 수 있어야 하고, 클라이언트는 추가로 그 인증이 Destination 자체에 의해 강제되었음을 보장해야 한다.</p>
+<p>제안 123은 Destination(목적지 식별자)의 서명 키를 블라인딩함으로써 이를 달성한다. 블라인딩된 키는 floodfill에 의해 검증 가능한 서명을 생성하는 데 사용할 수 있으며, 클라이언트는 오직 해당 Destination만이 그 서명을 생성했음을 확신할 수 있다. 따라서 블라인딩에 사용할 수 있는 서명 스킴을 명시할 필요가 있다.</p>
+<p><strong>Proposal 123 상태 안내</strong>: Proposal 123의 일부는 0.9.38 버전부터 순차적으로 구현되어 배포되었으며, 0.9.39에서 Red25519 지원이 추가되었습니다. 암호화된 LeaseSet2 기능은 운영 환경에서 사용할 준비가 되어 있으며, 프라이버시가 강화된 히든 서비스용으로 I2P 네트워크에서 활발히 사용되고 있습니다.</p>
+<h2 id="설계">설계</h2>
+<h3 id="핵심-서명-체계">핵심 서명 체계</h3>
+<p>여기에서 명시하는 서명 스킴 Red25519는 Zcash 프로토콜 명세서(Sapling 및 이후) 섹션 5.4.6에 정의된 RedDSA의 구현이다. RedDSA는 key re-randomization(키 재무작위화)을 지원하는 슈노르 기반 서명 스킴이다. 다음과 같은 함수가 있다:</p>
+<p><strong>GENERATE_PRIVATE()</strong> : 균등한 분포를 따르는 무작위 개인 키를 반환합니다.</p>
+<p><strong>DERIVE_PUBLIC(sk)</strong> : 주어진 개인 키에 해당하는 공개 키를 반환합니다.</p>
+<p><strong>GENERATE_RANDOM()</strong> : 키 쌍을 재무작위화하는 데 적합한 무작위 스칼라를 반환합니다.</p>
+<p><strong>RANDOMIZE_PRIVATE(sk, alpha)</strong> : 비밀 스칼라 alpha를 사용하여 개인 키를 재랜덤화합니다.</p>
+<p><strong>RANDOMIZE_PUBLIC(vk, alpha)</strong> : 비밀 스칼라 alpha를 사용하여 공개 키를 재무작위화합니다.</p>
+<p><strong>SIGN(sk, m)</strong> : 주어진 메시지 m에 대해 개인 키 sk로 생성한 서명을 반환합니다.</p>
+<p><strong>VERIFY(vk, m, sig)</strong> : 공개키 vk와 메시지 m에 대해 서명 sig를 검증합니다. 서명이 유효하면 true를 반환하고, 그렇지 않으면 false를 반환합니다.</p>
+<p>주어진 키 쌍 (sk, vk)에 대해 다음과 같은 관계가 성립한다:</p>
+<pre tabindex="0"><code>RANDOMIZE_PUBLIC(vk, alpha) == DERIVE_PUBLIC(RANDOMIZE_PRIVATE(sk, alpha))
+</code></pre><h3 id="ed25519타원곡선-전자서명-방식-키를-red25519reddsa-전자서명-방식로-변환하기">Ed25519(타원곡선 전자서명 방식) 키를 Red25519(RedDSA 전자서명 방식)로 변환하기</h3>
+<p>Ed25519 키는 기존 Ed25519 Destination(목적지)의 재무작위화를 지원하기 위해 일시적인 일방향 변환을 통해 Red25519 키로 변환될 수 있습니다. 다른 서명 유형은 호환되지 않습니다.</p>
+<p>다음과 같은 변환 함수를 정의합니다:</p>
+<p><strong>CONVERT_ED25519_PRIVATE(privkey)</strong> : 주어진 Ed25519 개인 키에 해당하는 Red25519 개인 키를 반환합니다.</p>
+<p><strong>CONVERT_ED25519_PUBLIC(pubkey)</strong> : 주어진 Ed25519 공개 키에 대응하는 Red25519 공개 키를 반환합니다.</p>
+<p>주어진 Ed25519 키 쌍 (privkey, pubkey)에 대해 다음 관계가 성립한다:</p>
+<pre tabindex="0"><code>CONVERT_ED25519_PUBLIC(pubkey) == DERIVE_PUBLIC(CONVERT_ED25519_PRIVATE(privkey))
+</code></pre><h2 id="명세">명세</h2>
+<h3 id="정의">정의</h3>
+<p><strong>B</strong> : <a href="https://www.rfc-editor.org/rfc/rfc8032.html">RFC 8032</a>
+에 정의된 Ed25519 기저점.</p>
+<p><strong>L</strong> : <a href="https://www.rfc-editor.org/rfc/rfc8032.html">RFC 8032</a>
+에 정의된 대로 Ed25519의 차수 2^252 + 27742317777372353535851937790883648493.</p>
+<p><strong>[s] B</strong> : 고정된 기준점에 대해 s를 곱하는 스칼라 곱셈.</p>
+<p><strong>[s] A</strong> : A에 s를 곱하는 가변 기준점 스칼라 곱셈.</p>
+<p><strong>x || y</strong> : 바이트 배열 x에 y를 이어 붙입니다.</p>
+<h3 id="red25519암호학-알고리즘-명칭">Red25519(암호학 알고리즘 명칭)</h3>
+<p>스킴 Red25519는 RedDSA를 다음과 같이 특화한다:</p>
+<ul>
+<li>G := Curve25519의 에드워즈 형태 위의 점들로 이루어진 군. 특히, 이는 Red25519가 차수 L의 소수 부분군을 사용하며, 보수(cofactor) h_G는 8임을 의미한다.</li>
+<li>P_G := Ed25519 기저점 B.</li>
+<li>l_H := 512</li>
+<li>H(x) := SHA-512(&ldquo;I2P_Red25519H(x)&rdquo; || x)</li>
+</ul>
+<p><strong>해시 함수 선택에 대한 참고</strong>: Red25519는 Zcash RedDSA에서 사용되는 BLAKE2b-512 대신 SHA-512를 사용합니다. 이러한 설계 선택은 아래에 설명된 length-prefixing(길이 접두어 부여) 보호로 보완됩니다. I2P Proposal 148은 중복 메시지 식별(DMI) 및 길이 확장 공격(LEA)에 대한 보호를 강화하고 성능을 향상하기 위해 향후 BLAKE2b-512로의 마이그레이션을 제안합니다.</p>
+<p>RedDSA는 H(x)가 길이 확장 공격에 대해 안전한 암호학적 해시 함수로 인스턴스화된다고 가정한다. SHA-512는 그 자체로는 이를 만족하지 않는다. 이를 보완하기 위해, 메시지의 길이를 prefix-free encoding(접두사-자유 인코딩)으로 표현한 접두사를 메시지 앞에 붙일 것을 요구한다:</p>
+<pre tabindex="0"><code>len_u16(M) || M
+</code></pre><p>여기서 <code>len_u16(M)</code>은 M의 길이를 2바이트로 표현한 값이며, 리틀 엔디언이다(스칼라와 포인트의 리틀 엔디언 인코딩과 일관성을 유지하기 위해).</p>
+<p>메시지는 65534 바이트를 초과할 수 없습니다. 65535 바이트 길이는 향후 확장을 위해 예약되어 있습니다.</p>
+<p><strong>Security Note</strong>: 해시 함수에 공개키(vk)를 포함하고 서명 시 80바이트의 난수를 결합함으로써, 초기 RedDSA 설계에서 발견된 SURK-CMA (Strong Unforgeability with Re-randomized Keys under Chosen Message Attack, 선택 메시지 공격 하에서 재랜덤화된 키에 대한 강한 위조불가능성) 취약점으로부터의 보호를 보장합니다. 이 구현에는 NCC Group Zcash 감사(Finding NCC-Zcash2018-009)의 보안 수정 사항이 포함되어 있습니다.</p>
+<h3 id="인코딩과-디코딩">인코딩과 디코딩</h3>
+<p>Red25519 개인 키는 L을 법으로 하는 스칼라이며, 리틀 엔디언 표현으로 인코딩됩니다. 스칼라의 바이트 배열 형태와 정수 형태 사이를 상호 변환하기 위해 함수 <code>DECODE_SCALAR</code>와 <code>ENCODE_SCALAR</code>를 정의합니다.</p>
+<p>Red25519 공개키는 Curve25519(타원곡선 이름)의 에드워즈 형태 위의 점이다. 이들은 y좌표의 255비트 리틀 엔디언 표현 뒤에 x좌표의 부호를 나타내는 1비트를 이어붙인 방식으로 인코딩된다. 이는 Ed25519(서명 알고리즘 이름)와 동일한 인코딩이다. 점의 바이트 배열 형태와 좌표 형태 사이를 상호 변환하기 위해 <code>DECODE_POINT</code>와 <code>ENCODE_POINT</code> 함수를 정의한다.</p>
+<h3 id="reddsa랜덤화된-edwards-곡선-디지털-서명-알고리즘-함수">RedDSA(랜덤화된 Edwards-곡선 디지털 서명 알고리즘) 함수</h3>
+<p>구현을 용이하게 하기 위해, 이미 Red25519(레드25519)에 맞게 특화된 RedDSA(레드DSA) 함수들(그리고 몇 가지 보조 함수들)을 아래에 명시적으로 작성한다. 구현자들은 RedDSA 함수들의 일반적인 명세에 대해서는 Zcash Protocol Specification(지캐시 프로토콜 명세서) 섹션 5.4.6을 참조해야 한다.</p>
+<pre tabindex="0"><code>HStar(prefix1, prefix2, m) :=
+    h = SHA-512()
+    h.input(&#34;I2P_Red25519H(x)&#34;)
+    h.input(prefix1)
+    h.input(prefix2)
+
+    h.input(len(m) &amp; 0xff)
+    h.input((len(m) &gt;&gt; 8) &amp; 0xff)
+    h.input(m)
+
+    s = h.digest()
+    return s mod L
+
+GENERATE_PRIVATE :=
+    s = 64 random bytes
+    return s mod L
+
+DERIVE_PUBLIC(sk) := [sk] B
+
+GENERATE_RANDOM :=
+    s = 64 random bytes
+    return s mod L
+
+RANDOMIZE_PRIVATE(sk, alpha) := (sk + alpha) mod L
+
+RANDOMIZE_PUBLIC(vk, alpha) := vk + [alpha] B
+
+SIGN(sk, m) :=
+    T = 80 random bytes
+    vkBytes = ENCODE_POINT(DERIVE_PUBLIC(sk))
+    r = HStar(T, vkBytes, m)
+
+    R = [r] B
+    Rbytes = ENCODE_POINT(R)
+
+    c = HStar(Rbytes, vkBytes, m)
+    S = (r + (c * sk)) mod L
+
+    return Rbytes || ENCODE_SCALAR(S)
+
+VERIFY(vk, m, sig) :=
+    Rbytes = sig[0..32]
+    Sbytes = sig[32..64]
+
+    R = DECODE_POINT(Rbytes)
+    if R is invalid:
+        return false
+
+    S = DECODE_SCALAR(Sbytes)
+    if S &gt;= L:
+        return false
+
+    vkBytes = ENCODE_POINT(vk)
+    c = HStar(Rbytes, vkBytes, m)
+    return ((-[S] B) + R + ([c] vk)).multiplyByCofactor().isIdentity()
+</code></pre><h3 id="변환-함수">변환 함수</h3>
+<pre tabindex="0"><code>CONVERT_ED25519_PRIVATE(privkey) :=
+    s = SHA-512(privkey)[0..32]
+    s[0] = s[0] &amp; 248
+    s[31] = (s[31] &amp; 63) | 64
+    return s
+
+CONVERT_ED25519_PUBLIC(pubkey) := pubkey
+</code></pre><p><code>CONVERT_ED25519_PRIVATE</code>의 구현은 Ed25519 개인 키에서 Ed25519 공개 키를 유도할 때 비밀 스칼라 s를 계산하는 것과 동등하며, 이는 <a href="https://www.rfc-editor.org/rfc/rfc8032.html">RFC 8032</a>
+ 섹션 5.1.5의 1–3단계에 명시되어 있습니다.</p>
+<h2 id="보안상의-영향">보안상의 영향</h2>
+<p>Red25519 Destination(I2P 목적지 식별자)를 다시 무작위화한 다음 그것으로 서명을 생성하더라도, 해당 Destination에 관한 어떤 정보도 누설되지 않는다. 이는 <code>RANDOMIZE_PRIVATE</code>를 통해 생성된 Red25519 개인 키의 분포가 <code>GENERATE_PRIVATE</code>를 통해 생성된 개인 키의 분포와 동일하고, <code>DERIVE_PUBLIC</code>이 결정적이기 때문이다.</p>
+<p><code>CONVERT_ED25519_PRIVATE</code>를 통해 Ed25519(타원곡선 디지털 서명 방식) 개인 키를 Red25519(Ed25519에서 파생된 변환 키 형식)로 변환하면 동일한 분포가 생성되지 않습니다. 그러나 다음과 같은 이유로 보안성 감소는 수용 가능하다고 판단합니다:</p>
+<ul>
+<li>Ed25519 스칼라의 공간은 Red25519 스칼라의 공간 크기의 대략 절반이다(가능한 Ed25519 스칼라는 2^251개이고, 가능한 Red25519 스칼라는 L ~= 2^252개이다). 따라서 보안 강도 손실은 많아야 대략 2배, 즉 약 1비트에 불과하다(우연히 Ed25519에도 유효한 Red25519 스칼라를 선택했을 수 있기 때문이다).</li>
+<li>기존 Ed25519 목적지는 이미 과거에 네트워크에 노출되었으며, 악의적인 floodfills가 이미 이를 열거했을 것으로 가정해야 한다.</li>
+</ul>
+<p><strong>중요</strong>: 이 보안 약화가 우려되는 사용자는 Ed25519(서명 유형 7) 대신 자신의 Destinations(I2P의 공개 목적지 식별자)에 대한 sigtype으로 Red25519(서명 유형 11)를 사용해야 합니다.</p>
+<p>위의 논증은 재무작위화 스칼라 alpha에는 적용되지 않는다는 점에 유의하라. 편향된 alpha를 선택할 때마다 키에 관한 정보가 누출되는데, 이는 가법 재무작위화가 원타임 패드처럼 동작하기 때문이다.</p>
+<h3 id="보안-감사-상태">보안 감사 상태</h3>
+<p><strong>중요한 고지</strong>: Red25519(서명 체계)를 포함한 I2P는 정식 제3자 보안 감사를 받은 적이 없습니다. 기반이 되는 RedDSA(서명 설계)는 2018년 Zcash Sapling 프로토콜 감사의 일환으로 NCC Group의 보안 검토를 받았으며, 그 과정에서 보안 문제가 식별되어 수정되었습니다. 그러나 SHA-512(BLAKE2b-512 대신)를 사용한 I2P의 구체적 구현과 I2P 도메인 분리(domain separation)는 독립적으로 분석된 바 없습니다.</p>
+<p>str4d가 개발한 ed25519-java 참조 구현은 독립적인 제3자 감사를 한 차례 받았으나, 그 감사는 Red25519 구현 이전에 이루어졌고 Ed25519 기능만을 대상으로 했으며 Red25519 확장 기능은 포함하지 않았습니다.</p>
+<p>Red25519(암호학적 서명 방식)을 도입하는 사용자들은 이러한 한계를 이해하고 자신의 위협 모델에 따라 보안상의 절충관계를 평가해야 합니다.</p>
+<h2 id="호환성">호환성</h2>
+<p>Red25519(서명 알고리즘)을 지원하는 I2P 버전(0.9.39 이상)은 그 방식으로 서명된 네트워크 데이터 구조를 검증할 수 있습니다. Red25519을 지원하지 않는 I2P 버전은 이를 알 수 없는 서명으로 간주하며, 데이터 구조를 폐기(MAY)할 수도 있습니다.</p>
+<p><strong>배포 타임라인</strong>: - <strong>0.9.39</strong> (2019년 3월): floodfill에서 Encrypted LS2(암호화된 LS2) 지원을 포함한 최초 구현 - <strong>0.9.40</strong> (2019년 5월): Encrypted LS2에 대한 클라이언트별 인가 - <strong>0.9.41</strong> (2019년 8월): 오프라인 키와 함께 사용하는 Meta LS2(메타 LS2) 및 Encrypted LS2 - <strong>0.9.43</strong> (2020년 2월): Encrypted LS2에 대한 b32(base32 주소) 지원 - <strong>0.9.47</strong> (2020년 8월): 사양 최종화 - <strong>2.10.0</strong> (2025년 10월): 현재 네트워크 버전(0.9.67+와 동등)</p>
+<p>초기 구현 이후 네트워크가 6년이 넘는 기간 동안 업그레이드를 진행해 온 만큼, Encrypted LeaseSet2 사용 사례에서는 Red25519(서명 방식)로 서명된 데이터 구조의 신뢰성이 충분히 좋을 것으로 사용자는 기대할 수 있습니다. 그러나 일반적인 Destination(I2P 목적지) 사용에 대한 채택 지표는 공개되어 있지 않습니다.</p>
+<p><strong>주요 사용 사례</strong>: Red25519는 key blinding(키 블라인딩: 공개키를 눈가림하여 연관성을 숨기는 기법)이 필요한 암호화된 LeaseSet2 기능에 주로 사용됩니다. 암호화된 leaseset 요구사항이 없는 표준 목적지의 경우, 더 넓은 호환성과 더 오래 검증된 이력 때문에 Ed25519(서명 유형 7)가 여전히 권장되는 선택입니다.</p>
+<h2 id="구현-참고-사항">구현 참고 사항</h2>
+<p>Red25519는 I2P Java router의 <code>net.i2p.crypto.eddsa.RedDSAEngine</code>에 구현되어 있으며, str4d(Jack Grigg)이 만든 ed25519-java 라이브러리를 Maven 의존성 <code>net.i2p.crypto:eddsa</code>(버전 0.1.0부터 0.3.0까지)로 사용합니다.</p>
+<p>i2pd C++ 구현은 암호화된 LeaseSet 게시를 위해 Red25519(서명 알고리즘의 한 종류) (signaturetype=11)도 지원합니다.</p>
+<p>i2pd용 구성 예제:</p>
+<pre tabindex="0"><code>signaturetype=11
+i2cp.leaseSetType=5
+</code></pre><p><strong>Encrypted LeaseSet2 호환성</strong>: Encrypted LeaseSet 명세에 따르면 블라인드가 해제된 destination(목적지 식별자)의 서명 공개키는 Ed25519(서명 유형 7) 또는 Red25519(서명 유형 11)여야 합니다. 암호화된 LeaseSet 기능에는 이외의 서명 유형은 지원되지 않습니다.</p>
+<h2 id="테스트-벡터">테스트 벡터</h2>
+<p>다음 테스트 벡터는 구현 검증을 위해 제공됩니다. 각 벡터에는 다음이 포함됩니다:</p>
+<ul>
+<li><code>edsk</code>: Ed25519 개인 키(무작위)</li>
+<li><code>edpk</code>: edsk에 대응하는 Ed25519 공개 키</li>
+<li><code>sk</code>: CONVERT_ED25519_PRIVATE(edsk)</li>
+<li><code>vk</code>: CONVERT_ED25519_PUBLIC(edpk)</li>
+<li><code>msg</code>: 서명할 메시지</li>
+<li><code>sig</code>: SIGN(sk, msg)</li>
+<li><code>alpha</code>: GENERATE_RANDOM()</li>
+<li><code>rsk</code>: RANDOMIZE_PRIVATE(sk, alpha)</li>
+<li><code>rvk</code>: RANDOMIZE_PUBLIC(vk, alpha)</li>
+<li><code>rsig</code>: SIGN(rsk, msg)</li>
+</ul>
+<p><strong>구현 참고</strong>: 이 테스트 벡터는 지속적인 검증을 위해 자동화된 단위 테스트 스위트에 통합되어야 합니다. 구현자는 모든 변환, 서명, 그리고 re-randomization(재무작위화) 작업이 이러한 기대값과 일치하는지 확인해야 합니다.</p>
+<h3 id="테스트-벡터-1">테스트 벡터 1</h3>
+<pre tabindex="0"><code>edsk:  0101010101010101010101010101010101010101010101010101010101010101
+edpk:  8a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c
+sk:    58e86efb75fa4e2c410f46e16de9f6acae1a1703528651b69bc176c088bef36e
+vk:    8a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c
+msg:   0202020202020202020202020202020202020202020202020202020202020202
+sig:   61f5527f4d3b46de4b2c234390370bf715ae9098907a0d191ba1b44b23a8ac1a
+       6a40437a5294e9503faaf9bd2b7f2fe7ba44dec487b3185aba7ff7d7a17cd40f
+alpha: ae9ba9cbbc047c442448fca7c9f4e288a202ed520bfad0c784b792b7773cee08
+rsk:   8bb85f3c7a494a08890d7d142109c1a3501d04565d80227e2079097800fbe107
+rvk:   6fe128737b8e76fa66698a748b0dc0a89168dd8a0601c2b1c0b26835d323e9b3
+rsig:  533053074d3b44f08723aab988ede9880a001b7a684d4a98f2d1b88fabee07a5
+       b5c9430c69a690321e0cb8365d7aeb6688bcbad2c0780e0c69e8a1b4a45f3001
+</code></pre><h3 id="테스트-벡터-2">테스트 벡터 2</h3>
+<pre tabindex="0"><code>edsk:  0202020202020202020202020202020202020202020202020202020202020202
+edpk:  8139770ea87d175f56a35466c34c7ecccb8d8a91b4ee37a25df60f5b8fc9b394
+sk:    a83c626bc9c38c8c201878ebb1d5b0b50ac40e8986c78793db1d4ef369fca14e
+vk:    8139770ea87d175f56a35466c34c7ecccb8d8a91b4ee37a25df60f5b8fc9b394
+msg:   0303030303030303030303030303030303030303030303030303030303030303
+sig:   0829e58eb5399870f009bd1f0270264e556424bda7a93fbcec99f6d9d75db46d
+       5c3cb546d9947ca7c1200876c8775a90c357a2aef3d2f16388242ee1914b1a0a
+alpha: 98b615d9027e996cc2796c019d9c8beb46aa7d2b6eea2e5d98eb29eb1584c203
+rsk:   9fcfaa734852ca40b3810ebef590e138516e8cb4f4b1b6f0730978de7f806402
+rvk:   527e121090158419609e4a0d8de6f7d3271b353a8cd0b8172fe41468ea1e9177
+rsig:  9a6961f35ed264a946cd6214b2326a6e6caa426c2a61bc14367fd278e0b5fb51
+       3ac065a69210a457f17d12ba8a496cfd835002691affa8efcdecae48135c090f
+</code></pre><p><strong>참고</strong>: 추가 테스트 벡터 3-10은 동일한 형식을 따르며 레퍼런스 구현에서 확인할 수 있습니다.</p>
+<h2 id="참고자료">참고자료</h2>
+<ul>
+<li><a href="../../../../ko/proposals/123-new-netdb-entries/">제안 123: 새로운 netDB 항목</a>
+ - 일부는 0.9.38, 0.9.39 및 이후 릴리스에 구현되어 배포됨</li>
+<li><a href="https://zips.z.cash/protocol/protocol.pdf">Zcash 프로토콜 명세, 5.4.6절: RedDSA(디지털 서명 체계), RedJubjub, 및 RedPallas</a>
+ - RedDSA는 Zcash 프로토콜 명세의 일부로 정의됨; NCC Group에서 보안 감사(2019년 1월)</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc8032.html">RFC 8032: 에드워즈 곡선 디지털 서명 알고리즘 (EdDSA)</a>
+</li>
+<li><a href="../../../../ko/proposals/148-eddsa-blake2b-ed25519/">제안 148: RedDSA-BLAKE2b-Ed25519</a>
+ - 제안되었으나 아직 구현되지 않음; 향후 BLAKE2b-512로의 마이그레이션을 제안</li>
+<li><a href="../../../../ko/docs/specs/encryptedleaseset/">암호화된 LeaseSet 명세</a>
+</li>
+<li><a href="../../../../ko/docs/specs/cryptography/">저수준 암호화 명세</a>
+</li>
+</ul>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../ko/docs/specs/configuration/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">Router 설정</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../ko/docs/specs/ntcp2/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">NTCP2 전송</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/ko/docs/specs/red25519.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">I2P 뉴스 받기:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="이메일을 입력하세요" required>
+                            <button type="submit">구독하기</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>빠른 링크</h3>
+                <ul>
+                    <li><a href="../../../../ko/financial-support/">기부하기</a></li>
+                    <li><a href="../../../../ko/docs/overview/intro/">I2P 소개</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>커뮤니티</h3>
+                <ul>
+                    <li><a href="../../../../ko/get-involved/">참여하기</a></li>
+                    <li><a href="../../../../ko/blog/">블로그</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">공식 포럼</a></li>
+                    <li><a href="../../../../ko/contact/">연락처</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>리소스</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P 메트릭</a></li>
+                    <li><a href="../../../../ko/papers/">연구</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">스톰이클라우드</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Invisible Internet Project. Creative Commons 라이선스 적용.</p>
+            <div class="footer-links">
+                <a href="../../../../ko/privacy/">개인정보 처리방침</a>
+                <a href="../../../../ko/terms/">이용 약관</a>
+                <a href="../../../../ko/about/media/">언론</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="닫기">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>커뮤니티 설문 조사</h2>
+            <p class="modal-subtitle">귀하의 의견을 듣고 싶습니다</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                귀하의 투표는 I2P의 미래를 형성하는 데 도움이 됩니다.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

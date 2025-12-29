@@ -1,0 +1,2579 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Transport NTCP2 | I2P - Projekt neviditelného internetu</title>
+
+    <meta name="description" content="TCP transport založený na Noise (kryptografickém protokolu Noise) pro spojení router-to-router">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Transport NTCP2 | I2P - Projekt neviditelného internetu">
+    <meta property="og:description" content="TCP transport založený na Noise (kryptografickém protokolu Noise) pro spojení router-to-router">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/cs/docs/specs/ntcp2/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P Beta stránky jsou nyní spuštěny. Problémy s e-mailem hlaste na stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Zavřít banner" title="Zavřít banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../cs/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../cs/about/" class="">O aplikaci</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../cs/about/">Přehled</a></li>
+                            <li><a href="../../../../cs/papers/">Výzkumné práce</a></li>
+                            <li><a href="../../../../cs/about/media/">Pro média</a></li>
+                            <li><a href="../../../../cs/contact/">Kontaktujte nás</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../cs/docs/" class="active">Dokumentace</a></li>
+                    <li><a href="../../../../cs/downloads/" class="">Ke stažení</a></li>
+                    <li><a href="../../../../cs/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../cs/get-involved/" class="">Zapojte se</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../cs/get-involved/">Přehled</a></li>
+                            <li><a href="../../../../cs/feedback/">Návrhy funkcí</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">cs</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/ntcp2/"
+                                class="lang-option">Angličtina</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/ntcp2/"
+                                class="lang-option">Španělština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/ntcp2/"
+                                class="lang-option">Korejština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/ntcp2/"
+                                class="lang-option">Čínština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/ntcp2/"
+                                class="lang-option">Ruština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/ntcp2/"
+                                class="lang-option active">Čeština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/ntcp2/"
+                                class="lang-option">Němčina</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/ntcp2/"
+                                class="lang-option">Francouzština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/ntcp2/"
+                                class="lang-option">Turečtina</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/ntcp2/"
+                                class="lang-option">Vietnamština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/ntcp2/"
+                                class="lang-option">Hindština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/ntcp2/"
+                                class="lang-option">Arabština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/ntcp2/"
+                                class="lang-option">Portugalština</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../cs/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../cs/downloads/" class="btn btn-primary">Získat I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#přehled">Přehled</a></li>
+    <li><a href="#rámec-protokolu-noise">Rámec protokolu Noise</a>
+      <ul>
+        <li><a href="#rozšíření-specifická-pro-i2p">Rozšíření specifická pro I2P</a></li>
+      </ul>
+    </li>
+    <li><a href="#postup-navázání-spojení">Postup navázání spojení</a>
+      <ul>
+        <li><a href="#třízprávový-handshake">Třízprávový handshake</a></li>
+        <li><a href="#vzory-zpráv-noise-kryptografický-rámec">Vzory zpráv Noise (kryptografický rámec)</a></li>
+      </ul>
+    </li>
+    <li><a href="#specifikace-zpráv">Specifikace zpráv</a>
+      <ul>
+        <li><a href="#notace-klíčů">Notace klíčů</a></li>
+        <li><a href="#autentizované-šifrování-chacha20-poly1305">Autentizované šifrování (ChaCha20-Poly1305)</a></li>
+      </ul>
+    </li>
+    <li><a href="#zpráva-1-sessionrequest-žádost-o-relaci">Zpráva 1: SessionRequest (žádost o relaci)</a>
+      <ul>
+        <li><a href="#surový-formát">Surový formát</a></li>
+        <li><a href="#dešifrovaný-obsah">Dešifrovaný obsah</a></li>
+        <li><a href="#blok-voleb-16-bajtů-big-endian-uspořádání-s-nejvýznamnějším-bajtem-jako-prvním">Blok voleb (16 bajtů, big-endian (uspořádání s nejvýznamnějším bajtem jako prvním))</a></li>
+        <li><a href="#funkce-pro-odvozování-klíčů-kdf-1">Funkce pro odvozování klíčů (KDF-1)</a></li>
+        <li><a href="#poznámky-k-implementaci">Poznámky k implementaci</a></li>
+      </ul>
+    </li>
+    <li><a href="#zpráva-2-sessioncreated">Zpráva 2: SessionCreated</a>
+      <ul>
+        <li><a href="#surový-formát-1">Surový formát</a></li>
+        <li><a href="#dešifrovaný-obsah-1">Dešifrovaný obsah</a></li>
+        <li><a href="#blok-možností-16-bajtů-big-endian-nejvýznamnější-bajt-první">Blok možností (16 bajtů, big-endian (nejvýznamnější bajt první))</a></li>
+        <li><a href="#funkce-pro-odvození-klíče-kdf-2">Funkce pro odvození klíče (KDF-2)</a></li>
+        <li><a href="#poznámky-k-implementaci-1">Poznámky k implementaci</a></li>
+      </ul>
+    </li>
+    <li><a href="#zpráva-3-sessionconfirmed">Zpráva 3: SessionConfirmed</a>
+      <ul>
+        <li><a href="#dvoudílná-struktura">Dvoudílná struktura</a></li>
+        <li><a href="#surový-formát-2">Surový formát</a></li>
+        <li><a href="#dešifrovaný-obsah-2">Dešifrovaný obsah</a></li>
+        <li><a href="#funkce-pro-odvozování-klíčů-kdf-3">Funkce pro odvozování klíčů (KDF-3)</a></li>
+        <li><a href="#poznámky-k-implementaci-2">Poznámky k implementaci</a></li>
+      </ul>
+    </li>
+    <li><a href="#datová-fáze">Datová fáze</a>
+      <ul>
+        <li><a href="#funkce-odvození-klíče-datová-fáze">Funkce odvození klíče (datová fáze)</a></li>
+        <li><a href="#struktura-rámce">Struktura rámce</a></li>
+        <li><a href="#maskování-délky-pomocí-siphash">Maskování délky pomocí SipHash</a></li>
+        <li><a href="#formát-bloku">Formát bloku</a></li>
+        <li><a href="#typy-bloků">Typy bloků</a></li>
+        <li><a href="#typ-bloku-0-datum-a-čas">Typ bloku 0: Datum a čas</a></li>
+        <li><a href="#typ-bloku-1-možnosti">Typ bloku 1: Možnosti</a></li>
+        <li><a href="#typ-bloku-2-routerinfo">Typ bloku 2: RouterInfo</a></li>
+        <li><a href="#typ-bloku-3-zpráva-i2np">Typ bloku 3: zpráva I2NP</a></li>
+        <li><a href="#typ-bloku-4-ukončení">Typ bloku 4: Ukončení</a></li>
+        <li><a href="#typ-bloku-254-vycpávka">Typ bloku 254: Vycpávka</a></li>
+      </ul>
+    </li>
+    <li><a href="#ošetření-chyb-aead">Ošetření chyb AEAD</a>
+      <ul>
+        <li><a href="#fáze-navázání-spojení-zprávy-13">Fáze navázání spojení (zprávy 1–3)</a></li>
+        <li><a href="#datová-fáze-1">Datová fáze</a></li>
+      </ul>
+    </li>
+    <li><a href="#publikované-routerinfo">Publikované RouterInfo</a>
+      <ul>
+        <li><a href="#formát-adresy-pro-router">Formát adresy pro Router</a></li>
+        <li><a href="#povinné-volby">Povinné volby</a></li>
+        <li><a href="#příklady-záznamů-routeraddress">Příklady záznamů RouterAddress</a></li>
+        <li><a href="#nezveřejněná-adresa-ntcp2">Nezveřejněná adresa NTCP2</a></li>
+        <li><a href="#rotace-veřejného-klíče-a-iv-inicializačního-vektoru">Rotace veřejného klíče a IV (inicializačního vektoru)</a></li>
+      </ul>
+    </li>
+    <li><a href="#detekce-verze">Detekce verze</a></li>
+    <li><a href="#pokyny-pro-časovou-odchylku">Pokyny pro časovou odchylku</a>
+      <ul>
+        <li><a href="#zpracování-na-straně-boba-zpráva-1">Zpracování na straně Boba (Zpráva 1)</a></li>
+        <li><a href="#zpracování-u-alice-zpráva-2">Zpracování u Alice (Zpráva 2)</a></li>
+        <li><a href="#bobovo-zpracování-zpráva-3">Bobovo zpracování (Zpráva 3)</a></li>
+        <li><a href="#synchronizace-času">Synchronizace času</a></li>
+      </ul>
+    </li>
+    <li><a href="#bezpečnostní-vlastnosti">Bezpečnostní vlastnosti</a>
+      <ul>
+        <li><a href="#dopředné-utajení">Dopředné utajení</a></li>
+        <li><a href="#autentizace">Autentizace</a></li>
+        <li><a href="#odolnost-vůči-analýze-provozu">Odolnost vůči analýze provozu</a></li>
+        <li><a href="#zmírnění-útoků-typu-dos">Zmírnění útoků typu DoS</a></li>
+        <li><a href="#kryptografické-zabezpečení">Kryptografické zabezpečení</a></li>
+      </ul>
+    </li>
+    <li><a href="#reference">Reference</a>
+      <ul>
+        <li><a href="#hlavní-specifikace">Hlavní specifikace</a></li>
+        <li><a href="#kryptografické-standardy">Kryptografické standardy</a></li>
+        <li><a href="#související-specifikace-i2p">Související specifikace I2P</a></li>
+        <li><a href="#implementační-odkazy">Implementační odkazy</a></li>
+        <li><a href="#historické-souvislosti">Historické souvislosti</a></li>
+      </ul>
+    </li>
+    <li><a href="#pokyny-k-implementaci">Pokyny k implementaci</a>
+      <ul>
+        <li><a href="#povinné-požadavky">Povinné požadavky</a></li>
+        <li><a href="#doporučené-postupy">Doporučené postupy</a></li>
+        <li><a href="#častá-úskalí">Častá úskalí</a></li>
+        <li><a href="#metodika-testování">Metodika testování</a></li>
+        <li><a href="#přechod-z-ntcp">Přechod z NTCP</a></li>
+      </ul>
+    </li>
+    <li><a href="#příloha-a-noise-xk-pattern-vzor-xk-protokolu-noise">Příloha A: Noise XK Pattern (vzor XK protokolu Noise)</a></li>
+    <li><a href="#příloha-b-kódování-base64">Příloha B: Kódování Base64</a></li>
+    <li><a href="#příloha-c-analýza-zachycených-paketů">Příloha C: Analýza zachycených paketů</a></li>
+    <li><a href="#příloha-d-historie-verzí">Příloha D: Historie verzí</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../cs/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../cs/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../cs/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Transport NTCP2</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Tento překlad byl vytvořen pomocí strojového učení a nemusí být 100% přesný.</span>
+    
+    
+    <a href="../../../../en/docs/specs/ntcp2/" class="disclaimer-link">Zobrazit anglickou verzi</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Transport NTCP2</h1>
+                    
+                        <p class="article-description">TCP transport založený na Noise (kryptografickém protokolu Noise) pro spojení router-to-router</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 0.9.66
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="přehled">Přehled</h2>
+<p>NTCP2 nahrazuje původní transport NTCP handshakem založeným na Noise (kryptografickém rámci pro handshake), který odolává rozpoznávání provozu podle otisků, šifruje délková pole a podporuje moderní sady šifer. Routery mohou provozovat NTCP2 vedle SSU2 jako dva povinné transportní protokoly v síti I2P. NTCP (verze 1) byl v 0.9.40 (květen 2019) označen jako zastaralý a v 0.9.50 (květen 2021) zcela odstraněn.</p>
+<h2 id="rámec-protokolu-noise">Rámec protokolu Noise</h2>
+<p>NTCP2 používá Noise Protocol Framework (rámec protokolu Noise) <a href="https://noiseprotocol.org/noise.html">Revize 33, 2017-10-04</a>
+ s rozšířeními specifickými pro I2P:</p>
+<ul>
+<li><strong>Vzor</strong>: <code>Noise_XK_25519_ChaChaPoly_SHA256</code></li>
+<li><strong>Rozšířený identifikátor</strong>: <code>Noise_XKaesobfse+hs2+hs3_25519_ChaChaPoly_SHA256</code> (pro inicializaci KDF)</li>
+<li><strong>Funkce DH</strong>: X25519 (RFC 7748) - 32bajtové klíče, kódování little-endian</li>
+<li><strong>Šifra</strong>: AEAD_CHACHA20_POLY1305 (RFC 7539/RFC 8439)
+<ul>
+<li>12bajtový nonce (jednorázová hodnota): první 4 bajty jsou nula, posledních 8 bajtů je čítač (little-endian)</li>
+<li>Maximální hodnota nonce: 2^64 - 2 (spojení se musí ukončit před dosažením 2^64 - 1)</li>
+</ul>
+</li>
+<li><strong>Hašovací funkce</strong>: SHA-256 (32bajtový výstup)</li>
+<li><strong>MAC</strong>: Poly1305 (16bajtový autentizační tag)</li>
+</ul>
+<h3 id="rozšíření-specifická-pro-i2p">Rozšíření specifická pro I2P</h3>
+<ol>
+<li><strong>Obfuskace AES</strong>: Efemerní klíče šifrované pomocí AES-256-CBC s využitím hashe routeru Boba a publikovaného IV (inicializačního vektoru)</li>
+<li><strong>Náhodný padding</strong>: Padding v otevřeném textu ve zprávách 1-2 (autentizovaný), padding AEAD (ověřené šifrování s připojenými daty) ve zprávách 3+ (šifrovaný)</li>
+<li><strong>Zakrytí délky pomocí SipHash-2-4</strong>: Dvoubajtové délky rámců jsou XORovány s výstupem SipHash</li>
+<li><strong>Struktura rámců</strong>: Rámce s délkovým prefixem pro datovou fázi (kompatibilita se streamováním přes TCP)</li>
+<li><strong>Blokově strukturovaná uživatelská data</strong>: Strukturovaný datový formát s typovanými bloky</li>
+</ol>
+<h2 id="postup-navázání-spojení">Postup navázání spojení</h2>
+<pre tabindex="0"><code>Alice (Initiator)             Bob (Responder)
+SessionRequest  ──────────────────────►
+                ◄────────────────────── SessionCreated
+SessionConfirmed ──────────────────────►
+</code></pre><h3 id="třízprávový-handshake">Třízprávový handshake</h3>
+<ol>
+<li><strong>SessionRequest</strong> - Aličin zamaskovaný efemérní klíč, volby, nápovědy k paddingu (vycpávce)</li>
+<li><strong>SessionCreated</strong> - Bobův zamaskovaný efemérní klíč, šifrované volby, padding</li>
+<li><strong>SessionConfirmed</strong> - Aličin šifrovaný statický klíč a RouterInfo (dva AEAD rámce; ověřené šifrování s přidruženými daty)</li>
+</ol>
+<h3 id="vzory-zpráv-noise-kryptografický-rámec">Vzory zpráv Noise (kryptografický rámec)</h3>
+<pre tabindex="0"><code>XK(s, rs):           Authentication   Confidentiality
+  &lt;- s               (Bob&#39;s static key known in advance)
+  -&gt; e, es                  0                2
+  &lt;- e, ee                  2                1
+  -&gt; s, se                  2                5
+  &lt;-                        2                5
+</code></pre><p><strong>Úrovně autentizace:</strong> - 0: Bez autentizace (mohl to poslat kdokoli) - 2: Autentizace odesílatele odolná vůči útoku typu key-compromise impersonation (KCI, podvržení po kompromitaci klíče)</p>
+<p><strong>Úrovně důvěrnosti:</strong> - 1: Efemérní příjemce (dopředné utajení, bez autentizace příjemce) - 2: Známý příjemce, dopředné utajení pouze při kompromitaci odesílatele - 5: Silné dopředné utajení (efemérní-efemérní + efemérní-statický DH)</p>
+<h2 id="specifikace-zpráv">Specifikace zpráv</h2>
+<h3 id="notace-klíčů">Notace klíčů</h3>
+<ul>
+<li><code>RH_A</code> = Router Hash pro Alici (32 bajtů, SHA-256)</li>
+<li><code>RH_B</code> = Router Hash pro Boba (32 bajtů, SHA-256)</li>
+<li><code>||</code> = operátor zřetězení</li>
+<li><code>byte(n)</code> = jeden bajt s hodnotou n</li>
+<li>Všechny vícebajtové celočíselné hodnoty jsou <strong>big-endian</strong> (pořadí bajtů od nejvýznamnějšího), není-li uvedeno jinak</li>
+<li>Klíče X25519 jsou <strong>little-endian</strong> (pořadí bajtů od nejméně významného) (32 bajtů)</li>
+</ul>
+<h3 id="autentizované-šifrování-chacha20-poly1305">Autentizované šifrování (ChaCha20-Poly1305)</h3>
+<p><strong>Šifrovací funkce:</strong></p>
+<pre tabindex="0"><code>AEAD_ChaCha20_Poly1305(key, nonce, associatedData, plaintext)
+  → (ciphertext || MAC)
+</code></pre><p><strong>Parametry:</strong> - <code>key</code>: 32bajtový šifrovací klíč z KDF - <code>nonce</code>: 12 bajtů (4 nulové bajty + 8bajtový čítač, little-endian (nejméně významný bajt první)) - <code>associatedData</code>: 32bajtový hash ve fázi handshake; ve fázi dat nulové délky - <code>plaintext</code>: Data k zašifrování (0+ bajtů)</p>
+<p><strong>Výstup:</strong> - Šifrotext: Stejná délka jako otevřený text - MAC: 16 bajtů (autentizační tag Poly1305)</p>
+<p><strong>Správa nonce:</strong> - Čítač začíná na 0 u každé instance šifry - Zvyšuje se pro každou operaci AEAD v daném směru - Samostatné čítače pro Alice→Bob a Bob→Alice v datové fázi - Spojení se musí ukončit dříve, než čítač dosáhne 2^64 - 1</p>
+<h2 id="zpráva-1-sessionrequest-žádost-o-relaci">Zpráva 1: SessionRequest (žádost o relaci)</h2>
+<p>Alice navazuje spojení s Bobem.</p>
+<p><strong>Operace Noise</strong>: <code>e, es</code> (generování a výměna efemérních klíčů)</p>
+<h3 id="surový-formát">Surový formát</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    AES-256-CBC Encrypted X (32B)      +
+|    Key: RH_B, IV: Bob&#39;s published IV  |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame (48 bytes)        +
+|    Plaintext: 32B (X + options)       |
++    k from KDF-1, n=0, ad=h            +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
++    Length specified in options         +
+|    0 to 65535 - 80 bytes              |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Omezení velikosti:</strong> - Minimum: 80 bajtů (32 AES + 48 AEAD) - Maximum: celkem 65535 bajtů - <strong>Zvláštní případ</strong>: Max 287 bajtů při připojení k adresám &ldquo;NTCP&rdquo; (detekce verze)</p>
+<h3 id="dešifrovaný-obsah">Dešifrovaný obsah</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    X (Alice ephemeral public key)     +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|           Options Block               |
++             (16 bytes)                +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="blok-voleb-16-bajtů-big-endian-uspořádání-s-nejvýznamnějším-bajtem-jako-prvním">Blok voleb (16 bajtů, big-endian (uspořádání s nejvýznamnějším bajtem jako prvním))</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| id | ver|  padLen | m3p2len | Rsvd(0) |
++----+----+----+----+----+----+----+----+
+|        tsA        |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+
+id      : 1 byte  - Network ID (2 for mainnet, 16-254 for testnets)
+ver     : 1 byte  - Protocol version (currently 2)
+padLen  : 2 bytes - Padding length in this message (0-65455)
+m3p2len : 2 bytes - Length of SessionConfirmed part 2 frame
+Rsvd    : 2 bytes - Reserved, set to 0
+tsA     : 4 bytes - Unix timestamp (seconds since epoch)
+Reserved: 4 bytes - Reserved, set to 0
+</code></pre><p><strong>Kritická pole:</strong> - <strong>Network ID</strong> (od verze 0.9.42): Rychlé odmítnutí spojení napříč sítěmi - <strong>m3p2len</strong>: Přesná velikost části 2 zprávy 3 (musí odpovídat při odeslání)</p>
+<h3 id="funkce-pro-odvozování-klíčů-kdf-1">Funkce pro odvozování klíčů (KDF-1)</h3>
+<p><strong>Inicializace protokolu:</strong></p>
+<pre tabindex="0"><code>protocol_name = &#34;Noise_XKaesobfse+hs2+hs3_25519_ChaChaPoly_SHA256&#34;
+h = SHA256(protocol_name)
+ck = h  // Chaining key initialized to hash
+</code></pre><p><strong>Operace MixHash:</strong></p>
+<pre tabindex="0"><code>h = SHA256(h)                    // Null prologue
+h = SHA256(h || rs)              // Bob&#39;s static key (known)
+h = SHA256(h || e.pubkey)        // Alice&#39;s ephemeral key X
+// h is now the associated data for message 1 AEAD
+</code></pre><p><strong>Operace MixKey (es pattern – vzor ephemeral-static):</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Alice.ephemeral_private, Bob.static_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 1
+// ck is retained for message 2 KDF
+</code></pre><h3 id="poznámky-k-implementaci">Poznámky k implementaci</h3>
+<ol>
+<li><strong>AES obfuskace</strong>: Používá se pouze pro odolnost vůči DPI (hloubková inspekce paketů); kdokoli s Bobovým hash routeru a IV může dešifrovat X</li>
+<li><strong>Prevence replay útoků</strong>: Bob musí ukládat do cache hodnoty X (nebo jejich šifrované ekvivalenty) po dobu alespoň 2*D sekund (D = maximální odchylka hodin)</li>
+<li><strong>Validace časového razítka</strong>: Bob musí odmítnout spojení s |tsA - current_time| &gt; D (typicky D = 60 sekund)</li>
+<li><strong>Validace křivky</strong>: Bob musí ověřit, že X je platný bod X25519</li>
+<li><strong>Rychlé odmítnutí</strong>: Bob může zkontrolovat X[31] &amp; 0x80 == 0 před dešifrováním (platné klíče X25519 mají nejvyšší bit (MSB) nulový)</li>
+<li><strong>Zpracování chyb</strong>: Při jakémkoli selhání Bob ukončí spojení s TCP RST po náhodném timeoutu a náhodném přečtení bajtů</li>
+<li><strong>Bufferování</strong>: Alice musí odeslat celou zprávu (včetně vycpávky) najednou kvůli efektivitě</li>
+</ol>
+<h2 id="zpráva-2-sessioncreated">Zpráva 2: SessionCreated</h2>
+<p>Bob odpovídá Alici.</p>
+<p><strong>Operace Noise</strong>: <code>e, ee</code> (efemérní-efemérní DH)</p>
+<h3 id="surový-formát-1">Surový formát</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    AES-256-CBC Encrypted Y (32B)      +
+|    Key: RH_B, IV: AES state from msg1 |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame (48 bytes)        +
+|    Plaintext: 32B (Y + options)       |
++    k from KDF-2, n=0, ad=h            +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
++    Length specified in options         +
+|    0 to 65535 - 80 bytes              |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="dešifrovaný-obsah-1">Dešifrovaný obsah</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    Y (Bob ephemeral public key)       +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|           Options Block               |
++             (16 bytes)                +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="blok-možností-16-bajtů-big-endian-nejvýznamnější-bajt-první">Blok možností (16 bajtů, big-endian (nejvýznamnější bajt první))</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Rsvd(0) | padLen  |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+|        tsB        |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+
+Rsvd    : 2 bytes - Reserved, set to 0
+padLen  : 2 bytes - Padding length in this message
+Reserved: 10 bytes - Reserved, set to 0
+tsB     : 4 bytes - Unix timestamp (seconds since epoch)
+</code></pre><h3 id="funkce-pro-odvození-klíče-kdf-2">Funkce pro odvození klíče (KDF-2)</h3>
+<p><strong>Operace MixHash (mixovací hash):</strong></p>
+<pre tabindex="0"><code>h = SHA256(h || encrypted_payload_msg1)  // 32-byte ciphertext
+if (msg1_padding_length &gt; 0):
+    h = SHA256(h || padding_from_msg1)
+h = SHA256(h || e.pubkey)                // Bob&#39;s ephemeral key Y
+// h is now the associated data for message 2 AEAD
+</code></pre><p><strong>Operace MixKey (vzor ee):</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Bob.ephemeral_private, Alice.ephemeral_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 2
+// ck is retained for message 3 KDF
+</code></pre><p><strong>Vyčištění paměti:</strong></p>
+<pre tabindex="0"><code>// Overwrite ephemeral keys after ee DH
+Alice.ephemeral_public = zeros(32)
+Alice.ephemeral_private = zeros(32)  // Bob side
+Bob.received_ephemeral = zeros(32)    // Bob side
+</code></pre><h3 id="poznámky-k-implementaci-1">Poznámky k implementaci</h3>
+<ol>
+<li><strong>Řetězení AES</strong>: Šifrování Y používá stav AES-CBC ze zprávy 1 (neresetuje se)</li>
+<li><strong>Prevence replay (opakovaného přehrání)</strong>: Alice musí uchovávat hodnoty Y v mezipaměti alespoň po dobu 2*D sekund</li>
+<li><strong>Ověření časového razítka</strong>: Alice musí odmítnout, pokud |tsB - current_time| &gt; D</li>
+<li><strong>Ověření křivky</strong>: Alice musí ověřit, že Y je platný bod X25519</li>
+<li><strong>Zpracování chyb</strong>: Při jakémkoli selhání Alice ukončí spojení pomocí TCP RST</li>
+<li><strong>Bufferování</strong>: Bob musí vyprázdnit celou zprávu najednou</li>
+</ol>
+<h2 id="zpráva-3-sessionconfirmed">Zpráva 3: SessionConfirmed</h2>
+<p>Alice potvrdí relaci a odešle RouterInfo (metadata o routeru).</p>
+<p><strong>Operace Noise</strong>: <code>s, se</code> (zveřejnění statického klíče a staticko-efemérní DH)</p>
+<h3 id="dvoudílná-struktura">Dvoudílná struktura</h3>
+<p>Zpráva 3 se skládá ze <strong>dvou samostatných rámců AEAD (ověřené šifrování s přidruženými daty)</strong>:</p>
+<ol>
+<li><strong>Část 1</strong>: Pevný 48bajtový rámec s Aliciným zašifrovaným statickým klíčem</li>
+<li><strong>Část 2</strong>: Rámec proměnné délky obsahující RouterInfo, volby a vycpávku</li>
+</ol>
+<h3 id="surový-formát-2">Surový formát</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|    ChaChaPoly Frame 1 (48 bytes)      |
++    Plaintext: Alice static key (32B)  +
+|    k from KDF-2, n=1, ad=h            |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame 2 (variable)      +
+|    Length specified in msg1.m3p2len   |
++    k from KDF-3, n=0, ad=h            +
+|    Plaintext: RouterInfo + padding    |
++                                       +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Omezení velikosti:</strong> - Část 1: Přesně 48 bajtů (32 prostého textu + 16 MAC (Message Authentication Code, autentizační kód zprávy)) - Část 2: Délka uvedená ve zprávě 1 (pole m3p2len) - Celkové maximum: 65535 bajtů (část 1 max 48, takže část 2 max 65487)</p>
+<h3 id="dešifrovaný-obsah-2">Dešifrovaný obsah</h3>
+<p><strong>Část 1:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    S (Alice static public key)        +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Část 2:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|    Block: RouterInfo (required)       |
++    Type=2, contains Alice&#39;s RI         +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+|    Block: Options (optional)          |
++    Type=1, padding parameters          +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Block: Padding (optional)          |
++    Type=254, random data               +
+|    MUST be last block if present      |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="funkce-pro-odvozování-klíčů-kdf-3">Funkce pro odvozování klíčů (KDF-3)</h3>
+<p><strong>Část 1 (vzorec s):</strong></p>
+<pre tabindex="0"><code>h = SHA256(h || encrypted_payload_msg2)  // 32-byte ciphertext
+if (msg2_padding_length &gt; 0):
+    h = SHA256(h || padding_from_msg2)
+
+// Encrypt static key with message 2 cipher key
+ciphertext = AEAD_ChaCha20_Poly1305(k_msg2, n=1, h, Alice.static_public)
+h = SHA256(h || ciphertext)  // 48 bytes (32 + 16)
+// h is now the associated data for message 3 part 2
+</code></pre><p><strong>Část 2 (se pattern):</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Alice.static_private, Bob.ephemeral_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 3 part 2
+// ck is retained for data phase KDF
+
+ciphertext = AEAD_ChaCha20_Poly1305(k, n=0, h, payload)
+h = SHA256(h || ciphertext)
+// h is retained for SipHash KDF
+</code></pre><p><strong>Vyčištění paměti:</strong></p>
+<pre tabindex="0"><code>// Overwrite Bob&#39;s ephemeral key after se DH
+Alice.received_ephemeral = zeros(32)  // Alice side
+Bob.ephemeral_public = zeros(32)       // Bob side
+Bob.ephemeral_private = zeros(32)      // Bob side
+</code></pre><h3 id="poznámky-k-implementaci-2">Poznámky k implementaci</h3>
+<ol>
+<li><strong>Ověření RouterInfo</strong>: Bob musí ověřit podpis, časové razítko a konzistenci klíče</li>
+<li><strong>Shoda klíčů</strong>: Bob musí ověřit, že statický klíč Alice v části 1 se shoduje s klíčem v RouterInfo</li>
+<li><strong>Umístění statického klíče</strong>: Hledejte odpovídající parametr &ldquo;s&rdquo; v NTCP nebo NTCP2 RouterAddress</li>
+<li><strong>Pořadí bloků</strong>: RouterInfo musí být první, Options jako druhý (pokud je přítomen), Padding jako poslední (pokud je přítomen)</li>
+<li><strong>Plánování délky</strong>: Alice musí zajistit, aby m3p2len ve zprávě 1 přesně odpovídal délce části 2</li>
+<li><strong>Bufferování</strong>: Alice musí odeslat obě části společně jako jedno odeslání TCP</li>
+<li><strong>Volitelné řetězení</strong>: Alice může pro vyšší efektivitu okamžitě připojit rámec datové fáze</li>
+</ol>
+<h2 id="datová-fáze">Datová fáze</h2>
+<p>Po dokončení handshake všechny zprávy používají rámce AEAD (ověřené šifrování s přidruženými daty) s proměnnou délkou a s obfuskovanými poli délky.</p>
+<h3 id="funkce-odvození-klíče-datová-fáze">Funkce odvození klíče (datová fáze)</h3>
+<p><strong>Funkce Split (Noise):</strong></p>
+<pre tabindex="0"><code>// Generate transmit and receive keys
+zerolen = &#34;&#34;  // Zero-length byte array
+temp_key = HMAC-SHA256(ck, zerolen)
+
+// Alice transmits to Bob
+k_ab = HMAC-SHA256(temp_key, byte(0x01))
+
+// Bob transmits to Alice  
+k_ba = HMAC-SHA256(temp_key, k_ab || byte(0x02))
+
+// Cleanup
+ck = zeros(32)
+temp_key = zeros(32)
+</code></pre><p><strong>Odvození klíče SipHash:</strong></p>
+<pre tabindex="0"><code>// Generate additional symmetric key for SipHash
+ask_master = HMAC-SHA256(temp_key, &#34;ask&#34; || byte(0x01))
+
+// &#34;siphash&#34; is 7 bytes US-ASCII
+temp_key2 = HMAC-SHA256(ask_master, h || &#34;siphash&#34;)
+sip_master = HMAC-SHA256(temp_key2, byte(0x01))
+
+// Alice to Bob SipHash keys
+temp_key3 = HMAC-SHA256(sip_master, zerolen)
+sipkeys_ab = HMAC-SHA256(temp_key3, byte(0x01))
+sipk1_ab = sipkeys_ab[0:7]   // 8 bytes, little-endian
+sipk2_ab = sipkeys_ab[8:15]  // 8 bytes, little-endian
+sipiv_ab = sipkeys_ab[16:23] // 8 bytes, IV
+
+// Bob to Alice SipHash keys
+sipkeys_ba = HMAC-SHA256(temp_key3, sipkeys_ab || byte(0x02))
+sipk1_ba = sipkeys_ba[0:7]   // 8 bytes, little-endian
+sipk2_ba = sipkeys_ba[8:15]  // 8 bytes, little-endian
+sipiv_ba = sipkeys_ba[16:23] // 8 bytes, IV
+</code></pre><h3 id="struktura-rámce">Struktura rámce</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|Obfs Len |                             |
++----+----+    ChaChaPoly Frame         +
+|    Encrypted Block Data               |
++    k_ab (Alice→Bob) or k_ba (Bob→Alice)|
+|    Nonce starts at 0, increments      |
++    No associated data (empty string)  +
+|                                       |
+~           .   .   .                   ~
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Poly1305 MAC (16 bytes)            |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Omezení rámce:</strong> - Minimum: 18 bajtů (2 bajty zamaskované délky + 0 bajtů prostého textu + 16 bajtů MAC) - Maximum: 65537 bajtů (2 bajty zamaskované délky + rámec 65535 bajtů) - Doporučeno: pár KB na rámec (minimalizovat latenci přijímače)</p>
+<h3 id="maskování-délky-pomocí-siphash">Maskování délky pomocí SipHash</h3>
+<p><strong>Účel</strong>: Zabránit identifikaci hranic rámců pomocí DPI</p>
+<p><strong>Algoritmus:</strong></p>
+<pre tabindex="0"><code>// Initialization (per direction)
+IV[0] = sipiv  // From KDF
+
+// For each frame:
+IV[n] = SipHash-2-4(sipk1, sipk2, IV[n-1])
+Mask[n] = IV[n][0:1]  // First 2 bytes of IV
+ObfuscatedLength = ActualLength XOR Mask[n]
+
+// Send 2-byte ObfuscatedLength, then ActualLength bytes
+</code></pre><p><strong>Dekódování:</strong></p>
+<pre tabindex="0"><code>// Receiver maintains identical IV chain
+IV[n] = SipHash-2-4(sipk1, sipk2, IV[n-1])
+Mask[n] = IV[n][0:1]
+ActualLength = ObfuscatedLength XOR Mask[n]
+// Read ActualLength bytes (includes 16-byte MAC)
+</code></pre><p><strong>Poznámky:</strong> - Oddělené řetězce IV (inicializační vektor) pro každý směr (Alice→Bob a Bob→Alice) - Pokud SipHash vrací uint64, použijte nejméně významné 2 bajty jako masku - Převeďte uint64 na další IV jako bajty v pořadí little-endian</p>
+<h3 id="formát-bloku">Formát bloku</h3>
+<p>Každý rámec obsahuje nula nebo více bloků:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|Type| Length  |       Data              |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type  : 1 byte  - Block type identifier
+Length: 2 bytes - Big-endian, data size (0-65516)
+Data  : Variable length payload
+</code></pre><p><strong>Limity velikosti:</strong> - Maximální rámec: 65535 bajtů (včetně MAC) - Maximální prostor pro blok: 65519 bajtů (rámec - 16bajtové MAC) - Maximální jednotlivý blok: 65519 bajtů (3bajtová hlavička + 65516 dat)</p>
+<h3 id="typy-bloků">Typy bloků</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Name</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DateTime</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Time synchronization (4-byte timestamp)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Options</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding parameters, dummy traffic</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo delivery/flooding</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">I2NP</td><td style="border:1px solid var(--color-border); padding:0.5rem;">I2NP message with shortened header</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Termination</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Explicit connection close</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">224-253</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Experimental features</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">254</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Random padding (must be last)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">255</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Future extensions</td></tr>
+  </tbody>
+</table>
+**Pravidla řazení bloků:** - **Zpráva 3, část 2**: RouterInfo, Možnosti (volitelné), Padding (vycpávka; volitelný) - ŽÁDNÉ jiné typy - **Datová fáze**: Libovolné pořadí s výjimkou:   - Padding MUSÍ být poslední blok, pokud je přítomen   - Ukončení MUSÍ být poslední blok (kromě Padding), pokud je přítomen - Více bloků I2NP je povoleno v jednom rámci - Více bloků Padding NENÍ povoleno v jednom rámci
+<h3 id="typ-bloku-0-datum-a-čas">Typ bloku 0: Datum a čas</h3>
+<p>Synchronizace času pro detekci odchylky hodin.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+
+| 0  |    4    |     timestamp     |
++----+----+----+----+----+----+----+
+
+Type     : 0
+Length   : 4 (big-endian)
+Timestamp: 4 bytes, Unix seconds (big-endian)
+</code></pre><p><strong>Implementace</strong>: Zaokrouhlit na nejbližší sekundu, aby se zabránilo hromadění časové odchylky hodin.</p>
+<h3 id="typ-bloku-1-možnosti">Typ bloku 1: Možnosti</h3>
+<p>Parametry paddingu (vycpávání/výplň dat) a tvarování provozu.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 1  |  size   |tmin|tmax|rmin|rmax|tdmy|
++----+----+----+----+----+----+----+----+
+|tdmy|  rdmy   |  tdelay |  rdelay |    |
++----+----+----+----+----+----+----+    +
+|         more_options (TBD)            |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type  : 1
+Length: 12+ bytes (big-endian)
+</code></pre><p><strong>Poměry výplně</strong> (4.4 číslo s pevnou řádovou čárkou, hodnota/16.0): - <code>tmin</code>: Minimální poměr výplně pro odesílání (0.0 - 15.9375) - <code>tmax</code>: Maximální poměr výplně pro odesílání (0.0 - 15.9375) - <code>rmin</code>: Minimální poměr výplně pro příjem (0.0 - 15.9375) - <code>rmax</code>: Maximální poměr výplně pro příjem (0.0 - 15.9375)</p>
+<p><strong>Příklady:</strong> - 0x00 = 0% výplně - 0x01 = 6.25% výplně - 0x10 = 100% výplně (poměr 1:1) - 0x80 = 800% výplně (poměr 8:1)</p>
+<p><strong>Falešný provoz:</strong> - <code>tdmy</code>: Maximální objem, který je ochoten odesílat (2 bajty, průměr v bajtech/s) - <code>rdmy</code>: Požadovaný příjem (2 bajty, průměr v bajtech/s)</p>
+<p><strong>Vkládání zpoždění:</strong> - <code>tdelay</code>: Max. zpoždění ochotné k vložení (2 bajty, průměr v milisekundách) - <code>rdelay</code>: Požadované zpoždění (2 bajty, průměr v milisekundách)</p>
+<p><strong>Pokyny:</strong> - Minimální hodnoty označují požadovanou odolnost vůči analýze provozu - Maximální hodnoty označují omezení šířky pásma - Odesílatel by měl respektovat maximální hodnotu příjemce - Odesílatel může respektovat minimální hodnotu příjemce v rámci omezení - Žádný mechanismus vynucování; implementace se mohou lišit</p>
+<h3 id="typ-bloku-2-routerinfo">Typ bloku 2: RouterInfo</h3>
+<p>Doručování RouterInfo pro naplnění a zaplavování netdb.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 2  |  size   |flg |    RouterInfo     |
++----+----+----+----+                   +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type : 2
+Length: Flag (1 byte) + RouterInfo size
+Flag : Bit 0 = flood request (1) or local store (0)
+       Bits 1-7 = Reserved, set to 0
+</code></pre><p><strong>Použití:</strong></p>
+<p><strong>V Message 3 Part 2</strong> (handshake): - Alice pošle svůj RouterInfo Bobovi - Flood bit obvykle 0 (lokální uložení) - RouterInfo NENÍ komprimován pomocí gzipu</p>
+<p><strong>Ve fázi dat:</strong> - Každá ze stran může odeslat svůj aktualizovaný RouterInfo - Bit Flood = 1: Vyžádat distribuci přes floodfill (pokud je příjemce floodfill) - Bit Flood = 0: Pouze místní uložení do netdb</p>
+<p><strong>Požadavky na ověřování:</strong> 1. Ověřte, že typ podpisu je podporován 2. Ověřte podpis RouterInfo 3. Ověřte, že časové razítko je v přijatelných mezích 4. Pro handshake: Ověřte, že statický klíč odpovídá parametru &ldquo;s&rdquo; v adrese NTCP2 5. Pro datovou fázi: Ověřte, že router hash odpovídá protějšku relace 6. Floodujte (zaplavujte) pouze RouterInfos s publikovanými adresami</p>
+<p><strong>Poznámky:</strong> - Žádný mechanismus ACK (v případě potřeby použijte I2NP DatabaseStore s reply tokenem) - Může obsahovat RouterInfos třetích stran (při použití floodfill) - NENÍ komprimováno pomocí gzip (na rozdíl od I2NP DatabaseStore)</p>
+<h3 id="typ-bloku-3-zpráva-i2np">Typ bloku 3: zpráva I2NP</h3>
+<p>Zpráva I2NP se zkrácenou hlavičkou o délce 9 bajtů.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 3  |  size   |type|    msg_id         |
++----+----+----+----+----+----+----+----+
+|   expiration  |     I2NP payload      |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type      : 3
+Length    : 9 + payload_size (big-endian)
+Type      : 1 byte, I2NP message type
+Msg_ID    : 4 bytes, big-endian, I2NP message ID
+Expiration: 4 bytes, big-endian, Unix timestamp (seconds)
+Payload   : I2NP message body (length = size - 9)
+</code></pre><p><strong>Rozdíly oproti NTCP1:</strong> - Expirace: 4 bajty (sekundy) vs 8 bajtů (milisekundy) - Délka: vynecháno (odvoditelné z délky bloku) - Kontrolní součet: vynecháno (AEAD zajišťuje integritu) - Hlavička: 9 bajtů vs 16 bajtů (snížení o 44 %)</p>
+<p><strong>Fragmentace:</strong> - Zprávy I2NP NESMÍ být fragmentovány napříč bloky - Zprávy I2NP NESMÍ být fragmentovány napříč rámci - Více bloků I2NP je povoleno v jednom rámci</p>
+<h3 id="typ-bloku-4-ukončení">Typ bloku 4: Ukončení</h3>
+<p>Explicitní ukončení spojení s kódem důvodu.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 4  |  size   |  valid_frames_recv    |
++----+----+----+----+----+----+----+----+
+| (continued) |rsn |   additional_data   |
++----+----+----+----+                   +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type            : 4
+Length          : 9+ bytes (big-endian)
+Valid_Frames_Recv: 8 bytes, big-endian (receive nonce value)
+                  0 if error in handshake phase
+Reason          : 1 byte (see table below)
+Additional_Data : Optional (format unspecified, for debugging)
+</code></pre><p><strong>Kódy důvodů:</strong></p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Code</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Reason</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Phase</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Normal close / unspecified</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Termination received</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Idle timeout</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Router shutdown</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data phase AEAD failure</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">5</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Incompatible options</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">6</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Incompatible signature type</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">7</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Clock skew</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">8</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding violation</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">9</td><td style="border:1px solid var(--color-border); padding:0.5rem;">AEAD framing error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Payload format error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">11</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 1 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 2 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">13</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 3 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">14</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Intra-frame read timeout</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">15</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo signature verification fail</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">16</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Static key parameter mismatch</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">17</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Banned</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+  </tbody>
+</table>
+**Pravidla:** - Ukončení MUSÍ být v rámci posledním nevyplňovacím blokem - Maximálně jeden ukončovací blok na rámec - Odesílatel by měl po odeslání uzavřít spojení - Příjemce by měl po přijetí uzavřít spojení
+<p><strong>Zpracování chyb:</strong> - Chyby handshake: Typicky uzavřít pomocí TCP RST (bez ukončovacího bloku) - Chyby AEAD (autentizované šifrování s připojenými daty) ve fázi dat: Náhodný timeout + náhodné čtení, poté odeslat ukončení - Viz sekci &ldquo;AEAD Error Handling&rdquo; pro bezpečnostní postupy</p>
+<h3 id="typ-bloku-254-vycpávka">Typ bloku 254: Vycpávka</h3>
+<p>Náhodná výplň pro odolnost vůči analýze síťového provozu.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|254 |  size   |     random_data       |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type: 254
+Length: 0-65516 bytes (big-endian)
+Data: Cryptographically random bytes
+</code></pre><p><strong>Pravidla:</strong> - Výplň MUSÍ být posledním blokem v rámci, pokud je přítomna - Výplň nulové délky je povolena - Pouze jeden blok výplně na rámec - Rámce pouze s výplní jsou povoleny - Měly by být dodrženy vyjednané parametry z Options block (blok s volbami)</p>
+<p><strong>Výplň ve zprávách 1-2:</strong> - Mimo rámec AEAD (v otevřeném textu) - Zahrnuto do hashového řetězce následující zprávy (autentizováno) - Manipulace je zjištěna, když AEAD následující zprávy selže</p>
+<p><strong>Výplň ve zprávě 3+ a v datové fázi:</strong> - Uvnitř rámce AEAD (šifrovaného a autentizovaného) - Používá se pro tvarování provozu a zastírání velikosti</p>
+<h2 id="ošetření-chyb-aead">Ošetření chyb AEAD</h2>
+<p><strong>Kritické bezpečnostní požadavky:</strong></p>
+<h3 id="fáze-navázání-spojení-zprávy-13">Fáze navázání spojení (zprávy 1–3)</h3>
+<p><strong>Známá velikost zprávy:</strong> - Velikosti zpráv jsou předem stanovené nebo určené - Selhání autentizace AEAD je jednoznačné</p>
+<p><strong>Bobova reakce na selhání zprávy 1:</strong> 1. Nastavit náhodný timeout (rozsah závislý na implementaci, doporučeno 100-500ms) 2. Přečíst náhodný počet bajtů (rozsah závislý na implementaci, doporučeno 1KB-64KB) 3. Ukončit spojení pomocí TCP RST (bez odpovědi) 4. Dočasně zablokovat zdrojovou IP 5. Sledovat opakovaná selhání pro dlouhodobé blokace</p>
+<p><strong>Reakce Alice na selhání Message 2:</strong> 1. Okamžitě ukončit spojení pomocí TCP RST 2. Neodpovídat Bobovi</p>
+<p><strong>Bobova reakce na selhání zprávy 3:</strong> 1. Okamžitě ukončit spojení pomocí TCP RST 2. Neodpovídat Alici</p>
+<h3 id="datová-fáze-1">Datová fáze</h3>
+<p><strong>Zamaskovaná velikost zprávy:</strong> - Pole délky je zamaskované pomocí SipHash - Neplatná délka nebo selhání AEAD (autentizované šifrování s přidruženými daty) může naznačovat:   - Sondování útočníkem   - Poškození sítě   - Desynchronizovaný SipHash IV (inicializační vektor)   - Škodlivý uzel</p>
+<p><strong>Reakce na chybu AEAD nebo délky:</strong> 1. Nastavte náhodný časový limit (doporučeno 100-500ms) 2. Přečtěte náhodný počet bajtů (doporučeno 1KB-64KB) 3. Odešlete ukončovací blok s kódem důvodu 4 (selhání AEAD) nebo 9 (chyba rámce) 4. Ukončete spojení</p>
+<p><strong>Prevence dešifrovacího orákula:</strong> - Nikdy neprozrazujte protistraně typ chyby před uplynutím náhodného časového limitu - Nikdy nevynechávejte ověření délky před kontrolou AEAD - S neplatnou délkou zacházejte stejně jako se selháním AEAD - Pro obě chyby používejte stejný postup obsluhy chyb</p>
+<p><strong>Úvahy k implementaci:</strong> - Některé implementace mohou po chybách AEAD (autentizované šifrování s přidruženými daty) pokračovat v provozu, pokud se vyskytují jen zřídka - Ukončit po opakovaných chybách (doporučený práh: 3-5 chyb za hodinu) - Vyvážit obnovu po chybách a bezpečnost</p>
+<h2 id="publikované-routerinfo">Publikované RouterInfo</h2>
+<h3 id="formát-adresy-pro-router">Formát adresy pro Router</h3>
+<p>Podpora NTCP2 je oznamována prostřednictvím publikovaných záznamů RouterAddress (typ záznamu adresy routeru) se specifickými volbami.</p>
+<p><strong>Styl přenosu:</strong> - <code>&quot;NTCP2&quot;</code> - NTCP2 pouze na tomto portu - <code>&quot;NTCP&quot;</code> - NTCP i NTCP2 na tomto portu (automatická detekce)   - <strong>Poznámka</strong>: podpora NTCP (v1) byla odstraněna ve verzi 0.9.50 (květen 2021)   - styl &ldquo;NTCP&rdquo; je nyní zastaralý; použijte &ldquo;NTCP2&rdquo;</p>
+<h3 id="povinné-volby">Povinné volby</h3>
+<p><strong>Všechny zveřejněné adresy NTCP2:</strong></p>
+<ol>
+<li>
+<p><strong><code>host</code></strong> - IP adresa (IPv4 nebo IPv6) nebo název hostitele</p>
+<ul>
+<li>Formát: Standardní IP zápis nebo doménové jméno</li>
+<li>Může být vynecháno u routerů pouze pro odchozí provoz nebo u skrytých routerů</li>
+</ul>
+</li>
+<li>
+<p><strong><code>port</code></strong> - číslo TCP portu</p>
+<ul>
+<li>Formát: celé číslo, 1-65535</li>
+<li>Může být vynechán u pouze odchozích nebo skrytých routerů</li>
+</ul>
+</li>
+<li>
+<p><strong><code>s</code></strong> - Statický veřejný klíč (X25519)</p>
+<ul>
+<li>Formát: kódováno v Base64, 44 znaků</li>
+<li>Kódování: abeceda I2P Base64</li>
+<li>Zdroj: veřejný klíč X25519 o délce 32 bajtů, little-endian</li>
+</ul>
+</li>
+<li>
+<p><strong><code>i</code></strong> - Inicializační vektor pro AES</p>
+<ul>
+<li>Formát: zakódováno v Base64, 24 znaků</li>
+<li>Kódování: abeceda I2P Base64</li>
+<li>Zdroj: IV o délce 16 bajtů, big-endian</li>
+</ul>
+</li>
+<li>
+<p><strong><code>v</code></strong> - Verze protokolu</p>
+<ul>
+<li>Formát: celé číslo nebo čárkou oddělená celá čísla</li>
+<li>Aktuální: <code>&quot;2&quot;</code></li>
+<li>Budoucí: <code>&quot;2,3&quot;</code> (musí být v číselném pořadí)</li>
+</ul>
+</li>
+</ol>
+<p><strong>Volitelné možnosti:</strong></p>
+<ol start="6">
+<li>
+<p><strong><code>caps</code></strong> - Schopnosti (od 0.9.50)</p>
+<ul>
+<li>Formát: řetězec znaků schopností</li>
+<li>Hodnoty:
+<ul>
+<li><code>&quot;4&quot;</code> - schopnost odchozího IPv4</li>
+<li><code>&quot;6&quot;</code> - schopnost odchozího IPv6</li>
+<li><code>&quot;46&quot;</code> - obojí, IPv4 i IPv6 (doporučené pořadí)</li>
+</ul>
+</li>
+<li>Není potřeba, pokud je <code>host</code> publikován</li>
+<li>Užitečné pro skryté/za firewallem routers</li>
+</ul>
+</li>
+<li>
+<p><strong><code>cost</code></strong> - Priorita adresy</p>
+<ul>
+<li>Formát: celé číslo, 0-255</li>
+<li>Nižší hodnoty = vyšší priorita</li>
+<li>Doporučeno: 5-10 pro běžné adresy</li>
+<li>Doporučeno: 14 pro nepublikované adresy</li>
+</ul>
+</li>
+</ol>
+<h3 id="příklady-záznamů-routeraddress">Příklady záznamů RouterAddress</h3>
+<p><strong>Zveřejněná IPv4 adresa:</strong></p>
+<pre tabindex="0"><code>&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;192.0.2.1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>Skrytý Router (pouze odchozí):</strong></p>
+<pre tabindex="0"><code>&lt;Address cost=&#34;14&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;v&gt;2&lt;/v&gt;
+    &lt;caps&gt;4&lt;/caps&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>Router s duálním stackem:</strong></p>
+<pre tabindex="0"><code>&lt;!-- IPv4 Address --&gt;
+&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;192.0.2.1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+
+&lt;!-- IPv6 Address (same keys, same port) --&gt;
+&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;2001:db8::1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>Důležitá pravidla:</strong> - Více adres NTCP2 se <strong>stejným portem</strong> MUSÍ používat <strong>shodné</strong> hodnoty <code>s</code>, <code>i</code> a <code>v</code> - Různé porty mohou používat různé klíče - Dual-stack (současná podpora IPv4 i IPv6) routers by měly zveřejňovat oddělené adresy IPv4 a IPv6</p>
+<h3 id="nezveřejněná-adresa-ntcp2">Nezveřejněná adresa NTCP2</h3>
+<p><strong>Pro pouze odchozí Routers:</strong></p>
+<p>Pokud router nepřijímá příchozí spojení NTCP2, ale zahajuje odchozí spojení, MUSÍ i tak zveřejnit RouterAddress (záznam adresy routeru) s:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;Address</span> <span style="color:#a6e22e">cost=</span><span style="color:#e6db74">&#34;14&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;transport_style&gt;</span>NTCP2<span style="color:#f92672">&lt;/transport_style&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;options&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;s&gt;</span>9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=<span style="color:#f92672">&lt;/s&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;v&gt;</span>2<span style="color:#f92672">&lt;/v&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/options&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/Address&gt;</span>
+</span></span></code></pre></div><p><strong>Účel:</strong> - Umožňuje Bobovi ověřit Aličin statický klíč během handshake (navázání spojení) - Vyžadováno pro ověření RouterInfo ve 2. části zprávy 3 - Není potřeba <code>i</code>, <code>host</code> ani <code>port</code> (pouze odchozí)</p>
+<p><strong>Alternativa:</strong> - Přidejte <code>s</code> a <code>v</code> k již zveřejněné adrese &ldquo;NTCP&rdquo; nebo SSU</p>
+<h3 id="rotace-veřejného-klíče-a-iv-inicializačního-vektoru">Rotace veřejného klíče a IV (inicializačního vektoru)</h3>
+<p><strong>Kritická bezpečnostní politika:</strong></p>
+<p><strong>Obecná pravidla:</strong> 1. <strong>Nikdy neprovádějte rotaci, když je router spuštěný</strong> 2. <strong>Trvale ukládejte klíč a IV</strong> i mezi restarty 3. <strong>Sledujte předchozí dobu výpadku</strong> pro určení, zda je rotace vhodná</p>
+<p><strong>Minimální doba nedostupnosti před rotací:</strong></p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Router Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Min Downtime</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Published NTCP2 address</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>1 month</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Many routers cache RouterInfo</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Published SSU only (no NTCP2)</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>1 day</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Moderate caching</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">No published addresses (hidden)</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>2 hours</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Minimal impact</td></tr>
+  </tbody>
+</table>
+**Další spouštěče:** - Změna lokální IP adresy: Může dojít k rotaci bez ohledu na výpadek - Router "rekey" (změna klíčů) (nový Router Hash): Vygeneruje nové klíče
+<p><strong>Odůvodnění:</strong> - Zabraňuje odhalení časů restartu prostřednictvím změn klíčů - Umožňuje, aby RouterInfos uložené v mezipaměti přirozeně vypršely - Udržuje stabilitu sítě - Snižuje počet neúspěšných pokusů o připojení</p>
+<p><strong>Implementace:</strong> 1. Uložit klíč, IV a časové razítko posledního vypnutí trvale 2. Při startu vypočítat downtime = current_time - last_shutdown 3. Pokud downtime &gt; minimum pro typ routeru, lze provést rotaci 4. Pokud se IP změnila nebo probíhá výměna klíče, lze provést rotaci 5. Jinak znovu použít předchozí klíč a IV</p>
+<p><strong>Rotace IV (inicializačního vektoru):</strong> - Řídí se totožnými pravidly jako rotace klíče - Vyskytuje se pouze u zveřejněných adres (nikoli u skrytých routerů) - Doporučuje se měnit IV vždy, když se změní klíč</p>
+<h2 id="detekce-verze">Detekce verze</h2>
+<p><strong>Kontext:</strong> Když je <code>transportStyle=&quot;NTCP&quot;</code> (zastaralé), Bob podporuje NTCP v1 i v2 na stejném portu a musí automaticky detekovat verzi protokolu.</p>
+<p><strong>Algoritmus detekce:</strong></p>
+<pre tabindex="0"><code>1. Wait for at least 64 bytes (minimum NTCP2 message 1 size)
+
+2. If received ≥ 288 bytes:
+   → Connection is NTCP version 1 (NTCP1 message 1 is 288 bytes)
+
+3. If received &lt; 288 bytes:
+   
+   Option A (conservative, pre-NTCP2 majority):
+   a. Wait additional short time (e.g., 100-500ms)
+   b. If total received ≥ 288 bytes → NTCP1
+   c. Otherwise → Attempt NTCP2 decode
+   
+   Option B (aggressive, post-NTCP2 majority):
+   a. Attempt NTCP2 decode immediately:
+      - Decrypt first 32 bytes (X key) with AES-256-CBC
+      - Verify valid X25519 point (X[31] &amp; 0x80 == 0)
+      - Verify AEAD frame
+   b. If decode succeeds → NTCP2
+   c. If decode fails → Wait for more data or NTCP1
+</code></pre><p><strong>Rychlá kontrola nejvýznamnějšího bitu (MSB):</strong> - Před dešifrováním AES ověřte: <code>encrypted_X[31] &amp; 0x80 == 0</code> - Platné klíče X25519 mají nejvyšší bit vynulovaný - Selhání pravděpodobně naznačuje NTCP1 (nebo útok) - Při selhání implementujte odolnost proti sondování (náhodný časový limit + čtení)</p>
+<p><strong>Požadavky na implementaci:</strong></p>
+<ol>
+<li>
+<p><strong>Odpovědnost Alice:</strong></p>
+<ul>
+<li>Při připojení k adrese &ldquo;NTCP&rdquo; omezte zprávu 1 na maximálně 287 bajtů</li>
+<li>Uložte do bufferu a vyprázdněte celou zprávu 1 najednou</li>
+<li>Zvyšuje pravděpodobnost doručení v jediném TCP paketu</li>
+</ul>
+</li>
+<li>
+<p><strong>Bobova odpovědnost:</strong></p>
+<ul>
+<li>Před určením verze bufferovat přijatá data</li>
+<li>Implementovat správnou obsluhu časových limitů</li>
+<li>Použít TCP_NODELAY pro rychlou detekci verze</li>
+<li>Po detekci verze nabufferovat celou zprávu 2 a odeslat ji najednou</li>
+</ul>
+</li>
+</ol>
+<p><strong>Bezpečnostní aspekty:</strong> - Útoky segmentací: Bob by měl být odolný vůči segmentaci TCP - Sondovací útoky: Při selháních implementovat náhodná zpoždění a čtení bajtů - Prevence DoS: Omezit počet souběžně čekajících spojení - Časové limity pro čtení: Jak pro každé čtení, tak celkové (ochrana proti útoku &ldquo;slowloris&rdquo;)</p>
+<h2 id="pokyny-pro-časovou-odchylku">Pokyny pro časovou odchylku</h2>
+<p><strong>Pole časových razítek:</strong> - Zpráva 1: <code>tsA</code> (časové razítko Alice) - Zpráva 2: <code>tsB</code> (časové razítko Boba) - Zpráva 3+: volitelné bloky DateTime (datum a čas)</p>
+<p><strong>Maximální odchylka (D):</strong> - Typicky: <strong>±60 sekund</strong> - Konfigurovatelné podle implementace - Odchylka &gt; D je obecně fatální</p>
+<h3 id="zpracování-na-straně-boba-zpráva-1">Zpracování na straně Boba (Zpráva 1)</h3>
+<pre tabindex="0"><code>1. Receive tsA from Alice
+2. skew = tsA - current_time
+3. If |skew| &gt; D:
+   a. Still send message 2 (allows Alice to calculate skew)
+   b. Include tsB in message 2
+   c. Do NOT initiate handshake completion
+   d. Optionally: Temporary ban Alice&#39;s IP
+   e. After message 2 sent, close connection
+
+4. If |skew| ≤ D:
+   a. Continue handshake normally
+</code></pre><p><strong>Odůvodnění:</strong> Odeslání zprávy 2 i při časové odchylce umožní Alici diagnostikovat problémy s časem.</p>
+<h3 id="zpracování-u-alice-zpráva-2">Zpracování u Alice (Zpráva 2)</h3>
+<pre tabindex="0"><code>1. Receive tsB from Bob
+2. RTT = (current_time_now - tsA_sent)
+3. adjusted_skew = (tsB - current_time_now) - (RTT / 2)
+4. If |adjusted_skew| &gt; D:
+   a. Close connection immediately
+   b. If local clock suspect: Adjust clock or use external time source
+   c. If Bob&#39;s clock suspect: Temporary ban Bob
+   d. Log for operator review
+5. If |adjusted_skew| ≤ D:
+   a. Continue handshake normally
+   b. Optionally: Track skew for time synchronization
+</code></pre><p><strong>Úprava RTT:</strong> - Odečtěte polovinu RTT od vypočtené odchylky - Zohledňuje zpoždění šíření v síti - Přesnější odhad odchylky</p>
+<h3 id="bobovo-zpracování-zpráva-3">Bobovo zpracování (Zpráva 3)</h3>
+<pre tabindex="0"><code>1. If message 3 received (unlikely if skew exceeded in message 1)
+2. Recalculate skew = tsA_received - current_time
+3. If |adjusted_skew| &gt; D:
+   a. Send termination block (reason code 7: clock skew)
+   b. Close connection
+   c. Ban Alice for period (e.g., 1-24 hours)
+</code></pre><h3 id="synchronizace-času">Synchronizace času</h3>
+<p><strong>Bloky DateTime (datová fáze):</strong> - Pravidelně odesílat blok DateTime (typ 0) - Příjemce jej může použít k seřízení hodin - Zaokrouhlit časové razítko na nejbližší sekundu (předejít zkreslení)</p>
+<p><strong>Externí zdroje času:</strong> - NTP (síťový časový protokol) - Synchronizace systémových hodin - Konsenzuální čas sítě I2P</p>
+<p><strong>Strategie úpravy hodin:</strong> - Pokud jsou místní hodiny nesprávné: Upravte systémový čas nebo použijte posun - Pokud jsou hodiny peerů trvale nesprávné: Označte problém u peera - Sledujte statistiky časové odchylky (skew) pro monitorování zdraví sítě</p>
+<h2 id="bezpečnostní-vlastnosti">Bezpečnostní vlastnosti</h2>
+<h3 id="dopředné-utajení">Dopředné utajení</h3>
+<p><strong>Dosaženo pomocí:</strong> - Efemérní výměna klíčů Diffie-Hellman (X25519) - Tři operace DH: es, ee, se (vzor Noise XK) - Efemérní klíče jsou po dokončení handshake (navázání spojení) zničeny</p>
+<p><strong>Progrese důvěrnosti:</strong> - Zpráva 1: Úroveň 2 (dopředné utajení v případě kompromitace odesílatele) - Zpráva 2: Úroveň 1 (ephemeral recipient; dočasný příjemce) - Zpráva 3+: Úroveň 5 (silné dopředné utajení)</p>
+<p><strong>Perfect Forward Secrecy (dopředné utajení):</strong> - Kompromitace dlouhodobých statických klíčů NEodhalí minulé klíče sezení - Každé sezení používá jedinečné efemérní klíče - Efemérní soukromé klíče se nikdy znovu nepoužijí - Vyčištění paměti po dohodě o klíči</p>
+<p><strong>Omezení:</strong> - Zpráva 1 je zranitelná, pokud je kompromitován Bobův statický klíč (ale zachová se forward secrecy (dopředné utajení) i při kompromitaci Alice) - Opakované útoky (replay) jsou možné pro zprávu 1 (zmírněno pomocí časového razítka a replay cache (mezipaměť proti opakování))</p>
+<h3 id="autentizace">Autentizace</h3>
+<p><strong>Vzájemná autentizace:</strong> - Alice ověřena pomocí statického klíče ve zprávě 3 - Bob ověřen na základě vlastnictví statického soukromého klíče (implicitně z úspěšného navázání spojení)</p>
+<p><strong>Odolnost vůči Key Compromise Impersonation (KCI; zneužití identity po kompromitaci klíče):</strong> - Úroveň autentizace 2 (odolné vůči KCI) - Útočník se nemůže vydávat za Alici ani se statickým soukromým klíčem Alice (bez efemérního klíče Alice) - Útočník se nemůže vydávat za Boba ani se statickým soukromým klíčem Boba (bez efemérního klíče Boba)</p>
+<p><strong>Ověření statického klíče:</strong> - Alice zná Bobův statický klíč předem (z RouterInfo) - Bob ověří, že Aličin statický klíč odpovídá RouterInfo ve zprávě 3 - Zabraňuje útokům typu man-in-the-middle</p>
+<h3 id="odolnost-vůči-analýze-provozu">Odolnost vůči analýze provozu</h3>
+<p><strong>Opatření proti DPI:</strong> 1. <strong>Obfuskace AES:</strong> Dočasné klíče jsou šifrovány, jeví se náhodně 2. <strong>Obfuskace délky pomocí SipHash:</strong> Délky rámců nejsou v prostém textu 3. <strong>Náhodná výplň (padding):</strong> Proměnlivé velikosti zpráv, žádné pevné vzory 4. <strong>Šifrované rámce:</strong> Veškerá užitečná data jsou šifrována pomocí ChaCha20</p>
+<p><strong>Prevence replay útoků (útoků přehráním):</strong> - Ověření časového razítka (±60 sekund) - Replay cache efemérních klíčů (životnost 2*D) - Inkrementace nonce (jednorázové hodnoty) brání přehrání paketů v rámci relace</p>
+<p><strong>Odolnost proti sondování:</strong> - Náhodné vypršení časového limitu při selháních AEAD (ověřené šifrování s přidruženými daty) - Náhodné čtení bajtů před uzavřením spojení - Žádné odpovědi při selhání navázání spojení - Zařazení IP adres na černou listinu při opakovaných selháních</p>
+<p><strong>Pokyny pro padding (vycpávání):</strong> - Zprávy 1-2: nešifrovaný padding (ověřený) - Zpráva 3+: šifrovaný padding uvnitř rámců AEAD - Dohodnuté parametry paddingu (blok Options) - Rámce obsahující pouze padding jsou povoleny</p>
+<h3 id="zmírnění-útoků-typu-dos">Zmírnění útoků typu DoS</h3>
+<p><strong>Limity připojení:</strong> - Maximální počet aktivních spojení (v závislosti na implementaci) - Maximální počet čekajících handshaků (např. 100-1000) - Limity připojení na IP adresu (např. 3-10 současných)</p>
+<p><strong>Ochrana prostředků:</strong> - Operace DH s omezením rychlosti (výpočetně náročné) - Časové limity pro čtení pro každý socket i celkové - Ochrana proti &ldquo;Slowloris&rdquo; (celkové časové limity) - Zařazování IP adres na černou listinu při zneužívání</p>
+<p><strong>Rychlé odmítnutí:</strong> - Neshoda ID sítě → okamžité uzavření - Neplatný bod X25519 → rychlá kontrola nejvýznamnějšího bitu (MSB) před dešifrováním - Časové razítko mimo povolený rozsah → uzavření bez výpočtu - Selhání AEAD (autentizované šifrování s přidruženými daty) → bez odezvy, náhodné zpoždění</p>
+<p><strong>Odolnost vůči sondování:</strong> - Náhodný časový limit: 100-500ms (závislé na implementaci) - Náhodné čtení: 1KB-64KB (závislé na implementaci) - Žádné informace o chybě pro útočníka - Ukončit pomocí TCP RST (bez FIN handshake)</p>
+<h3 id="kryptografické-zabezpečení">Kryptografické zabezpečení</h3>
+<p><strong>Algoritmy:</strong> - <strong>X25519</strong>: 128bitová bezpečnost, Diffie–Hellman nad eliptickou křivkou (Curve25519) - <strong>ChaCha20</strong>: proudová šifra s 256bitovým klíčem - <strong>Poly1305</strong>: informačně-teoreticky bezpečný MAC - <strong>SHA-256</strong>: 128bitová odolnost proti kolizím, 256bitová odolnost vůči předobrazu - <strong>HMAC-SHA256</strong>: PRF (pseudonáhodná funkce) pro odvozování klíčů</p>
+<p><strong>Velikosti klíčů:</strong> - Statické klíče: 32 bajtů (256 bitů) - Efemérní klíče: 32 bajtů (256 bitů) - Šifrovací klíče: 32 bajtů (256 bitů) - MAC: 16 bajtů (128 bitů)</p>
+<p><strong>Známé problémy:</strong> - Znovupoužití nonce (jednorázové číslo) u ChaCha20 je katastrofální (zabráněno inkrementací čítače) - X25519 má problémy s malými podgrupami (zmírněno ověřením bodu na křivce) - SHA-256 je teoreticky zranitelná vůči útoku rozšíření délky (v HMAC ji nelze zneužít)</p>
+<p><strong>Žádné známé zranitelnosti (k říjnu 2025):</strong> - Noise Protocol Framework rozsáhle analyzován - ChaCha20-Poly1305 nasazen v TLS 1.3 - X25519 standard v moderních protokolech - Žádné praktické útoky na konstrukci</p>
+<h2 id="reference">Reference</h2>
+<h3 id="hlavní-specifikace">Hlavní specifikace</h3>
+<ul>
+<li><strong><a href="../../../../cs/docs/specs/ntcp2/">Specifikace NTCP2</a>
+</strong> - Oficiální specifikace I2P</li>
+<li><strong><a href="../../../../cs/proposals/111-ntcp-2/">Návrh 111</a>
+</strong> - Původní návrhový dokument se zdůvodněním</li>
+<li><strong><a href="https://noiseprotocol.org/noise.html">Rámec protokolu Noise</a>
+</strong> - Revize 33 (2017-10-04)</li>
+</ul>
+<h3 id="kryptografické-standardy">Kryptografické standardy</h3>
+<ul>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc7748">RFC 7748</a>
+</strong> - Eliptické křivky pro bezpečnost (X25519)</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc7539">RFC 7539</a>
+</strong> - ChaCha20 a Poly1305 pro protokoly IETF</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc8439">RFC 8439</a>
+</strong> - ChaCha20-Poly1305 (nahrazuje RFC 7539)</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc2104">RFC 2104</a>
+</strong> - HMAC: klíčované hašování pro autentizaci zpráv</li>
+<li><strong><a href="https://www.131002.net/siphash/">SipHash</a>
+</strong> - SipHash-2-4 pro použití jako hašovací funkce</li>
+</ul>
+<h3 id="související-specifikace-i2p">Související specifikace I2P</h3>
+<ul>
+<li><strong><a href="../../../../cs/docs/specs/i2np/">Specifikace I2NP</a>
+</strong> - formát zpráv I2NP</li>
+<li><strong><a href="../../../../cs/docs/specs/common-structures/">Společné struktury</a>
+</strong> - formáty RouterInfo a RouterAddress</li>
+<li><strong><a href="../../../../cs/docs/legacy/ssu/">Transport SSU</a>
+</strong> - transport přes UDP (původní, nyní SSU2)</li>
+<li><strong><a href="../../../../cs/proposals/147-transport-network-id-check/">Návrh 147</a>
+</strong> - kontrola ID transportní sítě (0.9.42)</li>
+</ul>
+<h3 id="implementační-odkazy">Implementační odkazy</h3>
+<ul>
+<li><strong><a href="https://github.com/i2p/i2p.i2p">I2P Java</a>
+</strong> - Referenční implementace (Java)</li>
+<li><strong><a href="https://github.com/PurpleI2P/i2pd">i2pd</a>
+</strong> - Implementace v C++</li>
+<li><strong><a href="../../../../cs/blog/">Poznámky k vydání I2P</a>
+</strong> - Historie verzí a aktualizace</li>
+</ul>
+<h3 id="historické-souvislosti">Historické souvislosti</h3>
+<ul>
+<li><strong><a href="https://en.wikipedia.org/wiki/Station-to-Station_protocol">Station-To-Station Protocol (STS)</a>
+</strong> - Inspirace pro Noise framework (kryptografický rámec Noise)</li>
+<li><strong><a href="https://gitlab.com/yawning/obfs4">obfs4</a>
+</strong> - Zásuvný transport (precedens zastírání délky pomocí SipHash)</li>
+</ul>
+<h2 id="pokyny-k-implementaci">Pokyny k implementaci</h2>
+<h3 id="povinné-požadavky">Povinné požadavky</h3>
+<p><strong>Pro dodržování předpisů:</strong></p>
+<ol>
+<li>
+<p><strong>Implementujte kompletní handshake (navázání kryptografické relace):</strong></p>
+<ul>
+<li>Podporujte všechny tři zprávy se správnými řetězci KDF (funkce odvození klíče)</li>
+<li>Ověřujte všechny AEAD tagy (ověřovací značky AEAD)</li>
+<li>Ověřte, že body X25519 (body eliptické křivky X25519) jsou platné</li>
+</ul>
+</li>
+<li>
+<p><strong>Implementovat datovou fázi:</strong></p>
+<ul>
+<li>Obfuskace délky pomocí SipHash (v obou směrech)</li>
+<li>Všechny typy bloků: 0 (DateTime), 1 (Options), 2 (RouterInfo), 3 (I2NP), 4 (Termination), 254 (Padding)</li>
+<li>Správná správa nonce (jednorázová hodnota; oddělené čítače)</li>
+</ul>
+</li>
+<li>
+<p><strong>Bezpečnostní funkce:</strong></p>
+<ul>
+<li>Prevence replay útoků (ukládání efemérních klíčů do mezipaměti po dobu 2*D)</li>
+<li>Ověření časového razítka (výchozí ±60 sekund)</li>
+<li>Náhodná výplň ve zprávách 1-2</li>
+<li>Zpracování chyb AEAD s náhodnými časovými limity</li>
+</ul>
+</li>
+<li>
+<p><strong>Publikování RouterInfo:</strong></p>
+<ul>
+<li>Publikovat statický klíč (&ldquo;s&rdquo;), IV (&ldquo;i&rdquo;) a verzi (&ldquo;v&rdquo;)</li>
+<li>Rotovat klíče podle zásad</li>
+<li>Podporovat pole schopností (&ldquo;caps&rdquo;) pro skryté routery</li>
+</ul>
+</li>
+<li>
+<p><strong>Kompatibilita sítě:</strong></p>
+<ul>
+<li>Podporovat pole ID sítě (aktuálně 2 pro hlavní síť)</li>
+<li>Interoperovat se stávajícími implementacemi v jazyce Java a i2pd</li>
+<li>Podporovat IPv4 i IPv6</li>
+</ul>
+</li>
+</ol>
+<h3 id="doporučené-postupy">Doporučené postupy</h3>
+<p><strong>Optimalizace výkonu:</strong></p>
+<ol>
+<li>
+<p><strong>Strategie bufferování:</strong></p>
+<ul>
+<li>Odeslat celé zprávy najednou (zprávy 1, 2, 3)</li>
+<li>Použít TCP_NODELAY pro zprávy během navázání spojení</li>
+<li>Slučovat více datových bloků do jednoho rámce</li>
+<li>Omezit velikost rámce na několik KB (minimalizovat latenci na straně příjemce)</li>
+</ul>
+</li>
+<li>
+<p><strong>Správa připojení:</strong></p>
+<ul>
+<li>Opakovaně používat připojení, pokud je to možné</li>
+<li>Implementovat sdružování připojení</li>
+<li>Sledovat stav připojení (DateTime blocks)</li>
+</ul>
+</li>
+<li>
+<p><strong>Správa paměti:</strong></p>
+<ul>
+<li>Po použití vynulujte citlivá data (efemérní klíče, výsledky DH)</li>
+<li>Omezte souběžně probíhající handshake (úvodní fáze navázání spojení; prevence DoS)</li>
+<li>Pro časté alokace používejte paměťové pooly</li>
+</ul>
+</li>
+</ol>
+<p><strong>Zpřísnění zabezpečení:</strong></p>
+<ol>
+<li>
+<p><strong>Odolnost vůči sondování:</strong></p>
+<ul>
+<li>Náhodné časové limity: 100-500ms</li>
+<li>Náhodné čtení bajtů: 1KB-64KB</li>
+<li>IP blacklisting (zařazení IP adres na černou listinu) při opakovaných selháních</li>
+<li>Žádné podrobnosti o chybách pro protějšky</li>
+</ul>
+</li>
+<li>
+<p><strong>Limity prostředků:</strong></p>
+<ul>
+<li>Maximální počet připojení na jednu IP adresu: 3-10</li>
+<li>Maximální počet čekajících handshake (navázání spojení): 100-1000</li>
+<li>Časové limity pro čtení: 30-60 sekund na operaci</li>
+<li>Celkový časový limit spojení: 5 minut pro handshake</li>
+</ul>
+</li>
+<li>
+<p><strong>Správa klíčů:</strong></p>
+<ul>
+<li>Trvalé uložení statického klíče a IV (inicializačního vektoru)</li>
+<li>Bezpečné generování náhodných hodnot (kryptografický generátor náhodných čísel, RNG)</li>
+<li>Striktně dodržujte zásady rotace klíčů</li>
+<li>Nikdy znovu nepoužívejte efemérní klíče</li>
+</ul>
+</li>
+</ol>
+<p><strong>Monitoring a diagnostika:</strong></p>
+<ol>
+<li>
+<p><strong>Metriky:</strong></p>
+<ul>
+<li>Míry úspěchu/selhání handshaku</li>
+<li>Míry chyb AEAD</li>
+<li>Distribuce časové odchylky (clock skew)</li>
+<li>Statistiky délky trvání spojení</li>
+</ul>
+</li>
+<li>
+<p><strong>Logování:</strong></p>
+<ul>
+<li>Zaznamenávejte selhání handshake (úvodní navázání spojení) s kódy důvodů</li>
+<li>Zaznamenávejte události odchylky systémových hodin</li>
+<li>Zaznamenávejte zakázané IP adresy</li>
+<li>Nikdy nezaznamenávejte citlivý klíčový materiál</li>
+</ul>
+</li>
+<li>
+<p><strong>Testování:</strong></p>
+<ul>
+<li>Jednotkové testy pro řetězce KDF</li>
+<li>Integrační testy s jinými implementacemi</li>
+<li>Fuzzing pro zpracování paketů</li>
+<li>Zátěžové testování odolnosti vůči DoS útokům</li>
+</ul>
+</li>
+</ol>
+<h3 id="častá-úskalí">Častá úskalí</h3>
+<p><strong>Kritické chyby, kterým je třeba se vyhnout:</strong></p>
+<ol>
+<li>
+<p><strong>Znovupoužití nonce (jednorázové hodnoty):</strong></p>
+<ul>
+<li>Nikdy během relace neresetujte čítač nonce</li>
+<li>Používejte samostatné čítače pro každý směr</li>
+<li>Ukončete dříve, než dosáhnete 2^64 - 1</li>
+</ul>
+</li>
+<li>
+<p><strong>Rotace klíčů:</strong></p>
+<ul>
+<li>Nikdy nerotujte klíče, když je router spuštěn</li>
+<li>Nikdy znovu nepoužívejte efemérní klíče napříč relacemi</li>
+<li>Dodržujte pravidla pro minimální odstávku</li>
+</ul>
+</li>
+<li>
+<p><strong>Zpracování časových razítek:</strong></p>
+<ul>
+<li>Nikdy nepřijímejte expirovaná časová razítka</li>
+<li>Vždy při výpočtu odchylky zohledněte RTT (doba obousměrné cesty)</li>
+<li>Zaokrouhlujte časová razítka DateTime na sekundy</li>
+</ul>
+</li>
+<li>
+<p><strong>Chyby AEAD:</strong></p>
+<ul>
+<li>Nikdy neprozrazujte útočníkovi typ chyby</li>
+<li>Vždy použijte náhodný časový limit před uzavřením</li>
+<li>Zacházejte s neplatnou délkou stejně jako se selháním AEAD</li>
+</ul>
+</li>
+<li>
+<p><strong>Výplň:</strong></p>
+<ul>
+<li>Nikdy neodesílejte výplň mimo dohodnuté meze</li>
+<li>Vždy umístěte blok výplně na konec</li>
+<li>Nikdy nepoužívejte více než jeden blok výplně v rámci jednoho rámce</li>
+</ul>
+</li>
+<li>
+<p><strong>RouterInfo (záznam s informacemi o I2P router):</strong></p>
+<ul>
+<li>Vždy ověřujte, že se statický klíč shoduje s RouterInfo</li>
+<li>Nikdy nešiřte RouterInfos bez zveřejněných adres</li>
+<li>Vždy ověřujte podpisy</li>
+</ul>
+</li>
+</ol>
+<h3 id="metodika-testování">Metodika testování</h3>
+<p><strong>Jednotkové testy:</strong></p>
+<ol>
+<li>
+<p><strong>Kryptografická primitiva:</strong></p>
+<ul>
+<li>Testovací vektory pro X25519, ChaCha20, Poly1305, SHA-256</li>
+<li>Testovací vektory pro HMAC-SHA256</li>
+<li>Testovací vektory pro SipHash-2-4</li>
+</ul>
+</li>
+<li>
+<p><strong>Řetězce KDF:</strong></p>
+<ul>
+<li>Testy s předem známým výsledkem pro všechny tři zprávy</li>
+<li>Ověřit propagaci řetězového klíče</li>
+<li>Otestovat generování IV pro SipHash</li>
+</ul>
+</li>
+<li>
+<p><strong>Parsování zpráv:</strong></p>
+<ul>
+<li>Dekódování platných zpráv</li>
+<li>Odmítnutí neplatných zpráv</li>
+<li>Hraniční podmínky (prázdná zpráva, maximální velikost)</li>
+</ul>
+</li>
+</ol>
+<p><strong>Integrační testy:</strong></p>
+<ol>
+<li>
+<p><strong>Handshake (navázání spojení):</strong></p>
+<ul>
+<li>Úspěšná výměna tří zpráv</li>
+<li>Odmítnutí kvůli časové odchylce</li>
+<li>Detekce replay útoku</li>
+<li>Odmítnutí neplatného klíče</li>
+</ul>
+</li>
+<li>
+<p><strong>Datová fáze:</strong></p>
+<ul>
+<li>přenos zpráv I2NP</li>
+<li>výměna RouterInfo</li>
+<li>zpracování výplně</li>
+<li>ukončovací zprávy</li>
+</ul>
+</li>
+<li>
+<p><strong>Interoperabilita:</strong></p>
+<ul>
+<li>Testovat s Java I2P</li>
+<li>Testovat s i2pd</li>
+<li>Testovat IPv4 a IPv6</li>
+<li>Testovat zveřejněné a skryté routers</li>
+</ul>
+</li>
+</ol>
+<p><strong>Bezpečnostní testy:</strong></p>
+<ol>
+<li>
+<p><strong>Negativní testy:</strong></p>
+<ul>
+<li>Neplatné značky AEAD</li>
+<li>Zopakované zprávy (replay)</li>
+<li>Útoky využívající odchylku systémových hodin</li>
+<li>Chybně formátované rámce</li>
+</ul>
+</li>
+<li>
+<p><strong>Testy DoS:</strong></p>
+<ul>
+<li>Zaplavování spojení</li>
+<li>Útoky typu Slowloris</li>
+<li>Vyčerpání CPU (nadměrné DH)</li>
+<li>Vyčerpání paměti</li>
+</ul>
+</li>
+<li>
+<p><strong>Fuzzing (testování náhodnými vstupy):</strong></p>
+<ul>
+<li>Náhodné zprávy pro handshake</li>
+<li>Náhodné rámce datové fáze</li>
+<li>Náhodné typy a velikosti bloků</li>
+<li>Neplatné kryptografické hodnoty</li>
+</ul>
+</li>
+</ol>
+<h3 id="přechod-z-ntcp">Přechod z NTCP</h3>
+<p><strong>Pro podporu zastaralého NTCP (nyní odstraněno):</strong></p>
+<p>Podpora NTCP (verze 1) byla odstraněna v I2P 0.9.50 (květen 2021). Všechny současné implementace musí podporovat NTCP2. Historické poznámky:</p>
+<ol>
+<li>
+<p><strong>Přechodné období (2018-2021):</strong></p>
+<ul>
+<li>0.9.36: NTCP2 zaveden (ve výchozím nastavení zakázán)</li>
+<li>0.9.37: NTCP2 ve výchozím nastavení povolen</li>
+<li>0.9.40: NTCP označen jako zastaralý</li>
+<li>0.9.50: NTCP odstraněn</li>
+</ul>
+</li>
+<li>
+<p><strong>Detekce verze:</strong></p>
+<ul>
+<li>&ldquo;NTCP&rdquo; transportStyle (typ přenosu) znamenal, že jsou podporovány obě verze</li>
+<li>&ldquo;NTCP2&rdquo; transportStyle znamenal pouze NTCP2</li>
+<li>Automatická detekce na základě velikosti zprávy (287 vs 288 bajtů)</li>
+</ul>
+</li>
+<li>
+<p><strong>Aktuální stav:</strong></p>
+<ul>
+<li>Všechny routers musí podporovat NTCP2</li>
+<li>&ldquo;NTCP&rdquo; transportStyle (styl přenosu) je zastaralý</li>
+<li>Používejte výhradně transportStyle &ldquo;NTCP2&rdquo;</li>
+</ul>
+</li>
+</ol>
+<h2 id="příloha-a-noise-xk-pattern-vzor-xk-protokolu-noise">Příloha A: Noise XK Pattern (vzor XK protokolu Noise)</h2>
+<p><strong>Standardní vzor Noise XK:</strong></p>
+<pre tabindex="0"><code>XK(s, rs):
+  &lt;- s
+  ...
+  -&gt; e, es
+  &lt;- e, ee
+  -&gt; s, se
+</code></pre><p><strong>Interpretace:</strong></p>
+<ul>
+<li><code>&lt;-</code> : Zpráva od odpovídající strany (Bob) k iniciátorovi (Alice)</li>
+<li><code>-&gt;</code> : Zpráva od iniciátora (Alice) k odpovídající straně (Bob)</li>
+<li><code>s</code> : Statický klíč (dlouhodobý identitní klíč)</li>
+<li><code>rs</code> : Vzdálený statický klíč (statický klíč protějšku, známý předem)</li>
+<li><code>e</code> : Efemérní klíč (specifický pro relaci, generovaný podle potřeby)</li>
+<li><code>es</code> : Efemérní-statický DH (Alice efemérní × Bob statický)</li>
+<li><code>ee</code> : Efemérní-efemérní DH (Alice efemérní × Bob efemérní)</li>
+<li><code>se</code> : Statický-efemérní DH (Alice statický × Bob efemérní)</li>
+</ul>
+<p><strong>Postup dohodnutí klíče:</strong></p>
+<ol>
+<li><strong>Předběžná zpráva:</strong> Alice zná Bobův statický veřejný klíč (z RouterInfo)</li>
+<li><strong>Zpráva 1:</strong> Alice posílá efemérní klíč, provede es DH</li>
+<li><strong>Zpráva 2:</strong> Bob posílá efemérní klíč, provede ee DH</li>
+<li><strong>Zpráva 3:</strong> Alice odhalí statický klíč, provede se DH</li>
+</ol>
+<p><strong>Bezpečnostní vlastnosti:</strong></p>
+<ul>
+<li>Alice ověřena: Ano (pomocí zprávy 3)</li>
+<li>Bob ověřen: Ano (držením statického soukromého klíče)</li>
+<li>Dopředné utajení: Ano (efemerní klíče zničeny)</li>
+<li>Odolnost vůči KCI (útoku s kompromitací klíče): Ano (úroveň ověření 2)</li>
+</ul>
+<h2 id="příloha-b-kódování-base64">Příloha B: Kódování Base64</h2>
+<p><strong>Abeceda I2P Base64:</strong></p>
+<pre tabindex="0"><code>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-~
+</code></pre><p><strong>Rozdíly oproti standardnímu Base64:</strong> - Znaky 62–63: <code>-~</code> místo <code>+/</code> - Výplň: Stejná (<code>=</code>) nebo vynechána v závislosti na kontextu</p>
+<p><strong>Použití v NTCP2:</strong> - Statický klíč (&ldquo;s&rdquo;): 32 bajtů → 44 znaků (bez paddingu) - IV (inicializační vektor) (&ldquo;i&rdquo;): 16 bajtů → 24 znaků (bez paddingu)</p>
+<p><strong>Příklad kódování:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 32-byte static key (hex): </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># f4489e1bb0597b39ca6cbf5ad9f5f1f09043e02d96cb9aa6a63742b3462429aa</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2P Base64 encoded:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=</span>
+</span></span></code></pre></div><h2 id="příloha-c-analýza-zachycených-paketů">Příloha C: Analýza zachycených paketů</h2>
+<p><strong>Identifikace provozu NTCP2:</strong></p>
+<ol>
+<li>
+<p><strong>Navázání TCP spojení:</strong></p>
+<ul>
+<li>Standardní TCP SYN, SYN-ACK, ACK</li>
+<li>Cílový port typicky 8887 nebo podobný</li>
+</ul>
+</li>
+<li>
+<p><strong>Zpráva 1 (SessionRequest – žádost o relaci):</strong></p>
+<ul>
+<li>První aplikační data od Alice</li>
+<li>80-65535 bajtů (obvykle několik stovek)</li>
+<li>Vypadá náhodně (dočasný klíč šifrovaný AES)</li>
+<li>287 bajtů max, pokud se připojuje k adrese &ldquo;NTCP&rdquo;</li>
+</ul>
+</li>
+<li>
+<p><strong>Zpráva 2 (SessionCreated – vytvoření relace):</strong></p>
+<ul>
+<li>Odpověď od Boba</li>
+<li>80-65535 bajtů (typicky několik stovek)</li>
+<li>Také působí náhodně</li>
+</ul>
+</li>
+<li>
+<p><strong>Zpráva 3 (SessionConfirmed – potvrzení relace):</strong></p>
+<ul>
+<li>Od Alice</li>
+<li>48 bajtů + proměnná část (velikost RouterInfo + výplň)</li>
+<li>Obvykle 1-4 KB</li>
+</ul>
+</li>
+<li>
+<p><strong>Datová fáze:</strong></p>
+<ul>
+<li>Rámce s proměnnou délkou</li>
+<li>Pole délky je zatemněné (vypadá náhodně)</li>
+<li>Šifrovaná užitečná data</li>
+<li>Výplň způsobuje, že velikost je nepředvídatelná</li>
+</ul>
+</li>
+</ol>
+<p><strong>Obcházení DPI:</strong> - Žádné hlavičky v prostém textu - Žádné pevné vzory - Pole délky jsou obfuskovaná - Náhodná výplň narušuje heuristiky založené na velikosti</p>
+<p><strong>Srovnání s NTCP:</strong> - NTCP zpráva 1 má vždy 288 bajtů (identifikovatelná) - Zpráva 1 v NTCP2 má proměnlivou velikost (neidentifikovatelná) - NTCP měl rozpoznatelné vzorce - NTCP2 je navržen tak, aby odolal DPI (hluboké inspekci paketů)</p>
+<h2 id="příloha-d-historie-verzí">Příloha D: Historie verzí</h2>
+<p><strong>Hlavní milníky:</strong></p>
+<ul>
+<li><strong>0.9.36</strong> (23. srpna 2018): NTCP2 zavedeno, ve výchozím nastavení zakázáno</li>
+<li><strong>0.9.37</strong> (4. října 2018): NTCP2 ve výchozím nastavení povoleno</li>
+<li><strong>0.9.40</strong> (20. května 2019): NTCP označen jako zastaralý</li>
+<li><strong>0.9.42</strong> (27. srpna 2019): Přidáno pole Network ID (Návrh 147)</li>
+<li><strong>0.9.50</strong> (17. května 2021): NTCP odstraněn, přidána podpora capabilities (schopností)</li>
+<li><strong>2.10.0</strong> (9. září 2025): Nejnovější stabilní vydání</li>
+</ul>
+<p><strong>Stabilita protokolu:</strong> - Žádné zpětně nekompatibilní změny od 0.9.50 - Průběžná vylepšení odolnosti vůči sondování - Důraz na výkon a spolehlivost - Postkvantová kryptografie ve vývoji (není ve výchozím nastavení povolena)</p>
+<p><strong>Aktuální stav transportních protokolů:</strong> - NTCP2: Povinný TCP transport - SSU2: Povinný UDP transport - NTCP (v1): Odstraněno - SSU (v1): Odstraněno</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../cs/docs/specs/udp-bittorrent-announces/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">UDP oznámení BitTorrentu</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../cs/docs/specs/encryptedleaseset/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">Šifrovaný LeaseSet</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/cs/docs/specs/ntcp2.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Zůstaňte informováni o novinkách I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Zadejte svůj email" required>
+                            <button type="submit">Odebírat</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Rychlé odkazy</h3>
+                <ul>
+                    <li><a href="../../../../cs/financial-support/">Darovat</a></li>
+                    <li><a href="../../../../cs/docs/overview/intro/">Úvod do I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Komunita</h3>
+                <ul>
+                    <li><a href="../../../../cs/get-involved/">Zapojte se</a></li>
+                    <li><a href="../../../../cs/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Oficiální fóra</a></li>
+                    <li><a href="../../../../cs/contact/">Kontaktujte nás</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Zdroje</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P Metriky</a></li>
+                    <li><a href="../../../../cs/papers/">Výzkum</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Projekt Neviditelný Internet. Licencováno pod Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../cs/privacy/">Ochrana soukromí</a>
+                <a href="../../../../cs/terms/">Podmínky</a>
+                <a href="../../../../cs/about/media/">Tisk</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Zavřít">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Komunitní anketa</h2>
+            <p class="modal-subtitle">Rádi bychom o vás slyšeli</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Váš hlas pomáhá utvářet budoucnost I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

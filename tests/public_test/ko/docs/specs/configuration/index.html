@@ -1,0 +1,2852 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Router 설정 | I2P - 보이지 않는 인터넷 프로젝트</title>
+
+    <meta name="description" content="I2P routers 및 클라이언트를 위한 구성 옵션과 형식">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Router 설정 | I2P - 보이지 않는 인터넷 프로젝트">
+    <meta property="og:description" content="I2P routers 및 클라이언트를 위한 구성 옵션과 형식">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/ko/docs/specs/configuration/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P 베타 사이트 현재 운영 중 문의사항은 stormycloud@mail.i2p로 이메일 주세요</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="배너 닫기" title="배너 닫기">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../ko/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../ko/about/" class="">소개</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ko/about/">개요</a></li>
+                            <li><a href="../../../../ko/papers/">연구 논문</a></li>
+                            <li><a href="../../../../ko/about/media/">보도자료</a></li>
+                            <li><a href="../../../../ko/contact/">문의하기</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../ko/docs/" class="active">문서</a></li>
+                    <li><a href="../../../../ko/downloads/" class="">다운로드</a></li>
+                    <li><a href="../../../../ko/blog/" class="">블로그</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../ko/get-involved/" class="">참여하기</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ko/get-involved/">개요</a></li>
+                            <li><a href="../../../../ko/feedback/">기능 제안</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">ko</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/configuration/"
+                                class="lang-option">영어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/configuration/"
+                                class="lang-option">스페인어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/configuration/"
+                                class="lang-option active">한국어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/configuration/"
+                                class="lang-option">중국어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/configuration/"
+                                class="lang-option">러시아어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/configuration/"
+                                class="lang-option">체코어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/configuration/"
+                                class="lang-option">독일어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/configuration/"
+                                class="lang-option">프랑스어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/configuration/"
+                                class="lang-option">터키어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/configuration/"
+                                class="lang-option">베트남어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/configuration/"
+                                class="lang-option">힌디어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/configuration/"
+                                class="lang-option">아랍어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/configuration/"
+                                class="lang-option">포르투갈어</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../ko/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../ko/downloads/" class="btn btn-primary">I2P 다운로드</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#개요">개요</a>
+      <ul>
+        <li><a href="#범위">범위</a></li>
+        <li><a href="#구현-참고-사항">구현 참고 사항</a></li>
+      </ul>
+    </li>
+    <li><a href="#일반-구성-파일-형식">일반 구성 파일 형식</a>
+      <ul>
+        <li><a href="#형식-사양">형식 사양</a></li>
+        <li><a href="#파일-정렬">파일 정렬</a></li>
+        <li><a href="#구현-세부-사항">구현 세부 사항</a></li>
+        <li><a href="#형식-예제">형식 예제</a></li>
+      </ul>
+    </li>
+    <li><a href="#코어-라이브러리-및-router-구성">코어 라이브러리 및 Router 구성</a>
+      <ul>
+        <li><a href="#클라이언트-구성-clientsconfig">클라이언트 구성 (clients.config)</a></li>
+        <li><a href="#로거-구성-loggerconfig">로거 구성 (logger.config)</a></li>
+        <li><a href="#플러그인-구성">플러그인 구성</a></li>
+        <li><a href="#웹-애플리케이션-설정-webappsconfig">웹 애플리케이션 설정 (webapps.config)</a></li>
+        <li><a href="#router-설정-routerconfig">Router 설정 (router.config)</a></li>
+      </ul>
+    </li>
+    <li><a href="#애플리케이션-구성-파일">애플리케이션 구성 파일</a>
+      <ul>
+        <li><a href="#주소록-설정-addressbookconfigtxt">주소록 설정 (addressbook/config.txt)</a></li>
+        <li><a href="#i2psnark-구성-i2psnarkconfigdi2psnarkconfig">I2PSnark 구성 (i2psnark.config.d/i2psnark.config)</a></li>
+        <li><a href="#i2ptunnel-설정-i2ptunnelconfig">I2PTunnel 설정 (i2ptunnel.config)</a></li>
+      </ul>
+    </li>
+    <li><a href="#i2ptunnel-설정-참조">I2PTunnel 설정 참조</a>
+      <ul>
+        <li><a href="#기본-속성">기본 속성</a></li>
+        <li><a href="#프록시-구성">프록시 구성</a></li>
+        <li><a href="#서버-구성">서버 구성</a></li>
+        <li><a href="#클라이언트별-옵션">클라이언트별 옵션</a></li>
+        <li><a href="#i2cp-옵션-i2ptunnel-구현">I2CP 옵션 (I2PTunnel 구현)</a></li>
+        <li><a href="#서버별-옵션">서버별 옵션</a></li>
+        <li><a href="#스레드-풀-구성">스레드 풀 구성</a></li>
+        <li><a href="#http-클라이언트-옵션">HTTP 클라이언트 옵션</a></li>
+        <li><a href="#http-클라이언트-인증">HTTP 클라이언트 인증</a></li>
+        <li><a href="#outproxy외부-프록시-인증">Outproxy(외부 프록시) 인증</a></li>
+        <li><a href="#socks-클라이언트-옵션">SOCKS 클라이언트 옵션</a></li>
+        <li><a href="#http-서버-옵션">HTTP 서버 옵션</a></li>
+        <li><a href="#http-서버-보안-옵션">HTTP 서버 보안 옵션</a></li>
+        <li><a href="#irc-서버-옵션">IRC 서버 옵션</a></li>
+        <li><a href="#ssltls-구성">SSL/TLS 구성</a></li>
+        <li><a href="#일반-i2cp-및-스트리밍-옵션">일반 I2CP 및 스트리밍 옵션</a></li>
+        <li><a href="#완전한-tunnel-예제">완전한 Tunnel 예제</a></li>
+      </ul>
+    </li>
+    <li><a href="#버전-이력-및-기능-연대표">버전 이력 및 기능 연대표</a>
+      <ul>
+        <li><a href="#버전-0910-2013">버전 0.9.10 (2013)</a></li>
+        <li><a href="#버전-0918-2015">버전 0.9.18 (2015)</a></li>
+        <li><a href="#버전-0923-2015년-11월">버전 0.9.23 (2015년 11월)</a></li>
+        <li><a href="#버전-0925-2015">버전 0.9.25 (2015)</a></li>
+        <li><a href="#버전-0933-2018년-1월">버전 0.9.33 (2018년 1월)</a></li>
+        <li><a href="#버전-0941-2019">버전 0.9.41 (2019)</a></li>
+        <li><a href="#버전-0942-2019년-8월">버전 0.9.42 (2019년 8월)</a></li>
+        <li><a href="#버전-0956-2021">버전 0.9.56 (2021)</a></li>
+        <li><a href="#버전-0957-2023년-1월">버전 0.9.57 (2023년 1월)</a></li>
+        <li><a href="#버전-260-2024년-7월">버전 2.6.0 (2024년 7월)</a></li>
+        <li><a href="#버전-2100-2025년-9월---현재">버전 2.10.0 (2025년 9월 - 현재)</a></li>
+      </ul>
+    </li>
+    <li><a href="#사용-중단-및-호환성-파괴-변경">사용 중단 및 호환성 파괴 변경</a>
+      <ul>
+        <li><a href="#중대한-사용-중단-사항">중대한 사용 중단 사항</a></li>
+        <li><a href="#구성-아키텍처-변경-사항">구성 아키텍처 변경 사항</a></li>
+        <li><a href="#java-버전-요구사항">Java 버전 요구사항</a></li>
+        <li><a href="#제거된-기능">제거된 기능</a></li>
+        <li><a href="#권장-마이그레이션">권장 마이그레이션</a></li>
+      </ul>
+    </li>
+    <li><a href="#참고-자료">참고 자료</a>
+      <ul>
+        <li><a href="#공식-문서">공식 문서</a></li>
+        <li><a href="#소스-코드">소스 코드</a></li>
+        <li><a href="#커뮤니티-자료">커뮤니티 자료</a></li>
+        <li><a href="#api-문서">API 문서</a></li>
+        <li><a href="#명세-상태">명세 상태</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../ko/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../ko/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../ko/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Router 설정</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">이 번역은 기계 학습을 사용하여 생성되었으며 100% 정확하지 않을 수 있습니다.</span>
+    
+    
+    <a href="../../../../en/docs/specs/configuration/" class="disclaimer-link">영어 버전 보기</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Router 설정</h1>
+                    
+                        <p class="article-description">I2P routers 및 클라이언트를 위한 구성 옵션과 형식</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="개요">개요</h2>
+<p>이 문서는 router와 다양한 애플리케이션에서 사용되는 I2P 구성 파일에 대한 포괄적인 기술 사양을 제공합니다. 또한 파일 형식 사양, 속성 정의, 그리고 I2P 소스 코드와 공식 문서를 대조하여 검증된 구현 세부사항을 다룹니다.</p>
+<h3 id="범위">범위</h3>
+<ul>
+<li>router 구성 파일 및 형식</li>
+<li>클라이언트 애플리케이션 구성</li>
+<li>I2PTunnel tunnel 구성</li>
+<li>파일 형식 사양 및 구현</li>
+<li>버전별 기능 및 사용 중단 항목</li>
+</ul>
+<h3 id="구현-참고-사항">구현 참고 사항</h3>
+<p>구성 파일은 I2P 코어 라이브러리의 <code>DataHelper.loadProps()</code> 및 <code>storeProps()</code> 메서드를 사용하여 읽고 저장됩니다. 파일 형식은 I2P 프로토콜에서 사용하는 직렬화 형식과 상당히 다릅니다(자세한 내용은 <a href="../../../../ko/docs/specs/common-structures/#type-mapping">공통 구조 사양 - 타입 매핑</a>
+을 참조하세요).</p>
+<hr>
+<h2 id="일반-구성-파일-형식">일반 구성 파일 형식</h2>
+<p>I2P 구성 파일은 특정 예외와 제약이 적용된 수정된 Java Properties 형식을 따릅니다.</p>
+<h3 id="형식-사양">형식 사양</h3>
+<p><a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Properties.html#load%28java.io.InputStream%29">Java Properties</a>
+에 기반하되, 다음과 같은 중대한 차이가 있습니다:</p>
+<h4 id="인코딩">인코딩</h4>
+<ul>
+<li><strong>반드시</strong> UTF-8 인코딩을 사용해야 합니다 (표준 Java Properties에서 사용하는 ISO-8859-1이 아님)</li>
+<li>구현: 모든 파일 작업에 <code>DataHelper.getUTF8()</code> 유틸리티를 사용합니다</li>
+</ul>
+<h4 id="이스케이프-시퀀스">이스케이프 시퀀스</h4>
+<ul>
+<li>이스케이프 시퀀스는 <strong>인식되지 않습니다</strong>(백슬래시 <code>\</code> 포함)</li>
+<li>줄 연속(line continuation)은 <strong>지원되지 않습니다</strong></li>
+<li>백슬래시 문자는 리터럴로 취급됩니다</li>
+</ul>
+<h4 id="주석-문자">주석 문자</h4>
+<ul>
+<li><code>#</code>는 줄의 어느 위치에서든 주석을 시작합니다</li>
+<li><code>;</code>는 <strong>오직</strong> 1열에 있을 때에만 주석을 시작합니다</li>
+<li><code>!</code>는 주석을 시작하지 <strong>않습니다</strong> (Java Properties와 다릅니다)</li>
+</ul>
+<h4 id="키-값-구분자">키-값 구분자</h4>
+<ul>
+<li><code>=</code>는 유효한 키-값 구분자 중 <strong>유일한</strong> 것입니다</li>
+<li><code>:</code>는 구분자로 <strong>인식되지 않습니다</strong></li>
+<li>공백은 구분자로 <strong>인식되지 않습니다</strong></li>
+</ul>
+<h4 id="공백-처리">공백 처리</h4>
+<ul>
+<li>키의 앞뒤 공백은 <strong>제거되지 않습니다</strong></li>
+<li>값의 앞뒤 공백은 <strong>제거됩니다</strong></li>
+</ul>
+<h4 id="라인-처리">라인 처리</h4>
+<ul>
+<li><code>=</code>가 없는 줄은 무시됩니다(주석이나 빈 줄로 간주됨)</li>
+<li>빈 값(<code>key=</code>)은 버전 0.9.10부터 지원됩니다</li>
+<li>빈 값을 가진 키는 정상적으로 저장되고 읽어올 수 있습니다</li>
+</ul>
+<h4 id="문자-제한-사항">문자 제한 사항</h4>
+<p><strong>키에는 다음이 포함되면 안 됩니다</strong>: - <code>#</code> (해시/파운드 기호) - <code>=</code> (등호) - <code>\n</code> (줄바꿈 문자) - <code>;</code> (세미콜론)로 시작할 수 없습니다</p>
+<p><strong>값에는 다음이 포함될 수 없습니다</strong>: - <code>#</code> (해시/파운드 기호) - <code>\n</code> (줄바꿈 문자) - <code>\r</code> (캐리지 리턴)로 시작하거나 끝날 수 없음 - 공백으로 시작하거나 끝날 수 없음 (자동으로 제거됨)</p>
+<h3 id="파일-정렬">파일 정렬</h3>
+<p>구성 파일은 키 기준으로 정렬할 필요는 없습니다. 그러나 대부분의 I2P 애플리케이션은 구성 파일을 작성할 때 다음을 쉽게 하기 위해 키를 알파벳순으로 정렬합니다: - 수동 편집 - 버전 관리 시스템의 diff(차이 비교) 작업 - 가독성</p>
+<h3 id="구현-세부-사항">구현 세부 사항</h3>
+<h4 id="구성-파일-읽기">구성 파일 읽기</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// Method signature from net.i2p.data.DataHelper</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Properties <span style="color:#a6e22e">loadProps</span>(File file)
+</span></span></code></pre></div><p><strong>동작</strong>: - UTF-8로 인코딩된 파일을 읽습니다 - 위에서 설명한 모든 형식 규칙을 강제합니다 - 문자 제한을 검증합니다 - 파일이 없으면 비어 있는 Properties 객체를 반환합니다 - 읽기 오류가 발생하면 <code>IOException</code>을 던집니다</p>
+<h4 id="구성-파일-작성">구성 파일 작성</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// Method signature from net.i2p.data.DataHelper</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">storeProps</span>(Properties props, File file)
+</span></span></code></pre></div><p><strong>동작</strong>: - UTF-8로 인코딩된 파일을 작성함 - 키를 알파벳 순으로 정렬함 (OrderedProperties를 사용하지 않는 한) - 버전 0.8.1부터 파일 권한을 모드 600(사용자 읽기/쓰기만)으로 설정함 - 키 또는 값에 잘못된 문자가 있을 경우 <code>IllegalArgumentException</code>을 던짐 - 쓰기 오류 시 <code>IOException</code>을 던짐</p>
+<h4 id="형식-검증">형식 검증</h4>
+<p>이 구현은 엄격한 검증을 수행합니다: - 키와 값에 금지된 문자가 있는지 검사합니다 - 잘못된 항목은 쓰기 작업 중 예외를 발생시킵니다 - 읽기 시 형식이 잘못된 줄(<code>=</code> 없는 줄)은 조용히 무시됩니다</p>
+<h3 id="형식-예제">형식 예제</h3>
+<h4 id="유효한-구성-파일">유효한 구성 파일</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># This is a comment</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">;</span> <span style="color:#e6db74">This is also a comment (column 1 only)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">key.with.dots</span><span style="color:#f92672">=</span><span style="color:#e6db74">value with spaces</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">another_key</span><span style="color:#f92672">=</span><span style="color:#e6db74">value=with=equals</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">empty.value</span><span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">numeric.value</span><span style="color:#f92672">=</span><span style="color:#e6db74">12345</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">unicode.value</span><span style="color:#f92672">=</span><span style="color:#e6db74">こんにちは</span>
+</span></span></code></pre></div><h4 id="잘못된-구성-예시">잘못된 구성 예시</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># INVALID: Key contains equals sign</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">invalid</span><span style="color:#f92672">=</span><span style="color:#e6db74">key=value</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># INVALID: Key contains hash</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">invalid#key</span><span style="color:#f92672">=</span><span style="color:#e6db74">value</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># INVALID: Value contains newline (implicit)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">key</span><span style="color:#f92672">=</span><span style="color:#e6db74">value</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">continues</span> <span style="color:#e6db74">here</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># INVALID: Semicolon comment not in column 1 (treated as key)</span>
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">;</span> <span style="color:#e6db74">not.a.comment=value</span>
+</span></span></code></pre></div><hr>
+<h2 id="코어-라이브러리-및-router-구성">코어 라이브러리 및 Router 구성</h2>
+<h3 id="클라이언트-구성-clientsconfig">클라이언트 구성 (clients.config)</h3>
+<p><strong>위치</strong>: <code>$I2P_CONFIG_DIR/clients.config</code> (레거시) 또는 <code>$I2P_CONFIG_DIR/clients.config.d/</code> (현대식)   <strong>구성 인터페이스</strong>: Router 콘솔의 <code>/configclients</code>   <strong>형식 변경</strong>: 버전 0.9.42 (2019년 8월)</p>
+<h4 id="디렉터리-구조-버전-0942">디렉터리 구조 (버전 0.9.42+)</h4>
+<p>릴리스 0.9.42부터 기본 clients.config 파일이 자동으로 개별 구성 파일로 분할됩니다:</p>
+<pre tabindex="0"><code>$I2P_CONFIG_DIR/
+├── clients.config.d/
+│   ├── 00-webConsole.config
+│   ├── 01-i2ptunnel.config
+│   ├── 02-i2psnark.config
+│   ├── 03-susidns.config
+│   └── ...
+└── clients.config (legacy, auto-migrated)
+</code></pre><p><strong>마이그레이션 동작</strong>: - 0.9.42+로 업그레이드한 뒤 첫 실행 시, monolithic file(모놀리식, 단일 구조의 파일)이 자동으로 분할됩니다 - 분리된 파일의 속성에는 <code>clientApp.0.</code> 접두사가 붙습니다 - 하위 호환성을 위해 레거시 형식도 계속 지원됩니다 - 분할 형식은 모듈식 패키징과 플러그인 관리를 가능하게 합니다</p>
+<h4 id="속성-형식">속성 형식</h4>
+<p>각 줄은 <code>clientApp.x.prop=val</code> 형식을 따르며, 여기서 <code>x</code>는 앱 번호입니다.</p>
+<p><strong>앱 번호 매기기 요구사항</strong>: - 반드시 0부터 시작해야 함 - 반드시 연속적이어야 함 (누락 없음) - 나열 순서가 시작 순서를 결정함</p>
+<h4 id="필수-속성">필수 속성</h4>
+<h5 id="메인">메인</h5>
+<ul>
+<li><strong>유형</strong>: String (정규화된 클래스 이름)</li>
+<li><strong>필수</strong>: 예</li>
+<li><strong>설명</strong>: 클라이언트 유형(관리형 vs. 비관리형)에 따라 이 클래스의 생성자 또는 <code>main()</code> 메서드가 호출됩니다</li>
+<li><strong>예</strong>: <code>clientApp.0.main=net.i2p.router.web.RouterConsoleRunner</code></li>
+</ul>
+<h4 id="선택적-속성">선택적 속성</h4>
+<h5 id="이름">이름</h5>
+<ul>
+<li><strong>유형</strong>: 문자열</li>
+<li><strong>필수</strong>: 아니오</li>
+<li><strong>설명</strong>: router console에 표시되는 이름</li>
+<li><strong>예시</strong>: <code>clientApp.0.name=Router Console</code></li>
+</ul>
+<h5 id="인수">인수</h5>
+<ul>
+<li><strong>Type</strong>: 문자열(공백 또는 탭으로 구분됨)</li>
+<li><strong>Required</strong>: 아니오</li>
+<li><strong>Description</strong>: 메인 클래스의 생성자 또는 main() 메서드에 전달되는 인자</li>
+<li><strong>Quoting</strong>: 공백 또는 탭이 포함된 인자는 <code>'</code> 또는 <code>&quot;</code>로 감싸서 사용할 수 있음</li>
+<li><strong>Example</strong>: <code>clientApp.0.args=-d $CONFIG/eepsite</code></li>
+</ul>
+<h5 id="지연">지연</h5>
+<ul>
+<li><strong>유형</strong>: 정수(초)</li>
+<li><strong>필수</strong>: 아니오</li>
+<li><strong>기본값</strong>: 120</li>
+<li><strong>설명</strong>: 클라이언트를 시작하기 전에 대기할 시간(초)</li>
+<li><strong>재정의</strong>: <code>onBoot=true</code>에 의해 재정의됨(지연을 0으로 설정)</li>
+<li><strong>특수 값</strong>:
+<ul>
+<li><code>&lt; 0</code>: router가 RUNNING 상태에 도달할 때까지 대기한 후 새 스레드에서 즉시 시작</li>
+<li><code>= 0</code>: 같은 스레드에서 즉시 실행(예외가 콘솔로 전파됨)</li>
+<li><code>&gt; 0</code>: 지연 후 새 스레드에서 시작(예외는 로그에 기록되고 전파되지 않음)</li>
+</ul>
+</li>
+</ul>
+<h5 id="onboot">onBoot</h5>
+<ul>
+<li><strong>유형</strong>: 불리언</li>
+<li><strong>필수</strong>: 아니요</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: 지연 시간을 0으로 강제하며, 명시적으로 지정한 지연 설정을 재정의합니다</li>
+<li><strong>사용 사례</strong>: router 부팅 시 핵심 서비스를 즉시 시작</li>
+</ul>
+<h5 id="startonload">startOnLoad</h5>
+<ul>
+<li><strong>유형</strong>: Boolean</li>
+<li><strong>필수</strong>: 아니오</li>
+<li><strong>기본값</strong>: true</li>
+<li><strong>설명</strong>: 클라이언트를 아예 시작할지 여부</li>
+<li><strong>사용 사례</strong>: 구성을 제거하지 않고 클라이언트를 비활성화</li>
+</ul>
+<h4 id="플러그인별-속성">플러그인별 속성</h4>
+<p>이 속성들은 플러그인에서만 사용됩니다(코어 클라이언트에서는 사용되지 않습니다):</p>
+<h5 id="stopargs">stopargs</h5>
+<ul>
+<li><strong>유형</strong>: 문자열 (공백 또는 탭으로 구분)</li>
+<li><strong>설명</strong>: 클라이언트를 중지시키는 데 전달되는 인수</li>
+<li><strong>변수 치환</strong>: 예 (아래 참조)</li>
+</ul>
+<h5 id="uninstallargs">uninstallargs</h5>
+<ul>
+<li><strong>Type</strong>: 문자열(공백 또는 탭으로 구분됨)</li>
+<li><strong>Description</strong>: 클라이언트를 제거할 때 전달되는 인수</li>
+<li><strong>Variable Substitution</strong>: 예(아래 참조)</li>
+</ul>
+<h5 id="클래스패스">클래스패스</h5>
+<ul>
+<li><strong>유형</strong>: 문자열 (쉼표로 구분된 경로)</li>
+<li><strong>설명</strong>: 클라이언트용 추가 classpath 요소</li>
+<li><strong>변수 치환</strong>: 예 (아래 참조)</li>
+</ul>
+<h4 id="변수-치환-플러그인-전용">변수 치환 (플러그인 전용)</h4>
+<p>플러그인의 <code>args</code>, <code>stopargs</code>, <code>uninstallargs</code>, 그리고 <code>classpath</code>에서 다음 변수들이 치환됩니다:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Variable</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Expands To</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$I2P</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Base I2P installation directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>/usr/share/i2p</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$CONFIG</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">User configuration directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>~/.i2p</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$PLUGIN</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Plugin directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>~/.i2p/plugins/foo</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$OS</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Operating system name</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>linux</code></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$ARCH</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Architecture name</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>amd64</code></td>
+    </tr>
+  </tbody>
+</table>
+**참고**: 변수 치환은 플러그인에서만 수행되며, 코어 클라이언트에는 적용되지 않습니다.
+<h4 id="클라이언트-유형">클라이언트 유형</h4>
+<h5 id="관리형-클라이언트">관리형 클라이언트</h5>
+<ul>
+<li>생성자는 <code>RouterContext</code> 및 <code>ClientAppManager</code> 매개변수와 함께 호출됩니다</li>
+<li>클라이언트는 <code>ClientApp</code> 인터페이스를 구현해야 합니다</li>
+<li>수명 주기는 router에 의해 제어됩니다</li>
+<li>동적으로 시작, 중지 및 재시작할 수 있습니다</li>
+</ul>
+<h5 id="비관리형-클라이언트">비관리형 클라이언트</h5>
+<ul>
+<li><code>main(String[] args)</code> 메서드가 호출됨</li>
+<li>별도의 스레드에서 실행</li>
+<li>라이프사이클은 router에서 관리되지 않음</li>
+<li>레거시 클라이언트 유형</li>
+</ul>
+<h4 id="구성-예제">구성 예제</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Router Console (core client)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">net.i2p.router.web.RouterConsoleRunner</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Router Console</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.args</span><span style="color:#f92672">=</span><span style="color:#e6db74">-d $CONFIG/eepsite</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.delay</span><span style="color:#f92672">=</span><span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.onBoot</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.0.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2PTunnel (core client)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">net.i2p.i2ptunnel.TunnelControllerGroup</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.name</span><span style="color:#f92672">=</span><span style="color:#e6db74">I2PTunnel</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.args</span><span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.delay</span><span style="color:#f92672">=</span><span style="color:#e6db74">120</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.1.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plugin Example</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.main</span><span style="color:#f92672">=</span><span style="color:#e6db74">org.example.plugin.PluginMain</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example Plugin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.args</span><span style="color:#f92672">=</span><span style="color:#e6db74">-config $PLUGIN/config.properties</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.stopargs</span><span style="color:#f92672">=</span><span style="color:#e6db74">-shutdown</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.uninstallargs</span><span style="color:#f92672">=</span><span style="color:#e6db74">-remove $PLUGIN</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/lib/plugin.jar,$PLUGIN/lib/dep.jar</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.delay</span><span style="color:#f92672">=</span><span style="color:#e6db74">240</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clientApp.2.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span></code></pre></div><hr>
+<h3 id="로거-구성-loggerconfig">로거 구성 (logger.config)</h3>
+<p><strong>위치</strong>: <code>$I2P_CONFIG_DIR/logger.config</code>   <strong>설정 인터페이스</strong>: Router 콘솔의 <code>/configlogging</code></p>
+<h4 id="속성-참조">속성 참조</h4>
+<h5 id="콘솔-버퍼-설정">콘솔 버퍼 설정</h5>
+<h6 id="loggerconsolebuffersize">logger.consoleBufferSize</h6>
+<ul>
+<li><strong>유형</strong>: 정수</li>
+<li><strong>기본값</strong>: 20</li>
+<li><strong>설명</strong>: 콘솔에서 버퍼링할 로그 메시지의 최대 개수</li>
+<li><strong>범위</strong>: 1-1000 권장</li>
+</ul>
+<h5 id="날짜와-시간-형식">날짜와 시간 형식</h5>
+<h6 id="loggerdateformat">logger.dateFormat</h6>
+<ul>
+<li><strong>유형</strong>: 문자열(SimpleDateFormat 패턴)</li>
+<li><strong>기본값</strong>: 시스템 로케일에서 가져옴</li>
+<li><strong>예시</strong>: <code>HH:mm:ss.SSS</code></li>
+<li><strong>문서</strong>: <a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html">Java SimpleDateFormat</a>
+</li>
+</ul>
+<h5 id="로그-레벨">로그 레벨</h5>
+<h6 id="loggerdefaultlevel">logger.defaultLevel</h6>
+<ul>
+<li><strong>유형</strong>: 열거형</li>
+<li><strong>기본값</strong>: ERROR</li>
+<li><strong>값</strong>: <code>CRIT</code>, <code>ERROR</code>, <code>WARN</code>, <code>INFO</code>, <code>DEBUG</code></li>
+<li><strong>설명</strong>: 모든 클래스에 대한 기본 로그 수준</li>
+</ul>
+<h6 id="loggerminimumonscreenlevel">logger.minimumOnScreenLevel</h6>
+<ul>
+<li><strong>Type</strong>: 열거형</li>
+<li><strong>Default</strong>: CRIT</li>
+<li><strong>Values</strong>: <code>CRIT</code>, <code>ERROR</code>, <code>WARN</code>, <code>INFO</code>, <code>DEBUG</code></li>
+<li><strong>Description</strong>: 화면에 표시되는 메시지의 최소 레벨</li>
+</ul>
+<h6 id="loggerrecordclass">logger.record.{class}</h6>
+<ul>
+<li><strong>유형</strong>: Enum(열거형)</li>
+<li><strong>값</strong>: <code>CRIT</code>, <code>ERROR</code>, <code>WARN</code>, <code>INFO</code>, <code>DEBUG</code></li>
+<li><strong>설명</strong>: 클래스별 로그 레벨 재정의</li>
+<li><strong>예시</strong>: <code>logger.record.net.i2p.router.transport.udp=DEBUG</code></li>
+</ul>
+<h5 id="표시-옵션">표시 옵션</h5>
+<h6 id="loggerdisplayonscreen">logger.displayOnScreen</h6>
+<ul>
+<li><strong>유형</strong>: 불리언</li>
+<li><strong>기본값</strong>: true</li>
+<li><strong>설명</strong>: 콘솔 출력에 로그 메시지를 표시할지 여부</li>
+</ul>
+<h6 id="loggerdropduplicates">logger.dropDuplicates</h6>
+<ul>
+<li><strong>유형</strong>: 불리언</li>
+<li><strong>기본값</strong>: true</li>
+<li><strong>설명</strong>: 연속된 중복 로그 메시지를 제거합니다</li>
+</ul>
+<h6 id="loggerdroponoverflow">logger.dropOnOverflow</h6>
+<ul>
+<li><strong>유형</strong>: 불리언</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: 버퍼가 가득 찼을 때 메시지를 버립니다(블로킹 대신)</li>
+</ul>
+<h5 id="플러시-동작-방식">플러시 동작 방식</h5>
+<h6 id="loggerflushinterval">logger.flushInterval</h6>
+<ul>
+<li><strong>유형</strong>: 정수 (초)</li>
+<li><strong>기본값</strong>: 29</li>
+<li><strong>도입 버전</strong>: 0.9.18</li>
+<li><strong>설명</strong>: 로그 버퍼를 디스크에 플러시하는 주기</li>
+</ul>
+<h5 id="형식-설정">형식 설정</h5>
+<h6 id="loggerformat">logger.format</h6>
+<ul>
+<li><strong>유형</strong>: 문자열 (문자 시퀀스)</li>
+<li><strong>설명</strong>: 로그 메시지 형식 템플릿</li>
+<li><strong>형식 문자</strong>:
+<ul>
+<li><code>d</code> = 날짜/시간</li>
+<li><code>c</code> = 클래스 이름</li>
+<li><code>t</code> = 스레드 이름</li>
+<li><code>p</code> = 우선순위(로그 레벨)</li>
+<li><code>m</code> = 메시지</li>
+</ul>
+</li>
+<li><strong>예시</strong>: <code>dctpm</code>은 <code>[타임스탬프] [클래스] [스레드] [레벨] 메시지</code>를 생성합니다</li>
+</ul>
+<h5 id="압축-버전-0956">압축 (버전 0.9.56+)</h5>
+<h6 id="loggergzip">logger.gzip</h6>
+<ul>
+<li><strong>유형</strong>: Boolean</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>도입 버전</strong>: 0.9.56</li>
+<li><strong>설명</strong>: 로테이션된 로그 파일에 대해 gzip 압축을 활성화합니다</li>
+</ul>
+<h6 id="loggermingzipsize">logger.minGzipSize</h6>
+<ul>
+<li><strong>유형</strong>: 정수(바이트)</li>
+<li><strong>기본값</strong>: 65536</li>
+<li><strong>도입</strong>: 버전 0.9.56</li>
+<li><strong>설명</strong>: 압축을 트리거하는 최소 파일 크기(기본값 64 KB)</li>
+</ul>
+<h5 id="파일-관리">파일 관리</h5>
+<h6 id="loggerlogbuffersize">logger.logBufferSize</h6>
+<ul>
+<li><strong>유형</strong>: 정수 (바이트)</li>
+<li><strong>기본값</strong>: 1024</li>
+<li><strong>설명</strong>: 플러시하기 전에 버퍼링할 최대 메시지 수</li>
+</ul>
+<h6 id="loggerlogfilename">logger.logFileName</h6>
+<ul>
+<li><strong>유형</strong>: 문자열 (파일 경로)</li>
+<li><strong>기본값</strong>: <code>logs/log-@.txt</code></li>
+<li><strong>설명</strong>: 로그 파일 명명 패턴 (<code>@</code>은 로테이션 번호로 대체됨)</li>
+</ul>
+<h6 id="loggerlogfilenameoverride">logger.logFilenameOverride</h6>
+<ul>
+<li><strong>Type</strong>: 문자열 (파일 경로)</li>
+<li><strong>Description</strong>: 로그 파일 이름 재정의(로그 로테이션 패턴 비활성화)</li>
+</ul>
+<h6 id="loggerlogfilesize">logger.logFileSize</h6>
+<ul>
+<li><strong>유형</strong>: 문자열(단위가 포함된 크기)</li>
+<li><strong>기본값</strong>: 10M</li>
+<li><strong>단위</strong>: K (킬로바이트), M (메가바이트), G (기가바이트)</li>
+<li><strong>예시</strong>: <code>50M</code>, <code>1G</code></li>
+</ul>
+<h6 id="loggerlogrotationlimit">logger.logRotationLimit</h6>
+<ul>
+<li><strong>유형</strong>: 정수</li>
+<li><strong>기본값</strong>: 2</li>
+<li><strong>설명</strong>: 순환 로그 파일의 최대 번호 (log-0.txt부터 log-N.txt까지)</li>
+</ul>
+<h4 id="구성-예제-1">구성 예제</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Basic logging configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.consoleBufferSize</span><span style="color:#f92672">=</span><span style="color:#e6db74">50</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.dateFormat</span><span style="color:#f92672">=</span><span style="color:#e6db74">yyyy-MM-dd HH:mm:ss.SSS</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.defaultLevel</span><span style="color:#f92672">=</span><span style="color:#e6db74">WARN</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.displayOnScreen</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.dropDuplicates</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.dropOnOverflow</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Flushing and format</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.flushInterval</span><span style="color:#f92672">=</span><span style="color:#e6db74">30</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.format</span><span style="color:#f92672">=</span><span style="color:#e6db74">dctpm</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># File management</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.logBufferSize</span><span style="color:#f92672">=</span><span style="color:#e6db74">2048</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.logFileName</span><span style="color:#f92672">=</span><span style="color:#e6db74">logs/log-@.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.logFileSize</span><span style="color:#f92672">=</span><span style="color:#e6db74">25M</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.logRotationLimit</span><span style="color:#f92672">=</span><span style="color:#e6db74">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Compression (0.9.56+)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.gzip</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.minGzipSize</span><span style="color:#f92672">=</span><span style="color:#e6db74">131072</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># On-screen filtering</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.minimumOnScreenLevel</span><span style="color:#f92672">=</span><span style="color:#e6db74">ERROR</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Per-class overrides</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.record.net.i2p.router.transport</span><span style="color:#f92672">=</span><span style="color:#e6db74">INFO</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.record.net.i2p.router.tunnel</span><span style="color:#f92672">=</span><span style="color:#e6db74">DEBUG</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">logger.record.net.i2p.crypto</span><span style="color:#f92672">=</span><span style="color:#e6db74">WARN</span>
+</span></span></code></pre></div><hr>
+<h3 id="플러그인-구성">플러그인 구성</h3>
+<h4 id="개별-플러그인-구성-pluginspluginconfig">개별 플러그인 구성 (plugins/*/plugin.config)</h4>
+<p><strong>위치</strong>: <code>$I2P_CONFIG_DIR/plugins/{plugin-name}/plugin.config</code>   <strong>형식</strong>: 표준 I2P 구성 파일 형식   <strong>문서</strong>: <a href="../../../../ko/docs/specs/plugin/">플러그인 사양</a>
+</p>
+<h5 id="필수-속성-1">필수 속성</h5>
+<h6 id="이름-1">이름</h6>
+<ul>
+<li><strong>유형</strong>: 문자열</li>
+<li><strong>필수</strong>: 예</li>
+<li><strong>설명</strong>: 플러그인 표시 이름</li>
+<li><strong>예시</strong>: <code>name=I2P Plugin Example</code></li>
+</ul>
+<h6 id="키">키</h6>
+<ul>
+<li><strong>유형</strong>: 문자열(공개 키)</li>
+<li><strong>필수 여부</strong>: 예(SU3로 서명된 플러그인의 경우 생략)</li>
+<li><strong>설명</strong>: 검증을 위한 플러그인 서명 공개 키</li>
+<li><strong>형식</strong>: Base64로 인코딩된 서명 키</li>
+</ul>
+<h6 id="서명자">서명자</h6>
+<ul>
+<li><strong>유형</strong>: 문자열</li>
+<li><strong>필수</strong>: 예</li>
+<li><strong>설명</strong>: 플러그인 서명자 식별자</li>
+<li><strong>예시</strong>: <code>signer=user@example.i2p</code></li>
+</ul>
+<h6 id="버전">버전</h6>
+<ul>
+<li><strong>유형</strong>: 문자열 (VersionComparator 형식)</li>
+<li><strong>필수</strong>: 예</li>
+<li><strong>설명</strong>: 업데이트 확인을 위한 플러그인 버전</li>
+<li><strong>형식</strong>: Semantic versioning(시맨틱 버저닝) 또는 사용자 정의 비교 가능한 형식</li>
+<li><strong>예시</strong>: <code>version=1.2.3</code></li>
+</ul>
+<h5 id="표시-속성">표시 속성</h5>
+<h6 id="날짜">날짜</h6>
+<ul>
+<li><strong>유형</strong>: Long (Unix 타임스탬프 밀리초)</li>
+<li><strong>설명</strong>: 플러그인 릴리스 날짜</li>
+</ul>
+<h6 id="저자">저자</h6>
+<ul>
+<li><strong>유형</strong>: 문자열</li>
+<li><strong>설명</strong>: 플러그인 작성자 이름</li>
+</ul>
+<h6 id="websiteurl">websiteURL</h6>
+<ul>
+<li><strong>유형</strong>: 문자열 (URL)</li>
+<li><strong>설명</strong>: 플러그인 웹사이트 URL</li>
+</ul>
+<h6 id="updateurl">updateURL</h6>
+<ul>
+<li><strong>유형</strong>: 문자열 (URL)</li>
+<li><strong>설명</strong>: 플러그인 업데이트 확인용 URL</li>
+</ul>
+<h6 id="updateurlsu3">updateURL.su3</h6>
+<ul>
+<li><strong>유형</strong>: 문자열 (URL)</li>
+<li><strong>도입 버전</strong>: 버전 0.9.15</li>
+<li><strong>설명</strong>: SU3 형식(I2P 업데이트 패키지 파일 형식) 업데이트 URL (권장)</li>
+</ul>
+<h6 id="설명">설명</h6>
+<ul>
+<li><strong>유형</strong>: 문자열</li>
+<li><strong>설명</strong>: 영문 플러그인 설명</li>
+</ul>
+<h6 id="설명_language">설명_{language}</h6>
+<ul>
+<li><strong>유형</strong>: 문자열</li>
+<li><strong>설명</strong>: 현지화된 플러그인 설명</li>
+<li><strong>예시</strong>: <code>description_de=Deutsche Beschreibung</code></li>
+</ul>
+<h6 id="라이선스">라이선스</h6>
+<ul>
+<li><strong>유형</strong>: 문자열</li>
+<li><strong>설명</strong>: 플러그인 라이선스 식별자</li>
+<li><strong>예</strong>: <code>license=Apache 2.0</code></li>
+</ul>
+<h5 id="설치-속성">설치 속성</h5>
+<h6 id="설치-시-자동-시작-안-함">설치 시 자동 시작 안 함</h6>
+<ul>
+<li><strong>유형</strong>: 불리언</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: 설치 후 자동 시작을 방지합니다</li>
+</ul>
+<h6 id="router-재시작-필요">router 재시작 필요</h6>
+<ul>
+<li><strong>유형</strong>: 불리언</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: 설치 후 router 재시작이 필요함</li>
+</ul>
+<h6 id="설치-전용">설치 전용</h6>
+<ul>
+<li><strong>유형</strong>: 부울</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: 한 번만 설치(업데이트 없음)</li>
+</ul>
+<h6 id="업데이트-전용">업데이트 전용</h6>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Default</strong>: false</li>
+<li><strong>Description</strong>: 기존 설치만 업데이트합니다(새로 설치하지 않음)</li>
+</ul>
+<h5 id="플러그인-설정-예제">플러그인 설정 예제</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Required properties</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example I2P Plugin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">signer</span><span style="color:#f92672">=</span><span style="color:#e6db74">developer@mail.i2p</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">version</span><span style="color:#f92672">=</span><span style="color:#e6db74">1.5.0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Display properties</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">author</span><span style="color:#f92672">=</span><span style="color:#e6db74">Plugin Developer</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">websiteURL</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://plugin.example.i2p</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">updateURL</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://plugin.example.i2p/update.xpi2p</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">updateURL.su3</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://plugin.example.i2p/update.su3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description</span><span style="color:#f92672">=</span><span style="color:#e6db74">Example plugin demonstrating configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description_de</span><span style="color:#f92672">=</span><span style="color:#e6db74">Beispiel-Plugin zur Demonstration der Konfiguration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">license</span><span style="color:#f92672">=</span><span style="color:#e6db74">MIT</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Installation behavior</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">dont-start-at-install</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router-restart-required</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span></code></pre></div><h4 id="전역-플러그인-구성-pluginsconfig">전역 플러그인 구성 (plugins.config)</h4>
+<p><strong>위치</strong>: <code>$I2P_CONFIG_DIR/plugins.config</code>   <strong>목적</strong>: 설치된 플러그인을 전역적으로 활성화/비활성화</p>
+<h5 id="속성-형식-1">속성 형식</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">plugin.{name}.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true|false</span>
+</span></span></code></pre></div><ul>
+<li><code>{name}</code>: plugin.config의 플러그인 이름</li>
+<li><code>startOnLoad</code>: router 실행 시 플러그인을 시작할지 여부</li>
+</ul>
+<h5 id="예시">예시</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">plugin.i2psnark.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plugin.susimail.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plugin.susidns.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plugin.i2pbote.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span></code></pre></div><hr>
+<h3 id="웹-애플리케이션-설정-webappsconfig">웹 애플리케이션 설정 (webapps.config)</h3>
+<p><strong>위치</strong>: <code>$I2P_CONFIG_DIR/webapps.config</code>   <strong>목적</strong>: 웹 애플리케이션을 활성화/비활성화하고 구성</p>
+<h4 id="속성-형식-2">속성 형식</h4>
+<h5 id="webappsnamestartonload">webapps.{name}.startOnLoad</h5>
+<ul>
+<li><strong>유형</strong>: Boolean</li>
+<li><strong>설명</strong>: router 시작 시 웹앱을 시작할지 여부</li>
+<li><strong>형식</strong>: <code>webapps.{name}.startOnLoad=true|false</code></li>
+</ul>
+<h5 id="webappsnameclasspath">webapps.{name}.classpath</h5>
+<ul>
+<li><strong>유형</strong>: String(문자열) (공백 또는 쉼표로 구분된 경로)</li>
+<li><strong>설명</strong>: 웹앱용 추가 클래스패스 요소</li>
+<li><strong>형식</strong>: <code>webapps.{name}.classpath=[paths]</code></li>
+</ul>
+<h4 id="변수-치환">변수 치환</h4>
+<p>경로는 다음과 같은 변수 치환을 지원합니다:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Variable</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Expands To</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Context</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$I2P</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Base I2P directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Core webapps</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$CONFIG</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">User config directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">All webapps</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;"><code>$PLUGIN</code></td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Plugin directory</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Plugin webapps</td>
+    </tr>
+  </tbody>
+</table>
+#### 클래스패스 해석
+<ul>
+<li><strong>코어 웹앱</strong>: <code>$I2P/lib</code>를 기준으로 한 상대 경로</li>
+<li><strong>플러그인 웹앱</strong>: <code>$CONFIG/plugins/{appname}/lib</code>를 기준으로 한 상대 경로</li>
+</ul>
+<h4 id="구성-예제-2">구성 예제</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Router console</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.routerconsole.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.routerconsole.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">routerconsole.jar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2PSnark</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.i2psnark.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.i2psnark.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">i2psnark.jar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># SusiDNS</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.susidns.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.susidns.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">susidns.jar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plugin webapp example</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.exampleplugin.startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webapps.exampleplugin.classpath</span><span style="color:#f92672">=</span><span style="color:#e6db74">$PLUGIN/lib/webapp.jar,$PLUGIN/lib/deps.jar</span>
+</span></span></code></pre></div><hr>
+<h3 id="router-설정-routerconfig">Router 설정 (router.config)</h3>
+<p><strong>위치</strong>: <code>$I2P_CONFIG_DIR/router.config</code>   <strong>구성 인터페이스</strong>: <code>/configadvanced</code>의 Router 콘솔   <strong>용도</strong>: 핵심 router 설정 및 네트워크 매개변수</p>
+<h4 id="설정-범주">설정 범주</h4>
+<h5 id="네트워크-설정">네트워크 설정</h5>
+<p>대역폭 설정:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">i2np.bandwidth.inboundKBytesPerSecond</span><span style="color:#f92672">=</span><span style="color:#e6db74">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.bandwidth.outboundKBytesPerSecond</span><span style="color:#f92672">=</span><span style="color:#e6db74">50</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.bandwidth.share.percentage</span><span style="color:#f92672">=</span><span style="color:#e6db74">80</span>
+</span></span></code></pre></div><p>전송 구성:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># NTCP (TCP-based transport)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.ntcp.port</span><span style="color:#f92672">=</span><span style="color:#e6db74">8887</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.ntcp.enable</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.ntcp.autoip</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># SSU (UDP-based transport)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.udp.port</span><span style="color:#f92672">=</span><span style="color:#e6db74">8887</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.udp.enable</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># UPnP/NAT-PMP</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.upnp.enable</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span></code></pre></div><h5 id="router-동작-방식">Router 동작 방식</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Tunnel participation</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.maxParticipatingTunnels</span><span style="color:#f92672">=</span><span style="color:#e6db74">200</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.sharePercentage</span><span style="color:#f92672">=</span><span style="color:#e6db74">80</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Updates</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.updatePolicy</span><span style="color:#f92672">=</span><span style="color:#e6db74">notify</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.updateURL</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://update.i2p2.i2p/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Network integration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.hiddenMode</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.clockSkewOffset</span><span style="color:#f92672">=</span><span style="color:#e6db74">0</span>
+</span></span></code></pre></div><h5 id="콘솔-설정">콘솔 설정</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Language and display</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">en</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.country</span><span style="color:#f92672">=</span><span style="color:#e6db74">US</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.summaryRefresh</span><span style="color:#f92672">=</span><span style="color:#e6db74">60</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Browser</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.browser</span><span style="color:#f92672">=</span><span style="color:#e6db74">default</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Security</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.enableCompression</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span></code></pre></div><h5 id="시간-설정">시간 설정</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># NTP</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">time.disabled</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">time.sntpServerList</span><span style="color:#f92672">=</span><span style="color:#e6db74">0.pool.ntp.org,1.pool.ntp.org</span>
+</span></span></code></pre></div><p><strong>참고</strong>: Router 설정은 방대합니다. 전체 속성 레퍼런스는 <code>/configadvanced</code>의 router 콘솔에서 확인하세요.</p>
+<hr>
+<h2 id="애플리케이션-구성-파일">애플리케이션 구성 파일</h2>
+<h3 id="주소록-설정-addressbookconfigtxt">주소록 설정 (addressbook/config.txt)</h3>
+<p><strong>위치</strong>: <code>$I2P_CONFIG_DIR/addressbook/config.txt</code>   <strong>애플리케이션</strong>: SusiDNS   <strong>목적</strong>: 호스트 이름 해석 및 주소록 관리</p>
+<h4 id="파일-위치">파일 위치</h4>
+<h5 id="router_addressbook">router_addressbook</h5>
+<ul>
+<li><strong>기본값</strong>: <code>../hosts.txt</code></li>
+<li><strong>설명</strong>: 마스터 주소록(시스템 전역 호스트 이름)</li>
+<li><strong>형식</strong>: 표준 hosts 파일 형식</li>
+</ul>
+<h5 id="privatehoststxt">privatehosts.txt</h5>
+<ul>
+<li><strong>위치</strong>: <code>$I2P_CONFIG_DIR/addressbook/privatehosts.txt</code></li>
+<li><strong>설명</strong>: 개인용 호스트 이름 매핑</li>
+<li><strong>우선순위</strong>: 최상위 (다른 모든 소스를 덮어씀)</li>
+</ul>
+<h5 id="userhoststxt">userhosts.txt</h5>
+<ul>
+<li><strong>위치</strong>: <code>$I2P_CONFIG_DIR/addressbook/userhosts.txt</code></li>
+<li><strong>설명</strong>: 사용자가 추가한 호스트명 매핑</li>
+<li><strong>관리</strong>: SusiDNS 인터페이스를 통해</li>
+</ul>
+<h5 id="hoststxt">hosts.txt</h5>
+<ul>
+<li><strong>위치</strong>: <code>$I2P_CONFIG_DIR/addressbook/hosts.txt</code></li>
+<li><strong>설명</strong>: 다운로드된 공개 주소록</li>
+<li><strong>출처</strong>: 구독 피드</li>
+</ul>
+<h4 id="네이밍-서비스">네이밍 서비스</h4>
+<h5 id="blockfilenamingservice-088부터-기본">BlockfileNamingService (0.8.8부터 기본)</h5>
+<p>저장 형식: - <strong>파일</strong>: <code>hostsdb.blockfile</code> - <strong>위치</strong>: <code>$I2P_CONFIG_DIR/addressbook/</code> - <strong>성능</strong>: hosts.txt 대비 ~10배 더 빠른 조회 - <strong>형식</strong>: 이진 데이터베이스 형식</p>
+<p>레거시 네이밍 서비스: - <strong>형식</strong>: 평문 텍스트 hosts.txt - <strong>상태</strong>: 더 이상 권장되지 않지만 여전히 지원됨 - <strong>사용 사례</strong>: 수동 편집, 버전 관리</p>
+<h4 id="호스트-이름-규칙">호스트 이름 규칙</h4>
+<p>I2P 호스트명은 다음을 준수해야 합니다:</p>
+<ol>
+<li><strong>TLD 요구 사항</strong>: <code>.i2p</code>로 끝나야 함</li>
+<li><strong>최대 길이</strong>: 총 67자</li>
+<li><strong>문자 집합</strong>: <code>[a-z]</code>, <code>[0-9]</code>, <code>.</code> (마침표), <code>-</code> (하이픈)</li>
+<li><strong>대소문자</strong>: 소문자만</li>
+<li><strong>시작 제한</strong>: <code>.</code> 또는 <code>-</code>로 시작할 수 없음</li>
+<li><strong>금지된 패턴</strong>: <code>..</code>, <code>.-</code>, <code>-.</code> 포함 불가 (0.6.1.33부터)</li>
+<li><strong>예약됨</strong>: Base32 호스트명 <code>*.b32.i2p</code> (base32.b32.i2p는 52자)</li>
+</ol>
+<h5 id="유효한-예시">유효한 예시</h5>
+<pre tabindex="0"><code>example.i2p
+my-site.i2p
+test.example.i2p
+site123.i2p
+</code></pre><h5 id="잘못된-예제">잘못된 예제</h5>
+<pre tabindex="0"><code>example.com          # Wrong TLD
+-invalid.i2p         # Starts with hyphen
+invalid..i2p         # Contains double dot
+invalid.-.i2p        # Contains dot-hyphen
+UPPERCASE.I2P        # Must be lowercase
+verylonghostnameover67charactersthatexceedsthemaximumlength.i2p  # Too long
+</code></pre><h4 id="구독-관리">구독 관리</h4>
+<h5 id="subscriptionstxt">subscriptions.txt</h5>
+<ul>
+<li><strong>위치</strong>: <code>$I2P_CONFIG_DIR/addressbook/subscriptions.txt</code></li>
+<li><strong>형식</strong>: 한 줄에 하나의 URL</li>
+<li><strong>기본값</strong>: <code>http://i2p-projekt.i2p/hosts.txt</code></li>
+</ul>
+<h5 id="구독-피드-형식-0926부터">구독 피드 형식 (0.9.26부터)</h5>
+<p>메타데이터가 포함된 고급 피드 형식:</p>
+<pre tabindex="0"><code>#
+# I2P Address Book Subscription Feed
+# Format: hostname=destination [#property=value ...]
+#
+
+example.i2p=base64destination #added=20250101 #src=manual
+another.i2p=base64destination #added=20250102 #src=feed1
+</code></pre><p>메타데이터 속성: - <code>added</code>: 호스트명이 추가된 날짜(YYYYMMDD 형식) - <code>src</code>: 소스 식별자 - <code>sig</code>: 선택적 서명</p>
+<p><strong>하위 호환성</strong>: 간단한 hostname=destination 형식은 여전히 지원됩니다.</p>
+<h4 id="구성-예시">구성 예시</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Address book locations</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router_addressbook</span><span style="color:#f92672">=</span><span style="color:#e6db74">../hosts.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">privatehosts.txt</span><span style="color:#f92672">=</span><span style="color:#e6db74">$CONFIG/addressbook/privatehosts.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">userhosts.txt</span><span style="color:#f92672">=</span><span style="color:#e6db74">$CONFIG/addressbook/userhosts.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">hosts.txt</span><span style="color:#f92672">=</span><span style="color:#e6db74">$CONFIG/addressbook/hosts.txt</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Naming service</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">naming.service</span><span style="color:#f92672">=</span><span style="color:#e6db74">BlockfileNamingService</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">naming.service.blockfile.location</span><span style="color:#f92672">=</span><span style="color:#e6db74">$CONFIG/addressbook/hostsdb.blockfile</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Subscriptions</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">subscriptions.txt</span><span style="color:#f92672">=</span><span style="color:#e6db74">$CONFIG/addressbook/subscriptions.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">subscriptions.schedule</span><span style="color:#f92672">=</span><span style="color:#e6db74">daily</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">subscriptions.proxy</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span></code></pre></div><hr>
+<h3 id="i2psnark-구성-i2psnarkconfigdi2psnarkconfig">I2PSnark 구성 (i2psnark.config.d/i2psnark.config)</h3>
+<p><strong>위치</strong>: <code>$I2P_CONFIG_DIR/i2psnark.config.d/i2psnark.config</code>   <strong>애플리케이션</strong>: I2PSnark BitTorrent 클라이언트   <strong>설정 인터페이스</strong>: http://127.0.0.1:7657/i2psnark 의 웹 GUI</p>
+<h4 id="디렉터리-구조">디렉터리 구조</h4>
+<pre tabindex="0"><code>$I2P_CONFIG_DIR/i2psnark.config.d/
+├── i2psnark.config
+├── [torrent-hash-1]/
+│   └── *.config
+├── [torrent-hash-2]/
+│   └── *.config
+└── ...
+</code></pre><h4 id="주요-설정-i2psnarkconfig">주요 설정 (i2psnark.config)</h4>
+<p>최소한의 기본 구성:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.dir</span><span style="color:#f92672">=</span><span style="color:#e6db74">i2psnark</span>
+</span></span></code></pre></div><p>웹 인터페이스를 통해 관리되는 추가 속성:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># Basic settings</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.dir</span><span style="color:#f92672">=</span><span style="color:#e6db74">i2psnark</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.autoStart</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.openTrackers</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Network settings</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.uploaders</span><span style="color:#f92672">=</span><span style="color:#e6db74">8</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.upBW</span><span style="color:#f92672">=</span><span style="color:#e6db74">40</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.seedPct</span><span style="color:#f92672">=</span><span style="color:#e6db74">100</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2CP settings</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.i2cpHost</span><span style="color:#f92672">=</span><span style="color:#e6db74">127.0.0.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2psnark.i2cpPort</span><span style="color:#f92672">=</span><span style="color:#e6db74">7654</span>
+</span></span></code></pre></div><h4 id="개별-토렌트-설정">개별 토렌트 설정</h4>
+<p><strong>위치</strong>: <code>$I2P_CONFIG_DIR/i2psnark.config.d/[torrent-hash]/*.config</code>   <strong>형식</strong>: 토렌트별 설정   <strong>관리</strong>: 자동 (웹 GUI를 통해)</p>
+<p>속성에는 다음이 포함됩니다: - 토렌트별 업로드/다운로드 설정 - 파일 우선순위 - 트래커 정보 - 피어 제한</p>
+<p><strong>참고</strong>: 토렌트 구성은 주로 웹 인터페이스를 통해 관리됩니다. 수동으로 편집하는 것은 권장되지 않습니다.</p>
+<h4 id="토렌트-데이터-구성">토렌트 데이터 구성</h4>
+<p>데이터 저장소는 설정과 분리되어 있습니다:</p>
+<pre tabindex="0"><code>$I2P_CONFIG_DIR/i2psnark/          # Data directory
+├── *.torrent                       # Torrent metadata files
+├── *.torrent.downloaded/           # Downloaded file directories
+├── file1.dat                       # Direct file downloads
+└── ...
+
+$I2P_CONFIG_DIR/i2psnark.config.d/ # Configuration directory
+├── i2psnark.config                 # Main config
+└── [hashes]/                       # Per-torrent configs
+</code></pre><hr>
+<h3 id="i2ptunnel-설정-i2ptunnelconfig">I2PTunnel 설정 (i2ptunnel.config)</h3>
+<p><strong>위치</strong>: <code>$I2P_CONFIG_DIR/i2ptunnel.config</code> (레거시) 또는 <code>$I2P_CONFIG_DIR/i2ptunnel.config.d/</code> (최신)   <strong>구성 인터페이스</strong>: Router 콘솔의 <code>/i2ptunnel</code>   <strong>형식 변경</strong>: 버전 0.9.42 (2019년 8월)</p>
+<h4 id="디렉터리-구조-버전-0942-1">디렉터리 구조 (버전 0.9.42+)</h4>
+<p>0.9.42 릴리스부터 기본 i2ptunnel.config 파일이 자동으로 나뉩니다:</p>
+<pre tabindex="0"><code>$I2P_CONFIG_DIR/
+├── i2ptunnel.config.d/
+│   ├── http-proxy/
+│   │   └── tunnel.config
+│   ├── irc-proxy/
+│   │   └── tunnel.config
+│   ├── ssh-service/
+│   │   └── tunnel.config
+│   └── ...
+└── i2ptunnel.config (legacy, auto-migrated)
+</code></pre><p><strong>중요한 형식 차이</strong>: - <strong>모놀리식 형식</strong>: 속성 앞에 <code>tunnel.N.</code> 접두사가 붙음 - <strong>분리형 형식</strong>: 속성에는 접두사가 <strong>없음</strong> (예: <code>description=</code>, <code>tunnel.0.description=</code>가 아님)</p>
+<h4 id="마이그레이션-동작">마이그레이션 동작</h4>
+<p>0.9.42로 업그레이드 후 첫 실행 시:</p>
+<ol>
+<li>기존 i2ptunnel.config 파일을 읽습니다</li>
+<li>개별 tunnel 설정이 i2ptunnel.config.d/ 디렉터리에 생성됩니다</li>
+<li>분리된 파일에서 속성의 접두사가 제거됩니다</li>
+<li>원본 파일이 백업됩니다</li>
+<li>하위 호환성을 위해 이전 형식도 계속 지원됩니다</li>
+</ol>
+<h4 id="구성-섹션">구성 섹션</h4>
+<p>I2PTunnel 구성은 아래의 <a href="#i2ptunnel-configuration-reference">I2PTunnel 구성 참조</a>
+ 섹션에서 자세히 설명되어 있습니다. 속성 설명은 모놀리식(<code>tunnel.N.property</code>) 형식과 분리(<code>property</code>) 형식 모두에 적용됩니다.</p>
+<hr>
+<h2 id="i2ptunnel-설정-참조">I2PTunnel 설정 참조</h2>
+<p>이 섹션에서는 모든 I2PTunnel 구성 속성에 대한 포괄적인 기술 참조를 제공합니다. 속성은 <code>tunnel.N.</code> 접두사 없이 분리 형식으로 표시됩니다. 모놀리식 형식의 경우 모든 속성 앞에 <code>tunnel.N.</code> 접두사를 붙이며, 여기서 N은 tunnel 번호입니다.</p>
+<p><strong>중요</strong>: <code>tunnel.N.option.i2cp.*</code>로 기술된 속성은 I2PTunnel(트래픽 경로를 구성·관리하는 도구)에서 구현되어 있으며, I2CP 프로토콜(I2P router와 애플리케이션 간 제어 프로토콜)이나 SAM API(I2P용 Simple Anonymous Messaging 인터페이스)와 같은 다른 인터페이스를 통해서는 <strong>지원되지 않습니다</strong>.</p>
+<h3 id="기본-속성">기본 속성</h3>
+<h4 id="tunnelndescription-설명">tunnel.N.description (설명)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열</li>
+<li><strong>적용 범위</strong>: 모든 tunnel(터널, I2P의 통신 경로)</li>
+<li><strong>설명</strong>: UI 표시용 사람이 읽을 수 있는 tunnel 설명</li>
+<li><strong>예시</strong>: <code>description=HTTP Proxy for outproxy access</code></li>
+</ul>
+<h4 id="tunnelnname-이름">tunnel.N.name (이름)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열</li>
+<li><strong>컨텍스트</strong>: 모든 tunnel(트래픽을 전달하는 I2P 경로)</li>
+<li><strong>필수</strong>: 예</li>
+<li><strong>설명</strong>: 고유한 tunnel 식별자 및 표시 이름</li>
+<li><strong>예시</strong>: <code>name=I2P HTTP Proxy</code></li>
+</ul>
+<h4 id="tunnelntype-유형">tunnel.N.type (유형)</h4>
+<ul>
+<li><strong>유형</strong>: 열거형</li>
+<li><strong>컨텍스트</strong>: 모든 tunnel</li>
+<li><strong>필수</strong>: 예</li>
+<li><strong>값</strong>:
+<ul>
+<li><code>client</code> - 일반적인 클라이언트 tunnel</li>
+<li><code>httpclient</code> - HTTP 프록시 클라이언트</li>
+<li><code>ircclient</code> - IRC 클라이언트 tunnel</li>
+<li><code>socksirctunnel</code> - SOCKS IRC 프록시</li>
+<li><code>sockstunnel</code> - SOCKS 프록시(버전 4, 4a, 5)</li>
+<li><code>connectclient</code> - CONNECT 프록시 클라이언트</li>
+<li><code>streamrclient</code> - Streamr 클라이언트</li>
+<li><code>server</code> - 일반적인 서버 tunnel</li>
+<li><code>httpserver</code> - HTTP 서버 tunnel</li>
+<li><code>ircserver</code> - IRC 서버 tunnel</li>
+<li><code>httpbidirserver</code> - 양방향 HTTP 서버</li>
+<li><code>streamrserver</code> - Streamr 서버</li>
+</ul>
+</li>
+</ul>
+<h4 id="tunnelninterface-인터페이스">tunnel.N.interface (인터페이스)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열(IP 주소 또는 호스트명)</li>
+<li><strong>컨텍스트</strong>: 클라이언트 tunnel에만 해당</li>
+<li><strong>기본값</strong>: 127.0.0.1</li>
+<li><strong>설명</strong>: 수신 연결을 위해 바인딩할 로컬 인터페이스</li>
+<li><strong>보안 참고</strong>: 0.0.0.0에 바인딩하면 원격 연결을 허용합니다</li>
+<li><strong>예시</strong>: <code>interface=127.0.0.1</code></li>
+</ul>
+<h4 id="tunnelnlistenport-listenport">tunnel.N.listenPort (listenPort)</h4>
+<ul>
+<li><strong>유형</strong>: 정수</li>
+<li><strong>적용 범위</strong>: 클라이언트 tunnel 전용</li>
+<li><strong>범위</strong>: 1-65535</li>
+<li><strong>설명</strong>: 클라이언트 연결을 수신 대기할 로컬 포트</li>
+<li><strong>예시</strong>: <code>listenPort=4444</code></li>
+</ul>
+<h4 id="tunnelntargethost-targethost">tunnel.N.targetHost (targetHost)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열(IP 주소 또는 호스트 이름)</li>
+<li><strong>적용 대상</strong>: 서버 tunnel에서만 사용</li>
+<li><strong>설명</strong>: 연결을 전달할 로컬 서버</li>
+<li><strong>예</strong>: <code>targetHost=127.0.0.1</code></li>
+</ul>
+<h4 id="tunnelntargetport-targetport">tunnel.N.targetPort (targetPort)</h4>
+<ul>
+<li><strong>유형</strong>: 정수</li>
+<li><strong>적용 대상</strong>: 서버 tunnels에만 해당</li>
+<li><strong>범위</strong>: 1-65535</li>
+<li><strong>설명</strong>: 연결할 targetHost의 포트</li>
+<li><strong>예</strong>: <code>targetPort=80</code></li>
+</ul>
+<h4 id="tunnelntargetdestination-targetdestination">tunnel.N.targetDestination (targetDestination)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열(쉼표 또는 공백으로 구분된 Destination(목적지 주소) 목록)</li>
+<li><strong>컨텍스트</strong>: 클라이언트 tunnels에만 해당</li>
+<li><strong>형식</strong>: <code>destination[:port][,destination[:port]]</code></li>
+<li><strong>설명</strong>: 연결할 I2P Destination</li>
+<li><strong>예시</strong>:
+<ul>
+<li><code>targetDestination=example.i2p</code></li>
+<li><code>targetDestination=example.i2p:8080</code></li>
+<li><code>targetDestination=site1.i2p,site2.i2p:8080</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="tunnelni2cphost-i2cphost">tunnel.N.i2cpHost (i2cpHost)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열(IP 주소 또는 호스트 이름)</li>
+<li><strong>기본값</strong>: 127.0.0.1</li>
+<li><strong>설명</strong>: I2P router의 I2CP 인터페이스 주소</li>
+<li><strong>참고</strong>: router 컨텍스트에서 실행 중에는 무시됩니다</li>
+<li><strong>예</strong>: <code>i2cpHost=127.0.0.1</code></li>
+</ul>
+<h4 id="tunnelni2cpport-i2cpport">tunnel.N.i2cpPort (i2cpPort)</h4>
+<ul>
+<li><strong>유형</strong>: 정수</li>
+<li><strong>기본값</strong>: 7654</li>
+<li><strong>범위</strong>: 1-65535</li>
+<li><strong>설명</strong>: I2P router의 I2CP 포트</li>
+<li><strong>참고</strong>: router 컨텍스트에서 실행 중일 때 무시됨</li>
+<li><strong>예시</strong>: <code>i2cpPort=7654</code></li>
+</ul>
+<h4 id="tunnelnstartonload-startonload">tunnel.N.startOnLoad (startOnLoad)</h4>
+<ul>
+<li><strong>유형</strong>: Boolean</li>
+<li><strong>기본값</strong>: true</li>
+<li><strong>설명</strong>: I2PTunnel이 로드될 때 tunnel을 시작할지 여부</li>
+<li><strong>예</strong>: <code>startOnLoad=true</code></li>
+</ul>
+<h3 id="프록시-구성">프록시 구성</h3>
+<h4 id="tunnelnproxylist-proxylist">tunnel.N.proxyList (proxyList)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열 (쉼표 또는 공백으로 구분된 호스트 이름)</li>
+<li><strong>적용 범위</strong>: HTTP 및 SOCKS 프록시에만 해당</li>
+<li><strong>설명</strong>: outproxy(외부로 나가는 프록시) 호스트 목록</li>
+<li><strong>예</strong>: <code>proxyList=outproxy.example.i2p,backup.example.i2p</code></li>
+</ul>
+<h3 id="서버-구성">서버 구성</h3>
+<h4 id="tunnelnprivkeyfile-privkeyfile">tunnel.N.privKeyFile (privKeyFile)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열 (파일 경로)</li>
+<li><strong>컨텍스트</strong>: 서버 및 지속형 클라이언트 tunnels</li>
+<li><strong>설명</strong>: 지속형 목적지의 개인 키를 포함하는 파일</li>
+<li><strong>경로</strong>: I2P 설정 디렉터리를 기준으로 하는 절대 경로 또는 상대 경로</li>
+<li><strong>예시</strong>: <code>privKeyFile=eepsite/eepPriv.dat</code></li>
+</ul>
+<h4 id="tunnelnspoofedhost-spoofedhost">tunnel.N.spoofedHost (spoofedHost)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열 (호스트명)</li>
+<li><strong>컨텍스트</strong>: HTTP 서버에만 해당</li>
+<li><strong>기본값</strong>: 대상의 Base32 호스트명</li>
+<li><strong>설명</strong>: 로컬 서버로 전달되는 Host 헤더 값</li>
+<li><strong>예</strong>: <code>spoofedHost=example.i2p</code></li>
+</ul>
+<h4 id="tunnelnspoofedhostnnnn-spoofedhostnnnn">tunnel.N.spoofedHost.NNNN (spoofedHost.NNNN)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열(호스트명)</li>
+<li><strong>컨텍스트</strong>: HTTP 서버에만 해당</li>
+<li><strong>설명</strong>: 특정 수신 포트에 대한 가상 호스트 재정의</li>
+<li><strong>사용 사례</strong>: 서로 다른 포트에서 여러 사이트를 호스팅</li>
+<li><strong>예시</strong>: <code>spoofedHost.8080=site1.example.i2p</code></li>
+</ul>
+<h3 id="클라이언트별-옵션">클라이언트별 옵션</h3>
+<h4 id="tunnelnsharedclient-sharedclient">tunnel.N.sharedClient (sharedClient)</h4>
+<ul>
+<li><strong>유형</strong>: 불리언</li>
+<li><strong>컨텍스트</strong>: Client tunnels 전용</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: 여러 클라이언트가 이 tunnel을 공유할 수 있는지 여부</li>
+<li><strong>예시</strong>: <code>sharedClient=false</code></li>
+</ul>
+<h4 id="tunnelnoptionpersistentclientkey-persistentclientkey">tunnel.N.option.persistentClientKey (persistentClientKey)</h4>
+<ul>
+<li><strong>Type</strong>: 불리언</li>
+<li><strong>Context</strong>: 클라이언트 tunnel(터널) 전용</li>
+<li><strong>Default</strong>: false</li>
+<li><strong>Description</strong>: 재시작 간에도 destination keys(목적지 키)를 저장하고 재사용</li>
+<li><strong>Conflict</strong>: <code>i2cp.newDestOnResume=true</code>와 상호 배타적</li>
+<li><strong>Example</strong>: <code>option.persistentClientKey=true</code></li>
+</ul>
+<h3 id="i2cp-옵션-i2ptunnel-구현">I2CP 옵션 (I2PTunnel 구현)</h3>
+<p><strong>중요</strong>: 이 속성들은 <code>option.i2cp.</code> 접두사가 붙어 있지만, I2CP 프로토콜 계층이 아니라 <strong>I2PTunnel에서 구현됩니다</strong>. I2CP 또는 SAM API를 통해서는 사용할 수 없습니다.</p>
+<h4 id="tunnelnoptioni2cpdelayopen-optioni2cpdelayopen">tunnel.N.option.i2cp.delayOpen (option.i2cp.delayOpen)</h4>
+<ul>
+<li><strong>유형</strong>: 부울</li>
+<li><strong>컨텍스트</strong>: 클라이언트 tunnels 전용</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: 첫 연결이 이루어질 때까지 tunnel 생성 지연</li>
+<li><strong>사용 사례</strong>: 드물게 사용되는 tunnels에 대한 리소스 절약</li>
+<li><strong>예시</strong>: <code>option.i2cp.delayOpen=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2cpnewdestonresume-optioni2cpnewdestonresume">tunnel.N.option.i2cp.newDestOnResume (option.i2cp.newDestOnResume)</h4>
+<ul>
+<li><strong>유형</strong>: 불리언</li>
+<li><strong>적용 범위</strong>: 클라이언트 tunnel에만 해당</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>필수 조건</strong>: <code>i2cp.closeOnIdle=true</code></li>
+<li><strong>충돌</strong>: <code>persistentClientKey=true</code>와 상호 배타적임</li>
+<li><strong>설명</strong>: 유휴 시간 초과 후 새 destination(목적지) 생성</li>
+<li><strong>예시</strong>: <code>option.i2cp.newDestOnResume=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2cpleasesetprivatekey-optioni2cpleasesetprivatekey">tunnel.N.option.i2cp.leaseSetPrivateKey (option.i2cp.leaseSetPrivateKey)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열 (base64로 인코딩된 키)</li>
+<li><strong>컨텍스트</strong>: 서버 tunnel 전용</li>
+<li><strong>설명</strong>: 지속적으로 사용하는 leaseset(목적지 연결 정보 데이터 구조) 암호화용 개인 키</li>
+<li><strong>사용 사례</strong>: 재시작 간에도 암호화된 leaseset을 일관되게 유지</li>
+<li><strong>예시</strong>: <code>option.i2cp.leaseSetPrivateKey=AAAA...base64...</code></li>
+</ul>
+<h4 id="tunnelnoptioni2cpleasesetsigningprivatekey-optioni2cpleasesetsigningprivatekey">tunnel.N.option.i2cp.leaseSetSigningPrivateKey (option.i2cp.leaseSetSigningPrivateKey)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열 (sigtype:base64)</li>
+<li><strong>컨텍스트</strong>: 서버 tunnel 전용</li>
+<li><strong>형식</strong>: <code>sigtype:base64key</code></li>
+<li><strong>설명</strong>: 영구적인 leaseset 서명용 개인 키</li>
+<li><strong>예</strong>: <code>option.i2cp.leaseSetSigningPrivateKey=7:AAAA...base64...</code></li>
+</ul>
+<h3 id="서버별-옵션">서버별 옵션</h3>
+<h4 id="tunnelnoptionenableuniquelocal-optionenableuniquelocal">tunnel.N.option.enableUniqueLocal (option.enableUniqueLocal)</h4>
+<ul>
+<li><strong>유형</strong>: 불리언(Boolean)</li>
+<li><strong>컨텍스트</strong>: Server tunnels에만 해당</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: 원격 I2P 목적지마다 고유한 로컬 IP 사용</li>
+<li><strong>사용 사례</strong>: 서버 로그에서 클라이언트 IP를 추적</li>
+<li><strong>보안 참고</strong>: 익명성이 낮아질 수 있음</li>
+<li><strong>예시</strong>: <code>option.enableUniqueLocal=false</code></li>
+</ul>
+<h4 id="tunnelnoptiontargetforportnnnn-optiontargetforportnnnn">tunnel.N.option.targetForPort.NNNN (option.targetForPort.NNNN)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열 (hostname:port)</li>
+<li><strong>컨텍스트</strong>: 서버 tunnels(I2P의 통신 경로) 전용</li>
+<li><strong>설명</strong>: 수신 포트 NNNN에 대해 targetHost/targetPort를 재정의합니다</li>
+<li><strong>사용 사례</strong>: 서로 다른 로컬 서비스로의 포트 기반 라우팅</li>
+<li><strong>예</strong>: <code>option.targetForPort.8080=localhost:8080</code></li>
+</ul>
+<h3 id="스레드-풀-구성">스레드 풀 구성</h3>
+<h4 id="tunnelnoptioni2ptunnelusepool-optioni2ptunnelusepool">tunnel.N.option.i2ptunnel.usePool (option.i2ptunnel.usePool)</h4>
+<ul>
+<li><strong>유형</strong>: Boolean</li>
+<li><strong>컨텍스트</strong>: 서버 tunnels 전용</li>
+<li><strong>기본값</strong>: true</li>
+<li><strong>설명</strong>: 연결 처리를 위해 스레드 풀 사용</li>
+<li><strong>비고</strong>: 표준 서버에서는 항상 false(무시됨)</li>
+<li><strong>예시</strong>: <code>option.i2ptunnel.usePool=true</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelblockinghandlercount-optioni2ptunnelblockinghandlercount">tunnel.N.option.i2ptunnel.blockingHandlerCount (option.i2ptunnel.blockingHandlerCount)</h4>
+<ul>
+<li><strong>유형</strong>: 정수</li>
+<li><strong>적용 범위</strong>: 서버 tunnel 전용</li>
+<li><strong>기본값</strong>: 65</li>
+<li><strong>설명</strong>: 최대 스레드 풀 크기</li>
+<li><strong>참고</strong>: 표준 서버에서는 무시됨</li>
+<li><strong>예시</strong>: <code>option.i2ptunnel.blockingHandlerCount=100</code></li>
+</ul>
+<h3 id="http-클라이언트-옵션">HTTP 클라이언트 옵션</h3>
+<h4 id="tunnelnoptioni2ptunnelhttpclientallowinternalssl-optioni2ptunnelhttpclientallowinternalssl">tunnel.N.option.i2ptunnel.httpclient.allowInternalSSL (option.i2ptunnel.httpclient.allowInternalSSL)</h4>
+<ul>
+<li><strong>유형</strong>: Boolean</li>
+<li><strong>컨텍스트</strong>: HTTP 클라이언트 전용</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: .i2p 주소에 대한 SSL 연결을 허용</li>
+<li><strong>예시</strong>: <code>option.i2ptunnel.httpclient.allowInternalSSL=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientdisableaddresshelper-optioni2ptunnelhttpclientdisableaddresshelper">tunnel.N.option.i2ptunnel.httpclient.disableAddressHelper (option.i2ptunnel.httpclient.disableAddressHelper)</h4>
+<ul>
+<li><strong>유형</strong>: 부울</li>
+<li><strong>컨텍스트</strong>: HTTP 클라이언트 전용</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: 프록시 응답에서 address helper 링크를 비활성화합니다</li>
+<li><strong>예시</strong>: <code>option.i2ptunnel.httpclient.disableAddressHelper=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientjumpservers-optioni2ptunnelhttpclientjumpservers">tunnel.N.option.i2ptunnel.httpclient.jumpServers (option.i2ptunnel.httpclient.jumpServers)</h4>
+<ul>
+<li><strong>Type</strong>: 문자열 (쉼표 또는 공백으로 구분된 URL)</li>
+<li><strong>Context</strong>: HTTP 클라이언트 전용</li>
+<li><strong>Description</strong>: 호스트명 해석을 위한 Jump server(점프 서버) URL</li>
+<li><strong>Example</strong>: <code>option.i2ptunnel.httpclient.jumpServers=http://jump.i2p/jump,http://stats.i2p/jump</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientsendaccept-optioni2ptunnelhttpclientsendaccept">tunnel.N.option.i2ptunnel.httpclient.sendAccept (option.i2ptunnel.httpclient.sendAccept)</h4>
+<ul>
+<li><strong>유형</strong>: Boolean</li>
+<li><strong>컨텍스트</strong>: HTTP 클라이언트 전용</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: Accept 및 Accept-Encoding을 제외한 Accept-* 헤더를 전달합니다</li>
+<li><strong>예</strong>: <code>option.i2ptunnel.httpclient.sendAccept=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientsendreferer-optioni2ptunnelhttpclientsendreferer">tunnel.N.option.i2ptunnel.httpclient.sendReferer (option.i2ptunnel.httpclient.sendReferer)</h4>
+<ul>
+<li><strong>유형</strong>: 부울</li>
+<li><strong>컨텍스트</strong>: HTTP 클라이언트 전용</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: 프록시를 통해 Referer 헤더 전달</li>
+<li><strong>개인정보 보호 참고</strong>: 개인정보가 유출될 수 있음</li>
+<li><strong>예시</strong>: <code>option.i2ptunnel.httpclient.sendReferer=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientsenduseragent-optioni2ptunnelhttpclientsenduseragent">tunnel.N.option.i2ptunnel.httpclient.sendUserAgent (option.i2ptunnel.httpclient.sendUserAgent)</h4>
+<ul>
+<li><strong>유형</strong>: Boolean</li>
+<li><strong>컨텍스트</strong>: HTTP 클라이언트 전용</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: User-Agent 헤더를 프록시를 통해 전달</li>
+<li><strong>프라이버시 주의</strong>: 브라우저 정보가 유출될 수 있음</li>
+<li><strong>예</strong>: <code>option.i2ptunnel.httpclient.sendUserAgent=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientsendvia-optioni2ptunnelhttpclientsendvia">tunnel.N.option.i2ptunnel.httpclient.sendVia (option.i2ptunnel.httpclient.sendVia)</h4>
+<ul>
+<li><strong>유형</strong>: Boolean</li>
+<li><strong>컨텍스트</strong>: HTTP 클라이언트 전용</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: 프록시를 통해 Via 헤더를 전달</li>
+<li><strong>예시</strong>: <code>option.i2ptunnel.httpclient.sendVia=false</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelhttpclientssloutproxies-optioni2ptunnelhttpclientssloutproxies">tunnel.N.option.i2ptunnel.httpclient.SSLOutproxies (option.i2ptunnel.httpclient.SSLOutproxies)</h4>
+<ul>
+<li><strong>Type</strong>: 문자열(쉼표 또는 공백으로 구분된 destination(목적지) 목록)</li>
+<li><strong>Context</strong>: HTTP 클라이언트 전용</li>
+<li><strong>Description</strong>: HTTPS를 위한 I2P 네트워크 내 SSL outproxies(외부 프록시)</li>
+<li><strong>Example</strong>: <code>option.i2ptunnel.httpclient.SSLOutproxies=ssl-outproxy.i2p</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunneluselocaloutproxy-optioni2ptunneluselocaloutproxy">tunnel.N.option.i2ptunnel.useLocalOutproxy (option.i2ptunnel.useLocalOutproxy)</h4>
+<ul>
+<li><strong>유형</strong>: 불리언</li>
+<li><strong>컨텍스트</strong>: HTTP 클라이언트 전용</li>
+<li><strong>기본값</strong>: true</li>
+<li><strong>설명</strong>: 등록된 로컬 outproxy(외부 프록시) 플러그인 사용</li>
+<li><strong>예시</strong>: <code>option.i2ptunnel.useLocalOutproxy=true</code></li>
+</ul>
+<h3 id="http-클라이언트-인증">HTTP 클라이언트 인증</h3>
+<h4 id="tunnelnoptionproxyauth-optionproxyauth">tunnel.N.option.proxyAuth (option.proxyAuth)</h4>
+<ul>
+<li><strong>유형</strong>: 열거형(Enum)</li>
+<li><strong>적용 범위</strong>: HTTP 클라이언트 전용</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>값</strong>: <code>true</code>, <code>false</code>, <code>basic</code>, <code>digest</code></li>
+<li><strong>설명</strong>: 프록시에 접근하려면 로컬 인증이 필요합니다</li>
+<li><strong>참고</strong>: <code>true</code>는 <code>basic</code>과 동일합니다</li>
+<li><strong>예시</strong>: <code>option.proxyAuth=basic</code></li>
+</ul>
+<h4 id="tunnelnoptionproxyauthusermd5-optionproxyauthusermd5">tunnel.N.option.proxy.auth.USER.md5 (option.proxy.auth.USER.md5)</h4>
+<ul>
+<li><strong>형식</strong>: 문자열(소문자 16진수 32자)</li>
+<li><strong>적용 대상</strong>: HTTP 클라이언트만</li>
+<li><strong>필수 조건</strong>: <code>proxyAuth=basic</code> 또는 <code>proxyAuth=digest</code></li>
+<li><strong>설명</strong>: 사용자 USER의 비밀번호에 대한 MD5 해시</li>
+<li><strong>사용 중단</strong>: 대신 SHA-256을 사용하세요 (0.9.56+)</li>
+<li><strong>예시</strong>: <code>option.proxy.auth.alice.md5=5f4dcc3b5aa765d61d8327deb882cf99</code></li>
+</ul>
+<h4 id="tunnelnoptionproxyauthusersha256-optionproxyauthusersha256">tunnel.N.option.proxy.auth.USER.sha256 (option.proxy.auth.USER.sha256)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열(소문자 16진수 64자)</li>
+<li><strong>적용 대상</strong>: HTTP 클라이언트 전용</li>
+<li><strong>요구 사항</strong>: <code>proxyAuth=digest</code></li>
+<li><strong>도입 버전</strong>: 버전 0.9.56</li>
+<li><strong>표준</strong>: RFC 7616</li>
+<li><strong>설명</strong>: 사용자 USER의 비밀번호에 대한 SHA-256 해시</li>
+<li><strong>예시</strong>: <code>option.proxy.auth.alice.sha256=5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8</code></li>
+</ul>
+<h3 id="outproxy외부-프록시-인증">Outproxy(외부 프록시) 인증</h3>
+<h4 id="tunnelnoptionoutproxyauth-optionoutproxyauth">tunnel.N.option.outproxyAuth (option.outproxyAuth)</h4>
+<ul>
+<li><strong>유형</strong>: 불리언</li>
+<li><strong>적용 범위</strong>: HTTP 클라이언트 전용</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: outproxy(외부 인터넷 접속을 위한 프록시)로 인증 정보를 전송</li>
+<li><strong>예시</strong>: <code>option.outproxyAuth=false</code></li>
+</ul>
+<h4 id="tunnelnoptionoutproxyusername-optionoutproxyusername">tunnel.N.option.outproxyUsername (option.outproxyUsername)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열</li>
+<li><strong>컨텍스트</strong>: HTTP 클라이언트 전용</li>
+<li><strong>요구 사항</strong>: <code>outproxyAuth=true</code></li>
+<li><strong>설명</strong>: outproxy(I2P에서 일반 인터넷으로 나가기 위한 프록시) 인증에 사용할 사용자 이름</li>
+<li><strong>예</strong>: <code>option.outproxyUsername=user</code></li>
+</ul>
+<h4 id="tunnelnoptionoutproxypassword-optionoutproxypassword">tunnel.N.option.outproxyPassword (option.outproxyPassword)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열</li>
+<li><strong>컨텍스트</strong>: HTTP 클라이언트 전용</li>
+<li><strong>요구 사항</strong>: <code>outproxyAuth=true</code></li>
+<li><strong>설명</strong>: outproxy(외부 프록시) 인증용 비밀번호</li>
+<li><strong>보안</strong>: 평문으로 저장됨</li>
+<li><strong>예</strong>: <code>option.outproxyPassword=secret</code></li>
+</ul>
+<h3 id="socks-클라이언트-옵션">SOCKS 클라이언트 옵션</h3>
+<h4 id="tunnelnoptioni2ptunnelsocksproxydefault-optioni2ptunnelsocksproxydefault">tunnel.N.option.i2ptunnel.socks.proxy.default (option.i2ptunnel.socks.proxy.default)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열 (쉼표 또는 공백으로 구분된 목적지)</li>
+<li><strong>컨텍스트</strong>: SOCKS 클라이언트에만 해당</li>
+<li><strong>설명</strong>: 지정되지 않은 포트를 위한 I2P 네트워크 내 아웃프록시(outproxy)</li>
+<li><strong>예시</strong>: <code>option.i2ptunnel.socks.proxy.default=outproxy.i2p</code></li>
+</ul>
+<h4 id="tunnelnoptioni2ptunnelsocksproxynnnn-optioni2ptunnelsocksproxynnnn">tunnel.N.option.i2ptunnel.socks.proxy.NNNN (option.i2ptunnel.socks.proxy.NNNN)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열(쉼표 또는 공백으로 구분된 대상 목록)</li>
+<li><strong>컨텍스트</strong>: SOCKS 클라이언트에만 해당</li>
+<li><strong>설명</strong>: 포트 NNNN 전용 네트워크 내 outproxy(외부 인터넷으로 나가기 위한 프록시)</li>
+<li><strong>예</strong>: <code>option.i2ptunnel.socks.proxy.443=ssl-outproxy.i2p</code></li>
+</ul>
+<h4 id="tunnelnoptionoutproxytype-optionoutproxytype">tunnel.N.option.outproxyType (option.outproxyType)</h4>
+<ul>
+<li><strong>유형</strong>: 열거형</li>
+<li><strong>적용 대상</strong>: SOCKS 클라이언트 전용</li>
+<li><strong>기본값</strong>: socks</li>
+<li><strong>도입</strong>: 버전 0.9.57</li>
+<li><strong>값</strong>: <code>socks</code>, <code>connect</code> (HTTPS)</li>
+<li><strong>설명</strong>: 구성된 outproxy(외부 프록시)의 유형</li>
+<li><strong>예시</strong>: <code>option.outproxyType=connect</code></li>
+</ul>
+<h3 id="http-서버-옵션">HTTP 서버 옵션</h3>
+<h4 id="tunnelnoptionmaxposts-optionmaxposts">tunnel.N.option.maxPosts (option.maxPosts)</h4>
+<ul>
+<li><strong>유형</strong>: 정수</li>
+<li><strong>적용 범위</strong>: HTTP 서버 전용</li>
+<li><strong>기본값</strong>: 0 (무제한)</li>
+<li><strong>설명</strong>: postCheckTime마다 단일 destination(목적지 식별자)에서 오는 POST 요청의 최대 수</li>
+<li><strong>예</strong>: <code>option.maxPosts=10</code></li>
+</ul>
+<h4 id="tunnelnoptionmaxtotalposts-optionmaxtotalposts">tunnel.N.option.maxTotalPosts (option.maxTotalPosts)</h4>
+<ul>
+<li><strong>유형</strong>: 정수</li>
+<li><strong>적용 범위</strong>: HTTP 서버 전용</li>
+<li><strong>기본값</strong>: 0 (제한 없음)</li>
+<li><strong>설명</strong>: postCheckTime마다 모든 Destination(목적지)에서 오는 POST 요청의 최대 개수</li>
+<li><strong>예시</strong>: <code>option.maxTotalPosts=50</code></li>
+</ul>
+<h4 id="tunnelnoptionpostchecktime-optionpostchecktime">tunnel.N.option.postCheckTime (option.postCheckTime)</h4>
+<ul>
+<li><strong>유형</strong>: 정수(초)</li>
+<li><strong>컨텍스트</strong>: HTTP 서버 전용</li>
+<li><strong>기본값</strong>: 300</li>
+<li><strong>설명</strong>: POST 제한을 확인하는 시간 범위</li>
+<li><strong>예시</strong>: <code>option.postCheckTime=600</code></li>
+</ul>
+<h4 id="tunnelnoptionpostbantime-optionpostbantime">tunnel.N.option.postBanTime (option.postBanTime)</h4>
+<ul>
+<li><strong>유형</strong>: 정수(초)</li>
+<li><strong>컨텍스트</strong>: HTTP 서버 전용</li>
+<li><strong>기본값</strong>: 1800</li>
+<li><strong>설명</strong>: 단일 목적지에 대해 maxPosts 초과 시 적용되는 차단 기간</li>
+<li><strong>예시</strong>: <code>option.postBanTime=3600</code></li>
+</ul>
+<h4 id="tunnelnoptionposttotalbantime-optionposttotalbantime">tunnel.N.option.postTotalBanTime (option.postTotalBanTime)</h4>
+<ul>
+<li><strong>유형</strong>: 정수(초)</li>
+<li><strong>적용 범위</strong>: HTTP 서버 전용</li>
+<li><strong>기본값</strong>: 600</li>
+<li><strong>설명</strong>: maxTotalPosts 초과 시 차단 기간</li>
+<li><strong>예시</strong>: <code>option.postTotalBanTime=1200</code></li>
+</ul>
+<h3 id="http-서버-보안-옵션">HTTP 서버 보안 옵션</h3>
+<h4 id="tunnelnoptionrejectinproxy-optionrejectinproxy">tunnel.N.option.rejectInproxy (option.rejectInproxy)</h4>
+<ul>
+<li><strong>유형</strong>: Boolean</li>
+<li><strong>컨텍스트</strong>: HTTP 서버에만 해당</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>설명</strong>: inproxy(인바운드 프록시)를 통해 온 것으로 보이는 연결을 거부합니다</li>
+<li><strong>예시</strong>: <code>option.rejectInproxy=false</code></li>
+</ul>
+<h4 id="tunnelnoptionrejectreferer-optionrejectreferer">tunnel.N.option.rejectReferer (option.rejectReferer)</h4>
+<ul>
+<li><strong>유형</strong>: 불리언</li>
+<li><strong>컨텍스트</strong>: HTTP 서버 전용</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>도입</strong>: 버전 0.9.25</li>
+<li><strong>설명</strong>: Referer 헤더가 있는 연결을 거부합니다</li>
+<li><strong>예시</strong>: <code>option.rejectReferer=false</code></li>
+</ul>
+<h4 id="tunnelnoptionrejectuseragents-optionrejectuseragents">tunnel.N.option.rejectUserAgents (option.rejectUserAgents)</h4>
+<ul>
+<li><strong>유형</strong>: 불리언</li>
+<li><strong>컨텍스트</strong>: HTTP 서버에만 해당</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>도입 버전</strong>: 0.9.25</li>
+<li><strong>요구 사항</strong>: <code>userAgentRejectList</code> 속성</li>
+<li><strong>설명</strong>: User-Agent가 일치하는 연결을 거부합니다</li>
+<li><strong>예</strong>: <code>option.rejectUserAgents=false</code></li>
+</ul>
+<h4 id="tunnelnoptionuseragentrejectlist-optionuseragentrejectlist">tunnel.N.option.userAgentRejectList (option.userAgentRejectList)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열(쉼표로 구분된 일치 문자열)</li>
+<li><strong>컨텍스트</strong>: HTTP 서버에서만</li>
+<li><strong>도입</strong>: 버전 0.9.25</li>
+<li><strong>대소문자</strong>: 대소문자 구분 일치</li>
+<li><strong>특이사항</strong>: &ldquo;none&rdquo;(0.9.33부터) 는 빈 User-Agent와 일치</li>
+<li><strong>설명</strong>: 거부할 User-Agent 패턴 목록</li>
+<li><strong>예시</strong>: <code>option.userAgentRejectList=Mozilla,Opera,none</code></li>
+</ul>
+<h3 id="irc-서버-옵션">IRC 서버 옵션</h3>
+<h4 id="tunnelnoptionircserverfakehostname-optionircserverfakehostname">tunnel.N.option.ircserver.fakeHostname (option.ircserver.fakeHostname)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열 (hostname 패턴)</li>
+<li><strong>컨텍스트</strong>: IRC 서버 전용</li>
+<li><strong>기본값</strong>: <code>%f.b32.i2p</code></li>
+<li><strong>토큰</strong>:
+<ul>
+<li><code>%f</code> = 전체 base32 destination(목적지) 해시</li>
+<li><code>%c</code> = 클로킹된 destination 해시 (cloakKey 참조)</li>
+</ul>
+</li>
+<li><strong>설명</strong>: IRC 서버로 전송되는 호스트명 형식</li>
+<li><strong>예시</strong>: <code>option.ircserver.fakeHostname=%c.irc.i2p</code></li>
+</ul>
+<h4 id="tunnelnoptionircservercloakkey-optionircservercloakkey">tunnel.N.option.ircserver.cloakKey (option.ircserver.cloakKey)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열(패스프레이즈)</li>
+<li><strong>컨텍스트</strong>: IRC 서버에만 해당</li>
+<li><strong>기본값</strong>: 세션마다 무작위</li>
+<li><strong>제한 사항</strong>: 따옴표 또는 공백 사용 금지</li>
+<li><strong>설명</strong>: 일관된 호스트명 클로킹을 위한 패스프레이즈</li>
+<li><strong>사용 사례</strong>: 재시작/서버 간 지속적인 사용자 추적</li>
+<li><strong>예</strong>: <code>option.ircserver.cloakKey=mysecretkey</code></li>
+</ul>
+<h4 id="tunnelnoptionircservermethod-optionircservermethod">tunnel.N.option.ircserver.method (option.ircserver.method)</h4>
+<ul>
+<li><strong>유형</strong>: Enum(열거형)</li>
+<li><strong>컨텍스트</strong>: IRC 서버 전용</li>
+<li><strong>기본값</strong>: user</li>
+<li><strong>값</strong>: <code>user</code>, <code>webirc</code></li>
+<li><strong>설명</strong>: IRC 서버용 인증 방법</li>
+<li><strong>예시</strong>: <code>option.ircserver.method=webirc</code></li>
+</ul>
+<h4 id="tunnelnoptionircserverwebircpassword-optionircserverwebircpassword">tunnel.N.option.ircserver.webircPassword (option.ircserver.webircPassword)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열(비밀번호)</li>
+<li><strong>대상</strong>: IRC 서버 전용</li>
+<li><strong>필수 조건</strong>: <code>method=webirc</code></li>
+<li><strong>제한 사항</strong>: 따옴표 또는 공백 금지</li>
+<li><strong>설명</strong>: WEBIRC 프로토콜(웹 기반 IRC 클라이언트를 위한 프록시 연동 프로토콜) 인증용 비밀번호</li>
+<li><strong>예시</strong>: <code>option.ircserver.webircPassword=webircpass</code></li>
+</ul>
+<h4 id="tunnelnoptionircserverwebircspoofip-optionircserverwebircspoofip">tunnel.N.option.ircserver.webircSpoofIP (option.ircserver.webircSpoofIP)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열 (IP 주소)</li>
+<li><strong>적용 대상</strong>: IRC 서버 전용</li>
+<li><strong>필요 조건</strong>: <code>method=webirc</code></li>
+<li><strong>설명</strong>: WEBIRC protocol(웹 IRC 프록시 인증 프로토콜)에서 사용할 스푸핑된 IP 주소</li>
+<li><strong>예시</strong>: <code>option.ircserver.webircSpoofIP=10.0.0.1</code></li>
+</ul>
+<h3 id="ssltls-구성">SSL/TLS 구성</h3>
+<h4 id="tunnelnoptionusessl-optionusessl">tunnel.N.option.useSSL (option.useSSL)</h4>
+<ul>
+<li><strong>유형</strong>: Boolean</li>
+<li><strong>기본값</strong>: false</li>
+<li><strong>적용 범위</strong>: 모든 tunnel</li>
+<li><strong>동작</strong>:
+<ul>
+<li><strong>서버</strong>: 로컬 서버와의 연결에 SSL 사용</li>
+<li><strong>클라이언트</strong>: 로컬 클라이언트의 SSL 사용을 요구</li>
+</ul>
+</li>
+<li><strong>예</strong>: <code>option.useSSL=false</code></li>
+</ul>
+<h4 id="tunnelnoptionkeystorefile-optionkeystorefile">tunnel.N.option.keystoreFile (option.keystoreFile)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열 (파일 경로)</li>
+<li><strong>컨텍스트</strong>: 클라이언트 tunnel 전용</li>
+<li><strong>기본값</strong>: <code>i2ptunnel-(random).ks</code></li>
+<li><strong>경로</strong>: 절대 경로가 아니면 <code>$(I2P_CONFIG_DIR)/keystore/</code> 기준 상대 경로</li>
+<li><strong>자동 생성</strong>: 존재하지 않으면 생성됨</li>
+<li><strong>설명</strong>: SSL 개인 키를 포함하는 키 저장소(keystore) 파일</li>
+<li><strong>예시</strong>: <code>option.keystoreFile=my-tunnel.ks</code></li>
+</ul>
+<h4 id="tunnelnoptionkeystorepassword-optionkeystorepassword">tunnel.N.option.keystorePassword (option.keystorePassword)</h4>
+<ul>
+<li><strong>유형</strong>: String (비밀번호)</li>
+<li><strong>컨텍스트</strong>: 클라이언트 tunnels 전용</li>
+<li><strong>기본값</strong>: changeit</li>
+<li><strong>자동 생성</strong>: 새 키스토어가 생성되면 무작위 비밀번호</li>
+<li><strong>설명</strong>: SSL 키스토어의 비밀번호</li>
+<li><strong>예제</strong>: <code>option.keystorePassword=secretpassword</code></li>
+</ul>
+<h4 id="tunnelnoptionkeyalias-optionkeyalias">tunnel.N.option.keyAlias (option.keyAlias)</h4>
+<ul>
+<li><strong>유형</strong>: String (별칭)</li>
+<li><strong>컨텍스트</strong>: 클라이언트 tunnel 전용</li>
+<li><strong>자동 생성</strong>: 새 키가 생성되면 자동으로 생성됨</li>
+<li><strong>설명</strong>: 키 저장소(keystore)의 개인 키에 대한 별칭</li>
+<li><strong>예시</strong>: <code>option.keyAlias=mytunnel-key</code></li>
+</ul>
+<h4 id="tunnelnoptionkeypassword-optionkeypassword">tunnel.N.option.keyPassword (option.keyPassword)</h4>
+<ul>
+<li><strong>유형</strong>: 문자열(비밀번호)</li>
+<li><strong>컨텍스트</strong>: 클라이언트 tunnels 전용</li>
+<li><strong>자동 생성</strong>: 새 키를 생성하면 임의의 비밀번호가 생성됨</li>
+<li><strong>설명</strong>: keystore(키 저장소)에 있는 개인 키의 비밀번호</li>
+<li><strong>예</strong>: <code>option.keyPassword=keypass123</code></li>
+</ul>
+<h3 id="일반-i2cp-및-스트리밍-옵션">일반 I2CP 및 스트리밍 옵션</h3>
+<p>모든 <code>tunnel.N.option.*</code> 속성(위에서 명시적으로 문서화되지 않은)은 <code>tunnel.N.option.</code> 접두사를 제거한 상태로 I2CP 인터페이스와 스트리밍 라이브러리로 그대로 전달됩니다.</p>
+<p><strong>중요</strong>: 이는 I2PTunnel 전용 옵션과는 별개입니다. 참조: - <a href="../../../../ko/docs/specs/i2cp/">I2CP 명세서</a>
+ - <a href="../../../../ko/docs/specs/streaming/">스트리밍 라이브러리 명세서</a>
+</p>
+<p>스트리밍 옵션 예시:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">option.i2cp.messageReliability</span><span style="color:#f92672">=</span><span style="color:#e6db74">BestEffort</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2p.streaming.connectDelay</span><span style="color:#f92672">=</span><span style="color:#e6db74">1000</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2p.streaming.maxWindowSize</span><span style="color:#f92672">=</span><span style="color:#e6db74">128</span>
+</span></span></code></pre></div><h3 id="완전한-tunnel-예제">완전한 Tunnel 예제</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># HTTP Proxy (split format without tunnel.N. prefix)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">I2P HTTP Proxy</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">description</span><span style="color:#f92672">=</span><span style="color:#e6db74">HTTP proxy for accessing I2P sites and outproxy</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">httpclient</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">interface</span><span style="color:#f92672">=</span><span style="color:#e6db74">127.0.0.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">listenPort</span><span style="color:#f92672">=</span><span style="color:#e6db74">4444</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">targetDestination</span><span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">sharedClient</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">startOnLoad</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2CP configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2cpHost</span><span style="color:#f92672">=</span><span style="color:#e6db74">127.0.0.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2cpPort</span><span style="color:#f92672">=</span><span style="color:#e6db74">7654</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># HTTP client options</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.allowInternalSSL</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.disableAddressHelper</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.jumpServers</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://stats.i2p/cgi-bin/jump.cgi</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.sendAccept</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.sendReferer</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.sendUserAgent</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Proxy authentication</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.proxyAuth</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Outproxy configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2ptunnel.httpclient.SSLOutproxies</span><span style="color:#f92672">=</span><span style="color:#e6db74">false.i2p</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">proxyList</span><span style="color:#f92672">=</span><span style="color:#e6db74">false.i2p</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Client behavior</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.persistentClientKey</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.i2cp.delayOpen</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2CP tunnel options</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.inbound.length</span><span style="color:#f92672">=</span><span style="color:#e6db74">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.outbound.length</span><span style="color:#f92672">=</span><span style="color:#e6db74">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.inbound.quantity</span><span style="color:#f92672">=</span><span style="color:#e6db74">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">option.outbound.quantity</span><span style="color:#f92672">=</span><span style="color:#e6db74">2</span>
+</span></span></code></pre></div><hr>
+<h2 id="버전-이력-및-기능-연대표">버전 이력 및 기능 연대표</h2>
+<h3 id="버전-0910-2013">버전 0.9.10 (2013)</h3>
+<p><strong>Feature</strong>: 구성 파일에서 빈 값 지원 - 빈 값을 가진 키(<code>key=</code>)가 이제 지원됩니다 - 이전에는 무시되거나 구문 분석 오류를 일으켰습니다</p>
+<h3 id="버전-0918-2015">버전 0.9.18 (2015)</h3>
+<p><strong>기능</strong>: 로거 플러시 간격 설정 - 속성: <code>logger.flushInterval</code> (기본값 29초) - 허용 가능한 로그 지연을 유지하면서 디스크 I/O를 줄입니다</p>
+<h3 id="버전-0923-2015년-11월">버전 0.9.23 (2015년 11월)</h3>
+<p><strong>주요 변경</strong>: Java 7이 최소 요구 사항 - Java 6 지원 종료 - 지속적인 보안 업데이트를 받기 위해 필요</p>
+<h3 id="버전-0925-2015">버전 0.9.25 (2015)</h3>
+<p><strong>기능</strong>: HTTP 서버 보안 옵션 - <code>tunnel.N.option.rejectReferer</code> - Referer 헤더가 있는 연결 거부 - <code>tunnel.N.option.rejectUserAgents</code> - 특정 User-Agent 헤더 거부 - <code>tunnel.N.option.userAgentRejectList</code> - 거부할 User-Agent 패턴 - <strong>사용 사례</strong>: 크롤러 및 원치 않는 클라이언트 차단</p>
+<h3 id="버전-0933-2018년-1월">버전 0.9.33 (2018년 1월)</h3>
+<p><strong>기능</strong>: 향상된 User-Agent(사용자 에이전트) 필터링 - <code>userAgentRejectList</code> 문자열 &ldquo;none&quot;은 빈 User-Agent와 일치 - i2psnark, i2ptunnel, streaming, SusiMail에 대한 추가 버그 수정</p>
+<h3 id="버전-0941-2019">버전 0.9.41 (2019)</h3>
+<p><strong>사용 중단</strong>: Android에서 BOB Protocol이 제거됨 - Android 사용자는 SAM 또는 I2CP로 마이그레이션해야 합니다</p>
+<h3 id="버전-0942-2019년-8월">버전 0.9.42 (2019년 8월)</h3>
+<p><strong>주요 변경</strong>: 구성 파일 분리 - <code>clients.config</code>를 <code>clients.config.d/</code> 디렉터리 구조로 분리 - <code>i2ptunnel.config</code>를 <code>i2ptunnel.config.d/</code> 디렉터리 구조로 분리 - 업그레이드 후 첫 실행 시 자동 마이그레이션 - 모듈식 패키징 및 플러그인 관리를 가능하게 함 - 기존 monolithic(단일형) 형식도 계속 지원</p>
+<p><strong>추가 기능</strong>: - SSU 성능 개선 - 교차 네트워크 연결 방지 (Proposal 147) - 초기 암호화 유형 지원</p>
+<h3 id="버전-0956-2021">버전 0.9.56 (2021)</h3>
+<p><strong>기능</strong>: 보안 및 로깅 개선 - <code>logger.gzip</code> - 로테이션된 로그에 대한 Gzip 압축 (기본값: false) - <code>logger.minGzipSize</code> - 압축 최소 크기 (기본값: 65536 바이트) - <code>tunnel.N.option.proxy.auth.USER.sha256</code> - SHA-256 다이제스트 인증 (RFC 7616) - <strong>보안</strong>: 다이제스트 인증에서 MD5가 SHA-256으로 대체됨</p>
+<h3 id="버전-0957-2023년-1월">버전 0.9.57 (2023년 1월)</h3>
+<p><strong>기능</strong>: SOCKS outproxy(외부 프록시) 유형 구성 - <code>tunnel.N.option.outproxyType</code> - outproxy 유형 선택 (socks|connect) - 기본값: socks - HTTPS outproxies에 대한 HTTPS CONNECT 지원</p>
+<h3 id="버전-260-2024년-7월">버전 2.6.0 (2024년 7월)</h3>
+<p><strong>파괴적 변경</strong>: I2P-over-Tor 차단됨 - Tor 출구 노드 IP 주소에서 오는 연결은 이제 거부됩니다 - <strong>이유</strong>: I2P 성능을 저하시키고 Tor 출구 노드 리소스를 낭비함 - <strong>영향</strong>: Tor 출구 노드를 통해 I2P에 접근하는 사용자는 차단됩니다 - 출구가 아닌 릴레이와 Tor 클라이언트에는 영향이 없습니다</p>
+<h3 id="버전-2100-2025년-9월---현재">버전 2.10.0 (2025년 9월 - 현재)</h3>
+<p><strong>구성</strong>: 새로운 구성 속성이 추가되지 않았습니다</p>
+<p><strong>중요한 예정 변경 사항</strong>: 다음 릴리스(아마 2.11.0 또는 3.0.0)는 Java 17 이상이 필요합니다</p>
+<hr>
+<h2 id="사용-중단-및-호환성-파괴-변경">사용 중단 및 호환성 파괴 변경</h2>
+<h3 id="중대한-사용-중단-사항">중대한 사용 중단 사항</h3>
+<h4 id="i2p-over-tor-접속-버전-260">I2P-over-Tor 접속 (버전 2.6.0+)</h4>
+<ul>
+<li><strong>상태</strong>: 2024년 7월부터 차단됨</li>
+<li><strong>영향</strong>: Tor 출구 노드 IP에서 오는 연결이 거부됨</li>
+<li><strong>이유</strong>: 익명성 이점 없이 I2P 네트워크 성능을 저하시킴</li>
+<li><strong>대상</strong>: Tor 출구 노드만 해당되며, 릴레이나 일반 Tor 클라이언트는 해당되지 않음</li>
+<li><strong>대안</strong>: I2P 또는 Tor를 별도로 사용하고, 결합하지 말 것</li>
+</ul>
+<h4 id="md5-다이제스트-인증">MD5 다이제스트 인증</h4>
+<ul>
+<li><strong>상태</strong>: 사용 중단됨 (SHA-256 사용)</li>
+<li><strong>속성</strong>: <code>tunnel.N.option.proxy.auth.USER.md5</code></li>
+<li><strong>이유</strong>: MD5는 암호학적으로 안전하지 않음</li>
+<li><strong>대체</strong>: <code>tunnel.N.option.proxy.auth.USER.sha256</code> (0.9.56부터)</li>
+<li><strong>현황</strong>: MD5는 여전히 지원되지만 권장되지 않음</li>
+</ul>
+<h3 id="구성-아키텍처-변경-사항">구성 아키텍처 변경 사항</h3>
+<h4 id="모놀리식-구성-파일버전-0942">모놀리식 구성 파일(버전 0.9.42+)</h4>
+<ul>
+<li><strong>영향 대상</strong>: <code>clients.config</code>, <code>i2ptunnel.config</code></li>
+<li><strong>상태</strong>: 분할된 디렉터리 구조를 채택함에 따라 사용 중단됨</li>
+<li><strong>마이그레이션</strong>: 0.9.42로 업그레이드 후 첫 실행 시 자동</li>
+<li><strong>호환성</strong>: 레거시 형식도 계속 작동함(하위 호환)</li>
+<li><strong>권장 사항</strong>: 새 구성에는 분할 형식 사용 권장</li>
+</ul>
+<h3 id="java-버전-요구사항">Java 버전 요구사항</h3>
+<h4 id="java-6-지원">Java 6 지원</h4>
+<ul>
+<li><strong>종료됨</strong>: 버전 0.9.23 (2015년 11월)</li>
+<li><strong>최소</strong>: 0.9.23부터 Java 7 필요</li>
+</ul>
+<h4 id="java-17-요구-사항-예정">Java 17 요구 사항 (예정)</h4>
+<ul>
+<li><strong>상태</strong>: 중대한 예정 변경</li>
+<li><strong>목표</strong>: 2.10.0 이후 다음 메이저 릴리스(가능성: 2.11.0 또는 3.0.0)</li>
+<li><strong>현재 최소 요구 버전</strong>: Java 8</li>
+<li><strong>조치 필요</strong>: Java 17로 마이그레이션을 준비</li>
+<li><strong>일정</strong>: 릴리스 노트와 함께 공지 예정</li>
+</ul>
+<h3 id="제거된-기능">제거된 기능</h3>
+<h4 id="bob-프로토콜안드로이드">BOB 프로토콜(안드로이드)</h4>
+<ul>
+<li><strong>제거됨</strong>: 버전 0.9.41</li>
+<li><strong>플랫폼</strong>: Android 전용</li>
+<li><strong>대안</strong>: SAM 또는 I2CP 프로토콜</li>
+<li><strong>데스크톱</strong>: 데스크톱 플랫폼에서는 여전히 BOB을 사용할 수 있음</li>
+</ul>
+<h3 id="권장-마이그레이션">권장 마이그레이션</h3>
+<ol>
+<li><strong>인증</strong>: MD5에서 SHA-256 다이제스트 인증으로 마이그레이션</li>
+<li><strong>구성 형식</strong>: 클라이언트와 tunnels를 위한 분리된 디렉터리 구조로 마이그레이션</li>
+<li><strong>Java 런타임</strong>: 다음 메이저 릴리스 이전에 Java 17 업그레이드를 계획</li>
+<li><strong>Tor 통합</strong>: Tor 종료 노드(Exit node)를 통해 I2P를 라우팅하지 말 것</li>
+</ol>
+<hr>
+<h2 id="참고-자료">참고 자료</h2>
+<h3 id="공식-문서">공식 문서</h3>
+<ul>
+<li><a href="../../../../ko/docs/specs/configuration/">I2P 설정 명세</a>
+ - 공식 설정 파일 형식 명세</li>
+<li><a href="../../../../ko/docs/specs/plugin/">I2P 플러그인 명세</a>
+ - 플러그인 설정 및 패키징</li>
+<li><a href="../../../../ko/docs/specs/common-structures/#type-mapping">I2P 공통 구조 - 타입 매핑</a>
+ - 프로토콜 데이터 직렬화 형식</li>
+<li><a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Properties.html#load%28java.io.InputStream%29">Java Properties 형식</a>
+ - 기본 형식 명세</li>
+</ul>
+<h3 id="소스-코드">소스 코드</h3>
+<ul>
+<li><a href="https://github.com/i2p/i2p.i2p">I2P Java Router 저장소</a>
+ - GitHub 미러</li>
+<li><a href="https://i2pgit.org/I2P_Developers/i2p.i2p">I2P 개발자 Gitea</a>
+ - 공식 I2P 소스 저장소</li>
+<li><a href="https://github.com/i2p/i2p.i2p/blob/master/core/java/src/net/i2p/data/DataHelper.java">DataHelper.java</a>
+ - 구성 파일 I/O 구현</li>
+</ul>
+<h3 id="커뮤니티-자료">커뮤니티 자료</h3>
+<ul>
+<li><a href="https://i2pforum.net/">I2P Forum</a>
+ - 활발한 커뮤니티 토론과 지원</li>
+<li><a href="../../../../ko/">I2P Website</a>
+ - 공식 프로젝트 웹사이트</li>
+</ul>
+<h3 id="api-문서">API 문서</h3>
+<ul>
+<li><a href="https://i2pplus.github.io/javadoc/net/i2p/data/DataHelper.html">DataHelper JavaDoc</a>
+ - 설정 파일 메서드용 API 문서</li>
+</ul>
+<h3 id="명세-상태">명세 상태</h3>
+<ul>
+<li><strong>최신 명세 업데이트</strong>: 2023년 1월 (버전 0.9.57)</li>
+<li><strong>현재 I2P 버전</strong>: 2.10.0 (2025년 9월)</li>
+<li><strong>기술적 정확성</strong>: 명세는 2.10.0까지 유효함(호환성을 깨는 변경 사항 없음)</li>
+<li><strong>유지 관리</strong>: 구성 형식이 수정될 때 업데이트되는 living document(수시로 갱신되는 문서)</li>
+</ul>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../ko/docs/specs/ssu2/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">SSU2 명세서</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../ko/docs/specs/red25519-signature-scheme/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">Red25519 서명 스킴</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/ko/docs/specs/configuration.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">I2P 뉴스 받기:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="이메일을 입력하세요" required>
+                            <button type="submit">구독하기</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>빠른 링크</h3>
+                <ul>
+                    <li><a href="../../../../ko/financial-support/">기부하기</a></li>
+                    <li><a href="../../../../ko/docs/overview/intro/">I2P 소개</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>커뮤니티</h3>
+                <ul>
+                    <li><a href="../../../../ko/get-involved/">참여하기</a></li>
+                    <li><a href="../../../../ko/blog/">블로그</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">공식 포럼</a></li>
+                    <li><a href="../../../../ko/contact/">연락처</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>리소스</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P 메트릭</a></li>
+                    <li><a href="../../../../ko/papers/">연구</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">스톰이클라우드</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Invisible Internet Project. Creative Commons 라이선스 적용.</p>
+            <div class="footer-links">
+                <a href="../../../../ko/privacy/">개인정보 처리방침</a>
+                <a href="../../../../ko/terms/">이용 약관</a>
+                <a href="../../../../ko/about/media/">언론</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="닫기">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>커뮤니티 설문 조사</h2>
+            <p class="modal-subtitle">귀하의 의견을 듣고 싶습니다</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                귀하의 투표는 I2P의 미래를 형성하는 데 도움이 됩니다.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

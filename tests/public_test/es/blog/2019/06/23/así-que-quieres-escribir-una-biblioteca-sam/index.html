@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Así que quieres escribir una biblioteca SAM | I2P - El Proyecto Internet Invisible</title>
+
+    <meta name="description" content="¡Guía para principiantes para desarrollar una biblioteca SAM!">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Así que quieres escribir una biblioteca SAM | I2P - El Proyecto Internet Invisible">
+    <meta property="og:description" content="¡Guía para principiantes para desarrollar una biblioteca SAM!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/es/blog/2019/06/23/as%C3%AD-que-quieres-escribir-una-biblioteca-sam/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Sitio Beta I2P Ahora Activo - Reportar problemas por correo a stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Cerrar banner" title="Cerrar banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../../../es/" class="logo-link">
+                    <img src="../../../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../../../es/about/" class="">Acerca de</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../../../es/about/">Resumen</a></li>
+                            <li><a href="../../../../../../es/papers/">Artículos de Investigación</a></li>
+                            <li><a href="../../../../../../es/about/media/">Prensa</a></li>
+                            <li><a href="../../../../../../es/contact/">Contáctanos</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../../../es/docs/" class="">Documentos</a></li>
+                    <li><a href="../../../../../../es/downloads/" class="">Descargas</a></li>
+                    <li><a href="../../../../../../es/blog/" class="active">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../../../es/get-involved/" class="">Participa</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../../../es/get-involved/">Resumen</a></li>
+                            <li><a href="../../../../../../es/feedback/">Sugerencias de Funciones</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">es</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../en/blog/2019/06/23/so-you-want-to-write-a-sam-library/"
+                                class="lang-option">Inglés</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../es/blog/2019/06/23/as%C3%AD-que-quieres-escribir-una-biblioteca-sam/"
+                                class="lang-option active">Español</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ko/blog/2019/06/23/sam-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC%EB%A5%BC-%EA%B0%9C%EB%B0%9C%ED%95%98%EA%B3%A0-%EC%8B%B6%EC%9C%BC%EC%8B%A0%EA%B0%80%EC%9A%94/"
+                                class="lang-option">Coreano</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../zh/blog/2019/06/23/%E6%89%80%E4%BB%A5%E4%BD%A0%E6%83%B3%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA-sam-%E5%BA%93/"
+                                class="lang-option">Chino</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ru/blog/2019/06/23/%D0%B8%D1%82%D0%B0%D0%BA-%D0%B2%D1%8B-%D1%85%D0%BE%D1%82%D0%B8%D1%82%D0%B5-%D0%BD%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C-sam-%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D1%83/"
+                                class="lang-option">Ruso</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../cs/blog/2019/06/23/tak-chcete-napsat-knihovnu-pro-sam/"
+                                class="lang-option">Checo</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../de/blog/2019/06/23/sie-m%C3%B6chten-also-eine-sam-bibliothek-schreiben/"
+                                class="lang-option">Alemán</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../fr/blog/2019/06/23/vous-souhaitez-%C3%A9crire-une-biblioth%C3%A8que-sam/"
+                                class="lang-option">Francés</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../tr/blog/2019/06/23/sam-k%C3%BCt%C3%BCphanesi-yazmak-m%C4%B1-istiyorsunuz/"
+                                class="lang-option">Turco</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../vi/blog/2019/06/23/v%E1%BA%ADy-b%E1%BA%A1n-mu%E1%BB%91n-vi%E1%BA%BFt-m%E1%BB%99t-th%C6%B0-vi%E1%BB%87n-sam/"
+                                class="lang-option">Vietnamita</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../hi/blog/2019/06/23/%E0%A4%A4%E0%A5%8B-%E0%A4%86%E0%A4%AA-%E0%A4%8F%E0%A4%95-sam-%E0%A4%B2%E0%A4%BE%E0%A4%87%E0%A4%AC%E0%A5%8D%E0%A4%B0%E0%A5%87%E0%A4%B0%E0%A5%80-%E0%A4%B2%E0%A4%BF%E0%A4%96%E0%A4%A8%E0%A4%BE-%E0%A4%9A%E0%A4%BE%E0%A4%B9%E0%A4%A4%E0%A5%87-%E0%A4%B9%E0%A5%88%E0%A4%82/"
+                                class="lang-option">Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ar/blog/2019/06/23/so-you-want-to-write-a-sam-library/"
+                                class="lang-option">Árabe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../pt/blog/2019/06/23/ent%C3%A3o-voc%C3%AA-quer-desenvolver-uma-biblioteca-sam/"
+                                class="lang-option">Portugués</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../../../es/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../../../es/downloads/" class="btn btn-primary">Obtener I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+<article class="blog-post">
+    <div class="container">
+        <div class="post-header">
+            <div class="post-meta-row">
+                
+                <time class="post-date" datetime="2019-06-23">
+                    June 23, 2019
+                </time>
+                
+
+                
+            </div>
+
+            <h1 class="post-title">Así que quieres escribir una biblioteca SAM</h1>
+
+            
+            <div class="post-author">By idk</div>
+            
+        </div>
+
+        <div class="post-content">
+            <p><em>O, comunicarse con <a href="https://geti2p.net">i2p</a>
+ para quienes no están realmente acostumbrados a leer especificaciones</em></p>
+<p>Una de las mejores características de I2P, en mi opinión, es su API SAM, que puede usarse para construir un puente entre I2P y tu aplicación o el lenguaje de tu elección. Actualmente, existen decenas de bibliotecas SAM para una variedad de lenguajes, incluidos:</p>
+<ul>
+<li><a href="https://github.com/i2p/i2psam">i2psam, for c++</a>
+</li>
+<li><a href="https://github.com/i2p/libsam3">libsam3, for C</a>
+</li>
+<li><a href="https://github.com/str4d/txi2p">txi2p for Python</a>
+</li>
+<li><a href="https://github.com/l-n-s/i2plib">i2plib for Python</a>
+</li>
+<li><a href="https://github.com/majestrate/i2p.socket">i2p.socket for Python</a>
+</li>
+<li><a href="https://github.com/MuxZeroNet/leaflet">leaflet for Python</a>
+</li>
+<li><a href="https://github.com/eyedeekay/gosam">gosam, for Go</a>
+</li>
+<li><a href="https://github.com/eyedeekay/sam3">sam3 for Go</a>
+</li>
+<li><a href="https://github.com/redhog/node-i2p">node-i2p for nodejs</a>
+</li>
+<li><a href="https://github.com/solatis/haskell-network-anonymous-i2p">haskell-network-anonymous-i2p</a>
+</li>
+<li><a href="https://github.com/SamuelFisher/i2pdotnet">i2pdotnet for .Net languages</a>
+</li>
+<li><a href="https://github.com/stallmanifold/rust-i2p">rust-i2p</a>
+</li>
+<li><a href="https://github.com/dryruby/i2p.rb">and i2p.rb for ruby</a>
+</li>
+</ul>
+<p>Si estás usando alguno de estos lenguajes, puede que ya puedas portar tu aplicación a I2P utilizando una biblioteca existente. Sin embargo, de eso no trata este tutorial. Este tutorial trata sobre qué hacer si quieres crear una biblioteca SAM en un lenguaje nuevo. En este tutorial, implementaré una nueva biblioteca SAM en Java. Elegí Java porque aún no existe una biblioteca en Java que te conecte a SAM, por el uso de Java en Android y porque es un lenguaje con el que casi todo el mundo tiene al menos un <em>poco</em> de experiencia, así que, con suerte, podrás traducirlo al lenguaje de tu elección.</p>
+<h2 id="creación-de-tu-biblioteca">Creación de tu biblioteca</h2>
+<p>La forma de configurar tu propia biblioteca variará según el lenguaje que desees usar. Para esta biblioteca de ejemplo, usaremos Java para poder crear una biblioteca como esta:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mkdir jsam
+</span></span><span style="display:flex;"><span>cd jsam
+</span></span><span style="display:flex;"><span>gradle init --type java-library
+</span></span></code></pre></div><p>O, si está usando gradle 5 o posterior:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>gradle init --type java-library --project-name jsam
+</span></span></code></pre></div><h2 id="configuración-de-la-biblioteca">Configuración de la biblioteca</h2>
+<p>Hay algunos datos que casi cualquier biblioteca SAM probablemente debería gestionar. Como mínimo, necesitará almacenar la dirección del SAM Bridge (puente SAM) que tiene intención de utilizar y el tipo de firma que desea utilizar.</p>
+<h3 id="storing-the-sam-address">Storing the SAM address</h3>
+<p>Prefiero almacenar la dirección SAM como un String y un Integer, y recombinarlos en una función en tiempo de ejecución.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> String SAMHost <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;127.0.0.1&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> SAMPort <span style="color:#f92672">=</span> 7656;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">SAMAddress</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> SAMHost <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;:&#34;</span> <span style="color:#f92672">+</span> SAMPort;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="storing-the-signature-type">Storing the Signature Type</h3>
+<p>Los tipos de firma válidos para un I2P Tunnel son DSA_SHA1, ECDSA_SHA256_P256, ECDSA_SHA384_P384, ECDSA_SHA512_P521, EdDSA_SHA512_Ed25519, pero se recomienda encarecidamente usar EdDSA_SHA512_Ed25519 como valor predeterminado si implementas al menos SAM 3.1. En Java, la estructura de datos &rsquo;enum&rsquo; se presta bien para esta tarea, ya que está pensada para contener un grupo de constantes. Añade el enum, y una instancia del enum, a la definición de tu clase de Java.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> SIGNATURE_TYPE {
+</span></span><span style="display:flex;"><span>    DSA_SHA1,
+</span></span><span style="display:flex;"><span>    ECDSA_SHA256_P256,
+</span></span><span style="display:flex;"><span>    ECDSA_SHA384_P384,
+</span></span><span style="display:flex;"><span>    ECDSA_SHA512_P521,
+</span></span><span style="display:flex;"><span>    EdDSA_SHA512_Ed25519;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> SIGNATURE_TYPE SigType <span style="color:#f92672">=</span> SIGNATURE_TYPE.<span style="color:#a6e22e">EdDSA_SHA512_Ed25519</span>;
+</span></span></code></pre></div><h3 id="almacenamiento-de-la-dirección-sam">Almacenamiento de la dirección SAM</h3>
+<p>Eso se encarga de almacenar de forma fiable el tipo de firma en uso por la conexión SAM, pero aún debes recuperarlo como una cadena para comunicárselo al puente.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">SignatureType</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">switch</span> (SigType) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> DSA_SHA1:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;SIGNATURE_TYPE=DSA_SHA1&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> ECDSA_SHA256_P256:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;SIGNATURE_TYPE=ECDSA_SHA256_P256&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> ECDSA_SHA384_P384:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;SIGNATURE_TYPE=ECDSA_SHA384_P384&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> ECDSA_SHA512_P521:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;SIGNATURE_TYPE=ECDSA_SHA512_P521&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> EdDSA_SHA512_Ed25519:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;SIGNATURE_TYPE=EdDSA_SHA512_Ed25519&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Es importante probar las cosas, así que escribamos algunas pruebas:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Test</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testValidDefaultSAMAddress</span>() {
+</span></span><span style="display:flex;"><span>    Jsam classUnderTest <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Jsam();
+</span></span><span style="display:flex;"><span>    assertEquals(<span style="color:#e6db74">&#34;127.0.0.1:7656&#34;</span>, classUnderTest.<span style="color:#a6e22e">SAMAddress</span>());
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Test</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testValidDefaultSignatureType</span>() {
+</span></span><span style="display:flex;"><span>    Jsam classUnderTest <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Jsam();
+</span></span><span style="display:flex;"><span>    assertEquals(<span style="color:#e6db74">&#34;EdDSA_SHA512_Ed25519&#34;</span>, classUnderTest.<span style="color:#a6e22e">SignatureType</span>());
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Una vez hecho esto, comienza a crear tu constructor. Ten en cuenta que hemos definido valores predeterminados en nuestra biblioteca que serán útiles en escenarios predeterminados en todos los routers I2P existentes hasta ahora.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Jsam</span>(String host, <span style="color:#66d9ef">int</span> port, SIGNATURE_TYPE sig) {
+</span></span><span style="display:flex;"><span>    SAMHost <span style="color:#f92672">=</span> host;
+</span></span><span style="display:flex;"><span>    SAMPort <span style="color:#f92672">=</span> port;
+</span></span><span style="display:flex;"><span>    SigType <span style="color:#f92672">=</span> sig;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="establishing-a-sam-connection">Establishing a SAM Connection</h2>
+<p>Finalmente, la parte buena. La interacción con el puente SAM se realiza enviando un &ldquo;command&rdquo; a la dirección del puente SAM, y puedes analizar el resultado del comando como un conjunto de pares clave-valor basados en cadenas. Teniendo esto en cuenta, establezcamos una conexión de lectura y escritura con el SAM Address que definimos antes y luego escribamos una función &ldquo;CommandSAM&rdquo; y un analizador de respuestas.</p>
+<h3 id="almacenamiento-del-tipo-de-firma">Almacenamiento del tipo de firma</h3>
+<p>Nos estamos comunicando con SAM a través de un Socket, así que, para conectarte al socket, leer desde él y escribir en él, necesitarás crear las siguientes variables privadas en la clase Jsam:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> Socket socket;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> PrintWriter writer;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> BufferedReader reader;
+</span></span></code></pre></div><p>También querrás instanciar esas variables en tus Constructores creando una función para hacerlo.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Jsam</span>(String host, <span style="color:#66d9ef">int</span> port, SIGNATURE_TYPE sig) {
+</span></span><span style="display:flex;"><span>    SAMHost <span style="color:#f92672">=</span> host;
+</span></span><span style="display:flex;"><span>    SAMPort <span style="color:#f92672">=</span> port;
+</span></span><span style="display:flex;"><span>    SigType <span style="color:#f92672">=</span> sig;
+</span></span><span style="display:flex;"><span>    startConnection();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">startConnection</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>        socket <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Socket(SAMHost, SAMPort);
+</span></span><span style="display:flex;"><span>        writer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> PrintWriter(socket.<span style="color:#a6e22e">getOutputStream</span>(), <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>        reader <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BufferedReader(<span style="color:#66d9ef">new</span> InputStreamReader(socket.<span style="color:#a6e22e">getInputStream</span>()));
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//omitted for brevity</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="obtención-del-tipo-de-firma">Obtención del tipo de firma:</h3>
+<p>Ahora ya está todo listo para empezar, por fin, a comunicarte con SAM. Para mantener todo bien organizado, vamos a crear una función que envíe un único comando a SAM, terminado en un salto de línea, y que devuelva un objeto Reply, que crearemos en el siguiente paso:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> Reply <span style="color:#a6e22e">CommandSAM</span>(String args) {
+</span></span><span style="display:flex;"><span>    writer.<span style="color:#a6e22e">println</span>(args <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\n&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>        String repl <span style="color:#f92672">=</span> reader.<span style="color:#a6e22e">readLine</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Reply(repl);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//omitted for brevity</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Ten en cuenta que estamos usando el escritor (writer) y el lector (reader) que creamos a partir del socket en el paso anterior como nuestras entradas y salidas del socket. Cuando recibimos una respuesta del lector, pasamos la cadena al constructor de Reply, que la analiza y devuelve el objeto Reply.</p>
+<h3 id="parsing-a-reply-and-creating-a-reply-object">Parsing a reply and creating a Reply object.</h3>
+<p>Para manejar más fácilmente las respuestas, usaremos un objeto Reply para analizar automáticamente los resultados que obtenemos del SAM bridge. Una respuesta tiene al menos un tema, un tipo y un resultado, así como un número arbitrario de pares clave-valor.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Reply</span> {
+</span></span><span style="display:flex;"><span>    String topic;
+</span></span><span style="display:flex;"><span>    String type;
+</span></span><span style="display:flex;"><span>    REPLY_TYPES result;
+</span></span><span style="display:flex;"><span>    Map<span style="color:#f92672">&lt;</span>String, String<span style="color:#f92672">&gt;</span> replyMap <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;</span>String, String<span style="color:#f92672">&gt;</span>();
+</span></span></code></pre></div><p>Como puede ver, almacenaremos el &ldquo;result&rdquo; como un enum (enumeración), REPLY_TYPES. Este enum contiene todos los posibles resultados de respuesta que el SAM bridge podría devolver.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> REPLY_TYPES {
+</span></span><span style="display:flex;"><span>    OK,
+</span></span><span style="display:flex;"><span>    CANT_REACH_PEER,
+</span></span><span style="display:flex;"><span>    DUPLICATED_ID,
+</span></span><span style="display:flex;"><span>    DUPLICATED_DEST,
+</span></span><span style="display:flex;"><span>    I2P_ERROR,
+</span></span><span style="display:flex;"><span>    INVALID_KEY,
+</span></span><span style="display:flex;"><span>    KEY_NOT_FOUND,
+</span></span><span style="display:flex;"><span>    PEER_NOT_FOUND,
+</span></span><span style="display:flex;"><span>    TIMEOUT;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> REPLY_TYPES <span style="color:#a6e22e">set</span>(String type) {
+</span></span><span style="display:flex;"><span>        String temp <span style="color:#f92672">=</span> type.<span style="color:#a6e22e">trim</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">switch</span> (temp) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;RESULT=OK&#34;</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> OK;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;RESULT=CANT_REACH_PEER&#34;</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> CANT_REACH_PEER;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;RESULT=DUPLICATED_ID&#34;</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> DUPLICATED_ID;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;RESULT=DUPLICATED_DEST&#34;</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> DUPLICATED_DEST;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;RESULT=I2P_ERROR&#34;</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> I2P_ERROR;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;RESULT=INVALID_KEY&#34;</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> INVALID_KEY;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;RESULT=KEY_NOT_FOUND&#34;</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> KEY_NOT_FOUND;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;RESULT=PEER_NOT_FOUND&#34;</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> PEER_NOT_FOUND;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;RESULT=TIMEOUT&#34;</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> TIMEOUT;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> I2P_ERROR;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> String <span style="color:#a6e22e">get</span>(REPLY_TYPES type) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">switch</span> (type) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> OK:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;RESULT=OK&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> CANT_REACH_PEER:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;RESULT=CANT_REACH_PEER&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> DUPLICATED_ID:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;RESULT=DUPLICATED_ID&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> DUPLICATED_DEST:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;RESULT=DUPLICATED_DEST&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> I2P_ERROR:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;RESULT=I2P_ERROR&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> INVALID_KEY:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;RESULT=INVALID_KEY&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> KEY_NOT_FOUND:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;RESULT=KEY_NOT_FOUND&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> PEER_NOT_FOUND:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;RESULT=PEER_NOT_FOUND&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> TIMEOUT:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;RESULT=TIMEOUT&#34;</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;RESULT=I2P_ERROR&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>Ahora creemos nuestro constructor, que toma como parámetro la cadena de respuesta recibida del socket, la analiza y utiliza la información para configurar el objeto de respuesta. La respuesta está delimitada por espacios, con pares clave-valor unidos por un signo igual y terminada por un salto de línea.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Reply</span>(String reply) {
+</span></span><span style="display:flex;"><span>    String trimmed <span style="color:#f92672">=</span> reply.<span style="color:#a6e22e">trim</span>();
+</span></span><span style="display:flex;"><span>    String<span style="color:#f92672">[]</span> replyvalues <span style="color:#f92672">=</span> reply.<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">&#34; &#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (replyvalues.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&lt;</span> 2) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//omitted for brevity</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    topic <span style="color:#f92672">=</span> replyvalues<span style="color:#f92672">[</span>0<span style="color:#f92672">]</span>;
+</span></span><span style="display:flex;"><span>    type <span style="color:#f92672">=</span> replyvalues<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>;
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> REPLY_TYPES.<span style="color:#a6e22e">set</span>(replyvalues<span style="color:#f92672">[</span>2<span style="color:#f92672">]</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    String<span style="color:#f92672">[]</span> replyLast <span style="color:#f92672">=</span> Arrays.<span style="color:#a6e22e">copyOfRange</span>(replyvalues, 2, replyvalues.<span style="color:#a6e22e">length</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> x <span style="color:#f92672">=</span> 0; x <span style="color:#f92672">&lt;</span> replyLast.<span style="color:#a6e22e">length</span>; x<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        String<span style="color:#f92672">[]</span> kv <span style="color:#f92672">=</span> replyLast<span style="color:#f92672">[</span>x<span style="color:#f92672">]</span>.<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">&#34;=&#34;</span>, 2);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (kv.<span style="color:#a6e22e">length</span> <span style="color:#f92672">!=</span> 2) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        replyMap.<span style="color:#a6e22e">put</span>(kv<span style="color:#f92672">[</span>0<span style="color:#f92672">]</span>, kv<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Por último, para mayor comodidad, agreguemos al objeto Reply una función toString() que devuelva una representación en cadena del objeto Reply.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toString</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> topic <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &#34;</span> <span style="color:#f92672">+</span> type <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &#34;</span> <span style="color:#f92672">+</span> REPLY_TYPES.<span style="color:#a6e22e">get</span>(result) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &#34;</span> <span style="color:#f92672">+</span> replyMap.<span style="color:#a6e22e">toString</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="conectarse-al-puerto-sam">Conectarse al puerto SAM</h3>
+<p>Ahora estamos listos para establecer comunicación con SAM enviando un mensaje &ldquo;Hello&rdquo;. Si estás escribiendo una nueva biblioteca de SAM, probablemente deberías apuntar como mínimo a SAM 3.1, ya que está disponible tanto en I2P como en i2pd e introduce compatibilidad con el parámetro SIGNATURE_TYPE.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">HelloSAM</span>() {
+</span></span><span style="display:flex;"><span>    Reply repl <span style="color:#f92672">=</span> CommandSAM(<span style="color:#e6db74">&#34;HELLO VERSION MIN=3.0 MAX=3.1 \n&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (repl.<span style="color:#a6e22e">result</span> <span style="color:#f92672">==</span> Reply.<span style="color:#a6e22e">REPLY_TYPES</span>.<span style="color:#a6e22e">OK</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(repl.<span style="color:#a6e22e">String</span>());
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Como puedes ver, usamos la función CommandSAM que creamos antes para enviar el comando terminado en salto de línea <code>HELLO VERSION MIN=3.0 MAX=3.1 \n</code>. Esto le indica a SAM que quieres empezar a comunicarte con la API y que sabes hablar SAM versión 3.0 y 3.1. El router, a su vez, responderá con algo como <code>HELLO REPLY RESULT=OK VERSION=3.1</code>, que es una cadena que puedes pasar al constructor de Reply para obtener un objeto Reply válido. A partir de ahora, podemos usar nuestra función CommandSAM y el objeto Reply para gestionar toda nuestra comunicación a través del puente SAM.</p>
+<p>Por último, agreguemos una prueba para nuestra función &ldquo;HelloSAM&rdquo;.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Test</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testHelloSAM</span>() {
+</span></span><span style="display:flex;"><span>    Jsam classUnderTest <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Jsam();
+</span></span><span style="display:flex;"><span>    assertTrue(<span style="color:#e6db74">&#34;HelloSAM should return &#39;true&#39; in the presence of an alive SAM bridge&#34;</span>, classUnderTest.<span style="color:#a6e22e">HelloSAM</span>());
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="enviar-un-comando-a-sam">Enviar un comando a SAM</h3>
+<p>Ahora que has negociado tu conexión con SAM y acordado una versión de SAM que ambos admiten, puedes configurar conexiones peer-to-peer (entre pares) para que tu aplicación se conecte a otras aplicaciones i2p. Esto se hace enviando un comando &ldquo;SESSION CREATE&rdquo; al SAM Bridge. Para ello, usaremos una función CreateSession que acepta un ID de sesión y un parámetro de tipo de destino.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">CreateSession</span>(String id, String destination ) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (destination <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span>) {
+</span></span><span style="display:flex;"><span>        destination <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;TRANSIENT&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    Reply repl <span style="color:#f92672">=</span> CommandSAM(<span style="color:#e6db74">&#34;SESSION CREATE STYLE=STREAM ID=&#34;</span> <span style="color:#f92672">+</span> ID <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; DESTINATION=&#34;</span> <span style="color:#f92672">+</span> destination);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (repl.<span style="color:#a6e22e">result</span> <span style="color:#f92672">==</span> Reply.<span style="color:#a6e22e">REPLY_TYPES</span>.<span style="color:#a6e22e">OK</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> id;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Eso fue fácil, ¿verdad? Todo lo que teníamos que hacer era adaptar el patrón que usamos en nuestra función HelloSAM al comando <code>SESSION CREATE</code>. Una buena respuesta del puente seguirá devolviendo OK, y en ese caso devolvemos el ID de la conexión SAM recién creada. De lo contrario, devolvemos una cadena vacía porque, de todos modos, es un ID no válido y ha fallado, así que es fácil de comprobar. Veamos si esta función funciona escribiendo una prueba para comprobarlo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Test</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testCreateSession</span>() {
+</span></span><span style="display:flex;"><span>    Jsam classUnderTest <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Jsam();
+</span></span><span style="display:flex;"><span>    assertTrue(<span style="color:#e6db74">&#34;HelloSAM should return &#39;true&#39; in the presence of an alive SAM bridge&#34;</span>, classUnderTest.<span style="color:#a6e22e">HelloSAM</span>());
+</span></span><span style="display:flex;"><span>    assertEquals(<span style="color:#e6db74">&#34;test&#34;</span>, classUnderTest.<span style="color:#a6e22e">CreateSession</span>(<span style="color:#e6db74">&#34;test&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Tenga en cuenta que en esta prueba <em>debemos</em> llamar a HelloSAM primero para establecer comunicación con SAM antes de iniciar nuestra sesión. De lo contrario, el puente responderá con un error y la prueba fallará.</p>
+<h3 id="analizando-una-respuesta-y-creando-un-objeto-reply">Analizando una respuesta y creando un objeto Reply.</h3>
+<p>Ahora tienes tu sesión establecida y tu destino local, y necesitas decidir qué quieres hacer con ellos. Ahora puedes indicarle a tu sesión que se conecte a un servicio remoto a través de I2P, o que espere conexiones entrantes a las que responder. Sin embargo, antes de poder conectarte a un destino remoto, puede que necesites obtener el base64 del destino, que es lo que espera la API. Para ello, crearemos una función LookupName, que devolverá el base64 en un formato utilizable.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">LookupName</span>(String name) {
+</span></span><span style="display:flex;"><span>    String cmd <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;NAMING LOOKUP NAME=&#34;</span> <span style="color:#f92672">+</span> name <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\n&#34;</span>;
+</span></span><span style="display:flex;"><span>    Reply repl <span style="color:#f92672">=</span> CommandSAM(cmd);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (repl.<span style="color:#a6e22e">result</span> <span style="color:#f92672">==</span> Reply.<span style="color:#a6e22e">REPLY_TYPES</span>.<span style="color:#a6e22e">OK</span>) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(repl.<span style="color:#a6e22e">replyMap</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;VALUE&#34;</span>));
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> repl.<span style="color:#a6e22e">replyMap</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;VALUE&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>De nuevo, esto es casi lo mismo que nuestras funciones HelloSAM y CreateSession, con una diferencia. Como buscamos específicamente el VALUE y el campo NAME será el mismo que el argumento <code>name</code>, simplemente devuelve la cadena en base64 del destino solicitado.</p>
+<p>Ahora que tenemos nuestra función LookupName, probémosla:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Test</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testLookupName</span>() {
+</span></span><span style="display:flex;"><span>    Jsam classUnderTest <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Jsam();
+</span></span><span style="display:flex;"><span>    assertTrue(<span style="color:#e6db74">&#34;HelloSAM should return &#39;true&#39; in the presence of an alive SAM bridge&#34;</span>, classUnderTest.<span style="color:#a6e22e">HelloSAM</span>());
+</span></span><span style="display:flex;"><span>    assertEquals(<span style="color:#e6db74">&#34;8ZAW~KzGFMUEj0pdchy6GQOOZbuzbqpWtiApEj8LHy2~O~58XKxRrA43cA23a9oDpNZDqWhRWEtehSnX5NoCwJcXWWdO1ksKEUim6cQLP-VpQyuZTIIqwSADwgoe6ikxZG0NGvy5FijgxF4EW9zg39nhUNKRejYNHhOBZKIX38qYyXoB8XCVJybKg89aMMPsCT884F0CLBKbHeYhpYGmhE4YW~aV21c5pebivvxeJPWuTBAOmYxAIgJE3fFU-fucQn9YyGUFa8F3t-0Vco-9qVNSEWfgrdXOdKT6orr3sfssiKo3ybRWdTpxycZ6wB4qHWgTSU5A-gOA3ACTCMZBsASN3W5cz6GRZCspQ0HNu~R~nJ8V06Mmw~iVYOu5lDvipmG6-dJky6XRxCedczxMM1GWFoieQ8Ysfuxq-j8keEtaYmyUQme6TcviCEvQsxyVirr~dTC-F8aZ~y2AlG5IJz5KD02nO6TRkI2fgjHhv9OZ9nskh-I2jxAzFP6Is1kyAAAA&#34;</span>, classUnderTest.<span style="color:#a6e22e">LookupName</span>(<span style="color:#e6db74">&#34;i2p-projekt.i2p&#34;</span>));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="diciendo-hello-a-sam">Diciendo &ldquo;HELLO&rdquo; a SAM</h3>
+<p>Por fin, vamos a establecer una conexión con otro servicio con nuestra nueva biblioteca. Esta parte me confundió un poco al principio, pero los desarrolladores de Java más astutos probablemente se preguntaban por qué no extendimos la clase Socket en lugar de crear una variable Socket dentro de la clase Jsam. Esto se debe a que, hasta ahora, nos hemos estado comunicando con el &ldquo;Control Socket&rdquo; y necesitamos crear un nuevo socket para realizar la comunicación propiamente dicha. Así que hemos esperado hasta ahora para que la clase Jsam extienda la clase Socket:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Jsam</span> <span style="color:#66d9ef">extends</span> Socket {
+</span></span></code></pre></div><p>Además, vamos a modificar nuestra función startConnection para que podamos usarla para cambiar del socket de control al socket que usaremos en nuestra aplicación. Ahora recibirá un argumento de tipo Socket.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">startConnection</span>(Socket socket) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>        socket.<span style="color:#a6e22e">connect</span>(<span style="color:#66d9ef">new</span> InetSocketAddress(SAMHost, SAMPort), 600 );
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(e);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>        writer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> PrintWriter(socket.<span style="color:#a6e22e">getOutputStream</span>(), <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(e);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>        reader <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BufferedReader(<span style="color:#66d9ef">new</span> InputStreamReader(socket.<span style="color:#a6e22e">getInputStream</span>()));
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(e);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Esto nos permite abrir rápida y fácilmente un nuevo socket por el cual comunicarnos, realizar de nuevo el handshake &ldquo;Hello SAM&rdquo; y conectar el stream (flujo).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">ConnectSession</span>(String id, String destination) {
+</span></span><span style="display:flex;"><span>    startConnection(<span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>    HelloSAM();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (destination.<span style="color:#a6e22e">endsWith</span>(<span style="color:#e6db74">&#34;.i2p&#34;</span>)) {
+</span></span><span style="display:flex;"><span>        destination <span style="color:#f92672">=</span> LookupName(destination);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    String cmd <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;STREAM CONNECT ID=&#34;</span> <span style="color:#f92672">+</span> id <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; DESTINATION=&#34;</span> <span style="color:#f92672">+</span> destination <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; SILENT=false&#34;</span>;
+</span></span><span style="display:flex;"><span>    Reply repl <span style="color:#f92672">=</span> CommandSAM(cmd);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (repl.<span style="color:#a6e22e">result</span> <span style="color:#f92672">==</span> Reply.<span style="color:#a6e22e">REPLY_TYPES</span>.<span style="color:#a6e22e">OK</span>) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(repl.<span style="color:#a6e22e">String</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> id;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(repl.<span style="color:#a6e22e">String</span>());
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>¡Y ahora ya cuentas con un nuevo Socket para comunicarte a través de SAM! Hagamos lo mismo para aceptar conexiones remotas:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">AcceptSession</span>(String id) {
+</span></span><span style="display:flex;"><span>    startConnection(<span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>    HelloSAM();
+</span></span><span style="display:flex;"><span>    String cmd <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;STREAM ACCEPT ID=&#34;</span> <span style="color:#f92672">+</span> id  <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; SILENT=false&#34;</span>;
+</span></span><span style="display:flex;"><span>    Reply repl <span style="color:#f92672">=</span> CommandSAM(cmd);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (repl.<span style="color:#a6e22e">result</span> <span style="color:#f92672">==</span> Reply.<span style="color:#a6e22e">REPLY_TYPES</span>.<span style="color:#a6e22e">OK</span>) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(repl.<span style="color:#a6e22e">String</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> id;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(repl.<span style="color:#a6e22e">String</span>());
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Ahí lo tienes. Así es como se construye una biblioteca de SAM, paso a paso. En el futuro, haré referencias cruzadas de esto con la versión funcional de la biblioteca, Jsam, y la especificación de SAM v3, pero por ahora tengo que ocuparme de otras tareas.</p>
+
+        </div>
+
+        <div class="post-navigation">
+            <a href="../../../../../../es/blog" class="back-to-blog">← Back to Blog</a>
+        </div>
+    </div>
+</article>
+
+<style>
+.blog-post {
+    padding: var(--spacing-2xl) 0;
+}
+
+.post-header {
+    margin-bottom: var(--spacing-2xl);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.post-meta-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.post-date {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.post-categories {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.category-badge {
+    padding: 0.25rem 0.625rem;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.post-title {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.2;
+}
+
+.post-author {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+}
+
+.post-content {
+    max-width: 800px;
+    margin: 0 auto var(--spacing-2xl);
+    line-height: 1.8;
+    font-size: 1.0625rem;
+}
+
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.post-content h2 {
+    font-size: 1.875rem;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.post-content h3 {
+    font-size: 1.5rem;
+}
+
+.post-content h4 {
+    font-size: 1.25rem;
+}
+
+.post-content ul,
+.post-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.post-content li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.post-content pre {
+    background-color: var(--color-bg-secondary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin: var(--spacing-lg) 0;
+    border: 1px solid var(--color-border);
+}
+
+.post-content code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+}
+
+.post-content pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.post-content :not(pre) > code {
+    background-color: var(--color-bg-tertiary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+}
+
+.post-navigation {
+    max-width: 800px;
+    margin: var(--spacing-2xl) auto 0;
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.back-to-blog {
+    color: var(--color-primary);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: gap var(--transition-fast);
+}
+
+.back-to-blog:hover {
+    gap: var(--spacing-sm);
+}
+
+@media (max-width: 768px) {
+    .post-meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+
+    .post-title {
+        font-size: 2rem;
+    }
+
+    .post-content {
+        font-size: 1rem;
+    }
+}
+</style>
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Mantente informado con las noticias de I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Introduce tu correo electrónico" required>
+                            <button type="submit">Suscribirse</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="../../../../../../es/financial-support/">Donar</a></li>
+                    <li><a href="../../../../../../es/docs/overview/intro/">Introducción a I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Comunidad</h3>
+                <ul>
+                    <li><a href="../../../../../../es/get-involved/">Participa</a></li>
+                    <li><a href="../../../../../../es/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Foros Oficiales</a></li>
+                    <li><a href="../../../../../../es/contact/">Contacto</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Recursos</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Métricas de I2P</a></li>
+                    <li><a href="../../../../../../es/papers/">Investigación</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 El Proyecto de Internet Invisible. Licenciado bajo Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../../../es/privacy/">Privacidad</a>
+                <a href="../../../../../../es/terms/">Términos</a>
+                <a href="../../../../../../es/about/media/">Prensa</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Encuesta de la comunidad</h2>
+            <p class="modal-subtitle">Nos encantaría saber de ti</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Tu voto ayuda a dar forma al futuro de I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

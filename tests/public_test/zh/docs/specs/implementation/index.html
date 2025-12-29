@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Tunnel 操作指南 | I2P - 隐形互联网项目</title>
+
+    <meta name="description" content="用于通过 I2P tunnels 构建、加密和传输流量的统一规范。">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Tunnel 操作指南 | I2P - 隐形互联网项目">
+    <meta property="og:description" content="用于通过 I2P tunnels 构建、加密和传输流量的统一规范。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/zh/docs/specs/implementation/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P 测试版网站现已上线 电子邮件问题请发送至 stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="关闭横幅" title="关闭横幅">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../zh/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../zh/about/" class="">关于</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../zh/about/">概览</a></li>
+                            <li><a href="../../../../zh/papers/">研究论文</a></li>
+                            <li><a href="../../../../zh/about/media/">媒体</a></li>
+                            <li><a href="../../../../zh/contact/">联系我们</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../zh/docs/" class="active">文档</a></li>
+                    <li><a href="../../../../zh/downloads/" class="">下载</a></li>
+                    <li><a href="../../../../zh/blog/" class="">博客</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../zh/get-involved/" class="">参与其中</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../zh/get-involved/">概览</a></li>
+                            <li><a href="../../../../zh/feedback/">功能建议</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">zh</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/implementation/"
+                                class="lang-option">英语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/implementation/"
+                                class="lang-option">西班牙语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/implementation/"
+                                class="lang-option">韩语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/implementation/"
+                                class="lang-option active">中文</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/implementation/"
+                                class="lang-option">俄语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/implementation/"
+                                class="lang-option">捷克语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/implementation/"
+                                class="lang-option">德语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/implementation/"
+                                class="lang-option">法语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/implementation/"
+                                class="lang-option">土耳其语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/implementation/"
+                                class="lang-option">越南语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/implementation/"
+                                class="lang-option">印地语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/implementation/"
+                                class="lang-option">阿拉伯语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/implementation/"
+                                class="lang-option">葡萄牙语</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../zh/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../zh/downloads/" class="btn btn-primary">获取I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tunnel-model">Tunnel 模型</a>
+      <ul>
+        <li><a href="#message-lifecycle">消息生命周期</a></li>
+        <li><a href="#roles">角色概览</a></li>
+      </ul>
+    </li>
+    <li><a href="#tunnel-message-format">Tunnel 消息格式</a>
+      <ul>
+        <li><a href="#encrypted-layout">加密布局</a></li>
+        <li><a href="#decrypted-layout">解密后的布局</a></li>
+        <li><a href="#processing-steps">处理步骤</a></li>
+      </ul>
+    </li>
+    <li><a href="#tunnel-creation-ecies">Tunnel 建立 (ECIES-X25519，椭圆曲线集成加密方案，基于 X25519)</a></li>
+    <li><a href="#tunnel-creation-elgamal">旧版 Tunnel 创建 (ElGamal-2048)</a></li>
+    <li><a href="#tunnel-pools">Tunnel 池和生命周期</a></li>
+    <li><a href="#congestion">拥塞与可靠性</a></li>
+    <li><a href="#further-reading">延伸阅读</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../zh/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../zh/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../zh/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Tunnel 操作指南</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">此翻译是使用机器学习生成的，可能不是100%准确。</span>
+    
+    
+    <a href="../../../../en/docs/specs/implementation/" class="disclaimer-link">查看英文版本</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Tunnel 操作指南</h1>
+                    
+                        <p class="article-description">用于通过 I2P tunnels 构建、加密和传输流量的统一规范。</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <blockquote>
+<p><strong>范围：</strong> 本指南汇总了 tunnel 的实现、消息格式，以及两种 tunnel 创建规范（ECIES 和旧版 ElGamal）。现有深链接可继续通过上述别名使用。</p></blockquote>
+<h2 id="tunnel-model">Tunnel 模型</h2>
+<p>I2P 通过<em>单向的 tunnel</em>转发有效载荷：由有序的 routers 组成，只在单一方向传输流量。两个目的地之间的一次完整往返需要四条 tunnel（两条出站、两条入站）。</p>
+<p>先阅读 <a href="../../../../zh/docs/overview/tunnel-routing/">Tunnel Overview</a>
+ 以了解术语，然后使用本指南获取操作细节。</p>
+<h3 id="message-lifecycle">消息生命周期</h3>
+<ol>
+<li>tunnel <strong>网关</strong> 将一个或多个 I2NP 消息打包，对其进行分片，并写入投递指令。</li>
+<li>该网关将负载封装为固定大小 (1024 B) 的 tunnel 消息，必要时进行填充。</li>
+<li>每个<strong>参与者</strong> 验证前一跳，施加其加密层，并将 <code>{nextTunnelId, nextIV, encryptedPayload}</code> 转发到下一跳。</li>
+<li>tunnel <strong>端点</strong> 移除最后一层，处理投递指令，重新组装分片，并分发重建后的 I2NP 消息。</li>
+</ol>
+<p>重复检测使用一种以 IV（初始向量）与第一个密文分组的异或值作为键的衰减布隆过滤器，以阻止基于 IV 交换的标记攻击。</p>
+<h3 id="roles">角色概览</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Role</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Pre-processing</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Crypto Operation</th>
+      <th style="border:1px solid var(--color-border); padding:0.6rem; text-align:left; background:var(--color-bg-secondary);">Post-processing</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Outbound gateway (creator)</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Fragment, batch, pad</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Iteratively <em>decrypt</em> using every hop’s keys (so downstream peers encrypt)</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Forward to first hop</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Participant</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">—</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Encrypt IV and payload with hop keys</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Forward to next hop</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Outbound endpoint</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">—</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Encrypt once more to reveal plaintext payload</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Deliver to target tunnel/destination</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Inbound gateway</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Fragment, batch, pad</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Encrypt with local keys</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Forward to next hop</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Inbound endpoint (creator)</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">—</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Iteratively decrypt using stored hop keys</td>
+      <td style="border:1px solid var(--color-border); padding:0.6rem;">Reassemble and deliver locally</td>
+    </tr>
+  </tbody>
+</table>
+### 加密工作流程 {#encryption-workflow}
+<ul>
+<li><strong>入站 tunnels:</strong> 网关使用其层密钥加密一次；下游参与者继续加密，直到创建者解密最终有效载荷。</li>
+<li><strong>出站 tunnels:</strong> 网关预先应用每一跳加密的逆运算，使得每个参与者都进行加密。当端点完成加密时，网关的原始明文被还原。</li>
+</ul>
+<p>两个方向都将 <code>{tunnelId, IV, encryptedPayload}</code> 转发到下一跳。</p>
+<hr>
+<h2 id="tunnel-message-format">Tunnel 消息格式</h2>
+<p>Tunnel 网关将 I2NP 消息分片为固定大小的封包，以隐藏有效负载长度并简化逐跳处理。</p>
+<h3 id="encrypted-layout">加密布局</h3>
+<pre tabindex="0"><code>+----------------+----------------+-------------------+
+| Tunnel ID (4B) | IV (16B)       | Encrypted payload |
++----------------+----------------+-------------------+
+</code></pre><ul>
+<li><strong>Tunnel ID</strong> – 用于下一跳的 32 位标识符（非零，每个构建周期轮换）。</li>
+<li><strong>IV</strong> – 每条消息选择的 16 字节 AES IV。</li>
+<li><strong>加密有效负载</strong> – 1008 字节的 AES-256-CBC 密文。</li>
+</ul>
+<p>总大小：1028 字节。</p>
+<h3 id="decrypted-layout">解密后的布局</h3>
+<p>当某个跳点移除了其加密层之后：</p>
+<pre tabindex="0"><code>[Checksum (4B)][Padding ... 0x00 terminator]
+[Delivery Instructions 1][I2NP fragment 1]
+[Delivery Instructions 2][I2NP fragment 2]
+...
+</code></pre><ul>
+<li><strong>校验和</strong>用于验证解密后的数据块。</li>
+<li><strong>填充</strong>是由随机的非零字节组成，并以一个零字节结束。</li>
+<li><strong>传递指令</strong>告知端点如何处理每个分片（本地递送、转发到另一个 tunnel 等）。</li>
+<li><strong>分片</strong>承载底层的 I2NP 消息；端点会在将其传递到更高层之前对其进行重组。</li>
+</ul>
+<h3 id="processing-steps">处理步骤</h3>
+<ol>
+<li>网关对 I2NP 消息进行分片并排队，短暂保留未完整的片段以便重组。</li>
+<li>网关使用相应的层密钥对载荷加密，并设置 tunnel ID 以及 IV（初始化向量）。</li>
+<li>每个参与者先加密 IV（AES-256/ECB），再加密载荷（AES-256/CBC），随后再次加密 IV 并转发消息。</li>
+<li>端点按相反顺序解密，验证校验和，执行投递指令，并重组这些片段。</li>
+</ol>
+<hr>
+<h2 id="tunnel-creation-ecies">Tunnel 建立 (ECIES-X25519，椭圆曲线集成加密方案，基于 X25519)</h2>
+<p>现代的 routers 使用 ECIES-X25519 密钥来构建 tunnels，从而缩小构建消息的大小并实现前向保密。</p>
+<ul>
+<li><strong>构建消息：</strong> 单个 <code>TunnelBuild</code>（或 <code>VariableTunnelBuild</code>）I2NP 消息承载 1–8 条加密的构建记录，每一跳一条。</li>
+<li><strong>层密钥：</strong> 创建者使用该跳的静态 X25519（椭圆曲线密钥交换算法）身份以及创建者的临时密钥，通过 HKDF（基于HMAC的密钥派生函数）导出每跳的层密钥、IV（初始化向量）和回复密钥。</li>
+<li><strong>处理：</strong> 每一跳解密其记录，验证请求标志，写入回复块（成功或详细失败代码），重新加密其余记录，并转发该消息。</li>
+<li><strong>回复：</strong> 创建者会接收到一个使用 garlic encryption 封装的回复消息。标记为失败的记录包含一个严重性代码，以便 router 能够为该对等体建立画像。</li>
+<li><strong>兼容性：</strong> 为了向后兼容，router 仍可接受传统的 ElGamal（公钥加密算法）构建，但新的 tunnel 默认使用 ECIES（椭圆曲线集成加密方案）。</li>
+</ul>
+<blockquote>
+<p>关于逐字段的常量和密钥派生说明，请参见 ECIES（椭圆曲线集成加密方案）提案历史和 router 源码；本指南涵盖操作流程。</p></blockquote>
+<hr>
+<h2 id="tunnel-creation-elgamal">旧版 Tunnel 创建 (ElGamal-2048)</h2>
+<p>最初的 tunnel 构建格式使用了 ElGamal 公钥。现代的 routers 仅保留有限的向后兼容支持。</p>
+<blockquote>
+<p><strong>状态：</strong> 已过时。为历史参考而保留于此，并供维护与遗留版本兼容的工具的人员使用。</p></blockquote>
+<ul>
+<li><strong>Non-interactive telescoping（非交互式逐段伸展）:</strong> 单个构建消息贯穿整个路径。每一跳解密其 528 字节的记录，更新消息并将其转发。</li>
+<li><strong>可变长度:</strong> 可变 Tunnel 构建消息（VTBM）允许包含 1–8 条记录。早期的固定消息始终包含八条记录，以混淆 tunnel 的长度。</li>
+<li><strong>请求记录布局:</strong></li>
+</ul>
+<pre tabindex="0"><code>Bytes 0–3    : Tunnel ID (receiving ID)
+Bytes 4–35   : Current hop router hash
+Bytes 36–39  : Next tunnel ID
+Bytes 40–71  : Next hop router hash
+Bytes 72–103 : AES-256 layer key
+Bytes 104–135: AES-256 IV key
+Bytes 136–167: AES-256 reply key
+Bytes 168–183: AES-256 reply IV
+Byte 184     : Flags (bit7=IBGW, bit6=OBEP)
+Bytes 185–188: Request time (hours since epoch)
+Bytes 189–192: Next message ID
+Bytes 193–221: Padding
+</code></pre><ul>
+<li><strong>标志：</strong> 第7位表示入站网关（IBGW）；第6位表示出站端点（OBEP）。二者互斥。</li>
+<li><strong>加密：</strong> 每条记录使用该跳点的公钥进行 ElGamal-2048（ElGamal 2048位公钥加密算法）加密。对称的 AES-256-CBC（AES 256位CBC模式）分层确保只有预定的跳点能够读取其记录。</li>
+<li><strong>要点：</strong> tunnel ID 均为非零的 32 位值；创建者可以插入填充记录以隐藏实际的 tunnel 长度；可靠性取决于重试失败的构建。</li>
+</ul>
+<hr>
+<h2 id="tunnel-pools">Tunnel 池和生命周期</h2>
+<p>router 会为探测流量以及每个 I2CP 会话分别维护独立的入站和出站 tunnel 池。</p>
+<ul>
+<li><strong>节点选择:</strong> 探索型 tunnels 从“active, not failing”的节点桶中选取以提升多样性; 客户端 tunnels 更偏好快速、高容量的节点。</li>
+<li><strong>确定性排序:</strong> 节点按 <code>SHA256(peerHash || poolKey)</code> 与该池随机密钥之间的 XOR 距离（按位异或距离）进行排序。该密钥在重启时轮换, 既保证单次运行内的稳定性, 又在跨运行时抑制前驱攻击。</li>
+<li><strong>生命周期:</strong> routers 按 <code>{mode, direction, length, variance}</code> 元组跟踪历史构建时间。随着 tunnels 接近到期, 会提前启动替换; 在发生失败时, router 会增加并行构建数量, 同时对未完成的尝试设定上限。</li>
+<li><strong>配置可调项:</strong> 活动/备份 tunnel 数量、跳数及其方差、零跳许可以及构建速率限制, 均可按池进行调节。</li>
+</ul>
+<hr>
+<h2 id="congestion">拥塞与可靠性</h2>
+<p>尽管 tunnels 类似于电路，routers 将它们视为消息队列。为了将时延保持在可控范围内，会使用加权随机早期丢弃（WRED）：</p>
+<ul>
+<li>当利用率接近配置的上限时，丢弃概率会上升。</li>
+<li>参与方按固定大小的片段进行计算；网关/端点会根据片段的合计大小决定丢弃，优先丢弃大型有效负载。</li>
+<li>出站端点会先于其他角色执行丢弃，以尽可能减少网络资源消耗。</li>
+</ul>
+<p>保证交付留给更高层（例如 <a href="../../../../zh/docs/specs/streaming/">Streaming library</a>
+）。需要可靠性的应用必须自行处理重传和确认。</p>
+<hr>
+<h2 id="further-reading">延伸阅读</h2>
+<ul>
+<li><a href="../../../../zh/docs/overview/tunnel-routing#peer-selection/">节点选择</a>
+</li>
+<li><a href="../../../../zh/docs/overview/tunnel-routing/">Tunnel 概述</a>
+</li>
+<li><a href="../../../../zh/docs/legacy/old-implementation/">旧版 Tunnel 实现</a>
+</li>
+</ul>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../zh/docs/specs/udp-bittorrent-announces/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">UDP BitTorrent 通告请求</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../zh/docs/specs/ssu2/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">SSU2 规范</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/zh/docs/specs/implementation.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">保持关注 I2P 新闻：</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="输入您的邮箱" required>
+                            <button type="submit">订阅</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>快速链接</h3>
+                <ul>
+                    <li><a href="../../../../zh/financial-support/">捐赠</a></li>
+                    <li><a href="../../../../zh/docs/overview/intro/">I2P介绍</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>社区</h3>
+                <ul>
+                    <li><a href="../../../../zh/get-involved/">参与其中</a></li>
+                    <li><a href="../../../../zh/blog/">博客</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">官方论坛</a></li>
+                    <li><a href="../../../../zh/contact/">联系我们</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>资源</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P 指标</a></li>
+                    <li><a href="../../../../zh/papers/">研究</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 隐形互联网计划。在 Creative Commons 许可下。</p>
+            <div class="footer-links">
+                <a href="../../../../zh/privacy/">隐私</a>
+                <a href="../../../../zh/terms/">条款</a>
+                <a href="../../../../zh/about/media/">媒体</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="关闭">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>社区投票</h2>
+            <p class="modal-subtitle">我们很想听听您的意见</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                您的投票将帮助塑造 I2P 的未来。
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

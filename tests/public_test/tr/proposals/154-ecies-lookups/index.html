@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>ECIES Hedeflerinden Veri Tabanı Aramaları | I2P - Görünmez İnternet Projesi</title>
+
+    <meta name="description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="ECIES Hedeflerinden Veri Tabanı Aramaları | I2P - Görünmez İnternet Projesi">
+    <meta property="og:description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tr/proposals/154-ecies-lookups/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P Beta Sitesi Artık Yayında E-posta sorunları için stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Banner" title="Banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../tr/" class="logo-link">
+                    <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../tr/about/" class="">Hakkında</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../tr/about/">Genel Bakış</a></li>
+                            <li><a href="../../../tr/papers/">Araştırma Makaleleri</a></li>
+                            <li><a href="../../../tr/about/media/">Basın</a></li>
+                            <li><a href="../../../tr/contact/">İletişim</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../tr/docs/" class="">Belgeler</a></li>
+                    <li><a href="../../../tr/downloads/" class="">İndirilenler</a></li>
+                    <li><a href="../../../tr/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../tr/get-involved/" class="">Katılım Sağla</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../tr/get-involved/">Genel Bakış</a></li>
+                            <li><a href="../../../tr/feedback/">Özellik Önerileri</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">tr</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../en/proposals/154-ecies-lookups/"
+                                class="lang-option">İngilizce</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../es/proposals/154-ecies-lookups/"
+                                class="lang-option">İspanyolca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ko/proposals/154-ecies-lookups/"
+                                class="lang-option">Korece</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../zh/proposals/154-ecies-lookups/"
+                                class="lang-option">Çince</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ru/proposals/154-ecies-lookups/"
+                                class="lang-option">Rusça</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../cs/proposals/154-ecies-lookups/"
+                                class="lang-option">Çekçe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../de/proposals/154-ecies-lookups/"
+                                class="lang-option">Almanca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../fr/proposals/154-ecies-lookups/"
+                                class="lang-option">Fransızca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../tr/proposals/154-ecies-lookups/"
+                                class="lang-option active">Türkçe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../vi/proposals/154-ecies-lookups/"
+                                class="lang-option">Vietnamca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../hi/proposals/154-ecies-lookups/"
+                                class="lang-option">Hintçe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ar/proposals/154-ecies-lookups/"
+                                class="lang-option">Arapça</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../pt/proposals/154-ecies-lookups/"
+                                class="lang-option">Portekizce</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../tr/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../tr/downloads/" class="btn btn-primary">I2P&#39;yi Edin</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+<div class="proposals-page">
+    <div class="container">
+        
+        <nav class="breadcrumbs">
+            <a href="../../../tr/">Home</a>
+            <span class="separator">/</span>
+            <a href="../../../tr/proposals/">Proposals</a>
+            <span class="separator">/</span>
+            <span class="current">ECIES Hedeflerinden Veri Tabanı Aramaları</span>
+        </nav>
+
+        
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Bu çeviri makine öğrenimi kullanılarak oluşturulmuştur ve %100 doğru olmayabilir.</span>
+    
+    
+    <a href="../../../en/proposals/154-ecies-lookups/" class="disclaimer-link">İngilizce versiyonu görüntüle</a>
+    
+</div>
+
+
+
+        
+        <header class="proposal-header">
+            <div class="proposal-title-section">
+                <h1 class="proposal-title">ECIES Hedeflerinden Veri Tabanı Aramaları</h1>
+                <div class="proposal-number">Proposal 154</div>
+            </div>
+
+            
+            <div class="proposal-meta-box">
+                <div class="proposal-status status-kapalı">
+                    Kapalı
+                </div>
+
+                
+                <div class="proposal-info-grid">
+                    
+                    <div class="info-item">
+                        <span class="info-label">Author</span>
+                        <span class="info-value">zzz</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Created</span>
+                        <span class="info-value">2020-03-23</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Last Updated</span>
+                        <span class="info-value">2021-01-08</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Target Version</span>
+                        <span class="info-value">0.9.46</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Implemented In</span>
+                        <span class="info-value">0.9.46</span>
+                    </div>
+                    
+                </div>
+
+                
+                
+            </div>
+        </header>
+
+        
+        <div class="proposal-layout proposal-layout--with-toc">
+            
+            
+            <aside class="proposal-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#not">Not</a></li>
+    <li><a href="#genel-bakış">Genel Bakış</a>
+      <ul>
+        <li><a href="#tanımlar">Tanımlar</a></li>
+        <li><a href="#özet">Özet</a></li>
+        <li><a href="#amaçlar">Amaçlar</a></li>
+        <li><a href="#amaçlar-dışında">Amaçlar Dışında</a></li>
+      </ul>
+    </li>
+    <li><a href="#alternatifler">Alternatifler</a></li>
+    <li><a href="#tasarım">Tasarım</a></li>
+    <li><a href="#spesifikasyon">Spesifikasyon</a>
+      <ul>
+        <li><a href="#elgden-elgye">ElG’den ElG’ye</a></li>
+        <li><a href="#eciesden-elgye">ECIES’den ElG’ye</a></li>
+        <li><a href="#eciesden-eciesye-0949">ECIES’den ECIES’ye (0.9.49)</a></li>
+        <li><a href="#eciesden-eciesye-gelecek">ECIES’den ECIES’ye (gelecek)</a></li>
+        <li><a href="#cevap-formatı">Cevap formatı</a></li>
+      </ul>
+    </li>
+    <li><a href="#gerekçe">Gerekçe</a></li>
+    <li><a href="#notlar">Notlar</a></li>
+    <li><a href="#sorunlar">Sorunlar</a></li>
+    <li><a href="#geçiş">Geçiş</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="proposal-main">
+                <article class="proposal-content">
+                    <h2 id="not">Not</h2>
+<p>ECIES&rsquo;den ElG&rsquo;ye uygulamaları 0.9.46&rsquo;da gerçekleştirildi ve teklif aşaması kapandı.
+Resmi spesifikasyon için <a href="../../../tr/docs/specs/i2np/">I2NP</a>
+&lsquo;ye bakın.
+Bu teklif, arka plan bilgileri için hala referans alınabilir.
+Anahtarlar dahil ECIES&rsquo;den ECIES&rsquo;ye uygulama 0.9.48 itibarıyla gerçekleştirilmiştir.
+Temel alınan anahtarlarla ECIES&rsquo;den ECIES&rsquo;ye bölümü yeniden açılabilir veya gelecekteki bir teklife dahil edilebilir.</p>
+<h2 id="genel-bakış">Genel Bakış</h2>
+<h3 id="tanımlar">Tanımlar</h3>
+<ul>
+<li>AEAD: ChaCha20/Poly1305</li>
+<li>DLM: I2NP Veri Tabanı Arama Mesajı</li>
+<li>DSM: I2NP Veri Tabanı Depolama Mesajı</li>
+<li>DSRM: I2NP Veri Tabanı Arama Cevabı Mesajı</li>
+<li>ECIES: ECIES-X25519-AEAD-Ratchet (öneri 144)</li>
+<li>ElG: ElGamal</li>
+<li>ENCRYPT(k, n, payload, ad): <a href="../../../tr/docs/specs/ecies/">ECIES</a>
+&lsquo;de tanımlandığı gibi</li>
+<li>LS: Kira seti</li>
+<li>lookup: I2NP DLM</li>
+<li>reply: I2NP DSM veya DSRM</li>
+</ul>
+<h3 id="özet">Özet</h3>
+<p>Bir LS için bir floodfill&rsquo;e DLM gönderirken, DLM genellikle cevabın etiketlenmesi, AES ile şifrelenmesi ve tünel boyunca hedefe gönderilmesi gerektiğini belirtir.
+AES ile şifrelenmiş cevaplar desteği 0.9.7&rsquo;de eklendi.</p>
+<p>AES ile şifrelenen cevaplar, ElG&rsquo;nin büyük kripto yükünü en aza indirmek için 0.9.7&rsquo;de belirtildi ve çünkü etiketler/AES tesisini ElGamal/AES+SessionTags&rsquo;te yeniden kullandığı için.
+Ancak, IBEP&rsquo;de kimlik doğrulaması olmadığından, AES cevapları kaldırılabilir ve ileriye dönük olarak gizli değildir.</p>
+<p><a href="../../../tr/docs/specs/ecies/">ECIES</a>
+ hedefleri ile, öneri 144&rsquo;ün amacı, artık 32 bayt etiketleri ve AES şifre çözmeyi desteklememeleridir.
+Özellikler o teklifte kasıtlı olarak dahil edilmedi.</p>
+<p>Bu teklif, DLM&rsquo;de ECIES şifreli cevapları talep etmek için yeni bir seçeneği belgeler.</p>
+<h3 id="amaçlar">Amaçlar</h3>
+<ul>
+<li>Şifrelenmiş bir cevabın bir tünel üzerinden bir ECIES hedefine talep edildiğinde, DLM için yeni bayraklar</li>
+<li>Cevap için, müracaat edenin (hedefin) anahtarının bozulması kimliğine bürünmeye karşı ileriye dönük gizlilik ve gönderen kimlik doğrulaması ekleyin.</li>
+<li>İstek sahibinin anonim olarak kalmasını sağlamak</li>
+<li>Kripto yükünü en aza indirmek</li>
+</ul>
+<h3 id="amaçlar-dışında">Amaçlar Dışında</h3>
+<ul>
+<li>Aramanın (DLM) şifreleme veya güvenlik özelliklerinde değişiklik yok.
+Arama, yalnızca isteyen anahtarının bozulması için ileriye dönük gizliliğe sahiptir.
+Şifreleme floodfill&rsquo;in statik anahtarına yapılır.</li>
+<li>Yanıt verenin (floodfill&rsquo;in) anahtarının bozulmasına karşı ileriye dönük gizlilik veya gönderen kimlik doğrulama sorunları yok.
+Floodfill, herkesten gelen aramalara yanıt verecek bir genel veri tabanıdır.</li>
+<li>Bu teklifte ECIES routerları tasarlamayın.
+Bir router&rsquo;ın X25519 genel anahtarının nereye gideceği TBD.</li>
+</ul>
+<h2 id="alternatifler">Alternatifler</h2>
+<p>ECIES hedeflerine cevapları şifrelemek için tanımlanmış bir yolun yokluğunda, birkaç alternatif vardır:</p>
+<ol>
+<li>
+<p>Şifrelenmiş cevapları talep etmeyin. Cevaplar şifresiz olacaktır.
+Java I2P şu anda bu yaklaşımı kullanıyor.</p>
+</li>
+<li>
+<p>Yalnızca ECIES hedefleri için 32 bayt etiket ve AES ile şifrelenmiş cevapları desteklemeye ekleyin ve her zamanki gibi AES ile şifrelenmiş cevapları isteyin. i2pd şu anda bu yaklaşımı kullanıyor.</p>
+</li>
+<li>
+<p>Her zamanki gibi AES ile şifrelenmiş cevapları isteyin, ancak cevapları router&rsquo;a keşif tünellerinden geri yönlendirin.
+Java I2P şu anda bazı durumlarda bu yaklaşımı kullanıyor.</p>
+</li>
+<li>
+<p>İkili ElG ve ECIES hedefleri için her zamanki gibi AES ile şifrelenmiş cevapları isteyin. Java I2P şu anda bu yaklaşımı kullanıyor.
+i2pd henüz çift kripto hedeflerini uygulamadı.</p>
+</li>
+</ol>
+<h2 id="tasarım">Tasarım</h2>
+<ul>
+<li>
+<p>Yeni DLM formatı, ECIES ile şifrelenmiş cevapları belirtmek için bayraklar alanına bir bit ekleyecektir.
+ECIES ile şifrelenmiş cevaplar, ekli bir etiket ve bir ChaCha/Poly yükü ve MAC ile <a href="../../../tr/docs/specs/ecies/">ECIES</a>
+ Mevcut Oturum mesajı formatını kullanacaktır.</p>
+</li>
+<li>
+<p>İki varyant tanımlayın. Bir DH işleminin mümkün olmadığı ElG routerları için bir tane ve DH işleminin mümkün olduğu ve ek güvenlik sağlayabilecek gelecek ECIES routerları için bir tane. Daha fazla inceleme için.</p>
+</li>
+</ul>
+<p>DH, ElG routerlarından cevaplar için mümkün değildir çünkü X25519 genel anahtarı yayınlanmaz.</p>
+<h2 id="spesifikasyon">Spesifikasyon</h2>
+<p><a href="../../../tr/docs/specs/i2np/">I2NP</a>
+ DLM (Veri Tabanı Arama) spesifikasyonunda, aşağıdaki değişiklikleri yapın.</p>
+<p>Yeni şifreleme seçenekleri için bayrak biti 4 &ldquo;ECIESFlag&rdquo; ekleyin.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>flags ::
+</span></span><span style="display:flex;"><span>       bit 4: ECIESFlag
+</span></span><span style="display:flex;"><span>               0.9.46 sürümünden önce göz ardı edilir
+</span></span><span style="display:flex;"><span>               0.9.46 sürümünden itibaren:
+</span></span><span style="display:flex;"><span>               0  =&gt; şifresiz veya ElGamal cevabı gönder
+</span></span><span style="display:flex;"><span>               1  =&gt; ekli anahtarla ChaCha/Poly şifrelenmiş cevap gönder
+</span></span><span style="display:flex;"><span>                     (etiket ekli olup olmadığı bit 1&#39;e bağlıdır)
+</span></span></code></pre></div><p>Bayrak biti 4, cevap şifreleme modunu belirlemek için bit 1 ile birlikte kullanılır.
+Bayrak biti 4 yalnızca 0.9.46 veya daha yüksek sürümdeki routerlara gönderilirken ayarlanmalıdır.</p>
+<p>Aşağıdaki tabloda,
+&ldquo;DH n/a&rdquo; cevabın şifrelenmediği anlamına gelir.
+&ldquo;DH no&rdquo; cevabın anahtarlarının istekte dahil edildiği anlamına gelir.
+&ldquo;DH yes&rdquo; cevabın anahtarlarının DH işlemi ile türetildiği anlamına gelir.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Bayrak bitleri 4,1</th>
+          <th>From Dest</th>
+          <th>To Router</th>
+          <th>Reply</th>
+          <th>DH?</th>
+          <th>notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>0 0</td>
+          <td>Any</td>
+          <td>Any</td>
+          <td>no enc</td>
+          <td>n/a</td>
+          <td>mevcut</td>
+      </tr>
+      <tr>
+          <td>0 1</td>
+          <td>ElG</td>
+          <td>ElG</td>
+          <td>AES</td>
+          <td>no</td>
+          <td>mevcut</td>
+      </tr>
+      <tr>
+          <td>0 1</td>
+          <td>ECIES</td>
+          <td>ElG</td>
+          <td>AES</td>
+          <td>no</td>
+          <td>i2pd geçici çözümü</td>
+      </tr>
+      <tr>
+          <td>1 0</td>
+          <td>ECIES</td>
+          <td>ElG</td>
+          <td>AEAD</td>
+          <td>no</td>
+          <td>bu teklif</td>
+      </tr>
+      <tr>
+          <td>1 0</td>
+          <td>ECIES</td>
+          <td>ECIES</td>
+          <td>AEAD</td>
+          <td>no</td>
+          <td>0.9.49</td>
+      </tr>
+      <tr>
+          <td>1 1</td>
+          <td>ECIES</td>
+          <td>ECIES</td>
+          <td>AEAD</td>
+          <td>yes</td>
+          <td>gelecek</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="elgden-elgye">ElG’den ElG’ye</h3>
+<p>ElG hedefi bir ElG routera bir arama gönderir.</p>
+<p>Yeni bit 4 için kontrol yapılması için küçük değişiklikler. Mevcut ikili formatta değişiklik yok.</p>
+<p>İsteyen anahtar üretimi (açıklama):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>reply_key :: CSRNG(32) 32 bayt rastgele veri
+</span></span><span style="display:flex;"><span>  reply_tags :: Her biri CSRNG(32) 32 bayt rastgele veridir
+</span></span></code></pre></div><p>Mesaj formatı (ECIESFlag için kontrol ekle):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>reply_key ::
+</span></span><span style="display:flex;"><span>       32 bayt `OturumAnahtarı` big-endian
+</span></span><span style="display:flex;"><span>       yalnızca encryptionFlag == 1 VE ECIESFlag == 0 ise dahil edilir, yalnızca 0.9.7 sürümünden itibaren
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tags ::
+</span></span><span style="display:flex;"><span>       1 bayt `Tamsayı`
+</span></span><span style="display:flex;"><span>       geçerli aralık: 1-32 (genellikle 1)
+</span></span><span style="display:flex;"><span>       ardından gelen cevap etiketlerinin sayısı
+</span></span><span style="display:flex;"><span>       yalnızca encryptionFlag == 1 VE ECIESFlag == 0 ise dahil edilir, yalnızca 0.9.7 sürümünden itibaren
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  reply_tags ::
+</span></span><span style="display:flex;"><span>       bir veya daha fazla 32 bayt `OturumTag`&#39;i (genellikle bir)
+</span></span><span style="display:flex;"><span>       yalnızca encryptionFlag == 1 VE ECIESFlag == 0 ise dahil edilir, yalnızca 0.9.7 sürümünden itibaren
+</span></span></code></pre></div><h3 id="eciesden-elgye">ECIES’den ElG’ye</h3>
+<p>ECIES hedefi bir ElG routera bir arama gönderir.
+0.9.46 itibarıyla desteklenir.</p>
+<p>reply_key ve reply_tags alanları, bir ECIES ile şifrelenmiş cevap için yeniden tanımlanır.</p>
+<p>İsteyen anahtar üretimi:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>reply_key :: CSRNG(32) 32 bayt rastgele veri
+</span></span><span style="display:flex;"><span>  reply_tags :: Her biri CSRNG(8) 8 bayt rastgele veri
+</span></span></code></pre></div><p>Mesaj formatı:
+reply_key ve reply_tags alanlarını aşağıdaki şekilde yeniden tanımlayın:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>reply_key ::
+</span></span><span style="display:flex;"><span>       32 bayt ECIES `OturumAnahtarı` big-endian
+</span></span><span style="display:flex;"><span>       yalnızca encryptionFlag == 0 VE ECIESFlag == 1 ise dahil edilir, yalnızca 0.9.46 sürümünden itibaren
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tags ::
+</span></span><span style="display:flex;"><span>       1 bayt `Tamsayı`
+</span></span><span style="display:flex;"><span>       gerekli değer: 1
+</span></span><span style="display:flex;"><span>       ardından gelen cevap etiketlerinin sayısı
+</span></span><span style="display:flex;"><span>       yalnızca encryptionFlag == 0 VE ECIESFlag == 1 ise dahil edilir, yalnızca 0.9.46 sürümünden itibaren
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  reply_tags ::
+</span></span><span style="display:flex;"><span>       bir 8 bayt ECIES `OturumTag`
+</span></span><span style="display:flex;"><span>       yalnızca encryptionFlag == 0 VE ECIESFlag == 1 ise dahil edilir, yalnızca 0.9.46 sürümünden itibaren
+</span></span></code></pre></div><p>Cevap, <a href="../../../tr/docs/specs/ecies/">ECIES</a>
+&lsquo;de tanımlandığı gibi bir ECIES Mevcut Oturum mesajıdır.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>tag :: 8 bayt reply_tag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  k :: 32 bayt oturum anahtarı
+</span></span><span style="display:flex;"><span>     Cevabın anahtarı.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  n :: 0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ad :: 8 bayt reply_tag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  payload :: Düz metin veriler, DSM veya DSRM.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  şifreli metin = ENCRYPT(k, n, payload, ad)
+</span></span></code></pre></div><h3 id="eciesden-eciesye-0949">ECIES’den ECIES’ye (0.9.49)</h3>
+<p>ECIES hedefi veya routerı, bir ECIES routerına eklenmiş cevap anahtarlarıyla bir arama gönderir.
+0.9.49 itibarıyla desteklenir.</p>
+<p>ECIES routerları 0.9.48&rsquo;de tanıtıldı, bkz. <a href="../../../tr/proposals/156-ecies-routers/">Prop156</a>
+.
+0.9.49 itibarıyla, ECIES hedefleri ve routerlar &ldquo;ECIES’den ElG’ye&rdquo; bölümündeki ile aynı formatı kullanabilir, istek içinde cevap anahtarları dahil edilmiştir.
+Arama, talep sahibinin anonim olduğu için <a href="../../../tr/docs/specs/ecies/">ECIES</a>
+&lsquo;deki &ldquo;tek seferlik format&quot;ı kullanacaktır.</p>
+<p>Yeni bir yöntemle türetilen anahtarlar için, bir sonraki bölüme bakın.</p>
+<h3 id="eciesden-eciesye-gelecek">ECIES’den ECIES’ye (gelecek)</h3>
+<p>ECIES hedefi veya routerı, bir ECIES routerına bir arama gönderir ve cevap anahtarları DH&rsquo;den türetilir.
+Tam olarak tanımlanmamış veya desteklenmiyor, uygulama TBD.</p>
+<p>Arama, talep sahibinin anonim olduğu için <a href="../../../tr/docs/specs/ecies/">ECIES</a>
+&lsquo;deki &ldquo;tek seferlik format&quot;ı kullanacaktır.</p>
+<p>reply_key alanını aşağıdaki gibi yeniden tanımlayın. Bağlı etiketler yok.
+Aşağıdaki KDF&rsquo;de etiketler oluşturulacaktır.</p>
+<p>Bu bölüm tamamlanmamış ve daha fazla çalışma gerektirir.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>reply_key ::
+</span></span><span style="display:flex;"><span>       32 bayt X25519 ephemeral `GenelAnahtar` istek sahibine ait, little-endian
+</span></span><span style="display:flex;"><span>       yalnızca encryptionFlag == 1 VE ECIESFlag == 1 ise dahil edilir, yalnızca 0.9.TBD sürümünden itibaren
+</span></span></code></pre></div><p>Cevap, <a href="../../../tr/docs/specs/ecies/">ECIES</a>
+ üzerinde tanımlanmış bir ECIES Mevcut Oturum mesajıdır.
+Tüm tanımlar için <a href="../../../tr/docs/specs/ecies/">ECIES</a>
+&rsquo;e bakın.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>// Alice&#39;in X25519 geçici anahtarları
+</span></span><span style="display:flex;"><span>  // aesk = Alice geçici özel anahtarı
+</span></span><span style="display:flex;"><span>  aesk = GENERATE_PRIVATE()
+</span></span><span style="display:flex;"><span>  // aepk = Alice geçici genel anahtarı
+</span></span><span style="display:flex;"><span>  aepk = DERIVE_PUBLIC(aesk)
+</span></span><span style="display:flex;"><span>  // Bob&#39;un X25519 statik anahtarları
+</span></span><span style="display:flex;"><span>  // bsk = Bob özel statik anahtarı
+</span></span><span style="display:flex;"><span>  bsk = GENERATE_PRIVATE()
+</span></span><span style="display:flex;"><span>  // bpk = Bob genel statik anahtarı
+</span></span><span style="display:flex;"><span>  // bpk RouterIdentity&#39;nin bir parçası olabilir veya RouterInfo&#39;da yayınlanabilir (TBD)
+</span></span><span style="display:flex;"><span>  bpk = DERIVE_PUBLIC(bsk)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // (DH()
+</span></span><span style="display:flex;"><span>  //[chainKey, k] = MixKey(sharedSecret)
+</span></span><span style="display:flex;"><span>  // chainKey nereden ???
+</span></span><span style="display:flex;"><span>  sharedSecret = DH(aesk, bpk) = DH(bsk, aepk)
+</span></span><span style="display:flex;"><span>  keydata = HKDF(chainKey, sharedSecret, &#34;ECIES-DSM-Reply1&#34;, 32)
+</span></span><span style="display:flex;"><span>  chainKey = keydata[0:31]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  1) rootKey = Payload Bölümünden chainKey
+</span></span><span style="display:flex;"><span>  2) k, Yeni Oturum KDF&#39;den veya split()&#39;ten
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // KDF_RK(rk, dh_out)
+</span></span><span style="display:flex;"><span>  keydata = HKDF(rootKey, k, &#34;KDFDHRatchetStep&#34;, 64)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Çıktı 1: kullanılmamış
+</span></span><span style="display:flex;"><span>  unused = keydata[0:31]
+</span></span><span style="display:flex;"><span>  // Çıktı 2: Alice&#39;den Bob&#39;a iletimler için yeni oturum etiketi ve simetrik anahtar rachetleri
+</span></span><span style="display:flex;"><span>  // başlatmak için zincir anahtar
+</span></span><span style="display:flex;"><span>  ck = keydata[32:63]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // oturum etiketi ve simetrik anahtar zincir anahtarları
+</span></span><span style="display:flex;"><span>  keydata = HKDF(ck, ZEROLEN, &#34;TagAndKeyGenKeys&#34;, 64)
+</span></span><span style="display:flex;"><span>  sessTag_ck = keydata[0:31]
+</span></span><span style="display:flex;"><span>  symmKey_ck = keydata[32:63]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tag :: [ECIES](/docs/specs/ecies/)&#39;deki RATCHET_TAG() tarafından üretilen 8 bayt etiket
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  k :: [ECIES](/docs/specs/ecies/)&#39;deki RATCHET_KEY() tarafından üretilen 32 bayt anahtar
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  n :: Etiketin dizini. Genellikle 0.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ad :: 8 bayt etiket
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  payload :: Düz metin veriler, DSM veya DSRM.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  şifreli metin = ENCRYPT(k, n, payload, ad)
+</span></span></code></pre></div><h3 id="cevap-formatı">Cevap formatı</h3>
+<p>Bu mevcut oturum mesajıdır,
+<a href="../../../tr/docs/specs/i2np/">I2NP</a>
+ içinde tanımlandığı gibi, aşağıda referans için kopyalanmıştır.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>+----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>  |       Oturum Etiketi                    |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>  |                                       |
+</span></span><span style="display:flex;"><span>  +            Yük Bölümü                +
+</span></span><span style="display:flex;"><span>  |       ChaCha20 şifreli veri          |
+</span></span><span style="display:flex;"><span>  ~                                       ~
+</span></span><span style="display:flex;"><span>  |                                       |
+</span></span><span style="display:flex;"><span>  +                                       +
+</span></span><span style="display:flex;"><span>  |                                       |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>  |  Poly1305 Mesaj Doğrulama Kodu       |
+</span></span><span style="display:flex;"><span>  +              (MAC)                    +
+</span></span><span style="display:flex;"><span>  |             16 bayt                  |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Oturum Etiketi :: 8 bayt, açık metin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Yük Bölümü şifreli veri :: kalan veri eksi 16 bayt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  MAC :: Poly1305 mesaj doğrulama kodu, 16 bayt
+</span></span></code></pre></div><h2 id="gerekçe">Gerekçe</h2>
+<p>Cevap şifreleme parametreleri önce 0.9.7&rsquo;de arama içinde tanıtıldı ve bunlar biraz katman ihlali gibi. Verimlilik için bu şekilde yapılır.
+Ama aynı zamanda aramanın anonim olmasından dolayı.</p>
+<p>Arama formatını şifreleme türü alanıyla genel yapabiliriz ama bu muhtemelen yapmaya değerinden fazla sorun yaratır.</p>
+<p>Yukarıdaki öneri en kolay olanı ve arama formatındaki değişiklikleri en aza indirir.</p>
+<h2 id="notlar">Notlar</h2>
+<p>ElG routerlarına yapılan veri tabanı aramaları ve depolamaları alışıldığı gibi ElGamal/AESSessionTag ile şifrelenmelidir.</p>
+<h2 id="sorunlar">Sorunlar</h2>
+<p>İki ECIES cevap seçeneğinin güvenliği üzerinde daha fazla analiz gereklidir.</p>
+<h2 id="geçiş">Geçiş</h2>
+<p>Geriye dönük uyumluluk sorunları yok. Routerları, RouterInfo&rsquo;da bir router.version&rsquo;u 0.9.46 veya daha yeni olarak reklam ederse, bu özelliği desteklemek zorundadır.
+Routerlar, 0.9.46&rsquo;dan düşük bir sürüme sahip routerlara yeni bayraklarla bir DatabaseLookup göndermemelidir.
+Yanlışlıkla ayarlanmamış bit 1 ve ayarlanmış bit 4 ile bir veri tabanı arama mesajı desteklenmeyen bir routera gönderilirse,
+sağlanan anahtar ve etiketi muhtemelen göz ardı edecek ve cevabı şifresiz olarak gönderecektir.</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    <a href="../../../tr/proposals/" class="page-nav-link">
+                        ← Back to Proposals
+                    </a>
+                    
+                    
+                    
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                            
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <a href="../../../proposals/154-ecies-lookups.txt" class="page-nav-link" download>
+                        Download Source (.txt)
+                    </a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.proposals-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.proposal-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.proposal-title-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.proposal-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-text);
+}
+
+.proposal-number {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+ 
+.proposal-meta-box {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.proposal-status {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+ 
+.status-open {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-open {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-accepted {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-accepted {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-finished {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-finished {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-closed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-closed {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.dark .status-rejected {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.status-draft,
+.status-needs-revision,
+.status-dead,
+.status-needs-research {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-draft,
+.dark .status-needs-revision,
+.dark .status-dead,
+.dark .status-needs-research {
+    background: #78350f;
+    color: #fde047;
+}
+
+.status-meta,
+.status-informational,
+.status-reserve {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+.dark .status-meta,
+.dark .status-informational,
+.dark .status-reserve {
+    background: #581c87;
+    color: #e879f9;
+}
+
+ 
+.proposal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.info-value {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+ 
+.proposal-relationships {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-md);
+}
+
+.relationship {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.relationship:last-child {
+    margin-bottom: 0;
+}
+
+.relationship-label {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    min-width: 120px;
+}
+
+.relationship-value {
+    color: var(--color-text);
+}
+
+ 
+.proposal-layout {
+    display: block;
+}
+
+.proposal-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.proposal-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.proposal-main {
+    min-width: 0;
+}
+
+ 
+.proposal-content {
+    line-height: 1.8;
+    color: var(--color-text);
+    max-width: 900px;
+}
+
+.proposal-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content ul,
+.proposal-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.proposal-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.proposal-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.proposal-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.proposal-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.proposal-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin-left: 0;
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+.proposal-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.proposal-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+.proposal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content table th {
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.proposal-content table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.proposal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+ 
+.page-nav {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.page-nav-link {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+ 
+@media (max-width: 1024px) {
+    .proposal-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .proposal-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .proposal-title {
+        font-size: 1.75rem;
+    }
+
+    .proposal-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">I2P haberleriyle güncel kalın:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="E-posta adresinizi girin" required>
+                            <button type="submit">Abone Ol</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Hızlı Bağlantılar</h3>
+                <ul>
+                    <li><a href="../../../tr/financial-support/">Bağış Yap</a></li>
+                    <li><a href="../../../tr/docs/overview/intro/">I2P Tanıtımı</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Topluluk</h3>
+                <ul>
+                    <li><a href="../../../tr/get-involved/">Katılın</a></li>
+                    <li><a href="../../../tr/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Resmi Forumlar</a></li>
+                    <li><a href="../../../tr/contact/">İletişim</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Kaynaklar</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P Metrikleri</a></li>
+                    <li><a href="../../../tr/papers/">Araştırma</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Invisible Internet Projesi. Creative Commons altında lisanslanmıştır.</p>
+            <div class="footer-links">
+                <a href="../../../tr/privacy/">Gizlilik</a>
+                <a href="../../../tr/terms/">Şartlar</a>
+                <a href="../../../tr/about/media/">Basın</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Kapat">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Topluluk Anketi</h2>
+            <p class="modal-subtitle">Sizden haber almaktan memnuniyet duyarız</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Oyunuz I2P&#39;nin geleceğini şekillendirmeye yardımcı olur.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

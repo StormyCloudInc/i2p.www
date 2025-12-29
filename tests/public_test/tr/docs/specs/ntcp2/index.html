@@ -1,0 +1,2579 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>NTCP2 Taşıma | I2P - Görünmez İnternet Projesi</title>
+
+    <meta name="description" content="router&#39;lar arası bağlantılar için Noise (Noise protokol çerçevesi) tabanlı TCP taşıma protokolü">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="NTCP2 Taşıma | I2P - Görünmez İnternet Projesi">
+    <meta property="og:description" content="router&#39;lar arası bağlantılar için Noise (Noise protokol çerçevesi) tabanlı TCP taşıma protokolü">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tr/docs/specs/ntcp2/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P Beta Sitesi Artık Yayında E-posta sorunları için stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Banner" title="Banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../tr/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../tr/about/" class="">Hakkında</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../tr/about/">Genel Bakış</a></li>
+                            <li><a href="../../../../tr/papers/">Araştırma Makaleleri</a></li>
+                            <li><a href="../../../../tr/about/media/">Basın</a></li>
+                            <li><a href="../../../../tr/contact/">İletişim</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../tr/docs/" class="active">Belgeler</a></li>
+                    <li><a href="../../../../tr/downloads/" class="">İndirilenler</a></li>
+                    <li><a href="../../../../tr/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../tr/get-involved/" class="">Katılım Sağla</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../tr/get-involved/">Genel Bakış</a></li>
+                            <li><a href="../../../../tr/feedback/">Özellik Önerileri</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">tr</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/ntcp2/"
+                                class="lang-option">İngilizce</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/ntcp2/"
+                                class="lang-option">İspanyolca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/ntcp2/"
+                                class="lang-option">Korece</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/ntcp2/"
+                                class="lang-option">Çince</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/ntcp2/"
+                                class="lang-option">Rusça</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/ntcp2/"
+                                class="lang-option">Çekçe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/ntcp2/"
+                                class="lang-option">Almanca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/ntcp2/"
+                                class="lang-option">Fransızca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/ntcp2/"
+                                class="lang-option active">Türkçe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/ntcp2/"
+                                class="lang-option">Vietnamca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/ntcp2/"
+                                class="lang-option">Hintçe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/ntcp2/"
+                                class="lang-option">Arapça</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/ntcp2/"
+                                class="lang-option">Portekizce</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../tr/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../tr/downloads/" class="btn btn-primary">I2P&#39;yi Edin</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#genel-bakış">Genel Bakış</a></li>
+    <li><a href="#noise-protokol-çerçevesi">Noise Protokol Çerçevesi</a>
+      <ul>
+        <li><a href="#i2pye-özgü-uzantılar">I2P&rsquo;ye Özgü Uzantılar</a></li>
+      </ul>
+    </li>
+    <li><a href="#el-sıkışma-akışı">El Sıkışma Akışı</a>
+      <ul>
+        <li><a href="#üç-mesajlı-el-sıkışma">Üç Mesajlı El Sıkışma</a></li>
+        <li><a href="#noise-mesaj-kalıpları">Noise Mesaj Kalıpları</a></li>
+      </ul>
+    </li>
+    <li><a href="#mesaj-spesifikasyonları">Mesaj Spesifikasyonları</a>
+      <ul>
+        <li><a href="#anahtar-gösterimi">Anahtar Gösterimi</a></li>
+        <li><a href="#kimliği-doğrulanmış-şifreleme-chacha20-poly1305">Kimliği Doğrulanmış Şifreleme (ChaCha20-Poly1305)</a></li>
+      </ul>
+    </li>
+    <li><a href="#mesaj-1-sessionrequest-oturum-isteği">Mesaj 1: SessionRequest (oturum isteği)</a>
+      <ul>
+        <li><a href="#ham-biçim">Ham Biçim</a></li>
+        <li><a href="#şifresi-çözülmüş-içerik">Şifresi Çözülmüş İçerik</a></li>
+        <li><a href="#seçenekler-bloğu-16-bayt-big-endian-yüksek-anlamlı-bayt-önce">Seçenekler Bloğu (16 bayt, big-endian (yüksek anlamlı bayt önce))</a></li>
+        <li><a href="#anahtar-türetme-fonksiyonu-kdf-1">Anahtar Türetme Fonksiyonu (KDF-1)</a></li>
+        <li><a href="#gerçekleştirim-notları">Gerçekleştirim Notları</a></li>
+      </ul>
+    </li>
+    <li><a href="#mesaj-2-sessioncreated-oturum-oluşturuldu">Mesaj 2: SessionCreated (oturum oluşturuldu)</a>
+      <ul>
+        <li><a href="#ham-biçim-1">Ham Biçim</a></li>
+        <li><a href="#şifresi-çözülmüş-içerik-1">Şifresi Çözülmüş İçerik</a></li>
+        <li><a href="#seçenekler-bloğu-16-bayt-big-endian-büyük-uçlu-bayt-sıralaması">Seçenekler Bloğu (16 bayt, big-endian (büyük uçlu bayt sıralaması))</a></li>
+        <li><a href="#anahtar-türetme-fonksiyonu-kdf-2">Anahtar Türetme Fonksiyonu (KDF-2)</a></li>
+        <li><a href="#uygulama-notları">Uygulama Notları</a></li>
+      </ul>
+    </li>
+    <li><a href="#mesaj-3-sessionconfirmed">Mesaj 3: SessionConfirmed</a>
+      <ul>
+        <li><a href="#iki-parçalı-yapı">İki Parçalı Yapı</a></li>
+        <li><a href="#ham-biçim-2">Ham Biçim</a></li>
+        <li><a href="#şifresi-çözülmüş-içerik-2">Şifresi Çözülmüş İçerik</a></li>
+        <li><a href="#anahtar-türetme-fonksiyonu-kdf-3">Anahtar Türetme Fonksiyonu (KDF-3)</a></li>
+        <li><a href="#uygulama-notları-1">Uygulama Notları</a></li>
+      </ul>
+    </li>
+    <li><a href="#veri-aşaması">Veri Aşaması</a>
+      <ul>
+        <li><a href="#anahtar-türetme-fonksiyonu-veri-aşaması">Anahtar Türetme Fonksiyonu (Veri Aşaması)</a></li>
+        <li><a href="#çerçeve-yapısı">Çerçeve Yapısı</a></li>
+        <li><a href="#siphash-ile-uzunluk-gizleme">SipHash ile Uzunluk Gizleme</a></li>
+        <li><a href="#blok-biçimi">Blok Biçimi</a></li>
+        <li><a href="#blok-türleri">Blok Türleri</a></li>
+        <li><a href="#blok-türü-0-datetime">Blok Türü 0: DateTime</a></li>
+        <li><a href="#blok-türü-1-seçenekler">Blok Türü 1: Seçenekler</a></li>
+        <li><a href="#blok-türü-2-routerinfo-router-bilgisi">Blok Türü 2: RouterInfo (router bilgisi)</a></li>
+        <li><a href="#blok-türü-3-i2np-mesajı">Blok Türü 3: I2NP Mesajı</a></li>
+        <li><a href="#blok-tipi-4-sonlandırma">Blok Tipi 4: Sonlandırma</a></li>
+        <li><a href="#blok-türü-254-dolgu">Blok Türü 254: Dolgu</a></li>
+      </ul>
+    </li>
+    <li><a href="#aead-ek-verili-kimliği-doğrulanmış-şifreleme-hata-işleme">AEAD (ek verili kimliği doğrulanmış şifreleme) Hata İşleme</a>
+      <ul>
+        <li><a href="#el-sıkışma-aşaması-mesajlar-1-3">El Sıkışma Aşaması (Mesajlar 1-3)</a></li>
+        <li><a href="#veri-aşaması-1">Veri Aşaması</a></li>
+      </ul>
+    </li>
+    <li><a href="#yayınlanan-routerinfo-router-bilgisi">Yayınlanan RouterInfo (router bilgisi)</a>
+      <ul>
+        <li><a href="#router-adres-biçimi">Router Adres Biçimi</a></li>
+        <li><a href="#gerekli-seçenekler">Gerekli Seçenekler</a></li>
+        <li><a href="#örnek-routeraddress-girdileri">Örnek RouterAddress Girdileri</a></li>
+        <li><a href="#yayınlanmamış-ntcp2-adresi">Yayınlanmamış NTCP2 Adresi</a></li>
+        <li><a href="#açık-anahtar-ve-iv-rotasyonu">Açık Anahtar ve IV Rotasyonu</a></li>
+      </ul>
+    </li>
+    <li><a href="#sürüm-tespiti">Sürüm Tespiti</a></li>
+    <li><a href="#saat-sapması-yönergeleri">Saat Sapması Yönergeleri</a>
+      <ul>
+        <li><a href="#bobun-ele-alması-mesaj-1">Bob&rsquo;un Ele Alması (Mesaj 1)</a></li>
+        <li><a href="#alicein-işlemesi-mesaj-2">Alice&rsquo;in İşlemesi (Mesaj 2)</a></li>
+        <li><a href="#bobun-işlemesi-mesaj-3">Bob&rsquo;un İşlemesi (Mesaj 3)</a></li>
+        <li><a href="#zaman-senkronizasyonu">Zaman Senkronizasyonu</a></li>
+      </ul>
+    </li>
+    <li><a href="#güvenlik-özellikleri">Güvenlik Özellikleri</a>
+      <ul>
+        <li><a href="#ileri-gizlilik">İleri Gizlilik</a></li>
+        <li><a href="#kimlik-doğrulama">Kimlik Doğrulama</a></li>
+        <li><a href="#trafik-analizine-karşı-direnç">Trafik Analizine Karşı Direnç</a></li>
+        <li><a href="#hizmet-reddi-saldırılarının-azaltılması">Hizmet Reddi Saldırılarının Azaltılması</a></li>
+        <li><a href="#kriptografik-güvenlik">Kriptografik Güvenlik</a></li>
+      </ul>
+    </li>
+    <li><a href="#kaynaklar">Kaynaklar</a>
+      <ul>
+        <li><a href="#ana-spesifikasyonlar">Ana Spesifikasyonlar</a></li>
+        <li><a href="#kriptografik-standartlar">Kriptografik Standartlar</a></li>
+        <li><a href="#ilgili-i2p-spesifikasyonları">İlgili I2P Spesifikasyonları</a></li>
+        <li><a href="#uygulama-referansları">Uygulama Referansları</a></li>
+        <li><a href="#tarihsel-bağlam">Tarihsel Bağlam</a></li>
+      </ul>
+    </li>
+    <li><a href="#uygulama-yönergeleri">Uygulama Yönergeleri</a>
+      <ul>
+        <li><a href="#zorunlu-gereksinimler">Zorunlu Gereksinimler</a></li>
+        <li><a href="#önerilen-uygulamalar">Önerilen Uygulamalar</a></li>
+        <li><a href="#sık-yapılan-hatalar">Sık Yapılan Hatalar</a></li>
+        <li><a href="#test-metodolojisi">Test Metodolojisi</a></li>
+        <li><a href="#ntcpden-geçiş">NTCP&rsquo;den geçiş</a></li>
+      </ul>
+    </li>
+    <li><a href="#ek-a-noise-xk-deseni">Ek A: Noise XK Deseni</a></li>
+    <li><a href="#ek-b-base64-kodlama">Ek B: Base64 Kodlama</a></li>
+    <li><a href="#ek-c-paket-yakalama-analizi">Ek C: Paket Yakalama Analizi</a></li>
+    <li><a href="#ek-d-sürüm-geçmişi">Ek D: Sürüm Geçmişi</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../tr/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../tr/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../tr/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">NTCP2 Taşıma</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Bu çeviri makine öğrenimi kullanılarak oluşturulmuştur ve %100 doğru olmayabilir.</span>
+    
+    
+    <a href="../../../../en/docs/specs/ntcp2/" class="disclaimer-link">İngilizce versiyonu görüntüle</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">NTCP2 Taşıma</h1>
+                    
+                        <p class="article-description">router&#39;lar arası bağlantılar için Noise (Noise protokol çerçevesi) tabanlı TCP taşıma protokolü</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 0.9.66
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="genel-bakış">Genel Bakış</h2>
+<p>NTCP2, eski NTCP taşıma protokolünün yerini, trafik parmak izi tespitine dirençli, uzunluk alanlarını şifreleyen ve modern şifre takımlarını destekleyen Noise tabanlı bir el sıkışmasıyla alır. Router&rsquo;lar, I2P ağındaki iki zorunlu taşıma protokolü olarak NTCP2&rsquo;yi SSU2 ile birlikte çalıştırabilir. NTCP (sürüm 1) 0.9.40&rsquo;da (Mayıs 2019) kullanımı önerilmez hale getirildi ve 0.9.50&rsquo;de (Mayıs 2021) tamamen kaldırıldı.</p>
+<h2 id="noise-protokol-çerçevesi">Noise Protokol Çerçevesi</h2>
+<p>NTCP2, I2P&rsquo;ye özgü uzantılarla birlikte Noise Protocol Framework (Noise Protokol Çatısı) <a href="https://noiseprotocol.org/noise.html">Revizyon 33, 2017-10-04</a>
+ kullanır:</p>
+<ul>
+<li><strong>Desen</strong>: <code>Noise_XK_25519_ChaChaPoly_SHA256</code></li>
+<li><strong>Genişletilmiş Tanımlayıcı</strong>: <code>Noise_XKaesobfse+hs2+hs3_25519_ChaChaPoly_SHA256</code> (KDF (Anahtar Türetme Fonksiyonu) başlatma için)</li>
+<li><strong>DH İşlevi</strong>: X25519 (RFC 7748) - 32 baytlık anahtarlar, little-endian kodlama</li>
+<li><strong>Şifreleme</strong>: AEAD_CHACHA20_POLY1305 (RFC 7539/RFC 8439)
+<ul>
+<li>12 baytlık nonce (tek seferlik değer): ilk 4 bayt sıfır, son 8 bayt sayaç (little-endian)</li>
+<li>Maksimum nonce değeri: 2^64 - 2 (bağlantı 2^64 - 1&rsquo;e ulaşmadan önce sonlandırılmalıdır)</li>
+</ul>
+</li>
+<li><strong>Özet Fonksiyonu</strong>: SHA-256 (32 bayt çıktı)</li>
+<li><strong>MAC (Mesaj Doğrulama Kodu)</strong>: Poly1305 (16 bayt kimlik doğrulama etiketi)</li>
+</ul>
+<h3 id="i2pye-özgü-uzantılar">I2P&rsquo;ye Özgü Uzantılar</h3>
+<ol>
+<li><strong>AES ile Gizleme</strong>: Bob&rsquo;un router karması ve yayımlanmış IV (başlatma vektörü) kullanılarak AES-256-CBC ile şifrelenen geçici anahtarlar</li>
+<li><strong>Rastgele Dolgu</strong>: Mesaj 1-2&rsquo;de açık metin dolgusu (kimliği doğrulanmış), mesaj 3 ve sonrasında AEAD (authenticated encryption with associated data - ilişkili verilerle kimlik doğrulamalı şifreleme) dolgusu (şifrelenmiş)</li>
+<li><strong>SipHash-2-4 ile Uzunluk Gizleme</strong>: İki baytlık çerçeve uzunlukları SipHash çıktısı ile XOR&rsquo;lanır</li>
+<li><strong>Çerçeve Yapısı</strong>: Veri aşaması için başında uzunluk alanı bulunan çerçeveler (TCP akış uyumluluğu)</li>
+<li><strong>Blok Tabanlı Yükler</strong>: Tür tanımlı bloklarla yapılandırılmış veri biçimi</li>
+</ol>
+<h2 id="el-sıkışma-akışı">El Sıkışma Akışı</h2>
+<pre tabindex="0"><code>Alice (Initiator)             Bob (Responder)
+SessionRequest  ──────────────────────►
+                ◄────────────────────── SessionCreated
+SessionConfirmed ──────────────────────►
+</code></pre><h3 id="üç-mesajlı-el-sıkışma">Üç Mesajlı El Sıkışma</h3>
+<ol>
+<li><strong>SessionRequest</strong> - Alice&rsquo;in gizlileştirilmiş geçici anahtarı, seçenekler, dolgu ipuçları</li>
+<li><strong>SessionCreated</strong> - Bob&rsquo;un gizlileştirilmiş geçici anahtarı, şifrelenmiş seçenekler, dolgu</li>
+<li><strong>SessionConfirmed</strong> - Alice&rsquo;in şifrelenmiş statik anahtarı ve RouterInfo (iki AEAD çerçevesi)</li>
+</ol>
+<h3 id="noise-mesaj-kalıpları">Noise Mesaj Kalıpları</h3>
+<pre tabindex="0"><code>XK(s, rs):           Authentication   Confidentiality
+  &lt;- s               (Bob&#39;s static key known in advance)
+  -&gt; e, es                  0                2
+  &lt;- e, ee                  2                1
+  -&gt; s, se                  2                5
+  &lt;-                        2                5
+</code></pre><p><strong>Kimlik Doğrulama Seviyeleri:</strong> - 0: Kimlik doğrulama yok (herhangi bir taraf göndermiş olabilir) - 2: Gönderici kimlik doğrulaması, anahtar ele geçirilmesine dayalı kimliğe bürünmeye (KCI) karşı dayanıklıdır</p>
+<p><strong>Gizlilik Düzeyleri:</strong> - 1: Geçici alıcı (ileri gizlilik, alıcı kimlik doğrulaması yok) - 2: Bilinen alıcı, yalnızca gönderenin ele geçirilmesi durumunda ileri gizlilik - 5: Güçlü ileri gizlilik (geçici-geçici + geçici-statik DH)</p>
+<h2 id="mesaj-spesifikasyonları">Mesaj Spesifikasyonları</h2>
+<h3 id="anahtar-gösterimi">Anahtar Gösterimi</h3>
+<ul>
+<li><code>RH_A</code> = Alice için Router Hash (32 bayt, SHA-256)</li>
+<li><code>RH_B</code> = Bob için Router Hash (32 bayt, SHA-256)</li>
+<li><code>||</code> = bitiştirme operatörü</li>
+<li><code>byte(n)</code> = değeri n olan tek bayt</li>
+<li>Aksi belirtilmedikçe tüm çok baytlı tamsayılar <strong>big-endian</strong> (büyük-sonlu) düzenindedir</li>
+<li>X25519 anahtarları <strong>little-endian</strong> (küçük-sonlu) (32 bayt)</li>
+</ul>
+<h3 id="kimliği-doğrulanmış-şifreleme-chacha20-poly1305">Kimliği Doğrulanmış Şifreleme (ChaCha20-Poly1305)</h3>
+<p><strong>Şifreleme İşlevi:</strong></p>
+<pre tabindex="0"><code>AEAD_ChaCha20_Poly1305(key, nonce, associatedData, plaintext)
+  → (ciphertext || MAC)
+</code></pre><p><strong>Parametreler:</strong> - <code>key</code>: KDF (Anahtar Türetme Fonksiyonu) çıktısı 32 baytlık şifreleme anahtarı - <code>nonce</code>: 12 bayt (4 sıfır bayt + 8 baytlık sayaç, little-endian (küçük uca dayalı bayt sıralaması)) - <code>associatedData</code>: el sıkışma aşamasında 32 baytlık özet; veri aşamasında sıfır uzunlukta - <code>plaintext</code>: Şifrelenecek veri (0+ bayt)</p>
+<p><strong>Çıktı:</strong> - Şifreli metin: Düz metinle aynı uzunlukta - MAC: 16 bayt (Poly1305 kimlik doğrulama etiketi)</p>
+<p><strong>Nonce (tek kullanımlık sayı) Yönetimi:</strong> - Her bir şifreleme örneği için sayaç 0&rsquo;dan başlar - O yöndeki her AEAD (kimliği doğrulanmış ek verili şifreleme) işlemi için artırılır - Veri aşamasında Alice→Bob ve Bob→Alice için ayrı sayaçlar vardır - Sayaç 2^64 - 1 değerine ulaşmadan önce bağlantı sonlandırılmalıdır</p>
+<h2 id="mesaj-1-sessionrequest-oturum-isteği">Mesaj 1: SessionRequest (oturum isteği)</h2>
+<p>Alice, Bob ile bir bağlantı başlatır.</p>
+<p><strong>Noise İşlemleri</strong>: <code>e, es</code> (geçici anahtar oluşturma ve değişimi)</p>
+<h3 id="ham-biçim">Ham Biçim</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    AES-256-CBC Encrypted X (32B)      +
+|    Key: RH_B, IV: Bob&#39;s published IV  |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame (48 bytes)        +
+|    Plaintext: 32B (X + options)       |
++    k from KDF-1, n=0, ad=h            +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
++    Length specified in options         +
+|    0 to 65535 - 80 bytes              |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Boyut Kısıtları:</strong> - Minimum: 80 bayt (32 AES + 48 AEAD) - Maksimum: toplam 65535 bayt - <strong>Özel durum</strong>: &ldquo;NTCP&rdquo; adreslerine bağlanırken en fazla 287 bayt (sürüm algılama)</p>
+<h3 id="şifresi-çözülmüş-içerik">Şifresi Çözülmüş İçerik</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    X (Alice ephemeral public key)     +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|           Options Block               |
++             (16 bytes)                +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="seçenekler-bloğu-16-bayt-big-endian-yüksek-anlamlı-bayt-önce">Seçenekler Bloğu (16 bayt, big-endian (yüksek anlamlı bayt önce))</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| id | ver|  padLen | m3p2len | Rsvd(0) |
++----+----+----+----+----+----+----+----+
+|        tsA        |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+
+id      : 1 byte  - Network ID (2 for mainnet, 16-254 for testnets)
+ver     : 1 byte  - Protocol version (currently 2)
+padLen  : 2 bytes - Padding length in this message (0-65455)
+m3p2len : 2 bytes - Length of SessionConfirmed part 2 frame
+Rsvd    : 2 bytes - Reserved, set to 0
+tsA     : 4 bytes - Unix timestamp (seconds since epoch)
+Reserved: 4 bytes - Reserved, set to 0
+</code></pre><p><strong>Kritik Alanlar:</strong> - <strong>Ağ Kimliği</strong> (0.9.42&rsquo;den beri): Ağlar arası bağlantıların hızlı reddedilmesi - <strong>m3p2len</strong>: 3. iletinin 2. bölümünün tam boyutu (gönderildiğinde eşleşmelidir)</p>
+<h3 id="anahtar-türetme-fonksiyonu-kdf-1">Anahtar Türetme Fonksiyonu (KDF-1)</h3>
+<p><strong>Başlatma Protokolü:</strong></p>
+<pre tabindex="0"><code>protocol_name = &#34;Noise_XKaesobfse+hs2+hs3_25519_ChaChaPoly_SHA256&#34;
+h = SHA256(protocol_name)
+ck = h  // Chaining key initialized to hash
+</code></pre><p><strong>MixHash İşlemleri:</strong></p>
+<pre tabindex="0"><code>h = SHA256(h)                    // Null prologue
+h = SHA256(h || rs)              // Bob&#39;s static key (known)
+h = SHA256(h || e.pubkey)        // Alice&#39;s ephemeral key X
+// h is now the associated data for message 1 AEAD
+</code></pre><p><strong>MixKey İşlemi (es deseni):</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Alice.ephemeral_private, Bob.static_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 1
+// ck is retained for message 2 KDF
+</code></pre><h3 id="gerçekleştirim-notları">Gerçekleştirim Notları</h3>
+<ol>
+<li><strong>AES Obfuscation (gizleme)</strong>: Yalnızca DPI (Derin Paket İnceleme) direnci için kullanılır; Bob&rsquo;un router hash&rsquo;i ve IV&rsquo;si olan herkes X&rsquo;in şifresini çözebilir</li>
+<li><strong>Replay Prevention</strong>: Bob, X değerlerini (veya şifrelenmiş eşdeğerlerini) en az 2*D saniye boyunca önbelleğe almalıdır (D = maksimum saat sapması)</li>
+<li><strong>Timestamp Validation</strong>: Bob, |tsA - current_time| &gt; D olan bağlantıları reddetmelidir (genellikle D = 60 saniye)</li>
+<li><strong>Curve Validation</strong>: Bob, X&rsquo;in geçerli bir X25519 noktası olduğunu doğrulamalıdır</li>
+<li><strong>Fast Rejection</strong>: Bob, şifre çözmeden önce X[31] &amp; 0x80 == 0 olup olmadığını kontrol edebilir (geçerli X25519 anahtarlarında MSB (en anlamlı bit) sıfırdır)</li>
+<li><strong>Error Handling</strong>: Herhangi bir başarısızlıkta, Bob rastgele bir zaman aşımı ve rastgele bayt okumasının ardından TCP RST ile kapatır</li>
+<li><strong>Buffering</strong>: Alice, verimlilik için tüm mesajı (padding (doldurma) dahil) tek seferde boşaltmalıdır</li>
+</ol>
+<h2 id="mesaj-2-sessioncreated-oturum-oluşturuldu">Mesaj 2: SessionCreated (oturum oluşturuldu)</h2>
+<p>Bob, Alice&rsquo;e yanıt verir.</p>
+<p><strong>Noise İşlemleri</strong>: <code>e, ee</code> (geçici-geçici DH)</p>
+<h3 id="ham-biçim-1">Ham Biçim</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    AES-256-CBC Encrypted Y (32B)      +
+|    Key: RH_B, IV: AES state from msg1 |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame (48 bytes)        +
+|    Plaintext: 32B (Y + options)       |
++    k from KDF-2, n=0, ad=h            +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
++    Length specified in options         +
+|    0 to 65535 - 80 bytes              |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="şifresi-çözülmüş-içerik-1">Şifresi Çözülmüş İçerik</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    Y (Bob ephemeral public key)       +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|           Options Block               |
++             (16 bytes)                +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="seçenekler-bloğu-16-bayt-big-endian-büyük-uçlu-bayt-sıralaması">Seçenekler Bloğu (16 bayt, big-endian (büyük uçlu bayt sıralaması))</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Rsvd(0) | padLen  |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+|        tsB        |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+
+Rsvd    : 2 bytes - Reserved, set to 0
+padLen  : 2 bytes - Padding length in this message
+Reserved: 10 bytes - Reserved, set to 0
+tsB     : 4 bytes - Unix timestamp (seconds since epoch)
+</code></pre><h3 id="anahtar-türetme-fonksiyonu-kdf-2">Anahtar Türetme Fonksiyonu (KDF-2)</h3>
+<p><strong>MixHash İşlemleri:</strong></p>
+<pre tabindex="0"><code>h = SHA256(h || encrypted_payload_msg1)  // 32-byte ciphertext
+if (msg1_padding_length &gt; 0):
+    h = SHA256(h || padding_from_msg1)
+h = SHA256(h || e.pubkey)                // Bob&#39;s ephemeral key Y
+// h is now the associated data for message 2 AEAD
+</code></pre><p><strong>MixKey İşlemi (ee deseni):</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Bob.ephemeral_private, Alice.ephemeral_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 2
+// ck is retained for message 3 KDF
+</code></pre><p><strong>Bellek Temizliği:</strong></p>
+<pre tabindex="0"><code>// Overwrite ephemeral keys after ee DH
+Alice.ephemeral_public = zeros(32)
+Alice.ephemeral_private = zeros(32)  // Bob side
+Bob.received_ephemeral = zeros(32)    // Bob side
+</code></pre><h3 id="uygulama-notları">Uygulama Notları</h3>
+<ol>
+<li><strong>AES Zincirleme</strong>: Y şifrelemesi, 1. mesajdan (sıfırlanmadan) AES-CBC durumunu kullanır</li>
+<li><strong>Replay Saldırılarını Önleme</strong>: Alice en az 2*D saniye boyunca Y değerlerini önbelleğe almalıdır</li>
+<li><strong>Zaman Damgası Doğrulaması</strong>: Alice, |tsB - current_time| &gt; D ise reddetmelidir</li>
+<li><strong>Eğri Doğrulaması</strong>: Alice, Y&rsquo;nin geçerli bir X25519 noktası olduğunu doğrulamalıdır</li>
+<li><strong>Hata İşleme</strong>: Herhangi bir hata durumunda Alice, bağlantıyı TCP RST ile kapatır</li>
+<li><strong>Tamponlama</strong>: Bob, tüm mesajı tek seferde tampondan boşaltmalıdır</li>
+</ol>
+<h2 id="mesaj-3-sessionconfirmed">Mesaj 3: SessionConfirmed</h2>
+<p>Alice oturumu onaylar ve RouterInfo (router bilgi kaydı) gönderir.</p>
+<p><strong>Noise İşlemleri</strong>: <code>s, se</code> (statik anahtarın açıklanması ve statik-geçici DH)</p>
+<h3 id="iki-parçalı-yapı">İki Parçalı Yapı</h3>
+<p>Mesaj 3 <strong>iki ayrı AEAD (ilişkili verili kimlik doğrulamalı şifreleme) çerçeveden</strong> oluşur:</p>
+<ol>
+<li><strong>Bölüm 1</strong>: Alice&rsquo;in şifrelenmiş statik anahtarını içeren sabit 48 baytlık çerçeve</li>
+<li><strong>Bölüm 2</strong>: RouterInfo (router bilgisi), seçenekler ve dolgu içeren değişken uzunluklu çerçeve</li>
+</ol>
+<h3 id="ham-biçim-2">Ham Biçim</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|    ChaChaPoly Frame 1 (48 bytes)      |
++    Plaintext: Alice static key (32B)  +
+|    k from KDF-2, n=1, ad=h            |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame 2 (variable)      +
+|    Length specified in msg1.m3p2len   |
++    k from KDF-3, n=0, ad=h            +
+|    Plaintext: RouterInfo + padding    |
++                                       +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Boyut Kısıtlamaları:</strong> - Bölüm 1: Tam olarak 48 bayt (32 açık metin + 16 MAC) - Bölüm 2: Uzunluk, mesaj 1&rsquo;deki m3p2len alanında belirtilir - Toplam azami: 65535 bayt (bölüm 1 azami 48, dolayısıyla bölüm 2 azami 65487)</p>
+<h3 id="şifresi-çözülmüş-içerik-2">Şifresi Çözülmüş İçerik</h3>
+<p><strong>Bölüm 1:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    S (Alice static public key)        +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Bölüm 2:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|    Block: RouterInfo (required)       |
++    Type=2, contains Alice&#39;s RI         +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+|    Block: Options (optional)          |
++    Type=1, padding parameters          +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Block: Padding (optional)          |
++    Type=254, random data               +
+|    MUST be last block if present      |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="anahtar-türetme-fonksiyonu-kdf-3">Anahtar Türetme Fonksiyonu (KDF-3)</h3>
+<p><strong>Bölüm 1 (s deseni):</strong></p>
+<pre tabindex="0"><code>h = SHA256(h || encrypted_payload_msg2)  // 32-byte ciphertext
+if (msg2_padding_length &gt; 0):
+    h = SHA256(h || padding_from_msg2)
+
+// Encrypt static key with message 2 cipher key
+ciphertext = AEAD_ChaCha20_Poly1305(k_msg2, n=1, h, Alice.static_public)
+h = SHA256(h || ciphertext)  // 48 bytes (32 + 16)
+// h is now the associated data for message 3 part 2
+</code></pre><p><strong>Bölüm 2 (se pattern):</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Alice.static_private, Bob.ephemeral_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 3 part 2
+// ck is retained for data phase KDF
+
+ciphertext = AEAD_ChaCha20_Poly1305(k, n=0, h, payload)
+h = SHA256(h || ciphertext)
+// h is retained for SipHash KDF
+</code></pre><p><strong>Bellek Temizleme:</strong></p>
+<pre tabindex="0"><code>// Overwrite Bob&#39;s ephemeral key after se DH
+Alice.received_ephemeral = zeros(32)  // Alice side
+Bob.ephemeral_public = zeros(32)       // Bob side
+Bob.ephemeral_private = zeros(32)      // Bob side
+</code></pre><h3 id="uygulama-notları-1">Uygulama Notları</h3>
+<ol>
+<li><strong>RouterInfo Doğrulaması</strong>: Bob, imzayı, zaman damgasını ve anahtar tutarlılığını doğrulamalıdır</li>
+<li><strong>Anahtar Eşleşmesi</strong>: Bob, 1. bölümdeki Alice&rsquo;in statik anahtarının RouterInfo&rsquo;daki anahtarla eşleştiğini doğrulamalıdır</li>
+<li><strong>Statik Anahtarın Konumu</strong>: NTCP veya NTCP2 RouterAddress içinde eşleşen &ldquo;s&rdquo; parametresine bakın</li>
+<li><strong>Blok Sırası</strong>: RouterInfo ilk, Options ikinci (varsa), Padding en son (varsa) olmalıdır</li>
+<li><strong>Uzunluk Planlaması</strong>: Alice, mesaj 1&rsquo;deki m3p2len&rsquo;in 2. bölümün uzunluğuyla tam olarak eşleştiğinden emin olmalıdır</li>
+<li><strong>Arabelleğe Alma</strong>: Alice, her iki bölümü tek bir TCP gönderimi olarak birlikte flush (tamponu boşaltmak) etmelidir</li>
+<li><strong>İsteğe Bağlı Zincirleme</strong>: Alice, verimlilik için hemen bir data phase frame (veri aşaması çerçevesi) ekleyebilir</li>
+</ol>
+<h2 id="veri-aşaması">Veri Aşaması</h2>
+<p>El sıkışması tamamlandıktan sonra, tüm iletiler gizlenmiş uzunluk alanlarına sahip, değişken uzunluklu AEAD (İlişkili verili kimlik doğrulamalı şifreleme) çerçeveleri kullanır.</p>
+<h3 id="anahtar-türetme-fonksiyonu-veri-aşaması">Anahtar Türetme Fonksiyonu (Veri Aşaması)</h3>
+<p><strong>Split İşlevi (Noise):</strong></p>
+<pre tabindex="0"><code>// Generate transmit and receive keys
+zerolen = &#34;&#34;  // Zero-length byte array
+temp_key = HMAC-SHA256(ck, zerolen)
+
+// Alice transmits to Bob
+k_ab = HMAC-SHA256(temp_key, byte(0x01))
+
+// Bob transmits to Alice  
+k_ba = HMAC-SHA256(temp_key, k_ab || byte(0x02))
+
+// Cleanup
+ck = zeros(32)
+temp_key = zeros(32)
+</code></pre><p><strong>SipHash Anahtar Türetimi:</strong></p>
+<pre tabindex="0"><code>// Generate additional symmetric key for SipHash
+ask_master = HMAC-SHA256(temp_key, &#34;ask&#34; || byte(0x01))
+
+// &#34;siphash&#34; is 7 bytes US-ASCII
+temp_key2 = HMAC-SHA256(ask_master, h || &#34;siphash&#34;)
+sip_master = HMAC-SHA256(temp_key2, byte(0x01))
+
+// Alice to Bob SipHash keys
+temp_key3 = HMAC-SHA256(sip_master, zerolen)
+sipkeys_ab = HMAC-SHA256(temp_key3, byte(0x01))
+sipk1_ab = sipkeys_ab[0:7]   // 8 bytes, little-endian
+sipk2_ab = sipkeys_ab[8:15]  // 8 bytes, little-endian
+sipiv_ab = sipkeys_ab[16:23] // 8 bytes, IV
+
+// Bob to Alice SipHash keys
+sipkeys_ba = HMAC-SHA256(temp_key3, sipkeys_ab || byte(0x02))
+sipk1_ba = sipkeys_ba[0:7]   // 8 bytes, little-endian
+sipk2_ba = sipkeys_ba[8:15]  // 8 bytes, little-endian
+sipiv_ba = sipkeys_ba[16:23] // 8 bytes, IV
+</code></pre><h3 id="çerçeve-yapısı">Çerçeve Yapısı</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|Obfs Len |                             |
++----+----+    ChaChaPoly Frame         +
+|    Encrypted Block Data               |
++    k_ab (Alice→Bob) or k_ba (Bob→Alice)|
+|    Nonce starts at 0, increments      |
++    No associated data (empty string)  +
+|                                       |
+~           .   .   .                   ~
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Poly1305 MAC (16 bytes)            |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Çerçeve Kısıtlamaları:</strong> - Minimum: 18 bayt (2 gizlenmiş uzunluk + 0 düz metin + 16 MAC) - Maksimum: 65537 bayt (2 gizlenmiş uzunluk + 65535 çerçeve) - Önerilen: çerçeve başına birkaç KB (alıcı gecikmesini en aza indirmek için)</p>
+<h3 id="siphash-ile-uzunluk-gizleme">SipHash ile Uzunluk Gizleme</h3>
+<p><strong>Amaç</strong>: DPI&rsquo;nin çerçeve sınırlarını tespit etmesini önlemek</p>
+<p><strong>Algoritma:</strong></p>
+<pre tabindex="0"><code>// Initialization (per direction)
+IV[0] = sipiv  // From KDF
+
+// For each frame:
+IV[n] = SipHash-2-4(sipk1, sipk2, IV[n-1])
+Mask[n] = IV[n][0:1]  // First 2 bytes of IV
+ObfuscatedLength = ActualLength XOR Mask[n]
+
+// Send 2-byte ObfuscatedLength, then ActualLength bytes
+</code></pre><p><strong>Kod çözme:</strong></p>
+<pre tabindex="0"><code>// Receiver maintains identical IV chain
+IV[n] = SipHash-2-4(sipk1, sipk2, IV[n-1])
+Mask[n] = IV[n][0:1]
+ActualLength = ObfuscatedLength XOR Mask[n]
+// Read ActualLength bytes (includes 16-byte MAC)
+</code></pre><p><strong>Notlar:</strong> - Her yön için ayrı IV (başlatma vektörü) zincirleri (Alice→Bob ve Bob→Alice) - SipHash uint64 döndürürse, maske olarak en düşük anlamlı 2 baytı kullanın - uint64 değerini bir sonraki IV&rsquo;ye little-endian (küçük endian) baytlar olarak dönüştürün</p>
+<h3 id="blok-biçimi">Blok Biçimi</h3>
+<p>Her çerçeve sıfır veya daha fazla blok içerir:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|Type| Length  |       Data              |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type  : 1 byte  - Block type identifier
+Length: 2 bytes - Big-endian, data size (0-65516)
+Data  : Variable length payload
+</code></pre><p><strong>Boyut Sınırları:</strong> - Maksimum çerçeve: 65535 bayt (MAC dahil) - Maksimum blok alanı: 65519 bayt (çerçeve - 16 baytlık MAC) - Maksimum tek blok: 65519 bayt (3 baytlık başlık + 65516 veri)</p>
+<h3 id="blok-türleri">Blok Türleri</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Name</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DateTime</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Time synchronization (4-byte timestamp)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Options</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding parameters, dummy traffic</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo delivery/flooding</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">I2NP</td><td style="border:1px solid var(--color-border); padding:0.5rem;">I2NP message with shortened header</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Termination</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Explicit connection close</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">224-253</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Experimental features</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">254</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Random padding (must be last)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">255</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Future extensions</td></tr>
+  </tbody>
+</table>
+**Blok Sıralama Kuralları:** - **Mesaj 3 bölüm 2**: RouterInfo, Options (isteğe bağlı), Padding (isteğe bağlı) - Başka tür YOK - **Veri aşaması**: Şunlar dışında herhangi bir sırayla:   - Padding varsa MUTLAKA son blok olmalıdır   - Termination varsa MUTLAKA (Padding hariç) son blok olmalıdır - Çerçeve başına birden fazla I2NP bloğuna izin verilir - Çerçeve başına birden fazla Padding bloğuna İZİN VERİLMEZ
+<h3 id="blok-türü-0-datetime">Blok Türü 0: DateTime</h3>
+<p>Saat sapması tespiti için zaman senkronizasyonu.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+
+| 0  |    4    |     timestamp     |
++----+----+----+----+----+----+----+
+
+Type     : 0
+Length   : 4 (big-endian)
+Timestamp: 4 bytes, Unix seconds (big-endian)
+</code></pre><p><strong>Uygulama</strong>: Saat ofsetinin birikmesini önlemek için en yakın saniyeye yuvarlayın.</p>
+<h3 id="blok-türü-1-seçenekler">Blok Türü 1: Seçenekler</h3>
+<p>Dolgu ve trafik şekillendirme parametreleri.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 1  |  size   |tmin|tmax|rmin|rmax|tdmy|
++----+----+----+----+----+----+----+----+
+|tdmy|  rdmy   |  tdelay |  rdelay |    |
++----+----+----+----+----+----+----+    +
+|         more_options (TBD)            |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type  : 1
+Length: 12+ bytes (big-endian)
+</code></pre><p><strong>Dolgu Oranları</strong> (4.4 sabit noktalı sayı, değer/16.0): - <code>tmin</code>: İletimde minimum dolgu oranı (0.0 - 15.9375) - <code>tmax</code>: İletimde maksimum dolgu oranı (0.0 - 15.9375) - <code>rmin</code>: Alımda minimum dolgu oranı (0.0 - 15.9375) - <code>rmax</code>: Alımda maksimum dolgu oranı (0.0 - 15.9375)</p>
+<p><strong>Örnekler:</strong> - 0x00 = 0% dolgu - 0x01 = 6.25% dolgu - 0x10 = 100% dolgu (1:1 oranı) - 0x80 = 800% dolgu (8:1 oranı)</p>
+<p><strong>Sahte Trafik:</strong> - <code>tdmy</code>: Göndermeye istekli olunan azami değer (2 bayt, bayt/sn ortalaması) - <code>rdmy</code>: Alınması talep edilen miktar (2 bayt, bayt/sn ortalaması)</p>
+<p><strong>Gecikme Ekleme:</strong> - <code>tdelay</code>: Eklemeye razı olunan en yüksek değer (2 bayt, milisaniye cinsinden ortalama) - <code>rdelay</code>: Talep edilen gecikme (2 bayt, milisaniye cinsinden ortalama)</p>
+<p><strong>Kılavuzlar:</strong> - Min değerler istenen trafik analizi direncini gösterir - Max değerler bant genişliği kısıtlarını gösterir - Gönderici alıcının maksimumuna uymalıdır - Gönderici kısıtlar dahilinde alıcının minimumuna uyabilir - Herhangi bir yaptırım mekanizması yoktur; uygulamalar farklılık gösterebilir</p>
+<h3 id="blok-türü-2-routerinfo-router-bilgisi">Blok Türü 2: RouterInfo (router bilgisi)</h3>
+<p>netDb&rsquo;nin doldurulması ve yayılması için RouterInfo iletimi.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 2  |  size   |flg |    RouterInfo     |
++----+----+----+----+                   +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type : 2
+Length: Flag (1 byte) + RouterInfo size
+Flag : Bit 0 = flood request (1) or local store (0)
+       Bits 1-7 = Reserved, set to 0
+</code></pre><p><strong>Kullanım:</strong></p>
+<p><strong>Mesaj 3 Bölüm 2&rsquo;de</strong> (el sıkışması): - Alice RouterInfo&rsquo;yu (Router bilgisi) Bob&rsquo;a gönderir - Flood bit (ağa yayma biti) genellikle 0 (yerel depolama) - RouterInfo gzip ile sıkıştırılmamıştır</p>
+<p><strong>Veri Aşamasında:</strong> - Taraflardan herhangi biri güncellenmiş RouterInfo&rsquo;sunu gönderebilir - Flood bit = 1: floodfill dağıtımını iste (alıcı floodfill ise) - Flood bit = 0: Yalnızca yerel netdb depolaması</p>
+<p><strong>Doğrulama Gereksinimleri:</strong> 1. İmza türünün desteklendiğini doğrulayın 2. RouterInfo (yöneltici bilgi kaydı) imzasını doğrulayın 3. Zaman damgasının kabul edilebilir sınırlar içinde olduğunu doğrulayın 4. El sıkışması için: Statik anahtarın NTCP2 adresinin &ldquo;s&rdquo; parametresiyle eşleştiğini doğrulayın 5. Veri aşaması için: router hash&rsquo;in oturum eşiyle eşleştiğini doğrulayın 6. Yalnızca yayımlanmış adresleri olan RouterInfo&rsquo;ları dağıt</p>
+<p><strong>Notlar:</strong> - ACK mekanizması yok (gerektiğinde yanıt belirteci ile I2NP DatabaseStore kullanın) - Üçüncü taraf RouterInfos içerebilir (floodfill kullanımı) - gzip ile sıkıştırılmamıştır (I2NP DatabaseStore&rsquo;un aksine)</p>
+<h3 id="blok-türü-3-i2np-mesajı">Blok Türü 3: I2NP Mesajı</h3>
+<p>Kısaltılmış 9 baytlık başlığa sahip I2NP mesajı.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 3  |  size   |type|    msg_id         |
++----+----+----+----+----+----+----+----+
+|   expiration  |     I2NP payload      |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type      : 3
+Length    : 9 + payload_size (big-endian)
+Type      : 1 byte, I2NP message type
+Msg_ID    : 4 bytes, big-endian, I2NP message ID
+Expiration: 4 bytes, big-endian, Unix timestamp (seconds)
+Payload   : I2NP message body (length = size - 9)
+</code></pre><p><strong>NTCP1&rsquo;e göre farklar:</strong> - Bitiş zamanı: 4 bayt (saniye) vs 8 bayt (milisaniye) - Uzunluk: Çıkarıldı (blok uzunluğundan türetilebilir) - Sağlama toplamı: Çıkarıldı (AEAD (ilişkili verilerle kimlik doğrulamalı şifreleme) bütünlük sağlar) - Başlık: 9 bayt vs 16 bayt (%44 azalma)</p>
+<p><strong>Parçalama:</strong> - I2NP mesajları bloklar arasında kesinlikle parçalanmamalıdır - I2NP mesajları çerçeveler arasında kesinlikle parçalanmamalıdır - Çerçeve başına birden fazla I2NP bloğuna izin verilir</p>
+<h3 id="blok-tipi-4-sonlandırma">Blok Tipi 4: Sonlandırma</h3>
+<p>Gerekçe koduyla bağlantıyı açıkça kapatma.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 4  |  size   |  valid_frames_recv    |
++----+----+----+----+----+----+----+----+
+| (continued) |rsn |   additional_data   |
++----+----+----+----+                   +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type            : 4
+Length          : 9+ bytes (big-endian)
+Valid_Frames_Recv: 8 bytes, big-endian (receive nonce value)
+                  0 if error in handshake phase
+Reason          : 1 byte (see table below)
+Additional_Data : Optional (format unspecified, for debugging)
+</code></pre><p><strong>Neden Kodları:</strong></p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Code</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Reason</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Phase</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Normal close / unspecified</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Termination received</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Idle timeout</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Router shutdown</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data phase AEAD failure</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">5</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Incompatible options</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">6</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Incompatible signature type</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">7</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Clock skew</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">8</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding violation</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">9</td><td style="border:1px solid var(--color-border); padding:0.5rem;">AEAD framing error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Payload format error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">11</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 1 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 2 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">13</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 3 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">14</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Intra-frame read timeout</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">15</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo signature verification fail</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">16</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Static key parameter mismatch</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">17</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Banned</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+  </tbody>
+</table>
+**Kurallar:** - Sonlandırma MUTLAKA çerçevede dolgu olmayan son blok olmalıdır - Çerçeve başına en fazla bir sonlandırma bloğu - Gönderen gönderdikten sonra bağlantıyı kapatmalıdır - Alıcı aldıktan sonra bağlantıyı kapatmalıdır
+<p><strong>Hata İşleme:</strong> - El sıkışma hataları: Genellikle TCP RST ile kapatılır (sonlandırma bloğu yok) - Veri aşaması AEAD hataları: Rastgele zaman aşımı + rastgele okuma, ardından sonlandırma gönder - Güvenlik prosedürleri için &ldquo;AEAD Error Handling&rdquo; bölümüne bakın</p>
+<h3 id="blok-türü-254-dolgu">Blok Türü 254: Dolgu</h3>
+<p>Trafik analizine karşı dayanıklılık için rastgele dolgu.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|254 |  size   |     random_data       |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type: 254
+Length: 0-65516 bytes (big-endian)
+Data: Cryptographically random bytes
+</code></pre><p><strong>Kurallar:</strong> - Varsa, padding (dolgu) çerçevede son blok MUTLAKA olmalıdır - Sıfır uzunluklu padding&rsquo;e izin verilir - Her çerçevede yalnızca bir padding bloğuna izin verilir - Yalnızca padding içeren çerçevelere izin verilir - Options bloğunda müzakere edilen parametrelere uyulmalıdır</p>
+<p><strong>İletiler 1-2&rsquo;de Dolgu:</strong> - AEAD (ilişkili verilerle kimlik doğrulamalı şifreleme) çerçevesinin dışında (açık metin) - Sonraki iletinin hash zincirine dahil edilir (kimliği doğrulanmış) - Sonraki iletide AEAD başarısız olduğunda kurcalama saptanır</p>
+<p><strong>Mesaj 3+ ve Veri Aşamasında Dolgu:</strong> - AEAD (kimliği doğrulamalı ve ilişkili verili şifreleme) çerçevesinin içinde (şifrelenmiş ve kimlik doğrulaması yapılmış) - Trafik şekillendirme ve boyut gizleme için kullanılır</p>
+<h2 id="aead-ek-verili-kimliği-doğrulanmış-şifreleme-hata-işleme">AEAD (ek verili kimliği doğrulanmış şifreleme) Hata İşleme</h2>
+<p><strong>Kritik Güvenlik Gereksinimleri:</strong></p>
+<h3 id="el-sıkışma-aşaması-mesajlar-1-3">El Sıkışma Aşaması (Mesajlar 1-3)</h3>
+<p><strong>Bilinen Mesaj Boyutu:</strong> - Mesaj boyutları önceden belirlenir veya önceden belirtilir - AEAD (ilişkili verili doğrulanmış şifreleme) kimlik doğrulama hatası şüpheye yer bırakmaz</p>
+<p><strong>Bob&rsquo;un Mesaj 1 başarısızlığına yanıtı:</strong> 1. Rastgele bir zaman aşımı ayarla (aralık uygulamaya bağlıdır, 100-500ms önerilir) 2. Rastgele sayıda bayt oku (aralık uygulamaya bağlıdır, 1KB-64KB önerilir) 3. Bağlantıyı TCP RST ile kapat (yanıt yok) 4. Kaynak IP&rsquo;yi geçici olarak kara listeye al 5. Uzun vadeli yasaklamalar için tekrarlanan hataları izle</p>
+<p><strong>Alice&rsquo;in Mesaj 2 Hatasına Yanıtı:</strong> 1. Bağlantıyı hemen TCP RST ile kapat 2. Bob&rsquo;a yanıt verme</p>
+<p><strong>Bob&rsquo;un Mesaj 3 Hatasına Yanıtı:</strong> 1. Bağlantıyı TCP RST ile hemen kapat 2. Alice&rsquo;e yanıt verme</p>
+<h3 id="veri-aşaması-1">Veri Aşaması</h3>
+<p><strong>Gizlenmiş Mesaj Boyutu:</strong> - Uzunluk alanı SipHash (anahtarlı karma fonksiyonu) ile gizlenmiştir - Geçersiz uzunluk ya da AEAD (ek verilerle kimliği doğrulanmış şifreleme) hatası şunlara işaret edebilir:   - Saldırgan yoklaması   - Ağ bozulması   - Senkronu bozulmuş SipHash IV   - Kötücül eş</p>
+<p><strong>AEAD (İlişkili Verili Kimlik Doğrulamalı Şifreleme) veya Uzunluk Hatasına Yanıt:</strong> 1. Rastgele bir zaman aşımı ayarla (100-500ms önerilir) 2. Rastgele miktarda bayt oku (1KB-64KB önerilir) 3. Neden kodu 4 (AEAD başarısızlığı) veya 9 (çerçeveleme hatası) ile bir sonlandırma bloğu gönder 4. Bağlantıyı kapat</p>
+<p><strong>Decryption Oracle&rsquo;ın (saldırganın hata geri bildirimlerinden yararlanarak şifre çözmeye dair bilgi çıkarabildiği sorgulanabilir bileşen) Önlenmesi:</strong> - Rastgele bir zaman aşımı gerçekleşmeden önce eşe hata türünü asla açıklamayın - AEAD kontrolünden önce uzunluk doğrulamasını asla atlamayın - Geçersiz uzunluğu AEAD hatasıyla aynı şekilde ele alın - Her iki hata için de aynı hata işleme yolunu kullanın</p>
+<p><strong>Uygulama ile ilgili değerlendirmeler:</strong> - Bazı gerçekleştirmeler, AEAD (Authenticated Encryption with Associated Data — ilişkili verili kimlik doğrulamalı şifreleme) hataları seyrek görülüyorsa çalışmaya devam edebilir - Hatalar tekrarlandığında sonlandırın (önerilen eşik: saatte 3-5 hata) - Hata kurtarma ile güvenlik arasında denge kurun</p>
+<h2 id="yayınlanan-routerinfo-router-bilgisi">Yayınlanan RouterInfo (router bilgisi)</h2>
+<h3 id="router-adres-biçimi">Router Adres Biçimi</h3>
+<p>NTCP2 desteği, belirli seçeneklere sahip yayımlanmış RouterAddress girdileri aracılığıyla duyurulur.</p>
+<p><strong>Taşıma Stili:</strong> - <code>&quot;NTCP2&quot;</code> - Bu bağlantı noktasında yalnızca NTCP2 - <code>&quot;NTCP&quot;</code> - Bu bağlantı noktasında hem NTCP hem NTCP2 (otomatik algılama)   - <strong>Not</strong>: 0.9.50&rsquo;de (Mayıs 2021) NTCP (v1) desteği kaldırıldı   - &ldquo;NTCP&rdquo; stili artık kullanımdan kaldırıldı; &ldquo;NTCP2&rdquo; kullanın</p>
+<h3 id="gerekli-seçenekler">Gerekli Seçenekler</h3>
+<p><strong>Tüm Yayımlanmış NTCP2 Adresleri:</strong></p>
+<ol>
+<li>
+<p><strong><code>host</code></strong> - IP adresi (IPv4 ya da IPv6) veya ana makine adı</p>
+<ul>
+<li>Biçim: Standart IP gösterimi veya alan adı</li>
+<li>Yalnızca giden ya da gizli router&rsquo;lar için atlanabilir</li>
+</ul>
+</li>
+<li>
+<p><strong><code>port</code></strong> - TCP bağlantı noktası numarası</p>
+<ul>
+<li>Biçim: Tamsayı, 1-65535</li>
+<li>Yalnızca giden veya gizli routers için atlanabilir</li>
+</ul>
+</li>
+<li>
+<p><strong><code>s</code></strong> - Statik açık anahtar (X25519)</p>
+<ul>
+<li>Biçim: Base64 ile kodlanmış, 44 karakter</li>
+<li>Kodlama: I2P Base64 alfabesi</li>
+<li>Kaynak: 32 bayt X25519 açık anahtar, little-endian (düşük anlamlı bayt önce)</li>
+</ul>
+</li>
+<li>
+<p><strong><code>i</code></strong> - AES için İlklendirme Vektörü</p>
+<ul>
+<li>Biçim: Base64 ile kodlanmış, 24 karakter</li>
+<li>Kodlama: I2P Base64 alfabesi</li>
+<li>Kaynak: 16 baytlık IV, big-endian</li>
+</ul>
+</li>
+<li>
+<p><strong><code>v</code></strong> - Protokol sürümü</p>
+<ul>
+<li>Biçim: Tamsayı veya virgülle ayrılmış tamsayılar</li>
+<li>Geçerli: <code>&quot;2&quot;</code></li>
+<li>Gelecekte: <code>&quot;2,3&quot;</code> (sayısal sırada olmalıdır)</li>
+</ul>
+</li>
+</ol>
+<p><strong>İsteğe Bağlı Seçenekler:</strong></p>
+<ol start="6">
+<li>
+<p><strong><code>caps</code></strong> - Yetenekler (0.9.50&rsquo;den beri)</p>
+<ul>
+<li>Biçim: Yetenek karakterlerinden oluşan bir dize</li>
+<li>Değerler:
+<ul>
+<li><code>&quot;4&quot;</code> - IPv4 giden bağlantı yeteneği</li>
+<li><code>&quot;6&quot;</code> - IPv6 giden bağlantı yeteneği</li>
+<li><code>&quot;46&quot;</code> - Hem IPv4 hem de IPv6 (önerilen sıralama)</li>
+</ul>
+</li>
+<li><code>host</code> yayımlanmışsa gerekmez</li>
+<li>Gizli/güvenlik duvarı arkasındaki routers için kullanışlıdır</li>
+</ul>
+</li>
+<li>
+<p><strong><code>cost</code></strong> - Adres önceliği</p>
+<ul>
+<li>Biçim: Tamsayı, 0-255</li>
+<li>Daha düşük değerler = daha yüksek öncelik</li>
+<li>Önerilen: normal adresler için 5-10</li>
+<li>Önerilen: yayımlanmamış adresler için 14</li>
+</ul>
+</li>
+</ol>
+<h3 id="örnek-routeraddress-girdileri">Örnek RouterAddress Girdileri</h3>
+<p><strong>Yayınlanan IPv4 Adresi:</strong></p>
+<pre tabindex="0"><code>&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;192.0.2.1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>Gizli Router (Yalnızca Giden):</strong></p>
+<pre tabindex="0"><code>&lt;Address cost=&#34;14&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;v&gt;2&lt;/v&gt;
+    &lt;caps&gt;4&lt;/caps&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>Çift Yığınlı Router:</strong></p>
+<pre tabindex="0"><code>&lt;!-- IPv4 Address --&gt;
+&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;192.0.2.1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+
+&lt;!-- IPv6 Address (same keys, same port) --&gt;
+&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;2001:db8::1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>Önemli Kurallar:</strong> - <strong>aynı bağlantı noktası</strong>na sahip birden çok NTCP2 adresi, MUTLAKA <strong>özdeş</strong> <code>s</code>, <code>i</code> ve <code>v</code> değerleri kullanmalıdır - Farklı bağlantı noktaları farklı anahtarlar kullanabilir - Çift yığın (dual-stack) routers ayrı IPv4 ve IPv6 adresleri yayımlamalıdır</p>
+<h3 id="yayınlanmamış-ntcp2-adresi">Yayınlanmamış NTCP2 Adresi</h3>
+<p><strong>Yalnızca Giden Router&rsquo;lar İçin:</strong></p>
+<p>Bir router, gelen NTCP2 bağlantılarını kabul etmiyorsa ancak giden bağlantılar başlatıyorsa, yine de aşağıdakileri içeren bir RouterAddress (yöneltici adresi) yayımlaması ZORUNDADIR:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;Address</span> <span style="color:#a6e22e">cost=</span><span style="color:#e6db74">&#34;14&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;transport_style&gt;</span>NTCP2<span style="color:#f92672">&lt;/transport_style&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;options&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;s&gt;</span>9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=<span style="color:#f92672">&lt;/s&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;v&gt;</span>2<span style="color:#f92672">&lt;/v&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/options&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/Address&gt;</span>
+</span></span></code></pre></div><p><strong>Amaç:</strong> - El sıkışma sırasında Bob&rsquo;un Alice&rsquo;in statik anahtarını doğrulamasına olanak tanır - Mesaj 3, bölüm 2 RouterInfo doğrulaması için gereklidir - <code>i</code>, <code>host</code> veya <code>port</code> gerekmez (yalnızca giden)</p>
+<p><strong>Alternatif:</strong> - Yayımlanmış mevcut &ldquo;NTCP&rdquo; veya SSU adresine <code>s</code> ve <code>v</code> ekleyin</p>
+<h3 id="açık-anahtar-ve-iv-rotasyonu">Açık Anahtar ve IV Rotasyonu</h3>
+<p><strong>Kritik Güvenlik Politikası:</strong></p>
+<p><strong>Genel Kurallar:</strong> 1. <strong>router çalışırken asla rotasyon yapmayın</strong> 2. <strong>Anahtar ve IV (başlatma vektörü) değerlerini kalıcı olarak saklayın</strong> yeniden başlatmalar arasında 3. <strong>Önceki kapalı kalma süresini izleyin</strong> rotasyon uygunluğunu belirlemek için</p>
+<p><strong>Rotasyondan önceki minimum kesinti süresi:</strong></p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Router Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Min Downtime</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Published NTCP2 address</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>1 month</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Many routers cache RouterInfo</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Published SSU only (no NTCP2)</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>1 day</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Moderate caching</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">No published addresses (hidden)</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>2 hours</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Minimal impact</td></tr>
+  </tbody>
+</table>
+**Ek Tetikleyiciler:** - Yerel IP adresi değişikliği: Kesinti süresinden bağımsız olarak yenilenebilir - Router "rekey" (yeni Router Hash): Yeni anahtarlar oluşturur
+<p><strong>Gerekçe:</strong> - Anahtar değişiklikleri üzerinden yeniden başlatma zamanlarının açığa çıkmasını önler - Önbelleğe alınmış RouterInfos öğelerinin süresinin doğal olarak dolmasına izin verir - Ağ kararlılığını korur - Başarısız bağlantı girişimlerini azaltır</p>
+<p><strong>Uygulama:</strong> 1. Anahtarı, IV (başlatma vektörü) ve son kapatma zaman damgasını kalıcı olarak saklayın 2. Başlangıçta downtime = current_time - last_shutdown değerini hesaplayın 3. downtime, router türü için minimumun üzerindeyse, anahtar ve IV için rotasyon yapılabilir 4. IP değiştiyse veya yeniden anahtarlama varsa, rotasyon yapılabilir 5. Aksi halde, önceki anahtarı ve IV&rsquo;yi yeniden kullanın</p>
+<p><strong>IV Rotasyonu:</strong> - Anahtar rotasyonuyla aynı kurallara tabidir - Yalnızca yayımlanmış adreslerde bulunur (gizli routers değil) - Anahtar her değiştiğinde IV&rsquo;nin değiştirilmesi önerilir</p>
+<h2 id="sürüm-tespiti">Sürüm Tespiti</h2>
+<p><strong>Bağlam:</strong> <code>transportStyle=&quot;NTCP&quot;</code> (eski) iken, Bob aynı portta hem NTCP v1 hem de v2’yi destekler ve protokol sürümünü otomatik olarak algılamalıdır.</p>
+<p><strong>Tespit Algoritması:</strong></p>
+<pre tabindex="0"><code>1. Wait for at least 64 bytes (minimum NTCP2 message 1 size)
+
+2. If received ≥ 288 bytes:
+   → Connection is NTCP version 1 (NTCP1 message 1 is 288 bytes)
+
+3. If received &lt; 288 bytes:
+   
+   Option A (conservative, pre-NTCP2 majority):
+   a. Wait additional short time (e.g., 100-500ms)
+   b. If total received ≥ 288 bytes → NTCP1
+   c. Otherwise → Attempt NTCP2 decode
+   
+   Option B (aggressive, post-NTCP2 majority):
+   a. Attempt NTCP2 decode immediately:
+      - Decrypt first 32 bytes (X key) with AES-256-CBC
+      - Verify valid X25519 point (X[31] &amp; 0x80 == 0)
+      - Verify AEAD frame
+   b. If decode succeeds → NTCP2
+   c. If decode fails → Wait for more data or NTCP1
+</code></pre><p><strong>Hızlı MSB (en yüksek anlamlı bit) Kontrolü:</strong> - AES şifre çözmeden önce doğrulayın: <code>encrypted_X[31] &amp; 0x80 == 0</code> - Geçerli X25519 anahtarlarında yüksek bit temizdir - Başarısızlık büyük olasılıkla NTCP1&rsquo;i (veya bir saldırıyı) gösterir - Başarısızlık durumunda yoklama direnci (rastgele zaman aşımı + okuma) uygulayın</p>
+<p><strong>Uygulama Gereksinimleri:</strong></p>
+<ol>
+<li>
+<p><strong>Alice’in Sorumluluğu:</strong></p>
+<ul>
+<li>&ldquo;NTCP&rdquo; adresine bağlanırken, 1. mesajı en fazla 287 baytla sınırla</li>
+<li>Tüm 1. mesajı tamponla ve tek seferde boşalt</li>
+<li>Tek bir TCP paketiyle iletilme olasılığını artırır</li>
+</ul>
+</li>
+<li>
+<p><strong>Bob&rsquo;un Sorumlulukları:</strong></p>
+<ul>
+<li>Sürümü tespit etmeden önce alınan veriyi arabelleğe al</li>
+<li>Uygun zaman aşımı yönetimini uygula</li>
+<li>Hızlı sürüm tespiti için TCP_NODELAY kullan</li>
+<li>Sürüm tespit edildikten sonra 2. mesajın tamamını arabelleğe al ve tek seferde boşalt</li>
+</ul>
+</li>
+</ol>
+<p><strong>Güvenlik Hususları:</strong> - Segmentasyon saldırıları: Bob, TCP segmentasyonuna karşı dayanıklı olmalıdır - Yoklama saldırıları: Başarısızlıklarda rastgele gecikmeler ve bayt okumaları uygulayın - DoS (Hizmet Reddi) önleme: Eşzamanlı bekleyen bağlantıları sınırlandırın - Okuma zaman aşımları: Hem her okuma için hem de toplam (&ldquo;slowloris&rdquo; koruması)</p>
+<h2 id="saat-sapması-yönergeleri">Saat Sapması Yönergeleri</h2>
+<p><strong>Zaman Damgası Alanları:</strong> - Mesaj 1: <code>tsA</code> (Alice&rsquo;in zaman damgası) - Mesaj 2: <code>tsB</code> (Bob&rsquo;un zaman damgası) - Mesaj 3+: İsteğe bağlı DateTime (tarih-saat) blokları</p>
+<p><strong>Maksimum Sapma (D):</strong> - Tipik: <strong>±60 saniye</strong> - Uygulama bazında yapılandırılabilir - Sapma &gt; D genellikle ölümcül kabul edilir</p>
+<h3 id="bobun-ele-alması-mesaj-1">Bob&rsquo;un Ele Alması (Mesaj 1)</h3>
+<pre tabindex="0"><code>1. Receive tsA from Alice
+2. skew = tsA - current_time
+3. If |skew| &gt; D:
+   a. Still send message 2 (allows Alice to calculate skew)
+   b. Include tsB in message 2
+   c. Do NOT initiate handshake completion
+   d. Optionally: Temporary ban Alice&#39;s IP
+   e. After message 2 sent, close connection
+
+4. If |skew| ≤ D:
+   a. Continue handshake normally
+</code></pre><p><strong>Gerekçe:</strong> Zaman sapması olsa bile 2. mesajın gönderilmesi, Alice&rsquo;in sistem saatiyle ilgili sorunları teşhis etmesine olanak tanır.</p>
+<h3 id="alicein-işlemesi-mesaj-2">Alice&rsquo;in İşlemesi (Mesaj 2)</h3>
+<pre tabindex="0"><code>1. Receive tsB from Bob
+2. RTT = (current_time_now - tsA_sent)
+3. adjusted_skew = (tsB - current_time_now) - (RTT / 2)
+4. If |adjusted_skew| &gt; D:
+   a. Close connection immediately
+   b. If local clock suspect: Adjust clock or use external time source
+   c. If Bob&#39;s clock suspect: Temporary ban Bob
+   d. Log for operator review
+5. If |adjusted_skew| ≤ D:
+   a. Continue handshake normally
+   b. Optionally: Track skew for time synchronization
+</code></pre><p><strong>RTT Düzeltmesi:</strong> - Hesaplanan sapmadan RTT (gidiş-dönüş süresi) değerinin yarısını çıkarın - Ağ yayılım gecikmesini dikkate alır - Daha doğru sapma tahmini</p>
+<h3 id="bobun-işlemesi-mesaj-3">Bob&rsquo;un İşlemesi (Mesaj 3)</h3>
+<pre tabindex="0"><code>1. If message 3 received (unlikely if skew exceeded in message 1)
+2. Recalculate skew = tsA_received - current_time
+3. If |adjusted_skew| &gt; D:
+   a. Send termination block (reason code 7: clock skew)
+   b. Close connection
+   c. Ban Alice for period (e.g., 1-24 hours)
+</code></pre><h3 id="zaman-senkronizasyonu">Zaman Senkronizasyonu</h3>
+<p><strong>DateTime Blokları (Veri Aşaması):</strong> - Periyodik olarak DateTime bloğu gönder (tip 0) - Alıcı saat ayarlaması için kullanabilir - Zaman damgasını en yakın saniyeye yuvarla (yanlılığı önlemek için)</p>
+<p><strong>Harici Zaman Kaynakları:</strong> - NTP (Ağ Zaman Protokolü) - Sistem saati eşzamanlaması - I2P ağının konsensüs zamanı</p>
+<p><strong>Saat Ayarlama Stratejileri:</strong> - Yerel saat yanlışsa: Sistem saatini ayarla veya offset (kaydırma) kullan - Eşlerin saatleri sürekli yanlışsa: Eşte sorun olduğunu işaretle - Ağ sağlığını izlemek için skew (sapma) istatistiklerini izle</p>
+<h2 id="güvenlik-özellikleri">Güvenlik Özellikleri</h2>
+<h3 id="ileri-gizlilik">İleri Gizlilik</h3>
+<p><strong>Şunlarla Gerçekleştirilir:</strong> - Geçici Diffie-Hellman anahtar değişimi (X25519) - Üç DH işlemi: es, ee, se (Noise XK pattern) (Noise XK deseni) - El sıkışması tamamlandıktan sonra geçici anahtarlar imha edilir</p>
+<p><strong>Gizlilik İlerlemesi:</strong> - Mesaj 1: Seviye 2 (gönderen kompromize olduğunda forward secrecy (ileriye dönük gizlilik)) - Mesaj 2: Seviye 1 (geçici alıcı) - Mesaj 3+: Seviye 5 (güçlü forward secrecy)</p>
+<p><strong>Mükemmel İleri Gizlilik (Perfect Forward Secrecy):</strong> - Uzun vadeli statik anahtarların ele geçirilmesi geçmiş oturum anahtarlarını AÇIĞA ÇIKARMAZ - Her oturum benzersiz geçici anahtarlar kullanır - Geçici özel anahtarlar asla yeniden kullanılmaz - Anahtar anlaşmasından sonra bellek temizliği</p>
+<p><strong>Sınırlamalar:</strong> - Mesaj 1, Bob&rsquo;un statik anahtarı ele geçirilirse savunmasızdır (ancak Alice&rsquo;in kompromize olması durumunda ileri gizlilik sağlar) - Mesaj 1 için yeniden oynatma saldırıları mümkündür (zaman damgası ve yeniden oynatma önbelleği ile azaltılır)</p>
+<h3 id="kimlik-doğrulama">Kimlik Doğrulama</h3>
+<p><strong>Karşılıklı Kimlik Doğrulama:</strong> - Alice&rsquo;in kimliği, 3. mesajdaki statik anahtar ile doğrulanır - Bob&rsquo;un kimliği, statik özel anahtara sahip olmasıyla doğrulanır (başarılı el sıkışmadan örtük olarak)</p>
+<p><strong>Anahtar Ele Geçirme Yoluyla Kimliğe Bürünme (KCI) Direnci:</strong> - Kimlik doğrulama düzeyi 2 (KCI&rsquo;ye dayanıklı) - Saldırgan, Alice&rsquo;in statik özel anahtarına sahip olsa bile (Alice&rsquo;in geçici anahtarı olmadan) Alice&rsquo;in kimliğine bürünemez - Saldırgan, Bob&rsquo;un statik özel anahtarına sahip olsa bile (Bob&rsquo;un geçici anahtarı olmadan) Bob&rsquo;un kimliğine bürünemez</p>
+<p><strong>Statik Anahtar Doğrulaması:</strong> - Alice, Bob&rsquo;un statik anahtarını önceden bilir (RouterInfo&rsquo;dan) - Bob, 3. mesajda Alice&rsquo;in statik anahtarının RouterInfo ile eşleştiğini doğrular - Ortadaki adam saldırılarını önler</p>
+<h3 id="trafik-analizine-karşı-direnç">Trafik Analizine Karşı Direnç</h3>
+<p><strong>DPI (Derin Paket İncelemesi) Karşı Önlemleri:</strong> 1. <strong>AES Gizleme:</strong> Geçici anahtarlar şifrelenir, rastgele görünür 2. <strong>SipHash Uzunluk Gizleme:</strong> Çerçeve uzunlukları açık metin değildir 3. <strong>Rastgele Dolgu:</strong> Değişken mesaj boyutları, sabit kalıplar yok 4. <strong>Şifreli Çerçeveler:</strong> Tüm yük ChaCha20 ile şifrelenir</p>
+<p><strong>Replay Saldırılarının Önlenmesi:</strong> - Zaman damgası doğrulaması (±60 saniye) - Geçici anahtarlar için yeniden oynatma önbelleği (geçerlilik süresi 2*D) - Nonce (tek kullanımlık sayı) artışları, oturum içinde paketlerin yeniden oynatılmasını engeller</p>
+<p><strong>Yoklamaya Karşı Direnç:</strong> - AEAD (Authenticated Encryption with Associated Data - ilişkili verili doğrulamalı şifreleme) hatalarında rastgele zaman aşımı süreleri - Bağlantı kapatılmadan önce rastgele bayt okunması - El sıkışma başarısızlıklarında yanıt verilmez - Tekrarlanan başarısızlıklarda IP kara listeleme</p>
+<p><strong>Dolgu Yönergeleri:</strong> - Mesajlar 1-2: Açık metin dolgusu (kimliği doğrulanmış) - Mesaj 3+: AEAD çerçeveleri içinde şifrelenmiş dolgu - Müzakere edilen dolgu parametreleri (Seçenekler bloğu) - Yalnızca dolgu çerçevelerine izin verilir</p>
+<h3 id="hizmet-reddi-saldırılarının-azaltılması">Hizmet Reddi Saldırılarının Azaltılması</h3>
+<p><strong>Bağlantı Sınırları:</strong> - Maksimum etkin bağlantı sayısı (gerçeklemeye bağlı) - Maksimum bekleyen el sıkışması sayısı (örn., 100-1000) - IP başına bağlantı sınırları (örn., eşzamanlı 3-10)</p>
+<p><strong>Kaynak Koruması:</strong> - DH (Diffie-Hellman) işlemleri oran sınırlandırılmış (hesaplama açısından maliyetli) - Soket başına ve toplam okuma zaman aşımları - &ldquo;Slowloris&rdquo; koruması (toplam süre sınırları) - Kötüye kullanıma karşı IP kara listeleme</p>
+<p><strong>Hızlı Reddetme:</strong> - Ağ kimliği uyuşmazlığı → anında kapatma - Geçersiz X25519 noktası (eliptik eğri Diffie–Hellman anahtar değişimi) → şifre çözmeden önce hızlı MSB kontrolü - Zaman damgası sınırların dışında → hesaplama yapmadan kapatma - AEAD (Authenticated Encryption with Associated Data, ilişkili verili kimlik doğrulamalı şifreleme) hatası → yanıt yok, rastgele gecikme</p>
+<p><strong>Yoklamaya karşı direnç:</strong> - Rastgele zaman aşımı: 100-500ms (uygulamaya bağlı) - Rastgele okuma: 1KB-64KB (uygulamaya bağlı) - Saldırgana hata bilgisi verilmez - TCP RST ile kapat (FIN el sıkışması yok)</p>
+<h3 id="kriptografik-güvenlik">Kriptografik Güvenlik</h3>
+<p><strong>Algoritmalar:</strong> - <strong>X25519</strong>: 128-bit güvenlik, eliptik eğri DH (Curve25519) - <strong>ChaCha20</strong>: 256-bit anahtarlı akış şifresi - <strong>Poly1305</strong>: bilgi kuramsal olarak güvenli MAC (İleti Kimlik Doğrulama Kodu) - <strong>SHA-256</strong>: 128-bit çarpışma direnci, 256-bit öngörüntü direnci - <strong>HMAC-SHA256</strong>: anahtar türetimi için PRF (yalancı rastgele fonksiyon)</p>
+<p><strong>Anahtar Boyutları:</strong> - Statik anahtarlar: 32 bayt (256 bit) - Geçici anahtarlar: 32 bayt (256 bit) - Şifreleme anahtarları: 32 bayt (256 bit) - MAC (İleti Kimlik Doğrulama Kodu): 16 bayt (128 bit)</p>
+<p><strong>Bilinen Sorunlar:</strong> - ChaCha20 nonce (tek seferlik sayı) yeniden kullanımı felaketlidir (sayaç artırımıyla önlenir) - X25519 küçük alt grup sorunlarına sahiptir (eğri doğrulamasıyla hafifletilir) - SHA-256 teorik olarak length extension (uzunluk genişletme saldırısı) karşı savunmasızdır (HMAC&rsquo;te istismar edilemez)</p>
+<p><strong>Bilinen Güvenlik Açığı Yok (Ekim 2025 itibarıyla):</strong> - Noise Protocol Framework kapsamlı olarak incelendi - ChaCha20-Poly1305 TLS 1.3&rsquo;te kullanıma alındı - X25519 modern protokollerde standart - Tasarıma karşı pratik saldırı yok</p>
+<h2 id="kaynaklar">Kaynaklar</h2>
+<h3 id="ana-spesifikasyonlar">Ana Spesifikasyonlar</h3>
+<ul>
+<li><strong><a href="../../../../tr/docs/specs/ntcp2/">NTCP2 Spesifikasyonu</a>
+</strong> - Resmi I2P spesifikasyonu</li>
+<li><strong><a href="../../../../tr/proposals/111-ntcp-2/">Öneri 111</a>
+</strong> - Gerekçeleriyle birlikte özgün tasarım belgesi</li>
+<li><strong><a href="https://noiseprotocol.org/noise.html">Noise Protocol Framework</a>
+</strong> - Revizyon 33 (2017-10-04)</li>
+</ul>
+<h3 id="kriptografik-standartlar">Kriptografik Standartlar</h3>
+<ul>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc7748">RFC 7748</a>
+</strong> - Güvenlik için Eliptik Eğriler (X25519)</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc7539">RFC 7539</a>
+</strong> - IETF Protokolleri için ChaCha20 ve Poly1305</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc8439">RFC 8439</a>
+</strong> - ChaCha20-Poly1305 (RFC 7539&rsquo;un yerini alır)</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc2104">RFC 2104</a>
+</strong> - HMAC: Mesaj kimlik doğrulaması için anahtarlı özetleme</li>
+<li><strong><a href="https://www.131002.net/siphash/">SipHash</a>
+</strong> - Özet (hash) fonksiyonu uygulamaları için SipHash-2-4</li>
+</ul>
+<h3 id="ilgili-i2p-spesifikasyonları">İlgili I2P Spesifikasyonları</h3>
+<ul>
+<li><strong><a href="../../../../tr/docs/specs/i2np/">I2NP Belirtimi</a>
+</strong> - I2P Ağ Protokolü mesaj biçimi</li>
+<li><strong><a href="../../../../tr/docs/specs/common-structures/">Ortak Yapılar</a>
+</strong> - RouterInfo, RouterAddress biçimleri</li>
+<li><strong><a href="../../../../tr/docs/legacy/ssu/">SSU Taşıma</a>
+</strong> - UDP taşıma (orijinal, şimdi SSU2)</li>
+<li><strong><a href="../../../../tr/proposals/147-transport-network-id-check/">Öneri 147</a>
+</strong> - Taşıma Ağı Kimliği Denetimi (0.9.42)</li>
+</ul>
+<h3 id="uygulama-referansları">Uygulama Referansları</h3>
+<ul>
+<li><strong><a href="https://github.com/i2p/i2p.i2p">I2P Java</a>
+</strong> - Referans implementasyonu (Java)</li>
+<li><strong><a href="https://github.com/PurpleI2P/i2pd">i2pd</a>
+</strong> - C++ implementasyonu</li>
+<li><strong><a href="../../../../tr/blog/">I2P Sürüm Notları</a>
+</strong> - Sürüm geçmişi ve güncellemeler</li>
+</ul>
+<h3 id="tarihsel-bağlam">Tarihsel Bağlam</h3>
+<ul>
+<li><strong><a href="https://en.wikipedia.org/wiki/Station-to-Station_protocol">İstasyondan İstasyona Protokolü (STS)</a>
+</strong> - Noise çerçevesi için ilham kaynağı</li>
+<li><strong><a href="https://gitlab.com/yawning/obfs4">obfs4</a>
+</strong> - Takılabilir aktarım (SipHash tabanlı uzunluk gizleme için emsal)</li>
+</ul>
+<h2 id="uygulama-yönergeleri">Uygulama Yönergeleri</h2>
+<h3 id="zorunlu-gereksinimler">Zorunlu Gereksinimler</h3>
+<p><strong>Uyumluluk için:</strong></p>
+<ol>
+<li>
+<p><strong>Tam El Sıkışmasını Uygulayın:</strong></p>
+<ul>
+<li>Doğru KDF (anahtar türetme fonksiyonu) zincirleriyle her üç mesajı da destekleyin</li>
+<li>Tüm AEAD (ilişkili verili doğrulamalı şifreleme) etiketlerini doğrulayın</li>
+<li>X25519 (eliptik eğri anahtar değişimi) noktalarının geçerli olduğunu doğrulayın</li>
+</ul>
+</li>
+<li>
+<p><strong>Veri Aşamasını Uygulayın:</strong></p>
+<ul>
+<li>SipHash uzunluk gizleme (her iki yönde)</li>
+<li>Tüm blok türleri: 0 (Tarih/Saat), 1 (Seçenekler), 2 (RouterInfo), 3 (I2NP), 4 (Sonlandırma), 254 (Dolgu)</li>
+<li>Doğru nonce (tek seferlik sayı) yönetimi (ayrı sayaçlar)</li>
+</ul>
+</li>
+<li>
+<p><strong>Güvenlik Özellikleri:</strong></p>
+<ul>
+<li>Yeniden yürütmenin önlenmesi (geçici anahtarları 2*D boyunca önbelleğe alma)</li>
+<li>Zaman damgası doğrulaması (varsayılan ±60 saniye)</li>
+<li>1-2 numaralı iletilerde rastgele dolgu</li>
+<li>Rastgele zaman aşımı süreleriyle AEAD hata işleme</li>
+</ul>
+</li>
+<li>
+<p><strong>RouterInfo Yayınlama:</strong></p>
+<ul>
+<li>Statik anahtarı (&ldquo;s&rdquo;), IV&rsquo;yi (&ldquo;i&rdquo;) ve sürümü (&ldquo;v&rdquo;) yayınla</li>
+<li>Anahtarları ilkeye göre döndür</li>
+<li>Gizli router&rsquo;lar için yetenekler alanını (&ldquo;caps&rdquo;) destekle</li>
+</ul>
+</li>
+<li>
+<p><strong>Ağ Uyumluluğu:</strong></p>
+<ul>
+<li>Ağ kimliği alanını destekleyin (şu anda ana ağ için 2)</li>
+<li>Mevcut Java ve i2pd gerçeklemeleriyle birlikte çalışın</li>
+<li>Hem IPv4 hem de IPv6&rsquo;yı destekleyin</li>
+</ul>
+</li>
+</ol>
+<h3 id="önerilen-uygulamalar">Önerilen Uygulamalar</h3>
+<p><strong>Performans Optimizasyonu:</strong></p>
+<ol>
+<li>
+<p><strong>Arabelleğe Alma Stratejisi:</strong></p>
+<ul>
+<li>Tüm mesajları tek seferde gönder (mesaj 1, 2, 3)</li>
+<li>El sıkışma mesajları için TCP_NODELAY (Nagle algoritmasını devre dışı bırakma seçeneği) kullan</li>
+<li>Birden çok veri bloğunu tek bir çerçevede arabelleğe al</li>
+<li>Çerçeve boyutunu birkaç KB&rsquo;ye sınırla (alıcı gecikmesini en aza indir)</li>
+</ul>
+</li>
+<li>
+<p><strong>Bağlantı Yönetimi:</strong></p>
+<ul>
+<li>Mümkün olduğunda bağlantıları yeniden kullanın</li>
+<li>Bağlantı havuzu uygulayın</li>
+<li>Bağlantı sağlığını izleyin (DateTime blokları)</li>
+</ul>
+</li>
+<li>
+<p><strong>Bellek Yönetimi:</strong></p>
+<ul>
+<li>Kullanımdan sonra hassas veriyi sıfırla (geçici anahtarlar, DH sonuçları)</li>
+<li>Eşzamanlı el sıkışmalarını sınırla (DoS önleme; Hizmet Reddi)</li>
+<li>Sık tahsisler için bellek havuzları kullan</li>
+</ul>
+</li>
+</ol>
+<p><strong>Güvenlik Sıkılaştırma:</strong></p>
+<ol>
+<li>
+<p><strong>Sondalama Direnci:</strong></p>
+<ul>
+<li>Rastgele zaman aşımı süreleri: 100-500ms</li>
+<li>Rastgele bayt okumaları: 1KB-64KB</li>
+<li>Tekrarlanan başarısızlıklar için IP kara listeleme</li>
+<li>Eşlere hata ayrıntıları sağlanmaz</li>
+</ul>
+</li>
+<li>
+<p><strong>Kaynak Sınırları:</strong></p>
+<ul>
+<li>IP başına maksimum bağlantı: 3-10</li>
+<li>Maksimum bekleyen el sıkışması: 100-1000</li>
+<li>Okuma zaman aşımları: işlem başına 30-60 saniye</li>
+<li>Toplam bağlantı zaman aşımı: el sıkışma için 5 dakika</li>
+</ul>
+</li>
+<li>
+<p><strong>Anahtar Yönetimi:</strong></p>
+<ul>
+<li>Statik anahtar ve IV (başlatma vektörü)&rsquo;nin kalıcı olarak saklanması</li>
+<li>Güvenli rastgele sayı üretimi (kriptografik RNG - rastgele sayı üreteci)</li>
+<li>Anahtar rotasyonu politikalarına kesinlikle uyun</li>
+<li>Geçici anahtarları asla yeniden kullanmayın</li>
+</ul>
+</li>
+</ol>
+<p><strong>İzleme ve Tanılama:</strong></p>
+<ol>
+<li>
+<p><strong>Metrikler:</strong></p>
+<ul>
+<li>El sıkışma başarı/başarısızlık oranları</li>
+<li>AEAD (İlişkili Verilerle Kimliği Doğrulanmış Şifreleme) hata oranları</li>
+<li>Saat sapması dağılımı</li>
+<li>Bağlantı süresi istatistikleri</li>
+</ul>
+</li>
+<li>
+<p><strong>Günlükleme:</strong></p>
+<ul>
+<li>El sıkışması başarısızlıklarını neden kodlarıyla günlüğe kaydedin</li>
+<li>Saat sapması olaylarını günlüğe kaydedin</li>
+<li>Yasaklanmış IP&rsquo;leri günlüğe kaydedin</li>
+<li>Hassas anahtar malzemesini asla günlüğe kaydetmeyin</li>
+</ul>
+</li>
+<li>
+<p><strong>Testler:</strong></p>
+<ul>
+<li>KDF zincirleri için birim testleri</li>
+<li>Diğer gerçekleştirimlerle entegrasyon testleri</li>
+<li>Paket işleme için Fuzzing (rastgele ve bozulmuş girdilerle test)</li>
+<li>DoS dayanıklılığı için yük testleri</li>
+</ul>
+</li>
+</ol>
+<h3 id="sık-yapılan-hatalar">Sık Yapılan Hatalar</h3>
+<p><strong>Kaçınılması Gereken Kritik Hatalar:</strong></p>
+<ol>
+<li>
+<p><strong>Nonce (tek-kullanımlık sayı) Yeniden Kullanımı:</strong></p>
+<ul>
+<li>Oturum ortasında nonce sayacını asla sıfırlamayın</li>
+<li>Her yön için ayrı sayaçlar kullanın</li>
+<li>2^64 - 1 değerine ulaşmadan önce sonlandırın</li>
+</ul>
+</li>
+<li>
+<p><strong>Anahtar Döndürme:</strong></p>
+<ul>
+<li>router çalışırken anahtarları asla döndürmeyin</li>
+<li>Geçici anahtarları oturumlar arasında asla yeniden kullanmayın</li>
+<li>Asgari kesinti süresi kurallarına uyun</li>
+</ul>
+</li>
+<li>
+<p><strong>Zaman Damgası İşleme:</strong></p>
+<ul>
+<li>Süresi geçmiş zaman damgalarını asla kabul etmeyin</li>
+<li>Sapmayı hesaplarken her zaman RTT (gidiş-dönüş süresi) için düzeltme uygulayın</li>
+<li>DateTime zaman damgalarını saniye hassasiyetine yuvarlayın</li>
+</ul>
+</li>
+<li>
+<p><strong>AEAD (ek verili kimlik doğrulamalı şifreleme) Hataları:</strong></p>
+<ul>
+<li>Hata türünü saldırgana asla açıklamayın</li>
+<li>Kapatmadan önce her zaman rastgele bir zaman aşımı süresi kullanın</li>
+<li>Geçersiz uzunluğu AEAD başarısızlığıyla aynı şekilde ele alın</li>
+</ul>
+</li>
+<li>
+<p><strong>Dolgu:</strong></p>
+<ul>
+<li>Uzlaşılan sınırların dışında asla dolgu göndermeyin</li>
+<li>Dolgu bloğunu her zaman en sona yerleştirin</li>
+<li>Her çerçevede birden fazla dolgu bloğu kullanmayın</li>
+</ul>
+</li>
+<li>
+<p><strong>RouterInfo:</strong></p>
+<ul>
+<li>Her zaman statik anahtarın RouterInfo ile eşleştiğini doğrulayın</li>
+<li>Yayınlanmış adresleri olmayan RouterInfo&rsquo;ları asla flood etmeyin (ağa yaymayın)</li>
+<li>Her zaman imzaları doğrulayın</li>
+</ul>
+</li>
+</ol>
+<h3 id="test-metodolojisi">Test Metodolojisi</h3>
+<p><strong>Birim Testleri:</strong></p>
+<ol>
+<li>
+<p><strong>Kriptografik Primitifler:</strong></p>
+<ul>
+<li>X25519, ChaCha20, Poly1305, SHA-256 için test vektörleri</li>
+<li>HMAC-SHA256 test vektörleri</li>
+<li>SipHash-2-4 test vektörleri</li>
+</ul>
+</li>
+<li>
+<p><strong>KDF Zincirleri:</strong></p>
+<ul>
+<li>Üç iletinin tamamı için bilinen cevap testleri</li>
+<li>Zincirleme anahtar yayılımını doğrulayın</li>
+<li>SipHash IV üretimini test edin</li>
+</ul>
+</li>
+<li>
+<p><strong>Mesaj Ayrıştırma:</strong></p>
+<ul>
+<li>Geçerli mesajın kod çözümü</li>
+<li>Geçersiz mesajın reddedilmesi</li>
+<li>Sınır durumları (boş, azami boyut)</li>
+</ul>
+</li>
+</ol>
+<p><strong>Entegrasyon Testleri:</strong></p>
+<ol>
+<li>
+<p><strong>El sıkışma:</strong></p>
+<ul>
+<li>Başarılı üç mesajlık alışveriş</li>
+<li>Saat sapmasına göre reddetme</li>
+<li>Yeniden oynatma saldırısı tespiti</li>
+<li>Geçersiz anahtarların reddedilmesi</li>
+</ul>
+</li>
+<li>
+<p><strong>Veri Aşaması:</strong></p>
+<ul>
+<li>I2NP (I2P Ağ Protokolü) mesaj aktarımı</li>
+<li>RouterInfo (yönlendirici bilgisi) değişimi</li>
+<li>Doldurma yönetimi</li>
+<li>Sonlandırma mesajları</li>
+</ul>
+</li>
+<li>
+<p><strong>Birlikte Çalışabilirlik:</strong></p>
+<ul>
+<li>Java I2P&rsquo;ye karşı test yapın</li>
+<li>i2pd&rsquo;ye karşı test yapın</li>
+<li>IPv4 ve IPv6&rsquo;yı test edin</li>
+<li>Yayınlanmış ve gizli routers üzerinde test yapın</li>
+</ul>
+</li>
+</ol>
+<p><strong>Güvenlik Testleri:</strong></p>
+<ol>
+<li>
+<p><strong>Negatif Testler:</strong></p>
+<ul>
+<li>Geçersiz AEAD etiketleri</li>
+<li>Yeniden oynatılmış mesajlar</li>
+<li>Saat kayması saldırıları</li>
+<li>Hatalı biçimlendirilmiş çerçeveler</li>
+</ul>
+</li>
+<li>
+<p><strong>DoS (Hizmet Reddi) Testleri:</strong></p>
+<ul>
+<li>Bağlantı taşması</li>
+<li>Slowloris saldırıları</li>
+<li>CPU tükenmesi (aşırı DH (Diffie-Hellman anahtar değişimi))</li>
+<li>Bellek tükenmesi</li>
+</ul>
+</li>
+<li>
+<p><strong>Fuzzing (rastgele girdilerle hata bulma testi):</strong></p>
+<ul>
+<li>Rastgele el sıkışma mesajları</li>
+<li>Rastgele veri aşaması çerçeveleri</li>
+<li>Rastgele blok türleri ve boyutları</li>
+<li>Geçersiz kriptografik değerler</li>
+</ul>
+</li>
+</ol>
+<h3 id="ntcpden-geçiş">NTCP&rsquo;den geçiş</h3>
+<p><strong>Eski NTCP desteği için (artık kaldırıldı):</strong></p>
+<p>NTCP (sürüm 1), I2P 0.9.50&rsquo;de (Mayıs 2021) kaldırıldı. Mevcut tüm uygulamalar NTCP2&rsquo;yi desteklemelidir. Tarihsel notlar:</p>
+<ol>
+<li>
+<p><strong>Geçiş Dönemi (2018-2021):</strong></p>
+<ul>
+<li>0.9.36: NTCP2 tanıtıldı (varsayılan olarak devre dışı)</li>
+<li>0.9.37: NTCP2 varsayılan olarak etkinleştirildi</li>
+<li>0.9.40: NTCP kullanımı önerilmiyor (deprecated)</li>
+<li>0.9.50: NTCP kaldırıldı</li>
+</ul>
+</li>
+<li>
+<p><strong>Sürüm Tespiti:</strong></p>
+<ul>
+<li>&ldquo;NTCP&rdquo; transportStyle (taşıma stili) her iki sürümün de desteklendiğini belirtir</li>
+<li>&ldquo;NTCP2&rdquo; transportStyle yalnızca NTCP2&rsquo;nin desteklendiğini belirtir</li>
+<li>Mesaj boyutuna göre otomatik algılama (287 vs 288 bayt)</li>
+</ul>
+</li>
+<li>
+<p><strong>Güncel Durum:</strong></p>
+<ul>
+<li>Tüm router&rsquo;lar NTCP2&rsquo;yi desteklemelidir</li>
+<li>&ldquo;NTCP&rdquo; transportStyle kullanımdan kaldırılmıştır</li>
+<li>Yalnızca &ldquo;NTCP2&rdquo; transportStyle kullanın</li>
+</ul>
+</li>
+</ol>
+<h2 id="ek-a-noise-xk-deseni">Ek A: Noise XK Deseni</h2>
+<p><strong>Standart Noise XK Pattern (Noise protokol ailesindeki XK el sıkışma örüntüsü):</strong></p>
+<pre tabindex="0"><code>XK(s, rs):
+  &lt;- s
+  ...
+  -&gt; e, es
+  &lt;- e, ee
+  -&gt; s, se
+</code></pre><p><strong>Yorumlama:</strong></p>
+<ul>
+<li><code>&lt;-</code> : Yanıtlayıcıdan (Bob) başlatıcıya (Alice) giden mesaj</li>
+<li><code>-&gt;</code> : Başlatıcıdan (Alice) yanıtlayıcıya (Bob) giden mesaj</li>
+<li><code>s</code> : Statik anahtar (uzun süreli kimlik anahtarı)</li>
+<li><code>rs</code> : Uzak statik anahtar (eşin statik anahtarı, önceden bilinir)</li>
+<li><code>e</code> : Geçici anahtar (oturuma özgü, talep üzerine üretilir)</li>
+<li><code>es</code> : Geçici-Statik DH (Alice geçici × Bob statik)</li>
+<li><code>ee</code> : Geçici-Geçici DH (Alice geçici × Bob geçici)</li>
+<li><code>se</code> : Statik-Geçici DH (Alice statik × Bob geçici)</li>
+</ul>
+<p><strong>Anahtar Anlaşması Sırası:</strong></p>
+<ol>
+<li><strong>Ön-mesaj:</strong> Alice, Bob&rsquo;un statik açık anahtarını biliyor (RouterInfo&rsquo;dan)</li>
+<li><strong>Mesaj 1:</strong> Alice geçici anahtarı gönderir, es DH işlemini gerçekleştirir</li>
+<li><strong>Mesaj 2:</strong> Bob geçici anahtarı gönderir, ee DH işlemini gerçekleştirir</li>
+<li><strong>Mesaj 3:</strong> Alice statik anahtarını açıklar, se DH işlemini gerçekleştirir</li>
+</ol>
+<p><strong>Güvenlik Özellikleri:</strong></p>
+<ul>
+<li>Alice kimliği doğrulandı: Evet (3. mesajla)</li>
+<li>Bob kimliği doğrulandı: Evet (statik özel anahtara sahip olmasıyla)</li>
+<li>İleri gizlilik: Evet (geçici anahtarlar imha edildi)</li>
+<li>KCI resistance (Key Compromise Impersonation - anahtar ele geçirilmesi saldırısına karşı direnç): Evet (kimlik doğrulama seviyesi 2)</li>
+</ul>
+<h2 id="ek-b-base64-kodlama">Ek B: Base64 Kodlama</h2>
+<p><strong>I2P Base64 Alfabesi:</strong></p>
+<pre tabindex="0"><code>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-~
+</code></pre><p><strong>Standart Base64&rsquo;dan farklar:</strong> - 62-63 numaralı karakterler: <code>-~</code>, <code>+/</code> yerine - Dolgu: Aynı (<code>=</code>) veya bağlama bağlı olarak atlanabilir</p>
+<p><strong>NTCP2 kullanımında:</strong> - Statik anahtar (&ldquo;s&rdquo;): 32 bayt → 44 karakter (dolgu yok) - IV (&ldquo;i&rdquo;): 16 bayt → 24 karakter (dolgu yok)</p>
+<p><strong>Kodlama Örneği:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 32-byte static key (hex): </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># f4489e1bb0597b39ca6cbf5ad9f5f1f09043e02d96cb9aa6a63742b3462429aa</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2P Base64 encoded:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=</span>
+</span></span></code></pre></div><h2 id="ek-c-paket-yakalama-analizi">Ek C: Paket Yakalama Analizi</h2>
+<p><strong>NTCP2 trafiğinin tanımlanması:</strong></p>
+<ol>
+<li>
+<p><strong>TCP El Sıkışması:</strong></p>
+<ul>
+<li>Standart TCP SYN, SYN-ACK, ACK</li>
+<li>Hedef port genellikle 8887 veya benzeri</li>
+</ul>
+</li>
+<li>
+<p><strong>Mesaj 1 (SessionRequest):</strong></p>
+<ul>
+<li>Alice&rsquo;ten gelen ilk uygulama verisi</li>
+<li>80-65535 bayt (genellikle birkaç yüz)</li>
+<li>Rastgele görünür (AES ile şifrelenmiş geçici anahtar)</li>
+<li>&ldquo;NTCP&rdquo; adresine bağlanılıyorsa en fazla 287 bayt</li>
+</ul>
+</li>
+<li>
+<p><strong>Mesaj 2 (SessionCreated - oturum oluşturuldu):</strong></p>
+<ul>
+<li>Bob&rsquo;dan gelen yanıt</li>
+<li>80-65535 bayt (tipik olarak birkaç yüz)</li>
+<li>Ayrıca rastgele görünür</li>
+</ul>
+</li>
+<li>
+<p><strong>Mesaj 3 (SessionConfirmed):</strong></p>
+<ul>
+<li>Alice&rsquo;den</li>
+<li>48 bayt + değişken (RouterInfo boyutu + dolgu)</li>
+<li>Genellikle 1-4 KB</li>
+</ul>
+</li>
+<li>
+<p><strong>Veri Aşaması:</strong></p>
+<ul>
+<li>Değişken uzunluklu çerçeveler</li>
+<li>Uzunluk alanı gizlenmiş (rastgele görünür)</li>
+<li>Şifrelenmiş yük</li>
+<li>Dolgu, boyutu öngörülemez kılar</li>
+</ul>
+</li>
+</ol>
+<p><strong>DPI Atlatma:</strong> - Düz metin üstbilgileri yok - Sabit kalıplar yok - Uzunluk alanları gizlenmiş - Rastgele dolgu boyut tabanlı sezgisel yöntemleri bozar</p>
+<p><strong>NTCP ile karşılaştırma:</strong> - NTCP&rsquo;nin 1. mesajı her zaman 288 bayttır (tespit edilebilir) - NTCP2&rsquo;nin 1. mesajının boyutu değişir (tespit edilemez) - NTCP tanınabilir örüntülere sahipti - NTCP2, DPI&rsquo;ye (Derin Paket İncelemesi) direnmek üzere tasarlandı</p>
+<h2 id="ek-d-sürüm-geçmişi">Ek D: Sürüm Geçmişi</h2>
+<p><strong>Önemli Dönüm Noktaları:</strong></p>
+<ul>
+<li><strong>0.9.36</strong> (23 Ağustos 2018): NTCP2 tanıtıldı, varsayılan olarak devre dışı</li>
+<li><strong>0.9.37</strong> (4 Ekim 2018): NTCP2 varsayılan olarak etkin</li>
+<li><strong>0.9.40</strong> (20 Mayıs 2019): NTCP kullanımdan kaldırıldı</li>
+<li><strong>0.9.42</strong> (27 Ağustos 2019): Ağ Kimliği alanı eklendi (Öneri 147)</li>
+<li><strong>0.9.50</strong> (17 Mayıs 2021): NTCP kaldırıldı, yetenekler için destek eklendi</li>
+<li><strong>2.10.0</strong> (9 Eylül 2025): En son kararlı sürüm</li>
+</ul>
+<p><strong>Protokol Kararlılığı:</strong> - 0.9.50&rsquo;den beri geriye dönük uyumluluğu bozan değişiklik yok - Sondalama direncine yönelik devam eden iyileştirmeler - Performans ve güvenilirliğe odaklanma - Kuantum sonrası kriptografi geliştirme aşamasında (varsayılan olarak etkin değil)</p>
+<p><strong>Güncel Taşıma Durumu:</strong> - NTCP2: Zorunlu TCP taşıma - SSU2: Zorunlu UDP taşıma - NTCP (v1): Kaldırıldı - SSU (v1): Kaldırıldı</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../tr/docs/specs/common-structures/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">Ortak Yapılar</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../tr/docs/specs/i2cp/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">I2P İstemci Protokolü (I2CP)</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/tr/docs/specs/ntcp2.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">I2P haberleriyle güncel kalın:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="E-posta adresinizi girin" required>
+                            <button type="submit">Abone Ol</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Hızlı Bağlantılar</h3>
+                <ul>
+                    <li><a href="../../../../tr/financial-support/">Bağış Yap</a></li>
+                    <li><a href="../../../../tr/docs/overview/intro/">I2P Tanıtımı</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Topluluk</h3>
+                <ul>
+                    <li><a href="../../../../tr/get-involved/">Katılın</a></li>
+                    <li><a href="../../../../tr/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Resmi Forumlar</a></li>
+                    <li><a href="../../../../tr/contact/">İletişim</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Kaynaklar</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P Metrikleri</a></li>
+                    <li><a href="../../../../tr/papers/">Araştırma</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Invisible Internet Projesi. Creative Commons altında lisanslanmıştır.</p>
+            <div class="footer-links">
+                <a href="../../../../tr/privacy/">Gizlilik</a>
+                <a href="../../../../tr/terms/">Şartlar</a>
+                <a href="../../../../tr/about/media/">Basın</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Kapat">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Topluluk Anketi</h2>
+            <p class="modal-subtitle">Sizden haber almaktan memnuniyet duyarız</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Oyunuz I2P&#39;nin geleceğini şekillendirmeye yardımcı olur.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

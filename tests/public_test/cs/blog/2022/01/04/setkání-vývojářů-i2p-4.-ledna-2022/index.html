@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Setkání vývojářů I2P - 4. ledna 2022 | I2P - Projekt neviditelného internetu</title>
+
+    <meta name="description" content="Zápis z vývojářské schůzky I2P ze dne 4. ledna 2022.">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Setkání vývojářů I2P - 4. ledna 2022 | I2P - Projekt neviditelného internetu">
+    <meta property="og:description" content="Zápis z vývojářské schůzky I2P ze dne 4. ledna 2022.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/cs/blog/2022/01/04/setk%C3%A1n%C3%AD-v%C3%BDvoj%C3%A1%C5%99%C5%AF-i2p-4.-ledna-2022/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P Beta stránky jsou nyní spuštěny. Problémy s e-mailem hlaste na stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Zavřít banner" title="Zavřít banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../../../cs/" class="logo-link">
+                    <img src="../../../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../../../cs/about/" class="">O aplikaci</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../../../cs/about/">Přehled</a></li>
+                            <li><a href="../../../../../../cs/papers/">Výzkumné práce</a></li>
+                            <li><a href="../../../../../../cs/about/media/">Pro média</a></li>
+                            <li><a href="../../../../../../cs/contact/">Kontaktujte nás</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../../../cs/docs/" class="">Dokumentace</a></li>
+                    <li><a href="../../../../../../cs/downloads/" class="">Ke stažení</a></li>
+                    <li><a href="../../../../../../cs/blog/" class="active">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../../../cs/get-involved/" class="">Zapojte se</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../../../cs/get-involved/">Přehled</a></li>
+                            <li><a href="../../../../../../cs/feedback/">Návrhy funkcí</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">cs</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../en/blog/2022/01/04/i2p-dev-meeting-january-04-2022/"
+                                class="lang-option">Angličtina</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../es/blog/2022/01/04/reuni%C3%B3n-de-desarrolladores-de-i2p-04-de-enero-de-2022/"
+                                class="lang-option">Španělština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ko/blog/2022/01/04/i2p-%EA%B0%9C%EB%B0%9C%EC%9E%90-%ED%9A%8C%EC%9D%98-2022%EB%85%84-1%EC%9B%94-4%EC%9D%BC/"
+                                class="lang-option">Korejština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../zh/blog/2022/01/04/i2p-%E5%BC%80%E5%8F%91%E8%80%85%E4%BC%9A%E8%AE%AE-2022%E5%B9%B41%E6%9C%884%E6%97%A5/"
+                                class="lang-option">Čínština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ru/blog/2022/01/04/%D0%B2%D1%81%D1%82%D1%80%D0%B5%D1%87%D0%B0-%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2-i2p-04-%D1%8F%D0%BD%D0%B2%D0%B0%D1%80%D1%8F-2022/"
+                                class="lang-option">Ruština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../cs/blog/2022/01/04/setk%C3%A1n%C3%AD-v%C3%BDvoj%C3%A1%C5%99%C5%AF-i2p-4.-ledna-2022/"
+                                class="lang-option active">Čeština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../de/blog/2022/01/04/i2p-entwicklertreffen-04.-januar-2022/"
+                                class="lang-option">Němčina</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../fr/blog/2022/01/04/r%C3%A9union-des-d%C3%A9veloppeurs-di2p-4-janvier-2022/"
+                                class="lang-option">Francouzština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../tr/blog/2022/01/04/i2p-geli%C5%9Ftirici-toplant%C4%B1s%C4%B1-04-ocak-2022/"
+                                class="lang-option">Turečtina</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../vi/blog/2022/01/04/cu%E1%BB%99c-h%E1%BB%8Dp-nh%C3%A0-ph%C3%A1t-tri%E1%BB%83n-i2p-ng%C3%A0y-04-th%C3%A1ng-01-n%C4%83m-2022/"
+                                class="lang-option">Vietnamština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../hi/blog/2022/01/04/i2p-%E0%A4%A1%E0%A5%87%E0%A4%B5%E0%A4%B2%E0%A4%AA%E0%A4%B0-%E0%A4%AC%E0%A5%88%E0%A4%A0%E0%A4%95-04-%E0%A4%9C%E0%A4%A8%E0%A4%B5%E0%A4%B0%E0%A5%80-2022/"
+                                class="lang-option">Hindština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ar/blog/2022/01/04/%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9-%D9%85%D8%B7%D9%88%D8%B1%D9%8A-i2p-4-%D9%8A%D9%86%D8%A7%D9%8A%D8%B1-2022/"
+                                class="lang-option">Arabština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../pt/blog/2022/01/04/reuni%C3%A3o-dos-desenvolvedores-do-i2p-04-de-janeiro-de-2022/"
+                                class="lang-option">Portugalština</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../../../cs/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../../../cs/downloads/" class="btn btn-primary">Získat I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+<article class="blog-post">
+    <div class="container">
+        <div class="post-header">
+            <div class="post-meta-row">
+                
+                <time class="post-date" datetime="2022-01-04">
+                    January 4, 2022
+                </time>
+                
+
+                
+                <div class="post-categories">
+                    
+                    <span class="category-badge">meeting</span>
+                    
+                </div>
+                
+            </div>
+
+            <h1 class="post-title">Setkání vývojářů I2P - 4. ledna 2022</h1>
+
+            
+            <div class="post-author">By i2p</div>
+            
+        </div>
+
+        <div class="post-content">
+            <h2 id="stručné-shrnutí">Stručné shrnutí</h2>
+<p class="attendees-inline"><strong>Přítomni:</strong> eyedeekay, zzz, zlatinb</p>
+<h2 id="záznam-ze-schůzky">Záznam ze schůzky</h2>
+<div class="irc-log"> (03:00:39 PM) eyedeekay: Ahoj všem a vítejte na schůzce 4. ledna 2022 (03:00:39 PM) eyedeekay: 1. Ahoj (03:00:39 PM) eyedeekay: 2. Služby Meeh/požadavky na outproxy (výstupní proxy) http://zzz.i2p/topics/3218-meeh-services-going-down-soon (03:00:39 PM) eyedeekay: 3. Povýšení Mac DMG JPackage na stabilní https://geti2p.net/en/download/mac (03:00:39 PM) eyedeekay: 4. Výzkum NetDB (Sim/Model) http://zzz.i2p/topics/3227-netdb-simulator-proposal (03:01:13 PM) zlatinb: ahoj (03:01:23 PM) zzz: ahoj (03:01:55 PM) eyedeekay: Ahoj zzz, zlatinb, je tu dnes ještě někdo? (03:02:20 PM) eyedeekay: Operátoři outproxy? (03:02:59 PM) eyedeekay: Dobře, tak k bodu 1, mohou se připojit, pokud chtějí :) (03:03:38 PM) eyedeekay: Přicházíme o všechny meehovy nestatické služby; pro nás je to hlavně trac, který jsme už nahradili, a false.i2p, výchozí outproxy (03:04:07 PM) eyedeekay: Ani jedna dlouho dobře nefungovala, ale nemít outproxy má obvykle špatný UX, takže ji musíme nahradit (03:04:59 PM) eyedeekay: Minulý týden jsme probírali několik možností, jednou z nich bylo najít novou outproxy provozovanou dobrovolníkem a udělat z ní výchozí. (03:06:30 PM) eyedeekay: Pokud k tomu má dojít, budeme potřebovat, aby splnila základní požadavky. Samozřejmě je důležitá zásada ochrany soukromí. (03:06:30 PM) eyedeekay: Pokud nebudou všechno posílat přímo do Toru, budeme také potřebovat popis, jaké filtrování případně probíhá (03:07:34 PM) eyedeekay: Další možnost je provozovat ji sami, což je v nejlepším případě málo lákavé; další je podpora lokálního SOCKS, což vyžaduje, aby byla k dispozici lokální SOCKS proxy. (03:08:07 PM) eyedeekay: Pokud se někdo chce dobrovolně stát outproxy, místo, kam se ozvat, je fórum zzz (03:09:05 PM) zzz: správně (03:09:12 PM) eyedeekay: Zatím se mi od meeh nepodařilo získat statistiky o používání false.i2p. EOT (03:09:40 PM) zzz: Především musíme být velmi opatrní, abychom bez schválení veřejně nedoporučili alternativu ani nenastavili nový výchozí server, protože by to mohlo uložit velkou zátěž, finanční či jinou (03:10:06 PM) zzz: Jako malý první krůček chceme dostat alternativy zaregistrované na stats.i2p a získat souhlas s přidáním do našeho výchozího hosts.txt (03:10:16 PM) zzz: protože to lidem aspoň usnadní jejich nastavení a používání (03:10:55 PM) zzz: Pro tento krok máme schválení pro dvě outproxy, nicméně na stats.i2p je momentálně registrovaná jen jedna (03:11:05 PM) zzz: takže čekám na tu druhou registraci (03:11:05 PM) zzz: eot (03:11:35 PM) eyedeekay: Díky, zzz, mimochodem mu to připomenu (03:11:47 PM) dr|z3d: Měl jsem s tebou, zzz, několik předběžných diskusí a na jejich základě by mělo být poměrně jasné, že nemám zájem poskytovat oficiální službu. Neformálně klidně, ale nic oficiálního. (03:12:52 PM) zzz: díky, že jsi to vyjasnil, a taky díky za tvůj čas a expertizu v těch diskusích (03:12:59 PM) dr|z3d: Také zastávám názor, že jediná outproxy je odsouzená k neúspěchu v okamžiku, kdy se stane oficiální. (03:14:13 PM) eyedeekay: Rozhodně chápu proč. Ještě něco k bodu 1? (03:14:28 PM) zzz: Možná. Určitě to vyžaduje odpovídající kapacitu a schopnou administraci (03:14:29 PM) zzz: eot (03:14:59 PM) eyedeekay: 3. Povýšení Mac DMG Jpackage na stabilní (03:15:15 PM) eyedeekay: s/1/2/ (03:15:42 PM) eyedeekay: Tenhle bod přidal zlatinb, předávám slovo (03:16:21 PM) zlatinb: díky. V podstatě, ne-DMG (jar) balíček není notarizovaný a poslední 2 (nebo 3?) verze Mac OS ho odmítají spustit, pokud uživatel nezmění některá pokročilá nastavení (03:16:52 PM) zlatinb: zároveň byl DMG jpackage velmi stabilní a aktualizace v síti byly otestované end-to-end (03:17:10 PM) zlatinb: navrhuji tedy udělat z něj výchozí stažení pro Mac a úplně zrušit možnost .jar (03:17:55 PM) zlatinb: když už máme hezkou stránku /mac věnovanou tomuto balíčku, navrhuji ji ponechat a odstranit označení BETA (03:18:14 PM) zlatinb: a v Mac div na /download mít jen odkaz na stránku /mac, nic jiného (03:18:19 PM) zlatinb: eot (03:19:22 PM) eyedeekay: Podporuji to. (03:20:42 PM) eyedeekay: Musíme čekat na vydání, nebo to prostě uděláme teď? (03:21:51 PM) anonymousmaybe je nyní znám jako Irc2PGuest95343 (03:22:35 PM) mode (+ao zzz zzz) by ChanServ (03:22:37 PM) zlatinb: není třeba čekat na vydání (03:22:54 PM) zzz: viděli jste moje 3 otázky, než jsem vypadl? (03:23:01 PM) eyedeekay: Ne, unikly mi (03:23:03 PM) zlatinb: ne, promiň, prosím pošli znovu (03:23:11 PM) zzz: Položím pár jednoduchých otázek: (03:23:15 PM) zzz: 1) Je uživatelská základna dostatečná, abychom si byli jistí, že to bylo dobře otestováno? (03:23:17 PM) zzz: 2) Je proces vydání zdokumentovaný a teoreticky by to mohl sestavit i někdo jiný, pokud by měl správné klíče? (03:23:20 PM) zzz: 3) Jsme si jistí, že máme prostředky na pokračování v údržbě a vydávání verzí? (03:23:23 PM) zzz: eot (03:24:08 PM) zlatinb: 1) - podle Matomo má 20–25 stažení denně. Uživatelé Maců s M1 nám hlásili, že funguje podle očekávání. Žádná negativní hlášení (03:24:28 PM) eyedeekay: 2) a 3) dle mého názoru rozhodně ano. Dokážu vše sestavit až po notarizační část a můžu to někoho naučit (03:24:53 PM) zlatinb: 2) je ano, ale vyžaduje to de-anonymizaci kvůli Apple Inc. (03:24:54 PM) eyedeekay: Takže se zlatinbem jsou nejméně 2 lidé, kteří vědí, jak to sestavit (03:25:08 PM) zzz: 2) ale je to _zdokumentované_? (03:25:33 PM) zlatinb: ano, krok za krokem včetně procesu notarizace v README.md (03:25:41 PM) zzz: super (03:26:16 PM) zzz: 1) Znamená „funguje“ i aktualizační proces? Viděli jsme, že se torrentový roj skutečně rozběhne, když se aktualizují novinky? (03:26:29 PM) zlatinb: http://git.idk.i2p/i2p-hackers/i2p-jpackage-mac (03:26:43 PM) zzz: (protože myslím, že u verze pro Windows se ještě nevidělo, že by fungovala) (03:27:26 PM) zlatinb: 1) ano, roj se rozjede, je poměrně malý, ale je tam. Viděl jsem to jak u vydání 1.5.1, tak 1.6.1 (03:27:49 PM) zzz: ok, skvělé, díky za odpovědi, žádné námitky (03:28:14 PM) eyedeekay: Super, udělám změny na webu dnes večer poté, co zveřejním logy ze schůzky (03:28:26 PM) zlatinb: skvělé, díky! (03:29:05 PM) eyedeekay: Co se týče Windows, ano, ale vypadá to, že je to problém v konfiguračním souboru, který jsem dodal, a ne v samotném updateru (03:29:05 PM) eyedeekay: Takže Windows potřebují ještě jednu ruční aktualizaci, aby fungovaly s automatickými aktualizacemi, o čemž jsem, myslím, mohl vědět předem, ale zapomněl jsem (03:30:07 PM) eyedeekay: 4. Výzkum NetDB (Sim/Model) http://zzz.i2p/topics/3227-netdb-simulator-proposal (03:30:44 PM) eyedeekay: Také zlatinbův bod, řekni nám, co máš na mysli (03:31:28 PM) zlatinb: Takže za poslední asi dva týdny došlo k znatelnému zhoršení dostupnosti stránek jako zzz.i2p, postman, dokonce major.acetone.i2p… v zásadě stránek, o kterých vím, že běží (03:31:57 PM) zlatinb: Dělal jsem nějaké ladění a měl situace, kdy se LS zzz.i2p načetl v pořádku, ale pak se zřejmě nedařilo získat RI IBGW (03:32:03 PM) zlatinb: (tady samozřejmě spekuluji) (03:32:47 PM) zlatinb: Stručně řečeno, ve fungování NetDB je spousta neznámých a musíme věřit algoritmu Kad, což je v pořádku, ale raději bych měl větší jistotu prostřednictvím nějakého výzkumu (03:33:33 PM) zlatinb: Stejně jako testnet hodně pomohl zlepšit kód streamingu a SSU a NTCP, věřím, že model nebo simulace mohou pomoci zlepšit fungování netDB (03:34:44 PM) zlatinb: A důvod, proč to chci probrat tady, je, že pokud půjdeme cestou simulace, která spouští skutečný kód, který bude v routeru, bude nutný určitý refactoring kódu NetDB, možná i některých tříd *Job (03:34:52 PM) zlatinb: Poznámka: Na multi-router jvm a JVMCommSystem jsem se zatím nedíval (03:35:03 PM) zlatinb: možná to může být řešení až do určitého počtu uzlů (03:35:37 PM) zlatinb: ale mým cílem je simulovat alespoň pár tisíc uzlů, což znamená abstrahovat většinu komponent routeru (03:35:42 PM) zlatinb: eot-checkpoint (03:36:28 PM) major opustil místnost (quit: Ping timeout: 320 seconds). (03:36:32 PM) zzz: Jsem k tomu vlažný, vzhledem k tomu, jak těžké by to bylo, a jak dlouho by trvalo, než bychom dostali nějaké užitečné výsledky (03:37:20 PM) zzz: Pro začátek jsem nedávno udělal sérii změn, aby byly věci spolehlivější (03:37:27 PM) zzz: v 1.6.1-6 dev buildu (03:37:46 PM) zzz: ale nevím, jestli ho některý z populárních serverů (kromě mého) používá (03:38:17 PM) zzz: Rád bych, aby to zkusily servery echelona a eyedeekaye. To jsou dvě skupiny, se kterými mám problémy už měsíce (03:38:20 PM) zzz: eot (03:38:44 PM) eyedeekay: Většina mých serverů jen sleduje PPA, aktualizuji git.idk.i2p (03:39:17 PM) zzz: git a gitssh jsou dva, které mě často odmítají. Pokud se to zlepší, všimnu si toho (03:40:07 PM) zzz: echelonovy servery jsou další záhada. Zdá se, že často mívají problémy na úrovni IP (03:42:11 PM) eyedeekay: Pak to brzy udělám (03:43:37 PM) eyedeekay: Moje otázky ohledně testovacího rámce pro netDB jsou asi nevhodně položené – má například existující testnet schopnost simulovat netDB mezi routery uvnitř něj? (03:44:08 PM) eyedeekay: A pokud ano, dá se to nějak použít? (03:44:44 PM) Účet se odpojil a už nejste v tomto chatu. Po opětovném připojení účtu se do chatu automaticky znovu připojíte. (03:49:14 PM) Téma pro #i2p-dev je: 1.6.1-7 | příští vývojářské setkání v 20:00 UTC v úterý 4. ledna 2022 (03:49:14 PM) Téma pro #i2p-dev nastavil zzz v
+09:08:14 AM dne 01/03/2022 (03:49:20 PM) zzz: proboha ne, ne pspice. byl to nějaký frontový/behaviorální model sítě (03:50:31 PM) zzz: EOT a končím, musím běžet, díky všem (03:50:46 PM) eyedeekay: Měj se, zzz (03:51:41 PM) eyedeekay: Ještě něco k bodu 4? zlatinb (03:51:50 PM) zlatinb: ne, to je vše (03:52:08 PM) eyedeekay: Dobře, to by pro dnešní schůzku stačilo, mějte se všichni fajn a hezký týden </div>
+
+        </div>
+
+        <div class="post-navigation">
+            <a href="../../../../../../cs/blog" class="back-to-blog">← Back to Blog</a>
+        </div>
+    </div>
+</article>
+
+<style>
+.blog-post {
+    padding: var(--spacing-2xl) 0;
+}
+
+.post-header {
+    margin-bottom: var(--spacing-2xl);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.post-meta-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.post-date {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.post-categories {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.category-badge {
+    padding: 0.25rem 0.625rem;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.post-title {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.2;
+}
+
+.post-author {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+}
+
+.post-content {
+    max-width: 800px;
+    margin: 0 auto var(--spacing-2xl);
+    line-height: 1.8;
+    font-size: 1.0625rem;
+}
+
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.post-content h2 {
+    font-size: 1.875rem;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.post-content h3 {
+    font-size: 1.5rem;
+}
+
+.post-content h4 {
+    font-size: 1.25rem;
+}
+
+.post-content ul,
+.post-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.post-content li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.post-content pre {
+    background-color: var(--color-bg-secondary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin: var(--spacing-lg) 0;
+    border: 1px solid var(--color-border);
+}
+
+.post-content code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+}
+
+.post-content pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.post-content :not(pre) > code {
+    background-color: var(--color-bg-tertiary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+}
+
+.post-navigation {
+    max-width: 800px;
+    margin: var(--spacing-2xl) auto 0;
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.back-to-blog {
+    color: var(--color-primary);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: gap var(--transition-fast);
+}
+
+.back-to-blog:hover {
+    gap: var(--spacing-sm);
+}
+
+@media (max-width: 768px) {
+    .post-meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+
+    .post-title {
+        font-size: 2rem;
+    }
+
+    .post-content {
+        font-size: 1rem;
+    }
+}
+</style>
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Zůstaňte informováni o novinkách I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Zadejte svůj email" required>
+                            <button type="submit">Odebírat</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Rychlé odkazy</h3>
+                <ul>
+                    <li><a href="../../../../../../cs/financial-support/">Darovat</a></li>
+                    <li><a href="../../../../../../cs/docs/overview/intro/">Úvod do I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Komunita</h3>
+                <ul>
+                    <li><a href="../../../../../../cs/get-involved/">Zapojte se</a></li>
+                    <li><a href="../../../../../../cs/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Oficiální fóra</a></li>
+                    <li><a href="../../../../../../cs/contact/">Kontaktujte nás</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Zdroje</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P Metriky</a></li>
+                    <li><a href="../../../../../../cs/papers/">Výzkum</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Projekt Neviditelný Internet. Licencováno pod Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../../../cs/privacy/">Ochrana soukromí</a>
+                <a href="../../../../../../cs/terms/">Podmínky</a>
+                <a href="../../../../../../cs/about/media/">Tisk</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Zavřít">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Komunitní anketa</h2>
+            <p class="modal-subtitle">Rádi bychom o vás slyšeli</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Váš hlas pomáhá utvářet budoucnost I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

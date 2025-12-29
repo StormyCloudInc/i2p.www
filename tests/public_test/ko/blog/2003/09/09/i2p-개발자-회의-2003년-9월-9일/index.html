@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>I2P 개발자 회의, 2003년 9월 9일 | I2P - 보이지 않는 인터넷 프로젝트</title>
+
+    <meta name="description" content="CVS 호스팅 문제, 네이밍 서비스 업데이트, 개발 현황, 사양 관련 질문을 다룬 제57회 I2P 개발자 회의">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="I2P 개발자 회의, 2003년 9월 9일 | I2P - 보이지 않는 인터넷 프로젝트">
+    <meta property="og:description" content="CVS 호스팅 문제, 네이밍 서비스 업데이트, 개발 현황, 사양 관련 질문을 다룬 제57회 I2P 개발자 회의">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/ko/blog/2003/09/09/i2p-%EA%B0%9C%EB%B0%9C%EC%9E%90-%ED%9A%8C%EC%9D%98-2003%EB%85%84-9%EC%9B%94-9%EC%9D%BC/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P 베타 사이트 현재 운영 중 문의사항은 stormycloud@mail.i2p로 이메일 주세요</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="배너 닫기" title="배너 닫기">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../../../ko/" class="logo-link">
+                    <img src="../../../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../../../ko/about/" class="">소개</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../../../ko/about/">개요</a></li>
+                            <li><a href="../../../../../../ko/papers/">연구 논문</a></li>
+                            <li><a href="../../../../../../ko/about/media/">보도자료</a></li>
+                            <li><a href="../../../../../../ko/contact/">문의하기</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../../../ko/docs/" class="">문서</a></li>
+                    <li><a href="../../../../../../ko/downloads/" class="">다운로드</a></li>
+                    <li><a href="../../../../../../ko/blog/" class="active">블로그</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../../../ko/get-involved/" class="">참여하기</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../../../ko/get-involved/">개요</a></li>
+                            <li><a href="../../../../../../ko/feedback/">기능 제안</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">ko</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../en/blog/2003/09/09/i2p-dev-meeting-september-9-2003/"
+                                class="lang-option">영어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../es/blog/2003/09/09/reuni%C3%B3n-de-desarrolladores-de-i2p-9-de-septiembre-de-2003/"
+                                class="lang-option">스페인어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ko/blog/2003/09/09/i2p-%EA%B0%9C%EB%B0%9C%EC%9E%90-%ED%9A%8C%EC%9D%98-2003%EB%85%84-9%EC%9B%94-9%EC%9D%BC/"
+                                class="lang-option active">한국어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../zh/blog/2003/09/09/i2p-%E5%BC%80%E5%8F%91%E8%80%85%E4%BC%9A%E8%AE%AE2003%E5%B9%B49%E6%9C%889%E6%97%A5/"
+                                class="lang-option">중국어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ru/blog/2003/09/09/%D0%B2%D1%81%D1%82%D1%80%D0%B5%D1%87%D0%B0-%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2-i2p-9-%D1%81%D0%B5%D0%BD%D1%82%D1%8F%D0%B1%D1%80%D1%8F-2003-%D0%B3%D0%BE%D0%B4%D0%B0/"
+                                class="lang-option">러시아어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../cs/blog/2003/09/09/i2p-dev-meeting-september-9-2003/"
+                                class="lang-option">체코어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../de/blog/2003/09/09/i2p-entwicklertreffen-9.-september-2003/"
+                                class="lang-option">독일어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../fr/blog/2003/09/09/r%C3%A9union-des-d%C3%A9veloppeurs-i2p-9-septembre-2003/"
+                                class="lang-option">프랑스어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../tr/blog/2003/09/09/i2p-geli%C5%9Ftirici-toplant%C4%B1s%C4%B1-9-eyl%C3%BCl-2003/"
+                                class="lang-option">터키어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../vi/blog/2003/09/09/cu%E1%BB%99c-h%E1%BB%8Dp-c%C3%A1c-nh%C3%A0-ph%C3%A1t-tri%E1%BB%83n-i2p-ng%C3%A0y-9-th%C3%A1ng-9-n%C4%83m-2003/"
+                                class="lang-option">베트남어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../hi/blog/2003/09/09/i2p-%E0%A4%A1%E0%A5%87%E0%A4%B5%E0%A4%B2%E0%A4%AA%E0%A4%B0-%E0%A4%AC%E0%A5%88%E0%A4%A0%E0%A4%95-9-%E0%A4%B8%E0%A4%BF%E0%A4%A4%E0%A4%82%E0%A4%AC%E0%A4%B0-2003/"
+                                class="lang-option">힌디어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ar/blog/2003/09/09/%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9-%D9%85%D8%B7%D9%88%D8%B1%D9%8A-i2p-9-%D8%B3%D8%A8%D8%AA%D9%85%D8%A8%D8%B1-2003/"
+                                class="lang-option">아랍어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../pt/blog/2003/09/09/reuni%C3%A3o-de-desenvolvimento-do-i2p-9-de-setembro-de-2003/"
+                                class="lang-option">포르투갈어</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../../../ko/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../../../ko/downloads/" class="btn btn-primary">I2P 다운로드</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+<article class="blog-post">
+    <div class="container">
+        <div class="post-header">
+            <div class="post-meta-row">
+                
+                <time class="post-date" datetime="2003-09-09">
+                    September 9, 2003
+                </time>
+                
+
+                
+                <div class="post-categories">
+                    
+                    <span class="category-badge">meeting</span>
+                    
+                </div>
+                
+            </div>
+
+            <h1 class="post-title">I2P 개발자 회의, 2003년 9월 9일</h1>
+
+            
+            <div class="post-author">By jrand0m</div>
+            
+        </div>
+
+        <div class="post-content">
+            <h2 id="quick-recap">간단 요약</h2>
+<p class="attendees-inline"><strong>참석자:</strong> Brownspider, co, jrand0m, mariesofie, mihi, shardy, w0rmus</p>
+<h2 id="meeting-log">회의 로그</h2>
+<div class="irc-log"> [22:57] <jrand0m> ok, buenos noches srs y srtas [22:57] <jrand0m> 안건: [22:57] <jrand0m> 0) 환영 [22:57] <jrand0m> 1) cvs [22:57] <jrand0m> 4) 네이밍 서비스 [22:58] <co> 5) 질문 빼먹었어요. [22:58] <jrand0m> 3) 개발 현황 [22:58] <jrand0m> 2) 스펙 관련 질문? [22:58] <jrand0m> 5) 기타 질문? [22:58] <jrand0m> 아, 젠장, 순서를 다시 안 했네.  오케이.  번호가 잘못 매겨졌어 :)  0 == 0, 1 == 1, 4 ==2, 3 == 3, 2 == 4, 5 == 5 [22:59] <jrand0m> 진행하면서 그걸 잘 맞춰갈 수 있는지 보자... [22:59] <jrand0m> ok, 0) 환영 [22:59] <shardy> 순열 군 만세! [22:59] <jrand0m> 제57차 미팅에 온 걸 환영해 [22:59] <jrand0m> 그래, 어차피 전부 기호일 뿐이야 [22:59] <w0rmus> 좋네 뭐하냐 ;0 [23:00] <w0rmus> 구경꾼(피넛 갤러리) 하면서 거들게 [23:00] <jrand0m> 1) cvs는 10일 넘게 아직도 다운 상태.  새 호스트를 찾고 있어. [23:00] <jrand0m> sf.net은 형편없고, gnu의 nongnu가 더 낫다고 믿을 이유도 없어. [23:00] <co> jrand0m: 그 호스트에 "cvs.invisiblenet.net"이라는 별칭을 주면 어때요? [23:00] <jrand0m> nop이 진두지휘하고 있어, 새 호스트 찾는 건. [23:01] <jrand0m> 그래 co, 서버를 구하면 [23:01] <shardy> 호스트에 뭐가 필요해? [23:01] <jrand0m> shardy> 신뢰할 수 있는 네트 연결, ssh/cvs 접근.  그리고 약간의 디스크 공간 [23:01] <shardy> 무언가 마련해 둔 게 있어? [23:01] <shardy> 없다면 내가 도울 수도 있어. [23:02] <jrand0m> 굉장해!  nop이 뭘 준비해 뒀는지는 모르지만, 그가 너랑 얘기해 보게 할게 (지금 여기 없으면 말이야?) [23:02] * w0rmus가 nop을 톡톡 건드림 [23:03] <shardy> 1.1 비즈니스 sdsl이 있어. 머신만 찾으면 돼. 대역폭을 엄청나게 쓰지만 않는다면 서버를 호스팅해줄 수 있을 듯. [23:03] <shardy> 디스크 공간이 얼마나 필요해? [23:03] <jrand0m> 현재 저장소는 ~ 6Mb 정도.  그래서 아마 50M면 한동안 성장에도 충분할 거야 [23:04] <shardy> 오. pfft. 그건 아무것도 아니네. [23:04] <shardy> 그리고 머신이 엄청 빠를 필요는 없지? [23:04] <shardy> 큰 컴파일 작업을 거기서 돌리진 않지? [23:04] <jrand0m> 아니, 286도 아마 될걸. [23:04] <jrand0m> 아니, 오로지 cvs checking / checkout [23:04] <jrand0m> (음, 그리고 diff, log 등 ;) [23:05] <jrand0m> "우린 자바라서 컴파일 팜이 필요 없어" </fark> [23:05] *** 접속 종료: cohesion (class) [23:05] <w0rmus> 익명성을 신경 쓰는 사람들은 JAP 같은 걸로 CVS에 접근하나요?  난 CVS를 써본 적이 없어 [23:05] <jrand0m> w0rmus> 난 개인용 ssh 프록시 연쇄를 통해 cvs를 써 [23:05] <co> jrand0m: 앞으로 C나 C++ 구현이 나올 가능성도 있다는 점을 염두에 두세요. [23:06] <mihi> 내가 아는 한 jap은 cvs 접근을 허용하지 않아 :( [23:06] <w0rmus> ssh 터널링 [23:06] <shardy> 내가 뭘 할 수 있을지 보자. 누가 나한테 드라이브 하나 더 준다고 했거든... 디스크만 구하면 올릴 수 있는 머신이 있어. [23:06] <jrand0m> 아, 물론이지 co.  다만 cvs 저장소가 컴파일 팜 역할까지 반드시 해야 한다고 기대하진 않아. [23:07] <jrand0m> 좋아 shardy.  우리가 도울 일이 있으면 말만 해. [23:07] <co> jrand0m: 맞아요. 분리해야 해요. [23:07] <shardy> 그럴게. 드라이브 하나 구해볼게, 아마 구할 수 있을 거야, 그러면 모두를 위해 cvs를 호스팅해 줄게. [23:07] <jrand0m> shardy++ [23:07] <w0rmus> 야호 ;0 [23:07] <jrand0m> ok, 4) 네이밍 서비스 [23:08] <jrand0m> co, 어떻게 돼가? [23:08] <co> 아직 작성 중이지만, 몇 마디 하고 싶어요. [23:08] <co> 첫째, 지난 미팅에서 thecrypto가 한 질문에 답하자면, NS는 누가 온라인인지 알림을 제공하지 않습니다. [23:09] <co> 그저 AIM 같은 특정 방법으로 그 사람에게 연락할 수 있다고만 말해줍니다. [23:09] <co> 둘째, 클라이언트 측입니다. [23:09] <co> 프로그램이 네이밍 서버에 질의를 보낼 수 있는 API가 있을 겁니다. [23:10] <co> 하부 메커니즘은 어떤 서버에 질의할지에 대한 설정 파일을 읽고, I2P 네트워크를 사용해 결과를 얻은 뒤, 그 결과를 호출자에게 전달할 것입니다. [23:11] <co> 또한 하부 메커니즘은 로컬 router가 연락할 destination 메커니즘을 파일에서 읽을 것입니다. [23:11] <jrand0m> destination 메커니즘? [23:11] <co> 미안, destination 주소. [23:11] <jrand0m> 아 알겠어 [23:12] <co> 지금은 여기까지입니다. [23:12] <jrand0m> 좋아 [23:12] <w0rmus> 나도 동의 [23:12] <w0rmus> ;) [23:12] <jrand0m> 각 마일스톤에 대한 대략적인 일정 감은 어때? [23:13] <jrand0m> 물론 누구도 그걸로 뭐라 할 수는 없고, 그냥 궁금해서 [23:13] <co> 이번 주 말까지 명세와 API를 마무리하고 공개하는 걸로 하죠. [23:14] * mariesofie가 늦게 도착 [23:14] <jrand0m> 아 좋아, co [23:14] <co> 그 다음 구현을 시작할 겁니다. 얼마나 걸릴지는 확실하지 않아요. [23:14] <jrand0m> 이해돼 [23:15] <jrand0m> 네이밍 서비스에 대해 다른 질문/생각 있는 사람? [23:15] <jrand0m> ok, 3) 개발 현황 [23:16] <jrand0m> 개발은 잘 진행 중이야. [23:16] <jrand0m> 자바 쪽은 스펙에 맞춰졌고 I2CP와 I2NP의 모든 메시지와 구조를 구현했어 [23:17] <jrand0m> 자바 아키텍처 자체는 동작하고, 여러 하위 시스템을 계속 스텁으로 만들어 갈 거야 [23:17] <co> 테스트해 보셨나요? [23:17] <jrand0m> 메시지 &amp; 구조?  응, net.invisiblenet.i2p.data.test의 TestData 하네스로 [23:17] <co> 내 말은 I2P로 서로 다른 두 컴퓨터를 연결해 봤느냐는 거예요. [23:18] <jrand0m> 아, 아니, 그건 통신 하위 시스템의 완전한 구현이 필요해 [23:18] <co> 알겠어요. [23:18] <jrand0m> 먼저 여러 하위 시스템이 테스트 모드로 동작하도록 만들고, 그 다음에는 각각이 독립적으로 동작할 수 있도록 구현할 거야 [23:19] <jrand0m> 아마 2주쯤 뒤면 한 클라이언트가 다른 router에 있는 클라이언트에게 메시지를 보낼 수 있을 거야 [23:19] * mariesofie 환호 [23:20] <jrand0m> 그 다음 알파까지도 해야 할 일이 많이 남았지만, 그래도 진전이야 [23:21] <jrand0m> 구현하면서 누락된 부분을 보완하려고 datastrucutres와 i2np 스펙에 대해 자잘한 수정이 한 열두 가지쯤 필요해.  예: "datastructures p11, TunnelSigningPublic/PrivateKey should contain SIGNING Public/Private keys" 그리고 "i2np p15, TunnelCreateStatus - add hash of the replying RouterIdentity" [23:21] <shardy> 젠장. 스펙을 정말 읽어봐야겠네. [23:22] <jrand0m> 글쎄, 곧 네 머신에서 호스팅될 테니 쉬울 거야 :) [23:22] <w0rmus> 하하 [23:22] <w0rmus> 나도 스펙 아직 못 끝냈어 [23:23] <mariesofie> 난 스펙을 출력해서 너무 많이 읽다 보니 헤져서 다시 출력해야 했어 [23:23] <jrand0m> 여러 사람과 얘기해 보니, 스펙이 실제로 어떻게 돌아가는지를 잘 전달하지는 못하더라고.  애매한 부분과 자잘한 디테일은 다루지만, 왜 그 디테일이 필요한지는 설명하지 않아 [23:23] <w0rmus> 헤헷 [23:23] <jrand0m> 빵 터짐 mariesofie [23:23] <jrand0m> 오케이, 3) 개발 현황은 여기까지 [23:24] <jrand0m> 이제 2) 스펙 관련 질문 [23:24] <w0rmus> 멍청한 미적분 대신 그걸 읽어야겠네 [23:24] <co> 조금 미래를 생각하고 있어요. [23:24] <co> Python과 C 또는 C++ 구현의 메시지 데이터가 Java 구현에서도 읽힐 수 있어야 해요. [23:24] *** 접속 종료: mihi (EOF From client) [23:25] <jrand0m> 맞아, co [23:25] <co> 그걸 어떻게 달성할 건가요? [23:25] <jrand0m> datastructures 스펙이 바이트 레이아웃을 구체적으로 정의해 [23:25] <jrand0m> 그리고 전부 big endian이고, 모든 숫자는 unsigned야 [23:25] <mariesofie> 스펙의 대상 기술 수준은 어느 정도로 잡고 있어? 컴퓨터 지식이 어느 정도 있는 사람이면 되는지? 대학 수준의 CS 학생들? [23:25] <co> 아, 알겠습니다. [23:25] *** mihi_ (~none@anon.iip)님이 채널 #iip-dev에 참여했습니다 [23:26] <mariesofie> 즉, 대상 독자가 누구야? [23:26] *** mihi_의 이름이 mihi로 변경되었습니다 [23:26] <jrand0m> mariesofie> 음, 그 스펙들은 사실 대상을 제멋대로 정했어.  i2p_philosophy는 "오케이, 이게 대체 뭔데"였고, 나머지 스펙은 실제로 시스템을 구현하는 데 관심 있는 사람들을 대상으로 했지 [23:26] <jrand0m> 우리에겐 그 중간을 메워 줄 문서가 정말 정말 필요해 [23:27] <mariesofie> 그렇구나 [23:27] <mariesofie> API 문서는 이해하기 쉽고 유용했는데, 아이러니하게도 핵심 아키텍처를 이해하려고 I2NP 스펙을 읽다 보면 아직도 헷갈려 [23:28] <mariesofie> 아마 문서 탓이라기보다 내 탓일지도 :) [23:28] <jrand0m> 헤헷 괴짜 :) [23:29] <jrand0m> 좋아, 스펙에 대해 다른 질문 있어?  5) 기타 질문으로 넘어가자 [23:29] <jrand0m> 다른 질문 있는 사람?  이게 미팅 안건의 마지막 항목이야 [23:30] <w0rmus> thecrypto가 achat을 어디까지 했는지 궁금하네 [23:30] <jrand0m> 아, thecrypto는 앞으로 3주 정도 오프라인이야 [23:30] <mihi> 동료 검토(peer review)는 어떻게 돼가? [23:30] <w0rmus> 아니면 atalk [23:30] <w0rmus> 와우 [23:30] <mihi> 검토하는 사람이 있어? [23:30] <mariesofie> thecrypto가 하루에 2시간 있다고 생각했는데 [23:31] <w0rmus> 그리고 그가 가진 코드도 난 보지도 못해 :( [23:31] <jrand0m> mihi> 리뷰는 여러 사람에게 보냈고, 피드백이 오면 반영할 거야. [23:31] <jrand0m> w0rmus> ATalk에 대해 질문 있어? [23:32] <shardy> 시간만 나면 바로 검토할게 :) [23:32] <mihi> 내 말은, 지금까지 피드백이 오긴 했어ß [23:32] <w0rmus> 아마 없나 보네 [23:32] <mihi> s/nowß/now?/ [23:32] <jrand0m> mihi> 주로 논의와 설명의 형태로 [23:32] <jrand0m> 좋아 shardy :) [23:33] <Brownspider> 생일 축하해, google [23:33] <jrand0m> mariesofie> 맞아, 하지만 그 시간으론 개발을 계속하려고 java 언어 문서를 d/l하는 것조차 충분하지 않아 :/ [23:33] <w0rmus> 아하하 wtf [23:35] <jrand0m> 좋아, 다른 질문 / 생각 있어? [23:35] <w0rmus> 학교 밖에서 코딩해 본 적이 없다는 건 말해둬야 할 듯 [23:35] <w0rmus> 그래도 어딘가는 시작해야지 [23:35] <jrand0m> 지금이 시작하기 좋아 :) [23:35] <jrand0m> 그렇지 [23:35] <w0rmus> ;0 [23:35] <mariesofie> API에 대해 질문이 있긴 한데, 아직은 아니고, 하루이틀 더 써볼 수 있을 때 [23:35] <w0rmus> 자바를 2년 정도 배웠어 [23:36] <jrand0m> 좋아, mariesofie, 언제든 리스트로 메세지 하나 보내거나 여기서 내게 메세지 보내 [23:37] <co> mariesofie: iip-dev 메일링 리스트의 논의를 읽어봤나요? [23:37] <w0rmus> 어디에 아카이브돼 있어? [23:37] <jrand0m> http://news.gmane.org/thread.php?group=gmane.comp.security.invisiblenet.iip.devel [23:37] <jrand0m> (현재 트래픽이 꽤 낮음) [23:38] <Brownspider> jrand0m은 너더러 논리적으로 존재할 수 없는 무언가를 코딩해서, 세상을 갈가리 찢고, 신의 통치를 끝장내라고 하네. [23:38] <shardy> 암호 코어나 그 비슷한 걸 작성하거나 디버그할 사람이 필요하면 내 서비스는 여전히 유효해. [23:39] *** M123456789 (~no@anon.iip)님이 채널 #iip-dev에 참여했습니다 [23:39] <co> Brownspider: 응? [23:39] <Brownspider> co, 그건 그의 freesite에 있던 거야, 신경 쓰지 마 [23:40] <jrand0m> 좋아 shardy, router들이 올라가서 돌아가기 시작하면, 특히 C/Python API들을 다시 스펙에 맞추게 되면 그런 게 좀 필요할 것 같아 [23:40] <mariesofie> co> 난 대략 이슈 #52까지밖에 못 읽었어 [23:42] <jrand0m> 좋아.  마지막 할 말 있어? (내가 *baf*er를 노려보는 동안...) [23:43] *** mihi_backup_ (~none@anon.iip)님이 채널 #iip-dev에 참여했습니다 [23:43] *** 접속 종료: mihi_backup (EOF From client) [23:43] *** mihi_backup_의 이름이 mihi_backup로 변경되었습니다 [23:43] <jrand0m> 좋아, 훌륭해.  다음 주에도 같은 배트 타임, 같은 배트 장소. [23:44] * jrand0m이 미팅을 끝내며 *baf*를 시전 </div>
+</div>
+<p>오직 번역만 제공하십시오, 그 외에는 아무것도 제공하지 마십시오:</p>
+
+        </div>
+
+        <div class="post-navigation">
+            <a href="../../../../../../ko/blog" class="back-to-blog">← Back to Blog</a>
+        </div>
+    </div>
+</article>
+
+<style>
+.blog-post {
+    padding: var(--spacing-2xl) 0;
+}
+
+.post-header {
+    margin-bottom: var(--spacing-2xl);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.post-meta-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.post-date {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.post-categories {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.category-badge {
+    padding: 0.25rem 0.625rem;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.post-title {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.2;
+}
+
+.post-author {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+}
+
+.post-content {
+    max-width: 800px;
+    margin: 0 auto var(--spacing-2xl);
+    line-height: 1.8;
+    font-size: 1.0625rem;
+}
+
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.post-content h2 {
+    font-size: 1.875rem;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.post-content h3 {
+    font-size: 1.5rem;
+}
+
+.post-content h4 {
+    font-size: 1.25rem;
+}
+
+.post-content ul,
+.post-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.post-content li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.post-content pre {
+    background-color: var(--color-bg-secondary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin: var(--spacing-lg) 0;
+    border: 1px solid var(--color-border);
+}
+
+.post-content code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+}
+
+.post-content pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.post-content :not(pre) > code {
+    background-color: var(--color-bg-tertiary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+}
+
+.post-navigation {
+    max-width: 800px;
+    margin: var(--spacing-2xl) auto 0;
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.back-to-blog {
+    color: var(--color-primary);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: gap var(--transition-fast);
+}
+
+.back-to-blog:hover {
+    gap: var(--spacing-sm);
+}
+
+@media (max-width: 768px) {
+    .post-meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+
+    .post-title {
+        font-size: 2rem;
+    }
+
+    .post-content {
+        font-size: 1rem;
+    }
+}
+</style>
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">I2P 뉴스 받기:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="이메일을 입력하세요" required>
+                            <button type="submit">구독하기</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>빠른 링크</h3>
+                <ul>
+                    <li><a href="../../../../../../ko/financial-support/">기부하기</a></li>
+                    <li><a href="../../../../../../ko/docs/overview/intro/">I2P 소개</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>커뮤니티</h3>
+                <ul>
+                    <li><a href="../../../../../../ko/get-involved/">참여하기</a></li>
+                    <li><a href="../../../../../../ko/blog/">블로그</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">공식 포럼</a></li>
+                    <li><a href="../../../../../../ko/contact/">연락처</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>리소스</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P 메트릭</a></li>
+                    <li><a href="../../../../../../ko/papers/">연구</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">스톰이클라우드</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Invisible Internet Project. Creative Commons 라이선스 적용.</p>
+            <div class="footer-links">
+                <a href="../../../../../../ko/privacy/">개인정보 처리방침</a>
+                <a href="../../../../../../ko/terms/">이용 약관</a>
+                <a href="../../../../../../ko/about/media/">언론</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="닫기">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>커뮤니티 설문 조사</h2>
+            <p class="modal-subtitle">귀하의 의견을 듣고 싶습니다</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                귀하의 투표는 I2P의 미래를 형성하는 데 도움이 됩니다.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

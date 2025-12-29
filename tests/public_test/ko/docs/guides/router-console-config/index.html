@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>라우터 콘솔 구성 가이드 | I2P - 보이지 않는 인터넷 프로젝트</title>
+
+    <meta name="description" content="I2P 라우터 콘솔 이해 및 구성에 관한 종합 가이드">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="라우터 콘솔 구성 가이드 | I2P - 보이지 않는 인터넷 프로젝트">
+    <meta property="og:description" content="I2P 라우터 콘솔 이해 및 구성에 관한 종합 가이드">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/ko/docs/guides/router-console-config/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P 베타 사이트 현재 운영 중 문의사항은 stormycloud@mail.i2p로 이메일 주세요</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="배너 닫기" title="배너 닫기">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../ko/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../ko/about/" class="">소개</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ko/about/">개요</a></li>
+                            <li><a href="../../../../ko/papers/">연구 논문</a></li>
+                            <li><a href="../../../../ko/about/media/">보도자료</a></li>
+                            <li><a href="../../../../ko/contact/">문의하기</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../ko/docs/" class="active">문서</a></li>
+                    <li><a href="../../../../ko/downloads/" class="">다운로드</a></li>
+                    <li><a href="../../../../ko/blog/" class="">블로그</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../ko/get-involved/" class="">참여하기</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ko/get-involved/">개요</a></li>
+                            <li><a href="../../../../ko/feedback/">기능 제안</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">ko</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/guides/router-console-config/"
+                                class="lang-option">영어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/guides/router-console-config/"
+                                class="lang-option">스페인어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/guides/router-console-config/"
+                                class="lang-option active">한국어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/guides/router-console-config/"
+                                class="lang-option">중국어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/guides/router-console-config/"
+                                class="lang-option">러시아어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/guides/router-console-config/"
+                                class="lang-option">체코어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/guides/router-console-config/"
+                                class="lang-option">독일어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/guides/router-console-config/"
+                                class="lang-option">프랑스어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/guides/router-console-config/"
+                                class="lang-option">터키어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/guides/router-console-config/"
+                                class="lang-option">베트남어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/guides/router-console-config/"
+                                class="lang-option">힌디어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/guides/router-console-config/"
+                                class="lang-option">아랍어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/guides/router-console-config/"
+                                class="lang-option">포르투갈어</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../ko/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../ko/downloads/" class="btn btn-primary">I2P 다운로드</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+<article class="single-page">
+    <div class="container">
+        <div class="page-header">
+            
+
+            <h1 class="page-title">라우터 콘솔 구성 가이드</h1>
+
+            
+            <p class="page-description">I2P 라우터 콘솔 이해 및 구성에 관한 종합 가이드</p>
+            
+
+            
+
+            
+        </div>
+
+        <div class="page-content">
+            <p>이 가이드는 I2P Router Console과 구성 페이지에 대한 개요를 제공합니다. 각 섹션은 페이지가 수행하는 작업과 용도를 설명하여 I2P router를 모니터링하고 구성하는 방법을 이해하는 데 도움을 줍니다.</p>
+<h2 id="라우터-콘솔-접속하기">라우터 콘솔 접속하기</h2>
+<p>I2P Router Console은 I2P router를 관리하고 모니터링하는 중앙 허브입니다. 기본적으로 I2P router가 실행 중일 때 <a href="http://127.0.0.1:7657/home">I2P Router Console</a>
+에서 접근할 수 있습니다.</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-home.png" 
+    alt="Router Console 홈"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>홈 페이지는 여러 주요 섹션을 표시합니다:</p>
+<ul>
+<li><strong>애플리케이션</strong> - 이메일, 토렌트, Hidden Services Manager, 웹 서버 등 내장된 I2P 애플리케이션에 빠르게 접근</li>
+<li><strong>I2P 커뮤니티 사이트</strong> - 포럼, 문서, 프로젝트 웹사이트를 포함한 주요 커뮤니티 리소스 링크</li>
+<li><strong>구성 및 도움말</strong> - 대역폭 설정 구성, 플러그인 관리, 도움말 리소스 접근을 위한 도구</li>
+<li><strong>네트워크 및 개발자 정보</strong> - 그래프, 로그, 기술 문서, 네트워크 통계에 대한 접근</li>
+</ul>
+<h2 id="주소록">주소록</h2>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/dns">주소록</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-address-book.png" 
+    alt="Router Console Address Book"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>I2P 주소록은 클리어넷의 DNS와 유사하게 작동하여, I2P destination(eepsite)에 대한 사람이 읽을 수 있는 이름을 관리할 수 있게 해줍니다. 여기에서 개인 주소록에 I2P 주소를 확인하고 추가할 수 있습니다.</p>
+<p>주소록 시스템은 여러 계층을 통해 작동합니다:</p>
+<ul>
+<li>
+<p><strong>로컬 레코드</strong> - 라우터에만 저장되는 개인 주소록</p>
+<ul>
+<li><strong>로컬 주소록</strong> - 수동으로 추가하거나 개인 용도로 저장한 호스트</li>
+<li><strong>프라이빗 주소록</strong> - 다른 사람과 공유하고 싶지 않은 주소; 공개적으로 배포되지 않음</li>
+</ul>
+</li>
+<li>
+<p><strong>구독(Subscriptions)</strong> - 알려진 I2P 사이트로 라우터의 주소록을 자동으로 업데이트하는 원격 주소록 소스 (예: <code>http://i2p-projekt.i2p/hosts.txt</code>)</p>
+</li>
+<li>
+<p><strong>라우터 주소록</strong> - 로컬 기록과 구독을 병합한 결과로, 라우터의 모든 I2P 애플리케이션에서 검색 가능</p>
+</li>
+<li>
+<p><strong>Published Addressbook</strong> - 다른 사람들이 구독 소스로 사용할 수 있도록 주소록을 공개적으로 공유하는 선택적 기능 (I2P 사이트를 운영하는 경우 유용함)</p>
+</li>
+</ul>
+<p>주소록은 정기적으로 구독을 폴링하고 콘텐츠를 라우터(router) 주소록에 병합하여 hosts.txt 파일을 I2P 네트워크와 최신 상태로 유지합니다.</p>
+<h2 id="설정">설정</h2>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configadvanced">고급 설정</a>
+</p>
+<p>Configuration 섹션은 여러 전문화된 탭을 통해 모든 router 설정에 대한 접근을 제공합니다.</p>
+<h3 id="advanced">Advanced</h3>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-advanced.png" 
+    alt="라우터 콘솔 고급 구성"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>고급 설정 페이지는 일반적인 작동에 필요하지 않은 저수준 router 설정에 대한 접근을 제공합니다. <strong>대부분의 사용자는 특정 설정 옵션과 그것이 router 동작에 미치는 영향을 이해하지 못하는 한 이러한 설정을 수정해서는 안 됩니다.</strong></p>
+<p>주요 기능:</p>
+<ul>
+<li>
+<p><strong>Floodfill 설정</strong> - 라우터가 floodfill 피어로 참여할지 여부를 제어합니다. Floodfill 피어는 netDb 정보를 저장하고 배포하여 네트워크를 돕습니다. 시스템 리소스를 더 많이 사용할 수 있지만 I2P 네트워크를 강화합니다.</p>
+</li>
+<li>
+<p><strong>고급 I2P 설정</strong> - <code>router.config</code> 파일에 직접 접근하여 다음을 포함한 모든 고급 설정 매개변수를 표시합니다:</p>
+<ul>
+<li>대역폭 제한 및 버스트 설정</li>
+<li>Transport 설정 (NTCP2, SSU2, UDP 포트 및 키)</li>
+<li>라우터 식별 정보 및 버전 정보</li>
+<li>콘솔 환경설정 및 업데이트 설정</li>
+</ul>
+</li>
+</ul>
+<p>대부분의 고급 설정 옵션은 거의 필요하지 않기 때문에 사용자 인터페이스에 노출되지 않습니다. 이러한 설정을 편집하려면 <code>router.config</code> 파일에 <code>routerconsole.advanced=true</code>를 수동으로 추가해야 합니다.</p>
+<p><strong>경고:</strong> 고급 설정을 잘못 수정하면 router의 성능이나 연결에 부정적인 영향을 미칠 수 있습니다. 무엇을 하는지 알고 있는 경우에만 이러한 설정을 변경하십시오.</p>
+<h3 id="bandwidth">Bandwidth</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/config">대역폭 설정</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-bandwidth.png" 
+    alt="Router Console Bandwidth 설정"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Bandwidth 설정 페이지에서는 라우터가 I2P 네트워크에 기여하는 대역폭의 양을 제어할 수 있습니다. I2P는 인터넷 연결 속도에 맞게 속도를 설정할 때 가장 잘 작동합니다.</p>
+<p><strong>주요 설정:</strong></p>
+<ul>
+<li><strong>KBps In</strong> - 라우터가 수신할 최대 인바운드 대역폭 (다운로드 속도)</li>
+<li><strong>KBps Out</strong> - 라우터가 사용할 최대 아웃바운드 대역폭 (업로드 속도)</li>
+<li><strong>Share</strong> - 참여 트래픽에 할당되는 아웃바운드 대역폭의 비율 (다른 사용자의 트래픽 라우팅 지원)</li>
+</ul>
+<p><strong>중요 사항:</strong></p>
+<ul>
+<li>모든 값은 초당 비트가 아닌 <strong>초당 바이트</strong>(KBps) 단위입니다</li>
+<li>더 많은 대역폭을 제공할수록 네트워크에 더 많이 기여하고 자신의 익명성도 향상됩니다</li>
+<li>업스트림 공유량(KBps Out)이 네트워크에 대한 전반적인 기여도를 결정합니다</li>
+<li>네트워크 속도를 잘 모르는 경우 <strong>대역폭 테스트</strong>를 사용하여 측정하세요</li>
+<li>공유 대역폭을 높이면 익명성이 향상되고 I2P 네트워크 강화에 도움이 됩니다</li>
+</ul>
+<p>설정 페이지는 사용자의 설정을 기반으로 예상 월간 데이터 전송량을 표시하여, 인터넷 요금제 한도에 맞춰 대역폭 할당을 계획하는 데 도움을 줍니다.</p>
+<h3 id="client-configuration">Client Configuration</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configclients">클라이언트 구성</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-clients.png" 
+    alt="Router Console Client Configuration"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>클라이언트 구성 페이지에서는 시작 시 실행할 I2P 애플리케이션과 서비스를 제어할 수 있습니다. 여기에서 내장된 I2P 클라이언트를 제거하지 않고 활성화하거나 비활성화할 수 있습니다.</p>
+<p><strong>중요 경고:</strong> 여기에서 설정을 변경할 때 주의하십시오. router console과 application tunnel은 I2P의 대부분의 용도에 필요합니다. 고급 사용자만 이러한 설정을 수정해야 합니다.</p>
+<p><strong>사용 가능한 클라이언트:</strong></p>
+<ul>
+<li><strong>Application tunnels</strong> - 클라이언트 및 서버 터널(HTTP 프록시, IRC 등)을 관리하는 I2PTunnel 시스템</li>
+<li><strong>I2P Router Console</strong> - 현재 사용 중인 웹 기반 관리 인터페이스</li>
+<li><strong>I2P webserver (eepsite)</strong> - 자신의 I2P 웹사이트를 호스팅하기 위한 내장 Jetty 웹서버</li>
+<li><strong>Open Router Console in web browser at startup</strong> - 시작 시 콘솔 홈페이지로 브라우저를 자동으로 실행</li>
+<li><strong>SAM application bridge</strong> - 서드파티 애플리케이션이 I2P에 연결하기 위한 API 브리지</li>
+</ul>
+<p>각 클라이언트는 다음을 표시합니다: - <strong>시작 시 실행?</strong> - 자동 시작을 활성화/비활성화하는 체크박스 - <strong>제어</strong> - 즉시 제어를 위한 시작/중지 버튼 - <strong>클래스 및 인자</strong> - 클라이언트가 실행되는 방식에 대한 기술적 세부 사항</p>
+<p>&ldquo;Run at Startup?&rdquo; 설정 변경사항은 라우터를 재시작해야 적용됩니다. 모든 수정사항은 <code>/var/lib/i2p/i2p-config/clients.config.d/</code>에 저장됩니다.</p>
+<h3 id="고급">고급</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configi2cp">I2CP 설정</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-i2cp.png" 
+    alt="Router Console I2CP 설정"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>I2CP(I2P Client Protocol) 설정 페이지에서는 외부 애플리케이션이 I2P router에 연결하는 방법을 구성할 수 있습니다. I2CP는 애플리케이션이 router와 통신하여 tunnel을 생성하고 I2P를 통해 데이터를 송수신하는 데 사용하는 프로토콜입니다.</p>
+<p><strong>중요:</strong> 기본 설정은 대부분의 사용자에게 적합합니다. 여기서 변경한 사항은 외부 클라이언트 애플리케이션에서도 동일하게 구성해야 합니다. 많은 클라이언트가 SSL 또는 인증을 지원하지 않습니다. <strong>모든 변경 사항은 재시작 후 적용됩니다.</strong></p>
+<p><strong>설정 옵션:</strong></p>
+<ul>
+<li>
+<p><strong>외부 I2CP 인터페이스 구성</strong></p>
+<ul>
+<li><strong>SSL 없이 활성화</strong> - 표준 I2CP 접근 (기본값이며 가장 호환성이 높음)</li>
+<li><strong>SSL 필수로 활성화</strong> - 암호화된 I2CP 연결만 허용</li>
+<li><strong>비활성화</strong> - 외부 클라이언트가 I2CP를 통해 연결하는 것을 차단</li>
+</ul>
+</li>
+<li>
+<p><strong>I2CP 인터페이스</strong> - 수신할 네트워크 인터페이스 (기본값: 127.0.0.1, 로컬호스트 전용)</p>
+</li>
+<li>
+<p><strong>I2CP 포트</strong> - I2CP 연결을 위한 포트 번호 (기본값: 7654)</p>
+</li>
+<li>
+<p><strong>인증</strong></p>
+<ul>
+<li><strong>사용자 이름과 비밀번호 요구</strong> - I2CP 연결에 대한 인증 활성화</li>
+<li><strong>사용자 이름</strong> - I2CP 접근에 필요한 사용자 이름 설정</li>
+<li><strong>비밀번호</strong> - I2CP 접근에 필요한 비밀번호 설정</li>
+</ul>
+</li>
+</ul>
+<p><strong>보안 참고사항:</strong> I2P router와 동일한 컴퓨터에서만 애플리케이션을 실행하는 경우, 원격 접속을 방지하기 위해 인터페이스를 <code>127.0.0.1</code>로 유지하십시오. 다른 장치의 I2P 애플리케이션이 router에 연결해야 하는 경우에만 이 설정을 변경하십시오.</p>
+<h3 id="대역폭">대역폭</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/confignet">네트워크 구성</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-network.png" 
+    alt="Router Console 네트워크 구성"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Network Configuration 페이지에서는 I2P router가 인터넷에 연결하는 방식을 구성할 수 있으며, IP 주소 감지, IPv4/IPv6 기본 설정, UDP 및 TCP transport의 포트 설정이 포함됩니다.</p>
+<p><strong>외부 접근 가능한 IP 주소:</strong></p>
+<ul>
+<li><strong>모든 자동 감지 방법 사용</strong> - 여러 방법을 사용하여 공인 IP를 자동으로 감지합니다 (권장)</li>
+<li><strong>UPnP IP 주소 감지 비활성화</strong> - UPnP를 사용한 IP 검색을 차단합니다</li>
+<li><strong>로컬 인터페이스 IP 주소 무시</strong> - 로컬 네트워크 IP를 사용하지 않습니다</li>
+<li><strong>SSU IP 주소 감지만 사용</strong> - IP 감지에 SSU2 전송만 사용합니다</li>
+<li><strong>숨김 모드 - IP 공개 안 함</strong> - 네트워크 트래픽 참여를 차단합니다 (익명성 감소)</li>
+<li><strong>호스트명 또는 IP 지정</strong> - 공인 IP 또는 호스트명을 수동으로 설정합니다</li>
+</ul>
+<p><strong>IPv4 설정:</strong></p>
+<ul>
+<li><strong>인바운드 비활성화 (방화벽 설정)</strong> - 방화벽, 홈 네트워크, ISP, DS-Lite 또는 통신사급 NAT 뒤에 있어 인바운드 연결이 차단되는 경우 이 옵션을 선택하세요</li>
+</ul>
+<p><strong>IPv6 설정:</strong></p>
+<ul>
+<li><strong>IPv4를 IPv6보다 우선</strong> - IPv4 연결을 우선순위로 사용합니다</li>
+<li><strong>IPv6를 IPv4보다 우선</strong> - IPv6 연결을 우선순위로 사용합니다 (듀얼 스택 네트워크의 기본값)</li>
+<li><strong>IPv6 활성화</strong> - IPv6 연결을 허용합니다</li>
+<li><strong>IPv6 비활성화</strong> - 모든 IPv6 연결을 비활성화합니다</li>
+<li><strong>IPv6만 사용 (IPv4 비활성화)</strong> - 실험적인 IPv6 전용 모드입니다</li>
+<li><strong>인바운드 비활성화 (방화벽 적용됨)</strong> - IPv6가 방화벽으로 차단되었는지 확인하세요</li>
+</ul>
+<p><strong>IP 변경 시 조치:</strong></p>
+<ul>
+<li><strong>랩톱 모드</strong> - IP 변경 시 라우터 ID와 UDP 포트를 변경하여 익명성을 강화하는 실험적 기능</li>
+</ul>
+<p><strong>UDP 설정:</strong></p>
+<ul>
+<li><strong>포트 지정</strong> - SSU2 전송을 위한 특정 UDP 포트 설정 (방화벽에서 해당 포트를 개방해야 함)</li>
+<li><strong>완전히 비활성화</strong> - 모든 아웃바운드 UDP를 차단하는 방화벽 뒤에 있는 경우에만 선택</li>
+</ul>
+<p><strong>TCP 설정:</strong></p>
+<ul>
+<li><strong>포트 지정</strong> - NTCP2 전송을 위한 특정 TCP 포트 설정 (방화벽에서 열어야 함)</li>
+<li><strong>UDP용으로 구성된 동일한 포트 사용</strong> - 두 전송 방식에 하나의 포트를 사용하여 구성 단순화</li>
+<li><strong>자동 감지된 IP 주소 사용</strong> - 공인 IP를 자동으로 감지 (아직 감지되지 않았거나 방화벽이 설정된 경우 &ldquo;currently unknown&rdquo; 표시)</li>
+<li><strong>자동 감지된 IP 주소 항상 사용 (방화벽 없음)</strong> - 인터넷에 직접 연결된 router에 가장 적합</li>
+<li><strong>인바운드 비활성화 (방화벽 있음)</strong> - TCP 연결이 방화벽에 의해 차단되는지 확인</li>
+<li><strong>완전히 비활성화</strong> - 아웃바운드 TCP를 제한하거나 차단하는 방화벽 뒤에 있는 경우에만 선택</li>
+<li><strong>호스트명 또는 IP 지정</strong> - 외부에서 접근 가능한 주소를 수동으로 구성</li>
+</ul>
+<p><strong>중요:</strong> 네트워크 설정 변경 사항은 완전히 적용되려면 router 재시작이 필요할 수 있습니다. 올바른 포트 포워딩 구성은 router의 성능을 크게 향상시키고 I2P 네트워크에 도움이 됩니다.</p>
+<h3 id="클라이언트-구성">클라이언트 구성</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configpeer">Peer Configuration</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-peer.png" 
+    alt="Router Console Peer 설정"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Peer Configuration 페이지는 I2P 네트워크의 개별 peer를 관리하기 위한 수동 제어 기능을 제공합니다. 이는 문제가 있는 peer의 해결을 위해 일반적으로 사용되는 고급 기능입니다.</p>
+<p><strong>수동 피어 제어:</strong></p>
+<ul>
+<li><strong>라우터 해시</strong> - 관리하려는 피어의 44자 base64 router hash를 입력하세요</li>
+</ul>
+<p><strong>수동으로 피어 차단 / 차단 해제:</strong></p>
+<p>피어를 차단하면 생성하는 모든 tunnel에 해당 피어가 참여하지 못하게 됩니다. 이 작업은: - 클라이언트 또는 탐색 tunnel에서 해당 피어가 사용되지 않도록 방지 - 재시작 없이 즉시 적용됨 - 수동으로 피어 차단을 해제하거나 router를 재시작할 때까지 지속됨 - <strong>재시작까지 피어 차단</strong> - 일시적으로 피어를 차단 - <strong>피어 차단 해제</strong> - 이전에 차단된 피어의 차단을 제거</p>
+<p><strong>프로필 보너스 조정:</strong></p>
+<p>프로필 보너스는 터널 참여를 위해 피어가 선택되는 방식에 영향을 미칩니다. 보너스는 양수 또는 음수일 수 있습니다: - <strong>빠른 피어</strong> - 높은 속도가 필요한 클라이언트 터널에 사용됩니다 - <strong>고용량 피어</strong> - 안정적인 라우팅이 필요한 일부 탐색 터널에 사용됩니다 - 현재 보너스는 프로필 페이지에 표시됩니다</p>
+<p><strong>설정:</strong> - <strong>속도</strong> - 이 피어의 속도 보너스 조정 (0 = 중립) - <strong>용량</strong> - 이 피어의 용량 보너스 조정 (0 = 중립) - <strong>피어 보너스 조정</strong> - 보너스 설정 적용</p>
+<p><strong>사용 사례:</strong> - 지속적으로 연결 문제를 일으키는 피어 차단 - 악의적이라고 의심되는 피어를 일시적으로 제외 - 성능이 저조한 피어의 우선순위를 낮추기 위해 보너스 조정 - 특정 피어를 제외하여 tunnel 구축 문제 디버그</p>
+<p><strong>참고:</strong> 대부분의 사용자는 이 기능을 사용할 필요가 없습니다. I2P router는 성능 지표를 기반으로 피어 선택 및 프로파일링을 자동으로 관리합니다.</p>
+<h3 id="i2cp-설정">I2CP 설정</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configreseed">Reseed 설정</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-reseed.png" 
+    alt="Router Console Reseed 설정"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Reseed 설정 페이지에서는 자동 reseed가 실패할 경우 router를 수동으로 reseed할 수 있습니다. Reseed는 I2P를 처음 설치할 때 또는 router에 남아있는 router 참조가 너무 적을 때 다른 router를 찾기 위해 사용되는 부트스트래핑 프로세스입니다.</p>
+<p><strong>수동 리시드(Reseed)를 사용해야 하는 경우:</strong></p>
+<ol>
+<li>
+<p>재시딩이 실패한 경우, 먼저 네트워크 연결을 확인해야 합니다</p>
+</li>
+<li>
+<p>방화벽이 reseed 호스트에 대한 연결을 차단하는 경우, 프록시를 사용할 수 있습니다:</p>
+<ul>
+<li>프록시는 원격 공개 프록시이거나 컴퓨터(localhost)에서 실행 중일 수 있습니다</li>
+<li>프록시를 사용하려면 Reseeding Configuration 섹션에서 유형, 호스트 및 포트를 구성하세요</li>
+<li>Tor Browser를 실행 중인 경우, SOCKS 5, localhost, 포트 9150으로 구성하여 reseed하세요</li>
+<li>명령줄 Tor를 실행 중인 경우, SOCKS 5, localhost, 포트 9050으로 구성하여 reseed하세요</li>
+<li>일부 피어가 있지만 더 필요한 경우, I2P Outproxy 옵션을 시도할 수 있습니다. 호스트와 포트는 비워두세요. 이 방법은 피어가 전혀 없는 초기 reseed에는 작동하지 않습니다</li>
+<li>그런 다음 &ldquo;Save changes and reseed now&quot;를 클릭하세요</li>
+<li>기본 설정은 대부분의 사용자에게 적합합니다. 제한적인 방화벽이 HTTPS를 차단하고 reseed가 실패한 경우에만 이 설정을 변경하세요</li>
+</ul>
+</li>
+<li>
+<p>I2P를 실행하는 신뢰할 수 있는 사람을 알고 있다면, 그들의 router console에서 이 페이지를 사용하여 생성한 reseed 파일을 보내달라고 요청하세요. 그런 다음, 이 페이지를 사용하여 받은 파일로 reseed하세요. 먼저 아래에서 파일을 선택하세요. 그 다음 &ldquo;Reseed from file&quot;을 클릭하세요</p>
+</li>
+<li>
+<p>리시드 파일을 게시하는 신뢰할 수 있는 사람을 알고 있다면, 해당 URL을 요청하세요. 그런 다음 이 페이지를 사용하여 받은 URL로 리시드를 진행하세요. 먼저 아래에 URL을 입력한 후 &ldquo;Reseed from URL&quot;을 클릭하세요</p>
+</li>
+<li>
+<p>수동 리시딩 방법은 <a href="../../../../ko/docs/overview/faq/">FAQ</a>
+를 참조하세요</p>
+</li>
+</ol>
+<p><strong>수동 리시드 옵션:</strong></p>
+<ul>
+<li>
+<p><strong>URL에서 리시드</strong> - 신뢰할 수 있는 소스의 zip 또는 su3 URL을 입력하고 &ldquo;URL에서 리시드&quot;를 클릭하세요</p>
+<ul>
+<li>su3 형식은 신뢰할 수 있는 소스의 서명이 검증되므로 권장됩니다</li>
+<li>zip 형식은 서명되지 않으므로, 신뢰할 수 있는 소스의 zip 파일만 사용하세요</li>
+</ul>
+</li>
+<li>
+<p><strong>파일에서 리시드</strong> - 로컬 zip 또는 su3 파일을 찾아 선택한 후 &ldquo;파일에서 리시드&quot;를 클릭하세요</p>
+<ul>
+<li>리시드 파일은 <a href="https://checki2p.com/reseed">checki2p.com/reseed</a>
+에서 찾을 수 있습니다</li>
+</ul>
+</li>
+<li>
+<p><strong>리시드 파일 생성</strong> - 다른 사용자들이 수동으로 리시드할 수 있도록 공유할 수 있는 새로운 리시드 zip 파일을 생성합니다</p>
+<ul>
+<li>이 파일에는 절대 자신의 router 신원 정보나 IP가 포함되지 않습니다</li>
+</ul>
+</li>
+</ul>
+<p><strong>리시딩 설정:</strong></p>
+<p>기본 설정은 대부분의 사용자에게 적합합니다. 제한적인 방화벽이 HTTPS를 차단하고 reseed가 실패한 경우에만 이 설정을 변경하십시오.</p>
+<ul>
+<li><strong>Reseed URL</strong> - Reseed 서버의 HTTPS URL 목록 (기본 목록은 내장되어 있으며 정기적으로 업데이트됨)</li>
+<li><strong>프록시 구성</strong> - 프록시를 통해 reseed 서버에 접근해야 하는 경우 HTTP/HTTPS/SOCKS 프록시 설정</li>
+<li><strong>URL 목록 초기화</strong> - 기본 reseed 서버 목록 복원</li>
+</ul>
+<p><strong>중요:</strong> 수동 리시딩은 자동 리시딩이 반복적으로 실패하는 드문 경우에만 필요합니다. 대부분의 사용자는 이 페이지를 사용할 필요가 없습니다.</p>
+<h3 id="네트워크-구성">네트워크 구성</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configfamily">라우터 패밀리 설정</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-family.png" 
+    alt="Router Console Router Family 설정"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>라우터 패밀리 설정 페이지에서는 라우터 패밀리를 관리할 수 있습니다. 같은 패밀리에 속한 라우터들은 패밀리 키를 공유하며, 이는 동일한 사람이나 조직이 운영하는 라우터임을 식별합니다. 이를 통해 귀하가 제어하는 여러 라우터가 동일한 터널에 선택되는 것을 방지하여 익명성 저하를 막습니다.</p>
+<p><strong>Router Family란 무엇인가?</strong></p>
+<p>여러 대의 I2P router를 운영할 때는 동일한 패밀리의 일부로 구성해야 합니다. 이를 통해 다음을 보장합니다: - 여러분의 router들이 동일한 tunnel 경로에 함께 사용되지 않습니다 - 다른 사용자들이 여러분의 router를 사용하는 tunnel을 이용할 때 적절한 익명성을 유지합니다 - 네트워크가 tunnel 참여를 적절하게 분산할 수 있습니다</p>
+<p><strong>현재 패밀리:</strong></p>
+<p>이 페이지는 현재 라우터 패밀리 이름을 표시합니다. 패밀리에 속하지 않은 경우 비어 있습니다.</p>
+<p><strong>Family Key 내보내기:</strong></p>
+<ul>
+<li><strong>다른 라우터로 가져올 비밀 패밀리 키 내보내기</strong></li>
+<li>&ldquo;Export Family Key&quot;를 클릭하여 패밀리 키 파일 다운로드</li>
+<li>동일한 패밀리에 추가하려면 다른 라우터에서 이 키를 가져오기</li>
+</ul>
+<p><strong>라우터 패밀리 탈퇴:</strong></p>
+<ul>
+<li><strong>더 이상 패밀리의 구성원이 아님</strong></li>
+<li>현재 패밀리에서 이 라우터를 제거하려면 &ldquo;Leave Family&quot;을 클릭하세요</li>
+<li>이 작업은 패밀리 키를 다시 가져오지 않는 한 되돌릴 수 없습니다</li>
+</ul>
+<p><strong>중요 고려사항:</strong></p>
+<ul>
+<li><strong>공개 등록 필요:</strong> 패밀리가 네트워크 전체에서 인식되려면, 패밀리 키가 개발팀에 의해 I2P 코드베이스에 추가되어야 합니다. 이를 통해 네트워크의 모든 router가 귀하의 패밀리에 대해 알 수 있습니다.</li>
+<li>여러 공개 router를 운영하는 경우 <strong>I2P 팀에 연락</strong>하여 패밀리 키를 등록하세요</li>
+<li>하나의 router만 실행하는 대부분의 사용자는 이 기능을 사용할 필요가 없습니다</li>
+<li>패밀리 구성은 주로 여러 공개 router를 운영하는 운영자나 인프라 제공자가 사용합니다</li>
+</ul>
+<p><strong>사용 사례:</strong></p>
+<ul>
+<li>중복성을 위해 여러 I2P router 운영</li>
+<li>여러 머신에서 reseed 서버나 outproxy와 같은 인프라 실행</li>
+<li>조직을 위한 I2P router 네트워크 관리</li>
+</ul>
+<h3 id="피어-설정">피어 설정</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configtunnels">터널 설정</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-tunnels.png" 
+    alt="Router Console Tunnel 설정"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>터널 구성 페이지에서는 탐색 터널(router 통신에 사용)과 클라이언트 터널(애플리케이션에서 사용) 모두에 대한 기본 tunnel 설정을 조정할 수 있습니다. <strong>기본 설정은 대부분의 사용자에게 적합하며, 트레이드오프를 이해하는 경우에만 변경해야 합니다.</strong></p>
+<p><strong>중요한 경고:</strong></p>
+<p>⚠️ <strong>익명성 대 성능 트레이드오프:</strong> 익명성과 성능 사이에는 근본적인 트레이드오프가 존재합니다. 3홉보다 긴 tunnel(예: 2 hops + 0-2 hops, 3 hops + 0-1 hops, 3 hops + 0-2 hops) 또는 높은 수량 + 백업 수량은 성능이나 안정성을 심각하게 저하시킬 수 있습니다. 높은 CPU 및/또는 높은 아웃바운드 대역폭 사용이 발생할 수 있습니다. 이러한 설정은 신중하게 변경하고, 문제가 발생하면 조정하십시오.</p>
+<p>⚠️ <strong>지속성:</strong> 탐색 tunnel 설정 변경사항은 router.config 파일에 저장됩니다. 클라이언트 tunnel 변경사항은 임시적이며 저장되지 않습니다. 클라이언트 tunnel 변경사항을 영구적으로 적용하려면 <a href="../../../../ko/docs/api/i2ptunnel">I2PTunnel 페이지</a>
+를 참조하세요.</p>
+<p><strong>탐색 터널(Exploratory Tunnels):</strong></p>
+<p>탐색 터널(Exploratory tunnel)은 라우터가 네트워크 데이터베이스와 통신하고 I2P 네트워크에 참여하는 데 사용됩니다.</p>
+<p>Inbound와 Outbound 모두에 대한 구성 옵션: - <strong>Length</strong> - tunnel의 홉 수 (기본값: 2-3 홉) - <strong>Randomization</strong> - tunnel 길이의 무작위 변동 (기본값: 0-1 홉) - <strong>Quantity</strong> - 활성 tunnel 수 (기본값: 2개 tunnel) - <strong>Backup quantity</strong> - 활성화 준비된 백업 tunnel 수 (기본값: 0개 tunnel)</p>
+<p><strong>I2P 웹서버를 위한 클라이언트 터널:</strong></p>
+<p>이 설정은 내장된 I2P 웹서버(eepsite)의 tunnel을 제어합니다.</p>
+<p>⚠️ <strong>익명성 경고</strong> - 설정에 1-hop 터널이 포함되어 있습니다. ⚠️ <strong>성능 경고</strong> - 설정에 높은 터널 수량이 포함되어 있습니다.</p>
+<p>Inbound와 Outbound 모두에 대한 구성 옵션: - <strong>Length</strong> - 터널 길이 (기본값: 웹서버의 경우 1 hop) - <strong>Randomization</strong> - 터널 길이의 무작위 변동 - <strong>Quantity</strong> - 활성 터널 수 - <strong>Backup quantity</strong> - 백업 터널 수</p>
+<p><strong>공유 클라이언트를 위한 클라이언트 Tunnel:</strong></p>
+<p>이 설정은 공유 클라이언트 애플리케이션(HTTP 프록시, IRC 등)에 적용됩니다.</p>
+<p>Inbound와 Outbound 모두에 대한 구성 옵션: - <strong>Length</strong> - 터널 길이 (기본값: 3홉) - <strong>Randomization</strong> - 터널 길이의 무작위 변동 - <strong>Quantity</strong> - 활성 터널 수 - <strong>Backup quantity</strong> - 백업 터널 수</p>
+<p><strong>터널 파라미터 이해하기:</strong></p>
+<ul>
+<li><strong>길이(Length):</strong> 터널이 길수록 익명성이 향상되지만 성능과 안정성은 저하됩니다</li>
+<li><strong>무작위화(Randomization):</strong> 터널 경로에 예측 불가능성을 추가하여 보안을 향상시킵니다</li>
+<li><strong>수량(Quantity):</strong> 터널이 많을수록 안정성과 부하 분산이 개선되지만 리소스 사용량이 증가합니다</li>
+<li><strong>백업 수량(Backup quantity):</strong> 장애가 발생한 터널을 대체할 수 있도록 미리 구축된 터널로, 복원력을 향상시킵니다</li>
+</ul>
+<p><strong>모범 사례:</strong></p>
+<ul>
+<li>특정 요구사항이 없다면 기본 설정을 유지하세요</li>
+<li>익명성이 매우 중요하고 성능 저하를 감수할 수 있는 경우에만 tunnel 길이를 늘리세요</li>
+<li>tunnel 장애가 자주 발생하는 경우에만 수량/백업을 늘리세요</li>
+<li>변경 후 router 성능을 모니터링하세요</li>
+<li>&ldquo;Save changes&quot;를 클릭하여 수정사항을 적용하세요</li>
+</ul>
+<h3 id="reseed-설정">Reseed 설정</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configui">UI 구성</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-ui.png" 
+    alt="Router Console UI 설정"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>UI 설정 페이지에서는 테마 선택, 언어 기본 설정 및 비밀번호 보호를 포함하여 router 콘솔의 모양과 접근성을 사용자 지정할 수 있습니다.</p>
+<p><strong>라우터 콘솔 테마:</strong></p>
+<p>router console 인터페이스의 다크 테마와 라이트 테마 중 선택하세요:</p>
+<ul>
+<li><strong>Dark</strong> - 다크 모드 테마 (어두운 환경에서 눈의 피로도 감소)</li>
+<li><strong>Light</strong> - 라이트 모드 테마 (전통적인 외관)</li>
+</ul>
+<p>추가 테마 옵션: - <strong>모든 앱에 테마를 전역으로 설정</strong> - 선택한 테마를 라우터 콘솔뿐만 아니라 모든 I2P 애플리케이션에 적용 - <strong>모바일 콘솔 강제 사용</strong> - 데스크톱 브라우저에서도 모바일 최적화 인터페이스 사용 - <strong>콘솔에 이메일 및 토렌트 애플리케이션 포함</strong> - Susimail과 I2PSnark를 별도 탭으로 여는 대신 콘솔 인터페이스에 직접 통합</p>
+<p><strong>라우터 콘솔 언어:</strong></p>
+<p>드롭다운 메뉴에서 router console 인터페이스에 사용할 언어를 선택하세요. I2P는 영어, 독일어, 프랑스어, 스페인어, 러시아어, 중국어, 일본어 등 다양한 언어를 지원합니다.</p>
+<p><strong>번역 기여를 환영합니다:</strong> 불완전하거나 부정확한 번역을 발견하시면, 번역 프로젝트에 기여하여 I2P를 개선하는 데 도움을 주실 수 있습니다. IRC의 #i2p-dev에서 개발자에게 연락하거나 번역 상태 보고서를 확인하세요(페이지에 링크되어 있습니다).</p>
+<p><strong>라우터 콘솔 비밀번호:</strong></p>
+<p>라우터 콘솔에 대한 접근을 보호하기 위해 사용자 이름과 비밀번호 인증을 추가하세요:</p>
+<ul>
+<li><strong>사용자 이름</strong> - 콘솔 접속을 위한 사용자 이름을 입력하세요</li>
+<li><strong>비밀번호</strong> - 콘솔 접속을 위한 비밀번호를 입력하세요</li>
+<li><strong>사용자 추가</strong> - 지정된 인증 정보로 새 사용자를 생성합니다</li>
+<li><strong>선택 항목 삭제</strong> - 기존 사용자 계정을 제거합니다</li>
+</ul>
+<p><strong>왜 비밀번호를 추가해야 하나요?</strong></p>
+<ul>
+<li>라우터 콘솔에 대한 무단 로컬 접근을 방지합니다</li>
+<li>여러 사람이 컴퓨터를 사용하는 경우 필수적입니다</li>
+<li>로컬 네트워크에서 라우터 콘솔에 접근 가능한 경우 권장됩니다</li>
+<li>I2P 설정 및 개인정보 보호 설정이 변조되지 않도록 보호합니다</li>
+</ul>
+<p><strong>보안 참고사항:</strong> 비밀번호 보호는 <a href="http://127.0.0.1:7657">I2P Router Console</a>
+의 router console 웹 인터페이스 접근에만 영향을 미칩니다. I2P 트래픽을 암호화하거나 애플리케이션이 I2P를 사용하는 것을 막지 않습니다. 컴퓨터의 유일한 사용자이고 router console이 localhost에서만 수신 대기하는 경우(기본값), 비밀번호가 필요하지 here 않을 수 있습니다.</p>
+<h3 id="라우터-패밀리-설정">라우터 패밀리 설정</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configwebapps">WebApp 설정</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-webapps.png" 
+    alt="Router Console WebApp 설정"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>WebApp 설정 페이지에서는 I2P router 내에서 실행되는 Java 웹 애플리케이션을 관리할 수 있습니다. 이러한 애플리케이션은 webConsole 클라이언트에 의해 시작되며 router와 동일한 JVM에서 실행되어, router 콘솔을 통해 접근 가능한 통합 기능을 제공합니다.</p>
+<p><strong>WebApps란 무엇인가요?</strong></p>
+<p>WebApps는 다음과 같은 Java 기반 애플리케이션입니다: - <strong>완전한 애플리케이션</strong> (예: 토렌트용 I2PSnark) - <strong>별도로 활성화해야 하는 다른 클라이언트의 프론트엔드</strong> (예: Susidns, I2PTunnel) - <strong>웹 인터페이스가 없는 웹 애플리케이션</strong> (예: 주소록)</p>
+<p><strong>중요 사항:</strong></p>
+<ul>
+<li>웹앱은 완전히 비활성화되거나 시작 시 실행만 비활성화될 수 있습니다</li>
+<li>webapps 디렉토리에서 war 파일을 제거하면 웹앱이 완전히 비활성화됩니다</li>
+<li>그러나 router를 새 버전으로 업데이트하면 .war 파일과 웹앱 디렉토리가 다시 나타납니다</li>
+<li><strong>웹앱을 영구적으로 비활성화하려면:</strong> 여기서 비활성화하는 것이 권장되는 방법입니다</li>
+</ul>
+<p><strong>사용 가능한 WebApps:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>WebApp</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>i2psnark</strong></td>
+          <td>Torrents - Built-in BitTorrent client for I2P</td>
+      </tr>
+      <tr>
+          <td><strong>i2ptunnel</strong></td>
+          <td>Hidden Services Manager - Configure client and server tunnels</td>
+      </tr>
+      <tr>
+          <td><strong>imagegen</strong></td>
+          <td>Identification Image Generator - Creates unique identicons</td>
+      </tr>
+      <tr>
+          <td><strong>jsonrpc</strong></td>
+          <td>jsonrpc.war - JSON-RPC API interface (disabled by default)</td>
+      </tr>
+      <tr>
+          <td><strong>routerconsole</strong></td>
+          <td>I2P Router Console - The main administrative interface</td>
+      </tr>
+      <tr>
+          <td><strong>susidns</strong></td>
+          <td>Address Book - Manage I2P addresses and subscriptions</td>
+      </tr>
+      <tr>
+          <td><strong>susimail</strong></td>
+          <td>Email - Web-based email client for I2P</td>
+      </tr>
+      <tr>
+          <td><strong>제어:</strong></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>각 웹앱별: - <strong>시작 시 실행?</strong> - 자동 시작을 활성화/비활성화하는 체크박스 - <strong>제어</strong> - 즉시 제어를 위한 시작/중지 버튼   - <strong>중지</strong> - 현재 실행 중인 웹앱을 중지합니다   - <strong>시작</strong> - 중지된 웹앱을 시작합니다</p>
+<p><strong>설정 버튼:</strong></p>
+<ul>
+<li><strong>취소</strong> - 변경 사항을 취소하고 이전 페이지로 돌아갑니다</li>
+<li><strong>WebApp 설정 저장</strong> - 변경 사항을 저장하고 적용합니다</li>
+</ul>
+<p><strong>사용 사례:</strong></p>
+<ul>
+<li>토렌트를 사용하지 않는다면 리소스 절약을 위해 I2PSnark를 중지하세요</li>
+<li>API 접근이 필요하지 않다면 jsonrpc를 비활성화하세요</li>
+<li>외부 이메일 클라이언트를 사용한다면 Susimail을 중지하세요</li>
+<li>메모리 확보나 문제 해결을 위해 일시적으로 웹앱을 중지하세요</li>
+</ul>
+<p><strong>성능 팁:</strong> 사용하지 않는 웹앱을 비활성화하면 메모리 사용량을 줄이고 router 성능을 향상시킬 수 있으며, 특히 리소스가 제한된 시스템에서 효과적입니다.</p>
+<h2 id="help">Help</h2>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/help">도움말</a>
+</p>
+<p>도움말 페이지는 I2P를 효과적으로 이해하고 사용할 수 있도록 포괄적인 문서와 리소스를 제공합니다. 문제 해결, 학습 및 지원을 받기 위한 중심 허브 역할을 합니다.</p>
+<p><strong>제공 내용:</strong></p>
+<ul>
+<li><strong>빠른 시작 가이드</strong> - I2P를 처음 시작하는 사용자를 위한 필수 정보</li>
+<li><strong>자주 묻는 질문(FAQ)</strong> - I2P 설치, 구성 및 사용에 관한 일반적인 질문에 대한 답변</li>
+<li><strong>문제 해결</strong> - 일반적인 문제 및 연결 문제에 대한 해결 방법</li>
+<li><strong>기술 문서</strong> - I2P 프로토콜, 아키텍처 및 사양에 대한 상세 정보</li>
+<li><strong>애플리케이션 가이드</strong> - 토렌트, 이메일, 히든 서비스와 같은 I2P 애플리케이션 사용 방법</li>
+<li><strong>네트워크 정보</strong> - I2P의 작동 원리와 보안성에 대한 이해</li>
+<li><strong>지원 리소스</strong> - 포럼, IRC 채널 및 커뮤니티 지원 링크</li>
+</ul>
+<p><strong>도움 받기:</strong></p>
+<p>I2P에 문제가 발생한 경우: 1. FAQ에서 자주 묻는 질문과 답변을 확인하세요 2. 특정 문제에 대한 문제 해결 섹션을 검토하세요 3. <a href="http://i2pforum.i2p">i2pforum.i2p</a>
+ 또는 <a href="https://i2pforum.net">i2pforum.net</a>
+에서 I2P 포럼을 방문하세요 4. 실시간 커뮤니티 지원을 위해 IRC 채널 #i2p에 참여하세요 5. 자세한 기술 정보는 문서를 검색하세요</p>
+<p><strong>팁:</strong> 도움말 페이지는 router console 사이드바에서 언제든지 접근할 수 있어, 필요할 때마다 쉽게 도움을 받을 수 있습니다.</p>
+<h2 id="performance-graphs">Performance Graphs</h2>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/graphs">성능 그래프</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-graphs.png" 
+    alt="Router Console 성능 그래프"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Performance Graphs 페이지는 I2P router의 성능과 네트워크 활동에 대한 실시간 시각적 모니터링을 제공합니다. 이 그래프들은 대역폭 사용량, 피어 연결, 메모리 소비량 및 전반적인 router 상태를 이해하는 데 도움을 줍니다.</p>
+<p><strong>사용 가능한 그래프:</strong></p>
+<ul>
+<li>
+<p><strong>대역폭 사용량</strong></p>
+<ul>
+<li><strong>Low-level send rate (bytes/sec)</strong> - 아웃바운드 트래픽 속도</li>
+<li><strong>Low-level receive rate (bytes/sec)</strong> - 인바운드 트래픽 속도</li>
+<li>현재, 평균, 최대 대역폭 사용률 표시</li>
+<li>설정된 대역폭 제한에 근접하고 있는지 모니터링하는 데 도움</li>
+</ul>
+</li>
+<li>
+<p><strong>활성 피어</strong></p>
+<ul>
+<li><strong>router.activePeers averaged for 60 sec</strong> - 현재 활발하게 통신 중인 피어의 수</li>
+<li>네트워크 연결 상태를 보여줍니다</li>
+<li>활성 피어가 많을수록 일반적으로 tunnel 구축 및 네트워크 참여가 원활함을 의미합니다</li>
+</ul>
+</li>
+<li>
+<p><strong>라우터 메모리 사용량</strong></p>
+<ul>
+<li><strong>router.memoryUsed averaged for 60 sec</strong> - JVM 메모리 소비량</li>
+<li>현재, 평균 및 최대 메모리 사용량을 MB 단위로 표시</li>
+<li>메모리 누수를 식별하거나 Java 힙 크기를 늘려야 하는지 판단하는 데 유용</li>
+</ul>
+</li>
+</ul>
+<p><strong>그래프 표시 구성:</strong></p>
+<p>그래프 표시 및 새로 고침 방법을 사용자 지정하세요:</p>
+<ul>
+<li><strong>그래프 크기</strong> - 너비(기본값: 400픽셀) 및 높이(기본값: 100픽셀) 설정</li>
+<li><strong>표시 기간</strong> - 표시할 시간 범위(기본값: 60분)</li>
+<li><strong>새로고침 간격</strong> - 그래프 업데이트 주기(기본값: 5분)</li>
+<li><strong>플롯 유형</strong> - 평균 또는 이벤트 표시 중 선택</li>
+<li><strong>범례 숨기기</strong> - 공간 절약을 위해 그래프에서 범례 제거</li>
+<li><strong>UTC</strong> - 그래프에서 현지 시간 대신 UTC 시간 사용</li>
+<li><strong>지속성</strong> - 과거 분석을 위해 그래프 데이터를 디스크에 저장</li>
+</ul>
+<p><strong>고급 옵션:</strong></p>
+<p>**[Select Stats]**를 클릭하여 그래프로 표시할 통계를 선택하세요: - tunnel 메트릭 (빌드 성공률, tunnel 수 등) - netDb 통계 - transport 통계 (NTCP2, SSU2) - 클라이언트 tunnel 성능 - 그 외 다양한 상세 메트릭</p>
+<p><strong>사용 사례:</strong></p>
+<ul>
+<li>대역폭을 모니터링하여 설정된 제한을 초과하지 않는지 확인</li>
+<li>네트워크 문제 해결 시 피어 연결 상태 확인</li>
+<li>메모리 사용량을 추적하여 Java 힙 설정 최적화</li>
+<li>시간 경과에 따른 성능 패턴 파악</li>
+<li>그래프 상관관계 분석을 통한 터널 구축 문제 진단</li>
+</ul>
+<p><strong>팁:</strong> 변경사항을 적용하려면 설정을 변경한 후 &ldquo;Save settings and redraw graphs&quot;를 클릭하세요. 그래프는 설정한 새로고침 지연 시간에 따라 자동으로 새로고침됩니다.</p>
+
+        </div>
+
+        
+    </div>
+</article>
+
+<style>
+.single-page {
+    padding: var(--spacing-2xl) 0;
+}
+
+.page-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.breadcrumb {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-lg);
+}
+
+.breadcrumb a {
+    color: var(--color-text-muted);
+}
+
+.breadcrumb a:hover {
+    color: var(--color-primary);
+}
+
+.breadcrumb .separator {
+    margin: 0 var(--spacing-sm);
+}
+
+.breadcrumb .current {
+    color: var(--color-text);
+}
+
+.page-title {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.page-description {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.page-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-md);
+}
+
+.page-meta time::before {
+    content: '📅 ';
+}
+
+.page-meta .author::before {
+    content: '✍️ ';
+}
+
+.page-meta .reading-time::before {
+    content: '⏱ ';
+}
+
+.page-categories {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.category-tag {
+    padding: 0.25rem 0.75rem;
+    background-color: var(--color-bg-tertiary);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.category-tag:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.page-content {
+    max-width: 800px;
+    line-height: 1.8;
+}
+
+.page-content h2,
+.page-content h3,
+.page-content h4 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.page-content h2 {
+    font-size: 1.875rem;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.page-content h3 {
+    font-size: 1.5rem;
+}
+
+.page-content h4 {
+    font-size: 1.25rem;
+}
+
+.page-content ul,
+.page-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.page-content li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.page-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    color: var(--color-text-secondary);
+    font-style: italic;
+}
+
+.page-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin: var(--spacing-lg) 0;
+}
+
+.page-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--spacing-lg) 0;
+}
+
+.page-content th,
+.page-content td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--color-border);
+    text-align: left;
+}
+
+.page-content th {
+    background-color: var(--color-bg-secondary);
+    font-weight: 600;
+}
+
+.table-of-contents {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+}
+
+.table-of-contents h3 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+}
+
+.table-of-contents ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.table-of-contents li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.table-of-contents a {
+    color: var(--color-text-secondary);
+}
+
+.table-of-contents a:hover {
+    color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .page-meta {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+}
+</style>
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">I2P 뉴스 받기:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="이메일을 입력하세요" required>
+                            <button type="submit">구독하기</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>빠른 링크</h3>
+                <ul>
+                    <li><a href="../../../../ko/financial-support/">기부하기</a></li>
+                    <li><a href="../../../../ko/docs/overview/intro/">I2P 소개</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>커뮤니티</h3>
+                <ul>
+                    <li><a href="../../../../ko/get-involved/">참여하기</a></li>
+                    <li><a href="../../../../ko/blog/">블로그</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">공식 포럼</a></li>
+                    <li><a href="../../../../ko/contact/">연락처</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>리소스</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P 메트릭</a></li>
+                    <li><a href="../../../../ko/papers/">연구</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">스톰이클라우드</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Invisible Internet Project. Creative Commons 라이선스 적용.</p>
+            <div class="footer-links">
+                <a href="../../../../ko/privacy/">개인정보 처리방침</a>
+                <a href="../../../../ko/terms/">이용 약관</a>
+                <a href="../../../../ko/about/media/">언론</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="닫기">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>커뮤니티 설문 조사</h2>
+            <p class="modal-subtitle">귀하의 의견을 듣고 싶습니다</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                귀하의 투표는 I2P의 미래를 형성하는 데 도움이 됩니다.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

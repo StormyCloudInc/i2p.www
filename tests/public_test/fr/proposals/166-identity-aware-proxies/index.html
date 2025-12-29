@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Proposition I2P #166 : Types de Tunnels Sensibles à l&#39;Identité/Hôte | I2P - Le projet Internet invisible</title>
+
+    <meta name="description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Proposition I2P #166 : Types de Tunnels Sensibles à l&#39;Identité/Hôte | I2P - Le projet Internet invisible">
+    <meta property="og:description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/fr/proposals/166-identity-aware-proxies/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Site Bêta I2P Maintenant En Ligne Signaler les problèmes e-mail à stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Fermer la bannière" title="Fermer la bannière">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../fr/" class="logo-link">
+                    <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../fr/about/" class="">À propos</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../fr/about/">Aperçu</a></li>
+                            <li><a href="../../../fr/papers/">Articles de recherche</a></li>
+                            <li><a href="../../../fr/about/media/">Presse</a></li>
+                            <li><a href="../../../fr/contact/">Contactez-nous</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../fr/docs/" class="">Docs</a></li>
+                    <li><a href="../../../fr/downloads/" class="">Téléchargements</a></li>
+                    <li><a href="../../../fr/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../fr/get-involved/" class="">S&#39;impliquer</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../fr/get-involved/">Aperçu</a></li>
+                            <li><a href="../../../fr/feedback/">Suggestions de fonctionnalités</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">fr</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../en/proposals/166-identity-aware-proxies/"
+                                class="lang-option">Anglais</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../es/proposals/166-identity-aware-proxies/"
+                                class="lang-option">Espagnol</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ko/proposals/166-identity-aware-proxies/"
+                                class="lang-option">Coréen</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../zh/proposals/166-identity-aware-proxies/"
+                                class="lang-option">Chinois</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ru/proposals/166-identity-aware-proxies/"
+                                class="lang-option">Russe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../cs/proposals/166-identity-aware-proxies/"
+                                class="lang-option">Tchèque</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../de/proposals/166-identity-aware-proxies/"
+                                class="lang-option">Allemand</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../fr/proposals/166-identity-aware-proxies/"
+                                class="lang-option active">Français</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../tr/proposals/166-identity-aware-proxies/"
+                                class="lang-option">Turc</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../vi/proposals/166-identity-aware-proxies/"
+                                class="lang-option">Vietnamien</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../hi/proposals/166-identity-aware-proxies/"
+                                class="lang-option">Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ar/proposals/166-identity-aware-proxies/"
+                                class="lang-option">Arabe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../pt/proposals/166-identity-aware-proxies/"
+                                class="lang-option">Portugais</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../fr/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../fr/downloads/" class="btn btn-primary">Obtenir I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+<div class="proposals-page">
+    <div class="container">
+        
+        <nav class="breadcrumbs">
+            <a href="../../../fr/">Home</a>
+            <span class="separator">/</span>
+            <a href="../../../fr/proposals/">Proposals</a>
+            <span class="separator">/</span>
+            <span class="current">Proposition I2P #166 : Types de Tunnels Sensibles à l&#39;Identité/Hôte</span>
+        </nav>
+
+        
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Cette traduction a été générée par apprentissage automatique et peut ne pas être exacte à 100%.</span>
+    
+    
+    <a href="../../../en/proposals/166-identity-aware-proxies/" class="disclaimer-link">Voir la version anglaise</a>
+    
+</div>
+
+
+
+        
+        <header class="proposal-header">
+            <div class="proposal-title-section">
+                <h1 class="proposal-title">Proposition I2P #166 : Types de Tunnels Sensibles à l&#39;Identité/Hôte</h1>
+                <div class="proposal-number">Proposal 166</div>
+            </div>
+
+            
+            <div class="proposal-meta-box">
+                <div class="proposal-status status-ouvert">
+                    Ouvert
+                </div>
+
+                
+                <div class="proposal-info-grid">
+                    
+                    <div class="info-item">
+                        <span class="info-label">Author</span>
+                        <span class="info-value">eyedeekay</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Created</span>
+                        <span class="info-value">2024-05-27</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Last Updated</span>
+                        <span class="info-value">2024-08-27</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Target Version</span>
+                        <span class="info-value">0.9.65</span>
+                    </div>
+                    
+
+                    
+                </div>
+
+                
+                
+            </div>
+        </header>
+
+        
+        <div class="proposal-layout proposal-layout--with-toc">
+            
+            
+            <aside class="proposal-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#proposition-pour-un-tunnel-proxy-http-sensible-à-lhôte">Proposition pour un Tunnel Proxy HTTP Sensible à l&rsquo;Hôte</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="proposal-main">
+                <article class="proposal-content">
+                    <h3 id="proposition-pour-un-tunnel-proxy-http-sensible-à-lhôte">Proposition pour un Tunnel Proxy HTTP Sensible à l&rsquo;Hôte</h3>
+<p>Il s&rsquo;agit d&rsquo;une proposition visant à résoudre le &ldquo;Problème d&rsquo;Identité Partagée&rdquo; dans l&rsquo;utilisation conventionnelle du HTTP-sur-I2P en introduisant un nouveau type de tunnel proxy HTTP. Ce type de tunnel a un comportement supplémentaire destiné à prévenir ou limiter l&rsquo;utilité du suivi effectué par des opérateurs de services cachés potentiellement hostiles, contre des agents utilisateurs ciblés (navigateurs) et l&rsquo;application cliente I2P elle-même.</p>
+<h4 id="quel-est-le-problème-de-lidentité-partagée-">Quel est le problème de “l’Identité Partagée” ?</h4>
+<p>Le problème de “l’Identité Partagée” survient lorsqu&rsquo;un agent utilisateur sur un réseau de superposition adressé de manière cryptographique partage une identité cryptographique avec un autre agent utilisateur. Cela se produit, par exemple, lorsqu&rsquo;un Firefox et un GNU Wget sont tous deux configurés pour utiliser le même proxy HTTP.</p>
+<p>Dans ce scénario, il est possible pour le serveur de collecter et stocker l&rsquo;adresse cryptographique (Destination) utilisée pour répondre à l&rsquo;activité. Il peut le traiter comme une “Empreinte” qui est toujours 100% unique, car elle est d&rsquo;origine cryptographique. Cela signifie que la liaison observée par le problème d&rsquo;Identité Partagée est parfaite.</p>
+<p>Mais est-ce vraiment un problème ?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+<p>Le problème d&rsquo;identité partagée est un problème lorsque des agents utilisateurs qui parlent le même protocole souhaitent une non-correlabilité. <a href="https://old.reddit.com/r/i2p/comments/579idi/warning_i2p_is_linkablefingerprintable/">Il a été mentionné pour la première fois dans le contexte du HTTP dans ce fil Reddit</a>
+, les commentaires supprimés étant accessibles grâce à <a href="https://api.pullpush.io/reddit/search/comment/?link_id=579idi">pullpush.io</a>
+. <em>À l&rsquo;époque</em>, j&rsquo;étais l&rsquo;un des répondants les plus actifs, et <em>à l&rsquo;époque</em> je croyais que le problème était mineur. Au cours des 8 dernières années, la situation et mon opinion ont changé, je crois maintenant que la menace posée par la corrélation de destination malveillante augmente considérablement à mesure que de plus en plus de sites sont en mesure de “proﬁler” des utilisateurs spécifiques.</p>
+<p>Cette attaque a une barrière à l&rsquo;entrée très faible. Elle nécessite seulement qu&rsquo;un opérateur de service caché exploite plusieurs services. Pour les attaques sur les visites contemporaines (visiter plusieurs sites en même temps), c&rsquo;est la seule exigence. Pour établir un lien non-contemporain, l&rsquo;un de ces services doit être un service qui héberge des “comptes” qui appartiennent à un seul utilisateur ciblé pour le suivi.</p>
+<p>Actuellement, tout opérateur de service qui héberge des comptes utilisateurs pourra les corréler avec l&rsquo;activité sur l&rsquo;ensemble des sites qu&rsquo;ils contrôlent en exploitant le problème d&rsquo;Identité Partagée. Mastodon, Gitlab ou même des forums simples pourraient être des attaquants déguisés, tant qu&rsquo;ils exploitent plus d&rsquo;un service et qu&rsquo;ils s&rsquo;intéressent à créer un profil pour un utilisateur. Cette surveillance pourrait être menée pour le harcèlement, le gain financier, ou des raisons liées au renseignement. Actuellement, il y a des dizaines d&rsquo;opérateurs majeurs qui pourraient réaliser cette attaque et en tirer des données significatives. Pour l&rsquo;instant, nous leur faisons principalement confiance pour ne pas le faire, mais des acteurs qui se moquent de nos opinions pourraient facilement émerger.</p>
+<p>Cela est directement lié à une forme assez basique de construction de profil sur le web clair où des organisations peuvent corréler des interactions sur leur site avec des interactions sur les réseaux qu&rsquo;ils contrôlent. Sur I2P, car la destination cryptographique est unique, cette technique peut parfois être encore plus fiable, bien qu&rsquo;elle soit privée du pouvoir supplémentaire de la géolocalisation.</p>
+<p>L’Identité Partagée n&rsquo;est pas utile contre un utilisateur qui utilise I2P uniquement pour obfuscation de géolocalisation. Elle ne peut pas non plus être utilisée pour briser l&rsquo;acheminement d&rsquo;I2P. C&rsquo;est uniquement un problème de gestion de l&rsquo;identité contextuelle.</p>
+<ul>
+<li>Il est impossible d&rsquo;utiliser le problème d&rsquo;Identité Partagée pour géolocaliser un utilisateur I2P.</li>
+<li>Il est impossible d&rsquo;utiliser le problème d&rsquo;Identité Partagée pour lier des sessions I2P si elles ne sont pas contemporaines.</li>
+</ul>
+<p>Cependant, il est possible de l&rsquo;utiliser pour dégrader l&rsquo;anonymat d&rsquo;un utilisateur I2P dans des circonstances qui sont probablement très courantes. Une des raisons pour lesquelles elles sont courantes est que nous encourageons l&rsquo;utilisation de Firefox, un navigateur Web qui prend en charge l&rsquo;opération de type “Onglet”.</p>
+<ul>
+<li>Il est <em>toujours</em> possible de produire une empreinte à partir du problème d&rsquo;Identité Partagée dans <em>n&rsquo;importe quel</em> navigateur Web qui prend en charge la demande de ressources tierces.</li>
+<li>Désactiver JavaScript n&rsquo;accomplit <strong>rien</strong> contre le problème d&rsquo;Identité Partagée.</li>
+<li>S&rsquo;il est possible d&rsquo;établir un lien entre des sessions non-contemporaines telles que par la méthode d&rsquo;“empreinte” de navigateur “traditionnelle”, alors l&rsquo;Identité Partagée peut être appliquée de manière transitive, ce qui permet potentiellement une stratégie de liaison non contemporaine.</li>
+<li>S&rsquo;il est possible d&rsquo;établir un lien entre une activité sur le web clair et une identité I2P, par exemple, si la cible est connectée à un site à la fois en présence I2P et en comparaison nette sur les deux côtés, l&rsquo;Identité Partagée peut être appliquée de manière transitive, permettant potentiellement une dé-anonymisation complète.</li>
+</ul>
+<p>Comment vous percevez la gravité du problème d&rsquo;Identité Partagée tel qu&rsquo;il s&rsquo;applique au proxy HTTP I2P dépend d&rsquo;où vous (ou plus précisément, un “utilisateur” avec peut-être des attentes non informées) pensez que l&rsquo;“identité contextuelle” pour l&rsquo;application réside. Il y a plusieurs possibilités :</p>
+<ol>
+<li>HTTP est à la fois l&rsquo;Application et l&rsquo;Identité Contextuelle - C&rsquo;est ainsi que cela fonctionne actuellement. Toutes les applications HTTP partagent une identité.</li>
+<li>Le Processus est l&rsquo;Application et l&rsquo;Identité Contextuelle - C&rsquo;est ainsi que cela fonctionne lorsqu&rsquo;une application utilise une API comme SAMv3 ou I2CP, où une application crée son identité et contrôle sa durée de vie.</li>
+<li>HTTP est l&rsquo;Application, mais l&rsquo;Hôte est l&rsquo;Identité Contextuelle - C&rsquo;est l&rsquo;objet de cette proposition, qui traite chaque Hôte comme une potentielle “Application Web” et traite la surface de menace comme telle.</li>
+</ol>
+<p>Est-ce Résoluble?
+^^^^^^^^^^^^^^^^^</p>
+<p>Il n&rsquo;est probablement pas possible de créer un proxy qui répond intelligemment à chaque cas possible où son fonctionnement pourrait affaiblir l&rsquo;anonymat d&rsquo;une application. Cependant, il est possible de construire un proxy qui répond intelligemment à une application spécifique qui se comporte de manière prévisible. Par exemple, dans les navigateurs Web modernes, il est attendu que les utilisateurs aient plusieurs onglets ouverts, où ils interagissent avec plusieurs sites web, qui seront distingués par le nom d&rsquo;hôte.</p>
+<p>Cela nous permet d&rsquo;améliorer le comportement du proxy HTTP pour ce type d&rsquo;agent utilisateur HTTP en faisant correspondre le comportement du proxy à celui de l&rsquo;agent utilisateur en donnant à chaque hôte sa propre Destination lorsqu&rsquo;il est utilisé avec le proxy HTTP. Ce changement rend impossible l&rsquo;utilisation du problème d&rsquo;Identité Partagée pour dériver une empreinte qui pourrait être utilisée pour corréler l&rsquo;activité du client avec deux hôtes, car les deux hôtes ne partageront simplement plus la même identité de retour.</p>
+<p>Description :
+^^^^^^^^^^^^</p>
+<p>Un nouveau proxy HTTP sera créé et ajouté au Gestionnaire de Services Cachés (I2PTunnel). Le nouveau proxy HTTP fonctionnera comme un “multiplexeur” de I2PSocketManagers. Le multiplexeur lui-même n&rsquo;a pas de destination. Chaque I2PSocketManager individuel qui devient partie du multiplex a sa propre destination locale et son propre pool de tunnels. Les I2PSocketManagers sont créés à la demande par le multiplexeur, où la “demande” est la première visite d&rsquo;un nouvel hôte. Il est possible d&rsquo;optimiser la création des I2PSocketManagers avant de les insérer dans le multiplexeur en en créant un ou plusieurs à l&rsquo;avance et en les stockant à l&rsquo;extérieur du multiplexeur. Cela peut améliorer les performances.</p>
+<p>Un I2PSocketManager supplémentaire, avec sa propre destination, est configuré comme porteur d&rsquo;un “Outproxy” pour tout site qui n&rsquo;a <em>pas</em> de Destination I2P, par exemple tout site du web clair. Cela rend effectivement toute utilisation d&rsquo;Outproxy une seule Identité Contextuelle, avec la mise en garde que la configuration de plusieurs Outproxies pour le tunnel entraînera la rotation normale de l&rsquo;“Outproxy collant”, où chaque outproxy ne reçoit des demandes que pour un seul site. Cela est <em>presque</em> le comportement équivalent à l&rsquo;isolation des proxys HTTP-sur-I2P par destination, sur l&rsquo;internet clair.</p>
+<p>Considérations de Ressources :
+&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;''</p>
+<p>Le nouveau proxy HTTP nécessite des ressources supplémentaires par rapport au proxy HTTP existant. Il va :</p>
+<ul>
+<li>Construire potentiellement plus de tunnels et d&rsquo;I2PSocketManagers</li>
+<li>Construire des tunnels plus souvent</li>
+</ul>
+<p>Chacun d&rsquo;eux nécessite :</p>
+<ul>
+<li>Des ressources de calcul locales</li>
+<li>Des ressources réseau de la part des pairs</li>
+</ul>
+<p>Paramètres :
+&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;&rsquo;''</p>
+<p>Afin de minimiser l&rsquo;impact de l&rsquo;utilisation accrue des ressources, le proxy doit être configuré pour utiliser le moins possible. Les proxys faisant partie du multiplexeur (pas le proxy parent) doivent être configurés pour :</p>
+<ul>
+<li>Les I2PSocketManagers multiplexés construisent 1 tunnel entrant, 1 tunnel sortant dans leurs pools de tunnels</li>
+<li>Les I2PSocketManagers multiplexés font 3 sauts par défaut.</li>
+<li>Fermer les sockets après 10 minutes d&rsquo;inactivité</li>
+<li>Les I2PSocketManagers démarrés par le Multiplexeur partagent la durée de vie du Multiplexeur. Les tunnels multiplexés ne sont pas &ldquo;Détruits&rdquo; jusqu&rsquo;à ce que le Multiplexeur parent le soit.</li>
+</ul>
+<p>Diagrammes :
+^^^^^^^^^^</p>
+<p>Le diagramme ci-dessous représente le fonctionnement actuel du proxy HTTP, qui correspond à la “Possibilité 1.” sous la section “Est-ce un problème”. Comme vous pouvez le voir, le proxy HTTP interagit avec des sites I2P directement en utilisant une seule destination. Dans ce scénario, HTTP est à la fois l&rsquo;application et l&rsquo;identité contextuelle.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>**Situation Actuelle : HTTP est l&#39;Application, HTTP est l&#39;Identité Contextuelle**
+</span></span><span style="display:flex;"><span>                                                          __-&gt; Outproxy &lt;-&gt; i2pgit.org
+</span></span><span style="display:flex;"><span>                                                         /
+</span></span><span style="display:flex;"><span>   Navigateur &lt;-&gt; Proxy HTTP (une Destination) &lt;-&gt; I2PSocketManager &lt;---&gt; idk.i2p
+</span></span><span style="display:flex;"><span>                                                         \__-&gt; translate.idk.i2p
+</span></span><span style="display:flex;"><span>                                                          \__-&gt; git.idk.i2p
+</span></span></code></pre></div><p>Le diagramme ci-dessous représente le fonctionnement d&rsquo;un proxy HTTP sensible à l&rsquo;hôte, qui correspond à la “Possibilité 3.” sous la section “Est-ce un problème”. Dans ce scénario, HTTP est l&rsquo;application, mais l&rsquo;Hôte définit l&rsquo;identité contextuelle, où chaque site I2P interagit avec un proxy HTTP différent avec une destination unique par hôte. Cela empêche les opérateurs de plusieurs sites de pouvoir distinguer quand la même personne visite plusieurs sites qu&rsquo;ils exploitent.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>**Après le Changement : HTTP est l&#39;Application, l&#39;Hôte est l&#39;Identité Contextuelle**
+</span></span><span style="display:flex;"><span>                                                        __-&gt; I2PSocketManager (Destination A - Outproxies Uniquement) &lt;--&gt; i2pgit.org
+</span></span><span style="display:flex;"><span>                                                       /
+</span></span><span style="display:flex;"><span>   Navigateur &lt;-&gt; Multiplexeur Proxy HTTP (Pas de Destination) &lt;---&gt; I2PSocketManager (Destination B) &lt;--&gt; idk.i2p
+</span></span><span style="display:flex;"><span>                                                       \__-&gt; I2PSocketManager (Destination C) &lt;--&gt; translate.idk.i2p
+</span></span><span style="display:flex;"><span>                                                        \__-&gt; I2PSocketManager (Destination C) &lt;--&gt; git.idk.i2p
+</span></span></code></pre></div><p>Statut :
+^^^^^^^</p>
+<p>Une implémentation Java fonctionnelle du proxy sensible à l&rsquo;hôte qui se conforme à une version antérieure de cette proposition est disponible sur la fourche de idk sous la branche : i2p.i2p.2.6.0-browser-proxy-post-keepalive Lien dans les citations. Elle est sous révision lourde, afin de décomposer les changements en sections plus petites.</p>
+<p>Des implémentations avec des capacités variées ont été écrites en Go utilisant la bibliothèque SAMv3, elles peuvent être utiles pour être intégrées dans d&rsquo;autres applications Go ou pour go-i2p mais ne conviennent pas pour Java I2P. De plus, elles manquent de bon support pour travailler de manière interactive avec des leaseSets cryptés.</p>
+<p>Addendum : <code>i2psocks</code></p>
+<p>Une approche simple orientée application pour isoler d&rsquo;autres types de clients est possible sans mettre en œuvre un nouveau type de tunnel ou modifier le code I2P existant en combinant les outils I2PTunnel existants qui sont déjà largement disponibles et testés dans la communauté de la confidentialité. Cependant, cette approche fait une hypothèse difficile qui n&rsquo;est pas vraie pour HTTP et non plus vraie pour beaucoup d&rsquo;autres types de clients I2P potentiels.</p>
+<p>En gros, le script suivant produira un proxy SOCKS5 sensible à l&rsquo;application et habilitera la commande sous-jacente :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">#! /bin/sh
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>command_to_proxy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$@<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>java -jar ~/i2p/lib/i2ptunnel.jar -wait -e <span style="color:#e6db74">&#39;sockstunnel 7695&#39;</span>
+</span></span><span style="display:flex;"><span>torsocks --port <span style="color:#ae81ff">7695</span> $command_to_proxy
+</span></span></code></pre></div><p>Addendum : <code>exemple d'implémentation de l'attaque</code></p>
+<p><a href="https://github.com/eyedeekay/colluding_sites_attack/">Un exemple d&rsquo;implémentation de l&rsquo;attaque d&rsquo;Identité Partagée sur les Agents Utilisateurs HTTP</a>
+ existe depuis plusieurs années. Un exemple supplémentaire est disponible dans le sous-répertoire <code>simple-colluder</code> du <a href="https://git.idk.i2p/idk/i2p.host-aware-proxy">répertoire prop166 d’idk</a>
+ Ces exemples sont délibérément conçus pour démontrer que l&rsquo;attaque fonctionne et nécessiteraient une modification (quoique mineure) pour être transformés en attaque réelle.</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    <a href="../../../fr/proposals/" class="page-nav-link">
+                        ← Back to Proposals
+                    </a>
+                    
+                    
+                    
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                            
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <a href="../../../proposals/166-identity-aware-proxies.txt" class="page-nav-link" download>
+                        Download Source (.txt)
+                    </a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.proposals-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.proposal-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.proposal-title-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.proposal-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-text);
+}
+
+.proposal-number {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+ 
+.proposal-meta-box {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.proposal-status {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+ 
+.status-open {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-open {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-accepted {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-accepted {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-finished {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-finished {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-closed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-closed {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.dark .status-rejected {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.status-draft,
+.status-needs-revision,
+.status-dead,
+.status-needs-research {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-draft,
+.dark .status-needs-revision,
+.dark .status-dead,
+.dark .status-needs-research {
+    background: #78350f;
+    color: #fde047;
+}
+
+.status-meta,
+.status-informational,
+.status-reserve {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+.dark .status-meta,
+.dark .status-informational,
+.dark .status-reserve {
+    background: #581c87;
+    color: #e879f9;
+}
+
+ 
+.proposal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.info-value {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+ 
+.proposal-relationships {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-md);
+}
+
+.relationship {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.relationship:last-child {
+    margin-bottom: 0;
+}
+
+.relationship-label {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    min-width: 120px;
+}
+
+.relationship-value {
+    color: var(--color-text);
+}
+
+ 
+.proposal-layout {
+    display: block;
+}
+
+.proposal-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.proposal-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.proposal-main {
+    min-width: 0;
+}
+
+ 
+.proposal-content {
+    line-height: 1.8;
+    color: var(--color-text);
+    max-width: 900px;
+}
+
+.proposal-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content ul,
+.proposal-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.proposal-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.proposal-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.proposal-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.proposal-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.proposal-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin-left: 0;
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+.proposal-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.proposal-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+.proposal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content table th {
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.proposal-content table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.proposal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+ 
+.page-nav {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.page-nav-link {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+ 
+@media (max-width: 1024px) {
+    .proposal-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .proposal-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .proposal-title {
+        font-size: 1.75rem;
+    }
+
+    .proposal-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Restez informé des actualités I2P :</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Entrez votre email" required>
+                            <button type="submit">S&#39;abonner</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Liens Rapides</h3>
+                <ul>
+                    <li><a href="../../../fr/financial-support/">Faire un don</a></li>
+                    <li><a href="../../../fr/docs/overview/intro/">Introduction à I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Communauté</h3>
+                <ul>
+                    <li><a href="../../../fr/get-involved/">Participez</a></li>
+                    <li><a href="../../../fr/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Forums Officiels</a></li>
+                    <li><a href="../../../fr/contact/">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Ressources</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Mesures I2P</a></li>
+                    <li><a href="../../../fr/papers/">Recherche</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Le Projet Internet Invisible. Sous licence Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../fr/privacy/">Confidentialité</a>
+                <a href="../../../fr/terms/">Conditions d&#39;utilisation</a>
+                <a href="../../../fr/about/media/">Presse</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Fermer">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Sondage de la communauté</h2>
+            <p class="modal-subtitle">Nous aimerions avoir de vos nouvelles</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Votre vote aide à façonner l&#39;avenir d&#39;I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

@@ -1,0 +1,2574 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Truyền tải NTCP2 | I2P - Dự án Internet vô hình</title>
+
+    <meta name="description" content="Giao thức truyền tải TCP dựa trên Noise (khung giao thức mật mã) cho các liên kết giữa các router">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Truyền tải NTCP2 | I2P - Dự án Internet vô hình">
+    <meta property="og:description" content="Giao thức truyền tải TCP dựa trên Noise (khung giao thức mật mã) cho các liên kết giữa các router">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/vi/docs/specs/ntcp2/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Trang I2P Beta Đã Hoạt Động Gửi báo cáo lỗi tới stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Đóng banner" title="Đóng banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../vi/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../vi/about/" class="">Giới thiệu</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../vi/about/">Tổng quan</a></li>
+                            <li><a href="../../../../vi/papers/">Bài Nghiên Cứu</a></li>
+                            <li><a href="../../../../vi/about/media/">Báo chí</a></li>
+                            <li><a href="../../../../vi/contact/">Liên hệ</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../vi/docs/" class="active">Tài liệu</a></li>
+                    <li><a href="../../../../vi/downloads/" class="">Tải xuống</a></li>
+                    <li><a href="../../../../vi/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../vi/get-involved/" class="">Tham gia</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../vi/get-involved/">Tổng quan</a></li>
+                            <li><a href="../../../../vi/feedback/">Đề xuất Tính năng</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">vi</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/ntcp2/"
+                                class="lang-option">Tiếng Anh</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/ntcp2/"
+                                class="lang-option">Tiếng Tây Ban Nha</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/ntcp2/"
+                                class="lang-option">Tiếng Hàn</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/ntcp2/"
+                                class="lang-option">Tiếng Trung</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/ntcp2/"
+                                class="lang-option">Tiếng Nga</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/ntcp2/"
+                                class="lang-option">Tiếng Séc</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/ntcp2/"
+                                class="lang-option">Tiếng Đức</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/ntcp2/"
+                                class="lang-option">Tiếng Pháp</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/ntcp2/"
+                                class="lang-option">Tiếng Thổ Nhĩ Kỳ</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/ntcp2/"
+                                class="lang-option active">Tiếng Việt</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/ntcp2/"
+                                class="lang-option">Tiếng Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/ntcp2/"
+                                class="lang-option">Tiếng Ả Rập</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/ntcp2/"
+                                class="lang-option">Tiếng Bồ Đào Nha</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../vi/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../vi/downloads/" class="btn btn-primary">Tải I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tổng-quan">Tổng quan</a></li>
+    <li><a href="#khung-giao-thức-noise">Khung giao thức Noise</a>
+      <ul>
+        <li><a href="#các-phần-mở-rộng-dành-riêng-cho-i2p">Các phần mở rộng dành riêng cho I2P</a></li>
+      </ul>
+    </li>
+    <li><a href="#quy-trình-bắt-tay">Quy trình bắt tay</a>
+      <ul>
+        <li><a href="#bắt-tay-ba-thông-điệp">Bắt tay ba thông điệp</a></li>
+        <li><a href="#các-mẫu-thông-điệp-của-noise">Các mẫu thông điệp của Noise</a></li>
+      </ul>
+    </li>
+    <li><a href="#đặc-tả-thông-điệp">Đặc tả thông điệp</a>
+      <ul>
+        <li><a href="#ký-hiệu-khóa">Ký hiệu khóa</a></li>
+        <li><a href="#mã-hóa-xác-thực-chacha20-poly1305">Mã hóa xác thực (ChaCha20-Poly1305)</a></li>
+      </ul>
+    </li>
+    <li><a href="#thông-điệp-1-sessionrequest-yêu-cầu-phiên">Thông điệp 1: SessionRequest (Yêu cầu phiên)</a>
+      <ul>
+        <li><a href="#định-dạng-thô">Định dạng thô</a></li>
+        <li><a href="#nội-dung-đã-giải-mã">Nội dung đã giải mã</a></li>
+        <li><a href="#khối-tùy-chọn-16-byte-thứ-tự-big-endian">Khối Tùy chọn (16 byte, thứ tự big-endian)</a></li>
+        <li><a href="#hàm-dẫn-xuất-khóa-kdf-1">Hàm dẫn xuất khóa (KDF-1)</a></li>
+        <li><a href="#ghi-chú-cài-đặt">Ghi chú cài đặt</a></li>
+      </ul>
+    </li>
+    <li><a href="#thông-điệp-2-sessioncreated">Thông điệp 2: SessionCreated</a>
+      <ul>
+        <li><a href="#định-dạng-thô-1">Định dạng thô</a></li>
+        <li><a href="#nội-dung-đã-giải-mã-1">Nội dung đã giải mã</a></li>
+        <li><a href="#khối-tùy-chọn-16-byte-big-endian-thứ-tự-byte-có-trọng-số-lớn-nhất-trước">Khối Tùy chọn (16 byte, big-endian (thứ tự byte có trọng số lớn nhất trước))</a></li>
+        <li><a href="#hàm-dẫn-xuất-khóa-kdf-2">Hàm dẫn xuất khóa (KDF-2)</a></li>
+        <li><a href="#ghi-chú-hiện-thực">Ghi chú hiện thực</a></li>
+      </ul>
+    </li>
+    <li><a href="#thông-điệp-3-sessionconfirmed-xác-nhận-phiên">Thông điệp 3: SessionConfirmed (xác nhận phiên)</a>
+      <ul>
+        <li><a href="#cấu-trúc-hai-phần">Cấu trúc hai phần</a></li>
+        <li><a href="#định-dạng-thô-2">Định dạng thô</a></li>
+        <li><a href="#nội-dung-đã-giải-mã-2">Nội dung đã giải mã</a></li>
+        <li><a href="#hàm-dẫn-xuất-khóa-kdf-3">Hàm dẫn xuất khóa (KDF-3)</a></li>
+        <li><a href="#ghi-chú-hiện-thực-1">Ghi chú hiện thực</a></li>
+      </ul>
+    </li>
+    <li><a href="#giai-đoạn-dữ-liệu">Giai đoạn dữ liệu</a>
+      <ul>
+        <li><a href="#hàm-dẫn-xuất-khóa-giai-đoạn-dữ-liệu">Hàm dẫn xuất khóa (Giai đoạn dữ liệu)</a></li>
+        <li><a href="#cấu-trúc-khung">Cấu trúc khung</a></li>
+        <li><a href="#che-giấu-độ-dài-bằng-siphash-hàm-băm-nhẹ-nhanh-dùng-cho-bảng-băm">Che giấu độ dài bằng SipHash (hàm băm nhẹ, nhanh dùng cho bảng băm)</a></li>
+        <li><a href="#định-dạng-khối">Định dạng khối</a></li>
+        <li><a href="#các-loại-khối">Các loại khối</a></li>
+        <li><a href="#loại-khối-0-datetime-ngày-giờ">Loại khối 0: DateTime (ngày giờ)</a></li>
+        <li><a href="#loại-khối-1-tùy-chọn">Loại khối 1: Tùy chọn</a></li>
+        <li><a href="#kiểu-khối-2-routerinfo-thông-tin-về-router">Kiểu khối 2: RouterInfo (thông tin về router)</a></li>
+        <li><a href="#loại-khối-3-thông-điệp-i2np">Loại khối 3: Thông điệp I2NP</a></li>
+        <li><a href="#loại-khối-4-kết-thúc">Loại khối 4: Kết thúc</a></li>
+        <li><a href="#loại-khối-254-đệm">Loại khối 254: Đệm</a></li>
+      </ul>
+    </li>
+    <li><a href="#xử-lý-lỗi-aead-mã-hóa-xác-thực-kèm-dữ-liệu">Xử lý lỗi AEAD (mã hóa xác thực kèm dữ liệu)</a>
+      <ul>
+        <li><a href="#giai-đoạn-bắt-tay-thông-điệp-1-3">Giai đoạn bắt tay (Thông điệp 1-3)</a></li>
+        <li><a href="#giai-đoạn-dữ-liệu-1">Giai đoạn dữ liệu</a></li>
+      </ul>
+    </li>
+    <li><a href="#routerinfo-thông-tin-router-đã-được-công-bố">RouterInfo (thông tin router) đã được công bố</a>
+      <ul>
+        <li><a href="#định-dạng-địa-chỉ-router">Định dạng địa chỉ Router</a></li>
+        <li><a href="#tùy-chọn-bắt-buộc">Tùy chọn bắt buộc</a></li>
+        <li><a href="#ví-dụ-các-mục-routeraddress">Ví dụ các mục RouterAddress</a></li>
+        <li><a href="#địa-chỉ-ntcp2-chưa-được-công-bố">Địa chỉ NTCP2 chưa được công bố</a></li>
+        <li><a href="#luân-chuyển-khóa-công-khai-và-iv-vector-khởi-tạo">Luân chuyển khóa công khai và IV (vector khởi tạo)</a></li>
+      </ul>
+    </li>
+    <li><a href="#phát-hiện-phiên-bản">Phát hiện phiên bản</a></li>
+    <li><a href="#hướng-dẫn-về-độ-lệch-đồng-hồ">Hướng dẫn về độ lệch đồng hồ</a>
+      <ul>
+        <li><a href="#cách-bob-xử-lý-thông-điệp-1">Cách Bob xử lý (Thông điệp 1)</a></li>
+        <li><a href="#cách-xử-lý-của-alice-thông-điệp-2">Cách xử lý của Alice (Thông điệp 2)</a></li>
+        <li><a href="#cách-bob-xử-lý-thông-điệp-3">Cách Bob xử lý (Thông điệp 3)</a></li>
+        <li><a href="#đồng-bộ-thời-gian">Đồng bộ thời gian</a></li>
+      </ul>
+    </li>
+    <li><a href="#thuộc-tính-bảo-mật">Thuộc tính bảo mật</a>
+      <ul>
+        <li><a href="#tính-bí-mật-chuyển-tiếp">Tính bí mật chuyển tiếp</a></li>
+        <li><a href="#xác-thực">Xác thực</a></li>
+        <li><a href="#khả-năng-chống-phân-tích-lưu-lượng">Khả năng chống phân tích lưu lượng</a></li>
+        <li><a href="#giảm-thiểu-tấn-công-từ-chối-dịch-vụ">Giảm thiểu tấn công từ chối dịch vụ</a></li>
+        <li><a href="#an-toàn-mật-mã">An toàn mật mã</a></li>
+      </ul>
+    </li>
+    <li><a href="#tài-liệu-tham-khảo">Tài liệu tham khảo</a>
+      <ul>
+        <li><a href="#các-đặc-tả-chính">Các đặc tả chính</a></li>
+        <li><a href="#các-tiêu-chuẩn-mật-mã">Các tiêu chuẩn mật mã</a></li>
+        <li><a href="#các-đặc-tả-kỹ-thuật-i2p-liên-quan">Các đặc tả kỹ thuật I2P liên quan</a></li>
+        <li><a href="#tài-liệu-tham-khảo-triển-khai">Tài liệu tham khảo triển khai</a></li>
+        <li><a href="#bối-cảnh-lịch-sử">Bối cảnh lịch sử</a></li>
+      </ul>
+    </li>
+    <li><a href="#hướng-dẫn-hiện-thực">Hướng dẫn hiện thực</a>
+      <ul>
+        <li><a href="#các-yêu-cầu-bắt-buộc">Các yêu cầu bắt buộc</a></li>
+        <li><a href="#thực-tiễn-khuyến-nghị">Thực tiễn khuyến nghị</a></li>
+        <li><a href="#những-cạm-bẫy-thường-gặp">Những cạm bẫy thường gặp</a></li>
+        <li><a href="#phương-pháp-luận-kiểm-thử">Phương pháp luận kiểm thử</a></li>
+        <li><a href="#chuyển-đổi-từ-ntcp-giao-thức-truyền-tải-dựa-trên-tcp-của-i2p-cũ">Chuyển đổi từ NTCP (giao thức truyền tải dựa trên TCP của I2P cũ)</a></li>
+      </ul>
+    </li>
+    <li><a href="#phụ-lục-a-mẫu-noise-xk">Phụ lục A: Mẫu Noise XK</a></li>
+    <li><a href="#phụ-lục-b-mã-hóa-base64">Phụ lục B: Mã hóa Base64</a></li>
+    <li><a href="#phụ-lục-c-phân-tích-bắt-gói-tin">Phụ lục C: Phân tích bắt gói tin</a></li>
+    <li><a href="#phụ-lục-d-lịch-sử-phiên-bản">Phụ lục D: Lịch sử phiên bản</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../vi/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../vi/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../vi/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Truyền tải NTCP2</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Bản dịch này được tạo bằng máy học và có thể không chính xác 100%.</span>
+    
+    
+    <a href="../../../../en/docs/specs/ntcp2/" class="disclaimer-link">Xem phiên bản tiếng Anh</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Truyền tải NTCP2</h1>
+                    
+                        <p class="article-description">Giao thức truyền tải TCP dựa trên Noise (khung giao thức mật mã) cho các liên kết giữa các router</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 0.9.66
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="tổng-quan">Tổng quan</h2>
+<p>NTCP2 thay thế giao thức truyền tải NTCP cũ bằng cơ chế bắt tay dựa trên Noise (bộ khung giao thức mật mã Noise), có khả năng chống việc lập dấu vân tay lưu lượng, mã hóa các trường độ dài và hỗ trợ các cipher suites (tập hợp thuật toán mật mã) hiện đại. Các router có thể chạy NTCP2 cùng với SSU2 như hai giao thức truyền tải bắt buộc trong mạng I2P. NTCP (phiên bản 1) đã bị ngừng khuyến nghị sử dụng (deprecated) từ 0.9.40 (tháng 5/2019) và bị loại bỏ hoàn toàn trong 0.9.50 (tháng 5/2021).</p>
+<h2 id="khung-giao-thức-noise">Khung giao thức Noise</h2>
+<p>NTCP2 sử dụng Noise Protocol Framework (khung giao thức Noise) <a href="https://noiseprotocol.org/noise.html">Revision 33, 2017-10-04</a>
+ với các phần mở rộng dành riêng cho I2P:</p>
+<ul>
+<li><strong>Mẫu</strong>: <code>Noise_XK_25519_ChaChaPoly_SHA256</code></li>
+<li><strong>Định danh mở rộng</strong>: <code>Noise_XKaesobfse+hs2+hs3_25519_ChaChaPoly_SHA256</code> (dùng để khởi tạo KDF (hàm dẫn xuất khóa))</li>
+<li><strong>Hàm Diffie-Hellman (DH)</strong>: X25519 (RFC 7748) - khóa 32 byte, biểu diễn little-endian</li>
+<li><strong>Mật mã</strong>: AEAD_CHACHA20_POLY1305 (RFC 7539/RFC 8439)
+<ul>
+<li>Nonce 12 byte: 4 byte đầu bằng 0, 8 byte cuối là bộ đếm (little-endian)</li>
+<li>Giá trị nonce tối đa: 2^64 - 2 (kết nối phải kết thúc trước khi đạt tới 2^64 - 1)</li>
+</ul>
+</li>
+<li><strong>Hàm băm</strong>: SHA-256 (đầu ra 32 byte)</li>
+<li><strong>MAC</strong>: Poly1305 (thẻ xác thực 16 byte)</li>
+</ul>
+<h3 id="các-phần-mở-rộng-dành-riêng-cho-i2p">Các phần mở rộng dành riêng cho I2P</h3>
+<ol>
+<li><strong>Làm mờ bằng AES</strong>: Khóa tạm thời được mã hóa bằng AES-256-CBC, sử dụng băm router của Bob và IV (vector khởi tạo) được công bố</li>
+<li><strong>Đệm ngẫu nhiên</strong>: Đệm dạng rõ trong các thông điệp 1-2 (được xác thực), đệm AEAD trong thông điệp 3+ (được mã hóa)</li>
+<li><strong>Làm mờ độ dài bằng SipHash-2-4</strong>: Độ dài khung 2 byte được XOR với đầu ra của SipHash</li>
+<li><strong>Cấu trúc khung</strong>: Khung có tiền tố độ dài cho giai đoạn dữ liệu (tương thích truyền luồng TCP)</li>
+<li><strong>Tải trọng dựa trên khối</strong>: Định dạng dữ liệu có cấu trúc với các khối có kiểu</li>
+</ol>
+<h2 id="quy-trình-bắt-tay">Quy trình bắt tay</h2>
+<pre tabindex="0"><code>Alice (Initiator)             Bob (Responder)
+SessionRequest  ──────────────────────►
+                ◄────────────────────── SessionCreated
+SessionConfirmed ──────────────────────►
+</code></pre><h3 id="bắt-tay-ba-thông-điệp">Bắt tay ba thông điệp</h3>
+<ol>
+<li><strong>SessionRequest</strong> - khóa tạm thời được che giấu của Alice, các tùy chọn, gợi ý về đệm</li>
+<li><strong>SessionCreated</strong> - khóa tạm thời được che giấu của Bob, các tùy chọn được mã hóa, phần đệm</li>
+<li><strong>SessionConfirmed</strong> - khóa tĩnh được mã hóa của Alice và RouterInfo (hai khung AEAD)</li>
+</ol>
+<h3 id="các-mẫu-thông-điệp-của-noise">Các mẫu thông điệp của Noise</h3>
+<pre tabindex="0"><code>XK(s, rs):           Authentication   Confidentiality
+  &lt;- s               (Bob&#39;s static key known in advance)
+  -&gt; e, es                  0                2
+  &lt;- e, ee                  2                1
+  -&gt; s, se                  2                5
+  &lt;-                        2                5
+</code></pre><p><strong>Mức xác thực:</strong> - 0: Không xác thực (bất kỳ bên nào cũng có thể đã gửi) - 2: Xác thực người gửi kháng key-compromise impersonation (KCI, giả mạo do lộ khóa)</p>
+<p><strong>Các cấp độ tính bí mật:</strong> - 1: Người nhận tạm thời (tính bí mật chuyển tiếp, không xác thực người nhận) - 2: Người nhận đã biết, tính bí mật chuyển tiếp chỉ khi phía người gửi bị xâm phạm - 5: Tính bí mật chuyển tiếp mạnh (tạm thời-tạm thời + tạm thời-tĩnh DH)</p>
+<h2 id="đặc-tả-thông-điệp">Đặc tả thông điệp</h2>
+<h3 id="ký-hiệu-khóa">Ký hiệu khóa</h3>
+<ul>
+<li><code>RH_A</code> = Router Hash cho Alice (32 byte, SHA-256)</li>
+<li><code>RH_B</code> = Router Hash cho Bob (32 byte, SHA-256)</li>
+<li><code>||</code> = toán tử nối</li>
+<li><code>byte(n)</code> = một byte có giá trị n</li>
+<li>Tất cả các số nguyên nhiều byte dùng <strong>big-endian</strong> trừ khi có chỉ định khác</li>
+<li>Khóa X25519 ở dạng <strong>little-endian</strong> (32 byte)</li>
+</ul>
+<h3 id="mã-hóa-xác-thực-chacha20-poly1305">Mã hóa xác thực (ChaCha20-Poly1305)</h3>
+<p><strong>Hàm mã hóa:</strong></p>
+<pre tabindex="0"><code>AEAD_ChaCha20_Poly1305(key, nonce, associatedData, plaintext)
+  → (ciphertext || MAC)
+</code></pre><p><strong>Tham số:</strong> - <code>key</code>: khóa mã 32 byte từ KDF (hàm dẫn xuất khóa) - <code>nonce</code>: 12 byte (4 byte bằng 0 + bộ đếm 8 byte, little-endian) - <code>associatedData</code>: băm 32 byte trong pha bắt tay; độ dài bằng 0 trong pha dữ liệu - <code>plaintext</code>: Dữ liệu cần mã hóa (0+ byte)</p>
+<p><strong>Đầu ra:</strong> - Bản mã: Cùng độ dài như bản rõ - MAC: 16 byte (thẻ xác thực Poly1305)</p>
+<p><strong>Quản lý nonce (giá trị dùng một lần):</strong> - Bộ đếm bắt đầu từ 0 cho mỗi thể hiện bộ mã - Tăng thêm sau mỗi thao tác AEAD theo chiều đó - Có bộ đếm riêng cho Alice→Bob và Bob→Alice trong giai đoạn dữ liệu - Phải chấm dứt kết nối trước khi bộ đếm đạt tới 2^64 - 1</p>
+<h2 id="thông-điệp-1-sessionrequest-yêu-cầu-phiên">Thông điệp 1: SessionRequest (Yêu cầu phiên)</h2>
+<p>Alice khởi tạo kết nối tới Bob.</p>
+<p><strong>Các thao tác Noise</strong>: <code>e, es</code> (tạo và trao đổi khóa tạm thời)</p>
+<h3 id="định-dạng-thô">Định dạng thô</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    AES-256-CBC Encrypted X (32B)      +
+|    Key: RH_B, IV: Bob&#39;s published IV  |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame (48 bytes)        +
+|    Plaintext: 32B (X + options)       |
++    k from KDF-1, n=0, ad=h            +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
++    Length specified in options         +
+|    0 to 65535 - 80 bytes              |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Giới hạn kích thước:</strong> - Tối thiểu: 80 byte (32 AES + 48 AEAD) - Tối đa: 65535 byte tổng cộng - <strong>Trường hợp đặc biệt</strong>: Tối đa 287 byte khi kết nối tới địa chỉ &ldquo;NTCP&rdquo; (giao thức truyền tải dựa trên TCP của I2P) (phát hiện phiên bản)</p>
+<h3 id="nội-dung-đã-giải-mã">Nội dung đã giải mã</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    X (Alice ephemeral public key)     +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|           Options Block               |
++             (16 bytes)                +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="khối-tùy-chọn-16-byte-thứ-tự-big-endian">Khối Tùy chọn (16 byte, thứ tự big-endian)</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| id | ver|  padLen | m3p2len | Rsvd(0) |
++----+----+----+----+----+----+----+----+
+|        tsA        |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+
+id      : 1 byte  - Network ID (2 for mainnet, 16-254 for testnets)
+ver     : 1 byte  - Protocol version (currently 2)
+padLen  : 2 bytes - Padding length in this message (0-65455)
+m3p2len : 2 bytes - Length of SessionConfirmed part 2 frame
+Rsvd    : 2 bytes - Reserved, set to 0
+tsA     : 4 bytes - Unix timestamp (seconds since epoch)
+Reserved: 4 bytes - Reserved, set to 0
+</code></pre><p><strong>Các trường quan trọng:</strong> - <strong>Network ID</strong> (kể từ 0.9.42): Từ chối nhanh các kết nối khác mạng - <strong>m3p2len</strong>: Kích thước chính xác của phần 2 của thông điệp 3 (phải khớp khi gửi)</p>
+<h3 id="hàm-dẫn-xuất-khóa-kdf-1">Hàm dẫn xuất khóa (KDF-1)</h3>
+<p><strong>Khởi tạo giao thức:</strong></p>
+<pre tabindex="0"><code>protocol_name = &#34;Noise_XKaesobfse+hs2+hs3_25519_ChaChaPoly_SHA256&#34;
+h = SHA256(protocol_name)
+ck = h  // Chaining key initialized to hash
+</code></pre><p><strong>Các phép toán MixHash:</strong></p>
+<pre tabindex="0"><code>h = SHA256(h)                    // Null prologue
+h = SHA256(h || rs)              // Bob&#39;s static key (known)
+h = SHA256(h || e.pubkey)        // Alice&#39;s ephemeral key X
+// h is now the associated data for message 1 AEAD
+</code></pre><p><strong>Hoạt động MixKey (trộn khóa) (es pattern):</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Alice.ephemeral_private, Bob.static_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 1
+// ck is retained for message 2 KDF
+</code></pre><h3 id="ghi-chú-cài-đặt">Ghi chú cài đặt</h3>
+<ol>
+<li><strong>Làm rối AES</strong>: Chỉ dùng để chống DPI (kiểm tra gói tin sâu); bất kỳ ai có router hash của Bob và IV (vector khởi tạo) đều có thể giải mã X</li>
+<li><strong>Ngăn chặn phát lại</strong>: Bob phải lưu đệm các giá trị X (hoặc các tương đương đã mã hóa) trong ít nhất 2*D giây (D = độ lệch đồng hồ tối đa)</li>
+<li><strong>Xác thực dấu thời gian</strong>: Bob phải từ chối các kết nối với |tsA - current_time| &gt; D (thường D = 60 giây)</li>
+<li><strong>Xác thực đường cong</strong>: Bob phải xác minh X là một điểm X25519 hợp lệ</li>
+<li><strong>Từ chối nhanh</strong>: Bob có thể kiểm tra X[31] &amp; 0x80 == 0 trước khi giải mã (khóa X25519 hợp lệ có MSB (bit có ý nghĩa cao nhất) bằng 0)</li>
+<li><strong>Xử lý lỗi</strong>: Khi gặp lỗi bất kỳ, Bob đóng kết nối bằng TCP RST (gói RST của TCP) sau thời gian chờ ngẫu nhiên và đọc một lượng byte ngẫu nhiên</li>
+<li><strong>Bộ đệm</strong>: Alice phải thực hiện flush (xả) toàn bộ thông điệp (bao gồm cả padding (phần đệm)) cùng lúc để đạt hiệu quả</li>
+</ol>
+<h2 id="thông-điệp-2-sessioncreated">Thông điệp 2: SessionCreated</h2>
+<p>Bob trả lời Alice.</p>
+<p><strong>Các thao tác Noise</strong>: <code>e, ee</code> (DH tạm thời–tạm thời)</p>
+<h3 id="định-dạng-thô-1">Định dạng thô</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    AES-256-CBC Encrypted Y (32B)      +
+|    Key: RH_B, IV: AES state from msg1 |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame (48 bytes)        +
+|    Plaintext: 32B (Y + options)       |
++    k from KDF-2, n=0, ad=h            +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
++    Length specified in options         +
+|    0 to 65535 - 80 bytes              |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="nội-dung-đã-giải-mã-1">Nội dung đã giải mã</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    Y (Bob ephemeral public key)       +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|           Options Block               |
++             (16 bytes)                +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="khối-tùy-chọn-16-byte-big-endian-thứ-tự-byte-có-trọng-số-lớn-nhất-trước">Khối Tùy chọn (16 byte, big-endian (thứ tự byte có trọng số lớn nhất trước))</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Rsvd(0) | padLen  |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+|        tsB        |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+
+Rsvd    : 2 bytes - Reserved, set to 0
+padLen  : 2 bytes - Padding length in this message
+Reserved: 10 bytes - Reserved, set to 0
+tsB     : 4 bytes - Unix timestamp (seconds since epoch)
+</code></pre><h3 id="hàm-dẫn-xuất-khóa-kdf-2">Hàm dẫn xuất khóa (KDF-2)</h3>
+<p><strong>Các phép toán MixHash:</strong></p>
+<pre tabindex="0"><code>h = SHA256(h || encrypted_payload_msg1)  // 32-byte ciphertext
+if (msg1_padding_length &gt; 0):
+    h = SHA256(h || padding_from_msg1)
+h = SHA256(h || e.pubkey)                // Bob&#39;s ephemeral key Y
+// h is now the associated data for message 2 AEAD
+</code></pre><p><strong>Hoạt động MixKey (trộn khóa) (mẫu ee):</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Bob.ephemeral_private, Alice.ephemeral_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 2
+// ck is retained for message 3 KDF
+</code></pre><p><strong>Dọn dẹp bộ nhớ:</strong></p>
+<pre tabindex="0"><code>// Overwrite ephemeral keys after ee DH
+Alice.ephemeral_public = zeros(32)
+Alice.ephemeral_private = zeros(32)  // Bob side
+Bob.received_ephemeral = zeros(32)    // Bob side
+</code></pre><h3 id="ghi-chú-hiện-thực">Ghi chú hiện thực</h3>
+<ol>
+<li><strong>Xâu chuỗi AES</strong>: Mã hóa Y sử dụng trạng thái AES-CBC từ thông điệp 1 (không đặt lại)</li>
+<li><strong>Ngăn chặn phát lại</strong>: Alice phải lưu vào bộ nhớ đệm các giá trị Y trong ít nhất 2*D giây</li>
+<li><strong>Kiểm tra dấu thời gian</strong>: Alice phải từ chối khi |tsB - current_time| &gt; D</li>
+<li><strong>Xác minh đường cong</strong>: Alice phải xác minh Y là một điểm X25519 hợp lệ</li>
+<li><strong>Xử lý lỗi</strong>: Alice đóng kết nối bằng TCP RST khi xảy ra bất kỳ lỗi nào</li>
+<li><strong>Bộ đệm</strong>: Bob phải xả toàn bộ thông điệp trong một lần</li>
+</ol>
+<h2 id="thông-điệp-3-sessionconfirmed-xác-nhận-phiên">Thông điệp 3: SessionConfirmed (xác nhận phiên)</h2>
+<p>Alice xác nhận phiên và gửi RouterInfo (thông tin về router).</p>
+<p><strong>Các thao tác Noise</strong>: <code>s, se</code> (tiết lộ khóa tĩnh và DH giữa khóa tĩnh và khóa tạm thời)</p>
+<h3 id="cấu-trúc-hai-phần">Cấu trúc hai phần</h3>
+<p>Thông điệp 3 bao gồm <strong>hai AEAD frames (khung AEAD) riêng biệt</strong>:</p>
+<ol>
+<li><strong>Phần 1</strong>: Khung 48 byte cố định với khóa tĩnh được mã hóa của Alice</li>
+<li><strong>Phần 2</strong>: Khung độ dài biến đổi với RouterInfo, các tùy chọn và phần đệm</li>
+</ol>
+<h3 id="định-dạng-thô-2">Định dạng thô</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|    ChaChaPoly Frame 1 (48 bytes)      |
++    Plaintext: Alice static key (32B)  +
+|    k from KDF-2, n=1, ad=h            |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame 2 (variable)      +
+|    Length specified in msg1.m3p2len   |
++    k from KDF-3, n=0, ad=h            +
+|    Plaintext: RouterInfo + padding    |
++                                       +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Giới hạn kích thước:</strong> - Phần 1: Chính xác 48 byte (32 bản rõ + 16 MAC) - Phần 2: Độ dài được chỉ định trong thông điệp 1 (trường m3p2len) - Tổng tối đa: 65535 byte (phần 1 tối đa 48, nên phần 2 tối đa 65487)</p>
+<h3 id="nội-dung-đã-giải-mã-2">Nội dung đã giải mã</h3>
+<p><strong>Phần 1:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    S (Alice static public key)        +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Phần 2:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|    Block: RouterInfo (required)       |
++    Type=2, contains Alice&#39;s RI         +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+|    Block: Options (optional)          |
++    Type=1, padding parameters          +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Block: Padding (optional)          |
++    Type=254, random data               +
+|    MUST be last block if present      |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="hàm-dẫn-xuất-khóa-kdf-3">Hàm dẫn xuất khóa (KDF-3)</h3>
+<p><strong>Phần 1 (mẫu chữ s):</strong></p>
+<pre tabindex="0"><code>h = SHA256(h || encrypted_payload_msg2)  // 32-byte ciphertext
+if (msg2_padding_length &gt; 0):
+    h = SHA256(h || padding_from_msg2)
+
+// Encrypt static key with message 2 cipher key
+ciphertext = AEAD_ChaCha20_Poly1305(k_msg2, n=1, h, Alice.static_public)
+h = SHA256(h || ciphertext)  // 48 bytes (32 + 16)
+// h is now the associated data for message 3 part 2
+</code></pre><p><strong>Phần 2 (se pattern):</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Alice.static_private, Bob.ephemeral_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 3 part 2
+// ck is retained for data phase KDF
+
+ciphertext = AEAD_ChaCha20_Poly1305(k, n=0, h, payload)
+h = SHA256(h || ciphertext)
+// h is retained for SipHash KDF
+</code></pre><p><strong>Dọn dẹp bộ nhớ:</strong></p>
+<pre tabindex="0"><code>// Overwrite Bob&#39;s ephemeral key after se DH
+Alice.received_ephemeral = zeros(32)  // Alice side
+Bob.ephemeral_public = zeros(32)       // Bob side
+Bob.ephemeral_private = zeros(32)      // Bob side
+</code></pre><h3 id="ghi-chú-hiện-thực-1">Ghi chú hiện thực</h3>
+<ol>
+<li><strong>Xác thực RouterInfo (khối thông tin của router)</strong>: Bob phải xác minh chữ ký, dấu thời gian và tính nhất quán của khóa</li>
+<li><strong>Đối chiếu khóa</strong>: Bob phải xác minh khóa tĩnh của Alice ở phần 1 trùng khớp với khóa trong RouterInfo</li>
+<li><strong>Vị trí khóa tĩnh</strong>: Tìm tham số &ldquo;s&rdquo; trùng khớp trong RouterAddress NTCP hoặc NTCP2</li>
+<li><strong>Thứ tự khối</strong>: RouterInfo phải đứng đầu, Options thứ hai (nếu có), Padding cuối cùng (nếu có)</li>
+<li><strong>Lập kế hoạch độ dài</strong>: Alice phải bảo đảm m3p2len trong thông điệp 1 khớp chính xác với độ dài của phần 2</li>
+<li><strong>Đệm</strong>: Alice phải xả đệm cả hai phần trong cùng một lần gửi TCP duy nhất</li>
+<li><strong>Xâu chuỗi tùy chọn</strong>: Alice có thể nối thêm một khung giai đoạn dữ liệu ngay lập tức để tăng hiệu quả</li>
+</ol>
+<h2 id="giai-đoạn-dữ-liệu">Giai đoạn dữ liệu</h2>
+<p>Sau khi hoàn tất quá trình bắt tay, tất cả các thông điệp sử dụng các khung AEAD (mã hóa xác thực kèm dữ liệu liên kết) có độ dài thay đổi, với các trường độ dài được che giấu.</p>
+<h3 id="hàm-dẫn-xuất-khóa-giai-đoạn-dữ-liệu">Hàm dẫn xuất khóa (Giai đoạn dữ liệu)</h3>
+<p><strong>Hàm Split (Noise — khung giao thức mật mã):</strong></p>
+<pre tabindex="0"><code>// Generate transmit and receive keys
+zerolen = &#34;&#34;  // Zero-length byte array
+temp_key = HMAC-SHA256(ck, zerolen)
+
+// Alice transmits to Bob
+k_ab = HMAC-SHA256(temp_key, byte(0x01))
+
+// Bob transmits to Alice  
+k_ba = HMAC-SHA256(temp_key, k_ab || byte(0x02))
+
+// Cleanup
+ck = zeros(32)
+temp_key = zeros(32)
+</code></pre><p><strong>Dẫn xuất khóa bằng SipHash (hàm băm dùng khóa):</strong></p>
+<pre tabindex="0"><code>// Generate additional symmetric key for SipHash
+ask_master = HMAC-SHA256(temp_key, &#34;ask&#34; || byte(0x01))
+
+// &#34;siphash&#34; is 7 bytes US-ASCII
+temp_key2 = HMAC-SHA256(ask_master, h || &#34;siphash&#34;)
+sip_master = HMAC-SHA256(temp_key2, byte(0x01))
+
+// Alice to Bob SipHash keys
+temp_key3 = HMAC-SHA256(sip_master, zerolen)
+sipkeys_ab = HMAC-SHA256(temp_key3, byte(0x01))
+sipk1_ab = sipkeys_ab[0:7]   // 8 bytes, little-endian
+sipk2_ab = sipkeys_ab[8:15]  // 8 bytes, little-endian
+sipiv_ab = sipkeys_ab[16:23] // 8 bytes, IV
+
+// Bob to Alice SipHash keys
+sipkeys_ba = HMAC-SHA256(temp_key3, sipkeys_ab || byte(0x02))
+sipk1_ba = sipkeys_ba[0:7]   // 8 bytes, little-endian
+sipk2_ba = sipkeys_ba[8:15]  // 8 bytes, little-endian
+sipiv_ba = sipkeys_ba[16:23] // 8 bytes, IV
+</code></pre><h3 id="cấu-trúc-khung">Cấu trúc khung</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|Obfs Len |                             |
++----+----+    ChaChaPoly Frame         +
+|    Encrypted Block Data               |
++    k_ab (Alice→Bob) or k_ba (Bob→Alice)|
+|    Nonce starts at 0, increments      |
++    No associated data (empty string)  +
+|                                       |
+~           .   .   .                   ~
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Poly1305 MAC (16 bytes)            |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Ràng buộc khung:</strong> - Tối thiểu: 18 byte (2 độ dài đã làm nhiễu + 0 bản rõ + 16 MAC) - Tối đa: 65537 byte (2 độ dài đã làm nhiễu + 65535 khung) - Khuyến nghị: Vài KB mỗi khung (giảm thiểu độ trễ phía nhận)</p>
+<h3 id="che-giấu-độ-dài-bằng-siphash-hàm-băm-nhẹ-nhanh-dùng-cho-bảng-băm">Che giấu độ dài bằng SipHash (hàm băm nhẹ, nhanh dùng cho bảng băm)</h3>
+<p><strong>Mục đích</strong>: Ngăn DPI (kiểm tra gói tin sâu) nhận diện ranh giới khung</p>
+<p><strong>Thuật toán:</strong></p>
+<pre tabindex="0"><code>// Initialization (per direction)
+IV[0] = sipiv  // From KDF
+
+// For each frame:
+IV[n] = SipHash-2-4(sipk1, sipk2, IV[n-1])
+Mask[n] = IV[n][0:1]  // First 2 bytes of IV
+ObfuscatedLength = ActualLength XOR Mask[n]
+
+// Send 2-byte ObfuscatedLength, then ActualLength bytes
+</code></pre><p><strong>Giải mã:</strong></p>
+<pre tabindex="0"><code>// Receiver maintains identical IV chain
+IV[n] = SipHash-2-4(sipk1, sipk2, IV[n-1])
+Mask[n] = IV[n][0:1]
+ActualLength = ObfuscatedLength XOR Mask[n]
+// Read ActualLength bytes (includes 16-byte MAC)
+</code></pre><p><strong>Ghi chú:</strong> - Tách các chuỗi IV (vector khởi tạo) cho từng hướng (Alice→Bob và Bob→Alice) - Nếu SipHash trả về uint64 (số nguyên không dấu 64-bit), dùng 2 byte có ý nghĩa thấp nhất làm mặt nạ - Chuyển đổi uint64 thành IV tiếp theo dưới dạng các byte little-endian (thứ tự byte từ thấp đến cao)</p>
+<h3 id="định-dạng-khối">Định dạng khối</h3>
+<p>Mỗi khung có thể chứa 0 hoặc nhiều khối:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|Type| Length  |       Data              |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type  : 1 byte  - Block type identifier
+Length: 2 bytes - Big-endian, data size (0-65516)
+Data  : Variable length payload
+</code></pre><p><strong>Giới hạn kích thước:</strong> - Khung tối đa: 65535 byte (bao gồm MAC) - Không gian khối tối đa: 65519 byte (khung - MAC 16 byte) - Khối đơn tối đa: 65519 byte (phần đầu 3 byte + 65516 dữ liệu)</p>
+<h3 id="các-loại-khối">Các loại khối</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Name</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DateTime</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Time synchronization (4-byte timestamp)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Options</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding parameters, dummy traffic</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo delivery/flooding</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">I2NP</td><td style="border:1px solid var(--color-border); padding:0.5rem;">I2NP message with shortened header</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Termination</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Explicit connection close</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">224-253</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Experimental features</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">254</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Random padding (must be last)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">255</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Future extensions</td></tr>
+  </tbody>
+</table>
+**Quy tắc sắp xếp khối:** - **Thông điệp 3 phần 2**: RouterInfo, Options (tùy chọn), Padding (tùy chọn) - KHÔNG có loại nào khác - **Giai đoạn dữ liệu**: Bất kỳ thứ tự nào, ngoại trừ:   - Padding (đệm) PHẢI là khối cuối cùng nếu có   - Termination (kết thúc) PHẢI là khối cuối cùng (ngoại trừ Padding) nếu có - Cho phép nhiều khối I2NP trên mỗi khung - KHÔNG cho phép nhiều khối Padding trên mỗi khung
+<h3 id="loại-khối-0-datetime-ngày-giờ">Loại khối 0: DateTime (ngày giờ)</h3>
+<p>Đồng bộ hóa thời gian để phát hiện độ lệch đồng hồ.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+
+| 0  |    4    |     timestamp     |
++----+----+----+----+----+----+----+
+
+Type     : 0
+Length   : 4 (big-endian)
+Timestamp: 4 bytes, Unix seconds (big-endian)
+</code></pre><p><strong>Triển khai</strong>: Làm tròn đến giây gần nhất để ngăn tích lũy sai lệch đồng hồ.</p>
+<h3 id="loại-khối-1-tùy-chọn">Loại khối 1: Tùy chọn</h3>
+<p>Các tham số đệm và định hình lưu lượng.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 1  |  size   |tmin|tmax|rmin|rmax|tdmy|
++----+----+----+----+----+----+----+----+
+|tdmy|  rdmy   |  tdelay |  rdelay |    |
++----+----+----+----+----+----+----+    +
+|         more_options (TBD)            |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type  : 1
+Length: 12+ bytes (big-endian)
+</code></pre><p><strong>Tỷ lệ đệm</strong> (số cố định 4.4 (fixed-point), giá trị/16.0): - <code>tmin</code>: Tỷ lệ đệm tối thiểu khi truyền (0.0 - 15.9375) - <code>tmax</code>: Tỷ lệ đệm tối đa khi truyền (0.0 - 15.9375) - <code>rmin</code>: Tỷ lệ đệm tối thiểu khi nhận (0.0 - 15.9375) - <code>rmax</code>: Tỷ lệ đệm tối đa khi nhận (0.0 - 15.9375)</p>
+<p><strong>Ví dụ:</strong> - 0x00 = 0% phần đệm - 0x01 = 6.25% phần đệm - 0x10 = 100% phần đệm (tỉ lệ 1:1) - 0x80 = 800% phần đệm (tỉ lệ 8:1)</p>
+<p><strong>Dummy Traffic (lưu lượng giả):</strong> - <code>tdmy</code>: Mức tối đa sẵn sàng gửi (2 byte, trung bình tính theo byte/giây) - <code>rdmy</code>: Mức được yêu cầu nhận (2 byte, trung bình tính theo byte/giây)</p>
+<p><strong>Chèn độ trễ:</strong> - <code>tdelay</code>: Độ trễ tối đa sẵn sàng chèn (2 byte, trung bình tính theo mili giây) - <code>rdelay</code>: Độ trễ được yêu cầu (2 byte, trung bình tính theo mili giây)</p>
+<p><strong>Hướng dẫn:</strong> - Giá trị tối thiểu biểu thị mức độ chống phân tích lưu lượng mong muốn - Giá trị tối đa biểu thị các ràng buộc về băng thông - Bên gửi nên tôn trọng mức tối đa của bên nhận - Bên gửi có thể tôn trọng mức tối thiểu của bên nhận trong phạm vi các ràng buộc - Không có cơ chế cưỡng chế; các triển khai có thể khác nhau</p>
+<h3 id="kiểu-khối-2-routerinfo-thông-tin-về-router">Kiểu khối 2: RouterInfo (thông tin về router)</h3>
+<p>Phân phối RouterInfo (thông tin router) để bổ sung netdb và phát tán.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 2  |  size   |flg |    RouterInfo     |
++----+----+----+----+                   +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type : 2
+Length: Flag (1 byte) + RouterInfo size
+Flag : Bit 0 = flood request (1) or local store (0)
+       Bits 1-7 = Reserved, set to 0
+</code></pre><p><strong>Cách sử dụng:</strong></p>
+<p><strong>Trong Thông điệp 3 Phần 2</strong> (bắt tay): - Alice gửi RouterInfo (bản ghi thông tin của router trong I2P) của cô ấy cho Bob - Flood bit (cờ flood) thường là 0 (lưu trữ cục bộ) - RouterInfo KHÔNG nén gzip</p>
+<p><strong>Trong Giai đoạn Dữ liệu:</strong> - Mỗi bên có thể gửi RouterInfo đã cập nhật của mình - bit Flood = 1: Yêu cầu phân phối qua floodfill (nếu bên nhận là floodfill) - bit Flood = 0: Chỉ lưu trữ cục bộ trong netdb</p>
+<p><strong>Yêu cầu xác minh:</strong> 1. Xác minh loại chữ ký được hỗ trợ 2. Xác minh chữ ký RouterInfo (thông tin router) 3. Xác minh dấu thời gian nằm trong giới hạn chấp nhận được 4. Đối với bắt tay: Xác minh khóa tĩnh khớp với tham số &ldquo;s&rdquo; của địa chỉ NTCP2 5. Đối với giai đoạn dữ liệu: Xác minh băm của router khớp với peer (đồng cấp) của phiên 6. Chỉ flood (phát tán) các RouterInfos với các địa chỉ đã công bố</p>
+<p><strong>Ghi chú:</strong> - Không có cơ chế ACK (sử dụng I2NP DatabaseStore (thông điệp DatabaseStore của I2NP) với token phản hồi nếu cần) - Có thể chứa các RouterInfos (bản ghi thông tin router) của bên thứ ba (sử dụng floodfill) - KHÔNG nén gzip (khác với I2NP DatabaseStore)</p>
+<h3 id="loại-khối-3-thông-điệp-i2np">Loại khối 3: Thông điệp I2NP</h3>
+<p>Thông điệp I2NP với phần đầu 9 byte được rút gọn.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 3  |  size   |type|    msg_id         |
++----+----+----+----+----+----+----+----+
+|   expiration  |     I2NP payload      |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type      : 3
+Length    : 9 + payload_size (big-endian)
+Type      : 1 byte, I2NP message type
+Msg_ID    : 4 bytes, big-endian, I2NP message ID
+Expiration: 4 bytes, big-endian, Unix timestamp (seconds)
+Payload   : I2NP message body (length = size - 9)
+</code></pre><p><strong>Khác biệt so với NTCP1:</strong> - Thời điểm hết hạn: 4 byte (giây) so với 8 byte (mili giây) - Độ dài: Được lược bỏ (có thể suy ra từ độ dài khối) - Checksum: Được lược bỏ (AEAD - mã hóa xác thực kèm dữ liệu liên kết - cung cấp tính toàn vẹn) - Header: 9 byte so với 16 byte (giảm 44%)</p>
+<p><strong>Phân mảnh:</strong> - Thông điệp I2NP KHÔNG ĐƯỢC bị phân mảnh giữa các khối - Thông điệp I2NP KHÔNG ĐƯỢC bị phân mảnh giữa các khung - Nhiều khối I2NP được phép trên mỗi khung</p>
+<h3 id="loại-khối-4-kết-thúc">Loại khối 4: Kết thúc</h3>
+<p>Đóng kết nối tường minh kèm mã lý do.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 4  |  size   |  valid_frames_recv    |
++----+----+----+----+----+----+----+----+
+| (continued) |rsn |   additional_data   |
++----+----+----+----+                   +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type            : 4
+Length          : 9+ bytes (big-endian)
+Valid_Frames_Recv: 8 bytes, big-endian (receive nonce value)
+                  0 if error in handshake phase
+Reason          : 1 byte (see table below)
+Additional_Data : Optional (format unspecified, for debugging)
+</code></pre><p><strong>Mã lý do:</strong></p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Code</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Reason</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Phase</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Normal close / unspecified</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Termination received</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Idle timeout</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Router shutdown</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data phase AEAD failure</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">5</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Incompatible options</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">6</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Incompatible signature type</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">7</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Clock skew</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">8</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding violation</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">9</td><td style="border:1px solid var(--color-border); padding:0.5rem;">AEAD framing error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Payload format error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">11</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 1 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 2 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">13</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 3 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">14</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Intra-frame read timeout</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">15</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo signature verification fail</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">16</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Static key parameter mismatch</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">17</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Banned</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+  </tbody>
+</table>
+**Quy tắc:** - Termination (khối kết thúc) PHẢI là khối không phải phần đệm cuối cùng trong khung - Tối đa một khối Termination cho mỗi khung - Bên gửi nên đóng kết nối sau khi gửi - Bên nhận nên đóng kết nối sau khi nhận
+<p><strong>Xử lý lỗi:</strong> - Lỗi bắt tay: Thường đóng bằng TCP RST (không có khối kết thúc) - Lỗi AEAD (mã hóa xác thực kèm dữ liệu liên kết) ở giai đoạn dữ liệu: timeout ngẫu nhiên + đọc ngẫu nhiên, rồi gửi thông điệp kết thúc - Xem phần &ldquo;AEAD Error Handling&rdquo; để biết các thủ tục bảo mật</p>
+<h3 id="loại-khối-254-đệm">Loại khối 254: Đệm</h3>
+<p>Phần đệm ngẫu nhiên để tăng khả năng chống phân tích lưu lượng.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|254 |  size   |     random_data       |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type: 254
+Length: 0-65516 bytes (big-endian)
+Data: Cryptographically random bytes
+</code></pre><p><strong>Quy tắc:</strong> - Phần đệm PHẢI là khối cuối cùng trong khung nếu có - Cho phép phần đệm độ dài bằng 0 - Chỉ một khối đệm cho mỗi khung - Cho phép các khung chỉ có phần đệm - Nên tuân theo các tham số đã thương lượng từ khối Options</p>
+<p><strong>Đệm trong Thông điệp 1-2:</strong> - Nằm ngoài khung AEAD (mã hóa xác thực kèm dữ liệu) (bản rõ) - Được đưa vào chuỗi băm của thông điệp tiếp theo (được xác thực) - Phát hiện giả mạo khi AEAD của thông điệp tiếp theo thất bại</p>
+<p><strong>Đệm trong Thông điệp 3+ và Giai đoạn Dữ liệu:</strong> - Bên trong khung AEAD (mã hóa xác thực đồng thời; được mã hóa và xác thực) - Dùng để định hình lưu lượng và che giấu kích thước</p>
+<h2 id="xử-lý-lỗi-aead-mã-hóa-xác-thực-kèm-dữ-liệu">Xử lý lỗi AEAD (mã hóa xác thực kèm dữ liệu)</h2>
+<p><strong>Các yêu cầu bảo mật trọng yếu:</strong></p>
+<h3 id="giai-đoạn-bắt-tay-thông-điệp-1-3">Giai đoạn bắt tay (Thông điệp 1-3)</h3>
+<p><strong>Kích thước thông điệp đã biết:</strong> - Kích thước thông điệp được định sẵn hoặc được chỉ định trước - Lỗi xác thực AEAD (mã hóa xác thực kèm dữ liệu liên kết) là rõ ràng, không mơ hồ</p>
+<p><strong>Phản hồi của Bob khi Thông điệp 1 thất bại:</strong> 1. Đặt thời hạn chờ ngẫu nhiên (khoảng phụ thuộc vào triển khai, đề xuất 100-500ms) 2. Đọc số byte ngẫu nhiên (khoảng phụ thuộc vào triển khai, đề xuất 1KB-64KB) 3. Đóng kết nối bằng TCP RST (không phản hồi) 4. Tạm thời đưa IP nguồn vào danh sách đen 5. Theo dõi các lỗi lặp lại để áp dụng lệnh cấm dài hạn</p>
+<p><strong>Phản hồi của Alice khi Thông điệp 2 thất bại:</strong> 1. Đóng kết nối ngay lập tức bằng TCP RST 2. Không gửi phản hồi cho Bob</p>
+<p><strong>Phản hồi của Bob khi Thông điệp 3 thất bại:</strong> 1. Đóng kết nối ngay lập tức bằng TCP RST 2. Không phản hồi cho Alice</p>
+<h3 id="giai-đoạn-dữ-liệu-1">Giai đoạn dữ liệu</h3>
+<p><strong>Kích thước thông điệp được làm rối:</strong> - Trường độ dài được làm rối bằng SipHash - Độ dài không hợp lệ hoặc lỗi AEAD có thể cho thấy:   - Thăm dò từ kẻ tấn công   - Hỏng dữ liệu mạng   - IV SipHash bị mất đồng bộ (IV: vector khởi tạo)   - Nút ngang hàng độc hại</p>
+<p><strong>Phản hồi đối với lỗi AEAD hoặc lỗi độ dài:</strong> 1. Đặt thời gian chờ ngẫu nhiên (đề xuất 100-500ms) 2. Đọc số lượng byte ngẫu nhiên (đề xuất 1KB-64KB) 3. Gửi khối kết thúc với mã lý do 4 (lỗi AEAD) hoặc 9 (lỗi khung) 4. Đóng kết nối</p>
+<p><strong>Ngăn chặn Decryption Oracle (oracle giải mã):</strong> - Không bao giờ tiết lộ loại lỗi cho đồng cấp trước khi hết một thời gian chờ ngẫu nhiên - Không bao giờ bỏ qua kiểm tra tính hợp lệ của độ dài trước khi kiểm tra AEAD (mã hóa xác thực với dữ liệu liên kết) - Xử lý độ dài không hợp lệ giống hệt như lỗi AEAD - Sử dụng cùng một luồng xử lý lỗi cho cả hai lỗi</p>
+<p><strong>Các cân nhắc triển khai:</strong> - Một số triển khai có thể tiếp tục sau lỗi AEAD (mã hóa xác thực kèm dữ liệu liên kết) nếu lỗi hiếm khi xảy ra - Kết thúc sau khi lỗi lặp lại (ngưỡng đề xuất: 3-5 lỗi mỗi giờ) - Cân bằng giữa khả năng phục hồi sau lỗi và bảo mật</p>
+<h2 id="routerinfo-thông-tin-router-đã-được-công-bố">RouterInfo (thông tin router) đã được công bố</h2>
+<h3 id="định-dạng-địa-chỉ-router">Định dạng địa chỉ Router</h3>
+<p>Hỗ trợ NTCP2 được quảng bá thông qua các mục RouterAddress được công bố với các tùy chọn cụ thể.</p>
+<p><strong>Kiểu truyền tải:</strong> - <code>&quot;NTCP2&quot;</code> - Chỉ NTCP2 trên cổng này - <code>&quot;NTCP&quot;</code> - Cả NTCP và NTCP2 trên cổng này (tự động phát hiện)   - <strong>Lưu ý</strong>: Hỗ trợ NTCP (v1) đã bị loại bỏ trong 0.9.50 (Tháng 5/2021)   - Kiểu &ldquo;NTCP&rdquo; hiện đã lỗi thời; hãy dùng &ldquo;NTCP2&rdquo;</p>
+<h3 id="tùy-chọn-bắt-buộc">Tùy chọn bắt buộc</h3>
+<p><strong>Tất cả các địa chỉ NTCP2 đã được công bố:</strong></p>
+<ol>
+<li>
+<p><strong><code>host</code></strong> - Địa chỉ IP (IPv4 hoặc IPv6) hoặc tên máy chủ</p>
+<ul>
+<li>Định dạng: Ký hiệu IP chuẩn hoặc tên miền</li>
+<li>Có thể bỏ qua đối với router chỉ đi ra (outbound-only) hoặc router ẩn (hidden)</li>
+</ul>
+</li>
+<li>
+<p><strong><code>port</code></strong> - số cổng TCP</p>
+<ul>
+<li>Định dạng: Số nguyên, 1-65535</li>
+<li>Có thể bỏ qua đối với router outbound-only (chỉ gửi ra) hoặc router ẩn</li>
+</ul>
+</li>
+<li>
+<p><strong><code>s</code></strong> - Khóa công khai tĩnh (X25519)</p>
+<ul>
+<li>Định dạng: được mã hóa Base64, 44 ký tự</li>
+<li>Mã hóa: bảng chữ cái Base64 của I2P</li>
+<li>Nguồn: khóa công khai X25519 32 byte, little-endian (thứ tự byte thấp trước)</li>
+</ul>
+</li>
+<li>
+<p><strong><code>i</code></strong> - Vector khởi tạo cho AES</p>
+<ul>
+<li>Định dạng: được mã hóa Base64, 24 ký tự</li>
+<li>Bảng mã: bảng chữ cái Base64 của I2P</li>
+<li>Nguồn: IV 16 byte, big-endian (thứ tự byte đầu lớn)</li>
+</ul>
+</li>
+<li>
+<p><strong><code>v</code></strong> - Phiên bản giao thức</p>
+<ul>
+<li>Định dạng: Số nguyên hoặc các số nguyên phân tách bằng dấu phẩy</li>
+<li>Hiện tại: <code>&quot;2&quot;</code></li>
+<li>Tương lai: <code>&quot;2,3&quot;</code> (phải theo thứ tự số tăng dần)</li>
+</ul>
+</li>
+</ol>
+<p><strong>Các tùy chọn không bắt buộc:</strong></p>
+<ol start="6">
+<li>
+<p><strong><code>caps</code></strong> - Khả năng (từ 0.9.50)</p>
+<ul>
+<li>Định dạng: Chuỗi các ký tự khả năng</li>
+<li>Giá trị:
+<ul>
+<li><code>&quot;4&quot;</code> - Khả năng kết nối ra ngoài IPv4</li>
+<li><code>&quot;6&quot;</code> - Khả năng kết nối ra ngoài IPv6</li>
+<li><code>&quot;46&quot;</code> - Cả IPv4 và IPv6 (thứ tự khuyến nghị)</li>
+</ul>
+</li>
+<li>Không cần thiết nếu <code>host</code> được công bố</li>
+<li>Hữu ích cho routers ẩn/bị tường lửa chặn</li>
+</ul>
+</li>
+<li>
+<p><strong><code>cost</code></strong> - Ưu tiên địa chỉ</p>
+<ul>
+<li>Định dạng: Số nguyên, 0-255</li>
+<li>Giá trị thấp hơn = ưu tiên cao hơn</li>
+<li>Gợi ý: 5-10 cho địa chỉ thông thường</li>
+<li>Gợi ý: 14 cho các địa chỉ chưa công bố</li>
+</ul>
+</li>
+</ol>
+<h3 id="ví-dụ-các-mục-routeraddress">Ví dụ các mục RouterAddress</h3>
+<p><strong>Địa chỉ IPv4 được công bố:</strong></p>
+<pre tabindex="0"><code>&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;192.0.2.1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>Router ẩn (chỉ gửi đi):</strong></p>
+<pre tabindex="0"><code>&lt;Address cost=&#34;14&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;v&gt;2&lt;/v&gt;
+    &lt;caps&gt;4&lt;/caps&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>Router hai ngăn xếp:</strong></p>
+<pre tabindex="0"><code>&lt;!-- IPv4 Address --&gt;
+&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;192.0.2.1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+
+&lt;!-- IPv6 Address (same keys, same port) --&gt;
+&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;2001:db8::1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>Quy tắc quan trọng:</strong> - Nhiều địa chỉ NTCP2 với <strong>cùng cổng</strong> PHẢI sử dụng <strong>giống hệt</strong> các giá trị <code>s</code>, <code>i</code>, và <code>v</code> - Các cổng khác nhau có thể sử dụng các khóa khác nhau - Các router dual-stack (hỗ trợ cả IPv4 và IPv6) nên công bố các địa chỉ IPv4 và IPv6 riêng biệt</p>
+<h3 id="địa-chỉ-ntcp2-chưa-được-công-bố">Địa chỉ NTCP2 chưa được công bố</h3>
+<p><strong>Dành cho các router chỉ kết nối ra ngoài:</strong></p>
+<p>Nếu một router không chấp nhận các kết nối NTCP2 đến nhưng khởi tạo các kết nối đi, thì nó PHẢI vẫn công bố một RouterAddress (địa chỉ Router) bao gồm:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;Address</span> <span style="color:#a6e22e">cost=</span><span style="color:#e6db74">&#34;14&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;transport_style&gt;</span>NTCP2<span style="color:#f92672">&lt;/transport_style&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;options&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;s&gt;</span>9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=<span style="color:#f92672">&lt;/s&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;v&gt;</span>2<span style="color:#f92672">&lt;/v&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/options&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/Address&gt;</span>
+</span></span></code></pre></div><p><strong>Mục đích:</strong> - Cho phép Bob xác thực khóa tĩnh của Alice trong quá trình bắt tay - Bắt buộc cho việc xác minh RouterInfo (thông tin về router) ở thông điệp 3, phần 2 - Không cần <code>i</code>, <code>host</code> hoặc <code>port</code> (chỉ hướng ra)</p>
+<p><strong>Phương án thay thế:</strong> - Thêm <code>s</code> và <code>v</code> vào địa chỉ &ldquo;NTCP&rdquo; hoặc SSU đã được công bố hiện có</p>
+<h3 id="luân-chuyển-khóa-công-khai-và-iv-vector-khởi-tạo">Luân chuyển khóa công khai và IV (vector khởi tạo)</h3>
+<p><strong>Chính sách bảo mật trọng yếu:</strong></p>
+<p><strong>Quy tắc chung:</strong> 1. <strong>Không bao giờ luân chuyển khi router đang chạy</strong> 2. <strong>Lưu trữ bền vững khóa và IV (vector khởi tạo)</strong> qua các lần khởi động lại 3. <strong>Theo dõi thời gian ngừng hoạt động trước đó</strong> để xác định đủ điều kiện luân chuyển</p>
+<p><strong>Thời gian ngừng hoạt động tối thiểu trước khi luân chuyển:</strong></p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Router Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Min Downtime</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Published NTCP2 address</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>1 month</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Many routers cache RouterInfo</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Published SSU only (no NTCP2)</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>1 day</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Moderate caching</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">No published addresses (hidden)</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>2 hours</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Minimal impact</td></tr>
+  </tbody>
+</table>
+**Các điều kiện kích hoạt bổ sung:** - Thay đổi địa chỉ IP cục bộ: Có thể xoay vòng bất kể thời gian ngừng hoạt động - Router "rekey" (new Router Hash): Tạo khóa mới
+<p><strong>Lý do:</strong> - Ngăn lộ thời điểm khởi động lại thông qua việc thay đổi khóa - Cho phép các RouterInfos (thông tin router) được lưu trong bộ nhớ đệm hết hạn tự nhiên - Duy trì sự ổn định của mạng - Giảm số lần thử kết nối thất bại</p>
+<p><strong>Triển khai:</strong> 1. Lưu trữ khóa, IV (vector khởi tạo), và dấu thời gian lần tắt trước lâu dài 2. Khi khởi động, tính downtime = current_time - last_shutdown 3. Nếu downtime &gt; mức tối thiểu cho loại router, có thể xoay vòng khóa/IV 4. Nếu IP thay đổi hoặc đang thay khóa, có thể xoay vòng khóa/IV 5. Nếu không, tái sử dụng khóa và IV trước đó</p>
+<p><strong>Xoay vòng IV (vector khởi tạo):</strong> - Tuân theo các quy tắc giống hệt như xoay vòng khóa - Chỉ xuất hiện trong các địa chỉ đã công bố (không áp dụng cho routers ẩn) - Khuyến nghị thay IV mỗi khi khóa thay đổi</p>
+<h2 id="phát-hiện-phiên-bản">Phát hiện phiên bản</h2>
+<p><strong>Ngữ cảnh:</strong> Khi <code>transportStyle=&quot;NTCP&quot;</code> (kiểu cũ), Bob hỗ trợ cả NTCP (giao thức truyền tải của I2P) v1 và v2 trên cùng một cổng và phải tự động phát hiện phiên bản giao thức.</p>
+<p><strong>Thuật toán phát hiện:</strong></p>
+<pre tabindex="0"><code>1. Wait for at least 64 bytes (minimum NTCP2 message 1 size)
+
+2. If received ≥ 288 bytes:
+   → Connection is NTCP version 1 (NTCP1 message 1 is 288 bytes)
+
+3. If received &lt; 288 bytes:
+   
+   Option A (conservative, pre-NTCP2 majority):
+   a. Wait additional short time (e.g., 100-500ms)
+   b. If total received ≥ 288 bytes → NTCP1
+   c. Otherwise → Attempt NTCP2 decode
+   
+   Option B (aggressive, post-NTCP2 majority):
+   a. Attempt NTCP2 decode immediately:
+      - Decrypt first 32 bytes (X key) with AES-256-CBC
+      - Verify valid X25519 point (X[31] &amp; 0x80 == 0)
+      - Verify AEAD frame
+   b. If decode succeeds → NTCP2
+   c. If decode fails → Wait for more data or NTCP1
+</code></pre><p><strong>Kiểm tra MSB (bit có trọng số lớn nhất) nhanh:</strong> - Trước khi giải mã AES, xác minh: <code>encrypted_X[31] &amp; 0x80 == 0</code> - Khóa X25519 hợp lệ có bit cao bằng 0 - Thất bại cho thấy có thể là NTCP1 (hoặc tấn công) - Triển khai cơ chế chống dò quét (thời gian chờ ngẫu nhiên + đọc) khi thất bại</p>
+<p><strong>Yêu cầu triển khai:</strong></p>
+<ol>
+<li>
+<p><strong>Trách nhiệm của Alice:</strong></p>
+<ul>
+<li>Khi kết nối tới địa chỉ &ldquo;NTCP&rdquo;, giới hạn độ dài thông điệp 1 tối đa 287 byte</li>
+<li>Buffer (đệm) và flush (xả) toàn bộ thông điệp 1 trong một lần</li>
+<li>Tăng khả năng truyền trong một gói TCP duy nhất</li>
+</ul>
+</li>
+<li>
+<p><strong>Trách nhiệm của Bob:</strong></p>
+<ul>
+<li>Đệm dữ liệu nhận được trước khi xác định phiên bản</li>
+<li>Triển khai xử lý timeout (hết thời gian chờ) đúng cách</li>
+<li>Sử dụng TCP_NODELAY để phát hiện phiên bản nhanh chóng</li>
+<li>Đệm và flush (xả bộ đệm) toàn bộ thông điệp 2 cùng lúc sau khi xác định phiên bản</li>
+</ul>
+</li>
+</ol>
+<p><strong>Các cân nhắc bảo mật:</strong> - Tấn công phân đoạn: Bob nên kháng chịu việc phân đoạn TCP - Tấn công thăm dò: Triển khai độ trễ ngẫu nhiên và đọc theo byte khi xảy ra lỗi - Phòng chống DoS (tấn công từ chối dịch vụ): Giới hạn số kết nối đang chờ đồng thời - Thời gian chờ khi đọc: Cả theo từng lần đọc và tổng thể (bảo vệ khỏi &ldquo;slowloris&rdquo;)</p>
+<h2 id="hướng-dẫn-về-độ-lệch-đồng-hồ">Hướng dẫn về độ lệch đồng hồ</h2>
+<p><strong>Các trường dấu thời gian:</strong> - Thông điệp 1: <code>tsA</code> (dấu thời gian của Alice) - Thông điệp 2: <code>tsB</code> (dấu thời gian của Bob) - Thông điệp 3+: Các khối DateTime (ngày-giờ) tùy chọn</p>
+<p><strong>Độ lệch thời gian tối đa (D):</strong> - Thông thường: <strong>±60 giây</strong> - Có thể cấu hình theo từng triển khai - Độ lệch &gt; D thường gây lỗi chí mạng</p>
+<h3 id="cách-bob-xử-lý-thông-điệp-1">Cách Bob xử lý (Thông điệp 1)</h3>
+<pre tabindex="0"><code>1. Receive tsA from Alice
+2. skew = tsA - current_time
+3. If |skew| &gt; D:
+   a. Still send message 2 (allows Alice to calculate skew)
+   b. Include tsB in message 2
+   c. Do NOT initiate handshake completion
+   d. Optionally: Temporary ban Alice&#39;s IP
+   e. After message 2 sent, close connection
+
+4. If |skew| ≤ D:
+   a. Continue handshake normally
+</code></pre><p><strong>Lý do:</strong> Việc gửi thông điệp 2 ngay cả khi có sai lệch thời gian (skew) cho phép Alice chẩn đoán các vấn đề về đồng hồ.</p>
+<h3 id="cách-xử-lý-của-alice-thông-điệp-2">Cách xử lý của Alice (Thông điệp 2)</h3>
+<pre tabindex="0"><code>1. Receive tsB from Bob
+2. RTT = (current_time_now - tsA_sent)
+3. adjusted_skew = (tsB - current_time_now) - (RTT / 2)
+4. If |adjusted_skew| &gt; D:
+   a. Close connection immediately
+   b. If local clock suspect: Adjust clock or use external time source
+   c. If Bob&#39;s clock suspect: Temporary ban Bob
+   d. Log for operator review
+5. If |adjusted_skew| ≤ D:
+   a. Continue handshake normally
+   b. Optionally: Track skew for time synchronization
+</code></pre><p><strong>Điều chỉnh RTT (thời gian khứ hồi):</strong> - Trừ một nửa RTT khỏi độ lệch đã tính - Tính đến độ trễ lan truyền của mạng - Ước tính độ lệch chính xác hơn</p>
+<h3 id="cách-bob-xử-lý-thông-điệp-3">Cách Bob xử lý (Thông điệp 3)</h3>
+<pre tabindex="0"><code>1. If message 3 received (unlikely if skew exceeded in message 1)
+2. Recalculate skew = tsA_received - current_time
+3. If |adjusted_skew| &gt; D:
+   a. Send termination block (reason code 7: clock skew)
+   b. Close connection
+   c. Ban Alice for period (e.g., 1-24 hours)
+</code></pre><h3 id="đồng-bộ-thời-gian">Đồng bộ thời gian</h3>
+<p><strong>Các khối DateTime (ngày-giờ) (Giai đoạn dữ liệu):</strong> - Gửi khối DateTime (loại 0) theo định kỳ - Bên nhận có thể dùng để hiệu chỉnh đồng hồ - Làm tròn dấu thời gian về giây gần nhất (tránh sai lệch)</p>
+<p><strong>Nguồn thời gian bên ngoài:</strong> - NTP (Giao thức thời gian mạng) - Đồng bộ hóa đồng hồ hệ thống - Thời gian đồng thuận của mạng I2P</p>
+<p><strong>Chiến lược điều chỉnh đồng hồ:</strong> - Nếu đồng hồ cục bộ bị sai: Điều chỉnh thời gian hệ thống hoặc dùng offset (độ bù) - Nếu đồng hồ của các nút ngang hàng thường xuyên sai: Gắn cờ vấn đề ở nút ngang hàng - Theo dõi thống kê độ lệch (skew) để giám sát sức khỏe mạng</p>
+<h2 id="thuộc-tính-bảo-mật">Thuộc tính bảo mật</h2>
+<h3 id="tính-bí-mật-chuyển-tiếp">Tính bí mật chuyển tiếp</h3>
+<p><strong>Đạt được thông qua:</strong> - Trao đổi khóa Diffie-Hellman tạm thời (X25519) - Ba phép toán DH: es, ee, se (Noise XK pattern (mẫu Noise XK)) - Khóa tạm thời được hủy sau khi hoàn tất bắt tay</p>
+<p><strong>Tiến triển về tính bí mật:</strong> - Thông điệp 1: Mức 2 (bí mật chuyển tiếp khi bên gửi bị thỏa hiệp) - Thông điệp 2: Mức 1 (người nhận tạm thời) - Thông điệp 3+: Mức 5 (bí mật chuyển tiếp mạnh)</p>
+<p><strong>Bí mật chuyển tiếp hoàn hảo:</strong> - Việc bị xâm phạm các khóa tĩnh dài hạn KHÔNG làm lộ các khóa phiên trong quá khứ - Mỗi phiên sử dụng các khóa tạm thời duy nhất - Các khóa riêng tạm thời không bao giờ được tái sử dụng - Dọn sạch bộ nhớ sau khi thỏa thuận khóa</p>
+<p><strong>Hạn chế:</strong> - Thông điệp 1 dễ bị tấn công nếu khóa tĩnh của Bob bị lộ (nhưng vẫn có forward secrecy (bí mật chuyển tiếp) nếu Alice bị xâm phạm) - Có thể xảy ra tấn công phát lại đối với thông điệp 1 (giảm thiểu bằng dấu thời gian và bộ đệm phát lại)</p>
+<h3 id="xác-thực">Xác thực</h3>
+<p><strong>Xác thực lẫn nhau:</strong> - Alice được xác thực bằng khóa tĩnh trong thông điệp 3 - Bob được xác thực bằng việc sở hữu khóa riêng tĩnh (ngầm định từ quá trình bắt tay thành công)</p>
+<p><strong>Khả năng kháng Key Compromise Impersonation (mạo danh khi lộ khóa, KCI):</strong> - Cấp độ xác thực 2 (kháng KCI) - Kẻ tấn công không thể mạo danh Alice ngay cả khi có khóa riêng tĩnh của Alice (mà không có khóa tạm thời của Alice) - Kẻ tấn công không thể mạo danh Bob ngay cả khi có khóa riêng tĩnh của Bob (mà không có khóa tạm thời của Bob)</p>
+<p><strong>Xác minh khóa tĩnh:</strong> - Alice biết khóa tĩnh của Bob từ trước (từ RouterInfo) - Bob xác minh khóa tĩnh của Alice khớp với RouterInfo trong thông điệp 3 - Ngăn chặn tấn công kẻ trung gian (man-in-the-middle)</p>
+<h3 id="khả-năng-chống-phân-tích-lưu-lượng">Khả năng chống phân tích lưu lượng</h3>
+<p><strong>Biện pháp đối phó DPI (kiểm tra gói tin sâu):</strong> 1. <strong>Che giấu bằng AES:</strong> Các khóa tạm thời được mã hóa, trông ngẫu nhiên 2. <strong>Che giấu độ dài bằng SipHash:</strong> Độ dài khung không ở dạng rõ 3. <strong>Đệm ngẫu nhiên:</strong> Kích thước thông điệp thay đổi, không có mẫu cố định 4. <strong>Khung được mã hóa:</strong> Toàn bộ tải trọng được mã hóa bằng ChaCha20</p>
+<p><strong>Ngăn chặn tấn công phát lại:</strong> - Xác thực dấu thời gian (±60 giây) - Bộ đệm phát lại cho các khóa tạm thời (thời gian sống 2*D) - Việc tăng nonce (số dùng một lần) ngăn phát lại gói tin trong cùng phiên</p>
+<p><strong>Khả năng chống thăm dò:</strong> - Hết thời gian chờ ngẫu nhiên khi xảy ra lỗi AEAD - Đọc các byte ngẫu nhiên trước khi đóng kết nối - Không phản hồi khi xảy ra lỗi bắt tay - Đưa IP vào danh sách đen khi lỗi lặp lại</p>
+<p><strong>Hướng dẫn về đệm:</strong> - Thông điệp 1-2: Đệm dạng rõ (được xác thực) - Thông điệp 3+: Đệm được mã hóa bên trong các khung AEAD (xác thực kèm dữ liệu) - Tham số đệm được thương lượng (Options block) - Cho phép các khung chỉ chứa đệm</p>
+<h3 id="giảm-thiểu-tấn-công-từ-chối-dịch-vụ">Giảm thiểu tấn công từ chối dịch vụ</h3>
+<p><strong>Giới hạn kết nối:</strong> - Số kết nối đang hoạt động tối đa (phụ thuộc vào cách triển khai) - Số bắt tay đang chờ tối đa (ví dụ: 100-1000) - Giới hạn kết nối theo từng IP (ví dụ: 3-10 đồng thời)</p>
+<p><strong>Bảo vệ tài nguyên:</strong> - Giới hạn tốc độ hoạt động DH (tốn tài nguyên) - Thời gian chờ đọc theo từng socket và tổng thể - Bảo vệ trước &ldquo;Slowloris&rdquo; (giới hạn tổng thời gian) - Đưa IP vào danh sách đen khi lạm dụng</p>
+<p><strong>Từ chối nhanh:</strong> - Không khớp Network ID → đóng ngay lập tức - Điểm X25519 không hợp lệ → kiểm tra nhanh MSB (bit có trọng số lớn nhất) trước khi giải mã - Dấu thời gian ngoài phạm vi → đóng mà không cần tính toán - Lỗi AEAD (mã hóa xác thực kèm dữ liệu) → không phản hồi, trễ ngẫu nhiên</p>
+<p><strong>Khả năng chống thăm dò:</strong> - Thời gian chờ ngẫu nhiên: 100-500ms (phụ thuộc vào triển khai) - Đọc ngẫu nhiên: 1KB-64KB (phụ thuộc vào triển khai) - Không cung cấp thông tin lỗi cho kẻ tấn công - Đóng bằng TCP RST (không thực hiện bắt tay FIN)</p>
+<h3 id="an-toàn-mật-mã">An toàn mật mã</h3>
+<p><strong>Thuật toán:</strong> - <strong>X25519</strong>: mức an toàn 128-bit, DH trên đường cong elliptic (Curve25519) - <strong>ChaCha20</strong>: mật mã dòng khóa 256-bit - <strong>Poly1305</strong>: MAC an toàn theo lý thuyết thông tin - <strong>SHA-256</strong>: kháng va chạm 128-bit, kháng tiền ảnh 256-bit - <strong>HMAC-SHA256</strong>: PRF (hàm giả ngẫu nhiên) để dẫn xuất khóa</p>
+<p><strong>Kích thước khóa:</strong> - Khóa tĩnh: 32 byte (256 bit) - Khóa tạm thời: 32 byte (256 bit) - Khóa mã hóa: 32 byte (256 bit) - MAC (mã xác thực thông điệp): 16 byte (128 bit)</p>
+<p><strong>Các vấn đề đã biết:</strong> - Tái sử dụng nonce của ChaCha20 gây hậu quả thảm khốc (được ngăn ngừa bằng cách tăng bộ đếm) - X25519 có vấn đề về nhóm con nhỏ (giảm thiểu bằng xác thực đường cong) - SHA-256 về mặt lý thuyết dễ bị tấn công mở rộng độ dài (không thể khai thác trong HMAC)</p>
+<p><strong>Không có lỗ hổng đã biết (tính đến tháng 10 năm 2025):</strong> - Noise Protocol Framework (khung giao thức Noise) đã được phân tích rộng rãi - ChaCha20-Poly1305 được triển khai trong TLS 1.3 - X25519 là tiêu chuẩn trong các giao thức hiện đại - Không có tấn công thực tế vào thiết kế (construction)</p>
+<h2 id="tài-liệu-tham-khảo">Tài liệu tham khảo</h2>
+<h3 id="các-đặc-tả-chính">Các đặc tả chính</h3>
+<ul>
+<li><strong><a href="../../../../vi/docs/specs/ntcp2/">Đặc tả NTCP2</a>
+</strong> - Đặc tả I2P chính thức</li>
+<li><strong><a href="../../../../vi/proposals/111-ntcp-2/">Đề xuất 111</a>
+</strong> - Tài liệu thiết kế ban đầu kèm phần giải thích lý do</li>
+<li><strong><a href="https://noiseprotocol.org/noise.html">Noise Protocol Framework</a>
+</strong> - Bản sửa đổi 33 (2017-10-04)</li>
+</ul>
+<h3 id="các-tiêu-chuẩn-mật-mã">Các tiêu chuẩn mật mã</h3>
+<ul>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc7748">RFC 7748</a>
+</strong> - Đường cong elliptic cho bảo mật (X25519)</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc7539">RFC 7539</a>
+</strong> - ChaCha20 và Poly1305 cho các giao thức của IETF</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc8439">RFC 8439</a>
+</strong> - ChaCha20-Poly1305 (thay thế RFC 7539)</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc2104">RFC 2104</a>
+</strong> - HMAC: Băm có khóa để xác thực thông điệp</li>
+<li><strong><a href="https://www.131002.net/siphash/">SipHash</a>
+</strong> - SipHash-2-4 cho các ứng dụng của hàm băm</li>
+</ul>
+<h3 id="các-đặc-tả-kỹ-thuật-i2p-liên-quan">Các đặc tả kỹ thuật I2P liên quan</h3>
+<ul>
+<li><strong><a href="../../../../vi/docs/specs/i2np/">I2NP Specification</a>
+</strong> - định dạng thông điệp của giao thức mạng I2P</li>
+<li><strong><a href="../../../../vi/docs/specs/common-structures/">Common Structures</a>
+</strong> - các định dạng RouterInfo, RouterAddress</li>
+<li><strong><a href="../../../../vi/docs/legacy/ssu/">SSU Transport</a>
+</strong> - transport UDP (ban đầu, nay là SSU2)</li>
+<li><strong><a href="../../../../vi/proposals/147-transport-network-id-check/">Proposal 147</a>
+</strong> - Kiểm tra Transport Network ID (0.9.42)</li>
+</ul>
+<h3 id="tài-liệu-tham-khảo-triển-khai">Tài liệu tham khảo triển khai</h3>
+<ul>
+<li><strong><a href="https://github.com/i2p/i2p.i2p">I2P Java</a>
+</strong> - Bản triển khai tham chiếu (Java)</li>
+<li><strong><a href="https://github.com/PurpleI2P/i2pd">i2pd</a>
+</strong> - Triển khai C++</li>
+<li><strong><a href="../../../../vi/blog/">I2P Release Notes</a>
+</strong> - Lịch sử phiên bản và cập nhật</li>
+</ul>
+<h3 id="bối-cảnh-lịch-sử">Bối cảnh lịch sử</h3>
+<ul>
+<li><strong><a href="https://en.wikipedia.org/wiki/Station-to-Station_protocol">Station-To-Station Protocol (STS)</a>
+</strong> - Nguồn cảm hứng cho Noise framework (khung giao thức Noise)</li>
+<li><strong><a href="https://gitlab.com/yawning/obfs4">obfs4</a>
+</strong> - Pluggable transport (cơ chế truyền tải có thể cắm thêm; tiền lệ che giấu độ dài bằng SipHash)</li>
+</ul>
+<h2 id="hướng-dẫn-hiện-thực">Hướng dẫn hiện thực</h2>
+<h3 id="các-yêu-cầu-bắt-buộc">Các yêu cầu bắt buộc</h3>
+<p><strong>Vì mục đích tuân thủ:</strong></p>
+<ol>
+<li>
+<p><strong>Triển khai bắt tay hoàn chỉnh:</strong></p>
+<ul>
+<li>Hỗ trợ cả ba thông điệp với các chuỗi KDF (hàm dẫn xuất khóa) chính xác</li>
+<li>Kiểm tra tính hợp lệ của mọi thẻ AEAD (mã hóa xác thực kèm dữ liệu)</li>
+<li>Xác minh rằng các điểm X25519 (thuật toán trao đổi khóa dựa trên đường cong elliptic Curve25519) là hợp lệ</li>
+</ul>
+</li>
+<li>
+<p><strong>Triển khai Giai đoạn Dữ liệu:</strong></p>
+<ul>
+<li>Che giấu độ dài bằng SipHash (theo cả hai hướng)</li>
+<li>Tất cả các loại khối: 0 (DateTime), 1 (Options), 2 (RouterInfo), 3 (I2NP), 4 (Termination), 254 (Padding)</li>
+<li>Quản lý nonce (số dùng một lần) đúng cách (các bộ đếm riêng biệt)</li>
+</ul>
+</li>
+<li>
+<p><strong>Các tính năng bảo mật:</strong></p>
+<ul>
+<li>Ngăn chặn phát lại (lưu cache các khóa tạm thời trong 2*D)</li>
+<li>Xác minh dấu thời gian (mặc định ±60 giây)</li>
+<li>Đệm ngẫu nhiên trong các thông điệp 1-2</li>
+<li>Xử lý lỗi AEAD (Authenticated Encryption with Associated Data - mã hóa xác thực kèm dữ liệu) với thời gian chờ ngẫu nhiên</li>
+</ul>
+</li>
+<li>
+<p><strong>Công bố RouterInfo:</strong></p>
+<ul>
+<li>Công bố khóa tĩnh (&ldquo;s&rdquo;), IV (&ldquo;i&rdquo;), và phiên bản (&ldquo;v&rdquo;)</li>
+<li>Luân chuyển khóa theo chính sách</li>
+<li>Hỗ trợ trường capabilities (&ldquo;caps&rdquo;) cho router ẩn</li>
+</ul>
+</li>
+<li>
+<p><strong>Khả năng tương thích mạng:</strong></p>
+<ul>
+<li>Hỗ trợ trường Network ID (hiện là 2 đối với mainnet (mạng chính))</li>
+<li>Tương tác liên thông với các triển khai Java và i2pd hiện có</li>
+<li>Hỗ trợ cả IPv4 và IPv6</li>
+</ul>
+</li>
+</ol>
+<h3 id="thực-tiễn-khuyến-nghị">Thực tiễn khuyến nghị</h3>
+<p><strong>Tối ưu hóa hiệu năng:</strong></p>
+<ol>
+<li>
+<p><strong>Chiến lược đệm:</strong></p>
+<ul>
+<li>Xả toàn bộ thông điệp cùng lúc (thông điệp 1, 2, 3)</li>
+<li>Sử dụng TCP_NODELAY cho các thông điệp bắt tay</li>
+<li>Gộp nhiều khối dữ liệu vào các khung đơn</li>
+<li>Giới hạn kích thước khung ở vài KB (giảm thiểu độ trễ phía nhận)</li>
+</ul>
+</li>
+<li>
+<p><strong>Quản lý kết nối:</strong></p>
+<ul>
+<li>Tái sử dụng các kết nối khi có thể</li>
+<li>Triển khai connection pooling (bể kết nối)</li>
+<li>Giám sát tình trạng kết nối (DateTime blocks - tình trạng bị chặn liên quan đến DateTime)</li>
+</ul>
+</li>
+<li>
+<p><strong>Quản lý bộ nhớ:</strong></p>
+<ul>
+<li>Xóa sạch dữ liệu nhạy cảm sau khi sử dụng (khóa tạm thời, kết quả DH (Diffie-Hellman))</li>
+<li>Giới hạn số lượng bắt tay đồng thời (ngăn chặn DoS (tấn công từ chối dịch vụ))</li>
+<li>Sử dụng pool bộ nhớ cho các lần cấp phát thường xuyên</li>
+</ul>
+</li>
+</ol>
+<p><strong>Tăng cường bảo mật:</strong></p>
+<ol>
+<li>
+<p><strong>Khả năng chống thăm dò:</strong></p>
+<ul>
+<li>Thời gian chờ ngẫu nhiên: 100-500ms</li>
+<li>Đọc byte ngẫu nhiên: 1KB-64KB</li>
+<li>Đưa IP vào danh sách đen khi lỗi lặp lại</li>
+<li>Không tiết lộ chi tiết lỗi cho các nút ngang hàng</li>
+</ul>
+</li>
+<li>
+<p><strong>Giới hạn tài nguyên:</strong></p>
+<ul>
+<li>Số kết nối tối đa trên mỗi IP: 3-10</li>
+<li>Số bắt tay đang chờ tối đa: 100-1000</li>
+<li>Thời gian chờ đọc: 30-60 giây mỗi thao tác</li>
+<li>Tổng thời gian chờ kết nối: 5 phút cho quá trình bắt tay</li>
+</ul>
+</li>
+<li>
+<p><strong>Quản lý khóa:</strong></p>
+<ul>
+<li>Lưu trữ lâu dài khóa tĩnh và IV (vector khởi tạo)</li>
+<li>Sinh số ngẫu nhiên an toàn (cryptographic RNG - bộ tạo số ngẫu nhiên mật mã)</li>
+<li>Tuân thủ nghiêm ngặt các chính sách luân chuyển (rotation)</li>
+<li>Không bao giờ tái sử dụng khóa tạm thời</li>
+</ul>
+</li>
+</ol>
+<p><strong>Giám sát và Chẩn đoán:</strong></p>
+<ol>
+<li>
+<p><strong>Chỉ số:</strong></p>
+<ul>
+<li>Tỷ lệ thành công/thất bại của bắt tay</li>
+<li>Tỷ lệ lỗi AEAD (mã hóa xác thực kèm dữ liệu)</li>
+<li>Phân bố độ lệch đồng hồ</li>
+<li>Thống kê thời lượng kết nối</li>
+</ul>
+</li>
+<li>
+<p><strong>Ghi nhật ký:</strong></p>
+<ul>
+<li>Ghi nhật ký các lỗi bắt tay kèm mã lý do</li>
+<li>Ghi nhật ký các sự kiện lệch thời gian hệ thống</li>
+<li>Ghi nhật ký các địa chỉ IP bị cấm</li>
+<li>Tuyệt đối không ghi nhật ký dữ liệu khóa nhạy cảm</li>
+</ul>
+</li>
+<li>
+<p><strong>Kiểm thử:</strong></p>
+<ul>
+<li>Kiểm thử đơn vị cho các chuỗi KDF (hàm dẫn xuất khóa)</li>
+<li>Kiểm thử tích hợp với các triển khai khác</li>
+<li>Fuzzing (kiểm thử ngẫu nhiên) cho xử lý gói tin</li>
+<li>Kiểm thử tải để đánh giá khả năng chống DoS (tấn công từ chối dịch vụ)</li>
+</ul>
+</li>
+</ol>
+<h3 id="những-cạm-bẫy-thường-gặp">Những cạm bẫy thường gặp</h3>
+<p><strong>Các lỗi nghiêm trọng cần tránh:</strong></p>
+<ol>
+<li>
+<p><strong>Tái sử dụng nonce (giá trị ngẫu nhiên dùng một lần):</strong></p>
+<ul>
+<li>Không bao giờ đặt lại bộ đếm nonce giữa phiên</li>
+<li>Sử dụng các bộ đếm riêng cho từng chiều</li>
+<li>Kết thúc trước khi đạt tới 2^64 - 1</li>
+</ul>
+</li>
+<li>
+<p><strong>Luân chuyển khóa:</strong></p>
+<ul>
+<li>Không bao giờ luân chuyển khóa khi router đang chạy</li>
+<li>Không bao giờ tái sử dụng khóa tạm thời giữa các phiên</li>
+<li>Tuân theo các quy tắc về thời gian ngừng hoạt động tối thiểu</li>
+</ul>
+</li>
+<li>
+<p><strong>Xử lý dấu thời gian:</strong></p>
+<ul>
+<li>Không bao giờ chấp nhận dấu thời gian đã hết hạn</li>
+<li>Luôn điều chỉnh theo RTT (thời gian khứ hồi) khi tính độ lệch</li>
+<li>Làm tròn các dấu thời gian DateTime tới giây</li>
+</ul>
+</li>
+<li>
+<p><strong>Lỗi AEAD:</strong></p>
+<ul>
+<li>Không bao giờ tiết lộ loại lỗi cho kẻ tấn công</li>
+<li>Luôn sử dụng thời gian chờ ngẫu nhiên trước khi đóng</li>
+<li>Xử lý độ dài không hợp lệ giống như lỗi AEAD</li>
+</ul>
+</li>
+<li>
+<p><strong>Phần đệm:</strong></p>
+<ul>
+<li>Không bao giờ gửi phần đệm vượt ngoài các giới hạn đã thỏa thuận</li>
+<li>Luôn đặt khối phần đệm ở vị trí cuối cùng</li>
+<li>Không bao giờ có nhiều hơn một khối phần đệm trong mỗi khung</li>
+</ul>
+</li>
+<li>
+<p><strong>RouterInfo (thông tin về router):</strong></p>
+<ul>
+<li>Luôn xác minh khóa tĩnh khớp với RouterInfo</li>
+<li>Không bao giờ phát tán RouterInfos mà không có địa chỉ đã được công bố</li>
+<li>Luôn xác minh chữ ký</li>
+</ul>
+</li>
+</ol>
+<h3 id="phương-pháp-luận-kiểm-thử">Phương pháp luận kiểm thử</h3>
+<p><strong>Kiểm thử đơn vị:</strong></p>
+<ol>
+<li>
+<p><strong>Các nguyên thủy mật mã:</strong></p>
+<ul>
+<li>Vector kiểm thử cho X25519, ChaCha20, Poly1305, SHA-256</li>
+<li>Vector kiểm thử cho HMAC-SHA256</li>
+<li>Vector kiểm thử cho SipHash-2-4</li>
+</ul>
+</li>
+<li>
+<p><strong>Chuỗi KDF:</strong></p>
+<ul>
+<li>Kiểm thử đáp án đã biết cho cả ba thông điệp</li>
+<li>Xác minh sự lan truyền của khóa chuỗi</li>
+<li>Kiểm tra việc sinh IV (vector khởi tạo) của SipHash</li>
+</ul>
+</li>
+<li>
+<p><strong>Phân tích cú pháp thông điệp:</strong></p>
+<ul>
+<li>Giải mã thông điệp hợp lệ</li>
+<li>Từ chối thông điệp không hợp lệ</li>
+<li>Điều kiện biên (rỗng, kích thước tối đa)</li>
+</ul>
+</li>
+</ol>
+<p><strong>Kiểm thử tích hợp:</strong></p>
+<ol>
+<li>
+<p><strong>Bắt tay:</strong></p>
+<ul>
+<li>Trao đổi ba thông điệp thành công</li>
+<li>Từ chối do lệch đồng hồ</li>
+<li>Phát hiện tấn công phát lại</li>
+<li>Từ chối khóa không hợp lệ</li>
+</ul>
+</li>
+<li>
+<p><strong>Giai đoạn dữ liệu:</strong></p>
+<ul>
+<li>Truyền thông điệp I2NP</li>
+<li>Trao đổi RouterInfo</li>
+<li>Xử lý padding (đệm)</li>
+<li>Thông điệp kết thúc</li>
+</ul>
+</li>
+<li>
+<p><strong>Khả năng tương tác:</strong></p>
+<ul>
+<li>Kiểm thử khả năng tương tác với Java I2P</li>
+<li>Kiểm thử khả năng tương tác với i2pd</li>
+<li>Kiểm thử IPv4 và IPv6</li>
+<li>Kiểm thử router công khai và ẩn</li>
+</ul>
+</li>
+</ol>
+<p><strong>Kiểm tra bảo mật:</strong></p>
+<ol>
+<li>
+<p><strong>Kiểm thử tiêu cực:</strong></p>
+<ul>
+<li>Thẻ AEAD không hợp lệ</li>
+<li>Thông điệp bị phát lại</li>
+<li>Tấn công lệch đồng hồ</li>
+<li>Khung sai định dạng</li>
+</ul>
+</li>
+<li>
+<p><strong>Kiểm thử DoS:</strong></p>
+<ul>
+<li>Làm ngập kết nối</li>
+<li>Tấn công Slowloris</li>
+<li>Làm cạn kiệt CPU (DH (Diffie-Hellman - trao đổi khóa Diffie–Hellman) quá mức)</li>
+<li>Làm cạn kiệt bộ nhớ</li>
+</ul>
+</li>
+<li>
+<p><strong>Fuzzing (kiểm thử ngẫu nhiên):</strong></p>
+<ul>
+<li>Thông điệp bắt tay ngẫu nhiên</li>
+<li>Các khung ở pha dữ liệu ngẫu nhiên</li>
+<li>Các loại và kích thước khối ngẫu nhiên</li>
+<li>Giá trị mật mã không hợp lệ</li>
+</ul>
+</li>
+</ol>
+<h3 id="chuyển-đổi-từ-ntcp-giao-thức-truyền-tải-dựa-trên-tcp-của-i2p-cũ">Chuyển đổi từ NTCP (giao thức truyền tải dựa trên TCP của I2P cũ)</h3>
+<p><strong>Đối với hỗ trợ NTCP cũ (hiện đã bị loại bỏ):</strong></p>
+<p>NTCP (phiên bản 1) đã được gỡ bỏ kể từ I2P 0.9.50 (tháng 5 năm 2021). Tất cả các bản triển khai hiện tại bắt buộc phải hỗ trợ NTCP2. Ghi chú lịch sử:</p>
+<ol>
+<li>
+<p><strong>Giai đoạn chuyển tiếp (2018-2021):</strong></p>
+<ul>
+<li>0.9.36: NTCP2 được giới thiệu (bị vô hiệu hóa theo mặc định)</li>
+<li>0.9.37: NTCP2 được kích hoạt theo mặc định</li>
+<li>0.9.40: NTCP bị đánh dấu là lỗi thời</li>
+<li>0.9.50: NTCP bị loại bỏ</li>
+</ul>
+</li>
+<li>
+<p><strong>Phát hiện phiên bản:</strong></p>
+<ul>
+<li>&ldquo;NTCP&rdquo; (giao thức dựa trên TCP của I2P) transportStyle cho biết cả hai phiên bản đều được hỗ trợ</li>
+<li>&ldquo;NTCP2&rdquo; (phiên bản 2 của NTCP) transportStyle cho biết chỉ hỗ trợ NTCP2</li>
+<li>Tự động phát hiện thông qua kích thước thông điệp (287 so với 288 byte)</li>
+</ul>
+</li>
+<li>
+<p><strong>Trạng thái hiện tại:</strong></p>
+<ul>
+<li>Tất cả routers phải hỗ trợ NTCP2</li>
+<li>&ldquo;NTCP&rdquo; transportStyle (kiểu truyền tải) đã lỗi thời</li>
+<li>Chỉ sử dụng &ldquo;NTCP2&rdquo; transportStyle</li>
+</ul>
+</li>
+</ol>
+<h2 id="phụ-lục-a-mẫu-noise-xk">Phụ lục A: Mẫu Noise XK</h2>
+<p><strong>Mẫu Noise XK tiêu chuẩn (một mẫu bắt tay trong bộ khung giao thức Noise):</strong></p>
+<pre tabindex="0"><code>XK(s, rs):
+  &lt;- s
+  ...
+  -&gt; e, es
+  &lt;- e, ee
+  -&gt; s, se
+</code></pre><p><strong>Diễn giải:</strong></p>
+<ul>
+<li><code>&lt;-</code> : Thông điệp từ bên phản hồi (Bob) đến bên khởi tạo (Alice)</li>
+<li><code>-&gt;</code> : Thông điệp từ bên khởi tạo (Alice) đến bên phản hồi (Bob)</li>
+<li><code>s</code> : Khóa tĩnh (khóa danh tính dài hạn)</li>
+<li><code>rs</code> : Khóa tĩnh từ xa (khóa tĩnh của đối tác, đã biết trước)</li>
+<li><code>e</code> : Khóa tạm thời (cụ thể cho phiên, được tạo theo yêu cầu)</li>
+<li><code>es</code> : DH tạm thời–tĩnh (Diffie-Hellman - trao đổi khóa; tạm thời của Alice × tĩnh của Bob)</li>
+<li><code>ee</code> : DH tạm thời–tạm thời (tạm thời của Alice × tạm thời của Bob)</li>
+<li><code>se</code> : DH tĩnh–tạm thời (tĩnh của Alice × tạm thời của Bob)</li>
+</ul>
+<p><strong>Trình tự thỏa thuận khóa:</strong></p>
+<ol>
+<li><strong>Tiền thông điệp:</strong> Alice biết khóa công khai tĩnh của Bob (từ RouterInfo)</li>
+<li><strong>Thông điệp 1:</strong> Alice gửi khóa tạm thời, thực hiện es DH (ephemeral–static Diffie-Hellman)</li>
+<li><strong>Thông điệp 2:</strong> Bob gửi khóa tạm thời, thực hiện ee DH (ephemeral–ephemeral Diffie-Hellman)</li>
+<li><strong>Thông điệp 3:</strong> Alice tiết lộ khóa tĩnh, thực hiện se DH (static–ephemeral Diffie-Hellman)</li>
+</ol>
+<p><strong>Thuộc tính bảo mật:</strong></p>
+<ul>
+<li>Alice đã xác thực: Có (ở thông điệp 3)</li>
+<li>Bob đã xác thực: Có (bằng việc sở hữu khóa riêng tĩnh)</li>
+<li>Bí mật chuyển tiếp: Có (các khóa tạm thời đã bị hủy)</li>
+<li>KCI resistance (khả năng kháng lại tấn công Key Compromise Impersonation): Có (mức xác thực 2)</li>
+</ul>
+<h2 id="phụ-lục-b-mã-hóa-base64">Phụ lục B: Mã hóa Base64</h2>
+<p><strong>Bảng chữ cái Base64 của I2P:</strong></p>
+<pre tabindex="0"><code>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-~
+</code></pre><p><strong>Khác biệt so với Base64 tiêu chuẩn:</strong> - Ký tự 62-63: <code>-~</code> thay vì <code>+/</code> - Phần đệm: Giống (<code>=</code>) hoặc lược bỏ tùy ngữ cảnh</p>
+<p><strong>Cách sử dụng trong NTCP2:</strong> - Khóa tĩnh (&ldquo;s&rdquo;): 32 byte → 44 ký tự (không có phần đệm) - IV (&ldquo;i&rdquo;): 16 byte → 24 ký tự (không có phần đệm)</p>
+<p><strong>Ví dụ về mã hóa:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 32-byte static key (hex): </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># f4489e1bb0597b39ca6cbf5ad9f5f1f09043e02d96cb9aa6a63742b3462429aa</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2P Base64 encoded:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=</span>
+</span></span></code></pre></div><h2 id="phụ-lục-c-phân-tích-bắt-gói-tin">Phụ lục C: Phân tích bắt gói tin</h2>
+<p><strong>Nhận diện lưu lượng NTCP2:</strong></p>
+<ol>
+<li>
+<p><strong>Bắt tay TCP:</strong></p>
+<ul>
+<li>Chuẩn TCP SYN, SYN-ACK, ACK</li>
+<li>Cổng đích thường là 8887 hoặc tương tự</li>
+</ul>
+</li>
+<li>
+<p><strong>Thông điệp 1 (SessionRequest - yêu cầu phiên):</strong></p>
+<ul>
+<li>Dữ liệu ứng dụng đầu tiên từ Alice</li>
+<li>80-65535 byte (thường là vài trăm)</li>
+<li>Có vẻ ngẫu nhiên (khóa tạm thời được mã hóa bằng AES)</li>
+<li>Tối đa 287 byte nếu kết nối tới địa chỉ &ldquo;NTCP&rdquo;</li>
+</ul>
+</li>
+<li>
+<p><strong>Thông điệp 2 (SessionCreated):</strong></p>
+<ul>
+<li>Phản hồi từ Bob</li>
+<li>80-65535 byte (thường là vài trăm)</li>
+<li>Cũng có vẻ ngẫu nhiên</li>
+</ul>
+</li>
+<li>
+<p><strong>Thông điệp 3 (SessionConfirmed):</strong></p>
+<ul>
+<li>Từ Alice</li>
+<li>48 byte + phần biến thiên (kích thước RouterInfo (thông tin router trong I2P) + phần đệm)</li>
+<li>Thường khoảng 1–4 KB</li>
+</ul>
+</li>
+<li>
+<p><strong>Pha dữ liệu:</strong></p>
+<ul>
+<li>Khung có độ dài biến thiên</li>
+<li>Trường độ dài được làm rối (trông như ngẫu nhiên)</li>
+<li>Phần tải tin được mã hóa</li>
+<li>Đệm (padding) khiến kích thước khó dự đoán</li>
+</ul>
+</li>
+</ol>
+<p><strong>Tránh né DPI (kiểm tra gói sâu):</strong> - Không có tiêu đề văn bản thuần - Không có mẫu cố định - Các trường độ dài được che giấu - Phần đệm ngẫu nhiên phá vỡ các heuristic dựa trên kích thước</p>
+<p><strong>So sánh với NTCP:</strong> - Thông điệp 1 của NTCP luôn có kích thước 288 byte (dễ nhận diện) - Kích thước thông điệp 1 của NTCP2 thay đổi (không thể nhận diện) - NTCP có các mẫu dễ nhận ra - NTCP2 được thiết kế để chống DPI (kiểm tra gói dữ liệu sâu)</p>
+<h2 id="phụ-lục-d-lịch-sử-phiên-bản">Phụ lục D: Lịch sử phiên bản</h2>
+<p><strong>Các cột mốc quan trọng:</strong></p>
+<ul>
+<li><strong>0.9.36</strong> (23 tháng 8, 2018): NTCP2 được giới thiệu, tắt theo mặc định</li>
+<li><strong>0.9.37</strong> (4 tháng 10, 2018): NTCP2 được bật theo mặc định</li>
+<li><strong>0.9.40</strong> (20 tháng 5, 2019): NTCP được đánh dấu lỗi thời</li>
+<li><strong>0.9.42</strong> (27 tháng 8, 2019): Trường Network ID (mã mạng) được thêm (Đề xuất 147)</li>
+<li><strong>0.9.50</strong> (17 tháng 5, 2021): NTCP được gỡ bỏ, bổ sung hỗ trợ capabilities (các khả năng)</li>
+<li><strong>2.10.0</strong> (9 tháng 9, 2025): Bản phát hành ổn định mới nhất</li>
+</ul>
+<p><strong>Tính ổn định giao thức:</strong> - Không có thay đổi không tương thích ngược kể từ 0.9.50 - Các cải tiến liên tục nhằm tăng khả năng chống thăm dò - Tập trung vào hiệu năng và độ tin cậy - Mật mã hậu lượng tử đang được phát triển (không bật theo mặc định)</p>
+<p><strong>Trạng thái truyền tải hiện tại:</strong> - NTCP2: Giao thức truyền tải TCP bắt buộc - SSU2: Giao thức truyền tải UDP bắt buộc - NTCP (v1): Đã loại bỏ - SSU (v1): Đã loại bỏ</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                    
+                        <a href="../../../../vi/docs/specs/cryptography/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">Mật mã cấp thấp</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/vi/docs/specs/ntcp2.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Cập nhật tin tức I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Nhập email của bạn" required>
+                            <button type="submit">Đăng ký</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Liên kết nhanh</h3>
+                <ul>
+                    <li><a href="../../../../vi/financial-support/">Quyên góp</a></li>
+                    <li><a href="../../../../vi/docs/overview/intro/">Giới thiệu I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Cộng đồng</h3>
+                <ul>
+                    <li><a href="../../../../vi/get-involved/">Tham Gia</a></li>
+                    <li><a href="../../../../vi/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Diễn đàn chính thức</a></li>
+                    <li><a href="../../../../vi/contact/">Liên hệ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Tài nguyên</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Thống kê I2P</a></li>
+                    <li><a href="../../../../vi/papers/">Nghiên cứu</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Dự án Internet Vô hình. Được cấp phép theo Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../vi/privacy/">Quyền riêng tư</a>
+                <a href="../../../../vi/terms/">Điều khoản</a>
+                <a href="../../../../vi/about/media/">Báo chí</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Đóng">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Thăm dò ý kiến cộng đồng</h2>
+            <p class="modal-subtitle">Chúng tôi rất muốn nghe ý kiến từ bạn</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Phiếu bầu của bạn giúp định hình tương lai của I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

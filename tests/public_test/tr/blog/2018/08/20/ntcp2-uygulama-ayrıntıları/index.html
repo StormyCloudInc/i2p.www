@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>NTCP2 Uygulama Ayrıntıları | I2P - Görünmez İnternet Projesi</title>
+
+    <meta name="description" content="I2P&#39;nin yeni taşıma protokolünün gerçekleştirim ayrıntıları ve teknik spesifikasyonları">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="NTCP2 Uygulama Ayrıntıları | I2P - Görünmez İnternet Projesi">
+    <meta property="og:description" content="I2P&#39;nin yeni taşıma protokolünün gerçekleştirim ayrıntıları ve teknik spesifikasyonları">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tr/blog/2018/08/20/ntcp2-uygulama-ayr%C4%B1nt%C4%B1lar%C4%B1/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P Beta Sitesi Artık Yayında E-posta sorunları için stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Banner" title="Banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../../../tr/" class="logo-link">
+                    <img src="../../../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../../../tr/about/" class="">Hakkında</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../../../tr/about/">Genel Bakış</a></li>
+                            <li><a href="../../../../../../tr/papers/">Araştırma Makaleleri</a></li>
+                            <li><a href="../../../../../../tr/about/media/">Basın</a></li>
+                            <li><a href="../../../../../../tr/contact/">İletişim</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../../../tr/docs/" class="">Belgeler</a></li>
+                    <li><a href="../../../../../../tr/downloads/" class="">İndirilenler</a></li>
+                    <li><a href="../../../../../../tr/blog/" class="active">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../../../tr/get-involved/" class="">Katılım Sağla</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../../../tr/get-involved/">Genel Bakış</a></li>
+                            <li><a href="../../../../../../tr/feedback/">Özellik Önerileri</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">tr</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../en/blog/2018/08/20/ntcp2-implementation-details/"
+                                class="lang-option">İngilizce</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../es/blog/2018/08/20/detalles-de-implementaci%C3%B3n-de-ntcp2/"
+                                class="lang-option">İspanyolca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ko/blog/2018/08/20/ntcp2-%EA%B5%AC%ED%98%84-%EC%84%B8%EB%B6%80-%EC%82%AC%ED%95%AD/"
+                                class="lang-option">Korece</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../zh/blog/2018/08/20/ntcp2-%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82/"
+                                class="lang-option">Çince</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ru/blog/2018/08/20/%D0%BF%D0%BE%D0%B4%D1%80%D0%BE%D0%B1%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D1%80%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8-ntcp2/"
+                                class="lang-option">Rusça</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../cs/blog/2018/08/20/podrobnosti-implementace-ntcp2/"
+                                class="lang-option">Çekçe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../de/blog/2018/08/20/ntcp2-implementierungsdetails/"
+                                class="lang-option">Almanca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../fr/blog/2018/08/20/d%C3%A9tails-de-limpl%C3%A9mentation-de-ntcp2/"
+                                class="lang-option">Fransızca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../tr/blog/2018/08/20/ntcp2-uygulama-ayr%C4%B1nt%C4%B1lar%C4%B1/"
+                                class="lang-option active">Türkçe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../vi/blog/2018/08/20/chi-ti%E1%BA%BFt-tri%E1%BB%83n-khai-ntcp2/"
+                                class="lang-option">Vietnamca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../hi/blog/2018/08/20/ntcp2-%E0%A4%95%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%A8%E0%A5%8D%E0%A4%B5%E0%A4%AF%E0%A4%A8-%E0%A4%B5%E0%A4%BF%E0%A4%B5%E0%A4%B0%E0%A4%A3/"
+                                class="lang-option">Hintçe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ar/blog/2018/08/20/ntcp2-implementation-details/"
+                                class="lang-option">Arapça</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../pt/blog/2018/08/20/detalhes-de-implementa%C3%A7%C3%A3o-do-ntcp2/"
+                                class="lang-option">Portekizce</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../../../tr/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../../../tr/downloads/" class="btn btn-primary">I2P&#39;yi Edin</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+<article class="blog-post">
+    <div class="container">
+        <div class="post-header">
+            <div class="post-meta-row">
+                
+                <time class="post-date" datetime="2018-08-20">
+                    August 20, 2018
+                </time>
+                
+
+                
+                <div class="post-categories">
+                    
+                    <span class="category-badge">development</span>
+                    
+                </div>
+                
+            </div>
+
+            <h1 class="post-title">NTCP2 Uygulama Ayrıntıları</h1>
+
+            
+            <div class="post-author">By villain</div>
+            
+        </div>
+
+        <div class="post-content">
+            <p>I2P&rsquo;nin taşıma protokolleri ilk olarak yaklaşık 15 yıl önce geliştirildi. O zamanlar, başlıca amaç aktarılan veriyi gizlemekti; protokolün kullanıldığı gerçeğini gizlemek değildi. Kimse DPI (derin paket incelemesi) ve protokollerin sansürlenmesine karşı korumayı ciddi biçimde düşünmüyordu. Zaman değişti ve orijinal taşıma protokolleri hâlâ güçlü güvenlik sağlıyor olsa da, yeni bir taşıma protokolüne ihtiyaç vardı. NTCP2, güncel sansür tehditlerine karşı koymak üzere tasarlanmıştır; özellikle paket uzunluklarının DPI ile analizine karşı dayanıklıdır. Ayrıca, yeni protokol kriptografideki en modern gelişmeleri kullanır. NTCP2, <a href="https://noiseprotocol.org/noise.html">Noise Protocol Framework</a>
+ üzerine kuruludur; hash fonksiyonu olarak SHA256 ve eliptik eğri Diffie-Hellman (DH) anahtar değişimi olarak x25519 kullanır.</p>
+<p>NTCP2 protokolünün tam belirtimi <a href="../../../../../../tr/docs/specs/ntcp2/">burada bulunabilir</a>
+.</p>
+<h2 id="yeni-kriptografi">Yeni Kriptografi</h2>
+<p>NTCP2, bir I2P gerçekleştirmesine aşağıdaki kriptografik algoritmaların eklenmesini gerektirir:</p>
+<ul>
+<li>x25519</li>
+<li>HMAC-SHA256</li>
+<li>Chacha20</li>
+<li>Poly1305</li>
+<li>AEAD</li>
+<li>SipHash</li>
+</ul>
+<p>Orijinal protokolümüz olan NTCP ile karşılaştırıldığında, NTCP2, DH işlevi için ElGamal yerine x25519, AES-256-CBC/Adler32 yerine de AEAD/Chaha20/Poly1305 kullanır ve paketin uzunluk bilgisini gizlemek için SipHash kullanır. NTCP2&rsquo;de kullanılan anahtar türetme işlevi daha karmaşıktır; artık çok sayıda HMAC-SHA256 çağrısı kullanmaktadır.</p>
+<p><em>i2pd (C++) uygulama notu: Yukarıda bahsedilen algoritmaların tümü, SipHash hariç, OpenSSL 1.1.0&rsquo;da uygulanmıştır. SipHash, yakında çıkacak OpenSSL 1.1.1 sürümüne eklenecektir. Güncel sistemlerin çoğunda kullanılan OpenSSL 1.0.2 ile uyumluluk için, i2pd çekirdek geliştiricisi <a href="https://github.com/majestrate">Jeff Becker</a>
+ eksik kriptografik algoritmaların bağımsız gerçeklemelerine katkıda bulunmuştur.</em></p>
+<h2 id="routerinfo-değişiklikleri">RouterInfo Değişiklikleri</h2>
+<p>NTCP2, mevcut iki anahtara (şifreleme ve imza anahtarları) ek olarak üçüncü bir (x25519) anahtarın bulunmasını gerektirir. Buna statik anahtar denir ve RouterInfo içindeki adreslere &ldquo;s&rdquo; parametresi olarak eklenmelidir. Bu, hem NTCP2 başlatıcı (Alice) hem de yanıtlayıcı (Bob) için gereklidir. Birden fazla adres NTCP2&rsquo;yi destekliyorsa, örneğin IPv4 ve IPv6, &ldquo;s&rdquo; parametresinin tümü için aynı olması zorunludur. Alice&rsquo;in adresinde &ldquo;host&rdquo; ve &ldquo;port&rdquo; ayarlanmadan yalnızca &ldquo;s&rdquo; parametresinin bulunmasına izin verilir. Ayrıca bir &ldquo;v&rdquo; parametresi gereklidir; bu da şu anda her zaman &ldquo;2&rdquo; olarak ayarlanır.</p>
+<p>NTCP2 adresi, ya ayrı bir NTCP2 adresi olarak ya da ek parametrelerle eski tarz bir NTCP adresi olarak belirtilebilir; bu durumda hem NTCP hem de NTCP2 bağlantılarını kabul eder. Java I2P uygulaması ikinci yaklaşımı kullanır, i2pd (C++ uygulaması) ise birincisini kullanır.</p>
+<p>Bir düğüm NTCP2 bağlantılarını kabul ediyorsa, o düğüm yeni bağlantılar kurduğunda açık şifreleme anahtarı için bir başlatma vektörü (IV) olarak kullanılan &ldquo;i&rdquo; parametresiyle RouterInfo’sunu yayımlamak zorundadır.</p>
+<h2 id="bağlantı-kurulması">Bağlantı Kurulması</h2>
+<p>Bağlantı kurmak için her iki tarafın da geçici x25519 anahtar çiftleri oluşturması gerekir. Bu anahtarlara ve &ldquo;statik&rdquo; anahtarlara dayanarak veri aktarımı için bir anahtar kümesi türetirler. Her iki taraf da, diğer tarafın gerçekten o statik anahtara karşılık gelen bir özel anahtara sahip olduğunu ve o statik anahtarın RouterInfo’dakiyle aynı olduğunu doğrulamalıdır.</p>
+<p>Bir bağlantı kurmak için üç mesaj gönderiliyor:</p>
+<pre tabindex="0"><code>Alice                           Bob
+
+SessionRequest -------------------&gt;
+&lt;------------------- SessionCreated
+SessionConfirmed -----------------&gt;
+</code></pre><p>Her mesaj için «input key material» (girdi anahtar malzemesi) olarak adlandırılan paylaşılan bir x25519 anahtarı hesaplanır; ardından mesaj şifreleme anahtarı bir MixKey fonksiyonu ile üretilir. Mesajlar alışverişi sırasında ck (chaining key, zincirleme anahtarı) değeri tutulur. Veri aktarımı için anahtarlar üretilirken bu değer son girdi olarak kullanılır.</p>
+<p>MixKey işlevi I2P&rsquo;nin C++ gerçeklemesinde yaklaşık olarak şöyle görünür:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> NTCP2Establisher<span style="color:#f92672">::</span>MixKey (<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint8_t</span> <span style="color:#f92672">*</span> inputKeyMaterial, <span style="color:#66d9ef">uint8_t</span> <span style="color:#f92672">*</span> derived)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// temp_key = HMAC-SHA256(ck, input_key_material)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">uint8_t</span> tempKey[<span style="color:#ae81ff">32</span>]; <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> len;
+</span></span><span style="display:flex;"><span>    HMAC(EVP_sha256(), m_CK, <span style="color:#ae81ff">32</span>, inputKeyMaterial, <span style="color:#ae81ff">32</span>, tempKey, <span style="color:#f92672">&amp;</span>len);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ck = HMAC-SHA256(temp_key, byte(0x01))
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">uint8_t</span> one[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span>  { <span style="color:#ae81ff">1</span> };
+</span></span><span style="display:flex;"><span>    HMAC(EVP_sha256(), tempKey, <span style="color:#ae81ff">32</span>, one, <span style="color:#ae81ff">1</span>, m_CK, <span style="color:#f92672">&amp;</span>len);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// derived = HMAC-SHA256(temp_key, ck || byte(0x02))
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    m_CK[<span style="color:#ae81ff">32</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>    HMAC(EVP_sha256(), tempKey, <span style="color:#ae81ff">32</span>, m_CK, <span style="color:#ae81ff">33</span>, derived, <span style="color:#f92672">&amp;</span>len);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>SessionRequest</strong> mesajı şunlardan oluşur: bir x25519 Alice açık anahtarı (32 bayt), AEAD/Chacha20/Poly1305 ile şifrelenmiş bir veri bloğu (16 bayt), bir özet (16 bayt) ve sonda biraz rastgele veri (dolgu). Dolgu uzunluğu, şifrelenmiş veri bloğunda tanımlanır. Şifrelenmiş blok ayrıca <strong>SessionConfirmed</strong> mesajının ikinci bölümünün uzunluğunu da içerir. Bir veri bloğu, Alice&rsquo;in geçici anahtarından ve Bob&rsquo;un statik anahtarından türetilen bir anahtarla şifrelenir ve imzalanır. MixKey fonksiyonu için başlangıç ck değeri SHA256 olarak ayarlanır (Noise_XKaesobfse+hs2+hs3_25519_ChaChaPoly_SHA256).</p>
+<p>Açık x25519 anahtarının 32 baytı DPI (Derin Paket İnceleme) tarafından tespit edilebildiğinden, Bob&rsquo;un adresinin hash&rsquo;ini (özetini) anahtar olarak ve RouterInfo&rsquo;daki &ldquo;i&rdquo; parametresini ilklendirme vektörü (IV) olarak kullanarak AES-256-CBC algoritmasıyla şifrelenir.</p>
+<p><strong>SessionCreated</strong> mesajı, anahtarın her iki tarafın geçici anahtarlarına göre hesaplanması dışında, <strong>SessionRequest</strong> ile aynı yapıya sahiptir. <strong>SessionRequest</strong> mesajındaki açık anahtarın şifrelenmesi/şifre çözülmesinden sonra üretilen IV (başlatma vektörü), geçici açık anahtarın şifrelenmesi/şifre çözülmesi için IV olarak kullanılır.</p>
+<p><strong>SessionConfirmed</strong> mesajı 2 parçadan oluşur: statik açık anahtar ve Alice&rsquo;e ait RouterInfo. Önceki mesajlardan farkı, geçici (ephemeral) açık anahtarın <strong>SessionCreated</strong> ile aynı anahtar kullanılarak AEAD/Chaha20/Poly1305 ile şifrelenmiş olmasıdır. Bu, mesajın ilk kısmının 32 bayttan 48 bayta çıkarılmasına yol açar. İkinci kısım da AEAD/Chaha20/Poly1305 ile şifrelenir, ancak Bob&rsquo;un geçici anahtarı ve Alice&rsquo;in statik anahtarından hesaplanan yeni bir anahtar kullanılarak. RouterInfo bölümü ayrıca rastgele veri dolgusu ile genişletilebilir, ancak gerekli değildir; çünkü RouterInfo genellikle değişken uzunluktadır.</p>
+<h2 id="veri-aktarım-anahtarlarının-oluşturulması">Veri Aktarım Anahtarlarının Oluşturulması</h2>
+<p>Eğer tüm hash ve anahtar doğrulamaları başarılı olduysa, her iki tarafta da son MixKey işleminin ardından ortak bir ck değeri mevcut olmalıdır. Bu değer, bir bağlantının her bir tarafı için iki anahtar kümesi &lt;k, sipk, sipiv&gt; oluşturmak üzere kullanılır. &ldquo;k&rdquo; bir AEAD/Chaha20/Poly1305 anahtarıdır, &ldquo;sipk&rdquo; bir SipHash anahtarıdır, &ldquo;sipiv&rdquo; ise SipHash IV (başlatma vektörü) için bir başlangıç değeridir ve her kullanımından sonra değiştirilir.</p>
+<p>Anahtarları üretmek için kullanılan kod, I2P&rsquo;nin C++ gerçekleştirmesinde şu şekildedir:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> NTCP2Session<span style="color:#f92672">::</span>KeyDerivationFunctionDataPhase ()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint8_t</span> tempKey[<span style="color:#ae81ff">32</span>]; <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> len;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// temp_key = HMAC-SHA256(ck, zerolen)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HMAC(EVP_sha256(), m_Establisher<span style="color:#f92672">-&gt;</span>GetCK (), <span style="color:#ae81ff">32</span>, <span style="color:#66d9ef">nullptr</span>, <span style="color:#ae81ff">0</span>, tempKey, <span style="color:#f92672">&amp;</span>len);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">uint8_t</span> one[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span>  { <span style="color:#ae81ff">1</span> };
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// k_ab = HMAC-SHA256(temp_key, byte(0x01)).
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HMAC(EVP_sha256(), tempKey, <span style="color:#ae81ff">32</span>, one, <span style="color:#ae81ff">1</span>, m_Kab, <span style="color:#f92672">&amp;</span>len);
+</span></span><span style="display:flex;"><span>    m_Kab[<span style="color:#ae81ff">32</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// k_ba = HMAC-SHA256(temp_key, k_ab || byte(0x02))
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HMAC(EVP_sha256(), tempKey, <span style="color:#ae81ff">32</span>, m_Kab, <span style="color:#ae81ff">33</span>, m_Kba, <span style="color:#f92672">&amp;</span>len);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">uint8_t</span> ask[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> { <span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#e6db74">&#39;s&#39;</span>, <span style="color:#e6db74">&#39;k&#39;</span>, <span style="color:#ae81ff">1</span> }, master[<span style="color:#ae81ff">32</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ask_master = HMAC-SHA256(temp_key, &#34;ask&#34; || byte(0x01))
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HMAC(EVP_sha256(), tempKey, <span style="color:#ae81ff">32</span>, ask, <span style="color:#ae81ff">4</span>, master, <span style="color:#f92672">&amp;</span>len);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint8_t</span> h[<span style="color:#ae81ff">39</span>];
+</span></span><span style="display:flex;"><span>    memcpy (h, m_Establisher<span style="color:#f92672">-&gt;</span>GetH (), <span style="color:#ae81ff">32</span>);
+</span></span><span style="display:flex;"><span>    memcpy (h <span style="color:#f92672">+</span> <span style="color:#ae81ff">32</span>, <span style="color:#e6db74">&#34;siphash&#34;</span>, <span style="color:#ae81ff">7</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// temp_key = HMAC-SHA256(ask_master, h || &#34;siphash&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HMAC(EVP_sha256(), master, <span style="color:#ae81ff">32</span>, h, <span style="color:#ae81ff">39</span>, tempKey, <span style="color:#f92672">&amp;</span>len);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// sip_master = HMAC-SHA256(temp_key, byte(0x01))
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HMAC(EVP_sha256(), tempKey, <span style="color:#ae81ff">32</span>, one, <span style="color:#ae81ff">1</span>, master, <span style="color:#f92672">&amp;</span>len);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// temp_key = HMAC-SHA256(sip_master, zerolen)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HMAC(EVP_sha256(), master, <span style="color:#ae81ff">32</span>, <span style="color:#66d9ef">nullptr</span>, <span style="color:#ae81ff">0</span>, tempKey, <span style="color:#f92672">&amp;</span>len);
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// sipkeys_ab = HMAC-SHA256(temp_key, byte(0x01)).
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HMAC(EVP_sha256(), tempKey, <span style="color:#ae81ff">32</span>, one, <span style="color:#ae81ff">1</span>, m_Sipkeysab, <span style="color:#f92672">&amp;</span>len);
+</span></span><span style="display:flex;"><span>    m_Sipkeysab[<span style="color:#ae81ff">32</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#75715e">// sipkeys_ba = HMAC-SHA256(temp_key, sipkeys_ab || byte(0x02))
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HMAC(EVP_sha256(), tempKey, <span style="color:#ae81ff">32</span>, m_Sipkeysab, <span style="color:#ae81ff">33</span>, m_Sipkeysba, <span style="color:#f92672">&amp;</span>len);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><em>i2pd (C++) gerçekleme notu: &ldquo;sipkeys&rdquo; dizisinin ilk 16 baytı bir SipHash anahtarıdır, son 8 bayt ise IV&rsquo;dir (başlatma vektörü). SipHash iki adet 8 baytlık anahtar gerektirir, ancak i2pd bunları tek bir 16 baytlık anahtar olarak ele alır.</em></p>
+<h2 id="veri-aktarımı">Veri Aktarımı</h2>
+<p>Veri çerçeveler halinde aktarılır, her çerçeve 3 bölümden oluşur:</p>
+<ul>
+<li>2 bytes of frame length obfuscated with SipHash</li>
+<li>data encrypted with Chacha20</li>
+<li>16 bytes of Poly1305 hash value</li>
+</ul>
+<p>Tek bir çerçevede aktarılan verinin azami uzunluğu 65519 bayttır.</p>
+<p>Mesaj uzunluğu, geçerli SipHash IV&rsquo;nin ilk iki baytıyla XOR işlemi uygulanarak maskelenir.</p>
+<p>Şifrelenmiş veri bölümü, veri blokları içerir. Her bloğun başına, blok türünü ve blok uzunluğunu tanımlayan 3 baytlık bir başlık eklenir. Genellikle I2NP türü bloklar aktarılır; bunlar, başlığı değiştirilmiş I2NP iletileridir. Bir NTCP2 çerçevesi birden fazla I2NP bloğunu aktarabilir.</p>
+<p>Diğer önemli veri bloğu türü rastgele veri bloğudur. Her NTCP2 çerçevesine bir rastgele veri bloğu eklenmesi önerilir. Yalnızca bir rastgele veri bloğu eklenebilir ve bu son blok olmalıdır.</p>
+<p>Mevcut NTCP2 uygulamasında kullanılan diğer veri blokları şunlardır:</p>
+<ul>
+<li><strong>RouterInfo</strong> — usually contains Bob&rsquo;s RouterInfo after the connection has been established, but it can also contain RouterInfo of a random node for the purpose of speeding up floodfills (there is a flags field for that case).</li>
+<li><strong>Termination</strong> — is used when a host explicitly terminates a connection and specifies a reason for that.</li>
+<li><strong>DateTime</strong> — a current time in seconds.</li>
+</ul>
+<h2 id="özet">Özet</h2>
+<p>Yeni I2P taşıma protokolü NTCP2, DPI (Derin Paket İncelemesi) sansürüne karşı etkili direnç sağlar. Kullanılan daha hızlı, modern kriptografi sayesinde CPU yükünü de azaltır. Bu, I2P&rsquo;nin akıllı telefonlar ve ev router&rsquo;ları gibi düşük özellikli cihazlarda çalışmasını daha olası kılar. Her iki büyük I2P uygulaması da NTCP2&rsquo;yi tam olarak destekler ve 0.9.36 (Java) ile 2.20 (i2pd, C++) sürümlerinden itibaren NTCP2&rsquo;nin kullanılmasını sağlar.</p>
+
+        </div>
+
+        <div class="post-navigation">
+            <a href="../../../../../../tr/blog" class="back-to-blog">← Back to Blog</a>
+        </div>
+    </div>
+</article>
+
+<style>
+.blog-post {
+    padding: var(--spacing-2xl) 0;
+}
+
+.post-header {
+    margin-bottom: var(--spacing-2xl);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.post-meta-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.post-date {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.post-categories {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.category-badge {
+    padding: 0.25rem 0.625rem;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.post-title {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.2;
+}
+
+.post-author {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+}
+
+.post-content {
+    max-width: 800px;
+    margin: 0 auto var(--spacing-2xl);
+    line-height: 1.8;
+    font-size: 1.0625rem;
+}
+
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.post-content h2 {
+    font-size: 1.875rem;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.post-content h3 {
+    font-size: 1.5rem;
+}
+
+.post-content h4 {
+    font-size: 1.25rem;
+}
+
+.post-content ul,
+.post-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.post-content li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.post-content pre {
+    background-color: var(--color-bg-secondary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin: var(--spacing-lg) 0;
+    border: 1px solid var(--color-border);
+}
+
+.post-content code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+}
+
+.post-content pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.post-content :not(pre) > code {
+    background-color: var(--color-bg-tertiary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+}
+
+.post-navigation {
+    max-width: 800px;
+    margin: var(--spacing-2xl) auto 0;
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.back-to-blog {
+    color: var(--color-primary);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: gap var(--transition-fast);
+}
+
+.back-to-blog:hover {
+    gap: var(--spacing-sm);
+}
+
+@media (max-width: 768px) {
+    .post-meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+
+    .post-title {
+        font-size: 2rem;
+    }
+
+    .post-content {
+        font-size: 1rem;
+    }
+}
+</style>
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">I2P haberleriyle güncel kalın:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="E-posta adresinizi girin" required>
+                            <button type="submit">Abone Ol</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Hızlı Bağlantılar</h3>
+                <ul>
+                    <li><a href="../../../../../../tr/financial-support/">Bağış Yap</a></li>
+                    <li><a href="../../../../../../tr/docs/overview/intro/">I2P Tanıtımı</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Topluluk</h3>
+                <ul>
+                    <li><a href="../../../../../../tr/get-involved/">Katılın</a></li>
+                    <li><a href="../../../../../../tr/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Resmi Forumlar</a></li>
+                    <li><a href="../../../../../../tr/contact/">İletişim</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Kaynaklar</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P Metrikleri</a></li>
+                    <li><a href="../../../../../../tr/papers/">Araştırma</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Invisible Internet Projesi. Creative Commons altında lisanslanmıştır.</p>
+            <div class="footer-links">
+                <a href="../../../../../../tr/privacy/">Gizlilik</a>
+                <a href="../../../../../../tr/terms/">Şartlar</a>
+                <a href="../../../../../../tr/about/media/">Basın</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Kapat">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Topluluk Anketi</h2>
+            <p class="modal-subtitle">Sizden haber almaktan memnuniyet duyarız</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Oyunuz I2P&#39;nin geleceğini şekillendirmeye yardımcı olur.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

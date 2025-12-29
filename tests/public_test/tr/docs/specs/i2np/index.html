@@ -1,0 +1,2943 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>I2P Ağ Protokolü (I2NP) | I2P - Görünmez İnternet Projesi</title>
+
+    <meta name="description" content="Router&#39;lar arası mesaj biçimleri, öncelikler ve I2P içindeki boyut sınırları.">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="I2P Ağ Protokolü (I2NP) | I2P - Görünmez İnternet Projesi">
+    <meta property="og:description" content="Router&#39;lar arası mesaj biçimleri, öncelikler ve I2P içindeki boyut sınırları.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tr/docs/specs/i2np/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P Beta Sitesi Artık Yayında E-posta sorunları için stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Banner" title="Banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../tr/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../tr/about/" class="">Hakkında</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../tr/about/">Genel Bakış</a></li>
+                            <li><a href="../../../../tr/papers/">Araştırma Makaleleri</a></li>
+                            <li><a href="../../../../tr/about/media/">Basın</a></li>
+                            <li><a href="../../../../tr/contact/">İletişim</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../tr/docs/" class="active">Belgeler</a></li>
+                    <li><a href="../../../../tr/downloads/" class="">İndirilenler</a></li>
+                    <li><a href="../../../../tr/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../tr/get-involved/" class="">Katılım Sağla</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../tr/get-involved/">Genel Bakış</a></li>
+                            <li><a href="../../../../tr/feedback/">Özellik Önerileri</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">tr</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/i2np/"
+                                class="lang-option">İngilizce</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/i2np/"
+                                class="lang-option">İspanyolca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/i2np/"
+                                class="lang-option">Korece</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/i2np/"
+                                class="lang-option">Çince</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/i2np/"
+                                class="lang-option">Rusça</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/i2np/"
+                                class="lang-option">Çekçe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/i2np/"
+                                class="lang-option">Almanca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/i2np/"
+                                class="lang-option">Fransızca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/i2np/"
+                                class="lang-option active">Türkçe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/i2np/"
+                                class="lang-option">Vietnamca</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/i2np/"
+                                class="lang-option">Hintçe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/i2np/"
+                                class="lang-option">Arapça</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/i2np/"
+                                class="lang-option">Portekizce</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../tr/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../tr/downloads/" class="btn btn-primary">I2P&#39;yi Edin</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#genel-bakış">Genel Bakış</a>
+      <ul>
+        <li><a href="#güncel-taşıma-protokolleri">Güncel Taşıma Protokolleri</a></li>
+      </ul>
+    </li>
+    <li><a href="#sürüm-numaralandırma-sistemi">Sürüm Numaralandırma Sistemi</a>
+      <ul>
+        <li><a href="#yayın-sürümleri-kullanıcıya-yönelik">Yayın sürümleri (kullanıcıya yönelik)</a></li>
+        <li><a href="#api-sürümleri-protokol-uyumluluğu">API Sürümleri (Protokol Uyumluluğu)</a></li>
+        <li><a href="#sürüm-eşleme-tablosu">Sürüm Eşleme Tablosu</a></li>
+      </ul>
+    </li>
+    <li><a href="#protokol-sürümleri">Protokol Sürümleri</a>
+      <ul>
+        <li><a href="#api-sürümüne-göre-özellik-özeti">API Sürümüne Göre Özellik Özeti</a></li>
+      </ul>
+    </li>
+    <li><a href="#ileti-üstbilgisi">İleti Üstbilgisi</a>
+      <ul>
+        <li><a href="#başlık-biçimi-karşılaştırması">Başlık Biçimi Karşılaştırması</a></li>
+        <li><a href="#başlık-alanı-ayrıntıları">Başlık Alanı Ayrıntıları</a></li>
+      </ul>
+    </li>
+    <li><a href="#boyut-sınırları">Boyut Sınırları</a>
+      <ul>
+        <li><a href="#tarihsel-bağlam">Tarihsel Bağlam</a></li>
+        <li><a href="#uygulama-verilerine-ilişkin-hususlar">Uygulama Verilerine İlişkin Hususlar</a></li>
+        <li><a href="#parçalama-teknik-ayrıntıları">Parçalama Teknik Ayrıntıları</a></li>
+      </ul>
+    </li>
+    <li><a href="#yaygın-mesaj-türleri">Yaygın Mesaj Türleri</a>
+      <ul>
+        <li><a href="#mesaj-türü-notları">Mesaj Türü Notları</a></li>
+      </ul>
+    </li>
+    <li><a href="#şifreleme-ve-mesaj-sarmalama">Şifreleme ve Mesaj Sarmalama</a>
+      <ul>
+        <li><a href="#şifreleme-algoritmaları">Şifreleme Algoritmaları</a></li>
+        <li><a href="#elgamal-router-kullanımdan-kaldırma">ElGamal Router Kullanımdan Kaldırma</a></li>
+        <li><a href="#ecies-x25519-aead-ratchet-ayrıntıları">ECIES-X25519-AEAD-Ratchet Ayrıntıları</a></li>
+      </ul>
+    </li>
+    <li><a href="#ortak-yapılar">Ortak Yapılar</a>
+      <ul>
+        <li><a href="#buildrequestrecord-tünel-kurma-isteği-kaydı-elgamal">BuildRequestRecord (tünel kurma isteği kaydı) (ElGamal)</a></li>
+        <li><a href="#buildrequestrecord-inşa-isteği-kaydı-ecies-x25519-long">BuildRequestRecord (inşa isteği kaydı) (ECIES-X25519 Long)</a></li>
+        <li><a href="#buildrequestrecord-ecies-x25519-kısa">BuildRequestRecord (ECIES-X25519 Kısa)</a></li>
+        <li><a href="#buildresponserecord-elgamal-oluşturma-yanıt-kaydı">BuildResponseRecord (ElGamal) (oluşturma yanıt kaydı)</a></li>
+        <li><a href="#buildresponserecord-ecies-x25519">BuildResponseRecord (ECIES-X25519)</a></li>
+        <li><a href="#garlicclove-i2pde-garlic-mesajının-alt-mesajı-elgamalaes">GarlicClove (I2P&rsquo;de garlic mesajının alt mesajı) (ElGamal/AES)</a></li>
+        <li><a href="#garlicclove-ecies-x25519-aead-ratchet">GarlicClove (ECIES-X25519-AEAD-Ratchet)</a></li>
+        <li><a href="#garlic-clove-i2pde-bir-garlic-mesajının-alt-mesajı-teslim-yönergeleri">Garlic Clove (I2P&rsquo;de bir garlic mesajının alt mesajı) Teslim Yönergeleri</a></li>
+      </ul>
+    </li>
+    <li><a href="#i2np-mesajları">I2NP Mesajları</a>
+      <ul>
+        <li><a href="#mesaj-türü-özeti">Mesaj Türü Özeti</a></li>
+        <li><a href="#databasestore-tip-1">DatabaseStore (Tip 1)</a></li>
+        <li><a href="#databaselookup-tip-2">DatabaseLookup (Tip 2)</a></li>
+        <li><a href="#databasesearchreply-veritabanı-arama-yanıtı-type-3">DatabaseSearchReply (veritabanı arama yanıtı) (Type 3)</a></li>
+        <li><a href="#deliverystatus-tür-10">DeliveryStatus (Tür 10)</a></li>
+        <li><a href="#garlicmessage-sarımsak-mesajı-tür-11">GarlicMessage (Sarımsak Mesajı) (Tür 11)</a></li>
+        <li><a href="#tunneldata-tür-18">TunnelData (Tür 18)</a></li>
+        <li><a href="#tunnelgateway-tünel-geçidi-tür-19">TunnelGateway (Tünel Geçidi) (Tür 19)</a></li>
+        <li><a href="#datamessage-tür-20">DataMessage (Tür 20)</a></li>
+        <li><a href="#tunnelbuild-tür-21">TunnelBuild (Tür 21)</a></li>
+        <li><a href="#tunnelbuildreply-tip-22">TunnelBuildReply (Tip 22)</a></li>
+        <li><a href="#variabletunnelbuild-tür-23">VariableTunnelBuild (Tür 23)</a></li>
+        <li><a href="#variabletunnelbuildreply-tür-24">VariableTunnelBuildReply (Tür 24)</a></li>
+        <li><a href="#shorttunnelbuild-tür-25">ShortTunnelBuild (Tür 25)</a></li>
+        <li><a href="#outboundtunnelbuildreply-tür-26">OutboundTunnelBuildReply (Tür 26)</a></li>
+      </ul>
+    </li>
+    <li><a href="#kaynaklar">Kaynaklar</a>
+      <ul>
+        <li><a href="#resmi-spesifikasyonlar">Resmi Spesifikasyonlar</a></li>
+        <li><a href="#öneriler">Öneriler</a></li>
+        <li><a href="#dokümantasyon">Dokümantasyon</a></li>
+        <li><a href="#kaynak-kodu">Kaynak kodu</a></li>
+        <li><a href="#önemli-kaynak-kod-konumları">Önemli Kaynak Kod Konumları</a></li>
+      </ul>
+    </li>
+    <li><a href="#ek-a-ağ-istatistikleri-ve-mevcut-durum">Ek A: Ağ İstatistikleri ve Mevcut Durum</a>
+      <ul>
+        <li><a href="#ağ-bileşimi-ekim-2025-itibarıyla">Ağ Bileşimi (Ekim 2025 itibarıyla)</a></li>
+        <li><a href="#asgari-router-gereksinimleri">Asgari Router Gereksinimleri</a></li>
+        <li><a href="#bant-genişliği-gereksinimleri">Bant Genişliği Gereksinimleri</a></li>
+        <li><a href="#tunnel-istatistikleri">Tunnel İstatistikleri</a></li>
+        <li><a href="#performans-metrikleri">Performans Metrikleri</a></li>
+      </ul>
+    </li>
+    <li><a href="#ek-b-artık-önerilmeyen-ve-kaldırılmış-özellikler">Ek B: Artık Önerilmeyen ve Kaldırılmış Özellikler</a>
+      <ul>
+        <li><a href="#tamamen-kaldırıldı-artık-desteklenmiyor">Tamamen Kaldırıldı (Artık Desteklenmiyor)</a></li>
+        <li><a href="#kullanımdan-kaldırıldı-destekleniyor-ancak-önerilmez">Kullanımdan kaldırıldı (Destekleniyor ancak önerilmez)</a></li>
+        <li><a href="#eski-sürüm-desteği-zaman-çizelgesi">Eski Sürüm Desteği Zaman Çizelgesi</a></li>
+      </ul>
+    </li>
+    <li><a href="#ek-c-gelecekteki-gelişmeler">Ek C: Gelecekteki Gelişmeler</a>
+      <ul>
+        <li><a href="#kuantum-sonrası-kriptografi">Kuantum Sonrası Kriptografi</a></li>
+        <li><a href="#planlanan-özellikler">Planlanan Özellikler</a></li>
+        <li><a href="#araştırma-alanları">Araştırma Alanları</a></li>
+      </ul>
+    </li>
+    <li><a href="#ek-d-uygulama-yönergeleri">Ek D: Uygulama Yönergeleri</a>
+      <ul>
+        <li><a href="#yeni-gerçeklemeler-için">Yeni Gerçeklemeler İçin</a></li>
+        <li><a href="#test-ve-doğrulama">Test ve Doğrulama</a></li>
+        <li><a href="#sık-yapılan-implementasyon-hataları">Sık Yapılan İmplementasyon Hataları</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../tr/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../tr/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../tr/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">I2P Ağ Protokolü (I2NP)</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Bu çeviri makine öğrenimi kullanılarak oluşturulmuştur ve %100 doğru olmayabilir.</span>
+    
+    
+    <a href="../../../../en/docs/specs/i2np/" class="disclaimer-link">İngilizce versiyonu görüntüle</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">I2P Ağ Protokolü (I2NP)</h1>
+                    
+                        <p class="article-description">Router&#39;lar arası mesaj biçimleri, öncelikler ve I2P içindeki boyut sınırları.</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="genel-bakış">Genel Bakış</h2>
+<p>I2P Ağ Protokolü (I2NP), router&rsquo;ların mesajları nasıl alışveriş ettiklerini, taşıma protokollerini nasıl seçtiklerini ve anonimliği korurken trafiği nasıl karıştırdıklarını tanımlar. <strong>I2CP</strong> (istemci API&rsquo;si) ile taşıma protokolleri (<strong>NTCP2</strong> ve <strong>SSU2</strong>) arasında çalışır.</p>
+<p>I2NP, I2P taşıma protokollerinin üstündeki katmandır. Şu amaçlarla kullanılan router&rsquo;lar arası bir protokoldür: - Ağ veritabanı sorgulamaları ve yanıtları - tunnel oluşturma - Şifrelenmiş router ve istemci veri iletileri</p>
+<p>I2NP mesajları başka bir router&rsquo;a nokta-noktaya gönderilebilir veya o router&rsquo;a tunnels üzerinden anonim olarak gönderilebilir.</p>
+<p>Routers, yerel öncelikleri kullanarak giden işleri kuyruğa alır. Daha yüksek öncelik numaraları önce işlenir. Standart tunnel veri önceliği (400) üzerindeki her şey acil olarak değerlendirilir.</p>
+<h3 id="güncel-taşıma-protokolleri">Güncel Taşıma Protokolleri</h3>
+<p>I2P artık hem IPv4 hem de IPv6 için <strong>NTCP2</strong> (TCP) ve <strong>SSU2</strong> (UDP) kullanıyor. Her iki taşıma protokolü de şunları kullanır: - <strong>X25519</strong> anahtar değişimi (Noise protokol çerçevesi) - <strong>ChaCha20/Poly1305</strong> kimliği doğrulanmış şifreleme (AEAD) - <strong>SHA-256</strong> özetleme</p>
+<p><strong>Eski taşıma protokolleri kaldırıldı:</strong> - NTCP (orijinal TCP) Java router&rsquo;dan 0.9.50 sürümünde (Mayıs 2021) kaldırıldı - SSU v1 (orijinal UDP) Java router&rsquo;dan 2.4.0 sürümünde (Aralık 2023) kaldırıldı - SSU v1, i2pd&rsquo;den 2.44.0 sürümünde (Kasım 2022) kaldırıldı</p>
+<p>2025 itibarıyla ağ, tamamen Noise tabanlı taşıma protokollerine geçmiş olup hiçbir eski (legacy) taşıma desteği bulunmamaktadır.</p>
+<hr>
+<h2 id="sürüm-numaralandırma-sistemi">Sürüm Numaralandırma Sistemi</h2>
+<p><strong>ÖNEMLİ:</strong> I2P, net biçimde anlaşılması gereken ikili bir sürümleme sistemi kullanır:</p>
+<h3 id="yayın-sürümleri-kullanıcıya-yönelik">Yayın sürümleri (kullanıcıya yönelik)</h3>
+<p>Kullanıcıların gördüğü ve indirdiği sürümler şunlardır: - 0.9.50 (Mayıs 2021) - Son 0.9.x sürümü - <strong>1.5.0</strong> (Ağustos 2021) - İlk 1.x sürümü - 1.6.0, 1.7.0, 1.8.0, 1.9.0 (2021-2022 boyunca) - <strong>2.0.0</strong> (Kasım 2022) - İlk 2.x sürümü - 2.1.0&rsquo;dan 2.9.0&rsquo;a (2023-2025 boyunca) - <strong>2.10.0</strong> (8 Eylül 2025) - Güncel sürüm</p>
+<h3 id="api-sürümleri-protokol-uyumluluğu">API Sürümleri (Protokol Uyumluluğu)</h3>
+<p>Bunlar, RouterInfo özelliklerindeki &ldquo;router.version&rdquo; alanında yayımlanan dahili sürüm numaralarıdır: - 0.9.50 (Mayıs 2021) - <strong>0.9.51</strong> (Ağustos 2021) - 1.5.0 sürümü için API sürümü - 0.9.52 ile 0.9.66 arası (2.x sürümleri boyunca devam ediyor) - <strong>0.9.67</strong> (Eylül 2025) - 2.10.0 sürümü için API sürümü</p>
+<p><strong>Önemli Nokta:</strong> 0.9.51 ile 0.9.67 numaraları arasında HİÇBİR sürüm yayımlanmadı. Bu numaralar yalnızca API sürüm tanımlayıcıları olarak kullanılır. I2P, 0.9.50 sürümünden doğrudan 1.5.0&rsquo;a atladı.</p>
+<h3 id="sürüm-eşleme-tablosu">Sürüm Eşleme Tablosu</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Release Version</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">API Version</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Date</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Key Features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">0.9.50</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.50</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">May 2021</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Last 0.9.x release, removed NTCP1</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1.5.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.51</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">August 2021</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Short tunnel build messages (218 bytes)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1.6.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.52</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">November 2021</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Various improvements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1.7.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.53</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">January 2022</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Performance enhancements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1.8.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.54</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">May 2022</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SSU2 introduced</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1.9.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.55</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">August 2022</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SSU2 improvements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.0.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.56</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">November 2022</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SSU2 enabled by default</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.1.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.57</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">January 2023</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Stability improvements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.2.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.58</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">March 2023</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>ElGamal routers deprecated</strong></td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.3.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.59</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">May 2023</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Various improvements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.4.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.61</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">December 2023</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Removed SSU1 support</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.5.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.62</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">February 2024</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Performance improvements</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.6.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.63</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">May 2024</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Network optimizations</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.7.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.64</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">October 2024</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Post-quantum preparation work</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.8.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.65</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">February 2025</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Tunnel bandwidth parameters</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.9.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.66</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">June 2025</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">LeaseSet service records</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">2.10.0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.67</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">September 2025</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Post-quantum hybrid cryptography (beta)</td>
+    </tr>
+  </tbody>
+</table>
+**Yakında:** Sürüm 2.11.0 (Aralık 2025 için planlanıyor) Java 17+ gerektirecek ve varsayılan olarak post-kuantum kriptografiyi etkinleştirecek.
+<hr>
+<h2 id="protokol-sürümleri">Protokol Sürümleri</h2>
+<p>Tüm router&rsquo;lar I2NP protokol sürümlerini RouterInfo özelliklerindeki &ldquo;router.version&rdquo; alanında yayımlamalıdır. Bu sürüm alanı, çeşitli I2NP protokol özellikleri için destek düzeyini gösteren API sürümüdür ve mutlaka gerçek router sürümü olmayabilir.</p>
+<p>Alternatif (Java dışı) router’lar, asıl router gerçekleştirimine ilişkin herhangi bir sürüm bilgisi yayımlamak isterlerse, bunu başka bir özellikte yapmalıdırlar. Aşağıda listelenenler dışındaki sürümlere izin verilir. Destek, sayısal bir karşılaştırma ile belirlenecektir; örneğin 0.9.13, 0.9.12 özelliklerine destek anlamına gelir.</p>
+<p><strong>Not:</strong> &ldquo;coreVersion&rdquo; özelliği artık router info içinde yayımlanmıyor ve I2NP protokol sürümünün belirlenmesi için hiçbir zaman kullanılmadı.</p>
+<h3 id="api-sürümüne-göre-özellik-özeti">API Sürümüne Göre Özellik Özeti</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">API Version</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Required I2NP Features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.67</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Post-quantum hybrid cryptography (MLKEM ratchet) support (beta), UDP tracker support</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.66</td><td style="border:1px solid var(--color-border); padding:0.5rem;">LeaseSet2 service record options (see proposal 167)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.65</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Tunnel build bandwidth parameters (see proposal 168)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.59</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Minimum peers will build tunnels through (as of 0.9.63), minimum floodfill peers will send DSM to (as of 0.9.63)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.58</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Minimum peers will build tunnels through (as of 0.9.62), <strong>ElGamal routers deprecated</strong></td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.55</td><td style="border:1px solid var(--color-border); padding:0.5rem;">SSU2 transport support (if published in router info)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.51</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Short tunnel build messages for ECIES-X25519 routers, minimum peers will build tunnels through (as of 0.9.58), minimum floodfill peers will send DSM to (as of 0.9.58)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.49</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Garlic messages to ECIES-X25519 routers</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.48</td><td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES-X25519 routers, ECIES-X25519 build request/response records</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.46</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DatabaseLookup flag bit 4 for AEAD reply</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.44</td><td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES-X25519 keys in LeaseSet2</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.40</td><td style="border:1px solid var(--color-border); padding:0.5rem;">MetaLeaseSet may be sent in a DSM</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.39</td><td style="border:1px solid var(--color-border); padding:0.5rem;">EncryptedLeaseSet may be sent in a DSM, RedDSA_SHA512_Ed25519 signature type supported</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.38</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DSM type bits 3-0 now contain the type; LeaseSet2 may be sent in a DSM</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.36</td><td style="border:1px solid var(--color-border); padding:0.5rem;">NTCP2 transport support (if published in router info), minimum peers will build tunnels through (as of 0.9.46)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.28</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RSA signature types disallowed, minimum floodfill peers will send DSM to (as of 0.9.34)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.18</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DSM type bits 7-1 ignored</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.16</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RI key certs / ECDSA and EdDSA signature types, DLM lookup types (flag bits 3-2), minimum version compatible with the current network</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.15</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Destination/LeaseSet key certificates with EdDSA Ed25519 signature type (if floodfill)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Destination/LeaseSet key certificates with ECDSA P-256, P-384, and P-521 signature types (if floodfill); non-zero expiration allowed in RouterAddress</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.7</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Encrypted DSM/DSRM replies supported (DLM flag bit 1) for floodfill routers</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.6</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Non-zero DLM flag bits 7-1 allowed</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Requires zero expiration in RouterAddress</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Supports up to 16 leases in a DSM LeaseSet store (previously 6)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">VTBM and VTBRM message support</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Floodfill supports encrypted DSM stores</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">TBM and TBRM messages introduced; minimum version compatible with the current network</td></tr>
+  </tbody>
+</table>
+**Not:** Taşıma ile ilgili özellikler ve uyumluluk sorunları da vardır. Ayrıntılar için NTCP2 ve SSU2 taşıma dokümantasyonuna bakın.
+<hr>
+<h2 id="ileti-üstbilgisi">İleti Üstbilgisi</h2>
+<p>I2NP, mantıksal bir 16 baytlık başlık yapısı kullanırken, modern taşıma protokolleri (NTCP2 ve SSU2) gereksiz boyut ve sağlama toplamı alanlarını içermeyen kısaltılmış 9 baytlık bir başlık kullanır. Alanlar kavramsal olarak özdeş kalır.</p>
+<h3 id="başlık-biçimi-karşılaştırması">Başlık Biçimi Karşılaştırması</h3>
+<p><strong>Standart Biçim (16 bayt):</strong></p>
+<p>Eski NTCP (I2P&rsquo;nin TCP tabanlı taşıma protokolü) taşımasında ve I2NP iletileri diğer iletilerin içine gömüldüğünde (TunnelData, TunnelGateway, GarlicClove) kullanılır.</p>
+<pre tabindex="0"><code>Bytes 0-15:
++----+----+----+----+----+----+----+----+
+|type|      msg_id       |  expiration
++----+----+----+----+----+----+----+----+
+                         |  size   |chks|
++----+----+----+----+----+----+----+----+
+
+type :: Integer (1 byte)
+        Identifies the message type (see message type table)
+
+msg_id :: Integer (4 bytes)
+          Uniquely identifies this message (for some time at least)
+          Usually a locally-generated random number, but for outgoing
+          tunnel build messages may be derived from the incoming message
+
+expiration :: Date (8 bytes)
+              Unix timestamp in milliseconds when this message expires
+
+size :: Integer (2 bytes)
+        Length of the payload (0 to ~61.2 KB for tunnel messages)
+
+chks :: Integer (1 byte)
+        SHA256 hash of payload truncated to first byte
+        Deprecated - NTCP2/SSU2 use ChaCha20/Poly1305 AEAD for integrity
+</code></pre><p><strong>SSU için Kısa Biçim (Kullanımdan kaldırılmış, 5 bayt):</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+
+|type| short_expiration  |
++----+----+----+----+----+
+
+type :: Integer (1 byte)
+short_expiration :: Integer (4 bytes, seconds since epoch)
+</code></pre><p><strong>NTCP2, SSU2 ve ECIES-Ratchet Garlic Cloves (I2P&rsquo;de &lsquo;garlic&rsquo; mesajını oluşturan alt bileşenler) için Kısa Biçim (9 bayt):</strong></p>
+<p>Modern taşıma protokollerinde ve ECIES ile şifrelenmiş garlic mesajlarında (I2P&rsquo;de demetlemeye dayalı mesajlar) kullanılır.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|type|      msg_id       | short_expira-
++----+----+----+----+----+----+----+----+
+ tion|
++----+
+
+type :: Integer (1 byte)
+msg_id :: Integer (4 bytes)
+short_expiration :: Integer (4 bytes, seconds since epoch, unsigned)
+</code></pre><h3 id="başlık-alanı-ayrıntıları">Başlık Alanı Ayrıntıları</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Field</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Bytes</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Type</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Identifies the message class (0&ndash;255, see message types below)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Unique ID</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Locally unique identifier for matching replies</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Expiration</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">8 (standard) / 4 (short)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Timestamp when the message expires. Routers discard expired messages. Short format uses seconds since epoch (unsigned, wraps February 7, 2106)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Payload Length</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Size in bytes (0 to ~61.2 KB for tunnel messages). NTCP2 and SSU2 encode this in their frame headers</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Checksum</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated. First byte of SHA-256 hash of the payload. NTCP2/SSU2 use ChaCha20/Poly1305 AEAD for integrity</td>
+    </tr>
+  </tbody>
+</table>
+### Uygulama Notları
+<ul>
+<li>SSU (kullanımdan kalkmış) üzerinden iletilirken, yalnızca tür ve 4 baytlık sona erme zamanı dahil edilirdi</li>
+<li>NTCP2 veya SSU2 üzerinden iletilirken, 9 baytlık kısa biçim kullanılır</li>
+<li>Diğer iletiler içinde yer alan I2NP iletileri için standart 16 baytlık başlık gereklidir (Data, TunnelData, TunnelGateway, GarlicClove)</li>
+<li>0.8.12 sürümünden itibaren, verimlilik amacıyla protokol yığınının bazı noktalarında sağlama toplamı doğrulaması devre dışı bırakılmıştır, ancak uyumluluk için sağlama toplamının üretilmesi hâlâ gereklidir</li>
+<li>Kısa sona erme alanı imzasızdır ve 7 Şubat 2106&rsquo;da taşma yapacaktır. Bu tarihten sonra doğru zamanı elde etmek için bir ofset eklenmelidir</li>
+<li>Daha eski sürümlerle uyumluluk için, doğrulanmasalar bile her zaman sağlama toplamlarını üretin</li>
+</ul>
+<hr>
+<h2 id="boyut-sınırları">Boyut Sınırları</h2>
+<p>Tunnel iletileri I2NP yüklerini sabit boyutlu parçalara böler: - <strong>İlk parça:</strong> yaklaşık 956 bayt - <strong>Sonraki parçalar:</strong> her biri yaklaşık 996 bayt - <strong>Maksimum parça sayısı:</strong> 64 (0-63 olarak numaralanmış) - <strong>Maksimum yük:</strong> yaklaşık 61,200 bayt (61.2 KB)</p>
+<p><strong>Hesaplama:</strong> 956 + (63 × 996) = 63,704 baytlık teorik maksimum; ek yük nedeniyle pratik sınır yaklaşık 61,200 bayt.</p>
+<h3 id="tarihsel-bağlam">Tarihsel Bağlam</h3>
+<p>Eski taşıma protokollerinde çerçeve boyutu sınırları daha sıkıydı: - NTCP: 16 KB&rsquo;lik çerçeveler - SSU: yaklaşık 32 KB&rsquo;lik çerçeveler</p>
+<p>NTCP2 yaklaşık 65 KB boyutunda çerçeveleri destekler, ancak tunnel parçalama sınırı hâlâ geçerlidir.</p>
+<h3 id="uygulama-verilerine-ilişkin-hususlar">Uygulama Verilerine İlişkin Hususlar</h3>
+<p>Garlic messages (I2P&rsquo;de birden çok öğeyi tek bir iletide paketleyen mesajlar) LeaseSets, Session Tags veya şifrelenmiş LeaseSet2 varyantlarını birlikte taşıyabilir ve bu da yük verisi için ayrılan alanı azaltır.</p>
+<p><strong>Öneri:</strong> Güvenilir iletimi sağlamak için datagramların ≤ 10 KB kalması gerekir. 61 KB sınırına yaklaşan iletiler şu sorunlarla karşılaşabilir: - Parçalama sonrası yeniden birleştirme nedeniyle artan gecikme - İletimin başarısız olma olasılığının artması - Trafik analizine daha fazla maruz kalma</p>
+<h3 id="parçalama-teknik-ayrıntıları">Parçalama Teknik Ayrıntıları</h3>
+<p>Her tunnel iletisi tam olarak 1,024 bayt (1 KB) boyutundadır ve şunları içerir: - 4 baytlık tunnel ID - 16 baytlık başlatma vektörü (IV) - 1,004 bayt şifrelenmiş veri</p>
+<p>Şifrelenmiş verinin içinde, tunnel iletileri, parça başlıklarında şunları belirten parçalanmış I2NP iletilerini taşır: - Parça numarası (0-63) - Bunun ilk mi yoksa devam parçası mı olduğunu - Yeniden birleştirme için toplam ileti kimliği</p>
+<p>İlk parça, tam I2NP mesaj başlığını (16 bayt) içerir ve yük için yaklaşık 956 bayt bırakır. Takip eden parçalar mesaj başlığını içermez, bu da parça başına yaklaşık 996 bayt yük sağlar.</p>
+<hr>
+<h2 id="yaygın-mesaj-türleri">Yaygın Mesaj Türleri</h2>
+<p>Router&rsquo;lar, giden işleri zamanlamak için ileti türünü ve önceliği kullanır. Daha yüksek öncelik değerleri önce işlenir. Aşağıdaki değerler, geçerli Java I2P varsayılanlarıyla eşleşir (API sürümü 0.9.67 itibarıyla).</p>
+<p><strong>Not:</strong> Öncelikler implementasyona bağlıdır. Kesin öncelik değerleri için, Java I2P kaynak kodundaki <code>OutNetMessage</code> sınıfı belgelerine bakın.</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Message</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Priority</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Typical Size</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>DatabaseStore</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">460</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Varies (LeaseSet ≈ 898&nbsp;B, RouterInfo ≈ 2&ndash;4&nbsp;KB compressed)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Publishes RouterInfo or LeaseSet objects. Supports LeaseSet2, EncryptedLeaseSet, and MetaLeaseSet</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>DatabaseLookup</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">500</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Varies</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Queries the network database for RouterInfo or LeaseSet entries</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>DatabaseSearchReply</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">300</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">≈161&nbsp;B (5 hashes)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Returns candidate floodfill router hashes (typically 3&ndash;16 hashes, recommended maximum 16)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>DeliveryStatus</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">10</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Varies</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">12&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Receipts for tunnel tests or acknowledgements inside GarlicMessages</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>GarlicMessage</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">11</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">100 (local)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Varies</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Bundles multiple message cloves (e.g., DataMessage, LeaseSets). Supports ElGamal/AES (deprecated) and ECIES-X25519-AEAD-Ratchet encryption</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>TunnelData</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">18</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">400</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1,028&nbsp;B (fixed)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Encrypted tunnel message exchanged between hops. Contains a 4-byte tunnel ID, 16-byte IV, and 1,004 bytes of encrypted data</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>TunnelGateway</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">19</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">300&ndash;400</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Varies</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Encapsulates messages at the tunnel gateway before fragmentation</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>DataMessage</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">20</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">425</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">4&ndash;62&nbsp;KB</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Carries end-to-end garlic payloads (application traffic)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>TunnelBuild</strong> <em>(deprecated)</em></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">21</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">500</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">4,224&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Requests tunnel participation from routers (8 × 528-byte records). Replaced by VariableTunnelBuild for ECIES</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>TunnelBuildReply</strong> <em>(deprecated)</em></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">22</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">300</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">4,224&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Replies to TunnelBuild with accept/reject status per hop</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>VariableTunnelBuild</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">23</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">500</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1,057&ndash;4,225&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Variable-length tunnel build for ElGamal or ECIES-X25519 routers (1&ndash;8 records, API 0.9.12+)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>VariableTunnelBuildReply</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">24</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">300</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">1,057&ndash;4,225&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Replies to VariableTunnelBuild</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>ShortTunnelBuild</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">25</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">500</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">873&ndash;1,745&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Short tunnel build messages for ECIES-X25519 routers only (1&ndash;8 × 218-byte records, API 0.9.51+)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>OutboundTunnelBuildReply</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">26</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">300</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">873&ndash;1,745&nbsp;B</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Sent from outbound endpoint to originator for ECIES-X25519 routers (API 0.9.51+)</td>
+    </tr>
+  </tbody>
+</table>
+**Ayrılmış mesaj türleri:** - Tür 0: Ayrılmış - Türler 4-9: Gelecekteki kullanım için ayrılmış - Türler 12-17: Gelecekteki kullanım için ayrılmış - Türler 224-254: Deneysel mesajlar için ayrılmış - Tür 255: Gelecekteki genişletme için ayrılmış
+<h3 id="mesaj-türü-notları">Mesaj Türü Notları</h3>
+<ul>
+<li>Kontrol düzlemi mesajları (DatabaseLookup, TunnelBuild vb.) genellikle istemci tunnel&rsquo;ları üzerinden değil, <strong>keşif tunnel&rsquo;ları</strong> üzerinden iletilir, bu da bağımsız önceliklendirmeye olanak tanır</li>
+<li>Öncelik değerleri yaklaşık olup uygulamaya göre değişebilir</li>
+<li>TunnelBuild (21) ve TunnelBuildReply (22) kullanımdan kaldırılmıştır, ancak çok uzun tunnel&rsquo;larla (&gt;8 atlama) uyumluluk için hâlâ uygulanmaktadır</li>
+<li>Standart tunnel verisi önceliği 400&rsquo;dür; bunun üzerindeki her şey acil olarak değerlendirilir</li>
+<li>Günümüz ağında tipik tunnel uzunluğu 3-4 atlamadır, bu nedenle çoğu tunnel kurulumu ShortTunnelBuild (218 baytlık kayıtlar) veya VariableTunnelBuild (528 baytlık kayıtlar) kullanır</li>
+</ul>
+<hr>
+<h2 id="şifreleme-ve-mesaj-sarmalama">Şifreleme ve Mesaj Sarmalama</h2>
+<p>Routers, iletimden önce I2NP mesajlarını sıkça kapsüller ve birden çok şifreleme katmanı oluşturur. DeliveryStatus message (teslim durumu mesajı) şunlardan biri olabilir: 1. Bir GarlicMessage içine sarılmış (şifrelenmiş) 2. Bir DataMessage&rsquo;ın içinde 3. Bir TunnelData mesajının içinde (yeniden şifrelenmiş)</p>
+<p>Her atlama yalnızca kendi katmanının şifresini çözer; son hedef en içteki veri yükünü ortaya çıkarır.</p>
+<h3 id="şifreleme-algoritmaları">Şifreleme Algoritmaları</h3>
+<p><strong>Eski (Aşamalı olarak kullanım dışı bırakılıyor):</strong> - ElGamal/AES + SessionTags (oturum etiketleri) - asimetrik şifreleme için ElGamal-2048 - simetrik şifreleme için AES-256 - 32 baytlık oturum etiketleri</p>
+<p><strong>Güncel (API 0.9.48 itibarıyla standart):</strong> - ECIES-X25519 + ChaCha20/Poly1305 AEAD ile ratcheting (mandallamalı) ileri gizlilik - Noise protokol çerçevesi (destinasyonlar için Noise_IK_25519_ChaChaPoly_SHA256) - 8 baytlık oturum etiketleri (32 bayttan düşürüldü) - ileri gizlilik için Signal Double Ratchet algoritması - API sürümü 0.9.46&rsquo;da (2020) tanıtıldı - API sürümü 0.9.58 (2023) itibarıyla tüm routers için zorunlu</p>
+<p><strong>Gelecek (2.10.0 itibarıyla Beta):</strong> - MLKEM (ML-KEM-768) kullanan ve X25519 ile birleştirilen post-kuantum hibrit kriptografi - Klasik ve post-kuantum anahtar uzlaşmasını birleştiren hibrit ratchet (kademeli anahtar yenileme mekanizması) - ECIES-X25519 ile geriye dönük uyumlu - 2.11.0 sürümünde varsayılan olacak (Aralık 2025)</p>
+<h3 id="elgamal-router-kullanımdan-kaldırma">ElGamal Router Kullanımdan Kaldırma</h3>
+<p><strong>KRİTİK:</strong> ElGamal router&rsquo;lar API sürümü 0.9.58 (sürüm 2.2.0, Mart 2023) itibarıyla kullanımdan kaldırıldı. Artık sorgulanması önerilen asgari floodfill sürümü 0.9.58 olduğundan, gerçekleştirimlerin ElGamal floodfill router&rsquo;lar için şifrelemeyi uygulaması gerekmez.</p>
+<p><strong>Ancak:</strong> Geriye dönük uyumluluk için ElGamal hedefleri hâlâ desteklenmektedir. ElGamal şifrelemesi kullanan istemciler ECIES router&rsquo;lar aracılığıyla hâlâ iletişim kurabilir.</p>
+<h3 id="ecies-x25519-aead-ratchet-ayrıntıları">ECIES-X25519-AEAD-Ratchet Ayrıntıları</h3>
+<p>Bu, I2P&rsquo;nin kriptografi spesifikasyonundaki crypto type 4 (kripto türü 4)&rsquo;tür. Şunları sağlar:</p>
+<p><strong>Temel Özellikler:</strong> - Ratcheting (kademeli anahtar yenileme) ile ileri gizlilik (her mesaj için yeni anahtarlar) - Azaltılmış oturum etiketi depolama gereksinimi (8 bayt vs. 32 bayt) - Birden çok oturum türü (Yeni Oturum, Mevcut Oturum, Tek Seferlik) - Noise protokolüne dayalı Noise_IK_25519_ChaChaPoly_SHA256 - Signal&rsquo;ın Double Ratchet (çift kademeli anahtar yenileme) algoritmasıyla entegre</p>
+<p><strong>Kriptografik Primitifler:</strong> - Diffie-Hellman anahtar anlaşması için X25519 - Akış şifrelemesi için ChaCha20 - Mesaj kimlik doğrulaması (AEAD) için Poly1305 - Özetleme için SHA-256 - Anahtar türetimi için HKDF</p>
+<p><strong>Oturum Yönetimi:</strong> - Yeni Oturum: Statik hedef anahtarı kullanılarak ilk bağlantı - Mevcut Oturum: Sonraki iletiler oturum etiketleri kullanılarak - Tek Seferlik Oturum: Daha düşük ek yük için tek iletilik oturumlar</p>
+<p>Tüm teknik ayrıntılar için <a href="../../../../tr/docs/specs/ecies/">ECIES Spesifikasyonu</a>
+ ve <a href="../../../../tr/proposals/144-ecies-x25519-aead-ratchet/">Öneri 144</a>
+ belgelerine bakın.</p>
+<hr>
+<h2 id="ortak-yapılar">Ortak Yapılar</h2>
+<p>Aşağıdaki yapılar, birden fazla I2NP mesajının öğeleridir. Bunlar tam mesajlar değildir.</p>
+<h3 id="buildrequestrecord-tünel-kurma-isteği-kaydı-elgamal">BuildRequestRecord (tünel kurma isteği kaydı) (ElGamal)</h3>
+<p><strong>KULLANIMDAN KALDIRILDI.</strong> Bir tunnel (tünel) bir ElGamal router (yönlendirici) içerdiğinde yalnızca mevcut ağda kullanılır. Modern biçim için <a href="../../../../tr/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ sayfasına bakın.</p>
+<p><strong>Amaç:</strong> tunnel içinde bir hop (atlama) oluşturulmasını talep etmek için, birden fazla kayıttan oluşan bir kümedeki bir kayıt.</p>
+<p><strong>Biçim:</strong></p>
+<p>ElGamal ve AES ile şifrelenmiş (toplam 528 bayt):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| encrypted data (528 bytes)            |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+</code></pre><p>ElGamal şifrelenmiş yapı (528 bayt):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| toPeer (16 bytes)                     |
++----+----+----+----+----+----+----+----+
+| ElGamal encrypted data (512 bytes)    |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+
+toPeer :: First 16 bytes of SHA-256 hash of peer&#39;s RouterIdentity
+
+encrypted_data :: ElGamal-2048 encrypted (bytes 1-256 and 258-513
+                  of the 514-byte ElGamal block, with padding bytes
+                  at positions 0 and 257 removed)
+</code></pre><p>Açık metin yapısı (şifrelemeden önce 222 bayt):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| receive_tunnel (4) | our_ident (32)   |
++----+----+----+----+                   +
+|                                       |
++                   +----+----+----+----+
+|                   | next_tunnel (4)   |
++----+----+----+----+----+----+----+----+
+| next_ident (32 bytes)                 |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| layer_key (32 bytes)                  |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| iv_key (32 bytes)                     |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| reply_key (32 bytes)                  |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| reply_iv (16 bytes)                   |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|flag| request_time (4) | send_msg_id  |
++----+----+----+----+----+----+----+----+
+     (4)                | padding (29)  |
++----+----+----+----+----+              +
+|                                       |
++                             +----+----+
+|                             |
++----+----+----+----+----+----+
+
+receive_tunnel :: TunnelId (4 bytes, nonzero)
+our_ident :: Hash (32 bytes)
+next_tunnel :: TunnelId (4 bytes, nonzero)
+next_ident :: Hash (32 bytes)
+layer_key :: SessionKey (32 bytes)
+iv_key :: SessionKey (32 bytes)
+reply_key :: SessionKey (32 bytes)
+reply_iv :: 16 bytes
+flag :: Integer (1 byte)
+request_time :: Integer (4 bytes, hours since epoch = time / 3600)
+send_message_id :: Integer (4 bytes)
+padding :: 29 bytes random data
+</code></pre><p><strong>Notlar:</strong> - ElGamal-2048 şifrelemesi 514 baytlık bir blok üretir, ancak iki doldurma baytı (0 ve 257. konumlarda) kaldırılır ve sonuçta 512 bayt kalır - Alan ayrıntıları için <a href="../../../../tr/docs/specs/implementation/">Tunnel Oluşturma Spesifikasyonu</a>
+ sayfasına bakın - Kaynak kodu: <code>net.i2p.data.i2np.BuildRequestRecord</code> - Sabit: <code>EncryptedBuildRecord.RECORD_SIZE = 528</code></p>
+<h3 id="buildrequestrecord-inşa-isteği-kaydı-ecies-x25519-long">BuildRequestRecord (inşa isteği kaydı) (ECIES-X25519 Long)</h3>
+<p>API sürümü 0.9.48&rsquo;te tanıtılan ECIES-X25519 router&rsquo;lar için. Karma tunnel&rsquo;larla geriye dönük uyumluluk için 528 bayt kullanır.</p>
+<p><strong>Biçim:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| toPeer (16 bytes)                     |
++----+----+----+----+----+----+----+----+
+| ephemeral_key (32 bytes)              |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| ChaCha20 encrypted data (464 bytes)   |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Poly1305 MAC (16 bytes)               |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+
+toPeer :: First 16 bytes of SHA-256 hash of peer&#39;s RouterIdentity
+ephemeral_key :: X25519 ephemeral public key (32 bytes)
+encrypted_data :: ChaCha20 encrypted (464 bytes)
+mac :: Poly1305 message authentication code (16 bytes)
+</code></pre><p><strong>Toplam boyut:</strong> 528 bayt (uyumluluk için ElGamal ile aynı)</p>
+<p>Açık metin yapısı ve şifreleme ayrıntıları için <a href="../../../../tr/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ sayfasına bakın.</p>
+<h3 id="buildrequestrecord-ecies-x25519-kısa">BuildRequestRecord (ECIES-X25519 Kısa)</h3>
+<p>Yalnızca ECIES-X25519 routers için, API sürümü 0.9.51 (1.5.0 sürümü) itibarıyla. Bu, mevcut standart biçimdir.</p>
+<p><strong>Biçim:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| toPeer (16 bytes)                     |
++----+----+----+----+----+----+----+----+
+| ephemeral_key (32 bytes)              |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| ChaCha20 encrypted data (154 bytes)   |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Poly1305 MAC (16 bytes)               |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+
+toPeer :: First 16 bytes of SHA-256 hash of peer&#39;s RouterIdentity
+ephemeral_key :: X25519 ephemeral public key (32 bytes)
+encrypted_data :: ChaCha20 encrypted (154 bytes)
+mac :: Poly1305 message authentication code (16 bytes)
+</code></pre><p><strong>Toplam boyut:</strong> 218 bayt (528 bayta kıyasla %59 azalma)</p>
+<p><strong>Temel Fark:</strong> Kısa kayıtlar, kayıtta açıkça dahil etmek yerine TÜM anahtarları HKDF (anahtar türetme fonksiyonu) aracılığıyla türetir. Buna şunlar dahildir: - Katman anahtarları (tunnel şifrelemesi için) - IV anahtarları (tunnel şifrelemesi için) - Yanıt anahtarları (oluşturma yanıtı için) - Yanıt IV&rsquo;leri (oluşturma yanıtı için)</p>
+<p>Tüm anahtarlar, X25519 anahtar değişiminden elde edilen paylaşılan sırra dayalı olarak Noise protokolünün HKDF mekanizması kullanılarak türetilir.</p>
+<p><strong>Faydalar:</strong> - 4 kısa kayıt tek bir tunnel mesajına sığar (873 bayt) - Her bir kayıt için ayrı mesajlar yerine 3 mesajlık tunnel kurulumları - Azaltılmış bant genişliği kullanımı ve gecikme - Uzun biçimle aynı güvenlik özellikleri</p>
+<p>Gerekçe için <a href="../../../../tr/proposals/157-new-tbm/">Proposal 157</a>
+, tam spesifikasyon için <a href="../../../../tr/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ belgesine bakın.</p>
+<p><strong>Kaynak kodu:</strong> - <code>net.i2p.data.i2np.ShortEncryptedBuildRecord</code> - Sabit: <code>ShortEncryptedBuildRecord.RECORD_SIZE = 218</code></p>
+<h3 id="buildresponserecord-elgamal-oluşturma-yanıt-kaydı">BuildResponseRecord (ElGamal) (oluşturma yanıt kaydı)</h3>
+<p><strong>KULLANIMDAN KALDIRILDI.</strong> Yalnızca tunnel bir ElGamal router içerdiğinde kullanılır.</p>
+<p><strong>Amaç:</strong> Oluşturma isteğine verilen yanıtları içeren birden çok kayıttan oluşan kümedeki tek bir kayıt.</p>
+<p><strong>Biçim:</strong></p>
+<p>Şifrelenmiş (528 bayt, BuildRequestRecord ile aynı boyutta):</p>
+<pre tabindex="0"><code>bytes 0-527 :: AES-encrypted record
+</code></pre><p>Şifrelenmemiş yapı:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| SHA-256 hash (32 bytes)               |
++                                       +
+|        (hash of bytes 32-527)         |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| random data (495 bytes)               |
+~                                       ~
+|                                  |ret |
++----+----+----+----+----+----+----+----+
+
+bytes 0-31 :: SHA-256 hash of bytes 32-527
+bytes 32-526 :: Random data (could be used for congestion info)
+byte 527 :: Reply code (0 = accept, 30 = reject)
+</code></pre><p><strong>Yanıt Kodları:</strong> - <code>0</code> - Kabul - <code>30</code> - Reddet (bant genişliği aşıldı)</p>
+<p>Yanıt alanı hakkında ayrıntılar için <a href="../../../../tr/docs/specs/implementation/">Tunnel Creation Specification</a>
+ bölümüne bakın.</p>
+<h3 id="buildresponserecord-ecies-x25519">BuildResponseRecord (ECIES-X25519)</h3>
+<p>ECIES-X25519 routers için, API sürümü 0.9.48+. Karşılık gelen istekle aynı boyuttadır (uzun için 528, kısa için 218).</p>
+<p><strong>Biçim:</strong></p>
+<p>Uzun biçim (528 bayt):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| ChaCha20 encrypted data (512 bytes)   |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Poly1305 MAC (16 bytes)               |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+</code></pre><p>Kısa biçim (218 bayt):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| ChaCha20 encrypted data (202 bytes)   |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Poly1305 MAC (16 bytes)               |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>Açık metin yapısı (her iki formatta):</strong></p>
+<p>Bir Mapping yapısı (I2P&rsquo;nin anahtar-değer biçimi) içerir: - Yanıt durum kodu (zorunlu) - Kullanılabilir bant genişliği parametresi (&ldquo;b&rdquo;) (isteğe bağlı, API 0.9.65&rsquo;te eklendi) - Gelecekteki genişletmeler için diğer isteğe bağlı parametreler</p>
+<p><strong>Yanıt Durum Kodları:</strong> - <code>0</code> - Başarılı - <code>30</code> - Reddedildi: bant genişliği aşıldı</p>
+<p>Tam spesifikasyon için <a href="../../../../tr/docs/specs/implementation/">ECIES Tunnel Oluşturma</a>
+ bölümüne bakın.</p>
+<h3 id="garlicclove-i2pde-garlic-mesajının-alt-mesajı-elgamalaes">GarlicClove (I2P&rsquo;de garlic mesajının alt mesajı) (ElGamal/AES)</h3>
+<p><strong>UYARI:</strong> Bu, ElGamal ile şifrelenmiş garlic messages (birden fazla garlic clove içeren kapsül mesaj) içindeki garlic cloves (garlic message içindeki bireysel mesaj birimi) için kullanılan formattır. ECIES-AEAD-X25519-Ratchet garlic messages ve garlic cloves için kullanılan format ise önemli ölçüde farklıdır. Güncel format için bkz. <a href="../../../../tr/docs/specs/ecies/">ECIES Spesifikasyonu</a>
+.</p>
+<p><strong>routers için kullanımdan kaldırılmıştır (API 0.9.58+), destinasyonlar için hâlâ desteklenmektedir.</strong></p>
+<p><strong>Biçim:</strong></p>
+<p>Şifrelenmemiş:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Delivery Instructions (variable)      |
+~                                       ~
++----+----+----+----+----+----+----+----+
+| I2NP Message (variable)               |
+~                                       ~
++----+----+----+----+----+----+----+----+
+| Clove ID (4)  | Expiration (8)   |Cert|
++----+----+----+----+----+----+----+----+
+                                    (3) |
++----+----+----+----+----+----+----+----+
+
+Delivery Instructions :: Variable length (typically 1, 33, or 37 bytes)
+I2NP Message :: Any I2NP message
+Clove ID :: 4-byte Integer (random, checked for duplicates)
+Expiration :: Date (8 bytes)
+Certificate :: Always NULL (3 bytes total, all zeroes)
+</code></pre><p><strong>Notlar:</strong> - Clove&rsquo;lar (garlic mesajı içindeki alt-mesaj) asla parçalanmaz - Delivery Instructions bayrak baytının ilk biti 0 olduğunda, clove şifrelenmez - İlk bit 1 olduğunda, clove şifrelenir (uygulanmamış özellik) - Azami uzunluk, toplam clove uzunlukları ile azami GarlicMessage (I2P&rsquo;de bir mesaj türü) uzunluğunun bir fonksiyonudur - Sertifika, yönlendirme için &ldquo;ödeme&rdquo; yapmak üzere HashCash ile kullanılabilir (geleceğe yönelik olasılık) - Uygulamada kullanılan mesajlar: DataMessage, DeliveryStatusMessage, DatabaseStoreMessage - GarlicMessage, GarlicMessage içerebilir (iç içe garlic), ancak bu uygulamada kullanılmaz</p>
+<p>Kavramsal bir genel bakış için <a href="../../../../tr/docs/overview/garlic-routing/">Garlic Routing</a>
+ (sarımsak yönlendirme tekniği) sayfasına bakın.</p>
+<h3 id="garlicclove-ecies-x25519-aead-ratchet">GarlicClove (ECIES-X25519-AEAD-Ratchet)</h3>
+<p>ECIES-X25519 routers ve hedefler için API sürümü 0.9.46+. Bu, güncel standart biçimdir.</p>
+<p><strong>KRİTİK FARK:</strong> ECIES garlic, açıkça tanımlı clove (I2P&rsquo;de garlic mesajı içindeki alt iletiler) yapıları yerine Noise protokolü bloklarına dayanan tamamen farklı bir yapı kullanır.</p>
+<p><strong>Biçim:</strong></p>
+<p>ECIES (Eliptik Eğri Entegre Şifreleme Şeması) garlic mesajları bir dizi blok içerir:</p>
+<pre tabindex="0"><code>Block structure:
++----+----+----+----+----+----+----+----+
+|type| length    | data ...
++----+----+----+----+----+-//-
+
+type :: 1 byte block type
+length :: 2 bytes block length
+data :: variable length data
+</code></pre><p><strong>Blok Türleri:</strong> - <code>0</code> - Garlic Clove Bloğu (bir I2NP mesajı içerir) - <code>1</code> - Tarih-Saat Bloğu (zaman damgası) - <code>2</code> - Seçenekler Bloğu (teslimat seçenekleri) - <code>3</code> - Dolgu Bloğu - <code>254</code> - Sonlandırma Bloğu (henüz uygulanmamış)</p>
+<p><strong>Sarımsak Dişi Bloğu (tip 0):</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|  0 | length    | Delivery Instructions |
++----+----+----+----+                    +
+~                                       ~
++----+----+----+----+----+----+----+----+
+| I2NP Message                          |
+~                                       ~
++----+----+----+----+----+----+----+----+
+| Clove ID (4)  | Expiration (4)        |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>ElGamal biçimine göre temel farklar:</strong> - 8 baytlık Date yerine 4 baytlık sona erme zamanı (Unix epoch&rsquo;tan bu yana geçen saniye cinsinden) kullanır - Sertifika alanı yok - Tür ve uzunluk içeren bir blok yapısı içinde sarmalanmıştır - Tüm mesaj ChaCha20/Poly1305 AEAD ile şifrelenir - Oturum yönetimi ratcheting (mandallama) ile</p>
+<p>Noise protokol çerçevesi ve blok yapıları hakkında tüm ayrıntılar için <a href="../../../../tr/docs/specs/ecies/">ECIES Specification</a>
+ belgesine bakın.</p>
+<h3 id="garlic-clove-i2pde-bir-garlic-mesajının-alt-mesajı-teslim-yönergeleri">Garlic Clove (I2P&rsquo;de bir garlic mesajının alt mesajı) Teslim Yönergeleri</h3>
+<p>Bu biçim, hem ElGamal hem de ECIES garlic cloves (garlic mesajı içindeki alt iletiler) için kullanılır. Ekli mesajın nasıl teslim edileceğini belirtir.</p>
+<p><strong>KRİTİK UYARI:</strong> Bu belirtim YALNIZCA Garlic Cloves (garlic mesajındaki &lsquo;clove&rsquo; bileşenleri) içindeki Delivery Instructions (teslimat talimatları) için geçerlidir. &ldquo;Delivery Instructions&rdquo; ayrıca Tunnel Messages (tunnel mesajları) içinde de kullanılır; oradaki biçim önemli ölçüde farklıdır. tunnel teslimat talimatları için <a href="../../../../tr/docs/specs/implementation/">Tunnel Message Specification</a>
+ belgesine bakın. Bu iki biçimi ASLA karıştırmayın.</p>
+<p><strong>Biçim:</strong></p>
+<p>Oturum anahtarı ve gecikme kullanılmaz ve hiçbir zaman mevcut değildir, bu nedenle üç olası uzunluk şunlardır: - 1 bayt (LOCAL) - 33 bayt (ROUTER ve DESTINATION) - 37 bayt (TUNNEL)</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|flag|                                  |
++----+                                  +
+|       Session Key (optional, 32)     |
++                                       +
+|                                       |
++    +----+----+----+----+--------------+
+|    |                                  |
++----+                                  +
+|       To Hash (optional, 32)         |
++                                       +
+|                                       |
++    +----+----+----+----+--------------+
+|    | Tunnel ID (4, opt)| Delay (4, opt)|
++----+----+----+----+----+----+----+----+
+
+flag :: 1 byte
+        Bit order: 76543210
+        bit 7: encrypted? (Unimplemented, always 0)
+               If 1, a 32-byte encryption session key follows
+        bits 6-5: delivery type
+               0x0 = LOCAL (0)
+               0x1 = DESTINATION (1)
+               0x2 = ROUTER (2)
+               0x3 = TUNNEL (3)
+        bit 4: delay included? (Not fully implemented, always 0)
+               If 1, four delay bytes are included
+        bits 3-0: reserved, set to 0 for compatibility
+
+Session Key :: 32 bytes (Optional, unimplemented)
+               Present if encrypt flag bit is set
+
+To Hash :: 32 bytes (Optional)
+           Present if delivery type is DESTINATION, ROUTER, or TUNNEL
+           - DESTINATION: SHA256 hash of the destination
+           - ROUTER: SHA256 hash of the router identity
+           - TUNNEL: SHA256 hash of the gateway router identity
+
+Tunnel ID :: 4 bytes (Optional)
+             Present if delivery type is TUNNEL
+             The destination tunnel ID (nonzero)
+
+Delay :: 4 bytes (Optional, unimplemented)
+         Present if delay included flag is set
+         Specifies delay in seconds
+</code></pre><p><strong>Tipik Uzunluklar:</strong> - Yerel teslimi: 1 bayt (yalnızca bayrak) - ROUTER / HEDEF teslimi: 33 bayt (bayrak + karma) - TUNNEL teslimi: 37 bayt (bayrak + karma + tunnel ID)</p>
+<p><strong>Teslimat Türü Açıklamaları:</strong></p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Value</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">LOCAL</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deliver to the local router (this router)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">DESTINATION</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deliver to a destination (client) identified by hash</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ROUTER</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deliver to another router identified by hash</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">TUNNEL</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Deliver to a tunnel gateway router</td>
+    </tr>
+  </tbody>
+</table>
+**Uygulama Notları:** - Oturum anahtarı şifrelemesi uygulanmamıştır ve bayrak biti her zaman 0 - Gecikme tam olarak uygulanmamıştır ve bayrak biti her zaman 0 - TUNNEL tesliminde, hash ağ geçidi router'ını belirtir ve tunnel ID, hangi gelen tunnel olduğunu belirtir - DESTINATION tesliminde, hash Destination (I2P adresi) açık anahtarının SHA-256'sıdır - ROUTER tesliminde, hash router kimliğinin SHA-256'sıdır
+<hr>
+<h2 id="i2np-mesajları">I2NP Mesajları</h2>
+<p>Tüm I2NP mesaj türleri için eksiksiz mesaj spesifikasyonları.</p>
+<h3 id="mesaj-türü-özeti">Mesaj Türü Özeti</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Message</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Since</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">DatabaseStore</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">DatabaseLookup</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">DatabaseSearchReply</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">DeliveryStatus</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">10</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Garlic</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">11</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">TunnelData</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">18</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">TunnelGateway</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">19</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">20</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">TunnelBuild</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">21</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">TunnelBuildReply</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">22</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.6.1.10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Deprecated</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">VariableTunnelBuild</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">23</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">VariableTunnelBuildReply</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">24</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.7.12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">ShortTunnelBuild</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">25</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.51</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">OutboundTunnelBuildReply</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">26</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.51</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+  </tbody>
+</table>
+**Ayrılmış:** - Tür 0: Ayrılmış - Türler 4-9: Gelecekte kullanım için ayrılmış - Türler 12-17: Gelecekte kullanım için ayrılmış - Türler 224-254: Deneysel mesajlar için ayrılmış - Tür 255: Gelecekteki genişletme için ayrılmış
+<hr>
+<h3 id="databasestore-tip-1">DatabaseStore (Tip 1)</h3>
+<p><strong>Amaç:</strong> Talep edilmemiş bir veritabanı depolaması veya başarılı bir DatabaseLookup mesajına verilen yanıt.</p>
+<p><strong>İçerik:</strong> Sıkıştırılmamış bir LeaseSet (tunnel erişim bilgileri kümesi), LeaseSet2, MetaLeaseSet veya EncryptedLeaseSet ya da sıkıştırılmış bir RouterInfo (router bilgisi).</p>
+<p><strong>Yanıt belirteci içeren biçim:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| SHA256 Hash as key (32 bytes)        |
++                                       +
+|                                       |
++                                       +
+|                                       |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|type| reply token (4)   | reply_tunnelId
++----+----+----+----+----+----+----+----+
+     (4)               | reply gateway  |
++----+----+----+----+----+              +
+|       SHA256 hash (32 bytes)          |
++                                       +
+|                                       |
++                                  +----+
+|                                  |
++----+----+----+----+----+----+----+
+| data ...
++----+-//
+
+key :: 32 bytes
+       SHA256 hash (the &#34;real&#34; hash, not routing key)
+
+type :: 1 byte
+        Type identifier
+        bit 0:
+            0 = RouterInfo
+            1 = LeaseSet or variants
+        bits 3-1: (as of 0.9.38)
+            0: RouterInfo or LeaseSet (types 0 or 1)
+            1: LeaseSet2 (type 3)
+            2: EncryptedLeaseSet (type 5)
+            3: MetaLeaseSet (type 7)
+            4-7: Unsupported, invalid
+        bits 7-4:
+            Reserved, set to 0
+
+reply token :: 4 bytes
+               If greater than zero, a DeliveryStatusMessage is
+               requested with the Message ID set to the reply token
+               A floodfill router is also expected to flood the data
+               to the closest floodfill peers
+
+reply_tunnelId :: 4 bytes (only if reply token &gt; 0)
+                  TunnelId of the inbound gateway of the tunnel
+                  for the response
+                  If 0, reply is sent directly to reply gateway
+
+reply gateway :: 32 bytes (only if reply token &gt; 0)
+                 SHA256 hash of the RouterInfo
+                 If reply_tunnelId is nonzero: inbound gateway router
+                 If reply_tunnelId is zero: router to send reply to
+
+data :: Variable length
+        If type == 0: 2-byte Integer length + gzip-compressed RouterInfo
+        If type == 1: Uncompressed LeaseSet
+        If type == 3: Uncompressed LeaseSet2
+        If type == 5: Uncompressed EncryptedLeaseSet
+        If type == 7: Uncompressed MetaLeaseSet
+</code></pre><p><strong>Yanıt belirteci == 0 iken biçim:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| SHA256 Hash as key (32 bytes)        |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|type|         0         | data ...
++----+----+----+----+----+-//
+</code></pre><p><strong>Kaynak kodu:</strong> - <code>net.i2p.data.i2np.DatabaseStoreMessage</code> - <code>net.i2p.data.RouterInfo</code> (RouterInfo yapısı için) - <code>net.i2p.data.LeaseSet</code> (LeaseSet yapısı için)</p>
+<hr>
+<h3 id="databaselookup-tip-2">DatabaseLookup (Tip 2)</h3>
+<p><strong>Amaç:</strong> Ağ veritabanında bir öğeyi sorgulama isteği. Yanıt, DatabaseStore veya DatabaseSearchReply olur.</p>
+<p><strong>Biçim:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| SHA256 hash as the key (32 bytes)    |
++                                       +
+|                                       |
++                                       +
+|                                       |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| SHA256 hash of the from router (32)  |
++    or reply tunnel gateway            +
+|                                       |
++                                       +
+|                                       |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|flag| reply_tunnelId (4)| size (2)|   |
++----+----+----+----+----+----+----+    +
+| SHA256 of key1 to exclude (32 bytes) |
++                                       +
+|                                       |
++                                  +----+
+|                                  |    |
++----+----+----+----+----+----+----+    +
+| SHA256 of key2 to exclude (32)       |
++                                       +
+~                                       ~
+|                                       |
++                                  +----+
+|                                  |    |
++----+----+----+----+----+----+----+    +
+|   Session key if reply encryption     |
++       requested (32 bytes)             +
+|                                       |
++                                  +----+
+|                                  |tags|
++----+----+----+----+----+----+----+----+
+|   Session tags if reply encryption    |
++       requested (variable)             +
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+
+key :: 32 bytes
+       SHA256 hash of the object to lookup
+
+from :: 32 bytes
+        If deliveryFlag == 0: SHA256 hash of RouterInfo (sender)
+        If deliveryFlag == 1: SHA256 hash of reply tunnel gateway
+
+flags :: 1 byte
+         Bit order: 76543210
+         bit 0: deliveryFlag
+             0 = send reply directly
+             1 = send reply to some tunnel
+         bit 1: encryptionFlag
+             Through 0.9.5: must be 0
+             As of 0.9.6: ignored
+             As of 0.9.7:
+                 0 = send unencrypted reply
+                 1 = send AES encrypted reply using key and tag
+         bits 3-2: lookup type flags
+             Through 0.9.5: must be 00
+             As of 0.9.6: ignored
+             As of 0.9.16:
+                 00 = ANY (deprecated, use LS or RI as of 0.9.16)
+                 01 = LS lookup (LeaseSet or variants)
+                 10 = RI lookup (RouterInfo)
+                 11 = exploration lookup (RouterInfo, non-floodfill)
+         bit 4: ECIESFlag
+             Before 0.9.46: ignored
+             As of 0.9.46:
+                 0 = send unencrypted or ElGamal reply
+                 1 = send ChaCha/Poly encrypted reply using key
+         bits 7-5:
+             Reserved, set to 0
+
+reply_tunnelId :: 4 bytes (only if deliveryFlag == 1)
+                  TunnelId of the tunnel to send reply to (nonzero)
+
+size :: 2 bytes
+        Integer (valid range: 0-512)
+        Number of peers to exclude from DatabaseSearchReply
+
+excludedPeers :: $size SHA256 hashes of 32 bytes each
+                 If lookup fails, exclude these peers from the reply
+                 If includes a hash of all zeroes, the request is
+                 exploratory (return non-floodfill routers only)
+
+reply_key :: 32 bytes (conditional, see encryption modes below)
+reply_tags :: 1 byte count + variable length tags (conditional)
+</code></pre><p><strong>Yanıt Şifreleme Modları:</strong></p>
+<p><strong>Not:</strong> API 0.9.58 itibarıyla ElGamal routers kullanımdan kaldırılmıştır. Artık sorgulanması önerilen asgari floodfill sürümü 0.9.58 olduğundan, gerçekleştirimlerin ElGamal floodfill router&rsquo;lar için şifreleme uygulanmasına gerek yoktur. ElGamal hedefleri hâlâ desteklenmektedir.</p>
+<p>Bayrak biti 4 (ECIESFlag), yanıt şifreleme modunu belirlemek için bit 1 (encryptionFlag) ile birlikte kullanılır:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Flag bits 4,1</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">From</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">To Router</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Reply</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">DH?</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0 0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">No encryption</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">n/a</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">No encryption</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0 1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElG</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElG</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">AES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">No</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">As of 0.9.7, deprecated 0.9.58</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1 0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElG</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">AEAD</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">No</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">As of 0.9.46, deprecated 0.9.58</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1 0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">AEAD</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">No</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">As of 0.9.49, current standard</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1 1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElG</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">AES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Yes</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">TBD, future</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1 1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ECIES</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">AEAD</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Yes</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">TBD, future</td>
+    </tr>
+  </tbody>
+</table>
+**Şifreleme Yok (bayraklar 0,0):**
+<p>reply_key, tags ve reply_tags mevcut değil.</p>
+<p><strong>ElG&rsquo;den ElG&rsquo;ye (bayraklar 0,1) - KULLANIMDAN KALDIRILDI:</strong></p>
+<p>0.9.7 sürümünden itibaren desteklenmektedir, 0.9.58 sürümünden itibaren kullanımdan kaldırılmıştır.</p>
+<pre tabindex="0"><code>reply_key :: 32 byte SessionKey (big-endian)
+             CSRNG(32) random data
+
+tags :: 1 byte Integer (1-32, typically 1)
+        Number of reply tags that follow
+
+reply_tags :: One or more 32-byte SessionTags
+              Each is CSRNG(32) random data
+</code></pre><p><strong>ECIES&rsquo;den ElG&rsquo;ye (bayraklar 1,0) - KULLANIMDAN KALDIRILDI:</strong></p>
+<p>0.9.46 itibarıyla desteklenmektedir, 0.9.58 itibarıyla kullanımdan kaldırılmıştır.</p>
+<pre tabindex="0"><code>reply_key :: 32 byte ECIES SessionKey (big-endian)
+             CSRNG(32) random data
+
+tags :: 1 byte Integer (required value: 1)
+        Number of reply tags that follow
+
+reply_tags :: One 8-byte ECIES SessionTag
+              CSRNG(8) random data
+</code></pre><p>Yanıt, <a href="../../../../tr/docs/specs/ecies/">ECIES Spesifikasyonu</a>
+&rsquo;nda tanımlandığı üzere bir ECIES Existing Session (mevcut oturum) mesajıdır:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Session Tag (8 bytes)                 |
++----+----+----+----+----+----+----+----+
+| ChaCha20 encrypted payload            |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Poly1305 MAC (16 bytes)               |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+
+tag :: 8 byte reply_tag
+k :: 32 byte session key (the reply_key)
+n :: 0 (nonce)
+ad :: The 8 byte reply_tag
+payload :: Plaintext data (DSM or DSRM)
+ciphertext = ENCRYPT(k, n, payload, ad)
+</code></pre><p><strong>ECIES&rsquo;den ECIES&rsquo;e (bayraklar 1,0) - MEVCUT STANDART:</strong></p>
+<p>ECIES hedefi veya router, bir ECIES router&rsquo;a bir sorgu gönderir. 0.9.49 sürümünden itibaren desteklenir.</p>
+<p>Yukarıdaki &ldquo;ECIES to ElG&rdquo; ile aynı biçimdedir. Sorgu mesajı şifrelemesi <a href="../../../../tr/docs/specs/ecies/#routers">ECIES Routers</a>
+ içinde tanımlanmıştır. İstekte bulunan anonimdir.</p>
+<p><strong>ECIES&rsquo;den DH ile ECIES&rsquo;e (bayraklar 1,1) - GELECEK:</strong></p>
+<p>Henüz tam olarak tanımlanmadı. Bkz. <a href="../../../../tr/proposals/156-ecies-routers/">Proposal 156</a>
+.</p>
+<p><strong>Notlar:</strong> - 0.9.16&rsquo;dan önce, anahtar bir RouterInfo veya LeaseSet için olabilirdi (aynı anahtar alanı, ayırt etmek için bayrak yok) - Şifrelenmiş yanıtlar yalnızca yanıt bir tunnel üzerinden iletildiğinde yararlıdır - Alternatif DHT (Distributed Hash Table - Dağıtılmış Karma Tablosu) arama stratejileri uygulanırsa, dahil edilen etiketlerin sayısı birden fazla olabilir - Arama anahtarı ve hariç tutma anahtarları &ldquo;gerçek&rdquo; karmalardır, yönlendirme anahtarları DEĞİLDİR - 3, 5 ve 7 türleri (LeaseSet2 varyantları) 0.9.38 itibarıyla döndürülebilir. Bkz. <a href="../../../../tr/proposals/123-new-netdb-entries/">Proposal 123</a>
+ - <strong>Keşif araması notları:</strong> Bir keşif araması, anahtara yakın floodfill olmayan karmaların bir listesini döndürecek şekilde tanımlanır. Ancak uygulamalar farklılık gösterir: Java, bir RI (RouterInfo) için arama anahtarını gerçekten sorgular ve mevcutsa bir DatabaseStore döndürür; i2pd bunu yapmaz. Bu nedenle, daha önce alınmış karmalar için keşif araması kullanılması önerilmez</p>
+<p><strong>Kaynak kodu:</strong> - <code>net.i2p.data.i2np.DatabaseLookupMessage</code> - Şifreleme: <code>net.i2p.crypto.SessionKeyManager</code></p>
+<hr>
+<h3 id="databasesearchreply-veritabanı-arama-yanıtı-type-3">DatabaseSearchReply (veritabanı arama yanıtı) (Type 3)</h3>
+<p><strong>Amaç:</strong> Başarısız bir DatabaseLookup (veritabanı arama) mesajına verilen yanıt.</p>
+<p><strong>İçerik:</strong> İstenen anahtara en yakın router hash&rsquo;lerinin listesi.</p>
+<p><strong>Biçim:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| SHA256 hash as query key (32 bytes)  |
++                                       +
+|                                       |
++                                       +
+|                                       |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+| num| peer_hashes (variable)           |
++----+                                  +
+|                                       |
+~                                       ~
+|                                       |
++    +----+----+----+----+----+----+----+
+|    | from (32 bytes)                  |
++----+                                  +
+|                                       |
++                                       +
+|                                       |
++                                       +
+|                                       |
++    +----+----+----+----+----+----+----+
+|    |
++----+
+
+key :: 32 bytes
+       SHA256 of the object being searched
+
+num :: 1 byte Integer
+       Number of peer hashes that follow (0-255)
+
+peer_hashes :: $num SHA256 hashes of 32 bytes each (total $num*32 bytes)
+               SHA256 of the RouterIdentity that the sender thinks is
+               close to the key
+
+from :: 32 bytes
+        SHA256 of the RouterInfo of the router this reply was sent from
+</code></pre><p><strong>Notlar:</strong> - &lsquo;from&rsquo; karması kimlik doğrulanmamıştır ve güvenilemez - Döndürülen eş karmalarının, sorgulanan router’a kıyasla anahtara daha yakın olması şart değildir. Normal aramalara verilen yanıtlarda bu, yeni floodfill’lerin keşfini ve sağlamlık için (anahtardan daha uzak) &ldquo;ters yönde&rdquo; aramayı kolaylaştırır - Keşif aramalarında anahtar genellikle rastgele oluşturulur. Yanıtın floodfill olmayan peer_hashes değerleri, tüm yerel veritabanının verimsiz sıralanmasından kaçınmak için optimize edilmiş bir algoritma kullanılarak (örn. yakın ama mutlaka en yakın olmayan eşler) seçilebilir. Önbelleğe alma stratejileri de kullanılabilir. Bu, uygulamaya bağlıdır - <strong>Döndürülen karma sayısının tipik değeri:</strong> 3 - <strong>Önerilen en fazla döndürülecek karma sayısı:</strong> 16 - Arama anahtarı, eş karmaları ve &lsquo;from&rsquo; karması &ldquo;gerçek&rdquo; karmalardır, YÖNLENDİRME ANAHTARLARI DEĞİLDİR - num 0 ise, bu daha yakın eş bulunamadığını gösterir (çıkmaz)</p>
+<p><strong>Kaynak kodu:</strong> - <code>net.i2p.data.i2np.DatabaseSearchReplyMessage</code></p>
+<hr>
+<h3 id="deliverystatus-tür-10">DeliveryStatus (Tür 10)</h3>
+<p><strong>Amacı:</strong> Basit bir mesaj alındı onayı. Genellikle mesajın göndericisi tarafından oluşturulur ve mesajın kendisiyle birlikte Garlic Message (I2P’de birden fazla alt mesajı tek bir kapsülde taşıyan yapı) içinde paketlenir; hedef tarafından geri gönderilmek üzere.</p>
+<p><strong>İçerik:</strong> İletilen mesajın kimliği ve oluşturulma veya varış zamanı.</p>
+<p><strong>Biçim:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+----+----+----+----+
+| msg_id (4)            | time_stamp (8)                    |
++----+----+----+----+----+----+----+----+----+----+----+----+
+
+msg_id :: Integer (4 bytes)
+          Unique ID of the message we deliver the DeliveryStatus for
+          (see I2NP Message Header for details)
+
+time_stamp :: Date (8 bytes)
+              Time the message was successfully created or delivered
+</code></pre><p><strong>Notlar:</strong> - Zaman damgası her zaman oluşturan tarafından mevcut zamana ayarlanır. Ancak bunun koddaki birkaç kullanım alanı vardır ve gelecekte daha fazlası eklenebilir - Bu ileti, SSU içinde bir oturum kurulumu onayı olarak da kullanılır. Bu durumda, ileti kimliği rastgele bir sayıya ayarlanır ve &ldquo;varış zamanı&rdquo; geçerli ağ genelindeki kimliğe ayarlanır; bu değer 2’dir (yani, <code>0x0000000000000002</code>) - DeliveryStatus (teslim durumu mesajı) genellikle bir GarlicMessage (I2P’de özel bir mesaj türü) içine sarılır ve göndereni açığa çıkarmadan alındı onayı sağlamak için bir tunnel üzerinden gönderilir - Gecikmeyi ve güvenilirliği ölçmek için tunnel testlerinde kullanılır</p>
+<p><strong>Kaynak kodu:</strong> - <code>net.i2p.data.i2np.DeliveryStatusMessage</code> - Kullanıldığı yer: <code>net.i2p.router.tunnel.InboundEndpointProcessor</code> tunnel testi için</p>
+<hr>
+<h3 id="garlicmessage-sarımsak-mesajı-tür-11">GarlicMessage (Sarımsak Mesajı) (Tür 11)</h3>
+<p><strong>UYARI:</strong> Bu, ElGamal ile şifrelenmiş garlic messages (I2P&rsquo;de birden çok mesajı tek bir pakette birleştiren yapı) için kullanılan biçimdir. ECIES-AEAD-X25519-Ratchet garlic messages için kullanılan biçim önemli ölçüde farklıdır. Güncel biçim için <a href="../../../../tr/docs/specs/ecies/">ECIES Spesifikasyonu</a>
+ sayfasına bakın.</p>
+<p><strong>Amaç:</strong> Birden çok şifrelenmiş I2NP mesajını sarmak için kullanılır.</p>
+<p><strong>İçerik:</strong> Şifresi çözüldüğünde, Garlic Cloves (I2P’deki tekil alt-iletiler) ve ek veriden oluşan bir dizi; Clove Set (Garlic Cloves dizisi) olarak da bilinir.</p>
+<p><strong>Şifrelenmiş Format:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| length (4)            | data          |
++----+----+----+----+----+              +
+|                                       |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+
+length :: 4 byte Integer
+          Number of bytes that follow (0 to 64 KB)
+
+data :: $length bytes
+        ElGamal encrypted data
+</code></pre><p><strong>Şifresi Çözülmüş Veri (Clove Set - clove kümesi):</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| num| clove 1 (variable)               |
++----+                                  +
+|                                       |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| clove 2 (variable)                    |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Certificate (3) | Message_ID (4)  |
++----+----+----+----+----+----+----+----+
+    Expiration (8)                  |
++----+----+----+----+----+----+----+----+
+
+num :: 1 byte Integer
+       Number of GarlicCloves to follow
+
+clove :: GarlicClove (see GarlicClove structure above)
+
+Certificate :: Always NULL (3 bytes total, all zeroes)
+
+Message_ID :: 4 byte Integer
+
+Expiration :: Date (8 bytes)
+</code></pre><p><strong>Notlar:</strong> - Şifrelenmediğinde, veri bir veya daha fazla Garlic Clove (I2P’deki garlic mesajının alt birimi) içerir - AES ile şifrelenmiş blok en az 128 bayta doldurulur; 32 baytlık oturum etiketi ile şifreli mesajın asgari boyutu 160 bayttır; 4 baytlık uzunluk alanıyla Garlic Message (birden çok Garlic Clove içeren üst mesaj) için asgari boyut 164 bayttır - Gerçek maksimum uzunluk 64 KB&rsquo;den küçüktür (tunnel mesajları için pratik sınır yaklaşık 61.2 KB) - Şifreleme ayrıntıları için <a href="../../../../tr/docs/legacy/elgamal-aes/">ElGamal/AES Şartnamesi</a>
+ bölümüne bakın - Kavramsal genel bakış için <a href="../../../../tr/docs/overview/garlic-routing/">Garlic Routing</a>
+ bölümüne bakın - AES ile şifrelenmiş bloğun 128 baytlık asgari boyutu şu anda yapılandırılamaz - Mesaj kimliği genellikle gönderimde rastgele bir sayıya ayarlanır ve alımda yok sayılıyor görünür - Sertifika, yönlendirme için &ldquo;ödeme&rdquo; yapmak üzere HashCash ile kullanılabilir (gelecekteki olasılık) - <strong>ElGamal şifreleme yapısı:</strong> 32 baytlık oturum etiketi + ElGamal ile şifrelenmiş oturum anahtarı + AES ile şifrelenmiş yük</p>
+<p><strong>ECIES-X25519-AEAD-Ratchet formatı için (router&rsquo;lar için mevcut standart):</strong></p>
+<p>Bkz. <a href="../../../../tr/docs/specs/ecies/">ECIES Specification</a>
+ ve <a href="../../../../tr/proposals/144-ecies-x25519-aead-ratchet/">Proposal 144</a>
+.</p>
+<p><strong>Kaynak kodu:</strong> - <code>net.i2p.data.i2np.GarlicMessage</code> - Şifreleme: <code>net.i2p.crypto.elgamal.ElGamalAESEngine</code> (kullanımdan kaldırılmış) - Modern şifreleme: <code>net.i2p.crypto.ECIES</code> paketleri</p>
+<hr>
+<h3 id="tunneldata-tür-18">TunnelData (Tür 18)</h3>
+<p><strong>Purpose:</strong> Bir tunnel ağ geçidinden veya katılımcısından sonraki katılımcıya ya da uç noktaya gönderilen bir ileti. Veri sabit uzunluktadır; parçalanmış, toplulaştırılmış, dolgu eklenmiş ve şifrelenmiş I2NP iletilerini içerir.</p>
+<p><strong>Biçim:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| tunnelID (4)          | data (1024)   |
++----+----+----+----+----+              +
+|                                       |
+~                                       ~
+|                                       |
++                   +----+----+----+----+
+|                   |
++----+----+----+----+
+
+tunnelId :: 4 bytes
+            TunnelId identifying the tunnel this message is directed at
+            Nonzero
+
+data :: 1024 bytes
+        Payload data, fixed to 1024 bytes
+</code></pre><p><strong>Yük Yapısı (1024 bayt):</strong></p>
+<pre tabindex="0"><code>Bytes 0-15: Initialization Vector (IV) for AES encryption
+Bytes 16-1023: Encrypted tunnel message data (1008 bytes)
+</code></pre><p><strong>Notlar:</strong> - TunnelData için I2NP mesaj kimliği her atlamada yeni bir rastgele sayıya atanır - tunnel mesaj biçimi (şifrelenmiş verinin içinde) <a href="../../../../tr/docs/specs/implementation/">Tünel Mesajı Spesifikasyonu</a>
+ içinde belirtilmiştir - Her atlama, AES-256 ile CBC modunda bir katmanı çözer - IV (ilklendirme vektörü), her atlamada çözülen veri kullanılarak güncellenir - Toplam boyut tam olarak 1.028 bayttır (4 tunnelId + 1024 veri) - Bu, tunnel trafiğinin temel birimidir - TunnelData mesajları, parçalanmış I2NP mesajlarını taşır (GarlicMessage, DatabaseStore vb.)</p>
+<p><strong>Kaynak kodu:</strong> - <code>net.i2p.data.i2np.TunnelDataMessage</code> - Sabit: <code>TunnelDataMessage.DATA_LENGTH = 1024</code> - İşleyen: <code>net.i2p.router.tunnel.InboundGatewayProcessor</code></p>
+<hr>
+<h3 id="tunnelgateway-tünel-geçidi-tür-19">TunnelGateway (Tünel Geçidi) (Tür 19)</h3>
+<p><strong>Amaç:</strong> Başka bir I2NP mesajını, tunnel&rsquo;in gelen ağ geçidinde tunnel içine iletilmek üzere paketler.</p>
+<p><strong>Biçim:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+-//
+| tunnelId (4)          | length (2)| data...
++----+----+----+----+----+----+----+-//
+
+tunnelId :: 4 bytes
+            TunnelId identifying the tunnel this message is directed at
+            Nonzero
+
+length :: 2 byte Integer
+          Length of the payload
+
+data :: $length bytes
+        Actual payload of this message
+</code></pre><p><strong>Notlar:</strong> - Yük, standart 16 baytlık başlığa sahip bir I2NP mesajıdır - Yerel router&rsquo;dan tunnel&rsquo;lere mesaj enjekte etmek için kullanılır - Gerekirse ağ geçidi, içerideki mesajı parçalara böler - Parçalama sonrasında, parçalar TunnelData mesajlarının içine sarılır - TunnelGateway hiçbir zaman ağ üzerinden gönderilmez; tunnel işlemeye başlamadan önce kullanılan dahili bir mesaj türüdür</p>
+<p><strong>Kaynak kodu:</strong> - <code>net.i2p.data.i2np.TunnelGatewayMessage</code> - İşleme: <code>net.i2p.router.tunnel.OutboundGatewayProcessor</code></p>
+<hr>
+<h3 id="datamessage-tür-20">DataMessage (Tür 20)</h3>
+<p><strong>Amaç:</strong> Her tür veriyi sarmalamak için Garlic Messages (I2P&rsquo;de Garlic mesaj formatı) ve Garlic Cloves (Garlic mesajı içindeki &lsquo;clove/diş&rsquo; alt birimleri) tarafından kullanılır (genellikle uçtan uca şifrelenmiş uygulama verisi).</p>
+<p><strong>Biçim:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+-//-+
+| length (4)            | data...    |
++----+----+----+----+----+----+-//-+
+
+length :: 4 bytes
+          Length of the payload
+
+data :: $length bytes
+        Actual payload of this message
+</code></pre><p><strong>Notlar:</strong> - Bu mesaj herhangi bir yönlendirme bilgisi içermez ve asla &ldquo;unwrapped&rdquo; olarak gönderilmez - Yalnızca Garlic messages (Garlic mesajları) içinde kullanılır - Genellikle uçtan uca şifrelenmiş uygulama verisi içerir (HTTP, IRC, e-posta vb.) - Veri genellikle ElGamal/AES ya da ECIES ile şifrelenmiş bir yükten oluşur - tunnel mesajı parçalanma sınırları nedeniyle pratikteki azami uzunluk yaklaşık 61.2 KB&rsquo;dir</p>
+<p><strong>Kaynak kodu:</strong> - <code>net.i2p.data.i2np.DataMessage</code></p>
+<hr>
+<h3 id="tunnelbuild-tür-21">TunnelBuild (Tür 21)</h3>
+<p><strong>KULLANIMDAN KALDIRILDI.</strong> VariableTunnelBuild (tip 23) veya ShortTunnelBuild (tip 25) kullanın.</p>
+<p><strong>Amaç:</strong> Sabit uzunlukta, 8 atlamalı tunnel oluşturma isteği.</p>
+<p><strong>Biçim:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Record 0 (528 bytes)                  |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Record 1 (528 bytes)                  |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+| Record 7 (528 bytes)                  |
+~                                       ~
+|                                       |
++----+----+----+----+----+----+----+----+
+
+Just 8 BuildRequestRecords attached together
+Record size: 528 bytes
+Total size: 8 × 528 = 4,224 bytes
+</code></pre><p><strong>Notlar:</strong> - 0.9.48 itibarıyla, ECIES-X25519 BuildRequestRecords (yapı istek kayıtları) içerebilir. Bkz. <a href="../../../../tr/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ - Ayrıntılar için bkz. <a href="../../../../tr/docs/specs/implementation/">Tunnel Oluşturma Spesifikasyonu</a>
+ - Bu ileti için I2NP ileti kimliği, Tunnel Oluşturma Spesifikasyonu&rsquo;na göre ayarlanmalıdır - Günümüz ağında nadiren görülse de (VariableTunnelBuild (değişken tunnel oluşturma) ile değiştirildi), çok uzun tunnel&rsquo;lar için hâlâ kullanılabilir ve resmen kullanımdan kaldırılmamıştır - Router&rsquo;lar uyumluluk için bunu hâlâ uygulamak zorundadır - Sabit 8 kayıtlı biçim esnek değildir ve daha kısa tunnel&rsquo;lar için bant genişliğini israf eder</p>
+<p><strong>Kaynak kodu:</strong> - <code>net.i2p.data.i2np.TunnelBuildMessage</code> - Sabit: <code>TunnelBuildMessageBase.MAX_RECORD_COUNT = 8</code></p>
+<hr>
+<h3 id="tunnelbuildreply-tip-22">TunnelBuildReply (Tip 22)</h3>
+<p><strong>KULLANIMDAN KALDIRILDI.</strong> VariableTunnelBuildReply (tip 24) veya OutboundTunnelBuildReply (tip 26) kullanın.</p>
+<p><strong>Amaç:</strong> 8 atlamalı sabit uzunluklu tunnel oluşturma yanıtı.</p>
+<p><strong>Biçim:</strong></p>
+<p>TunnelBuildMessage ile aynı biçimdedir; BuildRequestRecords yerine BuildResponseRecords içerir.</p>
+<pre tabindex="0"><code>Total size: 8 × 528 = 4,224 bytes
+</code></pre><p><strong>Notlar:</strong> - 0.9.48 itibarıyla, ECIES-X25519 BuildResponseRecords (oluşturma yanıt kayıtları) içerebilir. Bkz. <a href="../../../../tr/docs/specs/implementation/">ECIES Tunnel Oluşturma</a>
+ - Ayrıntılar için <a href="../../../../tr/docs/specs/implementation/">Tunnel Oluşturma Belirtimi</a>
+ - Bu mesaj için I2NP mesaj kimliği, tunnel oluşturma belirtimine göre ayarlanmalıdır - Günümüz ağında nadiren görülse de (VariableTunnelBuildReply (değişken tunnel oluşturma yanıtı) ile değiştirildi), çok uzun tunnel&rsquo;lar için hâlâ kullanılabilir ve resmen kullanımdan kaldırılmamıştır - Router&rsquo;lar yine de uyumluluk için bunu uygulamak zorundadır</p>
+<p><strong>Kaynak kodu:</strong> - <code>net.i2p.data.i2np.TunnelBuildReplyMessage</code></p>
+<hr>
+<h3 id="variabletunnelbuild-tür-23">VariableTunnelBuild (Tür 23)</h3>
+<p><strong>Amaç:</strong> 1-8 atlama için değişken uzunluklu tunnel oluşturma. Hem ElGamal hem de ECIES-X25519 router&rsquo;ları destekler.</p>
+<p><strong>Biçim:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| num| BuildRequestRecords (variable)   |
++----+----+----+----+----+----+----+----+
+
+num :: 1 byte Integer
+       Valid values: 1-8
+
+BuildRequestRecords :: $num records of 528 bytes each
+
+Record size: 528 bytes
+Total size: 1 + ($num × 528) bytes
+</code></pre><p><strong>Notlar:</strong> - 0.9.48 itibarıyla, ECIES-X25519 BuildRequestRecords (inşa isteği kayıtları) içerebilir. Bkz. <a href="../../../../tr/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ - router sürüm 0.7.12’de (2009) tanıtıldı - 0.7.12 sürümünden önceki tunnel katılımcılarına gönderilmemelidir - Ayrıntılar için bkz. <a href="../../../../tr/docs/specs/implementation/">Tunnel Creation Specification</a>
+ - I2NP mesaj kimliği, tunnel oluşturma teknik şartnamesine göre ayarlanmalıdır - <strong>Tipik kayıt sayısı:</strong> 4 (4 atlamalı bir tunnel için) - <strong>Tipik toplam boyut:</strong> 1 + (4 × 528) = 2,113 bayt - Bu, ElGamal routers için standart tunnel oluşturma mesajıdır - Bunun yerine ECIES routers genellikle ShortTunnelBuild (tip 25) kullanır</p>
+<p><strong>Kaynak kodu:</strong> - <code>net.i2p.data.i2np.VariableTunnelBuildMessage</code></p>
+<hr>
+<h3 id="variabletunnelbuildreply-tür-24">VariableTunnelBuildReply (Tür 24)</h3>
+<p><strong>Amaç:</strong> 1-8 atlama için değişken uzunluklu tunnel kurulum yanıtı. Hem ElGamal hem de ECIES-X25519 router&rsquo;ları destekler.</p>
+<p><strong>Biçim:</strong></p>
+<p>VariableTunnelBuildMessage (değişken tunnel oluşturma mesajı) ile aynı biçimdedir; ancak BuildRequestRecords yerine BuildResponseRecords içerir.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| num| BuildResponseRecords (variable)  |
++----+----+----+----+----+----+----+----+
+
+num :: 1 byte Integer
+       Valid values: 1-8
+
+BuildResponseRecords :: $num records of 528 bytes each
+
+Record size: 528 bytes
+Total size: 1 + ($num × 528) bytes
+</code></pre><p><strong>Notlar:</strong> - 0.9.48 itibarıyla, ECIES-X25519 BuildResponseRecords içerebilir. Bkz. <a href="../../../../tr/docs/specs/implementation/">ECIES Tunnel Oluşturma</a>
+ - router sürüm 0.7.12&rsquo;de (2009) tanıtıldı - 0.7.12 sürümünden önceki tunnel katılımcılarına gönderilmeyebilir - Ayrıntılar için <a href="../../../../tr/docs/specs/implementation/">Tunnel Oluşturma Spesifikasyonu</a>
+ bölümüne bakın - I2NP ileti kimliği, Tunnel oluşturma spesifikasyonuna uygun olarak ayarlanmalıdır - <strong>Tipik kayıt sayısı:</strong> 4 - <strong>Tipik toplam boyut:</strong> 2,113 bayt</p>
+<p><strong>Kaynak kodu:</strong> - <code>net.i2p.data.i2np.VariableTunnelBuildReplyMessage</code></p>
+<hr>
+<h3 id="shorttunnelbuild-tür-25">ShortTunnelBuild (Tür 25)</h3>
+<p><strong>Amaç:</strong> Yalnızca ECIES-X25519 routers için kısa tunnel oluşturma iletileri. API sürümü 0.9.51&rsquo;de tanıtıldı (sürüm 1.5.0, Ağustos 2021). Bu, ECIES tunnel oluşturma işlemleri için mevcut standarttır.</p>
+<p><strong>Biçim:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| num| ShortBuildRequestRecords (var)   |
++----+----+----+----+----+----+----+----+
+
+num :: 1 byte Integer
+       Valid values: 1-8
+
+ShortBuildRequestRecords :: $num records of 218 bytes each
+
+Record size: 218 bytes
+Total size: 1 + ($num × 218) bytes
+</code></pre><p><strong>Notlar:</strong> - router sürüm 0.9.51&rsquo;de tanıtıldı (sürüm 1.5.0, Ağustos 2021) - API sürümü 0.9.51&rsquo;den daha eski olan tunnel katılımcılarına gönderilmeyebilir - Tam belirtim için <a href="../../../../tr/docs/specs/implementation/">ECIES Tunnel Creation</a>
+ bölümüne bakın - Gerekçesi için <a href="../../../../tr/proposals/157-new-tbm/">Proposal 157</a>
+ belgesine bakın - <strong>Tipik kayıt sayısı:</strong> 4 - <strong>Tipik toplam boyut:</strong> 1 + (4 × 218) = 873 bayt - <strong>Bant genişliği tasarrufu:</strong> VariableTunnelBuild&rsquo;e göre 59% daha küçük (873&rsquo;e karşı 2,113 bayt) - <strong>Performans kazancı:</strong> 4 kısa kayıt tek bir tunnel mesajına sığar; VariableTunnelBuild 3 tunnel mesajı gerektirir - Bu, artık saf ECIES-X25519 tunnel&rsquo;ları için standart tunnel oluşturma biçimidir - Kayıtlar, anahtarları açıkça dahil etmek yerine HKDF (HMAC tabanlı anahtar türetme işlevi) aracılığıyla türetir</p>
+<p><strong>Kaynak kodu:</strong> - <code>net.i2p.data.i2np.ShortTunnelBuildMessage</code> - Sabit: <code>ShortEncryptedBuildRecord.RECORD_SIZE = 218</code></p>
+<hr>
+<h3 id="outboundtunnelbuildreply-tür-26">OutboundTunnelBuildReply (Tür 26)</h3>
+<p><strong>Amaç:</strong> Yeni bir tunnel üzerindeki giden uç noktadan başlatıcıya gönderilir. Yalnızca ECIES-X25519 routers için. API sürüm 0.9.51&rsquo;de tanıtıldı (sürüm 1.5.0, Ağustos 2021).</p>
+<p><strong>Biçim:</strong></p>
+<p>ShortTunnelBuildMessage ile aynı biçimdedir; ShortBuildRequestRecords yerine ShortBuildResponseRecords kullanır.</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| num| ShortBuildResponseRecords (var)  |
++----+----+----+----+----+----+----+----+
+
+num :: 1 byte Integer
+       Valid values: 1-8
+
+ShortBuildResponseRecords :: $num records of 218 bytes each
+
+Record size: 218 bytes
+Total size: 1 + ($num × 218) bytes
+</code></pre><p><strong>Notlar:</strong> - router 0.9.51 sürümünde tanıtıldı (sürüm 1.5.0, Ağustos 2021) - Tam belirtim için <a href="../../../../tr/docs/specs/implementation/">ECIES Tunnel Oluşturma</a>
+ bölümüne bakın - <strong>Tipik kayıt sayısı:</strong> 4 - <strong>Tipik toplam boyut:</strong> 873 bayt - Bu yanıt, yeni oluşturulan outbound tunnel üzerinden outbound uç nokta (OBEP) tarafından tunnel oluşturucusuna geri gönderilir - Tüm hop (atlama) noktalarının tunnel kurulumunu kabul ettiğini doğrular</p>
+<p><strong>Kaynak kodu:</strong> - <code>net.i2p.data.i2np.OutboundTunnelBuildReplyMessage</code></p>
+<hr>
+<h2 id="kaynaklar">Kaynaklar</h2>
+<h3 id="resmi-spesifikasyonlar">Resmi Spesifikasyonlar</h3>
+<ul>
+<li><strong><a href="../../../../tr/docs/specs/i2np/">I2NP Belirtimi</a>
+</strong> - Eksiksiz I2NP ileti biçimi belirtimi</li>
+<li><strong><a href="../../../../tr/docs/specs/common-structures/">Ortak Yapılar</a>
+</strong> - I2P genelinde kullanılan veri türleri ve yapılar</li>
+<li><strong><a href="../../../../tr/docs/specs/implementation/">Tunnel Oluşturma</a>
+</strong> - ElGamal tunnel oluşturma (kullanımdan kaldırıldı)</li>
+<li><strong><a href="../../../../tr/docs/specs/implementation/">ECIES Tunnel Oluşturma</a>
+</strong> - ECIES-X25519 tunnel oluşturma (güncel)</li>
+<li><strong><a href="../../../../tr/docs/specs/implementation/">Tunnel İletisi</a>
+</strong> - Tunnel ileti biçimi ve teslim yönergeleri</li>
+<li><strong><a href="../../../../tr/docs/specs/ntcp2/">NTCP2 Belirtimi</a>
+</strong> - TCP taşıma protokolü</li>
+<li><strong><a href="../../../../tr/docs/specs/ssu2/">SSU2 Belirtimi</a>
+</strong> - UDP taşıma protokolü</li>
+<li><strong><a href="../../../../tr/docs/specs/ecies/">ECIES Belirtimi</a>
+</strong> - ECIES-X25519-AEAD-Ratchet şifreleme (ratchet: kademeli anahtar yenileme mekanizması)</li>
+<li><strong><a href="../../../../tr/docs/specs/cryptography/">Kriptografi Belirtimi</a>
+</strong> - Düşük seviyeli kriptografik ilkeller</li>
+<li><strong><a href="../../../../tr/docs/specs/i2cp/">I2CP Belirtimi</a>
+</strong> - İstemci protokolü belirtimi</li>
+<li><strong><a href="../../../../tr/docs/api/datagrams/">Datagram Belirtimi</a>
+</strong> - Datagram2 ve Datagram3 biçimleri</li>
+</ul>
+<h3 id="öneriler">Öneriler</h3>
+<ul>
+<li><strong><a href="../../../../tr/proposals/123-new-netdb-entries/">Teklif 123</a>
+</strong> - Yeni netDB kayıtları (LeaseSet2, EncryptedLeaseSet, MetaLeaseSet)</li>
+<li><strong><a href="../../../../tr/proposals/144-ecies-x25519-aead-ratchet/">Teklif 144</a>
+</strong> - ECIES-X25519-AEAD-Ratchet şifreleme</li>
+<li><strong><a href="../../../../tr/proposals/154-ecies-lookups/">Teklif 154</a>
+</strong> - Şifreli veritabanı araması</li>
+<li><strong><a href="../../../../tr/proposals/156-ecies-routers/">Teklif 156</a>
+</strong> - ECIES routers</li>
+<li><strong><a href="../../../../tr/proposals/157-new-tbm/">Teklif 157</a>
+</strong> - Daha küçük tunnel oluşturma iletileri (kısa biçim)</li>
+<li><strong><a href="../../../../tr/proposals/159-ssu2/">Teklif 159</a>
+</strong> - SSU2 taşıma</li>
+<li><strong><a href="../../../../tr/proposals/161-ri-dest-padding/">Teklif 161</a>
+</strong> - Sıkıştırılabilir dolgu</li>
+<li><strong><a href="../../../../tr/proposals/163-datagram2/">Teklif 163</a>
+</strong> - Datagram2 ve Datagram3</li>
+<li><strong><a href="../../../../tr/proposals/167-service-records/">Teklif 167</a>
+</strong> - LeaseSet hizmet kaydı parametreleri</li>
+<li><strong><a href="../../../../tr/proposals/168-tunnel-bandwidth/">Teklif 168</a>
+</strong> - Tunnel oluşturma bant genişliği parametreleri</li>
+<li><strong><a href="../../../../tr/proposals/169-pq-crypto/">Teklif 169</a>
+</strong> - Post-kuantum hibrit kriptografi</li>
+</ul>
+<h3 id="dokümantasyon">Dokümantasyon</h3>
+<ul>
+<li><strong><a href="../../../../tr/docs/overview/garlic-routing/">Garlic Routing</a>
+</strong> - Katmanlı mesaj demetleme</li>
+<li><strong><a href="../../../../tr/docs/legacy/elgamal-aes/">ElGamal/AES</a>
+</strong> - Kullanımdan kaldırılmış şifreleme şeması</li>
+<li><strong><a href="../../../../tr/docs/specs/implementation/">Tunnel Uygulaması</a>
+</strong> - Parçalama ve işleme</li>
+<li><strong><a href="../../../../tr/docs/specs/common-structures/">Ağ Veritabanı</a>
+</strong> - Dağıtık hash tablosu</li>
+<li><strong><a href="../../../../tr/docs/specs/ntcp2/">NTCP2 Taşıma</a>
+</strong> - TCP taşıma belirtimi</li>
+<li><strong><a href="../../../../tr/docs/specs/ssu2/">SSU2 Taşıma</a>
+</strong> - UDP taşıma belirtimi</li>
+<li><strong><a href="../../../../tr/docs/overview/tech-intro/">Teknik Giriş</a>
+</strong> - I2P mimarisine genel bakış</li>
+</ul>
+<h3 id="kaynak-kodu">Kaynak kodu</h3>
+<ul>
+<li><strong><a href="https://i2pgit.org/I2P_Developers/i2p.i2p">Java I2P Deposu</a>
+</strong> - Resmî Java gerçekleştirmesi</li>
+<li><strong><a href="https://github.com/i2p/i2p.i2p">GitHub Yansısı</a>
+</strong> - Java I2P&rsquo;nin GitHub yansısı</li>
+<li><strong><a href="https://github.com/PurpleI2P/i2pd">i2pd Deposu</a>
+</strong> - C++ gerçekleştirmesi</li>
+</ul>
+<h3 id="önemli-kaynak-kod-konumları">Önemli Kaynak Kod Konumları</h3>
+<p><strong>Java I2P (i2pgit.org/I2P_Developers/i2p.i2p):</strong> - <code>core/java/src/net/i2p/data/i2np/</code> - I2NP mesaj gerçeklemeleri - <code>core/java/src/net/i2p/crypto/</code> - Kriptografik gerçeklemeler - <code>router/java/src/net/i2p/router/tunnel/</code> - Tunnel işlemesi - <code>router/java/src/net/i2p/router/transport/</code> - Taşıma gerçeklemeleri</p>
+<p><strong>Sabitler ve Değerler:</strong> - <code>I2NPMessage.MAX_SIZE = 65536</code> - Maksimum I2NP mesaj boyutu - <code>I2NPMessageImpl.HEADER_LENGTH = 16</code> - Standart başlık boyutu - <code>TunnelDataMessage.DATA_LENGTH = 1024</code> - Tunnel mesaj yükü - <code>EncryptedBuildRecord.RECORD_SIZE = 528</code> - Uzun oluşturma kaydı - <code>ShortEncryptedBuildRecord.RECORD_SIZE = 218</code> - Kısa oluşturma kaydı - <code>TunnelBuildMessageBase.MAX_RECORD_COUNT = 8</code> - Bir oluşturma başına maksimum kayıt sayısı</p>
+<hr>
+<h2 id="ek-a-ağ-istatistikleri-ve-mevcut-durum">Ek A: Ağ İstatistikleri ve Mevcut Durum</h2>
+<h3 id="ağ-bileşimi-ekim-2025-itibarıyla">Ağ Bileşimi (Ekim 2025 itibarıyla)</h3>
+<ul>
+<li><strong>Toplam routers:</strong> Yaklaşık 60,000-70,000 (değişir)</li>
+<li><strong>Floodfill routers:</strong> Yaklaşık 500-700 aktif</li>
+<li><strong>Şifreleme türleri:</strong>
+<ul>
+<li>ECIES-X25519: routers arasında &gt;95%</li>
+<li>ElGamal: routers arasında &lt;5% (kullanımdan kaldırıldı, yalnızca eski)</li>
+</ul>
+</li>
+<li><strong>Taşıma protokollerinin benimsenmesi:</strong>
+<ul>
+<li>SSU2: &gt;60% birincil taşıma</li>
+<li>NTCP2: ~40% birincil taşıma</li>
+<li>Eski taşıma protokolleri (SSU1, NTCP): 0% (kaldırıldı)</li>
+</ul>
+</li>
+<li><strong>İmza türleri:</strong>
+<ul>
+<li>EdDSA (Ed25519): Büyük çoğunluk</li>
+<li>ECDSA: Küçük bir yüzde</li>
+<li>RSA: İzin verilmiyor (kaldırıldı)</li>
+</ul>
+</li>
+</ul>
+<h3 id="asgari-router-gereksinimleri">Asgari Router Gereksinimleri</h3>
+<ul>
+<li><strong>API sürümü:</strong> 0.9.16+ (ağ ile EdDSA uyumluluğu için)</li>
+<li><strong>Önerilen en düşük:</strong> API 0.9.51+ (ECIES kısa tunnel derlemeleri)</li>
+<li><strong>floodfills için mevcut en düşük:</strong> API 0.9.58+ (ElGamal router&rsquo;ın kullanımdan kaldırılması)</li>
+<li><strong>Yaklaşan gereksinim:</strong> Java 17+ (sürüm 2.11.0 itibarıyla, Aralık 2025)</li>
+</ul>
+<h3 id="bant-genişliği-gereksinimleri">Bant Genişliği Gereksinimleri</h3>
+<ul>
+<li><strong>Asgari:</strong> 128 KBytes/sn (N bayrağı veya üzeri) floodfill (I2P ağında netDb verisini tutup dağıtan özel düğüm) için</li>
+<li><strong>Önerilen:</strong> 256 KBytes/sn (O bayrağı) veya üzeri</li>
+<li><strong>Floodfill gereksinimleri:</strong>
+<ul>
+<li>Asgari 128 KB/sn bant genişliği</li>
+<li>Kararlı çalışma süresi (&gt; %95 önerilir)</li>
+<li>Düşük gecikme (eşlere &lt;500 ms)</li>
+<li>Sağlık testlerini geçmek (kuyruk süresi, iş gecikmesi)</li>
+</ul>
+</li>
+</ul>
+<h3 id="tunnel-istatistikleri">Tunnel İstatistikleri</h3>
+<ul>
+<li><strong>Tipik tunnel uzunluğu:</strong> 3-4 atlama</li>
+<li><strong>Maksimum tunnel uzunluğu:</strong> 8 atlama (teorik, nadiren kullanılır)</li>
+<li><strong>Tipik tunnel ömrü:</strong> 10 dakika</li>
+<li><strong>Tunnel oluşturma başarı oranı:</strong> iyi bağlantılı routers için &gt;85%</li>
+<li><strong>Tunnel oluşturma mesaj biçimi:</strong>
+<ul>
+<li>ECIES routers: ShortTunnelBuild (218 baytlık kayıtlar)</li>
+<li>Karma tunnels: VariableTunnelBuild (528 baytlık kayıtlar)</li>
+</ul>
+</li>
+</ul>
+<h3 id="performans-metrikleri">Performans Metrikleri</h3>
+<ul>
+<li><strong>Tunnel oluşturma süresi:</strong> 1-3 saniye (tipik)</li>
+<li><strong>Uçtan uca gecikme:</strong> 0,5-2 saniye (tipik, toplam 6-8 atlama)</li>
+<li><strong>Aktarım hızı:</strong> tunnel bant genişliği ile sınırlıdır (genellikle tunnel başına 10-50 KB/sn)</li>
+<li><strong>Maksimum datagram boyutu:</strong> 10 KB önerilir (61,2 KB teorik maksimum)</li>
+</ul>
+<hr>
+<h2 id="ek-b-artık-önerilmeyen-ve-kaldırılmış-özellikler">Ek B: Artık Önerilmeyen ve Kaldırılmış Özellikler</h2>
+<h3 id="tamamen-kaldırıldı-artık-desteklenmiyor">Tamamen Kaldırıldı (Artık Desteklenmiyor)</h3>
+<ul>
+<li><strong>NTCP aktarımı</strong> - 0.9.50 sürümünde kaldırıldı (Mayıs 2021)</li>
+<li><strong>SSU v1 aktarımı</strong> - Java I2P&rsquo;den 2.4.0 sürümünde kaldırıldı (Aralık 2023)</li>
+<li><strong>SSU v1 aktarımı</strong> - i2pd&rsquo;den 2.44.0 sürümünde kaldırıldı (Kasım 2022)</li>
+<li><strong>RSA imza türleri</strong> - API 0.9.28 itibarıyla yasaklandı</li>
+</ul>
+<h3 id="kullanımdan-kaldırıldı-destekleniyor-ancak-önerilmez">Kullanımdan kaldırıldı (Destekleniyor ancak önerilmez)</h3>
+<ul>
+<li><strong>ElGamal router&rsquo;lar</strong> - API 0.9.58 (Mart 2023) itibarıyla kullanımdan kaldırıldı
+<ul>
+<li>ElGamal hedefler geriye dönük uyumluluk için hâlâ desteklenmektedir</li>
+<li>Yeni router&rsquo;lar yalnızca ECIES-X25519 kullanmalıdır</li>
+</ul>
+</li>
+<li><strong>TunnelBuild (type 21)</strong> - VariableTunnelBuild ve ShortTunnelBuild lehine kullanımdan kaldırıldı
+<ul>
+<li>Çok uzun tunnel&rsquo;lar (&gt;8 atlama) için hâlâ uygulanmaktadır</li>
+</ul>
+</li>
+<li><strong>TunnelBuildReply (type 22)</strong> - VariableTunnelBuildReply ve OutboundTunnelBuildReply lehine kullanımdan kaldırıldı</li>
+<li><strong>ElGamal/AES şifrelemesi</strong> - ECIES-X25519-AEAD-Ratchet lehine kullanımdan kaldırıldı
+<ul>
+<li>Eski hedefler için hâlâ kullanılmaktadır</li>
+</ul>
+</li>
+<li><strong>Uzun ECIES BuildRequestRecords (528 bayt)</strong> - Kısa biçimin (218 bayt) lehine kullanımdan kaldırıldı
+<ul>
+<li>ElGamal atlamaları içeren karışık tunnel&rsquo;larda hâlâ kullanılmaktadır</li>
+</ul>
+</li>
+</ul>
+<h3 id="eski-sürüm-desteği-zaman-çizelgesi">Eski Sürüm Desteği Zaman Çizelgesi</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Feature</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Introduced</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Deprecated</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Removed</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">NTCP</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2003</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2018 (0.9.36)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2021 (0.9.50)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Replaced by NTCP2</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">SSU v1</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2004</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2022 (0.9.54)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2023 (Java) / 2022 (i2pd)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Replaced by SSU2</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">ElGamal routers</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2003</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2023 (0.9.58)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">TBD</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Destinations still supported</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">RSA signatures</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2015</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2017</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2017 (0.9.28)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Never widely used</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">TunnelBuild</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2004</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2009 (0.7.12)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Not removed</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Still supported for long tunnels</td>
+    </tr>
+  </tbody>
+</table>
+---
+<h2 id="ek-c-gelecekteki-gelişmeler">Ek C: Gelecekteki Gelişmeler</h2>
+<h3 id="kuantum-sonrası-kriptografi">Kuantum Sonrası Kriptografi</h3>
+<p><strong>Durum:</strong> 2.10.0 sürümüyle birlikte (Eylül 2025) Beta, 2.11.0 sürümünde (Aralık 2025) varsayılan olacak</p>
+<p><strong>Uygulama:</strong> - Klasik X25519 ve post-quantum (kuantum-sonrası) MLKEM (ML-KEM-768) birleştiren hibrit yaklaşım - Mevcut ECIES-X25519 altyapısıyla geriye dönük uyumlu - Hem klasik hem de PQ anahtar materyali ile Signal Double Ratchet (çift mandal anahtar yenileme algoritması) kullanır - Ayrıntılar için <a href="../../../../tr/proposals/169-pq-crypto/">Proposal 169</a>
+ sayfasına bakın</p>
+<p><strong>Geçiş Yolu:</strong> 1. Sürüm 2.10.0 (Eylül 2025): beta seçeneği olarak sunulacak 2. Sürüm 2.11.0 (Aralık 2025): varsayılan olarak etkinleştirilecek 3. Gelecek sürümler: Zamanla zorunlu hale gelecek</p>
+<h3 id="planlanan-özellikler">Planlanan Özellikler</h3>
+<ul>
+<li><strong>IPv6 iyileştirmeleri</strong> - Daha iyi IPv6 desteği ve geçiş mekanizmaları</li>
+<li><strong>Tunnel başına bant daraltma</strong> - Her tunnel için ince ayarlı bant genişliği kontrolü</li>
+<li><strong>Geliştirilmiş metrikler</strong> - Daha iyi performans izleme ve tanılama</li>
+<li><strong>Protokol iyileştirmeleri</strong> - Daha az ek yük ve daha yüksek verimlilik</li>
+<li><strong>Geliştirilmiş floodfill seçimi</strong> - Daha iyi ağ veritabanı dağıtımı</li>
+</ul>
+<h3 id="araştırma-alanları">Araştırma Alanları</h3>
+<ul>
+<li><strong>Tunnel uzunluğu optimizasyonu</strong> - Tehdit modeline göre dinamik tunnel uzunluğu</li>
+<li><strong>Gelişmiş padding (dolgu)</strong> - Trafik analizine karşı dirençte iyileştirmeler</li>
+<li><strong>Yeni şifreleme şemaları</strong> - Kuantum hesaplama tehditlerine hazırlık</li>
+<li><strong>Tıkanıklık kontrolü</strong> - Ağ yükünün daha iyi yönetimi</li>
+<li><strong>Mobil destek</strong> - Mobil cihazlar ve ağlar için optimizasyonlar</li>
+</ul>
+<hr>
+<h2 id="ek-d-uygulama-yönergeleri">Ek D: Uygulama Yönergeleri</h2>
+<h3 id="yeni-gerçeklemeler-için">Yeni Gerçeklemeler İçin</h3>
+<p><strong>Asgari Gereksinimler:</strong> 1. API sürümü 0.9.51+ özelliklerini destekleyin 2. ECIES-X25519-AEAD-Ratchet şifrelemesini uygulayın 3. NTCP2 ve SSU2 taşıma protokollerini destekleyin 4. ShortTunnelBuild mesajlarını (218 baytlık kayıtlar) uygulayın 5. LeaseSet2 varyantlarını destekleyin (türleri 3, 5, 7) 6. EdDSA imzalarını kullanın (Ed25519)</p>
+<p><strong>Önerilen:</strong> 1. Post-kuantum hibrit kriptografiyi destekleyin (2.11.0 itibarıyla) 2. tunnel başına bant genişliği parametrelerini uygulayın 3. Datagram2 ve Datagram3 formatlarını destekleyin 4. LeaseSets içinde hizmet kaydı seçeneklerini uygulayın 5. /docs/specs/ adresindeki resmi spesifikasyonlara uyun</p>
+<p><strong>Gerekli Değil:</strong> 1. ElGamal router desteği (kullanımdan kaldırıldı) 2. Eski taşıma desteği (SSU1, NTCP) 3. Uzun ECIES BuildRequestRecords (İnşa İstek Kayıtları; yalnızca ECIES tunnels için 528 bayt) 4. TunnelBuild/TunnelBuildReply mesajları (Variable veya Short varyantlarını kullanın)</p>
+<h3 id="test-ve-doğrulama">Test ve Doğrulama</h3>
+<p><strong>Protokol Uyumluluğu:</strong> 1. Resmi Java I2P router ile birlikte çalışabilirliği test edin 2. i2pd C++ router ile birlikte çalışabilirliği test edin 3. İleti biçimlerinin belirtimlere uygunluğunu doğrulayın 4. tunnel oluşturma/sökme döngülerini test edin 5. Test vektörleriyle şifreleme/şifre çözmeyi doğrulayın</p>
+<p><strong>Performans Testi:</strong> 1. tunnel oluşturma başarı oranlarını ölçün (&gt;85% olmalı) 2. çeşitli tunnel uzunluklarıyla test edin (2-8 atlama) 3. parçalama ve yeniden birleştirmeyi doğrulayın 4. yük altında test edin (eşzamanlı birden çok tunnel) 5. uçtan uca gecikmeyi ölçün</p>
+<p><strong>Güvenlik Testleri:</strong> 1. Şifreleme uygulamasını doğrulayın (test vektörlerini kullanın) 2. Yeniden oynatma saldırısının (replay attack) önlenmesini test edin 3. Mesajın zaman aşımı yönetimini doğrulayın 4. Hatalı biçimlendirilmiş mesajlara karşı test edin 5. Doğru rastgele sayı üretimini doğrulayın</p>
+<h3 id="sık-yapılan-implementasyon-hataları">Sık Yapılan İmplementasyon Hataları</h3>
+<ol>
+<li><strong>Kafa karıştırıcı teslim talimatı biçimleri</strong> - garlic clove (I2P&rsquo;de tekil &lsquo;garlic&rsquo; alt-ileti) vs tunnel iletisi</li>
+<li><strong>Hatalı anahtar türetimi</strong> - kısa build records (inşa kayıtları) için HKDF kullanımı</li>
+<li><strong>Message ID yönetimi</strong> - tunnel kurulumları için doğru şekilde ayarlanmaması</li>
+<li><strong>Parçalama sorunları</strong> - 61.2 KB&rsquo;lik pratik sınıra uyulmaması</li>
+<li><strong>Bayt sıralaması (endianness) hataları</strong> - Java tüm tamsayılar için big-endian kullanır</li>
+<li><strong>Sona erme yönetimi</strong> - Kısa biçim 7 Şubat 2106&rsquo;da sarar</li>
+<li><strong>Checksum (sağlama toplamı) üretimi</strong> - Doğrulanmasa bile hâlâ gereklidir</li>
+</ol>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../tr/docs/specs/i2cp/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">I2P İstemci Protokolü (I2CP)</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../tr/docs/specs/filter-format/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">Erişim Filtresi Biçimi</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/tr/docs/specs/i2np.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">I2P haberleriyle güncel kalın:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="E-posta adresinizi girin" required>
+                            <button type="submit">Abone Ol</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Hızlı Bağlantılar</h3>
+                <ul>
+                    <li><a href="../../../../tr/financial-support/">Bağış Yap</a></li>
+                    <li><a href="../../../../tr/docs/overview/intro/">I2P Tanıtımı</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Topluluk</h3>
+                <ul>
+                    <li><a href="../../../../tr/get-involved/">Katılın</a></li>
+                    <li><a href="../../../../tr/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Resmi Forumlar</a></li>
+                    <li><a href="../../../../tr/contact/">İletişim</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Kaynaklar</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P Metrikleri</a></li>
+                    <li><a href="../../../../tr/papers/">Araştırma</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Invisible Internet Projesi. Creative Commons altında lisanslanmıştır.</p>
+            <div class="footer-links">
+                <a href="../../../../tr/privacy/">Gizlilik</a>
+                <a href="../../../../tr/terms/">Şartlar</a>
+                <a href="../../../../tr/about/media/">Basın</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Kapat">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Topluluk Anketi</h2>
+            <p class="modal-subtitle">Sizden haber almaktan memnuniyet duyarız</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Oyunuz I2P&#39;nin geleceğini şekillendirmeye yardımcı olur.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

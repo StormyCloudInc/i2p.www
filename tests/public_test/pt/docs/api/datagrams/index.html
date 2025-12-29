@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="pt" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Datagramas | I2P - O Projeto de Internet Invisível</title>
+
+    <meta name="description" content="Formatos de mensagem autenticados, respondíveis e brutos acima do I2CP">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Datagramas | I2P - O Projeto de Internet Invisível">
+    <meta property="og:description" content="Formatos de mensagem autenticados, respondíveis e brutos acima do I2CP">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/pt/docs/api/datagrams/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Site Beta I2P Agora no Ar Reporte problemas por e-mail para stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Fechar banner" title="Fechar banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../pt/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../pt/about/" class="">Sobre</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../pt/about/">Visão Geral</a></li>
+                            <li><a href="../../../../pt/papers/">Artigos de Pesquisa</a></li>
+                            <li><a href="../../../../pt/about/media/">Imprensa</a></li>
+                            <li><a href="../../../../pt/contact/">Contate-nos</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../pt/docs/" class="active">Docs</a></li>
+                    <li><a href="../../../../pt/downloads/" class="">Downloads</a></li>
+                    <li><a href="../../../../pt/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../pt/get-involved/" class="">Participe</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../pt/get-involved/">Visão Geral</a></li>
+                            <li><a href="../../../../pt/feedback/">Sugestões de Recursos</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">pt</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/api/datagrams/"
+                                class="lang-option">Inglês</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/api/datagrams/"
+                                class="lang-option">Espanhol</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/api/datagrams/"
+                                class="lang-option">Coreano</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/api/datagrams/"
+                                class="lang-option">Chinês</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/api/datagrams/"
+                                class="lang-option">Russo</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/api/datagrams/"
+                                class="lang-option">Tcheco</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/api/datagrams/"
+                                class="lang-option">Alemão</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/api/datagrams/"
+                                class="lang-option">Francês</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/api/datagrams/"
+                                class="lang-option">Turco</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/api/datagrams/"
+                                class="lang-option">Vietnamita</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/api/datagrams/"
+                                class="lang-option">Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/api/datagrams/"
+                                class="lang-option">Árabe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/api/datagrams/"
+                                class="lang-option active">Português</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../pt/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../pt/downloads/" class="btn btn-primary">Obter I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#visão-geral">Visão Geral</a></li>
+    <li><a href="#1-constantes-do-protocolo">1. Constantes do Protocolo</a></li>
+    <li><a href="#2-tipos-de-datagramas">2. Tipos de Datagramas</a></li>
+    <li><a href="#3-detalhes-do-datagram2-e-datagram3-2025">3. Detalhes do Datagram2 e Datagram3 (2025)</a>
+      <ul>
+        <li><a href="#datagram2-protocolo-19">Datagram2 (Protocolo 19)</a></li>
+        <li><a href="#datagram3-protocolo-20">Datagram3 (Protocolo 20)</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-limites-de-tamanho-e-fragmentação">4. Limites de Tamanho e Fragmentação</a></li>
+    <li><a href="#5-integração-i2cp--i2np">5. Integração I2CP / I2NP</a></li>
+    <li><a href="#6-interfaces-de-programação">6. Interfaces de Programação</a>
+      <ul>
+        <li><a href="#api-java">API Java</a></li>
+        <li><a href="#suporte-sam-v3">Suporte SAM v3</a></li>
+        <li><a href="#módulos-i2ptunnel">Módulos i2ptunnel</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-ecossistema-e-suporte-a-linguagens-2025">7. Ecossistema e Suporte a Linguagens (2025)</a></li>
+    <li><a href="#8-exemplo-de-uso--rastreador-udp-i2psnark-2100">8. Exemplo de Uso – Rastreador UDP (I2PSnark 2.10.0)</a></li>
+    <li><a href="#9-segurança-e-melhores-práticas">9. Segurança e Melhores Práticas</a></li>
+    <li><a href="#10-especificação-técnica">10. Especificação Técnica</a>
+      <ul>
+        <li><a href="#101-identificação-de-protocolo">10.1 Identificação de Protocolo</a></li>
+        <li><a href="#102-datagramas-brutos">10.2 Datagramas Brutos</a></li>
+        <li><a href="#103-datagram1-datagramas-respondíveis">10.3 Datagram1 (Datagramas Respondíveis)</a></li>
+        <li><a href="#104-formato-datagram2">10.4 Formato Datagram2</a></li>
+        <li><a href="#105-formato-datagram3">10.5 Formato Datagram3</a></li>
+        <li><a href="#106-integridade-de-dados">10.6 Integridade de Dados</a></li>
+        <li><a href="#107-encapsulamento-de-pacotes">10.7 Encapsulamento de Pacotes</a></li>
+        <li><a href="#108-considerações-pós-quânticas-pq">10.8 Considerações Pós-Quânticas (PQ)</a></li>
+      </ul>
+    </li>
+    <li><a href="#11-referências">11. Referências</a></li>
+    <li><a href="#12-destaques-do-registro-de-alterações-2019--2025">12. Destaques do Registro de Alterações (2019 – 2025)</a></li>
+    <li><a href="#13-resumo">13. Resumo</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../pt/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../pt/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../pt/docs/api/">API</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Datagramas</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Esta tradução foi gerada usando aprendizado de máquina e pode não ser 100% precisa.</span>
+    
+    
+    <a href="../../../../en/docs/api/datagrams/" class="disclaimer-link">Ver versão em inglês</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Datagramas</h1>
+                    
+                        <p class="article-description">Formatos de mensagem autenticados, respondíveis e brutos acima do I2CP</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="visão-geral">Visão Geral</h2>
+<p>Datagramas fornecem comunicação orientada a mensagens acima do <a href="../../../../pt/docs/specs/i2cp/">I2CP</a>
+ e paralela à biblioteca de streaming. Eles permitem pacotes <strong>com capacidade de resposta</strong>, <strong>autenticados</strong> ou <strong>brutos</strong> sem exigir fluxos orientados a conexão. Os routers encapsulam datagramas em mensagens I2NP e mensagens de túnel, independentemente de o tráfego ser transportado por NTCP2 ou SSU2.</p>
+<p>A motivação principal é permitir que aplicações (como trackers, resolvedores DNS ou jogos) enviem pacotes autocontidos que identifiquem seu remetente.</p>
+<blockquote>
+<p><strong>Novidade em 2025:</strong> O Projeto I2P aprovou <strong>Datagram2 (protocolo 19)</strong> e <strong>Datagram3 (protocolo 20)</strong>, adicionando proteção contra replay e mensagens respondíveis com menor sobrecarga pela primeira vez em uma década.</p></blockquote>
+<hr>
+<h2 id="1-constantes-do-protocolo">1. Constantes do Protocolo</h2>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Protocol</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Value</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Introduced</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>PROTO_DATAGRAM</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">17</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Signed (repliable) datagram – “Datagram1”</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Original</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>PROTO_DATAGRAM_RAW</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">18</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Unsigned (raw) datagram – no sender info</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Original</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>PROTO_DATAGRAM2</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">19</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Signed + replay-protected datagram</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">API 0.9.66 (2025)</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>PROTO_DATAGRAM3</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">20</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Repliable (no signature, hash only)</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">API 0.9.66 (2025)</td>
+    </tr>
+  </tbody>
+</table>
+Os protocolos 19 e 20 foram formalizados na **Proposta 163 (Abril de 2025)**. Eles coexistem com Datagram1 / RAW para compatibilidade retroativa.
+<hr>
+<h2 id="2-tipos-de-datagramas">2. Tipos de Datagramas</h2>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Protocol</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Repliable</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Authenticated</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Replay Protection</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Min Overhead</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Raw</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">18</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">No</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">No</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">No</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Minimal size; spoofable.</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Datagram1</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">17</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Yes</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Yes</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">No</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">≈ 427</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Full Destination + signature.</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Datagram2</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">19</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Yes</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Yes</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Yes</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">≈ 457</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Replay prevention + offline signatures; PQ-ready.</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>Datagram3</strong></td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">20</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">Yes</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">No</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">No</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">≈ 34</td>
+      <td style="border:1px solid var(--color-border); padding:0.5rem;">Sender hash only; low overhead.</td>
+    </tr>
+  </tbody>
+</table>
+### Padrões de Design Típicos
+<ul>
+<li><strong>Requisição → Resposta:</strong> Envie um Datagram2 assinado (requisição + nonce), receba uma resposta raw ou Datagram3 (echo nonce).</li>
+<li><strong>Alta frequência/baixo overhead:</strong> Prefira Datagram3 ou RAW.</li>
+<li><strong>Mensagens de controle autenticadas:</strong> Datagram2.</li>
+<li><strong>Compatibilidade legada:</strong> Datagram1 ainda totalmente suportado.</li>
+</ul>
+<hr>
+<h2 id="3-detalhes-do-datagram2-e-datagram3-2025">3. Detalhes do Datagram2 e Datagram3 (2025)</h2>
+<h3 id="datagram2-protocolo-19">Datagram2 (Protocolo 19)</h3>
+<p>Substituto aprimorado para Datagram1. Recursos: - <strong>Prevenção de replay:</strong> token anti-replay de 4 bytes. - <strong>Suporte a assinatura offline:</strong> permite uso por Destinations assinados offline. - <strong>Cobertura de assinatura expandida:</strong> inclui hash de destination, flags, opções, bloco de assinatura offline, payload. - <strong>Preparado para pós-quântico:</strong> compatível com futuros híbridos ML-KEM. - <strong>Overhead:</strong> ≈ 457 bytes (chaves X25519).</p>
+<h3 id="datagram3-protocolo-20">Datagram3 (Protocolo 20)</h3>
+<p>Preenche a lacuna entre tipos brutos e assinados. Características: - <strong>Replicável sem assinatura:</strong> contém hash de 32 bytes do remetente + flags de 2 bytes. - <strong>Sobrecarga mínima:</strong> ≈ 34 bytes. - <strong>Sem defesa contra replay</strong> — a aplicação deve implementar.</p>
+<p>Ambos os protocolos são recursos da API 0.9.66 e implementados no router Java desde a versão 2.9.0; ainda não há implementações no i2pd ou Go (outubro de 2025).</p>
+<hr>
+<h2 id="4-limites-de-tamanho-e-fragmentação">4. Limites de Tamanho e Fragmentação</h2>
+<ul>
+<li><strong>Tamanho da mensagem tunnel:</strong> 1 028 bytes (4 B Tunnel ID + 16 B IV + 1 008 B payload).</li>
+<li><strong>Fragmento inicial:</strong> 956 B (entrega TUNNEL típica).</li>
+<li><strong>Fragmento subsequente:</strong> 996 B.</li>
+<li><strong>Fragmentos máximos:</strong> 63–64.</li>
+<li><strong>Limite prático:</strong> ≈ 62 708 B (~61 KB).</li>
+<li><strong>Limite recomendado:</strong> ≤ 10 KB para entrega confiável (perdas aumentam exponencialmente além deste limite).</li>
+</ul>
+<p><strong>Resumo de overhead:</strong> - Datagram1 ≈ 427 B (mínimo).   - Datagram2 ≈ 457 B.   - Datagram3 ≈ 34 B.   - Camadas adicionais (cabeçalho gzip I2CP, I2NP, Garlic, Tunnel): + ~5.5 KB no pior caso.</p>
+<hr>
+<h2 id="5-integração-i2cp--i2np">5. Integração I2CP / I2NP</h2>
+<p>Caminho da mensagem: 1. A aplicação cria um datagrama (via API I2P ou SAM).   2. I2CP envolve com cabeçalho gzip (<code>0x1F 0x8B 0x08</code>, RFC 1952) e checksum CRC-32.   3. Números de Protocolo + Porta armazenados nos campos do cabeçalho gzip.   4. Router encapsula como mensagem I2NP → Garlic clove → fragmentos de tunnel de 1 KB.   5. Fragmentos atravessam tunnel de saída → rede → tunnel de entrada.   6. Datagrama remontado entregue ao manipulador da aplicação com base no número do protocolo.</p>
+<p><strong>Integridade:</strong> CRC-32 (do I2CP) + assinatura criptográfica opcional (Datagram1/2). Não há um campo de checksum separado dentro do próprio datagrama.</p>
+<hr>
+<h2 id="6-interfaces-de-programação">6. Interfaces de Programação</h2>
+<h3 id="api-java">API Java</h3>
+<p>O pacote <code>net.i2p.client.datagram</code> inclui: - <code>I2PDatagramMaker</code> – constrói datagramas assinados.   - <code>I2PDatagramDissector</code> – verifica e extrai informações do remetente.   - <code>I2PInvalidDatagramException</code> – lançada em caso de falha na verificação.</p>
+<p><code>I2PSessionMuxedImpl</code> (<code>net.i2p.client.impl.I2PSessionMuxedImpl</code>) gerencia a multiplexação de protocolo e porta para aplicações que compartilham um Destination.</p>
+<p><strong>Acesso ao Javadoc:</strong> - <a href="http://idk.i2p/javadoc-i2p/">idk.i2p Javadoc</a>
+ (somente rede I2P) - <a href="https://eyedeekay.github.io/javadoc-i2p/">Espelho do Javadoc</a>
+ (espelho na clearnet) - <a href="http://docs.i2p-projekt.de/javadoc/">Javadocs Oficiais</a>
+ (documentação oficial)</p>
+<h3 id="suporte-sam-v3">Suporte SAM v3</h3>
+<ul>
+<li>SAM 3.2 (2016): adicionou parâmetros PORT e PROTOCOL.</li>
+<li>SAM 3.3 (2016): introduziu modelo PRIMARY/subsession; permite streams + datagramas em um Destination.</li>
+<li>Suporte para estilos de sessão Datagram2 / 3 adicionado à especificação em 2025 (implementação pendente).</li>
+<li>Especificação oficial: <a href="../../../../pt/docs/api/samv3/">Especificação SAM v3</a>
+</li>
+</ul>
+<h3 id="módulos-i2ptunnel">Módulos i2ptunnel</h3>
+<ul>
+<li><strong>udpTunnel:</strong> Base totalmente funcional para aplicações I2P UDP (<code>net.i2p.i2ptunnel.udpTunnel</code>).</li>
+<li><strong>streamr:</strong> Operacional para streaming A/V (<code>net.i2p.i2ptunnel.streamr</code>).</li>
+<li><strong>SOCKS UDP:</strong> <strong>Não funcional</strong> a partir da versão 2.10.0 (apenas stub UDP).</li>
+</ul>
+<blockquote>
+<p>Para UDP de uso geral, use a API Datagram ou udpTunnel diretamente—não dependa de SOCKS UDP.</p></blockquote>
+<hr>
+<h2 id="7-ecossistema-e-suporte-a-linguagens-2025">7. Ecossistema e Suporte a Linguagens (2025)</h2>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Language</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Library / Package</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">SAM Version</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Java</td><td style="border:1px solid var(--color-border); padding:0.5rem;">core API (net.i2p.client.datagram)</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3.3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">✓ full support</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">C++</td><td style="border:1px solid var(--color-border); padding:0.5rem;">i2pd / libsam3</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3.2 partial</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Limited</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Go</td><td style="border:1px solid var(--color-border); padding:0.5rem;">go-i2p / sam3</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3.1–3.2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Python</td><td style="border:1px solid var(--color-border); padding:0.5rem;">i2plib, i2p.socket, txi2p</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3.2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Rust</td><td style="border:1px solid var(--color-border); padding:0.5rem;">i2p-rs, i2p_client</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3.3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">C#</td><td style="border:1px solid var(--color-border); padding:0.5rem;">I2PSharp</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3.3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">JS/TS</td><td style="border:1px solid var(--color-border); padding:0.5rem;">node-i2p, i2p-sam</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3.2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Active</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Haskell</td><td style="border:1px solid var(--color-border); padding:0.5rem;">network-anonymous-i2p</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3.2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Experimental</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Lua</td><td style="border:1px solid var(--color-border); padding:0.5rem;">mooni2p</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3.2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Experimental</td></tr>
+  </tbody>
+</table>
+Java I2P é o único router que suporta subsessões completas SAM 3.3 e API Datagram2 neste momento.
+<hr>
+<h2 id="8-exemplo-de-uso--rastreador-udp-i2psnark-2100">8. Exemplo de Uso – Rastreador UDP (I2PSnark 2.10.0)</h2>
+<p>Primeira aplicação real do Datagram2/3:</p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Operation</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Datagram Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Announce Request</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Datagram3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Repliable but low-overhead update</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Response</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Raw Datagram</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Minimal payload return</td></tr>
+  </tbody>
+</table>
+O padrão demonstra o uso misto de datagramas autenticados e leves para equilibrar segurança e desempenho.
+<hr>
+<h2 id="9-segurança-e-melhores-práticas">9. Segurança e Melhores Práticas</h2>
+<ul>
+<li>Use Datagram2 para qualquer troca autenticada ou quando ataques de replay importarem.</li>
+<li>Prefira Datagram3 para respostas rápidas e replicáveis com confiança moderada.</li>
+<li>Use RAW para transmissões públicas ou dados anônimos.</li>
+<li>Mantenha payloads ≤ 10 KB para entrega confiável.</li>
+<li>Esteja ciente de que SOCKS UDP permanece não-funcional.</li>
+<li>Sempre verifique CRC gzip e assinaturas digitais no recebimento.</li>
+</ul>
+<hr>
+<h2 id="10-especificação-técnica">10. Especificação Técnica</h2>
+<p>Esta seção aborda os formatos de datagrama de baixo nível, encapsulamento e detalhes do protocolo.</p>
+<h3 id="101-identificação-de-protocolo">10.1 Identificação de Protocolo</h3>
+<p>Os formatos de datagrama <strong>não</strong> compartilham um cabeçalho comum. Os routers não podem inferir o tipo apenas a partir dos bytes do payload.</p>
+<p>Ao misturar vários tipos de datagrama—ou ao combinar datagramas com streaming—defina explicitamente: - O <strong>número do protocolo</strong> (via I2CP ou SAM) - Opcionalmente o <strong>número da porta</strong>, se a sua aplicação multiplexa serviços</p>
+<p>Deixar o protocolo sem definição (<code>0</code> ou <code>PROTO_ANY</code>) é desencorajado e pode levar a erros de roteamento ou entrega.</p>
+<h3 id="102-datagramas-brutos">10.2 Datagramas Brutos</h3>
+<p>Datagramas não respondíveis não transportam dados do remetente ou de autenticação. São cargas úteis opacas, tratadas fora da API de datagrama de nível superior, mas suportadas via SAM e I2PTunnel.</p>
+<p><strong>Protocolo:</strong> <code>18</code> (<code>PROTO_DATAGRAM_RAW</code>)</p>
+<p><strong>Formato:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----//
+|     payload...
++----+----+----+----+----//
+</code></pre><p>O comprimento do payload é limitado pelos limites de transporte (≈32 KB máximo prático, frequentemente muito menor).</p>
+<h3 id="103-datagram1-datagramas-respondíveis">10.3 Datagram1 (Datagramas Respondíveis)</h3>
+<p>Incorpora o <strong>Destination</strong> do remetente e uma <strong>Signature</strong> para autenticação e endereçamento de resposta.</p>
+<p><strong>Protocolo:</strong> <code>17</code> (<code>PROTO_DATAGRAM</code>)</p>
+<p><strong>Sobrecarga:</strong> ≥427 bytes <strong>Carga útil:</strong> até ~31,5 KB (limitado pelo transporte)</p>
+<p><strong>Formato:</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|               from                    |
++                                       +
+|                                       |
+~             Destination bytes         ~
+|                                       |
++----+----+----+----+----+----+----+----+
+|             signature                 |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|     payload...
++----+----+----+----//
+</code></pre><ul>
+<li><code>from</code>: um Destination (387+ bytes)</li>
+<li><code>signature</code>: uma Signature correspondente ao tipo de chave
+<ul>
+<li>Para DSA_SHA1: Signature do hash SHA-256 do payload</li>
+<li>Para outros tipos de chave: Signature diretamente sobre o payload</li>
+</ul>
+</li>
+</ul>
+<p><strong>Notas:</strong> - As assinaturas para tipos não-DSA foram padronizadas no I2P 0.9.14. - As assinaturas offline LS2 (Proposta 123) não são atualmente suportadas no Datagram1.</p>
+<h3 id="104-formato-datagram2">10.4 Formato Datagram2</h3>
+<p>Um datagrama respondível aprimorado que adiciona <strong>resistência a replay</strong> conforme definido na <a href="../../../../pt/proposals/163-datagram2/">Proposta 163</a>
+.</p>
+<p><strong>Protocolo:</strong> <code>19</code> (<code>PROTO_DATAGRAM2</code>)</p>
+<p>A implementação está em andamento. As aplicações devem incluir verificações de nonce ou timestamp para redundância.</p>
+<h3 id="105-formato-datagram3">10.5 Formato Datagram3</h3>
+<p>Fornece datagramas <strong>respondíveis mas não autenticados</strong>. Baseia-se na autenticação de sessão mantida pelo router em vez de destino e assinatura incorporados.</p>
+<p><strong>Protocolo:</strong> <code>20</code> (<code>PROTO_DATAGRAM3</code>) <strong>Status:</strong> Em desenvolvimento desde 0.9.66</p>
+<p>Útil quando: - Os destinos são grandes (por exemplo, chaves pós-quânticas) - A autenticação ocorre em outra camada - A eficiência de largura de banda é crítica</p>
+<h3 id="106-integridade-de-dados">10.6 Integridade de Dados</h3>
+<p>A integridade do datagrama é protegida pelo <strong>checksum gzip CRC-32</strong> na camada I2CP. Nenhum campo de checksum explícito existe dentro do próprio formato de payload do datagrama.</p>
+<h3 id="107-encapsulamento-de-pacotes">10.7 Encapsulamento de Pacotes</h3>
+<p>Cada datagrama é encapsulado como uma única mensagem I2NP ou como um cravo individual em uma <strong>Garlic Message</strong>. As camadas I2CP, I2NP e tunnel tratam o comprimento e o enquadramento — não há delimitador interno ou campo de comprimento no protocolo de datagrama.</p>
+<h3 id="108-considerações-pós-quânticas-pq">10.8 Considerações Pós-Quânticas (PQ)</h3>
+<p>Se a <strong>Proposta 169</strong> (assinaturas ML-DSA) for implementada, os tamanhos de assinatura e destino aumentarão drasticamente — de ~455 bytes para <strong>≥3739 bytes</strong>. Esta mudança aumentará substancialmente a sobrecarga de datagramas e reduzirá a capacidade efetiva de payload.</p>
+<p><strong>Datagram3</strong>, que depende de autenticação no nível de sessão (não assinaturas incorporadas), provavelmente se tornará o design preferido em ambientes I2P pós-quânticos.</p>
+<hr>
+<h2 id="11-referências">11. Referências</h2>
+<ul>
+<li><a href="../../../../pt/proposals/163-datagram2/">Proposta 163 – Datagram2 e Datagram3</a>
+</li>
+<li><a href="../../../../pt/proposals/160-udp-trackers/">Proposta 160 – Integração de Tracker UDP</a>
+</li>
+<li><a href="../../../../pt/proposals/144-ecies-x25519-aead-ratchet/">Proposta 144 – Cálculos de MTU para Streaming</a>
+</li>
+<li><a href="../../../../pt/proposals/169-pq-crypto/">Proposta 169 – Assinaturas Pós-Quânticas</a>
+</li>
+<li><a href="../../../../pt/docs/specs/i2cp/">Especificação I2CP</a>
+</li>
+<li><a href="../../../../pt/docs/specs/i2np/">Especificação I2NP</a>
+</li>
+<li><a href="../../../../pt/docs/specs/implementation/">Especificação de Mensagem de Tunnel</a>
+</li>
+<li><a href="../../../../pt/docs/api/samv3/">Especificação SAM v3</a>
+</li>
+<li><a href="../../../../pt/docs/api/i2ptunnel/">Documentação i2ptunnel</a>
+</li>
+</ul>
+<h2 id="12-destaques-do-registro-de-alterações-2019--2025">12. Destaques do Registro de Alterações (2019 – 2025)</h2>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Year</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Release</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">2019</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.43</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Datagram API stabilization</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">2021</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0.9.50</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Protocol port handling reworked</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">2022</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2.0.0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">SSU2 adoption completed</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">2024</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2.6.0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Legacy transport removal simplified UDP code</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">2025</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2.9.0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Datagram2/3 support added (Java API)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">2025</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2.10.0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">UDP Tracker implementation released</td></tr>
+  </tbody>
+</table>
+---
+<h2 id="13-resumo">13. Resumo</h2>
+<p>O subsistema de datagramas agora suporta quatro variantes de protocolo oferecendo um espectro desde totalmente autenticado até transmissão bruta leve. Os desenvolvedores devem migrar para <strong>Datagram2</strong> para casos de uso sensíveis à segurança e <strong>Datagram3</strong> para tráfego respondível eficiente. Todos os tipos mais antigos permanecem compatíveis para garantir interoperabilidade de longo prazo.</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../pt/docs/api/i2pcontrol/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">I2PControl JSON-RPC</span>
+                        </a>
+                    
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/pt/docs/api/datagrams.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Fique atualizado com as notícias do I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Digite seu e-mail" required>
+                            <button type="submit">Inscrever-se</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Links Rápidos</h3>
+                <ul>
+                    <li><a href="../../../../pt/financial-support/">Doar</a></li>
+                    <li><a href="../../../../pt/docs/overview/intro/">Introdução ao I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Comunidade</h3>
+                <ul>
+                    <li><a href="../../../../pt/get-involved/">Participe</a></li>
+                    <li><a href="../../../../pt/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Fóruns Oficiais</a></li>
+                    <li><a href="../../../../pt/contact/">Contato</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Recursos</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Métricas I2P</a></li>
+                    <li><a href="../../../../pt/papers/">Pesquisa</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 O Projeto de Internet Invisível. Licenciado sob Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../pt/privacy/">Privacidade</a>
+                <a href="../../../../pt/terms/">Termos</a>
+                <a href="../../../../pt/about/media/">Imprensa</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Enquete da comunidade</h2>
+            <p class="modal-subtitle">Gostaríamos de ouvir sua opinião</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Seu voto ajuda a moldar o futuro do I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

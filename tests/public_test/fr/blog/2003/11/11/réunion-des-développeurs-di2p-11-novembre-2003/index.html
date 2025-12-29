@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Réunion des développeurs d’I2P - 11 novembre 2003 | I2P - Le projet Internet invisible</title>
+
+    <meta name="description" content="Réunion de développement I2P portant sur le statut du router, les mises à jour de la feuille de route, l’implémentation native de modPow, le programme d’installation graphique, et des discussions sur les licences">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Réunion des développeurs d’I2P - 11 novembre 2003 | I2P - Le projet Internet invisible">
+    <meta property="og:description" content="Réunion de développement I2P portant sur le statut du router, les mises à jour de la feuille de route, l’implémentation native de modPow, le programme d’installation graphique, et des discussions sur les licences">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/fr/blog/2003/11/11/r%C3%A9union-des-d%C3%A9veloppeurs-di2p-11-novembre-2003/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Site Bêta I2P Maintenant En Ligne Signaler les problèmes e-mail à stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Fermer la bannière" title="Fermer la bannière">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../../../fr/" class="logo-link">
+                    <img src="../../../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../../../fr/about/" class="">À propos</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../../../fr/about/">Aperçu</a></li>
+                            <li><a href="../../../../../../fr/papers/">Articles de recherche</a></li>
+                            <li><a href="../../../../../../fr/about/media/">Presse</a></li>
+                            <li><a href="../../../../../../fr/contact/">Contactez-nous</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../../../fr/docs/" class="">Docs</a></li>
+                    <li><a href="../../../../../../fr/downloads/" class="">Téléchargements</a></li>
+                    <li><a href="../../../../../../fr/blog/" class="active">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../../../fr/get-involved/" class="">S&#39;impliquer</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../../../fr/get-involved/">Aperçu</a></li>
+                            <li><a href="../../../../../../fr/feedback/">Suggestions de fonctionnalités</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">fr</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../en/blog/2003/11/11/i2p-dev-meeting-november-11-2003/"
+                                class="lang-option">Anglais</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../es/blog/2003/11/11/reuni%C3%B3n-de-desarrolladores-de-i2p-11-de-noviembre-de-2003/"
+                                class="lang-option">Espagnol</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ko/blog/2003/11/11/i2p-%EA%B0%9C%EB%B0%9C%EC%9E%90-%ED%9A%8C%EC%9D%98-2003%EB%85%84-11%EC%9B%94-11%EC%9D%BC/"
+                                class="lang-option">Coréen</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../zh/blog/2003/11/11/i2p-%E5%BC%80%E5%8F%91%E8%80%85%E4%BC%9A%E8%AE%AE-2003%E5%B9%B411%E6%9C%8811%E6%97%A5/"
+                                class="lang-option">Chinois</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ru/blog/2003/11/11/%D0%B2%D1%81%D1%82%D1%80%D0%B5%D1%87%D0%B0-%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2-i2p-11-%D0%BD%D0%BE%D1%8F%D0%B1%D1%80%D1%8F-2003-%D0%B3%D0%BE%D0%B4%D0%B0/"
+                                class="lang-option">Russe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../cs/blog/2003/11/11/setk%C3%A1n%C3%AD-v%C3%BDvoj%C3%A1%C5%99%C5%AF-i2p-11.-listopadu-2003/"
+                                class="lang-option">Tchèque</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../de/blog/2003/11/11/i2p-dev-meeting-november-11-2003/"
+                                class="lang-option">Allemand</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../fr/blog/2003/11/11/r%C3%A9union-des-d%C3%A9veloppeurs-di2p-11-novembre-2003/"
+                                class="lang-option active">Français</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../tr/blog/2003/11/11/i2p-geli%C5%9Ftirici-toplant%C4%B1s%C4%B1-11-kas%C4%B1m-2003/"
+                                class="lang-option">Turc</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../vi/blog/2003/11/11/cu%E1%BB%99c-h%E1%BB%8Dp-c%C3%A1c-nh%C3%A0-ph%C3%A1t-tri%E1%BB%83n-i2p-ng%C3%A0y-11-th%C3%A1ng-11-n%C4%83m-2003/"
+                                class="lang-option">Vietnamien</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../hi/blog/2003/11/11/i2p-%E0%A4%A1%E0%A5%87%E0%A4%B5%E0%A4%B2%E0%A4%AA%E0%A4%B0-%E0%A4%AC%E0%A5%88%E0%A4%A0%E0%A4%95-11-%E0%A4%A8%E0%A4%B5%E0%A4%82%E0%A4%AC%E0%A4%B0-2003/"
+                                class="lang-option">Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../ar/blog/2003/11/11/%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9-%D9%85%D8%B7%D9%88%D8%B1%D9%8A-i2p-11-%D9%86%D9%88%D9%81%D9%85%D8%A8%D8%B1-2003/"
+                                class="lang-option">Arabe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../../../pt/blog/2003/11/11/reuni%C3%A3o-de-desenvolvedores-do-i2p-11-de-novembro-de-2003/"
+                                class="lang-option">Portugais</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../../../fr/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../../../fr/downloads/" class="btn btn-primary">Obtenir I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+<article class="blog-post">
+    <div class="container">
+        <div class="post-header">
+            <div class="post-meta-row">
+                
+                <time class="post-date" datetime="2003-11-11">
+                    November 11, 2003
+                </time>
+                
+
+                
+                <div class="post-categories">
+                    
+                    <span class="category-badge">meeting</span>
+                    
+                </div>
+                
+            </div>
+
+            <h1 class="post-title">Réunion des développeurs d’I2P - 11 novembre 2003</h1>
+
+            
+            <div class="post-author">By jrand0m</div>
+            
+        </div>
+
+        <div class="post-content">
+            <p>(Avec l&rsquo;aimable autorisation de la wayback machine <a href="http://www.archive.org/">http://www.archive.org/</a>
+)</p>
+<h2 id="récapitulatif-rapide">Récapitulatif rapide</h2>
+<p class="attendees-inline"><strong>Présents:</strong> dish, dm, jrand0m, MrEcho, nop</p>
+<p>(journal de réunion modifié pour masquer le fait que iip a planté en plein milieu de la réunion et qu&rsquo;il y a eu beaucoup d&rsquo;expirations de délai de ping, donc n&rsquo;essayez pas de lire ceci comme un récit linéaire)</p>
+<h2 id="journal-de-réunion">Journal de réunion</h2>
+<div class="irc-log"> [22:02] &lt;jrand0m&gt; ordre du jour [22:02] &lt;jrand0m&gt; 0) bienvenue [22:02] &lt;jrand0m&gt; 1) i2p router [22:02] &lt;jrand0m&gt; 1.1) état [22:02] &lt;jrand0m&gt; 1.2) modifications de la feuille de route [22:02] &lt;jrand0m&gt; 1.3) sous-projets ouverts [22:02] &lt;jrand0m&gt; 2) modPow natif [22:03] &lt;jrand0m&gt; 2) programme d'installation GUI [22:03] &lt;jrand0m&gt; 3) messagerie instantanée (IM) [22:03] &lt;jrand0m&gt; 4) service de noms [22:03] &lt;MrEcho&gt; j'ai vu ce code .c [22:03] &lt;jrand0m&gt; 5) licences [22:03] &lt;jrand0m&gt; 6) autre ? [22:03] &lt;jrand0m&gt; 0) bienvenue [22:03] &lt;jrand0m&gt; salut. [22:03] &lt;nop&gt; salut [22:03] &lt;jrand0m&gt; réunion 2^6 [22:04] &lt;jrand0m&gt; tu as des points à ajouter à l'ordre du jour, nop ? [22:04] &lt;jrand0m&gt; ok, 1.1) état du router [22:04] &lt;jrand0m&gt; on est en 0.2.0.3 et d'après les dernières nouvelles, c'est fonctionnel [22:04] &lt;MrEcho&gt; &gt; 0.2.0.3 [22:04] &lt;MrEcho&gt; c'est bien ça ? [22:05] &lt;MrEcho&gt; je le fais tourner... ça a l'air bien [22:05] &lt;nop&gt; non [22:05] &lt;jrand0m&gt; il y a eu de petits commits après la version 0.2.0.3, rien qui vaille une nouvelle version [22:05] &lt;nop&gt; j'essaie juste de rattraper [22:05] &lt;jrand0m&gt; cool [22:06] &lt;jrand0m&gt; vu les expériences et retours de la 0.2.0.x, la feuille de route a été mise à jour pour rendre l'exécution moins gourmande en ressources [22:06] &lt;jrand0m&gt; (c.-à-d. pour que les gens puissent faire tourner des serveurs web / etc. sans que ça leur bouffe le CPU) [22:06] &lt;jrand0m&gt; plus précisément (on passe au point 1.2 de l'ordre du jour) : http://wiki.invisiblenet.net/iip-wiki?I2PRoadmap [22:06] &lt;MrEcho&gt; ce que j'ai remarqué, c'est que la plupart des routers utilisent : TransportStyle: PHTTP [22:07] &lt;MrEcho&gt; ça passe automatiquement en PHTTP ou ça essaie d'abord TCP ? [22:07] &lt;jrand0m&gt; hmm, la plupart des routers devraient supporter PHTTP, et s'ils peuvent accepter des connexions entrantes, ils devraient supporter TCP aussi [22:07] &lt;jrand0m&gt; si c'est possible, il utilise TCP [22:07] &lt;jrand0m&gt; PHTTP est pondéré comme environ 1000 fois plus coûteux que TCP [22:08] &lt;jrand0m&gt; (voir GetBidsJob, qui demande à chaque transport combien il pense que ça coûterait d'envoyer un message à un pair) [22:08] &lt;jrand0m&gt; (et voir TCPTransport.getBid et PHTTPTransport.getBid pour les valeurs utilisées) [22:08] &lt;MrEcho&gt; ok [22:08] &lt;jrand0m&gt; utilises-tu souvent PHTTP pour envoyer et recevoir des messages ? [22:09] &lt;jrand0m&gt; (ça peut être le signe que ton écouteur TCP n'est pas joignable) [22:09] &lt;MrEcho&gt; je n'ai pas mis les URLs de mon côté [22:09] &lt;jrand0m&gt; ah ok. [22:09] &lt;MrEcho&gt; oh si, il l'est [22:10] &lt;jrand0m&gt; ok, ouais, mes routers ont des connexions TCP ouvertes vers toi [22:10] &lt;dm&gt; comme c'est hospitalier de leur part. [22:10] * jrand0m est content que vous m'ayez fait implémenter routerConsole.html pour qu'on n'ait pas à fouiller dans les logs pour cette merde [22:11] &lt;MrEcho&gt; y a-t-il un timeout qui fait que s'il ne se connecte pas en TCP il passe en PHTTP ? et c'est quoi le timing ? [22:11] &lt;jrand0m&gt; mais bref, le grand changement de la feuille de route, c'est que la 0.2.1 implémentera le truc AES+SessionTag [22:11] &lt;MrEcho&gt; ou on pourrait avoir ça dans un réglage ? [22:11] &lt;jrand0m&gt; s'il reçoit un refus de connexion TCP / hôte introuvable / etc., il abandonne immédiatement cette tentative et essaie la prochaine offre disponible [22:12] &lt;MrEcho&gt; donc pas de nouvelles tentatives [22:12] &lt;jrand0m&gt; PHTTP a un timeout de 30 s, si je me souviens bien [22:12] &lt;jrand0m&gt; pas besoin de réessayer. soit tu as une connexion TCP ouverte et tu peux envoyer les données, soit non :) [22:12] &lt;MrEcho&gt; lol ok [22:13] &lt;MrEcho&gt; est-ce qu'il retentera TCP à chaque fois après ça, ou bien il sautera et passera directement en PHTTP pour la connexion suivante ? [22:13] &lt;jrand0m&gt; pour le moment, il tente TCP à chaque fois. [22:13] &lt;jrand0m&gt; les transports ne conservent pas encore d'historique [22:13] &lt;MrEcho&gt; ok cool [22:14] &lt;jrand0m&gt; (mais si un pair échoue 4 fois, il est mis sur la shitlist pendant 8 minutes) [22:14] &lt;MrEcho&gt; eh bien une fois que l'autre côté reçoit le message PHTTP, il devrait se connecter au router qui a envoyé le message via TCP, non ? [22:14] &lt;jrand0m&gt; correct. une fois qu'une connexion TCP est établie, il peut l'utiliser. [22:14] &lt;jrand0m&gt; (mais si les deux pairs n'ont que PHTTP, ils utiliseront évidemment uniquement PHTTP) [22:15] &lt;MrEcho&gt; ça voudrait dire qu'il ne pouvait établir de connexion TCP vers quoi que ce soit [22:15] &lt;MrEcho&gt; .. mais ouais [22:16] &lt;MrEcho&gt; j'aimerais qu'il y ait un moyen de contourner ça [22:16] &lt;jrand0m&gt; non, un de mes routers n'a pas d'adresse TCP - seulement PHTTP. mais j'établis des connexions TCP avec des pairs qui ont des adresses TCP. [22:16] &lt;jrand0m&gt; (et ensuite ils peuvent renvoyer des messages via cette connexion TCP plutôt que de m'envoyer des messages PHTTP plus lents) [22:17] &lt;jrand0m&gt; ou ce n'est pas ce que tu voulais dire ? [22:17] &lt;MrEcho&gt; ouais je me suis embrouillé [22:17] &lt;jrand0m&gt; yep, pas de souci [22:18] &lt;jrand0m&gt; donc, voir la feuille de route mise à jour pour les infos de planning mises à jour ((Link: http://wiki.invisiblenet.net/iip-wiki?I2PRoadmap)http://wiki.invisiblenet.net/iip-wiki?I2PRoadmap) [22:18] &lt;jrand0m&gt; ok, 1.3) sous-projets ouverts [22:19] &lt;jrand0m&gt; j'ai enfin mis une partie de la liste de choses à faire de mon palmpilot dans le wiki à (Link: http://wiki.invisiblenet.net/iip-wiki?OpenSubprojects)http://wiki.invisiblenet.net/iip-wiki?OpenSubprojects [22:19] &lt;jrand0m&gt; donc si tu t'ennuies et que tu cherches des projets de code... :) [22:19] &lt;MrEcho&gt; pff [22:20] &lt;MrEcho&gt; j'en ai déjà 2 [22:20] &lt;dish&gt; Tu as un palmpilot, c'est la classe [22:20] &lt;MrEcho&gt; le mien est mort [22:20] &lt;jrand0m&gt; mihi&gt; il y a un point là-dedans concernant l'I2PTunnel décrivant une idée que j'ai eue il y a quelque temps [22:20] &lt;MrEcho&gt; je sais pas ce qu'il a [22:21] &lt;jrand0m&gt; ouais, j'avais des palms avant mais on m'a récemment donné celui-ci pour la cause ;) [22:21] &lt;dish&gt; Pourrait-on avoir un point à l'ordre du jour de la réunion pour discuter de la dernière fois où userX a tapé quelque chose [22:21] &lt;MrEcho&gt; ce foutu truc ne s'allume même plus [22:21] &lt;MrEcho&gt; lol [22:22] &lt;jrand0m&gt; je ne pense pas que UserX ait dit quoi que ce soit depuis 4 ou 5 mois ;) [22:22] &lt;MrEcho&gt; c'est un bot ou quoi ? [22:22] &lt;dish&gt; Qu'est-ce qu'il a dit il y a 5 mois ? [22:22] &lt;MrEcho&gt; je parie que c'est un bitchx qui tourne sur une machine à laquelle il avait accès... et qu'il a oubliée [22:22] &lt;jrand0m&gt; qu'il reviendrait avec des commentaires sur l'anonCommFramework (ancien nom d'i2p) la semaine suivante ;) [22:23] &lt;dish&gt; haha [22:23] &lt;jrand0m&gt; mais je suppose qu'il est occupé. c'est la vie [22:23] &lt;jrand0m&gt; ok, 2) modPow natif [22:23] &lt;MrEcho&gt; j'ai vu ce code c [22:24] &lt;jrand0m&gt; j'ai assemblé un .c stub et une classe Java pour montrer comment quelque chose comme GMP ou une autre bibliothèque MPI pourrait être intégré, mais évidemment ça ne marche pas [22:25] &lt;jrand0m&gt; ce qui serait bien, ce serait d'avoir un petit paquet de classes C et cette classe d'enveloppe Java triviale associée que l'on pourrait compiler pour Windows, OSX, *BSD, Linux, et empaqueter sous GPL
+<p>(insérer ici une défaillance majeure d&rsquo;iip)</p>
+<p>[22:38] &lt;MrEcho&gt; la dernière chose que j’ai vue était : [13:25] &lt;jrand0m&gt; ok, 2) native modPow
+[22:38] &lt;jrand0m&gt; salut MrEcho
+[22:38] &lt;jrand0m&gt; ouais, on dirait qu’un proxy principal a planté
+[22:39] &lt;jrand0m&gt; je lui laisse encore 2 min avant de redémarrer
+[22:39] &lt;MrEcho&gt; ok
+[22:39] &lt;MrEcho&gt; pour 25 $ une fois je peux avoir Java complet sur thenidus.net &hellip; un de mes sites
+[22:40] &lt;jrand0m&gt; 25 $ ? ils te facturent l’installation de logiciels ?
+[22:40] &lt;MrEcho&gt; aucune idée en fait&hellip; c’est un forfait
+[22:40] &lt;MrEcho&gt; je parle à mon pote là tout de suite
+[22:40] &lt;jrand0m&gt; je ne suis pas sûr que le code soit assez stable pour aller louer une flopée d’emplacements en colocation pour y déployer des routers. pas encore :)
+[22:41] &lt;dm&gt; un forfait de quoi ?
+[22:41] &lt;MrEcho&gt; java - jsp
+[22:41] &lt;jrand0m&gt; ok, je renvoie ce que j’ai envoyé avant :
+[22:41] &lt;jrand0m&gt; j’ai bricolé un stub en .c et une classe Java pour montrer comment quelque chose comme GMP ou une autre bibliothèque MPI pourrait être intégré, mais ça ne marche évidemment pas
+[22:41] &lt;jrand0m&gt; ce qui serait bien, ce serait d’avoir un petit paquet de classes C et la classe wrapper Java triviale associée, que l’on pourrait compiler pour windows, osx, *bsd, linux, et empaqueter sous GPL (ou une licence moins restrictive)
+[22:41] &lt;jrand0m&gt; toutefois, avec la nouvelle feuille de route qui met AES+SessionTag comme tâche en cours pour moi, ce n’est plus aussi critique qu’avant.
+[22:42] &lt;jrand0m&gt; si quelqu’un veut s’en charger malgré tout, ce serait super (et je suis sûr qu’un autre projet que nous connaissons tous serait intéressé par un tel packaging)
+[22:43] &lt;dm&gt; frazaa ?
+[22:43] &lt;jrand0m&gt; hé, d’une certaine façon ;)
+[22:44] &lt;jrand0m&gt; ok, 3) installateur GUI
+[22:44] &lt;jrand0m&gt; MrEcho&gt; salut
+[22:44] &lt;MrEcho&gt; :)
+[22:44] &lt;MrEcho&gt; héhé
+[22:44] &lt;MrEcho&gt; ça avance
+[22:44] &lt;jrand0m&gt; cool
+[22:44] &lt;MrEcho&gt; rien de spécial
+[22:45] &lt;MrEcho&gt; j’ai des idées vraiment cool pour le rendre super chiadé&hellip; mais c’est pour plus tard
+[22:45] &lt;jrand0m&gt; je me demandais si l’installateur devait ajouter 1) une option pour récupérer automatiquement les seeds depuis http://&hellip;/i2pdb/ 2) récupérer automatiquement http://&hellip;/i2p/squid.dest et créer aussi un runSquid.bat/runSquid.sh ?
+[22:45] &lt;jrand0m&gt; ouais
+[22:46] &lt;jrand0m&gt; ouais, on veut que l’installateur soit le plus simple possible — tu pensais à quoi comme trucs « fancy » ?
+[22:46] &lt;MrEcho&gt; la question, c’est que quand tu fais java -jar installer ça part sur le non-GUI par défaut à cause de la façon dont tu as organisé les choses
+[22:46] &lt;MrEcho&gt; comment on fait pour que quand tu double-cliques le fichier jar ça lance la GUI
+[22:47] &lt;jrand0m&gt; install.jar &lt;&ndash; non-GUI,  installgui.jar &lt;&ndash; GUI
+[22:47] &lt;jrand0m&gt; code séparé, paquets séparés
+[22:47] &lt;MrEcho&gt; « fancy » au sens de trucs que tu ne remarqueras peut-être pas&hellip; mais ça va être propre et soigné
+[22:47] &lt;jrand0m&gt; cool
+[22:47] &lt;MrEcho&gt; ah ok
+[22:48] &lt;jrand0m&gt; (ou install &lt;&ndash; GUI, installcli &lt;&ndash; CLI. on verra comment ça évolue)
+[22:49] &lt;jrand0m&gt; autre chose sur la GUI, ou on passe au point 4) ?
+[22:49] &lt;jrand0m&gt; (tu as une idée du délai ? pas de pression, je demande juste)
+[22:51] &lt;MrEcho&gt; aucune idée pour l’instant
+[22:51] &lt;jrand0m&gt; cool
+[22:51] &lt;jrand0m&gt; ok, 4) IM (messagerie instantanée)
+[22:51] &lt;jrand0m&gt; thecrypto n’est pas là, donc&hellip;..
+[22:51] &lt;jrand0m&gt; 5) service de nommage
+[22:51] &lt;jrand0m&gt; wiht n’est pas là non plus&hellip;
+[22:51] &lt;jrand0m&gt; ping
+[22:52] &lt;dish&gt; tu t’es trompé dans la numérotation de l’ordre du jour
+[22:52] &lt;dish&gt; 3) IM
+[22:52] &lt;jrand0m&gt; ouais, j’avais l’habitude d’avoir deux points 2 à l’ordre du jour
+[22:52] &lt;dish&gt; 4) Nommage
+[22:52] &lt;dish&gt; ;)
+[22:52] &lt;jrand0m&gt; (native modPow et installateur GUI)
+[22:52] &lt;jrand0m&gt; tu vois, on est dynamiques et tout
+[22:59] &lt;jrand0m&gt; ok, pour les logs je suppose que je vais continuer
+[22:59] &lt;jrand0m&gt; 6) licences
+[23:00] &lt;jrand0m&gt; je pense aller vers quelque chose de moins restrictif que la GPL. on utilise du code MIT, plus un autre fichier qui est GPL (mais c’est juste l’encodage base64 et ça peut être remplacé facilement). à part ça, tout le code est sous copyright soit par moi, soit par thecrypto.
+[23:00] * dish regarde la partie du code i2p tunnel de mihi
+[23:01] &lt;jrand0m&gt; ah oui, mihi a publié ça sous GPL mais il peut vouloir le publier sous autre chose s’il le souhaite aussi
+[23:01] &lt;jrand0m&gt; (mais i2ptunnel est essentiellement une appli tierce et peut choisir la licence qu’elle veut)
+[23:02] &lt;jrand0m&gt; (bien que, puisque le SDK i2p est GPL, il a été forcé d’être en GPL)
+[23:02] &lt;MrEcho&gt; zut, il était temps
+[23:02] &lt;jrand0m&gt; je ne sais pas. les licences, ce n’est pas mon fort, mais je serais enclin au moins à passer en LGPL
+[23:02] * dish publie les 10–20 lignes de modification du code I2P HTTP Client de mihi sous la licence qu’utilise mihi, quelle qu’elle soit
+[23:03] &lt;jrand0m&gt; héhé :)
+[23:06] &lt;jrand0m&gt; bref, 7) autre ?
+[23:07] &lt;jrand0m&gt; quelqu’un a des questions / préoccupations / idées à propos d’i2p ?
+[23:07] &lt;dish&gt; Laissez-moi poser une question
+[23:07] &lt;dish&gt; Est-ce que I2P a une fonctionnalité de nom de groupe ?
+[23:07] &lt;jrand0m&gt; une fonctionnalité de nom de groupe ?
+[23:07] &lt;dm&gt; équipe Discovery Channel !
+[23:07] &lt;MrEcho&gt; lol
+[23:08] &lt;dish&gt; L’idée étant que si tu veux avoir un réseau privé ou séparé, mais que certains router se mélangent d’une manière ou d’une autre, sans nom de groupe les deux réseaux fusionneraient
+[23:08] &lt;MrEcho&gt; il pense à Waste
+[23:08] &lt;jrand0m&gt; ah
+[23:08] &lt;dish&gt; Je ne sais pas pourquoi on voudrait ça, mais je demande au cas où
+[23:08] &lt;jrand0m&gt; oui, au début de la conception du réseau je jouais avec cette idée
+[23:09] &lt;jrand0m&gt; c’est plus avancé que ce dont on a besoin pour l’instant (ou dans un futur relativement proche [6–12 mois]) mais ça pourrait être intégré plus tard
+[23:09] &lt;dish&gt; Ou bien est-ce une mauvaise idée parce qu’il vaut mieux garder un seul grand réseau
+[23:09] &lt;dm&gt; i2pisdead
+[23:09] &lt;jrand0m&gt; hé dm
+[23:10] &lt;nop&gt; ferme-la
+[23:10] &lt;jrand0m&gt; non dish, c’est une bonne idée
+[23:10] &lt;dm&gt; nop : gros dur ?
+[23:10] &lt;jrand0m&gt; c’est essentiellement ce qu’est la version 0.2.3 — routes restreintes
+[23:10] &lt;jrand0m&gt; (a.k.a. tu as un petit ensemble privé (de confiance) de pairs et tu ne veux pas que tout le monde sache qui ils sont, mais tu veux quand même pouvoir communiquer avec eux)
+[23:15] &lt;jrand0m&gt; ok, autre chose ?
+[23:15] &lt;nop&gt; non, je fais juste le clown
+[23:18] &lt;dm&gt; marrant, hein ?
+[23:20] &lt;jrand0m&gt; ok, eh bien, réunion /intéressante/, avec quelques plantages iip au milieu ;)
+[23:21] * jrand0m <em>baf</em> met fin à la réunion </div></p>
+
+        </div>
+
+        <div class="post-navigation">
+            <a href="../../../../../../fr/blog" class="back-to-blog">← Back to Blog</a>
+        </div>
+    </div>
+</article>
+
+<style>
+.blog-post {
+    padding: var(--spacing-2xl) 0;
+}
+
+.post-header {
+    margin-bottom: var(--spacing-2xl);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.post-meta-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.post-date {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.post-categories {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.category-badge {
+    padding: 0.25rem 0.625rem;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.post-title {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.2;
+}
+
+.post-author {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+}
+
+.post-content {
+    max-width: 800px;
+    margin: 0 auto var(--spacing-2xl);
+    line-height: 1.8;
+    font-size: 1.0625rem;
+}
+
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.post-content h2 {
+    font-size: 1.875rem;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.post-content h3 {
+    font-size: 1.5rem;
+}
+
+.post-content h4 {
+    font-size: 1.25rem;
+}
+
+.post-content ul,
+.post-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.post-content li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.post-content pre {
+    background-color: var(--color-bg-secondary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin: var(--spacing-lg) 0;
+    border: 1px solid var(--color-border);
+}
+
+.post-content code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+}
+
+.post-content pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.post-content :not(pre) > code {
+    background-color: var(--color-bg-tertiary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+}
+
+.post-navigation {
+    max-width: 800px;
+    margin: var(--spacing-2xl) auto 0;
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.back-to-blog {
+    color: var(--color-primary);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: gap var(--transition-fast);
+}
+
+.back-to-blog:hover {
+    gap: var(--spacing-sm);
+}
+
+@media (max-width: 768px) {
+    .post-meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+
+    .post-title {
+        font-size: 2rem;
+    }
+
+    .post-content {
+        font-size: 1rem;
+    }
+}
+</style>
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Restez informé des actualités I2P :</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Entrez votre email" required>
+                            <button type="submit">S&#39;abonner</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Liens Rapides</h3>
+                <ul>
+                    <li><a href="../../../../../../fr/financial-support/">Faire un don</a></li>
+                    <li><a href="../../../../../../fr/docs/overview/intro/">Introduction à I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Communauté</h3>
+                <ul>
+                    <li><a href="../../../../../../fr/get-involved/">Participez</a></li>
+                    <li><a href="../../../../../../fr/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Forums Officiels</a></li>
+                    <li><a href="../../../../../../fr/contact/">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Ressources</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Mesures I2P</a></li>
+                    <li><a href="../../../../../../fr/papers/">Recherche</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Le Projet Internet Invisible. Sous licence Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../../../fr/privacy/">Confidentialité</a>
+                <a href="../../../../../../fr/terms/">Conditions d&#39;utilisation</a>
+                <a href="../../../../../../fr/about/media/">Presse</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Fermer">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Sondage de la communauté</h2>
+            <p class="modal-subtitle">Nous aimerions avoir de vos nouvelles</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Votre vote aide à façonner l&#39;avenir d&#39;I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

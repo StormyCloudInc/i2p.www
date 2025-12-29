@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Reseed 服务器 | I2P - 隐形互联网项目</title>
+
+    <meta name="description" content="运行 reseed（引导种子）服务与替代性引导方法">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Reseed 服务器 | I2P - 隐形互联网项目">
+    <meta property="og:description" content="运行 reseed（引导种子）服务与替代性引导方法">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/zh/docs/misc/reseed/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P 测试版网站现已上线 电子邮件问题请发送至 stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="关闭横幅" title="关闭横幅">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../zh/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../zh/about/" class="">关于</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../zh/about/">概览</a></li>
+                            <li><a href="../../../../zh/papers/">研究论文</a></li>
+                            <li><a href="../../../../zh/about/media/">媒体</a></li>
+                            <li><a href="../../../../zh/contact/">联系我们</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../zh/docs/" class="active">文档</a></li>
+                    <li><a href="../../../../zh/downloads/" class="">下载</a></li>
+                    <li><a href="../../../../zh/blog/" class="">博客</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../zh/get-involved/" class="">参与其中</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../zh/get-involved/">概览</a></li>
+                            <li><a href="../../../../zh/feedback/">功能建议</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">zh</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/misc/reseed/"
+                                class="lang-option">英语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/misc/reseed/"
+                                class="lang-option">西班牙语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/misc/reseed/"
+                                class="lang-option">韩语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/misc/reseed/"
+                                class="lang-option active">中文</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/misc/reseed/"
+                                class="lang-option">俄语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/misc/reseed/"
+                                class="lang-option">捷克语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/misc/reseed/"
+                                class="lang-option">德语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/misc/reseed/"
+                                class="lang-option">法语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/misc/reseed/"
+                                class="lang-option">土耳其语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/misc/reseed/"
+                                class="lang-option">越南语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/misc/reseed/"
+                                class="lang-option">印地语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/misc/reseed/"
+                                class="lang-option">阿拉伯语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/misc/reseed/"
+                                class="lang-option">葡萄牙语</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../zh/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../zh/downloads/" class="btn btn-primary">获取I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#关于-reseed引导主机">关于 Reseed（引导）主机</a>
+      <ul>
+        <li><a href="#网络引导流程">网络引导流程</a></li>
+        <li><a href="#当前网络状态">当前网络状态</a></li>
+      </ul>
+    </li>
+    <li><a href="#su3-文件格式规范">SU3 文件格式规范</a>
+      <ul>
+        <li><a href="#文件结构">文件结构</a></li>
+        <li><a href="#zip-内容结构">ZIP 内容结构</a></li>
+        <li><a href="#数字签名">数字签名</a></li>
+        <li><a href="#证书信任模型">证书信任模型</a></li>
+      </ul>
+    </li>
+    <li><a href="#运行-reseed补种服务器">运行 Reseed（补种）服务器</a>
+      <ul>
+        <li><a href="#技术要求">技术要求</a></li>
+        <li><a href="#安全需求">安全需求</a></li>
+        <li><a href="#实现方法">实现方法</a></li>
+        <li><a href="#反向代理配置">反向代理配置</a></li>
+        <li><a href="#注册与协调">注册与协调</a></li>
+        <li><a href="#运维最佳实践">运维最佳实践</a></li>
+      </ul>
+    </li>
+    <li><a href="#替代的重新播种方法">替代的重新播种方法</a>
+      <ul>
+        <li><a href="#基于文件的reseed引导">基于文件的Reseed（引导）</a></li>
+        <li><a href="#使用-cloudflare-代理的重新播种">使用 Cloudflare 代理的重新播种</a></li>
+        <li><a href="#抗审查策略">抗审查策略</a></li>
+      </ul>
+    </li>
+    <li><a href="#供实现者参考的协议细节">供实现者参考的协议细节</a>
+      <ul>
+        <li><a href="#reseed补种请求规范">Reseed（补种）请求规范</a></li>
+        <li><a href="#routerinfo-文件格式">RouterInfo 文件格式</a></li>
+        <li><a href="#网络多样性要求">网络多样性要求</a></li>
+        <li><a href="#ipv6-注意事项">IPv6 注意事项</a></li>
+      </ul>
+    </li>
+    <li><a href="#安全性考虑">安全性考虑</a>
+      <ul>
+        <li><a href="#威胁模型">威胁模型</a></li>
+        <li><a href="#证书管理-1">证书管理</a></li>
+        <li><a href="#攻击缓解">攻击缓解</a></li>
+      </ul>
+    </li>
+    <li><a href="#测试与验证">测试与验证</a>
+      <ul>
+        <li><a href="#测试你的-reseed引导服务器">测试你的 Reseed（引导）服务器</a></li>
+        <li><a href="#常见问题的故障排除">常见问题的故障排除</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考信息">参考信息</a>
+      <ul>
+        <li><a href="#官方文档">官方文档</a></li>
+        <li><a href="#替代实现">替代实现</a></li>
+        <li><a href="#社区资源">社区资源</a></li>
+        <li><a href="#版本历史">版本历史</a></li>
+        <li><a href="#签名类型参考">签名类型参考</a></li>
+      </ul>
+    </li>
+    <li><a href="#致谢">致谢</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../zh/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../zh/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../zh/docs/misc/">杂项</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Reseed 服务器</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">此翻译是使用机器学习生成的，可能不是100%准确。</span>
+    
+    
+    <a href="../../../../en/docs/misc/reseed/" class="disclaimer-link">查看英文版本</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Reseed 服务器</h1>
+                    
+                        <p class="article-description">运行 reseed（引导种子）服务与替代性引导方法</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="关于-reseed引导主机">关于 Reseed（引导）主机</h2>
+<p>新的 router 需要少量对等节点才能加入 I2P 网络。Reseed hosts（用于初始引导的主机）通过加密的 HTTPS 下载提供该初始引导集合。每个 reseed 包都由主机签名，防止未认证方篡改。已加入网络的 router 若其对等节点集变得陈旧，可能会偶尔进行 reseed。</p>
+<h3 id="网络引导流程">网络引导流程</h3>
+<p>当 I2P router 首次启动或长时间离线后，需要 RouterInfo（路由信息）数据来连接到网络。由于该 router 尚无现有对等节点，它无法从 I2P 网络内部获取该信息。reseed（获取初始节点的引导）机制通过从受信任的外部 HTTPS 服务器提供 RouterInfo 文件，来解决这一引导问题。</p>
+<p>reseed（初始种子获取）过程会以单个经加密签名的捆绑包形式提供 75–100 个 RouterInfo 文件。这可确保新的 routers 能够快速建立连接，同时不暴露于可能将其隔离到彼此独立且不受信任的网络分区中的中间人攻击。</p>
+<h3 id="当前网络状态">当前网络状态</h3>
+<p>截至 2025 年 10 月，I2P 网络运行的 router 版本为 2.10.0（API 版本 0.9.67）。在 0.9.14 版本引入的 reseed（用于为新节点提供网络引导信息的机制）协议，其核心功能保持稳定，未发生变化。该网络维护着多台相互独立的 reseed 服务器，全球分布，以确保可用性与抗审查能力。</p>
+<p>服务 <a href="https://checki2p.com/reseed">checki2p</a>
+ 每 4 小时监控所有 I2P reseed（节点引导）服务器，为 reseed 基础设施提供实时状态检查和可用性指标。</p>
+<h2 id="su3-文件格式规范">SU3 文件格式规范</h2>
+<p>SU3 文件格式是 I2P 的 reseed（初始节点引入）协议的基础，提供带有密码学签名的内容分发。理解该格式对于实现 reseed 服务器和客户端至关重要。</p>
+<h3 id="文件结构">文件结构</h3>
+<p>SU3 格式由三个主要组件组成：头部（40+ 字节）、内容（可变长度）和签名（长度由头部指定）。</p>
+<h4 id="头部格式至少包含字节-039">头部格式（至少包含字节 0–39）</h4>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Byte Range</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Field</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">0-5</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Magic Number</td><td style="border:1px solid var(--color-border); padding:0.5rem;">ASCII string "I2Psu3" (0x493250737533)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">6</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Unused, must be 0x00</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">7</td><td style="border:1px solid var(--color-border); padding:0.5rem;">File Format Version</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Current version: 0x00</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">8-9</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Signature Type</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Big-endian 16-bit integer. Type 6 = RSA-4096-SHA512 (reseed standard)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">10-11</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Signature Length</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Big-endian 16-bit integer. 512 bytes (0x0200) for RSA-4096</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Unused, must be 0x00</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">13</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Version Length</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Minimum 16 bytes (0x10) for compatibility</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">14</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Unused, must be 0x00</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">15</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Signer ID Length</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Length of UTF-8 signer identifier string</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">16-23</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Content Length</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Big-endian 64-bit integer, length of content in bytes</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">24</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Unused, must be 0x00</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">25</td><td style="border:1px solid var(--color-border); padding:0.5rem;">File Type</td><td style="border:1px solid var(--color-border); padding:0.5rem;">0x00 = ZIP, 0x01 = XML, 0x02 = HTML, 0x03 = XML.GZ, 0x04 = TXT.GZ, 0x05 = DMG, 0x06 = EXE</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">26</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Unused, must be 0x00</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">27</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Content Type</td><td style="border:1px solid var(--color-border); padding:0.5rem;">0x00 = unknown, 0x01 = router update, 0x02 = plugin, 0x03 = reseed, 0x04 = news, 0x05 = blocklist</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">28-39</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Unused, must be all zeros</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">40-55</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Version String</td><td style="border:1px solid var(--color-border); padding:0.5rem;">ASCII version string, padded with zeros (minimum 16 bytes)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">56-...</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Signer ID</td><td style="border:1px solid var(--color-border); padding:0.5rem;">UTF-8 encoded signer identifier (e.g., "user@mail.i2p")</td></tr>
+  </tbody>
+</table>
+### Reseed（获取初始 netDb 的过程）专用的 SU3 参数
+<p>对于 reseed（引导）捆绑包，SU3 文件必须具有以下特性：</p>
+<ul>
+<li><strong>文件名</strong>：必须完全为 <code>i2pseeds.su3</code></li>
+<li><strong>内容类型</strong>（第 27 字节）：0x03（RESEED）</li>
+<li><strong>文件类型</strong>（第 25 字节）：0x00（ZIP）</li>
+<li><strong>签名类型</strong>（第 8-9 字节）：0x0006（RSA-4096-SHA512）</li>
+<li><strong>版本字符串</strong>：ASCII 编码的 Unix 时间戳（自 Unix 纪元起的秒数，date +%s 格式）</li>
+<li><strong>签名者 ID</strong>：与 X.509 证书 CN 匹配的电子邮件风格标识符（CN 即 Common Name，通用名称）</li>
+</ul>
+<h4 id="网络id查询参数">网络ID查询参数</h4>
+<p>自 0.9.42 版本起，routers 会在 reseed（初始引导）请求后附加 <code>?netid=2</code>。这可防止跨网络连接，因为测试网络使用不同的网络 ID。当前 I2P 生产网络使用网络 ID 2。</p>
+<p>示例请求：<code>https://reseed.example.com/i2pseeds.su3?netid=2</code></p>
+<h3 id="zip-内容结构">ZIP 内容结构</h3>
+<p>内容部分（在头部之后、签名之前）包含一个标准的 ZIP 存档，并需满足以下要求：</p>
+<ul>
+<li><strong>压缩</strong>: 标准 ZIP 压缩（DEFLATE）</li>
+<li><strong>文件数量</strong>: 通常为 75-100 个 RouterInfo（路由器信息数据结构）文件</li>
+<li><strong>目录结构</strong>: 所有文件必须位于顶层目录（无子目录）</li>
+<li><strong>文件命名</strong>: <code>routerInfo-{44-character-base64-hash}.dat</code></li>
+<li><strong>Base64 字母表</strong>: 必须使用 I2P 的修改版 base64 字母表</li>
+</ul>
+<p>I2P 的 base64 字符集不同于标准 base64，它使用 <code>-</code> 和 <code>~</code> 代替 <code>+</code> 和 <code>/</code>，以确保与文件系统和 URL 兼容。</p>
+<h3 id="数字签名">数字签名</h3>
+<p>签名覆盖整个文件，从字节0一直到内容部分的末尾。签名本身追加在内容之后。</p>
+<h4 id="签名算法-rsa-4096-sha512">签名算法 (RSA-4096-SHA512)</h4>
+<ol>
+<li>计算从字节 0 到内容末尾的 SHA-512 哈希值</li>
+<li>使用 &ldquo;raw&rdquo; RSA（指不带哈希/填充的裸 RSA，Java 术语为 NONEwithRSA）对该哈希进行签名</li>
+<li>如有必要，在签名前填充前导零，使其长度达到 512 字节</li>
+<li>将 512 字节的签名追加到文件末尾</li>
+</ol>
+<h4 id="签名验证过程">签名验证过程</h4>
+<p>客户端必须：</p>
+<ol>
+<li>读取字节0-11以确定签名类型和长度</li>
+<li>读取整个头部以定位内容边界</li>
+<li>在流式处理内容的同时计算SHA-512哈希</li>
+<li>从文件末尾提取签名</li>
+<li>使用签名者的RSA-4096公钥验证签名</li>
+<li>如果签名验证失败，则拒绝该文件</li>
+</ol>
+<h3 id="证书信任模型">证书信任模型</h3>
+<p>Reseed（用于引导初始化 netDb 的过程）签名密钥以使用 RSA-4096 密钥的自签名 X.509 证书形式分发。这些证书包含在 I2P router 软件包的 <code>certificates/reseed/</code> 目录中。</p>
+<p>证书格式： - <strong>密钥类型</strong>：RSA-4096 - <strong>签名</strong>：自签名 - <strong>主题 CN</strong>：必须与 SU3 头中的签名者 ID 匹配 - <strong>有效期</strong>：客户端应强制执行证书的有效期</p>
+<h2 id="运行-reseed补种服务器">运行 Reseed（补种）服务器</h2>
+<p>运营 reseed（引导种子）服务需要对安全性、可靠性以及网络多样性方面的要求给予细致关注。更多彼此独立的 reseed 服务器会提升韧性，并使攻击者或审查者更难阻止新的 router 加入。</p>
+<h3 id="技术要求">技术要求</h3>
+<h4 id="服务器规格">服务器规格</h4>
+<ul>
+<li><strong>操作系统</strong>: Unix/Linux (Ubuntu, Debian, FreeBSD 已测试并推荐)</li>
+<li><strong>网络连接</strong>: 需要静态 IPv4 地址，IPv6 建议但可选</li>
+<li><strong>CPU</strong>: 至少 2 核心</li>
+<li><strong>RAM</strong>: 至少 2 GB</li>
+<li><strong>带宽</strong>: 每月约 15 GB</li>
+<li><strong>在线时间</strong>: 需要 24/7 持续运行</li>
+<li><strong>I2P Router</strong>: 持续运行且良好集成的 I2P router</li>
+</ul>
+<h4 id="软件需求">软件需求</h4>
+<ul>
+<li><strong>Java</strong>: JDK 8 或更高版本（从 I2P 2.11.0 开始将需要 Java 17+）</li>
+<li><strong>Web 服务器</strong>: 具有反向代理支持的 nginx 或 Apache（由于 X-Forwarded-For 头部限制，Lighttpd 不再受支持）</li>
+<li><strong>TLS/SSL</strong>: 有效的 TLS 证书（Let&rsquo;s Encrypt、自签名或商业 CA）</li>
+<li><strong>DDoS 防护</strong>: fail2ban 或等效工具（强制要求，不可选）</li>
+<li><strong>Reseed 工具（引导获取网络节点）</strong>: 来自 <a href="https://i2pgit.org/idk/reseed-tools">https://i2pgit.org/idk/reseed-tools</a>
+ 的官方 reseed-tools</li>
+</ul>
+<h3 id="安全需求">安全需求</h3>
+<h4 id="httpstls-配置">HTTPS/TLS 配置</h4>
+<ul>
+<li><strong>Protocol</strong>: 仅限 HTTPS，不支持回退到 HTTP</li>
+<li><strong>TLS Version</strong>: 最低要求 TLS 1.2</li>
+<li><strong>Cipher Suites</strong>: 必须支持与 Java 8+ 兼容的强密码套件</li>
+<li><strong>Certificate CN/SAN</strong>: 必须与所提供的 URL 的主机名匹配</li>
+<li><strong>Certificate Type</strong>: 如已与开发团队沟通，可使用自签名证书；或使用受认可的 CA（证书颁发机构）签发的证书</li>
+</ul>
+<h4 id="证书管理">证书管理</h4>
+<p>SU3 签名证书与 TLS 证书的用途不同：</p>
+<ul>
+<li><strong>TLS 证书</strong> (<code>certificates/ssl/</code>): 保障 HTTPS 传输安全</li>
+<li><strong>SU3 签名证书</strong> (<code>certificates/reseed/</code>): 为 reseed（引导）包签名</li>
+</ul>
+<p>两份证书都必须提供给 reseed（引导）协调员（zzz@mail.i2p），以便纳入 router 软件包。</p>
+<h4 id="ddos-和反爬虫防护">DDoS 和反爬虫防护</h4>
+<p>Reseed 服务器（用于初始引导网络的服务器）面临来自有缺陷的实现、僵尸网络以及试图爬取 netDb（网络数据库）的恶意行为者的周期性攻击。防护措施包括：</p>
+<ul>
+<li><strong>fail2ban</strong>: 用于速率限制与攻击缓解的必需组件</li>
+<li><strong>捆绑多样性</strong>: 向不同请求方提供不同的 RouterInfo（路由信息）集合</li>
+<li><strong>捆绑一致性</strong>: 向来自同一 IP 且在可配置时间窗口内的重复请求交付相同的捆绑</li>
+<li><strong>IP 日志记录限制</strong>: 不得公开日志或 IP 地址（隐私政策要求）</li>
+</ul>
+<h3 id="实现方法">实现方法</h3>
+<h4 id="方法-1官方-reseed-tools用于-netdb-重新播种的工具推荐">方法 1：官方 reseed-tools（用于 netDb 重新播种的工具）（推荐）</h4>
+<p>由 I2P 项目维护的官方实现。代码仓库：https://i2pgit.org/idk/reseed-tools</p>
+<p><strong>安装</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Install dependencies</span>
+</span></span><span style="display:flex;"><span>sudo apt-get install golang git
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Clone repository</span>
+</span></span><span style="display:flex;"><span>git clone https://i2pgit.org/idk/reseed-tools.git
+</span></span><span style="display:flex;"><span>cd reseed-tools
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Build</span>
+</span></span><span style="display:flex;"><span>make
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Generate keys and start server (first run)</span>
+</span></span><span style="display:flex;"><span>./reseed-tools reseed <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --signer<span style="color:#f92672">=</span>your-email@mail.i2p <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --netdb<span style="color:#f92672">=</span>/path/to/i2p/netDb <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --tlsHost<span style="color:#f92672">=</span>your-domain.tld <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --port<span style="color:#f92672">=</span><span style="color:#ae81ff">8443</span>
+</span></span></code></pre></div><p>首次运行时，工具将生成: - <code>your-email@mail.i2p.crt</code> (SU3 签名证书) - <code>your-email@mail.i2p.pem</code> (SU3 签名私钥) - <code>your-email@mail.i2p.crl</code> (证书吊销列表) - TLS 证书和密钥文件</p>
+<p><strong>功能</strong>: - 自动生成 SU3 包 (350 种变体，每个包含 77 个 RouterInfos) - 内置 HTTPS 服务器 - 通过 cron 每 9 小时重建缓存 - 通过 <code>--trustProxy</code> 标志支持 X-Forwarded-For 请求头 - 兼容反向代理配置</p>
+<p><strong>生产部署</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Create systemd service</span>
+</span></span><span style="display:flex;"><span>cat &gt; /etc/systemd/system/i2p-reseed.service <span style="color:#e6db74">&lt;&lt; EOF
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[Unit]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Description=I2P Reseed Server
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">After=network.target
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[Service]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Type=simple
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">User=i2p-reseed
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">WorkingDirectory=/opt/i2p-reseed
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ExecStart=/opt/i2p-reseed/reseed-tools reseed \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  --signer=your-email@mail.i2p \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  --netdb=/var/lib/i2p/netDb \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  --port=8443 \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  --ip=127.0.0.1 \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  --trustProxy
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Restart=always
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[Install]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">WantedBy=multi-user.target
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>systemctl enable i2p-reseed
+</span></span><span style="display:flex;"><span>systemctl start i2p-reseed
+</span></span></code></pre></div><h4 id="方法-2python-实现pyseeder">方法 2：Python 实现（pyseeder）</h4>
+<p>由 PurpleI2P 项目提供的替代实现: <a href="https://github.com/PurpleI2P/pyseeder">https://github.com/PurpleI2P/pyseeder</a>
+</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install pyseeder
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Generate SU3 file</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;your_password&#34;</span> | pyseeder reseed <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --netdb /path/to/netDb <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --private-key priv_key.pem <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --outfile i2pseeds.su3 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --signer-id user@mail.i2p
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Serve via built-in server</span>
+</span></span><span style="display:flex;"><span>pyseeder serve <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --port <span style="color:#ae81ff">8443</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --host 0.0.0.0 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --private-key priv_key.pem <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --cert user_at_mail.i2p.crt <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --file i2pseeds.su3
+</span></span></code></pre></div><h4 id="方法三docker-部署">方法三：Docker 部署</h4>
+<p>对于容器化环境，已有多种可直接用于 Docker 的实现：</p>
+<ul>
+<li><strong>DivaExchange i2p-reseed</strong>: <a href="https://github.com/diva-exchange/i2p-reseed">https://github.com/diva-exchange/i2p-reseed</a>
+</li>
+<li><strong>RTradeLtd/i2p-tools-1</strong>: 添加对 Tor onion service（洋葱服务）和 IPFS 的支持</li>
+</ul>
+<h3 id="反向代理配置">反向代理配置</h3>
+<h4 id="nginx-配置">nginx 配置</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#66d9ef">upstream</span> <span style="color:#e6db74">i2p_reseed</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">server</span> 127.0.0.1:<span style="color:#ae81ff">8443</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">server</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">listen</span> <span style="color:#ae81ff">443</span> <span style="color:#e6db74">ssl</span> <span style="color:#e6db74">http2</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">server_name</span> <span style="color:#e6db74">reseed.example.com</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ssl_certificate</span> <span style="color:#e6db74">/path/to/tls-cert.crt</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ssl_certificate_key</span> <span style="color:#e6db74">/path/to/tls-key.key</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ssl_protocols</span> <span style="color:#e6db74">TLSv1.2</span> <span style="color:#e6db74">TLSv1.3</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ssl_ciphers</span> <span style="color:#e6db74">HIGH:!aNULL:!MD5</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">location</span> <span style="color:#e6db74">/</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_pass</span> <span style="color:#e6db74">http://i2p_reseed</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Real-IP</span> $remote_addr;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-For</span> $remote_addr;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">Host</span> $host;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="apache-配置">Apache 配置</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-apache" data-lang="apache"><span style="display:flex;"><span><span style="color:#f92672">&lt;VirtualHost</span> <span style="color:#e6db74">*:443</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    ServerName reseed.example.com
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    SSLEngine <span style="color:#66d9ef">on</span>
+</span></span><span style="display:flex;"><span>    SSLCertificateFile <span style="color:#e6db74">/path/to/tls-cert.crt</span>
+</span></span><span style="display:flex;"><span>    SSLCertificateKeyFile <span style="color:#e6db74">/path/to/tls-key.key</span>
+</span></span><span style="display:flex;"><span>    SSLProtocol <span style="color:#66d9ef">all</span> -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    ProxyRequests <span style="color:#66d9ef">Off</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;Proxy</span> <span style="color:#e6db74">*</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        Order deny,allow
+</span></span><span style="display:flex;"><span>        Allow from <span style="color:#66d9ef">all</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/Proxy&gt;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    ProxyPass / http://127.0.0.1:8443/
+</span></span><span style="display:flex;"><span>    ProxyPassReverse / http://127.0.0.1:8443/
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/VirtualHost&gt;</span>
+</span></span></code></pre></div><h3 id="注册与协调">注册与协调</h3>
+<p>要将你的 reseed 服务器纳入官方 I2P 软件包：</p>
+<ol>
+<li>完成部署和测试</li>
+<li>将两份证书（SU3 签名和 TLS）发送给 reseed 协调员（reseed：网络引导种子分发）</li>
+<li>联系：zzz@mail.i2p 或 <a href="mailto:zzz@i2pmail.org">zzz@i2pmail.org</a>
+</li>
+<li>在 IRC2P 上加入 #i2p-dev，与其他运营者协调</li>
+</ol>
+<h3 id="运维最佳实践">运维最佳实践</h3>
+<h4 id="监控与日志记录">监控与日志记录</h4>
+<ul>
+<li>启用 Apache/nginx 的 combined 日志格式用于统计</li>
+<li>启用日志轮转（日志增长很快）</li>
+<li>监控 bundle（打包产物）的生成成功率和重建耗时</li>
+<li>跟踪带宽使用情况和请求模式</li>
+<li>切勿公开 IP 地址或详细访问日志</li>
+</ul>
+<h4 id="维护计划">维护计划</h4>
+<ul>
+<li><strong>每 9 小时</strong>：重建 SU3（I2P 更新包格式）包缓存（通过 cron 自动化）</li>
+<li><strong>每周</strong>：审查日志中的攻击模式</li>
+<li><strong>每月</strong>：更新 I2P router 和 reseed-tools（用于初始化 netDb 的工具）</li>
+<li><strong>按需</strong>：续订 TLS 证书（使用 Let&rsquo;s Encrypt 实现自动化）</li>
+</ul>
+<h4 id="端口选择">端口选择</h4>
+<ul>
+<li>默认：8443 (推荐)</li>
+<li>可选：1024-49151 之间的任意端口</li>
+<li>端口 443：需要 root 权限或端口转发 (建议使用 iptables 重定向)</li>
+</ul>
+<p>端口转发示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>iptables -A PREROUTING -t nat -p tcp --dport <span style="color:#ae81ff">443</span> -j REDIRECT --to-port <span style="color:#ae81ff">8443</span>
+</span></span></code></pre></div><h2 id="替代的重新播种方法">替代的重新播种方法</h2>
+<p>其他 bootstrap（引导初始化）选项可帮助处于受限网络环境中的用户：</p>
+<h3 id="基于文件的reseed引导">基于文件的Reseed（引导）</h3>
+<p>在 0.9.16 版本中引入的基于文件的 reseed（引导种子）允许用户手动加载 RouterInfo（I2P router 的信息记录）包。这种方法对处于因审查而封锁了 HTTPS reseed 服务器的地区的用户尤其有用。</p>
+<p><strong>流程</strong>: 1. 受信任的联系人使用其 router 生成一个 SU3 包 2. 通过电子邮件、USB 驱动器或其他带外渠道传输该包 3. 用户将 <code>i2pseeds.su3</code> 放入 I2P 配置目录中 4. Router 在重启时会自动检测并处理该包</p>
+<p><strong>文档</strong>: /blog/2020/06/07/help-your-friends-join-i2p-by-sharing-reseed-bundles/</p>
+<p><strong>使用场景</strong>: - 处在封锁了 reseed 服务器的国家级防火墙之后的用户 - 需要手动引导的隔离网络 - 测试与开发环境</p>
+<h3 id="使用-cloudflare-代理的重新播种">使用 Cloudflare 代理的重新播种</h3>
+<p>通过 Cloudflare 的 CDN（内容分发网络）路由 reseed（引导）流量，可为处于审查严格地区的运营者带来多重优势。</p>
+<p><strong>优势</strong>: - 源站 IP 地址对客户端隐藏 - 通过 Cloudflare 的基础设施实现 DDoS 防护 - 通过边缘缓存实现地理负载分发 - 为全球用户提升性能</p>
+<p><strong>实施要求</strong>: - 在 reseed-tools 中启用 <code>--trustProxy</code> 标志 - 为 DNS 记录启用 Cloudflare 代理 - 正确处理 X-Forwarded-For 请求头</p>
+<p><strong>重要注意事项</strong>: - 适用 Cloudflare 端口限制（必须使用受支持的端口） - 维持 Same-client bundle（同一客户端分组/捆绑）一致性需要 X-Forwarded-For 支持 - SSL/TLS 配置由 Cloudflare 管理</p>
+<p><strong>文档</strong>: <a href="https://homepage.np-tokumei.net/post/notes-i2p-reseed-over-cloudflare/">https://homepage.np-tokumei.net/post/notes-i2p-reseed-over-cloudflare/</a>
+</p>
+<h3 id="抗审查策略">抗审查策略</h3>
+<p>Nguyen Phong Hoang（USENIX FOCI 2019）的研究识别出用于受审查网络的额外引导方法：</p>
+<h4 id="云存储服务提供商">云存储服务提供商</h4>
+<ul>
+<li><strong>Box, Dropbox, Google Drive, OneDrive</strong>: 通过公开链接托管 SU3 文件</li>
+<li><strong>优点</strong>: 在不干扰合法服务的情况下难以被封锁</li>
+<li><strong>局限</strong>: 需要手动向用户分发 URL</li>
+</ul>
+<h4 id="ipfs-分发">IPFS 分发</h4>
+<ul>
+<li>在 InterPlanetary File System（星际文件系统，IPFS）上托管 reseed 包（用于初始引导的种子包）</li>
+<li>内容寻址存储可防止篡改</li>
+<li>对下架尝试具有抗性</li>
+</ul>
+<h4 id="tor-洋葱服务">Tor 洋葱服务</h4>
+<ul>
+<li>Reseed 服务器（用于获取初始节点信息的服务器）可通过 .onion 地址访问</li>
+<li>能抵抗基于 IP 的封锁</li>
+<li>需要在用户系统上运行 Tor 客户端</li>
+</ul>
+<p><strong>研究文档</strong>: <a href="https://homepage.np-tokumei.net/post/notes-censorship-resistant-i2p-reseeding/">https://homepage.np-tokumei.net/post/notes-censorship-resistant-i2p-reseeding/</a>
+</p>
+<h4 id="已知对-i2p-实施封锁的国家">已知对 I2P 实施封锁的国家</h4>
+<p>截至2025年，以下国家已确认封锁 I2P reseed 服务器（用于初始引导的种子服务器）： - 中国 - 伊朗 - 阿曼 - 卡塔尔 - 科威特</p>
+<p>这些地区的用户应采用替代的引导方法或抗审查的 reseeding（重新获取初始节点信息）策略。</p>
+<h2 id="供实现者参考的协议细节">供实现者参考的协议细节</h2>
+<h3 id="reseed补种请求规范">Reseed（补种）请求规范</h3>
+<h4 id="客户端行为">客户端行为</h4>
+<ol>
+<li><strong>服务器选择</strong>: router 维护一份硬编码的 reseed（引导）URL 列表</li>
+<li><strong>随机选择</strong>: 客户端从可用列表中随机选择服务器</li>
+<li><strong>请求格式</strong>: <code>GET /i2pseeds.su3?netid=2 HTTP/1.1</code></li>
+<li><strong>User-Agent</strong>: 应该模拟常见浏览器（例如，&ldquo;Wget/1.11.4&rdquo;）</li>
+<li><strong>重试逻辑</strong>: 如果 SU3 请求失败，回退到索引页解析</li>
+<li><strong>证书验证</strong>: 将 TLS 证书与系统信任存储进行校验</li>
+<li><strong>SU3 签名验证</strong>: 将签名与已知的 reseed 证书进行校验</li>
+</ol>
+<h4 id="服务器行为">服务器行为</h4>
+<ol>
+<li><strong>捆绑包选择</strong>: 从 netDb 中选择 RouterInfos（router 信息集合）的伪随机子集</li>
+<li><strong>客户端跟踪</strong>: 根据源 IP 识别请求（遵循 X-Forwarded-For）</li>
+<li><strong>捆绑包一致性</strong>: 在时间窗口内（通常 8-12 小时）对重复请求返回相同的捆绑包</li>
+<li><strong>捆绑包多样性</strong>: 为了网络多样性，向不同客户端返回不同的捆绑包</li>
+<li><strong>Content-Type</strong>: <code>application/octet-stream</code> 或 <code>application/x-i2p-reseed</code></li>
+</ol>
+<h3 id="routerinfo-文件格式">RouterInfo 文件格式</h3>
+<p>reseed 捆绑包中的每个 <code>.dat</code> 文件都包含一个 RouterInfo 结构（Router 信息结构）：</p>
+<p><strong>文件命名</strong>: <code>routerInfo-{base64-hash}.dat</code> - 哈希长度为 44 个字符，使用 I2P base64 字母表 - 示例: <code>routerInfo-ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn.dat</code></p>
+<p><strong>文件内容</strong>: - RouterIdentity (router 身份标识) (router 哈希、加密密钥、签名密钥) - 发布时间戳 - router 地址（IP、端口、传输类型） - router 能力与选项 - 覆盖上述所有数据的签名</p>
+<h3 id="网络多样性要求">网络多样性要求</h3>
+<p>为防止网络中心化并启用女巫攻击检测：</p>
+<ul>
+<li><strong>不得提供完整的 NetDb（网络数据库）导出</strong>: 切勿向单个客户端提供全部 RouterInfos（路由器信息记录）</li>
+<li><strong>随机抽样</strong>: 每个包包含可用节点的不同子集</li>
+<li><strong>最小包大小</strong>: 75 个 RouterInfos（由原来的 50 提高）</li>
+<li><strong>最大包大小</strong>: 100 个 RouterInfos</li>
+<li><strong>时效性</strong>: RouterInfos 应为近期（自生成起 24 小时内）</li>
+</ul>
+<h3 id="ipv6-注意事项">IPv6 注意事项</h3>
+<p><strong>当前状态</strong> (2025): - 一些 reseed 服务器（用于初始引导的服务器）在 IPv6 上无响应 - 出于可靠性考虑，客户端应优先或强制使用 IPv4 - 建议在新部署中启用 IPv6 支持，但并非关键</p>
+<p><strong>实现说明</strong>: 配置双栈服务器时，确保 IPv4 和 IPv6 的监听地址均能正常工作，或在无法正确支持 IPv6 时将其禁用。</p>
+<h2 id="安全性考虑">安全性考虑</h2>
+<h3 id="威胁模型">威胁模型</h3>
+<p>reseed（用于引导获取初始 netDb 数据）协议可防御：</p>
+<ol>
+<li><strong>中间人攻击</strong>: RSA-4096 签名可防止包被篡改</li>
+<li><strong>网络分区</strong>: 多个相互独立的 reseed 服务器可避免单点控制</li>
+<li><strong>Sybil 攻击</strong>: 包的多样性限制了攻击者隔离用户的能力</li>
+<li><strong>审查</strong>: 多台服务器和替代方法提供冗余</li>
+</ol>
+<p>reseed 协议（用于引导加入网络的补种协议）并不能防御以下情况：</p>
+<ol>
+<li><strong>reseed（初始引导）服务器被攻陷</strong>: 如果攻击者掌握了reseed证书私钥</li>
+<li><strong>网络完全封锁</strong>: 如果某地区的所有reseed方法都被封锁</li>
+<li><strong>长期监控</strong>: reseed请求会暴露尝试加入I2P的IP地址</li>
+</ol>
+<h3 id="证书管理-1">证书管理</h3>
+<p><strong>私钥安全</strong>: - 在不使用时将 SU3 签名密钥离线存储 - 为密钥加密使用强密码 - 维护密钥和证书的安全备份 - 考虑在高价值部署中使用硬件安全模块（HSM）</p>
+<p><strong>证书吊销</strong>: - 证书吊销列表（CRLs）通过新闻提要分发 - 遭到泄露的证书可由协调者吊销 - Routers 随软件更新自动更新 CRLs</p>
+<h3 id="攻击缓解">攻击缓解</h3>
+<p><strong>DDoS 防护</strong>: - 针对过多请求的 fail2ban 规则 - 在 Web 服务器层面进行限流 - 按 IP 地址设置连接数上限 - 使用 Cloudflare 或类似的 CDN 作为额外一层防护</p>
+<p><strong>防爬取措施</strong>: - 对每个请求 IP 提供不同的包 - 按 IP 进行基于时间的包缓存 - 记录可表明抓取尝试的日志模式 - 就已检测到的攻击与其他运营者协同</p>
+<h2 id="测试与验证">测试与验证</h2>
+<h3 id="测试你的-reseed引导服务器">测试你的 Reseed（引导）服务器</h3>
+<h4 id="方法-1-全新安装-router">方法 1: 全新安装 Router</h4>
+<ol>
+<li>在全新系统上安装 I2P</li>
+<li>将你的 reseed（引导）URL 添加到配置中</li>
+<li>移除或禁用其他 reseed URL</li>
+<li>启动 router 并监控日志以确认 reseed 成功</li>
+<li>在 5-10 分钟内验证与网络的连接</li>
+</ol>
+<p>预期的日志输出：</p>
+<pre tabindex="0"><code>Reseed got 77 router infos from https://your-reseed.example.com/i2pseeds.su3?netid=2 with 0 errors
+Reseed complete, 77 received
+</code></pre><h4 id="方法-2手动-su3-验证">方法 2：手动 SU3 验证</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Download bundle</span>
+</span></span><span style="display:flex;"><span>curl -k -A <span style="color:#e6db74">&#34;Wget/1.11.4&#34;</span> https://your-reseed.example.com/i2pseeds.su3 &gt; test.su3
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verify it&#39;s a valid SU3 file</span>
+</span></span><span style="display:flex;"><span>hexdump -C test.su3 | head -n <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Should show: 49 32 50 73 75 33 (I2Psu3)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Extract content (requires su3 tools)</span>
+</span></span><span style="display:flex;"><span>java -cp /path/to/i2p.jar net.i2p.crypto.SU3File verify test.su3 your-cert.crt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Unzip content</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># (Extract content section, skip header+signature, then unzip)</span>
+</span></span></code></pre></div><h4 id="方法-3checki2p-监控">方法 3：checki2p 监控</h4>
+<p>位于 <a href="https://checki2p.com/reseed">https://checki2p.com/reseed</a>
+ 的服务会每 4 小时对所有已注册的 I2P reseed 服务器（引导服务器）进行自动化检查。其提供：</p>
+<ul>
+<li>可用性监控</li>
+<li>响应时间指标</li>
+<li>TLS 证书验证</li>
+<li>SU3（I2P 更新包格式）签名验证</li>
+<li>历史正常运行时间数据</li>
+</ul>
+<p>一旦您的 reseed（用于引导 I2P 网络的种子服务器）在 I2P 项目中注册，它将在 24 小时内自动出现在 checki2p 上。</p>
+<h3 id="常见问题的故障排除">常见问题的故障排除</h3>
+<p><strong>Issue</strong>: &ldquo;无法读取签名密钥&rdquo; 在首次运行时 - <strong>Solution</strong>: 这是正常的。输入 &lsquo;y&rsquo; 以生成新密钥。</p>
+<p><strong>问题</strong>: Router 无法验证签名 - <strong>原因</strong>: 证书不在 router 的信任库中 - <strong>解决方案</strong>: 将证书放入 <code>~/.i2p/certificates/reseed/</code> 目录</p>
+<p><strong>问题</strong>：同一 bundle 被交付给不同客户端 - <strong>原因</strong>：X-Forwarded-For 请求头未被正确转发 - <strong>解决方案</strong>：启用 <code>--trustProxy</code> 并配置反向代理请求头</p>
+<p><strong>问题</strong>: &ldquo;连接被拒绝&rdquo; 错误 - <strong>原因</strong>: 端口无法从互联网访问 - <strong>解决方案</strong>: 检查防火墙规则，验证端口转发</p>
+<p><strong>问题</strong>: 在捆绑包重建期间 CPU 使用率高 - <strong>原因</strong>: 在生成 350+ 个 SU3（I2P 更新包格式）变体时的正常行为 - <strong>解决方案</strong>: 确保有足够的 CPU 资源，考虑降低重建频率</p>
+<h2 id="参考信息">参考信息</h2>
+<h3 id="官方文档">官方文档</h3>
+<ul>
+<li><strong>Reseed（初始节点引导）贡献者指南</strong>: /guides/creating-and-running-an-i2p-reseed-server/</li>
+<li><strong>Reseed 策略要求</strong>: /guides/reseed-policy/</li>
+<li><strong>SU3 规范</strong>: /docs/specs/updates/</li>
+<li><strong>Reseed 工具仓库</strong>: <a href="https://i2pgit.org/idk/reseed-tools">https://i2pgit.org/idk/reseed-tools</a>
+</li>
+<li><strong>Reseed 工具文档</strong>: <a href="https://eyedeekay.github.io/reseed-tools/">https://eyedeekay.github.io/reseed-tools/</a>
+</li>
+</ul>
+<h3 id="替代实现">替代实现</h3>
+<ul>
+<li><strong>PurpleI2P pyseeder</strong>: <a href="https://github.com/PurpleI2P/pyseeder">https://github.com/PurpleI2P/pyseeder</a>
+</li>
+<li><strong>DivaExchange i2p-reseed</strong>: <a href="https://github.com/diva-exchange/i2p-reseed">https://github.com/diva-exchange/i2p-reseed</a>
+</li>
+<li><strong>RTradeLtd i2p-tools-1</strong>: <a href="https://github.com/RTradeLtd/i2p-tools-1">https://github.com/RTradeLtd/i2p-tools-1</a>
+</li>
+<li><strong>Python WSGI reseeder（重新播种服务器）</strong>: <a href="https://github.com/torbjo/i2p-reseeder">https://github.com/torbjo/i2p-reseeder</a>
+</li>
+</ul>
+<h3 id="社区资源">社区资源</h3>
+<ul>
+<li><strong>I2P 论坛</strong>: <a href="https://i2pforum.net/">https://i2pforum.net/</a>
+</li>
+<li><strong>Gitea 仓库</strong>: <a href="https://i2pgit.org/I2P_Developers/i2p.i2p">https://i2pgit.org/I2P_Developers/i2p.i2p</a>
+</li>
+<li><strong>IRC</strong>: IRC2P 上的 #i2p-dev</li>
+<li><strong>状态监控</strong>: <a href="https://checki2p.com/reseed">https://checki2p.com/reseed</a>
+</li>
+</ul>
+<h3 id="版本历史">版本历史</h3>
+<ul>
+<li><strong>0.9.14</strong> (2014): 引入 SU3 reseed（重新引导）格式</li>
+<li><strong>0.9.16</strong> (2014): 新增基于文件的 reseeding</li>
+<li><strong>0.9.42</strong> (2019): 网络 ID 查询参数为必需项</li>
+<li><strong>2.0.0</strong> (2022): 引入 SSU2 传输协议</li>
+<li><strong>2.4.0</strong> (2024): NetDB 隔离与安全性改进</li>
+<li><strong>2.6.0</strong> (2024): 已阻止 I2P-over-Tor 连接</li>
+<li><strong>2.10.0</strong> (2025): 当前稳定版（截至 2025 年 9 月）</li>
+</ul>
+<h3 id="签名类型参考">签名类型参考</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Code</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Algorithm</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Key Size</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Signature Size</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Hash</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">DSA-SHA1</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DSA</td><td style="border:1px solid var(--color-border); padding:0.5rem;">1024-bit</td><td style="border:1px solid var(--color-border); padding:0.5rem;">40 bytes</td><td style="border:1px solid var(--color-border); padding:0.5rem;">SHA-1</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">ECDSA-SHA256-P256</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem;">ECDSA</td><td style="border:1px solid var(--color-border); padding:0.5rem;">P-256</td><td style="border:1px solid var(--color-border); padding:0.5rem;">64 bytes</td><td style="border:1px solid var(--color-border); padding:0.5rem;">SHA-256</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">ECDSA-SHA384-P384</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">ECDSA</td><td style="border:1px solid var(--color-border); padding:0.5rem;">P-384</td><td style="border:1px solid var(--color-border); padding:0.5rem;">96 bytes</td><td style="border:1px solid var(--color-border); padding:0.5rem;">SHA-384</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">ECDSA-SHA512-P521</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">ECDSA</td><td style="border:1px solid var(--color-border); padding:0.5rem;">P-521</td><td style="border:1px solid var(--color-border); padding:0.5rem;">132 bytes</td><td style="border:1px solid var(--color-border); padding:0.5rem;">SHA-512</td></tr>
+    <tr><td style="border:1px solidvar(--color-border); padding:0.5rem;">RSA-SHA256-2048</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RSA</td><td style="border:1px solid var(--color-border); padding:0.5rem;">2048-bit</td><td style="border:1px solid var(--color-border); padding:0.5rem;">256 bytes</td><td style="border:1px solid var(--color-border); padding:0.5rem;">SHA-256</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">RSA-SHA384-3072</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">5</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RSA</td><td style="border:1px solid var(--color-border); padding:0.5rem;">3072-bit</td><td style="border:1px solid var(--color-border); padding:0.5rem;">384 bytes</td><td style="border:1px solid var(--color-border); padding:0.5rem;">SHA-384</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">RSA-SHA512-4096</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">6</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RSA</td><td style="border:1px solid var(--color-border); padding:0.5rem;">4096-bit</td><td style="border:1px solid var(--color-border); padding:0.5rem;">512 bytes</td><td style="border:1px solid var(--color-border); padding:0.5rem;">SHA-512</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">EdDSA-SHA512-Ed25519</td><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">7</td><td style="border:1px solid var(--color-border); padding:0.5rem;">EdDSA</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Ed25519</td><td style="border:1px solid var(--color-border); padding:0.5rem;">64 bytes</td><td style="border:1px solid var(--color-border); padding:0.5rem;">SHA-512</td></tr>
+  </tbody>
+</table>
+**Reseed 标准（网络引导/重新播种）**: reseed 包必须使用 Type 6 (RSA-SHA512-4096).
+<h2 id="致谢">致谢</h2>
+<p>感谢每一位 reseed 服务器运营者（提供初始路由信息的引导服务），你们让网络保持可访问且具备弹性。特别致谢以下贡献者和项目：</p>
+<ul>
+<li><strong>zzz</strong>: 资深 I2P 开发者和 reseed（I2P 网络的初始引导/获取种子节点的机制）协调员</li>
+<li><strong>idk</strong>: reseed-tools 的现任维护者兼发布经理</li>
+<li><strong>Nguyen Phong Hoang</strong>: 研究抗审查的 reseeding 策略</li>
+<li><strong>PurpleI2P Team</strong>: 替代性 I2P 实现与工具</li>
+<li><strong>checki2p</strong>: 面向 reseed 基础设施的自动化监控服务</li>
+</ul>
+<p>I2P 网络的去中心化 reseed（引导服务）基础设施体现了全球数十位运营者的协作努力，确保无论面临何种本地审查或技术障碍，新用户都能始终找到加入网络的途径。</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/zh/docs/misc/reseed.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">保持关注 I2P 新闻：</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="输入您的邮箱" required>
+                            <button type="submit">订阅</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>快速链接</h3>
+                <ul>
+                    <li><a href="../../../../zh/financial-support/">捐赠</a></li>
+                    <li><a href="../../../../zh/docs/overview/intro/">I2P介绍</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>社区</h3>
+                <ul>
+                    <li><a href="../../../../zh/get-involved/">参与其中</a></li>
+                    <li><a href="../../../../zh/blog/">博客</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">官方论坛</a></li>
+                    <li><a href="../../../../zh/contact/">联系我们</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>资源</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P 指标</a></li>
+                    <li><a href="../../../../zh/papers/">研究</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 隐形互联网计划。在 Creative Commons 许可下。</p>
+            <div class="footer-links">
+                <a href="../../../../zh/privacy/">隐私</a>
+                <a href="../../../../zh/terms/">条款</a>
+                <a href="../../../../zh/about/media/">媒体</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="关闭">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>社区投票</h2>
+            <p class="modal-subtitle">我们很想听听您的意见</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                您的投票将帮助塑造 I2P 的未来。
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

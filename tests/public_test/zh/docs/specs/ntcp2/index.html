@@ -1,0 +1,2570 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>NTCP2 传输 | I2P - 隐形互联网项目</title>
+
+    <meta name="description" content="用于 router 间链路的基于 Noise 的 TCP 传输">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="NTCP2 传输 | I2P - 隐形互联网项目">
+    <meta property="og:description" content="用于 router 间链路的基于 Noise 的 TCP 传输">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/zh/docs/specs/ntcp2/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P 测试版网站现已上线 电子邮件问题请发送至 stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="关闭横幅" title="关闭横幅">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../zh/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../zh/about/" class="">关于</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../zh/about/">概览</a></li>
+                            <li><a href="../../../../zh/papers/">研究论文</a></li>
+                            <li><a href="../../../../zh/about/media/">媒体</a></li>
+                            <li><a href="../../../../zh/contact/">联系我们</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../zh/docs/" class="active">文档</a></li>
+                    <li><a href="../../../../zh/downloads/" class="">下载</a></li>
+                    <li><a href="../../../../zh/blog/" class="">博客</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../zh/get-involved/" class="">参与其中</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../zh/get-involved/">概览</a></li>
+                            <li><a href="../../../../zh/feedback/">功能建议</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">zh</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/specs/ntcp2/"
+                                class="lang-option">英语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/specs/ntcp2/"
+                                class="lang-option">西班牙语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/specs/ntcp2/"
+                                class="lang-option">韩语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/specs/ntcp2/"
+                                class="lang-option active">中文</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/specs/ntcp2/"
+                                class="lang-option">俄语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/specs/ntcp2/"
+                                class="lang-option">捷克语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/specs/ntcp2/"
+                                class="lang-option">德语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/specs/ntcp2/"
+                                class="lang-option">法语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/specs/ntcp2/"
+                                class="lang-option">土耳其语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/specs/ntcp2/"
+                                class="lang-option">越南语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/specs/ntcp2/"
+                                class="lang-option">印地语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/specs/ntcp2/"
+                                class="lang-option">阿拉伯语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/specs/ntcp2/"
+                                class="lang-option">葡萄牙语</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../zh/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../zh/downloads/" class="btn btn-primary">获取I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#概览">概览</a></li>
+    <li><a href="#noise-protocol-frameworknoise-协议框架">Noise Protocol Framework（Noise 协议框架）</a>
+      <ul>
+        <li><a href="#i2p-特定扩展">I2P 特定扩展</a></li>
+      </ul>
+    </li>
+    <li><a href="#握手流程">握手流程</a>
+      <ul>
+        <li><a href="#三消息握手">三消息握手</a></li>
+        <li><a href="#noise协议框架消息模式">Noise（协议框架）消息模式</a></li>
+      </ul>
+    </li>
+    <li><a href="#消息规范">消息规范</a>
+      <ul>
+        <li><a href="#密钥记法">密钥记法</a></li>
+        <li><a href="#认证加密chacha20-poly1305">认证加密（ChaCha20-Poly1305）</a></li>
+      </ul>
+    </li>
+    <li><a href="#消息-1sessionrequest会话请求">消息 1：SessionRequest（会话请求）</a>
+      <ul>
+        <li><a href="#原始格式">原始格式</a></li>
+        <li><a href="#解密后的内容">解密后的内容</a></li>
+        <li><a href="#选项块-16-字节大端序">选项块 (16 字节，大端序)</a></li>
+        <li><a href="#密钥派生函数kdf-1">密钥派生函数（KDF-1）</a></li>
+        <li><a href="#实现说明">实现说明</a></li>
+      </ul>
+    </li>
+    <li><a href="#消息-2-sessioncreated会话已创建">消息 2: SessionCreated（会话已创建）</a>
+      <ul>
+        <li><a href="#原始格式-1">原始格式</a></li>
+        <li><a href="#解密内容">解密内容</a></li>
+        <li><a href="#选项块16-字节大端序">选项块（16 字节，大端序）</a></li>
+        <li><a href="#密钥派生函数kdf-2">密钥派生函数（KDF-2）</a></li>
+        <li><a href="#实现说明-1">实现说明</a></li>
+      </ul>
+    </li>
+    <li><a href="#消息-3sessionconfirmed会话确认">消息 3：SessionConfirmed（会话确认）</a>
+      <ul>
+        <li><a href="#两部分结构">两部分结构</a></li>
+        <li><a href="#原始格式-2">原始格式</a></li>
+        <li><a href="#解密内容-1">解密内容</a></li>
+        <li><a href="#密钥派生函数kdf-3">密钥派生函数（KDF-3）</a></li>
+        <li><a href="#实现说明-2">实现说明</a></li>
+      </ul>
+    </li>
+    <li><a href="#数据阶段">数据阶段</a>
+      <ul>
+        <li><a href="#密钥派生函数数据阶段">密钥派生函数（数据阶段）</a></li>
+        <li><a href="#帧结构">帧结构</a></li>
+        <li><a href="#siphash-长度混淆">SipHash 长度混淆</a></li>
+        <li><a href="#块格式">块格式</a></li>
+        <li><a href="#块类型">块类型</a></li>
+        <li><a href="#块类型-0-日期时间">块类型 0: 日期时间</a></li>
+        <li><a href="#块类型-1选项">块类型 1：选项</a></li>
+        <li><a href="#块类型-2-routerinfo路由信息">块类型 2: RouterInfo（路由信息）</a></li>
+        <li><a href="#块类型-3i2np-消息">块类型 3：I2NP 消息</a></li>
+        <li><a href="#块类型-4终止">块类型 4：终止</a></li>
+        <li><a href="#块类型-254填充">块类型 254：填充</a></li>
+      </ul>
+    </li>
+    <li><a href="#aead-错误处理">AEAD 错误处理</a>
+      <ul>
+        <li><a href="#握手阶段消息1-3">握手阶段（消息1-3）</a></li>
+        <li><a href="#数据阶段-1">数据阶段</a></li>
+      </ul>
+    </li>
+    <li><a href="#已发布的-routerinforouter-信息记录">已发布的 RouterInfo（router 信息记录）</a>
+      <ul>
+        <li><a href="#router-地址格式">Router 地址格式</a></li>
+        <li><a href="#必需选项">必需选项</a></li>
+        <li><a href="#routeraddress-示例条目">RouterAddress 示例条目</a></li>
+        <li><a href="#未发布的-ntcp2-地址">未发布的 NTCP2 地址</a></li>
+        <li><a href="#公钥和iv轮换">公钥和IV轮换</a></li>
+      </ul>
+    </li>
+    <li><a href="#版本检测">版本检测</a></li>
+    <li><a href="#时钟偏差指南">时钟偏差指南</a>
+      <ul>
+        <li><a href="#bob-的处理-消息-1">Bob 的处理 (消息 1)</a></li>
+        <li><a href="#alice-的处理消息-2">Alice 的处理（消息 2）</a></li>
+        <li><a href="#bob-的处理-消息-3">Bob 的处理 (消息 3)</a></li>
+        <li><a href="#时间同步">时间同步</a></li>
+      </ul>
+    </li>
+    <li><a href="#安全属性">安全属性</a>
+      <ul>
+        <li><a href="#前向保密">前向保密</a></li>
+        <li><a href="#身份验证">身份验证</a></li>
+        <li><a href="#抗流量分析能力">抗流量分析能力</a></li>
+        <li><a href="#拒绝服务攻击缓解">拒绝服务攻击缓解</a></li>
+        <li><a href="#密码学安全">密码学安全</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考资料">参考资料</a>
+      <ul>
+        <li><a href="#主要规范">主要规范</a></li>
+        <li><a href="#密码学标准">密码学标准</a></li>
+        <li><a href="#相关的-i2p-规范">相关的 I2P 规范</a></li>
+        <li><a href="#实现参考">实现参考</a></li>
+        <li><a href="#历史背景">历史背景</a></li>
+      </ul>
+    </li>
+    <li><a href="#实现指南">实现指南</a>
+      <ul>
+        <li><a href="#强制性要求">强制性要求</a></li>
+        <li><a href="#推荐实践">推荐实践</a></li>
+        <li><a href="#常见误区">常见误区</a></li>
+        <li><a href="#测试方法论">测试方法论</a></li>
+        <li><a href="#从-ntcp-迁移">从 NTCP 迁移</a></li>
+      </ul>
+    </li>
+    <li><a href="#附录-anoise-xk-模式">附录 A：Noise XK 模式</a></li>
+    <li><a href="#附录-bbase64-编码">附录 B：Base64 编码</a></li>
+    <li><a href="#附录c数据包捕获分析">附录C：数据包捕获分析</a></li>
+    <li><a href="#附录-d版本历史">附录 D：版本历史</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../zh/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../zh/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../zh/docs/specs/">Specifications</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">NTCP2 传输</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">此翻译是使用机器学习生成的，可能不是100%准确。</span>
+    
+    
+    <a href="../../../../en/docs/specs/ntcp2/" class="disclaimer-link">查看英文版本</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">NTCP2 传输</h1>
+                    
+                        <p class="article-description">用于 router 间链路的基于 Noise 的 TCP 传输</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 0.9.66
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="概览">概览</h2>
+<p>NTCP2 用基于 Noise 的握手取代了旧版 NTCP 传输，能够抵御流量指纹识别、加密长度字段，并支持现代加密套件。Routers 可以将 NTCP2 与 SSU2 一同运行，作为 I2P 网络中的两种强制性传输协议。NTCP（版本 1）在 0.9.40（2019 年 5 月）被弃用，并在 0.9.50（2021 年 5 月）被完全移除。</p>
+<h2 id="noise-protocol-frameworknoise-协议框架">Noise Protocol Framework（Noise 协议框架）</h2>
+<p>NTCP2 使用 Noise 协议框架 <a href="https://noiseprotocol.org/noise.html">修订版 33，2017-10-04</a>
+，并带有 I2P 特定的扩展：</p>
+<ul>
+<li><strong>模式</strong>: <code>Noise_XK_25519_ChaChaPoly_SHA256</code></li>
+<li><strong>扩展标识符</strong>: <code>Noise_XKaesobfse+hs2+hs3_25519_ChaChaPoly_SHA256</code>（用于 KDF 初始化，KDF 为“密钥派生函数”）</li>
+<li><strong>DH（Diffie-Hellman）函数</strong>: X25519（RFC 7748） - 32 字节密钥，小端序编码</li>
+<li><strong>加密算法</strong>: AEAD_CHACHA20_POLY1305（RFC 7539/RFC 8439）
+<ul>
+<li>12 字节 nonce（随机数）：前 4 字节为 0，后 8 字节为计数器（小端序）</li>
+<li>最大 nonce 值：2^64 - 2（在达到 2^64 - 1 之前必须终止连接）</li>
+</ul>
+</li>
+<li><strong>哈希函数</strong>: SHA-256（32 字节输出）</li>
+<li><strong>MAC（消息认证码）</strong>: Poly1305（16 字节认证标签）</li>
+</ul>
+<h3 id="i2p-特定扩展">I2P 特定扩展</h3>
+<ol>
+<li><strong>AES 混淆</strong>: 使用 Bob 的 router 哈希和公开的 IV，以 AES-256-CBC 加密临时密钥</li>
+<li><strong>随机填充</strong>: 消息 1-2 中为明文填充（已认证），消息 3 及之后为 AEAD 填充（已加密）</li>
+<li><strong>SipHash-2-4 长度混淆</strong>: 将两字节帧长度与 SipHash-2-4 的输出异或</li>
+<li><strong>帧结构</strong>: 数据阶段使用带长度前缀的帧（兼容 TCP 流式传输）</li>
+<li><strong>基于块的有效载荷</strong>: 采用带类型块的结构化数据格式</li>
+</ol>
+<h2 id="握手流程">握手流程</h2>
+<pre tabindex="0"><code>Alice (Initiator)             Bob (Responder)
+SessionRequest  ──────────────────────►
+                ◄────────────────────── SessionCreated
+SessionConfirmed ──────────────────────►
+</code></pre><h3 id="三消息握手">三消息握手</h3>
+<ol>
+<li><strong>SessionRequest</strong> - Alice 的混淆临时密钥、选项、填充提示</li>
+<li><strong>SessionCreated</strong> - Bob 的混淆临时密钥、加密的选项、填充</li>
+<li><strong>SessionConfirmed</strong> - Alice 的加密的静态密钥和 RouterInfo（I2P router 的信息）（两个 AEAD（带关联数据的认证加密）帧）</li>
+</ol>
+<h3 id="noise协议框架消息模式">Noise（协议框架）消息模式</h3>
+<pre tabindex="0"><code>XK(s, rs):           Authentication   Confidentiality
+  &lt;- s               (Bob&#39;s static key known in advance)
+  -&gt; e, es                  0                2
+  &lt;- e, ee                  2                1
+  -&gt; s, se                  2                5
+  &lt;-                        2                5
+</code></pre><p><strong>认证级别：</strong> - 0: 无认证（任何一方都可能是发送者） - 2: 可抵抗密钥泄露冒充（KCI）攻击的发送方认证</p>
+<p><strong>保密级别：</strong> - 1: 临时（ephemeral）接收方（前向保密（forward secrecy），无接收方认证） - 2: 已知接收方，仅在发送方被攻破时提供前向保密 - 5: 强前向保密（临时-临时 + 临时-静态 DH（Diffie–Hellman））</p>
+<h2 id="消息规范">消息规范</h2>
+<h3 id="密钥记法">密钥记法</h3>
+<ul>
+<li><code>RH_A</code> = Alice 的 Router 哈希（32 字节，SHA-256）</li>
+<li><code>RH_B</code> = Bob 的 Router 哈希（32 字节，SHA-256）</li>
+<li><code>||</code> = 连接运算符</li>
+<li><code>byte(n)</code> = 值为 n 的单个字节</li>
+<li>除非另有说明，所有多字节整数均为<strong>大端序</strong></li>
+<li>X25519 密钥为<strong>小端序</strong>（32 字节）</li>
+</ul>
+<h3 id="认证加密chacha20-poly1305">认证加密（ChaCha20-Poly1305）</h3>
+<p><strong>加密函数：</strong></p>
+<pre tabindex="0"><code>AEAD_ChaCha20_Poly1305(key, nonce, associatedData, plaintext)
+  → (ciphertext || MAC)
+</code></pre><p><strong>参数：</strong> - <code>key</code>：来自 KDF 的 32 字节加密密钥 - <code>nonce</code>：12 字节（4 个零字节 + 8 字节计数器，小端序） - <code>associatedData</code>：握手阶段为 32 字节哈希；数据阶段为零长度 - <code>plaintext</code>：要加密的数据（0 个或更多字节）</p>
+<p><strong>输出：</strong> - 密文：与明文长度相同 - MAC：16 字节（Poly1305 认证标签）</p>
+<p><strong>Nonce（随机数）管理：</strong> - 对每个密码实例的计数器从 0 开始 - 在该方向的每次 AEAD 操作后递增 - 数据阶段中 Alice→Bob 与 Bob→Alice 各自使用独立计数器 - 在计数器达到 2^64 - 1 之前必须终止连接</p>
+<h2 id="消息-1sessionrequest会话请求">消息 1：SessionRequest（会话请求）</h2>
+<p>Alice 向 Bob 发起连接。</p>
+<p><strong>Noise 操作</strong>: <code>e, es</code> (临时密钥的生成与交换)</p>
+<h3 id="原始格式">原始格式</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    AES-256-CBC Encrypted X (32B)      +
+|    Key: RH_B, IV: Bob&#39;s published IV  |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame (48 bytes)        +
+|    Plaintext: 32B (X + options)       |
++    k from KDF-1, n=0, ad=h            +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
++    Length specified in options         +
+|    0 to 65535 - 80 bytes              |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>大小限制：</strong> - 最小值：80 字节（32 AES + 48 AEAD） - 最大值：总计 65535 字节 - <strong>特殊情况</strong>：连接到 &ldquo;NTCP&rdquo; 地址时最大 287 字节（版本检测）</p>
+<h3 id="解密后的内容">解密后的内容</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    X (Alice ephemeral public key)     +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|           Options Block               |
++             (16 bytes)                +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="选项块-16-字节大端序">选项块 (16 字节，大端序)</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| id | ver|  padLen | m3p2len | Rsvd(0) |
++----+----+----+----+----+----+----+----+
+|        tsA        |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+
+id      : 1 byte  - Network ID (2 for mainnet, 16-254 for testnets)
+ver     : 1 byte  - Protocol version (currently 2)
+padLen  : 2 bytes - Padding length in this message (0-65455)
+m3p2len : 2 bytes - Length of SessionConfirmed part 2 frame
+Rsvd    : 2 bytes - Reserved, set to 0
+tsA     : 4 bytes - Unix timestamp (seconds since epoch)
+Reserved: 4 bytes - Reserved, set to 0
+</code></pre><p><strong>关键字段：</strong> - <strong>Network ID</strong>（自 0.9.42 起）：快速拒绝跨网络连接 - <strong>m3p2len</strong>：消息 3 第 2 部分的精确大小（发送时必须匹配）</p>
+<h3 id="密钥派生函数kdf-1">密钥派生函数（KDF-1）</h3>
+<p><strong>初始化协议：</strong></p>
+<pre tabindex="0"><code>protocol_name = &#34;Noise_XKaesobfse+hs2+hs3_25519_ChaChaPoly_SHA256&#34;
+h = SHA256(protocol_name)
+ck = h  // Chaining key initialized to hash
+</code></pre><p><strong>MixHash 操作：</strong></p>
+<pre tabindex="0"><code>h = SHA256(h)                    // Null prologue
+h = SHA256(h || rs)              // Bob&#39;s static key (known)
+h = SHA256(h || e.pubkey)        // Alice&#39;s ephemeral key X
+// h is now the associated data for message 1 AEAD
+</code></pre><p><strong>MixKey 操作（es pattern，临时-静态握手模式）：</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Alice.ephemeral_private, Bob.static_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 1
+// ck is retained for message 2 KDF
+</code></pre><h3 id="实现说明">实现说明</h3>
+<ol>
+<li><strong>AES 混淆</strong>: 仅用于抵抗 DPI（深度包检测）；任何拥有 Bob 的 router 哈希和初始向量（IV）的人都可以解密 X</li>
+<li><strong>重放防护</strong>: Bob 必须将 X 的取值（或其加密等价物）缓存至少 2*D 秒（D = 最大时钟偏移）</li>
+<li><strong>时间戳校验</strong>: Bob 必须拒绝 |tsA - current_time| &gt; D 的连接（通常 D = 60 秒）</li>
+<li><strong>曲线校验</strong>: Bob 必须验证 X 为有效的 X25519 点</li>
+<li><strong>快速拒绝</strong>: Bob 可在解密前检查 X[31] &amp; 0x80 == 0（有效的 X25519 密钥其最高有效位（MSB）为 0）</li>
+<li><strong>错误处理</strong>: 任一失败时，Bob 在随机超时并读取随机字节后以 TCP RST（复位）关闭连接</li>
+<li><strong>缓冲</strong>: 为提高效率，Alice 必须一次性写出整个消息（包括填充）</li>
+</ol>
+<h2 id="消息-2-sessioncreated会话已创建">消息 2: SessionCreated（会话已创建）</h2>
+<p>Bob 回复 Alice。</p>
+<p><strong>Noise 操作</strong>: <code>e, ee</code> (临时-临时 DH)</p>
+<h3 id="原始格式-1">原始格式</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    AES-256-CBC Encrypted Y (32B)      +
+|    Key: RH_B, IV: AES state from msg1 |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame (48 bytes)        +
+|    Plaintext: 32B (Y + options)       |
++    k from KDF-2, n=0, ad=h            +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
++    Length specified in options         +
+|    0 to 65535 - 80 bytes              |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="解密内容">解密内容</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    Y (Bob ephemeral public key)       +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|           Options Block               |
++             (16 bytes)                +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Cleartext Padding (optional)       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="选项块16-字节大端序">选项块（16 字节，大端序）</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| Rsvd(0) | padLen  |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+|        tsB        |   Reserved (0)    |
++----+----+----+----+----+----+----+----+
+
+Rsvd    : 2 bytes - Reserved, set to 0
+padLen  : 2 bytes - Padding length in this message
+Reserved: 10 bytes - Reserved, set to 0
+tsB     : 4 bytes - Unix timestamp (seconds since epoch)
+</code></pre><h3 id="密钥派生函数kdf-2">密钥派生函数（KDF-2）</h3>
+<p><strong>MixHash（混合哈希）操作:</strong></p>
+<pre tabindex="0"><code>h = SHA256(h || encrypted_payload_msg1)  // 32-byte ciphertext
+if (msg1_padding_length &gt; 0):
+    h = SHA256(h || padding_from_msg1)
+h = SHA256(h || e.pubkey)                // Bob&#39;s ephemeral key Y
+// h is now the associated data for message 2 AEAD
+</code></pre><p><strong>MixKey（密钥混合）操作（ee 模式）：</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Bob.ephemeral_private, Alice.ephemeral_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 2
+// ck is retained for message 3 KDF
+</code></pre><p><strong>内存清理：</strong></p>
+<pre tabindex="0"><code>// Overwrite ephemeral keys after ee DH
+Alice.ephemeral_public = zeros(32)
+Alice.ephemeral_private = zeros(32)  // Bob side
+Bob.received_ephemeral = zeros(32)    // Bob side
+</code></pre><h3 id="实现说明-1">实现说明</h3>
+<ol>
+<li><strong>AES 链式</strong>: Y 加密使用来自消息 1 的 AES-CBC 状态（不重置）</li>
+<li><strong>重放防护</strong>: Alice 必须将 Y 值缓存至少 2*D 秒</li>
+<li><strong>时间戳验证</strong>: Alice 必须拒绝 |tsB - current_time| &gt; D 的情况</li>
+<li><strong>曲线验证</strong>: Alice 必须验证 Y 是有效的 X25519 点</li>
+<li><strong>错误处理</strong>: 发生任何失败时 Alice 使用 TCP RST 关闭</li>
+<li><strong>缓冲</strong>: Bob 必须一次性刷新整条消息</li>
+</ol>
+<h2 id="消息-3sessionconfirmed会话确认">消息 3：SessionConfirmed（会话确认）</h2>
+<p>Alice 确认会话并发送 RouterInfo。</p>
+<p><strong>Noise（协议框架）操作</strong>: <code>s, se</code> (静态密钥公开和静态-临时 DH)</p>
+<h3 id="两部分结构">两部分结构</h3>
+<p>消息 3 由<strong>两个独立的 AEAD（带关联数据的认证加密）帧</strong>组成：</p>
+<ol>
+<li><strong>第 1 部分</strong>: 固定长度的 48 字节帧，包含 Alice 的加密静态密钥</li>
+<li><strong>第 2 部分</strong>: 可变长度的帧，包含 RouterInfo（路由器信息）、选项和填充</li>
+</ol>
+<h3 id="原始格式-2">原始格式</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|    ChaChaPoly Frame 1 (48 bytes)      |
++    Plaintext: Alice static key (32B)  +
+|    k from KDF-2, n=1, ad=h            |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+|                                       |
++    ChaChaPoly Frame 2 (variable)      +
+|    Length specified in msg1.m3p2len   |
++    k from KDF-3, n=0, ad=h            +
+|    Plaintext: RouterInfo + padding    |
++                                       +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>大小限制：</strong> - 第 1 部分：恰好 48 字节 (32 明文 + 16 MAC) - 第 2 部分：长度由消息 1 指定 (m3p2len 字段) - 总上限：65535 字节 (第 1 部分最多 48，因此第 2 部分最多 65487)</p>
+<h3 id="解密内容-1">解密内容</h3>
+<p><strong>第1部分：</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|                                       |
++    S (Alice static public key)        +
+|    32 bytes, X25519, little-endian    |
++                                       +
+|                                       |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>第2部分：</strong></p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|    Block: RouterInfo (required)       |
++    Type=2, contains Alice&#39;s RI         +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+|    Block: Options (optional)          |
++    Type=1, padding parameters          +
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Block: Padding (optional)          |
++    Type=254, random data               +
+|    MUST be last block if present      |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+</code></pre><h3 id="密钥派生函数kdf-3">密钥派生函数（KDF-3）</h3>
+<p><strong>第1部分 (s 模式):</strong></p>
+<pre tabindex="0"><code>h = SHA256(h || encrypted_payload_msg2)  // 32-byte ciphertext
+if (msg2_padding_length &gt; 0):
+    h = SHA256(h || padding_from_msg2)
+
+// Encrypt static key with message 2 cipher key
+ciphertext = AEAD_ChaCha20_Poly1305(k_msg2, n=1, h, Alice.static_public)
+h = SHA256(h || ciphertext)  // 48 bytes (32 + 16)
+// h is now the associated data for message 3 part 2
+</code></pre><p><strong>第2部分（se 模式）：</strong></p>
+<pre tabindex="0"><code>dh_result = X25519(Alice.static_private, Bob.ephemeral_public)
+temp_key = HMAC-SHA256(ck, dh_result)
+ck = HMAC-SHA256(temp_key, byte(0x01))
+k = HMAC-SHA256(temp_key, ck || byte(0x02))
+// k is the cipher key for message 3 part 2
+// ck is retained for data phase KDF
+
+ciphertext = AEAD_ChaCha20_Poly1305(k, n=0, h, payload)
+h = SHA256(h || ciphertext)
+// h is retained for SipHash KDF
+</code></pre><p><strong>内存清理：</strong></p>
+<pre tabindex="0"><code>// Overwrite Bob&#39;s ephemeral key after se DH
+Alice.received_ephemeral = zeros(32)  // Alice side
+Bob.ephemeral_public = zeros(32)       // Bob side
+Bob.ephemeral_private = zeros(32)      // Bob side
+</code></pre><h3 id="实现说明-2">实现说明</h3>
+<h2 id="数据阶段">数据阶段</h2>
+<p>在握手完成后，所有消息都使用带有经过混淆的长度字段的可变长度 AEAD（带关联数据的认证加密）帧。</p>
+<h3 id="密钥派生函数数据阶段">密钥派生函数（数据阶段）</h3>
+<p><strong>拆分函数 (Noise 协议框架):</strong></p>
+<pre tabindex="0"><code>// Generate transmit and receive keys
+zerolen = &#34;&#34;  // Zero-length byte array
+temp_key = HMAC-SHA256(ck, zerolen)
+
+// Alice transmits to Bob
+k_ab = HMAC-SHA256(temp_key, byte(0x01))
+
+// Bob transmits to Alice  
+k_ba = HMAC-SHA256(temp_key, k_ab || byte(0x02))
+
+// Cleanup
+ck = zeros(32)
+temp_key = zeros(32)
+</code></pre><p><strong>SipHash 密钥派生:</strong></p>
+<pre tabindex="0"><code>// Generate additional symmetric key for SipHash
+ask_master = HMAC-SHA256(temp_key, &#34;ask&#34; || byte(0x01))
+
+// &#34;siphash&#34; is 7 bytes US-ASCII
+temp_key2 = HMAC-SHA256(ask_master, h || &#34;siphash&#34;)
+sip_master = HMAC-SHA256(temp_key2, byte(0x01))
+
+// Alice to Bob SipHash keys
+temp_key3 = HMAC-SHA256(sip_master, zerolen)
+sipkeys_ab = HMAC-SHA256(temp_key3, byte(0x01))
+sipk1_ab = sipkeys_ab[0:7]   // 8 bytes, little-endian
+sipk2_ab = sipkeys_ab[8:15]  // 8 bytes, little-endian
+sipiv_ab = sipkeys_ab[16:23] // 8 bytes, IV
+
+// Bob to Alice SipHash keys
+sipkeys_ba = HMAC-SHA256(temp_key3, sipkeys_ab || byte(0x02))
+sipk1_ba = sipkeys_ba[0:7]   // 8 bytes, little-endian
+sipk2_ba = sipkeys_ba[8:15]  // 8 bytes, little-endian
+sipiv_ba = sipkeys_ba[16:23] // 8 bytes, IV
+</code></pre><h3 id="帧结构">帧结构</h3>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|Obfs Len |                             |
++----+----+    ChaChaPoly Frame         +
+|    Encrypted Block Data               |
++    k_ab (Alice→Bob) or k_ba (Bob→Alice)|
+|    Nonce starts at 0, increments      |
++    No associated data (empty string)  +
+|                                       |
+~           .   .   .                   ~
+|                                       |
++----+----+----+----+----+----+----+----+
+|    Poly1305 MAC (16 bytes)            |
++----+----+----+----+----+----+----+----+
+</code></pre><p><strong>帧约束：</strong> - 最小值：18 字节（2 字节的混淆长度 + 0 字节明文 + 16 字节的 MAC（消息认证码）） - 最大值：65537 字节（2 字节的混淆长度 + 65535 字节的帧） - 建议：每帧几 KB（尽量降低接收端延迟）</p>
+<h3 id="siphash-长度混淆">SipHash 长度混淆</h3>
+<p><strong>目的</strong>：防止深度包检测（DPI）识别帧边界</p>
+<p><strong>算法：</strong></p>
+<pre tabindex="0"><code>// Initialization (per direction)
+IV[0] = sipiv  // From KDF
+
+// For each frame:
+IV[n] = SipHash-2-4(sipk1, sipk2, IV[n-1])
+Mask[n] = IV[n][0:1]  // First 2 bytes of IV
+ObfuscatedLength = ActualLength XOR Mask[n]
+
+// Send 2-byte ObfuscatedLength, then ActualLength bytes
+</code></pre><p><strong>解码：</strong></p>
+<pre tabindex="0"><code>// Receiver maintains identical IV chain
+IV[n] = SipHash-2-4(sipk1, sipk2, IV[n-1])
+Mask[n] = IV[n][0:1]
+ActualLength = ObfuscatedLength XOR Mask[n]
+// Read ActualLength bytes (includes 16-byte MAC)
+</code></pre><p><strong>注意：</strong> - 每个方向使用独立的 IV（初始化向量）链（Alice→Bob 与 Bob→Alice） - 如果 SipHash（哈希函数）返回 uint64（无符号 64 位整数），使用最低有效的 2 个字节作为掩码 - 将 uint64 按小端字节序转换为下一个 IV</p>
+<h3 id="块格式">块格式</h3>
+<p>每个帧包含零个或多个块:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|Type| Length  |       Data              |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type  : 1 byte  - Block type identifier
+Length: 2 bytes - Big-endian, data size (0-65516)
+Data  : Variable length payload
+</code></pre><p><strong>大小限制:</strong> - 最大帧: 65535 字节 (包括 MAC) - 最大块空间: 65519 字节 (帧 - 16 字节的 MAC) - 最大单个块: 65519 字节 (3 字节的头部 + 65516 字节的数据)</p>
+<h3 id="块类型">块类型</h3>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Name</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">DateTime</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Time synchronization (4-byte timestamp)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Options</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding parameters, dummy traffic</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo delivery/flooding</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">I2NP</td><td style="border:1px solid var(--color-border); padding:0.5rem;">I2NP message with shortened header</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Termination</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Explicit connection close</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">224-253</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Experimental features</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">254</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Random padding (must be last)</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">255</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Reserved</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Future extensions</td></tr>
+  </tbody>
+</table>
+**块排序规则：** - **消息 3 第 2 部分**：RouterInfo、选项（可选）、填充（可选） - 不得包含其他类型 - **数据阶段**：顺序任意，但以下情况除外：   - 如果存在，填充必须为最后一个块   - 如果存在，终止必须为最后一个块（填充除外） - 每个帧允许包含多个 I2NP 块 - 每个帧不允许包含多个填充块
+<h3 id="块类型-0-日期时间">块类型 0: 日期时间</h3>
+<p>用于时钟偏移检测的时间同步。</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+
+| 0  |    4    |     timestamp     |
++----+----+----+----+----+----+----+
+
+Type     : 0
+Length   : 4 (big-endian)
+Timestamp: 4 bytes, Unix seconds (big-endian)
+</code></pre><p><strong>实现</strong>：将时间四舍五入到最接近的秒，以防止时钟偏差的累积。</p>
+<h3 id="块类型-1选项">块类型 1：选项</h3>
+<p>填充和流量整形参数。</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 1  |  size   |tmin|tmax|rmin|rmax|tdmy|
++----+----+----+----+----+----+----+----+
+|tdmy|  rdmy   |  tdelay |  rdelay |    |
++----+----+----+----+----+----+----+    +
+|         more_options (TBD)            |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type  : 1
+Length: 12+ bytes (big-endian)
+</code></pre><p><strong>填充比</strong> (4.4 fixed-point float, value/16.0; 4.4 定点浮点表示：整数部分 4 位、小数部分 4 位，数值 = value/16.0): - <code>tmin</code>: 发送最小填充比 (0.0 - 15.9375) - <code>tmax</code>: 发送最大填充比 (0.0 - 15.9375) - <code>rmin</code>: 接收最小填充比 (0.0 - 15.9375) - <code>rmax</code>: 接收最大填充比 (0.0 - 15.9375)</p>
+<p><strong>示例：</strong> - 0x00 = 0% 填充 - 0x01 = 6.25% 填充 - 0x10 = 100% 填充 (1:1 比例) - 0x80 = 800% 填充 (8:1 比例)</p>
+<p><strong>填充流量:</strong> - <code>tdmy</code>: 愿意发送的最大速率（2 字节，平均值按字节/秒计） - <code>rdmy</code>: 请求接收的速率（2 字节，平均值按字节/秒计）</p>
+<p><strong>延迟插入:</strong> - <code>tdelay</code>: 愿意插入的最大值 (2 字节，以毫秒为单位的平均值) - <code>rdelay</code>: 请求的延迟 (2 字节，以毫秒为单位的平均值)</p>
+<p><strong>指南：</strong> - 最小值表示期望的抗流量分析能力 - 最大值表示带宽约束 - 发送方应遵从接收方的最大值 - 在约束范围内，发送方可遵从接收方的最小值 - 无强制执行机制；各实现可能有所不同</p>
+<h3 id="块类型-2-routerinfo路由信息">块类型 2: RouterInfo（路由信息）</h3>
+<p>用于 netdb 填充和泛洪的 RouterInfo（路由器信息）递送。</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 2  |  size   |flg |    RouterInfo     |
++----+----+----+----+                   +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type : 2
+Length: Flag (1 byte) + RouterInfo size
+Flag : Bit 0 = flood request (1) or local store (0)
+       Bits 1-7 = Reserved, set to 0
+</code></pre><p><strong>用法：</strong></p>
+<p><strong>在 Message 3 第 2 部分</strong> (握手): - Alice 将她的 RouterInfo(路由器信息) 发送给 Bob - Flood 位通常为 0(本地存储) - RouterInfo 未进行 gzip 压缩</p>
+<p><strong>在数据阶段：</strong> - 任一方都可以发送其更新后的 RouterInfo - Flood bit（Flood 位） = 1：请求由 floodfill 分发（如果接收方为 floodfill） - Flood bit = 0：仅在本地 netdb 中存储</p>
+<p><strong>验证要求：</strong> 1. 验证签名类型受支持 2. 验证 RouterInfo 签名 3. 验证时间戳在可接受范围内 4. 对于握手: 验证静态密钥与 NTCP2 地址的 &ldquo;s&rdquo; 参数匹配 5. 对于数据阶段: 验证 router 哈希与会话对端匹配 6. 仅对包含已发布地址的 RouterInfos 进行泛洪</p>
+<p><strong>注意：</strong> - 无 ACK 机制（如有需要，可使用 I2NP DatabaseStore 并携带回复令牌） - 可能包含第三方 RouterInfos（路由信息对象；floodfill 用途） - 未进行 gzip 压缩（不同于 I2NP DatabaseStore）</p>
+<h3 id="块类型-3i2np-消息">块类型 3：I2NP 消息</h3>
+<p>I2NP 消息，采用缩短的 9 字节头部。</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 3  |  size   |type|    msg_id         |
++----+----+----+----+----+----+----+----+
+|   expiration  |     I2NP payload      |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type      : 3
+Length    : 9 + payload_size (big-endian)
+Type      : 1 byte, I2NP message type
+Msg_ID    : 4 bytes, big-endian, I2NP message ID
+Expiration: 4 bytes, big-endian, Unix timestamp (seconds)
+Payload   : I2NP message body (length = size - 9)
+</code></pre><p><strong>与 NTCP1 的差异：</strong> - 过期时间：4 字节（秒） vs 8 字节（毫秒） - 长度：省略（可由块长度推导） - 校验和：省略（AEAD 提供完整性） - 头部：9 字节 vs 16 字节（减少 44%）</p>
+<p><strong>分片:</strong> - I2NP 消息不得跨块分片 - I2NP 消息不得跨帧分片 - 每帧允许多个 I2NP 块</p>
+<h3 id="块类型-4终止">块类型 4：终止</h3>
+<p>带原因码的显式连接关闭。</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+| 4  |  size   |  valid_frames_recv    |
++----+----+----+----+----+----+----+----+
+| (continued) |rsn |   additional_data   |
++----+----+----+----+                   +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type            : 4
+Length          : 9+ bytes (big-endian)
+Valid_Frames_Recv: 8 bytes, big-endian (receive nonce value)
+                  0 if error in handshake phase
+Reason          : 1 byte (see table below)
+Additional_Data : Optional (format unspecified, for debugging)
+</code></pre><p><strong>原因代码：</strong></p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:center;">Code</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Reason</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Phase</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">0</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Normal close / unspecified</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">1</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Termination received</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">2</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Idle timeout</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">3</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Router shutdown</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">4</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data phase AEAD failure</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">5</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Incompatible options</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">6</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Incompatible signature type</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">7</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Clock skew</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">8</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Padding violation</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">9</td><td style="border:1px solid var(--color-border); padding:0.5rem;">AEAD framing error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">10</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Payload format error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">11</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 1 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">12</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 2 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">13</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Message 3 error</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">14</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Intra-frame read timeout</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Data</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">15</td><td style="border:1px solid var(--color-border); padding:0.5rem;">RouterInfo signature verification fail</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">16</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Static key parameter mismatch</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Handshake</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem; text-align:center;">17</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Banned</td><td style="border:1px solid var(--color-border); padding:0.5rem;">Any</td></tr>
+  </tbody>
+</table>
+**规则：** - 终止块必须是帧中最后一个非填充块 - 每个帧最多一个终止块 - 发送方应在发送后关闭连接 - 接收方应在接收后关闭连接
+<p><strong>错误处理：</strong> - 握手错误：通常使用 TCP RST 关闭（不发送终止块） - 数据阶段的 AEAD（带关联数据的认证加密）错误：随机超时 + 随机读取，然后发送终止 - 有关安全流程，参见 &ldquo;AEAD 错误处理&rdquo; 一节</p>
+<h3 id="块类型-254填充">块类型 254：填充</h3>
+<p>用于增强对流量分析抗性的随机填充。</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+|254 |  size   |     random_data       |
++----+----+----+                        +
+|                                       |
+~           .   .   .                   ~
++----+----+----+----+----+----+----+----+
+
+Type: 254
+Length: 0-65516 bytes (big-endian)
+Data: Cryptographically random bytes
+</code></pre><p><strong>规则：</strong> - 如果存在，填充必须是帧中的最后一个块 - 允许零长度填充 - 每个帧中仅允许一个填充块 - 允许仅包含填充的帧 - 应遵循在 Options 块中协商的参数</p>
+<p><strong>消息 1-2 中的填充:</strong> - 位于 AEAD（带有关联数据的认证加密）帧之外（明文） - 包含在下一条消息的哈希链中（已认证） - 当下一条消息的 AEAD 校验失败时检测到篡改</p>
+<p><strong>消息 3+ 和数据阶段中的填充：</strong> - 在 AEAD（带关联数据的认证加密）帧（加密并认证）内 - 用于流量整形和长度混淆</p>
+<h2 id="aead-错误处理">AEAD 错误处理</h2>
+<p><strong>关键安全要求：</strong></p>
+<h3 id="握手阶段消息1-3">握手阶段（消息1-3）</h3>
+<p><strong>已知消息大小:</strong> - 消息大小是预先确定或事先指定的 - AEAD（带关联数据的认证加密）认证失败是无歧义的</p>
+<p><strong>Bob 对消息 1 失败的响应：</strong> 1. 设置随机超时（范围取决于实现，建议 100-500ms） 2. 读取随机数量的字节（范围取决于实现，建议 1KB-64KB） 3. 使用 TCP RST（TCP复位）关闭连接（无响应） 4. 临时将源 IP 加入黑名单 5. 跟踪重复失败以实施长期封禁</p>
+<p><strong>Alice 针对消息 2 失败的响应：</strong> 1. 立即使用 TCP RST（重置标志）关闭连接 2. 不向 Bob 作出任何响应</p>
+<p><strong>Bob 对消息 3 失败的响应:</strong> 1. 使用 TCP RST 立即关闭连接 2. 不向 Alice 发送任何响应</p>
+<h3 id="数据阶段-1">数据阶段</h3>
+<p><strong>已混淆的消息大小:</strong> - 长度字段经 SipHash 混淆 - 长度无效或 AEAD（带关联数据的认证加密）失败可能意味着:   - 攻击者探测   - 网络数据损坏   - SipHash 的 IV（初始化向量）不同步   - 恶意对等节点</p>
+<p><strong>针对 AEAD（带关联数据的认证加密）或长度错误的响应：</strong> 1. 设置随机超时（建议 100-500ms） 2. 读取随机数量的字节（建议 1KB-64KB） 3. 发送带有原因码 4（AEAD 失败）或 9（帧错误）的终止块 4. 关闭连接</p>
+<p><strong>防止解密预言机攻击:</strong> - 在随机超时之前，绝不向对端披露错误类型 - 在进行 AEAD（带关联数据的认证加密）校验之前，绝不跳过长度验证 - 将无效长度视同 AEAD 失败 - 对这两类错误使用相同的错误处理路径</p>
+<p><strong>实施注意事项：</strong> - 某些实现若 AEAD（带关联数据的认证加密）错误不频繁，可能会继续运行 - 在错误反复出现时应终止（建议阈值：每小时 3-5 次错误） - 在错误恢复与安全性之间取得平衡</p>
+<h2 id="已发布的-routerinforouter-信息记录">已发布的 RouterInfo（router 信息记录）</h2>
+<h3 id="router-地址格式">Router 地址格式</h3>
+<p>通过在已发布的 RouterAddress（router 地址）条目中包含特定选项来公布对 NTCP2 的支持。</p>
+<p><strong>传输样式:</strong> - <code>&quot;NTCP2&quot;</code> - 此端口仅使用 NTCP2 - <code>&quot;NTCP&quot;</code> - 此端口同时支持 NTCP 和 NTCP2（自动检测）   - <strong>注意</strong>: NTCP (v1) 支持已在 0.9.50 (May 2021) 中移除   - &ldquo;NTCP&rdquo; 样式现已废弃; 请改用 &ldquo;NTCP2&rdquo;</p>
+<h3 id="必需选项">必需选项</h3>
+<p><strong>所有已发布的 NTCP2 地址：</strong></p>
+<ol>
+<li>
+<p><strong><code>host</code></strong> - IP 地址（IPv4 或 IPv6）或主机名</p>
+<ul>
+<li>格式：标准 IP 表示法或域名</li>
+<li>对于仅出站或隐藏的 routers，可以省略</li>
+</ul>
+</li>
+<li>
+<p><strong><code>port</code></strong> - TCP 端口号</p>
+<ul>
+<li>格式：整数，1-65535</li>
+<li>对于仅出站或隐藏的 routers 可以省略</li>
+</ul>
+</li>
+<li>
+<p><strong><code>s</code></strong> - 静态公钥（X25519）</p>
+<ul>
+<li>格式：Base64 编码，44 个字符</li>
+<li>编码：I2P Base64 字母表</li>
+<li>来源：32 字节的 X25519 公钥，小端序</li>
+</ul>
+</li>
+<li>
+<p><strong><code>i</code></strong> - 用于 AES 的初始化向量（IV）</p>
+<ul>
+<li>格式：Base64 编码，24 个字符</li>
+<li>编码：I2P Base64 字母表</li>
+<li>来源：16 字节的 IV，大端序</li>
+</ul>
+</li>
+<li>
+<p><strong><code>v</code></strong> - 协议版本</p>
+<ul>
+<li>格式: 整数或用逗号分隔的整数</li>
+<li>当前: <code>&quot;2&quot;</code></li>
+<li>未来: <code>&quot;2,3&quot;</code>（必须按数值顺序排列）</li>
+</ul>
+</li>
+</ol>
+<p><strong>可选选项：</strong></p>
+<ol start="6">
+<li>
+<p><strong><code>caps</code></strong> - 能力（自 0.9.50 起）</p>
+<ul>
+<li>格式：由能力字符组成的字符串</li>
+<li>取值：
+<ul>
+<li><code>&quot;4&quot;</code> - IPv4 出站能力</li>
+<li><code>&quot;6&quot;</code> - IPv6 出站能力</li>
+<li><code>&quot;46&quot;</code> - 同时支持 IPv4 和 IPv6（推荐顺序）</li>
+</ul>
+</li>
+<li>如果已发布 <code>host</code> 则不需要</li>
+<li>适用于隐藏的/位于防火墙后的 routers</li>
+</ul>
+</li>
+<li>
+<p><strong><code>cost</code></strong> - 地址优先级</p>
+<ul>
+<li>格式: 整数, 0-255</li>
+<li>数值越低 = 优先级越高</li>
+<li>建议: 普通地址使用 5-10</li>
+<li>建议: 未发布的地址使用 14</li>
+</ul>
+</li>
+</ol>
+<h3 id="routeraddress-示例条目">RouterAddress 示例条目</h3>
+<p><strong>已发布的 IPv4 地址:</strong></p>
+<pre tabindex="0"><code>&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;192.0.2.1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>隐藏 Router (仅出站):</strong></p>
+<pre tabindex="0"><code>&lt;Address cost=&#34;14&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;v&gt;2&lt;/v&gt;
+    &lt;caps&gt;4&lt;/caps&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>双栈 Router：</strong></p>
+<pre tabindex="0"><code>&lt;!-- IPv4 Address --&gt;
+&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;192.0.2.1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+
+&lt;!-- IPv6 Address (same keys, same port) --&gt;
+&lt;Address cost=&#34;5&#34;&gt;
+  &lt;transport_style&gt;NTCP2&lt;/transport_style&gt;
+  &lt;options&gt;
+    &lt;host&gt;2001:db8::1&lt;/host&gt;
+    &lt;port&gt;8887&lt;/port&gt;
+    &lt;s&gt;9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=&lt;/s&gt;
+    &lt;i&gt;MDEyMzQ1Njc4OUFCQ0RFRg==&lt;/i&gt;
+    &lt;v&gt;2&lt;/v&gt;
+  &lt;/options&gt;
+&lt;/Address&gt;
+</code></pre><p><strong>重要规则：</strong> - 使用<strong>相同端口</strong>的多个 NTCP2 地址必须使用<strong>完全相同</strong>的 <code>s</code>、<code>i</code> 和 <code>v</code> 值 - 不同端口可以使用不同的密钥 - 双栈 routers 应分别发布 IPv4 和 IPv6 地址</p>
+<h3 id="未发布的-ntcp2-地址">未发布的 NTCP2 地址</h3>
+<p><strong>针对仅出站的 router:</strong></p>
+<p>如果一个 router 不接受传入的 NTCP2 连接，但会发起出站连接，它仍然必须发布一个包含以下内容的 RouterAddress（路由地址）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;Address</span> <span style="color:#a6e22e">cost=</span><span style="color:#e6db74">&#34;14&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;transport_style&gt;</span>NTCP2<span style="color:#f92672">&lt;/transport_style&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;options&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;s&gt;</span>9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=<span style="color:#f92672">&lt;/s&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;v&gt;</span>2<span style="color:#f92672">&lt;/v&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/options&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/Address&gt;</span>
+</span></span></code></pre></div><p><strong>目的:</strong> - 允许 Bob 在握手期间验证 Alice 的静态密钥 - 用于消息 3 第 2 部分的 RouterInfo 验证所必需 - 无需 <code>i</code>、<code>host</code> 或 <code>port</code> (仅出站)</p>
+<p><strong>替代方案：</strong> - 为现有已发布的 &ldquo;NTCP&rdquo; 或 SSU 地址添加 <code>s</code> 和 <code>v</code></p>
+<h3 id="公钥和iv轮换">公钥和IV轮换</h3>
+<p><strong>关键安全策略:</strong></p>
+<p><strong>通用规则：</strong> 1. <strong>在 router 正在运行时切勿进行轮换</strong> 2. <strong>持久化存储密钥和 IV（初始化向量）</strong> 跨重启 3. <strong>跟踪先前的停机时间</strong> 以确定是否符合轮换条件</p>
+<p><strong>轮换前的最小停机时间：</strong></p>
+<table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Router Type</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Min Downtime</th>
+      <th style="border:1px solid var(--color-border); padding:0.5rem; background:var(--color-bg-secondary); text-align:left;">Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Published NTCP2 address</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>1 month</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Many routers cache RouterInfo</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">Published SSU only (no NTCP2)</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>1 day</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Moderate caching</td></tr>
+    <tr><td style="border:1px solid var(--color-border); padding:0.5rem;">No published addresses (hidden)</td><td style="border:1px solid var(--color-border); padding:0.5rem;"><strong>2 hours</strong></td><td style="border:1px solid var(--color-border); padding:0.5rem;">Minimal impact</td></tr>
+  </tbody>
+</table>
+**附加触发条件:** - 本地 IP 地址变更: 无论是否停机，均可能轮换 - Router "rekey" (重新生成密钥) (新的 Router Hash): 生成新密钥
+<p><strong>理由：</strong> - 防止通过密钥更改暴露重启时间 - 允许缓存的 RouterInfos（I2P 路由信息对象）自然过期 - 保持网络稳定性 - 减少失败的连接尝试</p>
+<p><strong>实现：</strong> 1. 持久化存储密钥、IV（初始化向量）和上次关闭时间戳 2. 在启动时，计算停机时间 = current_time - last_shutdown 3. 如果停机时间 &gt; 对应 router 类型的最小值，则可以轮换 4. 如果 IP 发生变化或 rekeying（重新生成密钥），则可以轮换 5. 否则，复用先前的密钥和 IV</p>
+<p><strong>IV（初始化向量）轮换：</strong> - 适用与密钥轮换相同的规则 - 仅出现在已发布的地址中（非隐藏的 router） - 建议每当密钥更改时更换 IV</p>
+<h2 id="版本检测">版本检测</h2>
+<p><strong>上下文：</strong> 当 <code>transportStyle=&quot;NTCP&quot;</code>（旧版）时，Bob 在同一端口上同时支持 NTCP v1 和 v2，并且必须自动检测协议版本。</p>
+<p><strong>检测算法：</strong></p>
+<pre tabindex="0"><code>1. Wait for at least 64 bytes (minimum NTCP2 message 1 size)
+
+2. If received ≥ 288 bytes:
+   → Connection is NTCP version 1 (NTCP1 message 1 is 288 bytes)
+
+3. If received &lt; 288 bytes:
+   
+   Option A (conservative, pre-NTCP2 majority):
+   a. Wait additional short time (e.g., 100-500ms)
+   b. If total received ≥ 288 bytes → NTCP1
+   c. Otherwise → Attempt NTCP2 decode
+   
+   Option B (aggressive, post-NTCP2 majority):
+   a. Attempt NTCP2 decode immediately:
+      - Decrypt first 32 bytes (X key) with AES-256-CBC
+      - Verify valid X25519 point (X[31] &amp; 0x80 == 0)
+      - Verify AEAD frame
+   b. If decode succeeds → NTCP2
+   c. If decode fails → Wait for more data or NTCP1
+</code></pre><p><strong>快速最高有效位（MSB）检查：</strong> - 在 AES 解密之前，验证：<code>encrypted_X[31] &amp; 0x80 == 0</code> - 有效的 X25519 密钥应当最高位为 0 - 失败表明很可能是 NTCP1（或攻击） - 在失败时实现防探测机制（随机超时 + 读取）</p>
+<p><strong>实现要求:</strong></p>
+<ol>
+<li>
+<p><strong>Alice 的职责：</strong></p>
+<ul>
+<li>在连接到&quot;NTCP&quot;地址时，将消息 1 限制为最多 287 字节</li>
+<li>将整个消息 1 缓冲并一次性写出</li>
+<li>提高通过单个 TCP 数据包传递的可能性</li>
+</ul>
+</li>
+<li>
+<p><strong>Bob 的职责：</strong></p>
+<ul>
+<li>在确定版本之前先缓冲已接收的数据</li>
+<li>实现正确的超时处理</li>
+<li>使用 TCP_NODELAY 以快速进行版本检测</li>
+<li>在检测到版本后，将第 2 条消息整体一次性缓冲并刷新发送</li>
+</ul>
+</li>
+</ol>
+<p><strong>安全考虑：</strong> - 分段攻击：Bob 应该能够抵御 TCP 分段 - 探测攻击：在失败时引入随机延迟并执行字节读取 - 拒绝服务（DoS）预防：限制并发的挂起连接数 - 读取超时：同时设置单次读取和总体超时（&ldquo;slowloris&rdquo;（慢速 HTTP 攻击）防护）</p>
+<h2 id="时钟偏差指南">时钟偏差指南</h2>
+<p><strong>时间戳字段：</strong> - 消息 1：<code>tsA</code>（Alice 的时间戳） - 消息 2：<code>tsB</code>（Bob 的时间戳） - 消息 3+：可选的 DateTime（日期时间）块</p>
+<p><strong>最大时钟偏移（D）：</strong> - 典型：<strong>±60 秒</strong> - 可按实现配置 - 偏移量 &gt; D 通常是致命的</p>
+<h3 id="bob-的处理-消息-1">Bob 的处理 (消息 1)</h3>
+<pre tabindex="0"><code>1. Receive tsA from Alice
+2. skew = tsA - current_time
+3. If |skew| &gt; D:
+   a. Still send message 2 (allows Alice to calculate skew)
+   b. Include tsB in message 2
+   c. Do NOT initiate handshake completion
+   d. Optionally: Temporary ban Alice&#39;s IP
+   e. After message 2 sent, close connection
+
+4. If |skew| ≤ D:
+   a. Continue handshake normally
+</code></pre><p><strong>理由：</strong> 即使在时钟偏差的情况下也发送消息 2，以便 Alice 诊断时钟问题。</p>
+<h3 id="alice-的处理消息-2">Alice 的处理（消息 2）</h3>
+<pre tabindex="0"><code>1. Receive tsB from Bob
+2. RTT = (current_time_now - tsA_sent)
+3. adjusted_skew = (tsB - current_time_now) - (RTT / 2)
+4. If |adjusted_skew| &gt; D:
+   a. Close connection immediately
+   b. If local clock suspect: Adjust clock or use external time source
+   c. If Bob&#39;s clock suspect: Temporary ban Bob
+   d. Log for operator review
+5. If |adjusted_skew| ≤ D:
+   a. Continue handshake normally
+   b. Optionally: Track skew for time synchronization
+</code></pre><p><strong>RTT（往返时延）调整：</strong> - 从计算出的时钟偏移中减去一半的 RTT - 考虑网络传播时延 - 更准确的时钟偏移估计</p>
+<h3 id="bob-的处理-消息-3">Bob 的处理 (消息 3)</h3>
+<pre tabindex="0"><code>1. If message 3 received (unlikely if skew exceeded in message 1)
+2. Recalculate skew = tsA_received - current_time
+3. If |adjusted_skew| &gt; D:
+   a. Send termination block (reason code 7: clock skew)
+   b. Close connection
+   c. Ban Alice for period (e.g., 1-24 hours)
+</code></pre><h3 id="时间同步">时间同步</h3>
+<p><strong>DateTime 块 (数据阶段):</strong> - 定期发送 DateTime 块 (类型 0) - 接收方可用于时钟校准 - 将时间戳四舍五入到最近一秒 (避免偏差)</p>
+<p><strong>外部时间源：</strong> - NTP（网络时间协议） - 系统时钟同步 - I2P 网络共识时间</p>
+<p><strong>时钟调整策略：</strong> - 如果本地时钟异常：调整系统时间或使用偏移量 - 如果对等方的时钟持续异常：将该对等方标记为有问题 - 跟踪 skew（时钟偏差）统计用于网络健康监测</p>
+<h2 id="安全属性">安全属性</h2>
+<h3 id="前向保密">前向保密</h3>
+<p><strong>通过以下方式实现：</strong> - 临时 Diffie-Hellman 密钥交换 (X25519) - 三次 DH 操作：es、ee、se (Noise XK 模式) - 握手完成后销毁临时密钥</p>
+<p><strong>机密性演进：</strong> - 消息 1：级别 2（发送方被攻陷时具备前向保密性） - 消息 2：级别 1（临时接收方） - 消息 3+：级别 5（强前向保密性）</p>
+<p><strong>完美前向保密:</strong> - 长期静态密钥被泄露也绝不会暴露过去的会话密钥 - 每个会话使用唯一的临时密钥 - 临时私钥从不复用 - 密钥协商后清理内存</p>
+<p><strong>限制:</strong> - 如果 Bob 的静态密钥泄露，消息 1 将易受攻击（但在 Alice 的密钥被攻破的情况下仍具有前向保密性） - 消息 1 可能遭受重放攻击（可通过时间戳和重放缓存缓解）</p>
+<h3 id="身份验证">身份验证</h3>
+<p><strong>相互认证:</strong> - Alice 通过第 3 条消息中的静态密钥完成认证 - Bob 通过持有静态私钥完成认证（握手成功即为隐式证明）</p>
+<p><strong>密钥泄露冒充（KCI）抗性：</strong> - 认证级别 2（对 KCI 具备抗性） - 即使攻击者拥有 Alice 的静态私钥（但没有 Alice 的临时密钥），也无法冒充 Alice - 即使攻击者拥有 Bob 的静态私钥（但没有 Bob 的临时密钥），也无法冒充 Bob</p>
+<p><strong>静态密钥验证:</strong> - Alice 预先知道 Bob 的静态密钥（来自 RouterInfo，I2P 路由信息文件） - Bob 在第 3 条消息中验证 Alice 的静态密钥与 RouterInfo 一致 - 防止中间人攻击</p>
+<h3 id="抗流量分析能力">抗流量分析能力</h3>
+<p><strong>DPI（深度包检测）对抗措施:</strong> 1. <strong>AES 混淆:</strong> 临时密钥被加密，看起来随机 2. <strong>SipHash 长度混淆:</strong> 帧长度非明文 3. <strong>随机填充:</strong> 消息大小可变，无固定模式 4. <strong>加密帧:</strong> 所有负载均使用 ChaCha20 加密</p>
+<p><strong>重放攻击防护：</strong> - 时间戳验证 (±60 秒) - 针对临时密钥的重放缓存 (有效期 2*D) - 随机数递增可防止会话内的数据包重放</p>
+<p><strong>抗探测能力:</strong> - AEAD（带关联数据的认证加密）失败时随机超时 - 在关闭连接前随机读取字节 - 握手失败时不响应 - 对多次失败的 IP 进行黑名单处理</p>
+<p><strong>填充指南：</strong> - 消息 1-2：明文填充（已认证） - 消息 3+：AEAD 帧内的加密填充 - 协商的填充参数（选项块） - 允许仅包含填充的帧</p>
+<h3 id="拒绝服务攻击缓解">拒绝服务攻击缓解</h3>
+<p><strong>连接限制：</strong> - 最大活动连接数（取决于实现） - 最大待处理握手数（例如，100-1000） - 每个 IP 的连接限制（例如，同时 3-10 个）</p>
+<p><strong>资源保护:</strong> - 对 DH 操作进行速率限制(开销高) - 每个套接字及全局的读取超时 - &ldquo;Slowloris&rdquo; 防护(总时间限制) - 针对滥用行为的 IP 黑名单</p>
+<p><strong>快速拒绝:</strong> - 网络ID不匹配 → 立即关闭 - 无效的 X25519 点 → 在解密前进行快速最高有效位（MSB）检查 - 时间戳超出范围 → 不进行计算直接关闭 - AEAD（带附加数据的认证加密）验证失败 → 不响应，随机延迟</p>
+<p><strong>抗探测性：</strong> - 随机超时：100-500ms（取决于实现） - 随机读取：1KB-64KB（取决于实现） - 不向攻击者提供错误信息 - 使用 TCP RST 关闭（无 FIN 握手）</p>
+<h3 id="密码学安全">密码学安全</h3>
+<p><strong>算法:</strong> - <strong>X25519</strong>: 128 位安全性，椭圆曲线 DH（Curve25519） - <strong>ChaCha20</strong>: 256 位密钥流密码 - <strong>Poly1305</strong>: 信息论安全的 MAC - <strong>SHA-256</strong>: 128 位抗碰撞性，256 位抗原像性 - <strong>HMAC-SHA256</strong>: 用于密钥派生的伪随机函数（PRF）</p>
+<p><strong>密钥长度：</strong> - 静态密钥：32 字节 (256 位) - 临时密钥：32 字节 (256 位) - 加密密钥：32 字节 (256 位) - MAC (消息认证码)：16 字节 (128 位)</p>
+<p><strong>已知问题：</strong> - ChaCha20 的 nonce 重用会造成灾难性后果（通过计数器递增加以防止） - X25519 存在小子群问题（通过曲线验证加以缓解） - SHA-256 理论上易受长度扩展攻击影响（在 HMAC 中不可利用）</p>
+<p><strong>无已知漏洞（截至2025年10月）：</strong> - Noise Protocol Framework（噪声协议框架）已被广泛分析 - ChaCha20-Poly1305 已在 TLS 1.3 中部署 - X25519 已成为现代协议中的标准 - 对该构造暂无实用性攻击</p>
+<h2 id="参考资料">参考资料</h2>
+<h3 id="主要规范">主要规范</h3>
+<ul>
+<li><strong><a href="../../../../zh/docs/specs/ntcp2/">NTCP2 规范</a>
+</strong> - I2P 官方规范</li>
+<li><strong><a href="../../../../zh/proposals/111-ntcp-2/">提案 111</a>
+</strong> - 包含设计理由的原始设计文档</li>
+<li><strong><a href="https://noiseprotocol.org/noise.html">Noise 协议框架</a>
+</strong> - 第 33 版（2017-10-04）</li>
+</ul>
+<h3 id="密码学标准">密码学标准</h3>
+<ul>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc7748">RFC 7748</a>
+</strong> - 用于安全的椭圆曲线 (X25519)</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc7539">RFC 7539</a>
+</strong> - 用于 IETF 协议的 ChaCha20 和 Poly1305</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc8439">RFC 8439</a>
+</strong> - ChaCha20-Poly1305（取代 RFC 7539）</li>
+<li><strong><a href="https://www.rfc-editor.org/rfc/rfc2104">RFC 2104</a>
+</strong> - HMAC：用于消息认证的带密钥哈希</li>
+<li><strong><a href="https://www.131002.net/siphash/">SipHash</a>
+</strong> - 用于哈希函数应用的 SipHash-2-4</li>
+</ul>
+<h3 id="相关的-i2p-规范">相关的 I2P 规范</h3>
+<ul>
+<li><strong><a href="../../../../zh/docs/specs/i2np/">I2NP 规范</a>
+</strong> - I2P 网络协议消息格式</li>
+<li><strong><a href="../../../../zh/docs/specs/common-structures/">通用结构</a>
+</strong> - RouterInfo、RouterAddress 格式</li>
+<li><strong><a href="../../../../zh/docs/legacy/ssu/">SSU 传输</a>
+</strong> - UDP 传输（最初版本，现为 SSU2）</li>
+<li><strong><a href="../../../../zh/proposals/147-transport-network-id-check/">提案 147</a>
+</strong> - 传输网络 ID 检查（0.9.42）</li>
+</ul>
+<h3 id="实现参考">实现参考</h3>
+<ul>
+<li><strong><a href="https://github.com/i2p/i2p.i2p">I2P Java</a>
+</strong> - 参考实现（Java）</li>
+<li><strong><a href="https://github.com/PurpleI2P/i2pd">i2pd</a>
+</strong> - C++ 实现</li>
+<li><strong><a href="../../../../zh/blog/">I2P 发布说明</a>
+</strong> - 版本历史和更新</li>
+</ul>
+<h3 id="历史背景">历史背景</h3>
+<ul>
+<li><strong><a href="https://en.wikipedia.org/wiki/Station-to-Station_protocol">站到站协议 (STS)</a>
+</strong> - Noise 框架的灵感来源</li>
+<li><strong><a href="https://gitlab.com/yawning/obfs4">obfs4</a>
+</strong> - 可插拔传输 (SipHash 长度混淆先例)</li>
+</ul>
+<h2 id="实现指南">实现指南</h2>
+<h3 id="强制性要求">强制性要求</h3>
+<p><strong>用于合规：</strong></p>
+<ol>
+<li>
+<p><strong>实现完整握手:</strong></p>
+<ul>
+<li>以正确的 KDF（密钥派生函数）链支持全部三条消息</li>
+<li>校验所有 AEAD（附加数据认证加密）标签</li>
+<li>验证 X25519（基于 Curve25519 的密钥交换算法）曲线点是否有效</li>
+</ul>
+</li>
+<li>
+<p><strong>实现数据阶段:</strong></p>
+<ul>
+<li>SipHash 长度混淆（双向）</li>
+<li>所有块类型: 0（日期时间）, 1（选项）, 2（RouterInfo）, 3（I2NP）, 4（终止）, 254（填充）</li>
+<li>正确的 nonce（一次性随机数）管理（独立计数器）</li>
+</ul>
+</li>
+<li>
+<p><strong>安全特性：</strong></p>
+<ul>
+<li>重放防护（缓存临时密钥 2*D 的时间）</li>
+<li>时间戳校验（默认 ±60 秒）</li>
+<li>在消息 1-2 中加入随机填充</li>
+<li>AEAD（带关联数据的认证加密）错误处理采用随机超时</li>
+</ul>
+</li>
+<li>
+<p><strong>RouterInfo（路由信息）发布:</strong></p>
+<ul>
+<li>发布静态密钥（&ldquo;s&rdquo;）、IV（初始化向量，&ldquo;i&rdquo;）和版本（&ldquo;v&rdquo;）</li>
+<li>按照策略轮换密钥</li>
+<li>支持用于隐藏的 router 的 capabilities（能力）字段（&ldquo;caps&rdquo;）</li>
+</ul>
+</li>
+<li>
+<p><strong>网络兼容性：</strong></p>
+<ul>
+<li>支持 network ID 字段（当前主网为 2）</li>
+<li>与现有的 Java 和 i2pd 实现互操作</li>
+<li>同时处理 IPv4 和 IPv6</li>
+</ul>
+</li>
+</ol>
+<h3 id="推荐实践">推荐实践</h3>
+<p><strong>性能优化：</strong></p>
+<ol>
+<li>
+<p><strong>缓冲策略：</strong></p>
+<ul>
+<li>一次性发送完整消息（消息 1、2、3）</li>
+<li>对握手消息使用 TCP_NODELAY</li>
+<li>将多个数据块缓冲合并为单个帧</li>
+<li>将帧大小限制在几 KB（以最小化接收端延迟）</li>
+</ul>
+</li>
+<li>
+<p><strong>连接管理:</strong></p>
+<ul>
+<li>尽可能复用连接</li>
+<li>实现连接池</li>
+<li>监控连接健康状况 (DateTime blocks，指与日期时间相关的阻塞)</li>
+</ul>
+</li>
+<li>
+<p><strong>内存管理：</strong></p>
+<ul>
+<li>在使用后将敏感数据清零（短期密钥、DH 结果）</li>
+<li>限制并发握手（防止 DoS 拒绝服务）</li>
+<li>为频繁分配使用内存池</li>
+</ul>
+</li>
+</ol>
+<p><strong>安全加固：</strong></p>
+<ol>
+<li>
+<p><strong>抗探测性:</strong></p>
+<ul>
+<li>随机超时：100-500ms</li>
+<li>随机字节读取：1KB-64KB</li>
+<li>对多次失败的 IP 实施黑名单</li>
+<li>不向对等方提供错误细节</li>
+</ul>
+</li>
+<li>
+<p><strong>资源限制：</strong></p>
+<ul>
+<li>每个 IP 的最大连接数：3-10</li>
+<li>最大待处理握手数：100-1000</li>
+<li>读取超时：每次操作 30-60 秒</li>
+<li>连接总超时：握手阶段 5 分钟</li>
+</ul>
+</li>
+<li>
+<p><strong>密钥管理：</strong></p>
+<ul>
+<li>静态密钥和初始化向量（IV）的持久化存储</li>
+<li>安全随机生成（使用密码学安全随机数生成器）</li>
+<li>严格遵循密钥轮换策略</li>
+<li>切勿重复使用临时密钥</li>
+</ul>
+</li>
+</ol>
+<p><strong>监控与诊断：</strong></p>
+<ol>
+<li>
+<p><strong>指标:</strong></p>
+<ul>
+<li>握手成功/失败率</li>
+<li>AEAD 错误率</li>
+<li>时钟偏移分布</li>
+<li>连接持续时间统计</li>
+</ul>
+</li>
+<li>
+<p><strong>日志记录:</strong></p>
+<ul>
+<li>记录握手失败及其原因代码</li>
+<li>记录时钟偏差事件</li>
+<li>记录被封禁的 IP 地址</li>
+<li>绝不记录敏感的密钥材料</li>
+</ul>
+</li>
+<li>
+<p><strong>测试:</strong></p>
+<ul>
+<li>针对 KDF 链的单元测试</li>
+<li>与其他实现的集成测试</li>
+<li>针对数据包处理的模糊测试</li>
+<li>针对抗 DoS 能力的负载测试</li>
+</ul>
+</li>
+</ol>
+<h3 id="常见误区">常见误区</h3>
+<p><strong>应避免的严重错误:</strong></p>
+<ol>
+<li>
+<p><strong>随机数重用：</strong></p>
+<ul>
+<li>切勿在会话中途重置随机数计数器</li>
+<li>每个方向使用独立的计数器</li>
+<li>在达到 2^64 - 1 之前终止会话</li>
+</ul>
+</li>
+<li>
+<p><strong>密钥轮换:</strong></p>
+<ul>
+<li>切勿在 router 运行时轮换密钥</li>
+<li>切勿在不同会话间复用临时密钥</li>
+<li>遵循最小停机时间规则</li>
+</ul>
+</li>
+<li>
+<p><strong>时间戳处理:</strong></p>
+<ul>
+<li>绝不接受已过期的时间戳</li>
+<li>计算偏差时始终根据 RTT（往返时延）进行调整</li>
+<li>将 DateTime 时间戳舍入到秒</li>
+</ul>
+</li>
+<li>
+<p><strong>AEAD（带关联数据的认证加密）错误：</strong></p>
+<ul>
+<li>切勿向攻击者透露错误类型</li>
+<li>在关闭前始终使用随机延时</li>
+<li>将无效长度与 AEAD 失败同等处理</li>
+</ul>
+</li>
+<li>
+<p><strong>填充:</strong></p>
+<ul>
+<li>切勿在已协商范围之外发送填充数据</li>
+<li>始终将填充块放在最后</li>
+<li>每个帧中绝不使用多个填充块</li>
+</ul>
+</li>
+<li>
+<p><strong>RouterInfo:</strong></p>
+<ul>
+<li>始终验证静态密钥是否与 RouterInfo 匹配</li>
+<li>切勿泛洪未发布地址的 RouterInfos</li>
+<li>始终验证签名</li>
+</ul>
+</li>
+</ol>
+<h3 id="测试方法论">测试方法论</h3>
+<p><strong>单元测试：</strong></p>
+<ol>
+<li>
+<p><strong>密码学原语:</strong></p>
+<ul>
+<li>针对 X25519（椭圆曲线密钥协商算法）、ChaCha20（流密码）、Poly1305（消息认证码算法/MAC）、SHA-256（哈希函数）的测试向量</li>
+<li>HMAC-SHA256（基于密钥的哈希消息认证码，使用 SHA-256）的测试向量</li>
+<li>SipHash-2-4（带密钥的短输入散列，用于哈希表防碰撞）的测试向量</li>
+</ul>
+</li>
+<li>
+<p><strong>KDF 链（Key Derivation Function，密钥派生函数）:</strong></p>
+<ul>
+<li>针对全部三条消息的已知答案测试</li>
+<li>验证 chaining key（链密钥）的传递</li>
+<li>测试 SipHash IV（初始向量）的生成</li>
+</ul>
+</li>
+<li>
+<p><strong>消息解析:</strong></p>
+<ul>
+<li>有效消息解码</li>
+<li>无效消息拒绝</li>
+<li>边界条件（空、最大大小）</li>
+</ul>
+</li>
+</ol>
+<p><strong>集成测试：</strong></p>
+<ol>
+<li>
+<p><strong>握手：</strong></p>
+<ul>
+<li>成功完成三次消息交互</li>
+<li>时钟偏移拒绝</li>
+<li>重放攻击检测</li>
+<li>无效密钥拒绝</li>
+</ul>
+</li>
+<li>
+<p><strong>数据阶段：</strong></p>
+<ul>
+<li>I2NP 消息传输</li>
+<li>RouterInfo（路由信息）交换</li>
+<li>填充处理</li>
+<li>终止消息</li>
+</ul>
+</li>
+<li>
+<p><strong>互操作性:</strong></p>
+<ul>
+<li>针对 Java I2P 进行测试</li>
+<li>针对 i2pd 进行测试</li>
+<li>测试 IPv4 和 IPv6</li>
+<li>测试已发布和隐藏的 routers</li>
+</ul>
+</li>
+</ol>
+<p><strong>安全测试：</strong></p>
+<ol>
+<li>
+<p><strong>负向测试：</strong></p>
+<ul>
+<li>无效的 AEAD 标签</li>
+<li>重放消息</li>
+<li>时钟偏移攻击</li>
+<li>畸形帧</li>
+</ul>
+</li>
+<li>
+<p><strong>DoS（拒绝服务）测试：</strong></p>
+<ul>
+<li>连接泛洪</li>
+<li>Slowloris 攻击（慢速 HTTP 头攻击）</li>
+<li>CPU 耗尽（过度使用 DH/Diffie-Hellman 密钥交换）</li>
+<li>内存耗尽</li>
+</ul>
+</li>
+<li>
+<p><strong>模糊测试:</strong></p>
+<ul>
+<li>随机握手报文</li>
+<li>随机的数据阶段帧</li>
+<li>随机的数据块类型和大小</li>
+<li>无效的密码学参数</li>
+</ul>
+</li>
+</ol>
+<h3 id="从-ntcp-迁移">从 NTCP 迁移</h3>
+<p><strong>关于遗留 NTCP 支持（现已移除）：</strong></p>
+<p>NTCP（版本 1）已在 I2P 0.9.50（2021 年 5 月）中移除。所有当前实现都必须支持 NTCP2。历史说明：</p>
+<ol>
+<li>
+<p><strong>过渡期 (2018-2021):</strong></p>
+<ul>
+<li>0.9.36: 引入 NTCP2（默认禁用）</li>
+<li>0.9.37: 默认启用 NTCP2</li>
+<li>0.9.40: NTCP 已弃用</li>
+<li>0.9.50: NTCP 已移除</li>
+</ul>
+</li>
+<li>
+<p><strong>版本检测：</strong></p>
+<ul>
+<li>&ldquo;NTCP&rdquo; transportStyle 表明同时支持两个版本</li>
+<li>&ldquo;NTCP2&rdquo; transportStyle 表明仅支持 NTCP2</li>
+<li>通过消息大小自动检测（287 与 288 字节）</li>
+</ul>
+</li>
+<li>
+<p><strong>当前状态：</strong></p>
+<ul>
+<li>所有 router 必须支持 NTCP2</li>
+<li>&ldquo;NTCP&rdquo; transportStyle 已废弃</li>
+<li>仅使用 &ldquo;NTCP2&rdquo; transportStyle</li>
+</ul>
+</li>
+</ol>
+<h2 id="附录-anoise-xk-模式">附录 A：Noise XK 模式</h2>
+<p><strong>标准 Noise XK 模式：</strong></p>
+<pre tabindex="0"><code>XK(s, rs):
+  &lt;- s
+  ...
+  -&gt; e, es
+  &lt;- e, ee
+  -&gt; s, se
+</code></pre><p><strong>解释：</strong></p>
+<ul>
+<li><code>&lt;-</code> : 来自响应方（Bob）发往发起方（Alice）的消息</li>
+<li><code>-&gt;</code> : 来自发起方（Alice）发往响应方（Bob）的消息</li>
+<li><code>s</code> : 静态密钥（长期身份密钥）</li>
+<li><code>rs</code> : 远端静态密钥（对端的静态密钥，事先已知）</li>
+<li><code>e</code> : 临时密钥（特定于会话，按需生成）</li>
+<li><code>es</code> : 临时-静态 DH（Diffie-Hellman）（Alice 的临时 × Bob 的静态）</li>
+<li><code>ee</code> : 临时-临时 DH（Alice 的临时 × Bob 的临时）</li>
+<li><code>se</code> : 静态-临时 DH（Alice 的静态 × Bob 的临时）</li>
+</ul>
+<p><strong>密钥协商流程：</strong></p>
+<ol>
+<li><strong>预消息:</strong> Alice 知道 Bob 的静态公钥（来自 RouterInfo，I2P 的路由信息记录）</li>
+<li><strong>消息 1:</strong> Alice 发送临时密钥，执行 es DH（ephemeral-static，临时-静态）</li>
+<li><strong>消息 2:</strong> Bob 发送临时密钥，执行 ee DH（ephemeral-ephemeral，临时-临时）</li>
+<li><strong>消息 3:</strong> Alice 披露静态公钥，执行 se DH（static-ephemeral，静态-临时）</li>
+</ol>
+<p><strong>安全属性：</strong></p>
+<ul>
+<li>Alice 已认证：是（由第 3 条消息）</li>
+<li>Bob 已认证：是（通过持有静态私钥）</li>
+<li>前向保密：是（临时密钥已销毁）</li>
+<li>KCI（Key Compromise Impersonation，密钥泄露冒充攻击）抵抗能力：是（认证级别 2）</li>
+</ul>
+<h2 id="附录-bbase64-编码">附录 B：Base64 编码</h2>
+<p><strong>I2P Base64 字母表：</strong></p>
+<pre tabindex="0"><code>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-~
+</code></pre><p><strong>与标准 Base64 的差异：</strong> - 字符 62-63：<code>-~</code> 代替 <code>+/</code> - 填充：相同（<code>=</code>）或根据上下文省略</p>
+<p><strong>在 NTCP2 中的用法：</strong> - 静态密钥 (&ldquo;s&rdquo;): 32 字节 → 44 个字符 (无填充) - IV (初始化向量) (&ldquo;i&rdquo;): 16 字节 → 24 个字符 (无填充)</p>
+<p><strong>编码示例：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 32-byte static key (hex): </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># f4489e1bb0597b39ca6cbf5ad9f5f1f09043e02d96cb9aa6a63742b3462429aa</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I2P Base64 encoded:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 9EjeG7BZeznKbL9a2fXx8JBDPgLZbLmKbqY3QrNGJCo=</span>
+</span></span></code></pre></div><h2 id="附录c数据包捕获分析">附录C：数据包捕获分析</h2>
+<p><strong>识别 NTCP2 流量：</strong></p>
+<ol>
+<li>
+<p><strong>TCP 握手:</strong></p>
+<ul>
+<li>标准的 TCP SYN、SYN-ACK、ACK</li>
+<li>目标端口通常为 8887 或类似端口</li>
+</ul>
+</li>
+<li>
+<p><strong>消息 1 (SessionRequest, 会话请求):</strong></p>
+<ul>
+<li>来自 Alice 的首个应用数据</li>
+<li>80-65535 字节（通常为几百字节）</li>
+<li>看起来像随机数据（AES 加密的临时密钥）</li>
+<li>如果连接到 &ldquo;NTCP&rdquo; 地址，最大为 287 字节</li>
+</ul>
+</li>
+<li>
+<p><strong>消息 2 (SessionCreated):</strong></p>
+<ul>
+<li>来自 Bob 的响应</li>
+<li>80-65535 字节（通常为几百字节）</li>
+<li>同样看起来是随机的</li>
+</ul>
+</li>
+<li>
+<p><strong>消息 3 (SessionConfirmed，会话确认):</strong></p>
+<ul>
+<li>来自 Alice</li>
+<li>48 字节 + 可变 (RouterInfo (路由器信息) 大小 + 填充)</li>
+<li>通常为 1-4 KB</li>
+</ul>
+</li>
+<li>
+<p><strong>数据阶段:</strong></p>
+<ul>
+<li>可变长度帧</li>
+<li>长度字段被混淆（看起来随机）</li>
+<li>加密的有效载荷</li>
+<li>填充使大小不可预测</li>
+</ul>
+</li>
+</ol>
+<p><strong>DPI 规避:</strong> - 无明文头部 - 无固定模式 - 长度字段已混淆 - 随机填充使基于大小的启发式失效</p>
+<p><strong>与 NTCP 的比较：</strong> - NTCP 消息 1 始终为 288 字节（可识别） - NTCP2 消息 1 大小可变（不可识别） - NTCP 存在可识别的模式 - NTCP2 旨在抵抗深度包检测（DPI）</p>
+<h2 id="附录-d版本历史">附录 D：版本历史</h2>
+<p><strong>主要里程碑：</strong></p>
+<ul>
+<li><strong>0.9.36</strong> (2018年8月23日): 引入 NTCP2，默认禁用</li>
+<li><strong>0.9.37</strong> (2018年10月4日): NTCP2 默认启用</li>
+<li><strong>0.9.40</strong> (2019年5月20日): NTCP 已弃用</li>
+<li><strong>0.9.42</strong> (2019年8月27日): 添加了网络 ID 字段 (提案 147)</li>
+<li><strong>0.9.50</strong> (2021年5月17日): 移除了 NTCP，添加了 capabilities (能力标识) 支持</li>
+<li><strong>2.10.0</strong> (2025年9月9日): 最新稳定版</li>
+</ul>
+<p><strong>协议稳定性：</strong> - 自 0.9.50 起无不兼容变更 - 持续提升抗探测能力 - 重点关注性能与可靠性 - 后量子密码学开发中（默认未启用）</p>
+<p><strong>当前传输状态:</strong> - NTCP2: 强制的 TCP 传输 - SSU2: 强制的 UDP 传输 - NTCP (v1): 已移除 - SSU (v1): 已移除</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../zh/docs/specs/red25519-signature-scheme/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">Red25519 签名方案</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../zh/docs/specs/i2np/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">I2P 网络协议 (I2NP)</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/zh/docs/specs/ntcp2.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">保持关注 I2P 新闻：</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="输入您的邮箱" required>
+                            <button type="submit">订阅</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>快速链接</h3>
+                <ul>
+                    <li><a href="../../../../zh/financial-support/">捐赠</a></li>
+                    <li><a href="../../../../zh/docs/overview/intro/">I2P介绍</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>社区</h3>
+                <ul>
+                    <li><a href="../../../../zh/get-involved/">参与其中</a></li>
+                    <li><a href="../../../../zh/blog/">博客</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">官方论坛</a></li>
+                    <li><a href="../../../../zh/contact/">联系我们</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>资源</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P 指标</a></li>
+                    <li><a href="../../../../zh/papers/">研究</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 隐形互联网计划。在 Creative Commons 许可下。</p>
+            <div class="footer-links">
+                <a href="../../../../zh/privacy/">隐私</a>
+                <a href="../../../../zh/terms/">条款</a>
+                <a href="../../../../zh/about/media/">媒体</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="关闭">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>社区投票</h2>
+            <p class="modal-subtitle">我们很想听听您的意见</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                您的投票将帮助塑造 I2P 的未来。
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

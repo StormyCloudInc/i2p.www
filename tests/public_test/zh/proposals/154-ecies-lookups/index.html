@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>从ECIES目标进行数据库查找 | I2P - 隐形互联网项目</title>
+
+    <meta name="description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="从ECIES目标进行数据库查找 | I2P - 隐形互联网项目">
+    <meta property="og:description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/zh/proposals/154-ecies-lookups/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P 测试版网站现已上线 电子邮件问题请发送至 stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="关闭横幅" title="关闭横幅">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../zh/" class="logo-link">
+                    <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../zh/about/" class="">关于</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../zh/about/">概览</a></li>
+                            <li><a href="../../../zh/papers/">研究论文</a></li>
+                            <li><a href="../../../zh/about/media/">媒体</a></li>
+                            <li><a href="../../../zh/contact/">联系我们</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../zh/docs/" class="">文档</a></li>
+                    <li><a href="../../../zh/downloads/" class="">下载</a></li>
+                    <li><a href="../../../zh/blog/" class="">博客</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../zh/get-involved/" class="">参与其中</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../zh/get-involved/">概览</a></li>
+                            <li><a href="../../../zh/feedback/">功能建议</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">zh</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../en/proposals/154-ecies-lookups/"
+                                class="lang-option">英语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../es/proposals/154-ecies-lookups/"
+                                class="lang-option">西班牙语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ko/proposals/154-ecies-lookups/"
+                                class="lang-option">韩语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../zh/proposals/154-ecies-lookups/"
+                                class="lang-option active">中文</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ru/proposals/154-ecies-lookups/"
+                                class="lang-option">俄语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../cs/proposals/154-ecies-lookups/"
+                                class="lang-option">捷克语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../de/proposals/154-ecies-lookups/"
+                                class="lang-option">德语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../fr/proposals/154-ecies-lookups/"
+                                class="lang-option">法语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../tr/proposals/154-ecies-lookups/"
+                                class="lang-option">土耳其语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../vi/proposals/154-ecies-lookups/"
+                                class="lang-option">越南语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../hi/proposals/154-ecies-lookups/"
+                                class="lang-option">印地语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ar/proposals/154-ecies-lookups/"
+                                class="lang-option">阿拉伯语</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../pt/proposals/154-ecies-lookups/"
+                                class="lang-option">葡萄牙语</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../zh/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../zh/downloads/" class="btn btn-primary">获取I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+<div class="proposals-page">
+    <div class="container">
+        
+        <nav class="breadcrumbs">
+            <a href="../../../zh/">Home</a>
+            <span class="separator">/</span>
+            <a href="../../../zh/proposals/">Proposals</a>
+            <span class="separator">/</span>
+            <span class="current">从ECIES目标进行数据库查找</span>
+        </nav>
+
+        
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">此翻译是使用机器学习生成的，可能不是100%准确。</span>
+    
+    
+    <a href="../../../en/proposals/154-ecies-lookups/" class="disclaimer-link">查看英文版本</a>
+    
+</div>
+
+
+
+        
+        <header class="proposal-header">
+            <div class="proposal-title-section">
+                <h1 class="proposal-title">从ECIES目标进行数据库查找</h1>
+                <div class="proposal-number">Proposal 154</div>
+            </div>
+
+            
+            <div class="proposal-meta-box">
+                <div class="proposal-status status-已关闭">
+                    已关闭
+                </div>
+
+                
+                <div class="proposal-info-grid">
+                    
+                    <div class="info-item">
+                        <span class="info-label">Author</span>
+                        <span class="info-value">zzz</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Created</span>
+                        <span class="info-value">2020-03-23</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Last Updated</span>
+                        <span class="info-value">2021-01-08</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Target Version</span>
+                        <span class="info-value">0.9.46</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Implemented In</span>
+                        <span class="info-value">0.9.46</span>
+                    </div>
+                    
+                </div>
+
+                
+                
+            </div>
+        </header>
+
+        
+        <div class="proposal-layout proposal-layout--with-toc">
+            
+            
+            <aside class="proposal-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#注意">注意</a></li>
+    <li><a href="#概览">概览</a>
+      <ul>
+        <li><a href="#定义">定义</a></li>
+        <li><a href="#摘要">摘要</a></li>
+        <li><a href="#目标">目标</a></li>
+        <li><a href="#非目标">非目标</a></li>
+      </ul>
+    </li>
+    <li><a href="#替代方案">替代方案</a></li>
+    <li><a href="#设计">设计</a></li>
+    <li><a href="#规范">规范</a>
+      <ul>
+        <li><a href="#elg-to-elg">ElG to ElG</a></li>
+        <li><a href="#ecies-to-elg">ECIES to ElG</a></li>
+        <li><a href="#ecies-to-ecies-0949">ECIES to ECIES (0.9.49)</a></li>
+        <li><a href="#ecies-to-ecies-未来">ECIES to ECIES (未来)</a></li>
+        <li><a href="#回复格式">回复格式</a></li>
+      </ul>
+    </li>
+    <li><a href="#正当性">正当性</a></li>
+    <li><a href="#注意-1">注意</a></li>
+    <li><a href="#问题">问题</a></li>
+    <li><a href="#迁移">迁移</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="proposal-main">
+                <article class="proposal-content">
+                    <h2 id="注意">注意</h2>
+<p>ECIES到ElG在0.9.46中已实现，并且提案阶段已关闭。
+请参见<a href="../../../zh/docs/specs/i2np/">I2NP</a>
+以获取官方规范。
+此提案仍可作为背景信息参考。
+包含密钥的ECIES到ECIES已在0.9.48版中实现。
+ECIES到ECIES（派生密钥）部分可能会在未来的提案中重新开放或合并。</p>
+<h2 id="概览">概览</h2>
+<h3 id="定义">定义</h3>
+<ul>
+<li>AEAD: ChaCha20/Poly1305</li>
+<li>DLM: I2NP数据库查找消息</li>
+<li>DSM: I2NP数据库存储消息</li>
+<li>DSRM: I2NP数据库搜索回复消息</li>
+<li>ECIES: ECIES-X25519-AEAD-Ratchet（提案144）</li>
+<li>ElG: ElGamal</li>
+<li>ENCRYPT(k, n, payload, ad): 如<a href="../../../zh/docs/specs/ecies/">ECIES</a>
+中定义</li>
+<li>LS: 租约集</li>
+<li>查找: I2NP DLM</li>
+<li>回复: I2NP DSM或DSRM</li>
+</ul>
+<h3 id="摘要">摘要</h3>
+<p>当发送针对LS的DLM到洪泛填充时，DLM通常指定回复被标签化，AES加密，并通过隧道发送到目的地。
+对AES加密回复的支持已在0.9.7中添加。</p>
+<p>在0.9.7中，指定AES加密回复是为了最小化ElG的巨大加密开销，并因为它复用了ElGamal/AES+SessionTags中的标签/AES工具。
+然而，由于没有认证，并且这些回复不是前向保密的，AES回复可能在IBEP处被篡改。</p>
+<p>对于<a href="../../../zh/docs/specs/ecies/">ECIES</a>
+目的地，提案144的目的是不再支持32字节标签和AES解密。
+具体细节在该提案中有意未被包含。</p>
+<p>此提案记录了一种请求ECIES加密回复的DLM的新选项。</p>
+<h3 id="目标">目标</h3>
+<ul>
+<li>当请求加密回复通过隧道发送至ECIES目的地时，为DLM定义新标志</li>
+<li>对于回复，添加前向保密和发送者认证以抵抗请求者（目的地）密钥泄露身份盗用（KCI）</li>
+<li>保持请求者的匿名性</li>
+<li>最小化加密开销</li>
+</ul>
+<h3 id="非目标">非目标</h3>
+<ul>
+<li>不改变查找（DLM）的加密或安全属性。
+查找仅对请求者密钥泄露具有前向保密性。
+加密是针对洪泛填充的静态密钥。</li>
+<li>不对回复者（洪泛填充）的密钥泄露身份盗用（KCI）进行前向保密或发送者认证。
+洪泛填充是公共数据库，将响应来自任何人的查找请求。</li>
+<li>在此提案中不设计ECIES路由器。
+路由器的X25519公钥去向尚待确定。</li>
+</ul>
+<h2 id="替代方案">替代方案</h2>
+<p>在缺乏定义的加密方式回复ECIES目的地时，有几种替代方案：</p>
+<ol>
+<li>
+<p>不请求加密回复。回复将是未加密的。
+Java I2P目前使用这种方法。</p>
+</li>
+<li>
+<p>为仅ECIES目的地添加对32字节标签和AES加密回复的支持，并按照惯例请求AES加密回复。i2pd目前使用这种方法。</p>
+</li>
+<li>
+<p>按照惯例请求AES加密回复，但通过探测隧道将其路由回路由器。
+Java I2P目前在某些情况下使用这种方法。</p>
+</li>
+<li>
+<p>对于双ElG和ECIES目的地，按照惯例请求AES加密回复。Java I2P目前使用这种方法。
+i2pd尚未实现双加密目的地。</p>
+</li>
+</ol>
+<h2 id="设计">设计</h2>
+<ul>
+<li>
+<p>新的DLM格式将在标志字段中添加一个位来指定ECIES加密回复。
+ECIES加密回复将使用<a href="../../../zh/docs/specs/ecies/">ECIES</a>
+现有会话消息格式，附加一个标签和ChaCha/Poly载荷和MAC。</p>
+</li>
+<li>
+<p>定义两个变体。一个用于ElG路由器，其中DH操作不可用，另一个用于未来的ECIES路由器，其中DH操作可用并可能提供额外安全性。需要进一步研究。</p>
+</li>
+</ul>
+<p>由于ElG路由器不发布X25519公钥，因此其回复不可能进行DH。</p>
+<h2 id="规范">规范</h2>
+<p>在<a href="../../../zh/docs/specs/i2np/">I2NP</a>
+ DLM（DatabaseLookup）规范中，做出以下更改。</p>
+<p>添加标志位4“ECIESFlag”以供新的加密选项使用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>flags ::
+</span></span><span style="display:flex;"><span>       bit 4: ECIESFlag
+</span></span><span style="display:flex;"><span>               发行0.9.46之前被忽略
+</span></span><span style="display:flex;"><span>               从0.9.46版本开始：
+</span></span><span style="display:flex;"><span>               0  =&gt; 发送未加密或ElGamal回复
+</span></span><span style="display:flex;"><span>               1  =&gt; 使用包含的密钥发送ChaCha/Poly加密回复
+</span></span><span style="display:flex;"><span>                     （是否包括标签取决于第1位）
+</span></span></code></pre></div><p>标志位4与第1位结合使用以确定回复加密模式。
+标志位4仅可在向版本0.9.46或更高版本的路由器发送时设置。</p>
+<p>在下表中，
+“DH n/a”表示回复未加密。
+“DH no”表示回复密钥已包含在请求中。
+“DH yes”表示回复密钥是从DH操作中得出的。</p>
+<p>=============  =========  =========  ======  ===  =======
+Flag bits 4,1  From Dest  To Router  Reply   DH?  notes
+=============  =========  =========  ======  ===  =======
+0 0            Any        Any        no enc  n/a  current
+0 1            ElG        ElG        AES     no   current
+0 1            ECIES      ElG        AES     no   i2pd workaround
+1 0            ECIES      ElG        AEAD    no   this proposal
+1 0            ECIES      ECIES      AEAD    no   0.9.49
+1 1            ECIES      ECIES      AEAD    yes  future
+=============  =========  =========  ======  ===  =======</p>
+<h3 id="elg-to-elg">ElG to ElG</h3>
+<p>ElG目的地向ElG路由器发送查找。</p>
+<p>对规范的微小更改以检查新位4。
+对现有二进制格式没有更改。</p>
+<p>请求者密钥生成（澄清）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>reply_key :: CSRNG(32) 32字节随机数据
+</span></span><span style="display:flex;"><span>  reply_tags :: 每个为CSRNG(32) 32字节随机数据
+</span></span></code></pre></div><p>消息格式（添加ECIESFlag检查）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>reply_key ::
+</span></span><span style="display:flex;"><span>       32字节 `SessionKey` 大端
+</span></span><span style="display:flex;"><span>       仅在加密Flag == 1 AND ECIESFlag == 0时包括，仅从发行版0.9.7开始
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tags ::
+</span></span><span style="display:flex;"><span>       1字节 `Integer`
+</span></span><span style="display:flex;"><span>       有效范围：1-32（通常为1）
+</span></span><span style="display:flex;"><span>       后随的回复标签数
+</span></span><span style="display:flex;"><span>       仅在加密Flag == 1 AND ECIESFlag == 0时包括，仅从发行版0.9.7开始
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  reply_tags ::
+</span></span><span style="display:flex;"><span>       一个或多个32字节 `SessionTag`（通常一个）
+</span></span><span style="display:flex;"><span>       仅在加密Flag == 1 AND ECIESFlag == 0时包括，仅从发行版0.9.7开始
+</span></span></code></pre></div><h3 id="ecies-to-elg">ECIES to ElG</h3>
+<p>ECIES目的地向ElG路由器发送查找。
+支持从0.9.46开始。</p>
+<p>重新定义reply_key和reply_tags字段以用于ECIES加密回复。</p>
+<p>请求者密钥生成：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>reply_key :: CSRNG(32) 32字节随机数据
+</span></span><span style="display:flex;"><span>  reply_tags :: 每个为CSRNG(8) 8字节随机数据
+</span></span></code></pre></div><p>消息格式：
+重新定义reply_key和reply_tags字段如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>reply_key ::
+</span></span><span style="display:flex;"><span>       32字节 ECIES `SessionKey` 大端
+</span></span><span style="display:flex;"><span>       仅在加密Flag == 0 AND ECIESFlag == 1时包括，仅从发行版0.9.46开始
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tags ::
+</span></span><span style="display:flex;"><span>       1字节 `Integer`
+</span></span><span style="display:flex;"><span>       必需值：1
+</span></span><span style="display:flex;"><span>       后随的回复标签数
+</span></span><span style="display:flex;"><span>       仅在加密Flag == 0 AND ECIESFlag == 1时包括，仅从发行版0.9.46开始
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  reply_tags ::
+</span></span><span style="display:flex;"><span>       一个8字节 ECIES `SessionTag`
+</span></span><span style="display:flex;"><span>       仅在加密Flag == 0 AND ECIESFlag == 1时包括，仅从发行版0.9.46开始
+</span></span></code></pre></div><p>回复是一个ECIES现有会话消息，如<a href="../../../zh/docs/specs/ecies/">ECIES</a>
+中定义。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>tag :: 8字节 reply_tag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  k :: 32字节 session key
+</span></span><span style="display:flex;"><span>     即reply_key。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  n :: 0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ad :: 8字节 reply_tag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  payload :: 明文数据，DSM 或 DSRM。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ciphertext = ENCRYPT(k, n, payload, ad)
+</span></span></code></pre></div><h3 id="ecies-to-ecies-0949">ECIES to ECIES (0.9.49)</h3>
+<p>ECIES目的地或路由器向ECIES路由器发送查找，附带回复密钥。
+支持从0.9.49开始。</p>
+<p>ECIES路由器在0.9.48中引入，参见<a href="../../../zh/proposals/156-ecies-routers/">Prop156</a>
+。
+从0.9.49开始，ECIES目的地和路由器可以使用与上述“ECIES to ElG”部分相同的格式，在请求中包括回复密钥。
+查找将使用<a href="../../../zh/docs/specs/ecies/">ECIES</a>
+中的“一次性格式”，因为请求者是匿名的。</p>
+<p>对于使用派生密钥的新方法，请参见下一节。</p>
+<h3 id="ecies-to-ecies-未来">ECIES to ECIES (未来)</h3>
+<p>ECIES目的地或路由器向ECIES路由器发送查找，并从DH派生回复密钥。
+尚未完全定义或支持，实现TBD。</p>
+<p>查找将使用<a href="../../../zh/docs/specs/ecies/">ECIES</a>
+中的“一次性格式”，因为请求者是匿名的。</p>
+<p>重新定义reply_key字段如下。没有关联的标签。
+标签将在下面的KDF中生成。</p>
+<p>此部分不完整，需要进一步研究。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>reply_key ::
+</span></span><span style="display:flex;"><span>       32字节X25519临时`PublicKey`的请求者，小端
+</span></span><span style="display:flex;"><span>       仅在加密Flag == 1 AND ECIESFlag == 1时包括，仅从发行版0.9.TBD开始
+</span></span></code></pre></div><p>回复是一个ECIES现有会话消息，如<a href="../../../zh/docs/specs/ecies/">ECIES</a>
+中定义。
+参见<a href="../../../zh/docs/specs/ecies/">ECIES</a>
+获取全部定义。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>// Alice的X25519临时密钥
+</span></span><span style="display:flex;"><span>  // aesk = Alice临时私钥
+</span></span><span style="display:flex;"><span>  aesk = GENERATE_PRIVATE()
+</span></span><span style="display:flex;"><span>  // aepk = Alice临时公钥
+</span></span><span style="display:flex;"><span>  aepk = DERIVE_PUBLIC(aesk)
+</span></span><span style="display:flex;"><span>  // Bob的X25519静态密钥
+</span></span><span style="display:flex;"><span>  // bsk = Bob私有静态密钥
+</span></span><span style="display:flex;"><span>  bsk = GENERATE_PRIVATE()
+</span></span><span style="display:flex;"><span>  // bpk = Bob公有静态密钥
+</span></span><span style="display:flex;"><span>  // bpk是RouterIdentity的一部分，或发布在RouterInfo中（TBD）
+</span></span><span style="display:flex;"><span>  bpk = DERIVE_PUBLIC(bsk)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // (DH()
+</span></span><span style="display:flex;"><span>  //[chainKey, k] = MixKey(sharedSecret)
+</span></span><span style="display:flex;"><span>  // chainKey来自???
+</span></span><span style="display:flex;"><span>  sharedSecret = DH(aesk, bpk) = DH(bsk, aepk)
+</span></span><span style="display:flex;"><span>  keydata = HKDF(chainKey, sharedSecret, &#34;ECIES-DSM-Reply1&#34;, 32)
+</span></span><span style="display:flex;"><span>  chainKey = keydata[0:31]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  1) rootKey = Payload Section的chainKey
+</span></span><span style="display:flex;"><span>  2) k 从New Session KDF或者split()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // KDF_RK(rk, dh_out)
+</span></span><span style="display:flex;"><span>  keydata = HKDF(rootKey, k, &#34;KDFDHRatchetStep&#34;, 64)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // 输出1：未使用
+</span></span><span style="display:flex;"><span>  unused = keydata[0:31]
+</span></span><span style="display:flex;"><span>  // 输出2：初始化新会话标签和对称密钥棘轮
+</span></span><span style="display:flex;"><span>  // 用于Alice到Bob的传输
+</span></span><span style="display:flex;"><span>  ck = keydata[32:63]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // 会话标签和对称密钥链密钥
+</span></span><span style="display:flex;"><span>  keydata = HKDF(ck, ZEROLEN, &#34;TagAndKeyGenKeys&#34;, 64)
+</span></span><span style="display:flex;"><span>  sessTag_ck = keydata[0:31]
+</span></span><span style="display:flex;"><span>  symmKey_ck = keydata[32:63]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tag :: 从[ECIES](/docs/specs/ecies/)中的RATCHET_TAG()生成的8字节标签
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  k :: 从[ECIES](/docs/specs/ecies/)中的RATCHET_KEY()生成的32字节密钥
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  n :: 标签的索引。通常为0。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ad :: 8字节标签
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  payload :: 明文数据，DSM或DSRM。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ciphertext = ENCRYPT(k, n, payload, ad)
+</span></span></code></pre></div><h3 id="回复格式">回复格式</h3>
+<p>这是现有的会话消息，与<a href="../../../zh/docs/specs/ecies/">ECIES</a>
+中相同，下面为参考复制。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>+----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>  |       会话标签                      |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>  |                                       |
+</span></span><span style="display:flex;"><span>  +           负载部分                    +
+</span></span><span style="display:flex;"><span>  |       ChaCha20加密数据               |
+</span></span><span style="display:flex;"><span>  ~                                       ~
+</span></span><span style="display:flex;"><span>  |                                       |
+</span></span><span style="display:flex;"><span>  +                                       +
+</span></span><span style="display:flex;"><span>  |                                       |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>  |  Poly1305消息认证码                   |
+</span></span><span style="display:flex;"><span>  +              (MAC)                    +
+</span></span><span style="display:flex;"><span>  |             16字节                    |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  会话标签 :: 8字节，明文
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  负载部分加密数据 :: 剩余数据减去16字节
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  MAC :: Poly1305消息认证码，16字节
+</span></span></code></pre></div><h2 id="正当性">正当性</h2>
+<p>查找消息中的回复加密参数，最早在0.9.7中引入，在层次结构上有些违背。
+如此实现是为了效率。
+但也因为查找是匿名的。</p>
+<p>我们可以使查找格式通用化，例如使用加密类型字段，但这可能不是十分必要。</p>
+<p>上述提案是最简单的并且对查找格式的更改最小化。</p>
+<h2 id="注意-1">注意</h2>
+<p>向ElG路由器的数据库查找和存储必须按照惯例是ElGamal/AESSessionTag加密的。</p>
+<h2 id="问题">问题</h2>
+<p>需要对两种ECIES回复选项的安全性进行进一步分析。</p>
+<h2 id="迁移">迁移</h2>
+<p>没有向后兼容性问题。路由器在其RouterInfo中宣布0.9.46或更高版本的router.version时必须支持此功能。
+路由器不得向版本低于0.9.46的路由器发送包含新标志的DatabaseLookup。
+如果误将带有第4位设定且第1位未设置的数据库查找消息发送给不支持的路由器，它可能会忽略提供的密钥和标签，并发送未加密的回复。</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    <a href="../../../zh/proposals/" class="page-nav-link">
+                        ← Back to Proposals
+                    </a>
+                    
+                    
+                    
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                            
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <a href="../../../proposals/154-ecies-lookups.txt" class="page-nav-link" download>
+                        Download Source (.txt)
+                    </a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.proposals-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.proposal-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.proposal-title-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.proposal-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-text);
+}
+
+.proposal-number {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+ 
+.proposal-meta-box {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.proposal-status {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+ 
+.status-open {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-open {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-accepted {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-accepted {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-finished {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-finished {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-closed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-closed {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.dark .status-rejected {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.status-draft,
+.status-needs-revision,
+.status-dead,
+.status-needs-research {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-draft,
+.dark .status-needs-revision,
+.dark .status-dead,
+.dark .status-needs-research {
+    background: #78350f;
+    color: #fde047;
+}
+
+.status-meta,
+.status-informational,
+.status-reserve {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+.dark .status-meta,
+.dark .status-informational,
+.dark .status-reserve {
+    background: #581c87;
+    color: #e879f9;
+}
+
+ 
+.proposal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.info-value {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+ 
+.proposal-relationships {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-md);
+}
+
+.relationship {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.relationship:last-child {
+    margin-bottom: 0;
+}
+
+.relationship-label {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    min-width: 120px;
+}
+
+.relationship-value {
+    color: var(--color-text);
+}
+
+ 
+.proposal-layout {
+    display: block;
+}
+
+.proposal-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.proposal-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.proposal-main {
+    min-width: 0;
+}
+
+ 
+.proposal-content {
+    line-height: 1.8;
+    color: var(--color-text);
+    max-width: 900px;
+}
+
+.proposal-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content ul,
+.proposal-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.proposal-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.proposal-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.proposal-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.proposal-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.proposal-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin-left: 0;
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+.proposal-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.proposal-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+.proposal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content table th {
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.proposal-content table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.proposal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+ 
+.page-nav {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.page-nav-link {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+ 
+@media (max-width: 1024px) {
+    .proposal-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .proposal-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .proposal-title {
+        font-size: 1.75rem;
+    }
+
+    .proposal-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">保持关注 I2P 新闻：</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="输入您的邮箱" required>
+                            <button type="submit">订阅</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>快速链接</h3>
+                <ul>
+                    <li><a href="../../../zh/financial-support/">捐赠</a></li>
+                    <li><a href="../../../zh/docs/overview/intro/">I2P介绍</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>社区</h3>
+                <ul>
+                    <li><a href="../../../zh/get-involved/">参与其中</a></li>
+                    <li><a href="../../../zh/blog/">博客</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">官方论坛</a></li>
+                    <li><a href="../../../zh/contact/">联系我们</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>资源</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P 指标</a></li>
+                    <li><a href="../../../zh/papers/">研究</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 隐形互联网计划。在 Creative Commons 许可下。</p>
+            <div class="footer-links">
+                <a href="../../../zh/privacy/">隐私</a>
+                <a href="../../../zh/terms/">条款</a>
+                <a href="../../../zh/about/media/">媒体</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="关闭">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>社区投票</h2>
+            <p class="modal-subtitle">我们很想听听您的意见</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                您的投票将帮助塑造 I2P 的未来。
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

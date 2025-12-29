@@ -1,0 +1,4026 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Giao thức Mật mã Hậu Lượng tử | I2P - Dự án Internet vô hình</title>
+
+    <meta name="description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Giao thức Mật mã Hậu Lượng tử | I2P - Dự án Internet vô hình">
+    <meta property="og:description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/vi/proposals/169-pq-crypto/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Trang I2P Beta Đã Hoạt Động Gửi báo cáo lỗi tới stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Đóng banner" title="Đóng banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../vi/" class="logo-link">
+                    <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../vi/about/" class="">Giới thiệu</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../vi/about/">Tổng quan</a></li>
+                            <li><a href="../../../vi/papers/">Bài Nghiên Cứu</a></li>
+                            <li><a href="../../../vi/about/media/">Báo chí</a></li>
+                            <li><a href="../../../vi/contact/">Liên hệ</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../vi/docs/" class="">Tài liệu</a></li>
+                    <li><a href="../../../vi/downloads/" class="">Tải xuống</a></li>
+                    <li><a href="../../../vi/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../vi/get-involved/" class="">Tham gia</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../vi/get-involved/">Tổng quan</a></li>
+                            <li><a href="../../../vi/feedback/">Đề xuất Tính năng</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">vi</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../en/proposals/169-pq-crypto/"
+                                class="lang-option">Tiếng Anh</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../es/proposals/169-pq-crypto/"
+                                class="lang-option">Tiếng Tây Ban Nha</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ko/proposals/169-pq-crypto/"
+                                class="lang-option">Tiếng Hàn</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../zh/proposals/169-pq-crypto/"
+                                class="lang-option">Tiếng Trung</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ru/proposals/169-pq-crypto/"
+                                class="lang-option">Tiếng Nga</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../cs/proposals/169-pq-crypto/"
+                                class="lang-option">Tiếng Séc</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../de/proposals/169-pq-crypto/"
+                                class="lang-option">Tiếng Đức</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../fr/proposals/169-pq-crypto/"
+                                class="lang-option">Tiếng Pháp</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../tr/proposals/169-pq-crypto/"
+                                class="lang-option">Tiếng Thổ Nhĩ Kỳ</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../vi/proposals/169-pq-crypto/"
+                                class="lang-option active">Tiếng Việt</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../hi/proposals/169-pq-crypto/"
+                                class="lang-option">Tiếng Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ar/proposals/169-pq-crypto/"
+                                class="lang-option">Tiếng Ả Rập</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../pt/proposals/169-pq-crypto/"
+                                class="lang-option">Tiếng Bồ Đào Nha</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../vi/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../vi/downloads/" class="btn btn-primary">Tải I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+<div class="proposals-page">
+    <div class="container">
+        
+        <nav class="breadcrumbs">
+            <a href="../../../vi/">Home</a>
+            <span class="separator">/</span>
+            <a href="../../../vi/proposals/">Proposals</a>
+            <span class="separator">/</span>
+            <span class="current">Giao thức Mật mã Hậu Lượng tử</span>
+        </nav>
+
+        
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Bản dịch này được tạo bằng máy học và có thể không chính xác 100%.</span>
+    
+    
+    <a href="../../../en/proposals/169-pq-crypto/" class="disclaimer-link">Xem phiên bản tiếng Anh</a>
+    
+</div>
+
+
+
+        
+        <header class="proposal-header">
+            <div class="proposal-title-section">
+                <h1 class="proposal-title">Giao thức Mật mã Hậu Lượng tử</h1>
+                <div class="proposal-number">Proposal 169</div>
+            </div>
+
+            
+            <div class="proposal-meta-box">
+                <div class="proposal-status status-mở">
+                    Mở
+                </div>
+
+                
+                <div class="proposal-info-grid">
+                    
+                    <div class="info-item">
+                        <span class="info-label">Author</span>
+                        <span class="info-value">zzz, orignal, drzed, eyedeekay</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Created</span>
+                        <span class="info-value">2025-01-21</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Last Updated</span>
+                        <span class="info-value">2025-06-12</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Target Version</span>
+                        <span class="info-value">0.9.80</span>
+                    </div>
+                    
+
+                    
+                </div>
+
+                
+                
+            </div>
+        </header>
+
+        
+        <div class="proposal-layout proposal-layout--with-toc">
+            
+            
+            <aside class="proposal-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tổng-quan">Tổng quan</a></li>
+    <li><a href="#mục-tiêu">Mục tiêu</a></li>
+    <li><a href="#các-mục-tiêu-không-theo-đuổi">Các Mục Tiêu Không Theo Đuổi</a></li>
+    <li><a href="#mô-hình-mối-đe-dọa">Mô hình Mối đe dọa</a></li>
+    <li><a href="#các-giao-thức-bị-ảnh-hưởng">Các Giao thức Bị Ảnh hưởng</a></li>
+    <li><a href="#thiết-kế">Thiết kế</a>
+      <ul>
+        <li><a href="#key-exchange">Key Exchange</a></li>
+        <li><a href="#signatures">Signatures</a></li>
+        <li><a href="#legal-combinations">Legal Combinations</a></li>
+        <li><a href="#new-crypto-required">New Crypto Required</a></li>
+        <li><a href="#alternatives">Alternatives</a></li>
+        <li><a href="#rosenpass">Rosenpass</a></li>
+      </ul>
+    </li>
+    <li><a href="#specification">Specification</a>
+      <ul>
+        <li><a href="#trao-đổi-khóa">Trao Đổi Khóa</a></li>
+        <li><a href="#chữ-ký">Chữ ký</a></li>
+        <li><a href="#các-kết-hợp-hợp-lệ">Các Kết Hợp Hợp Lệ</a></li>
+        <li><a href="#yêu-cầu-mã-hóa-mới">Yêu Cầu Mã Hóa Mới</a></li>
+        <li><a href="#các-phương-án-thay-thế">Các Phương Án Thay Thế</a></li>
+        <li><a href="#rosenpass-1">Rosenpass</a></li>
+        <li><a href="#key-certificates">Key Certificates</a></li>
+        <li><a href="#cấu-trúc-chung">Cấu trúc Chung</a></li>
+        <li><a href="#publickey">PublicKey</a></li>
+        <li><a href="#privatekey">PrivateKey</a></li>
+        <li><a href="#signingpublickey">SigningPublicKey</a></li>
+        <li><a href="#signingprivatekey">SigningPrivateKey</a></li>
+        <li><a href="#chữ-ký-1">Chữ ký</a></li>
+        <li><a href="#chứng-chỉ-khóa">Chứng chỉ Khóa</a></li>
+        <li><a href="#kích-thước-destination">Kích thước Destination</a></li>
+        <li><a href="#kích-thước-routerident">Kích thước RouterIdent</a></li>
+        <li><a href="#các-mẫu-handshake">Các Mẫu Handshake</a></li>
+      </ul>
+    </li>
+    <li><a href="#overhead-analysis">Overhead Analysis</a>
+      <ul>
+        <li><a href="#noise-handshake-kdf">Noise Handshake KDF</a></li>
+        <li><a href="#signatures-1">Signatures</a></li>
+      </ul>
+    </li>
+    <li><a href="#security-analysis">Security Analysis</a>
+      <ul>
+        <li><a href="#handshakes">Handshakes</a></li>
+        <li><a href="#signatures-2">Signatures</a></li>
+      </ul>
+    </li>
+    <li><a href="#type-preferences">Type Preferences</a></li>
+    <li><a href="#implementation-notes">Implementation Notes</a>
+      <ul>
+        <li><a href="#library-support">Library Support</a></li>
+        <li><a href="#signing-variants">Signing Variants</a></li>
+        <li><a href="#reliability">Reliability</a></li>
+        <li><a href="#structure-sizes">Structure Sizes</a></li>
+        <li><a href="#netdb">NetDB</a></li>
+        <li><a href="#ratchet">Ratchet</a></li>
+        <li><a href="#ratchet-1">Ratchet</a></li>
+        <li><a href="#ssu2">SSU2</a></li>
+      </ul>
+    </li>
+    <li><a href="#router-compatibility">Router Compatibility</a>
+      <ul>
+        <li><a href="#transport-names">Transport Names</a></li>
+        <li><a href="#router-enc-types">Router Enc. Types</a></li>
+        <li><a href="#ntcp2">NTCP2</a></li>
+        <li><a href="#ls-enc-types">LS Enc. Types</a></li>
+        <li><a href="#dest-sig-types">Dest. Sig. Types</a></li>
+      </ul>
+    </li>
+    <li><a href="#đặc-tả-kỹ-thuật">Đặc tả kỹ thuật</a></li>
+    <li><a href="#migration">Migration</a></li>
+    <li><a href="#issues-1">Issues</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="proposal-main">
+                <article class="proposal-content">
+                    <h2 id="tổng-quan">Tổng quan</h2>
+<p>Trong khi nghiên cứu và cạnh tranh để tìm ra mật mã học hậu lượng tử (PQ) phù hợp đã diễn ra trong một thập kỷ, các lựa chọn vẫn chưa trở nên rõ ràng cho đến gần đây.</p>
+<p>Chúng tôi bắt đầu xem xét những tác động của mật mã PQ vào năm 2022 <a href="http://zzz.i2p/topics/3294">zzz.i2p</a>
+.</p>
+<p>Các tiêu chuẩn TLS đã bổ sung hỗ trợ mã hóa lai trong hai năm qua và hiện tại được sử dụng cho một phần đáng kể lưu lượng mã hóa trên internet nhờ vào sự hỗ trợ trong Chrome và Firefox <a href="https://blog.cloudflare.com/pq-2024/">Cloudflare</a>
+.</p>
+<p>NIST gần đây đã hoàn thiện và công bố các thuật toán được khuyến nghị cho mật mã hậu lượng tử <a href="https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards">NIST</a>
+. Một số thư viện mật mã phổ biến hiện đã hỗ trợ các tiêu chuẩn NIST hoặc sẽ phát hành hỗ trợ trong tương lai gần.</p>
+<p>Cả <a href="https://blog.cloudflare.com/pq-2024/">Cloudflare</a>
+ và <a href="https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards">NIST</a>
+ đều khuyến nghị việc di chuyển nên bắt đầu ngay lập tức. Xem thêm NSA PQ FAQ năm 2022 <a href="https://media.defense.gov/2022/Sep/07/2003071836/-1/-1/0/CSI_CNSA_2.0_FAQ_.PDF">NSA</a>
+. I2P nên dẫn đầu trong lĩnh vực bảo mật và mật mã học. Đây là thời điểm thích hợp để triển khai các thuật toán được khuyến nghị. Sử dụng hệ thống loại mã hóa và loại chữ ký linh hoạt của chúng tôi, chúng tôi sẽ thêm các loại cho mã hóa hybrid, và cho chữ ký PQ và hybrid.</p>
+<h2 id="mục-tiêu">Mục tiêu</h2>
+<ul>
+<li>Chọn các thuật toán chống lại PQ</li>
+<li>Thêm các thuật toán chỉ PQ và hybrid vào các giao thức I2P khi phù hợp</li>
+<li>Định nghĩa nhiều biến thể</li>
+<li>Chọn các biến thể tốt nhất sau khi triển khai, kiểm tra, phân tích và nghiên cứu</li>
+<li>Thêm hỗ trợ từng bước và đảm bảo tương thích ngược</li>
+</ul>
+<h2 id="các-mục-tiêu-không-theo-đuổi">Các Mục Tiêu Không Theo Đuổi</h2>
+<ul>
+<li>Không thay đổi các giao thức mã hóa một chiều (Noise N)</li>
+<li>Không rời bỏ SHA256, không bị đe dọa trong ngắn hạn bởi PQ</li>
+<li>Không lựa chọn các biến thể ưu tiên cuối cùng vào thời điểm này</li>
+</ul>
+<h2 id="mô-hình-mối-đe-dọa">Mô hình Mối đe dọa</h2>
+<ul>
+<li>Các router tại OBEP hoặc IBGW, có thể thông đồng,
+lưu trữ các tin nhắn garlic để giải mã sau này (forward secrecy)</li>
+<li>Các bên quan sát mạng
+lưu trữ các tin nhắn vận chuyển để giải mã sau này (forward secrecy)</li>
+<li>Các thành viên mạng giả mạo chữ ký cho RI, LS, streaming, datagram,
+hoặc các cấu trúc khác</li>
+</ul>
+<h2 id="các-giao-thức-bị-ảnh-hưởng">Các Giao thức Bị Ảnh hưởng</h2>
+<p>Chúng tôi sẽ sửa đổi các giao thức sau đây, theo thứ tự phát triển tương đối. Việc triển khai tổng thể có thể sẽ từ cuối năm 2025 đến giữa năm 2027. Xem phần Ưu tiên và Triển khai bên dưới để biết chi tiết.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Protocol / Feature</th>
+          <th>Status</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Hybrid MLKEM Ratchet and LS</td>
+          <td>Approved 2026-06; beta target 2025-08; release target 2025-11</td>
+      </tr>
+      <tr>
+          <td>Hybrid MLKEM NTCP2</td>
+          <td>Some details to be finalized</td>
+      </tr>
+      <tr>
+          <td>Hybrid MLKEM SSU2</td>
+          <td>Some details to be finalized</td>
+      </tr>
+      <tr>
+          <td>MLDSA SigTypes 12-14</td>
+          <td>Proposal is stable but may not be finalized until 2026</td>
+      </tr>
+      <tr>
+          <td>MLDSA Dests</td>
+          <td>Tested on live net, requires net upgrade for floodfill support</td>
+      </tr>
+      <tr>
+          <td>Hybrid SigTypes 15-17</td>
+          <td>Preliminary</td>
+      </tr>
+      <tr>
+          <td>Hybrid Dests</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="thiết-kế">Thiết kế</h2>
+<p>Chúng tôi sẽ hỗ trợ các tiêu chuẩn NIST FIPS 203 và 204 <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">FIPS 203</a>
+ <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+ dựa trên, nhưng KHÔNG tương thích với, CRYSTALS-Kyber và CRYSTALS-Dilithium (phiên bản 3.1, 3, và các phiên bản cũ hơn).</p>
+<h3 id="key-exchange">Key Exchange</h3>
+<p>Chúng tôi sẽ hỗ trợ trao đổi khóa hybrid trong các giao thức sau:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Proto</th>
+          <th>Noise Type</th>
+          <th>Support PQ only?</th>
+          <th>Support Hybrid?</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>NTCP2</td>
+          <td>XK</td>
+          <td>no</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>SSU2</td>
+          <td>XK</td>
+          <td>no</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>Ratchet</td>
+          <td>IK</td>
+          <td>no</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>TBM</td>
+          <td>N</td>
+          <td>no</td>
+          <td>no</td>
+      </tr>
+      <tr>
+          <td>NetDB</td>
+          <td>N</td>
+          <td>no</td>
+          <td>no</td>
+      </tr>
+      <tr>
+          <td>PQ KEM chỉ cung cấp các khóa tạm thời và không hỗ trợ trực tiếp các quá trình bắt tay khóa tĩnh như Noise XK và IK.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>Noise N không sử dụng trao đổi khóa hai chiều và do đó không phù hợp cho mã hóa hybrid.</p>
+<p>Vậy nên chúng tôi sẽ chỉ hỗ trợ mã hóa hybrid, cho NTCP2, SSU2, và Ratchet. Chúng tôi sẽ định nghĩa ba biến thể ML-KEM như trong <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">FIPS 203</a>
+, cho tổng cộng 3 loại mã hóa mới. Các loại hybrid sẽ chỉ được định nghĩa kết hợp với X25519.</p>
+<p>Các loại mã hóa mới là:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Code</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+      </tr>
+      <tr>
+          <td>Overhead sẽ rất đáng kể. Kích thước thông điệp 1 và 2 điển hình (đối với XK và IK) hiện tại khoảng 100 byte (trước khi có bất kỳ payload bổ sung nào). Điều này sẽ tăng từ 8x đến 15x tùy thuộc vào thuật toán.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="signatures">Signatures</h3>
+<p>Chúng tôi sẽ hỗ trợ chữ ký PQ và hybrid trong các cấu trúc sau:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Support PQ only?</th>
+          <th>Support Hybrid?</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>RouterInfo</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>LeaseSet</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>Streaming SYN/SYNACK/Close</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>Repliable Datagrams</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>Datagram2 (prop. 163)</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>I2CP create session msg</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>SU3 files</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>X.509 certificates</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>Java keystores</td>
+          <td>yes</td>
+          <td>yes</td>
+      </tr>
+      <tr>
+          <td>Vậy nên chúng tôi sẽ hỗ trợ cả chữ ký chỉ PQ và hybrid. Chúng tôi sẽ định nghĩa ba biến thể ML-DSA như trong <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+, ba biến thể hybrid với Ed25519, và ba biến thể chỉ PQ với prehash chỉ dành cho file SU3, tổng cộng 9 loại chữ ký mới. Các loại hybrid sẽ chỉ được định nghĩa kết hợp với Ed25519. Chúng tôi sẽ sử dụng ML-DSA tiêu chuẩn, KHÔNG phải các biến thể pre-hash (HashML-DSA), trừ file SU3.</td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>Chúng tôi sẽ sử dụng biến thể ký &ldquo;hedged&rdquo; hoặc ngẫu nhiên hóa, không phải biến thể &ldquo;determinstic&rdquo;, như được định nghĩa trong <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+ mục 3.4. Điều này đảm bảo rằng mỗi chữ ký sẽ khác nhau, ngay cả khi ký trên cùng một dữ liệu, và cung cấp bảo vệ bổ sung chống lại các cuộc tấn công kênh phụ. Xem phần ghi chú triển khai bên dưới để biết thêm chi tiết về các lựa chọn thuật toán bao gồm mã hóa và ngữ cảnh.</p>
+<p>Các loại chữ ký mới là:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Code</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>12</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>13</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>14</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>15</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>17</td>
+      </tr>
+      <tr>
+          <td>MLDSA44ph</td>
+          <td>18</td>
+      </tr>
+      <tr>
+          <td>MLDSA65ph</td>
+          <td>19</td>
+      </tr>
+      <tr>
+          <td>MLDSA87ph</td>
+          <td>20</td>
+      </tr>
+      <tr>
+          <td>Chứng chỉ X.509 và các mã hóa DER khác sẽ sử dụng các cấu trúc tổng hợp và OID được định nghĩa trong <a href="https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/">IETF draft</a>
+.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>Overhead sẽ đáng kể. Kích thước điển hình của destination Ed25519 và router identity là 391 byte. Chúng sẽ tăng từ 3.5x đến 6.8x tùy thuộc vào thuật toán. Chữ ký Ed25519 có kích thước 64 byte. Chúng sẽ tăng từ 38x đến 76x tùy thuộc vào thuật toán. RouterInfo đã ký, LeaseSet, datagram có thể phản hồi, và streaming message đã ký điển hình có kích thước khoảng 1KB. Chúng sẽ tăng từ 3x đến 8x tùy thuộc vào thuật toán.</p>
+<p>Vì các loại định danh đích và router mới sẽ không chứa padding, chúng sẽ không thể nén được. Kích thước của các destination và router identity được nén gzip trong quá trình truyền tải sẽ tăng từ 12x - 38x tùy thuộc vào thuật toán.</p>
+<h3 id="legal-combinations">Legal Combinations</h3>
+<p>Đối với các Destinations, các loại chữ ký mới được hỗ trợ với tất cả loại mã hóa trong leaseset. Đặt loại mã hóa trong key certificate thành NONE (255).</p>
+<p>Đối với RouterIdentities, loại mã hóa ElGamal đã được ngừng sử dụng. Các loại chữ ký mới chỉ được hỗ trợ với mã hóa X25519 (loại 4). Các loại mã hóa mới sẽ được chỉ định trong RouterAddresses. Loại mã hóa trong key certificate sẽ tiếp tục là loại 4.</p>
+<h3 id="new-crypto-required">New Crypto Required</h3>
+<ul>
+<li>ML-KEM (trước đây là CRYSTALS-Kyber) <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">FIPS 203</a>
+</li>
+<li>ML-DSA (trước đây là CRYSTALS-Dilithium) <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+</li>
+<li>SHA3-128 (trước đây là Keccak-256) <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS 202</a>
+ Chỉ được sử dụng cho SHAKE128</li>
+<li>SHA3-256 (trước đây là Keccak-512) <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS 202</a>
+</li>
+<li>SHAKE128 và SHAKE256 (phần mở rộng XOF cho SHA3-128 và SHA3-256) <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">FIPS 202</a>
+</li>
+</ul>
+<p>Các test vector cho SHA3-256, SHAKE128, và SHAKE256 có tại <a href="https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/example-values">NIST</a>
+.</p>
+<p>Lưu ý rằng thư viện Java bouncycastle hỗ trợ tất cả các thuật toán trên. Hỗ trợ thư viện C++ có trong OpenSSL 3.5 <a href="https://openssl-library.org/post/2025-02-04-release-announcement-3.5/">OpenSSL</a>
+.</p>
+<h3 id="alternatives">Alternatives</h3>
+<p>Chúng tôi sẽ không hỗ trợ <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf">FIPS 205</a>
+ (Sphincs+), vì nó chậm hơn và lớn hơn ML-DSA rất nhiều. Chúng tôi sẽ không hỗ trợ FIPS206 sắp tới (Falcon), vì nó chưa được tiêu chuẩn hóa. Chúng tôi sẽ không hỗ trợ NTRU hoặc các ứng viên PQ khác không được NIST tiêu chuẩn hóa.</p>
+<h3 id="rosenpass">Rosenpass</h3>
+<p>Có một số nghiên cứu <a href="https://eprint.iacr.org/2020/379.pdf">paper</a>
+ về việc điều chỉnh Wireguard (IK) cho mã hóa PQ thuần túy, nhưng có một số câu hỏi mở trong bài báo đó. Sau đó, cách tiếp cận này đã được triển khai dưới dạng Rosenpass <a href="https://rosenpass.eu/">Rosenpass</a>
+ <a href="https://raw.githubusercontent.com/rosenpass/rosenpass/papers-pdf/whitepaper.pdf">whitepaper</a>
+ cho PQ Wireguard.</p>
+<p>Rosenpass sử dụng một bắt tay giống Noise KK với các khóa tĩnh Classic McEliece 460896 được chia sẻ trước (mỗi khóa 500 KB) và các khóa tạm thời Kyber-512 (về cơ bản là MLKEM-512). Vì các bản mã hóa Classic McEliece chỉ có 188 byte, và các khóa công khai cùng bản mã hóa Kyber-512 có kích thước hợp lý, cả hai thông điệp bắt tay đều vừa với MTU UDP tiêu chuẩn. Khóa chia sẻ đầu ra (osk) từ bắt tay PQ KK được sử dụng làm khóa chia sẻ trước đầu vào (psk) cho bắt tay Wireguard IK tiêu chuẩn. Vậy tổng cộng có hai bắt tay hoàn chỉnh, một bắt tay PQ thuần túy và một bắt tay X25519 thuần túy.</p>
+<p>Chúng ta không thể thực hiện bất kỳ điều nào trong số này để thay thế các handshake XK và IK của chúng ta vì:</p>
+<ul>
+<li>Chúng ta không thể thực hiện KK, Bob không có static key của Alice</li>
+<li>Static key 500KB quá lớn</li>
+<li>Chúng ta không muốn có thêm round-trip</li>
+</ul>
+<p>Có rất nhiều thông tin hữu ích trong whitepaper, và chúng tôi sẽ xem xét nó để tìm ý tưởng và cảm hứng. TODO.</p>
+<h2 id="specification">Specification</h2>
+<h3 id="trao-đổi-khóa">Trao Đổi Khóa</h3>
+<p>Cập nhật các phần và bảng trong tài liệu cấu trúc chung <a href="../../../vi/docs/specs/common-structures/">/docs/specs/common-structures/</a>
+ như sau:</p>
+<h3 id="chữ-ký">Chữ ký</h3>
+<p>Các loại Public Key mới là:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Public Key Length</th>
+          <th>Since</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM512</td>
+          <td>800</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM768</td>
+          <td>1184</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024</td>
+          <td>1568</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_CT</td>
+          <td>768</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_CT</td>
+          <td>1088</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_CT</td>
+          <td>1568</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>NONE</td>
+          <td>0</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for destinations with PQ sig types only, not for RIs or Leasesets</td>
+      </tr>
+      <tr>
+          <td>Khóa công khai hybrid là khóa X25519. Khóa công khai KEM là khóa PQ tạm thời được gửi từ Alice đến Bob. Mã hóa và thứ tự byte được định nghĩa trong <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">FIPS 203</a>
+.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>Các khóa MLKEM*_CT không thực sự là khóa công khai, chúng là &ldquo;ciphertext&rdquo; được gửi từ Bob đến Alice trong quá trình bắt tay Noise. Chúng được liệt kê ở đây để hoàn thiện thông tin.</p>
+<h3 id="các-kết-hợp-hợp-lệ">Các Kết Hợp Hợp Lệ</h3>
+<p>Các loại Private Key mới là:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Private Key Length</th>
+          <th>Since</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM512</td>
+          <td>1632</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM768</td>
+          <td>2400</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024</td>
+          <td>3168</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for handshakes only, not for Leasesets, RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>Các khóa riêng tư hybrid là các khóa X25519. Các khóa riêng tư KEM chỉ dành cho Alice. Mã hóa KEM và thứ tự byte được định nghĩa trong <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">FIPS 203</a>
+.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="yêu-cầu-mã-hóa-mới">Yêu Cầu Mã Hóa Mới</h3>
+<p>Các loại Signing Public Key mới là:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Length (bytes)</th>
+          <th>Since</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>1312</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>1952</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>2592</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>1344</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>1984</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>2624</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44ph</td>
+          <td>1344</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures</td>
+      </tr>
+      <tr>
+          <td>MLDSA65ph</td>
+          <td>1984</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures</td>
+      </tr>
+      <tr>
+          <td>MLDSA87ph</td>
+          <td>2624</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures</td>
+      </tr>
+      <tr>
+          <td>Khóa công khai ký lai (hybrid signing public keys) là khóa Ed25519 theo sau bởi khóa PQ, như trong <a href="https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/">IETF draft</a>
+. Mã hóa và thứ tự byte được định nghĩa trong <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="các-phương-án-thay-thế">Các Phương Án Thay Thế</h3>
+<p>Các loại Signing Private Key mới là:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Length (bytes)</th>
+          <th>Since</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>2560</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>4032</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>4896</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>2592</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>4064</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>4928</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44ph</td>
+          <td>2592</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures. See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65ph</td>
+          <td>4064</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures. See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87ph</td>
+          <td>4928</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures. See proposal 169</td>
+      </tr>
+      <tr>
+          <td>Khóa riêng tư ký lai (hybrid signing private keys) là khóa Ed25519 theo sau bởi khóa PQ, như trong <a href="https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/">IETF draft</a>
+. Mã hóa và thứ tự byte được định nghĩa trong <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="rosenpass-1">Rosenpass</h3>
+<p>Các loại Signature mới là:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Length (bytes)</th>
+          <th>Since</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>2420</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>3309</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>4627</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>2484</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>3373</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>4691</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44ph</td>
+          <td>2484</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures. See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65ph</td>
+          <td>3373</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures. See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87ph</td>
+          <td>4691</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files, not for netdb structures. See proposal 169</td>
+      </tr>
+      <tr>
+          <td>Chữ ký hybrid là chữ ký Ed25519 theo sau bởi chữ ký PQ, như trong <a href="https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/">IETF draft</a>
+. Chữ ký hybrid được xác minh bằng cách xác minh cả hai chữ ký, và sẽ thất bại nếu một trong hai thất bại. Mã hóa và thứ tự byte được định nghĩa trong <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="key-certificates">Key Certificates</h3>
+<p>Các loại Signing Public Key mới là:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>Total Public Key Length</th>
+          <th>Since</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>12</td>
+          <td>1312</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>13</td>
+          <td>1952</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>14</td>
+          <td>2592</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>15</td>
+          <td>1344</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>16</td>
+          <td>1984</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>17</td>
+          <td>2624</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>MLDSA44ph</td>
+          <td>18</td>
+          <td>n/a</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files</td>
+      </tr>
+      <tr>
+          <td>MLDSA65ph</td>
+          <td>19</td>
+          <td>n/a</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files</td>
+      </tr>
+      <tr>
+          <td>MLDSA87ph</td>
+          <td>20</td>
+          <td>n/a</td>
+          <td>0.9.xx</td>
+          <td>Only for SU3 files</td>
+      </tr>
+      <tr>
+          <td>Các loại Crypto Public Key mới là:</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>Total Public Key Length</th>
+          <th>Since</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+          <td>32</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169, for Leasesets only, not for RIs or Destinations</td>
+      </tr>
+      <tr>
+          <td>NONE</td>
+          <td>255</td>
+          <td>0</td>
+          <td>0.9.xx</td>
+          <td>See proposal 169</td>
+      </tr>
+      <tr>
+          <td>Các loại khóa hybrid KHÔNG BAO GIỜ được bao gồm trong chứng chỉ khóa; chỉ có trong leaseSet.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>Đối với các điểm đến có loại chữ ký Hybrid hoặc PQ, sử dụng NONE (loại 255) cho loại mã hóa, nhưng không có khóa mã hóa, và toàn bộ phần chính 384-byte dành cho khóa ký.</p>
+<h3 id="cấu-trúc-chung">Cấu trúc Chung</h3>
+<p>Đây là các độ dài cho các loại Destination mới. Loại mã hóa (Enc type) cho tất cả là NONE (loại 255) và độ dài khóa mã hóa được xử lý như 0. Toàn bộ phần 384-byte được sử dụng cho phần đầu của khóa công khai ký. LƯU Ý: Điều này khác với đặc tả cho các loại chữ ký ECDSA_SHA512_P521 và RSA, nơi chúng ta vẫn duy trì khóa ElGamal 256-byte trong destination mặc dù nó không được sử dụng.</p>
+<p>Không có padding. Tổng độ dài là 7 + tổng độ dài key. Độ dài key certificate là 4 + độ dài key dư thừa.</p>
+<p>Ví dụ luồng byte destination 1319-byte cho MLDSA44:</p>
+<p>skey[0:383] 5 (932 &raquo; 8) (932 &amp; 0xff) 00 12 00 255 skey[384:1311]</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>Total Public Key Length</th>
+          <th>Main</th>
+          <th>Excess</th>
+          <th>Total Dest Length</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>12</td>
+          <td>1312</td>
+          <td>384</td>
+          <td>928</td>
+          <td>1319</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>13</td>
+          <td>1952</td>
+          <td>384</td>
+          <td>1568</td>
+          <td>1959</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>14</td>
+          <td>2592</td>
+          <td>384</td>
+          <td>2208</td>
+          <td>2599</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>15</td>
+          <td>1344</td>
+          <td>384</td>
+          <td>960</td>
+          <td>1351</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>16</td>
+          <td>1984</td>
+          <td>384</td>
+          <td>1600</td>
+          <td>1991</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>17</td>
+          <td>2624</td>
+          <td>384</td>
+          <td>2240</td>
+          <td>2631</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="publickey">PublicKey</h3>
+<p>Đây là độ dài cho các loại Destination mới. Loại mã hóa cho tất cả là X25519 (loại 4). Toàn bộ phần 352-byte sau khóa công khai X25519 được sử dụng cho phần đầu tiên của khóa công khai ký. Không có padding. Tổng độ dài là 39 + tổng độ dài khóa. Độ dài certificate khóa là 4 + độ dài khóa vượt quá.</p>
+<p>Ví dụ luồng byte router identity 1351 byte cho MLDSA44:</p>
+<p>enckey[0:31] skey[0:351] 5 (960 &raquo; 8) (960 &amp; 0xff) 00 12 00 4 skey[352:1311]</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>Total Public Key Length</th>
+          <th>Main</th>
+          <th>Excess</th>
+          <th>Total RouterIdent Length</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>12</td>
+          <td>1312</td>
+          <td>352</td>
+          <td>960</td>
+          <td>1351</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>13</td>
+          <td>1952</td>
+          <td>352</td>
+          <td>1600</td>
+          <td>1991</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>14</td>
+          <td>2592</td>
+          <td>352</td>
+          <td>2240</td>
+          <td>2631</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>15</td>
+          <td>1344</td>
+          <td>352</td>
+          <td>992</td>
+          <td>1383</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>16</td>
+          <td>1984</td>
+          <td>352</td>
+          <td>1632</td>
+          <td>2023</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>17</td>
+          <td>2624</td>
+          <td>352</td>
+          <td>2272</td>
+          <td>2663</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="privatekey">PrivateKey</h3>
+<p>Việc bắt tay sử dụng các mẫu bắt tay <a href="https://noiseprotocol.org/noise.html">Noise Protocol</a>
+.</p>
+<p>Ánh xạ chữ cái sau đây được sử dụng:</p>
+<ul>
+<li>e = khóa ephemeral một lần</li>
+<li>s = khóa tĩnh</li>
+<li>p = message payload</li>
+<li>e1 = khóa PQ ephemeral một lần, gửi từ Alice đến Bob</li>
+<li>ekem1 = KEM ciphertext, gửi từ Bob đến Alice</li>
+</ul>
+<p>Các thay đổi sau đối với XK và IK cho hybrid forward secrecy (hfs) được quy định trong <a href="https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf">Noise HFS spec</a>
+ phần 5:</p>
+<pre tabindex="0"><code>XK:                       XKhfs:
+  &lt;- s                      &lt;- s
+  ...                       ...
+  -&gt; e, es, p               -&gt; e, es, e1, p
+  &lt;- e, ee, p               &lt;- e, ee, ekem1, p
+  -&gt; s, se                  -&gt; s, se
+  &lt;- p                      &lt;- p
+  p -&gt;                      p -&gt;
+
+
+  IK:                       IKhfs:
+  &lt;- s                      &lt;- s
+  ...                       ...
+  -&gt; e, es, s, ss, p       -&gt; e, es, e1, s, ss, p
+  &lt;- tag, e, ee, se, p     &lt;- tag, e, ee, ekem1, se, p
+  &lt;- p                     &lt;- p
+  p -&gt;                     p -&gt;
+
+  e1 and ekem1 are encrypted. See pattern definitions below.
+  NOTE: e1 and ekem1 are different sizes (unlike X25519)
+</code></pre><p>Mẫu e1 được định nghĩa như sau, như được chỉ định trong <a href="https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf">Noise HFS spec</a>
+ mục 4:</p>
+<pre tabindex="0"><code>For Alice:
+  (encap_key, decap_key) = PQ_KEYGEN()
+
+  // EncryptAndHash(encap_key)
+  ciphertext = ENCRYPT(k, n, encap_key, ad)
+  n++
+  MixHash(ciphertext)
+
+  For Bob:
+
+  // DecryptAndHash(ciphertext)
+  encap_key = DECRYPT(k, n, ciphertext, ad)
+  n++
+  MixHash(ciphertext)
+</code></pre><p>Mẫu ekem1 được định nghĩa như sau, theo quy định trong <a href="https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf">Noise HFS spec</a>
+ phần 4:</p>
+<pre tabindex="0"><code>For Bob:
+
+  (kem_ciphertext, kem_shared_key) = ENCAPS(encap_key)
+
+  // EncryptAndHash(kem_ciphertext)
+  ciphertext = ENCRYPT(k, n, kem_ciphertext, ad)
+  MixHash(ciphertext)
+
+  // MixKey
+  MixKey(kem_shared_key)
+
+
+  For Alice:
+
+  // DecryptAndHash(ciphertext)
+  kem_ciphertext = DECRYPT(k, n, ciphertext, ad)
+  MixHash(ciphertext)
+
+  // MixKey
+  kem_shared_key = DECAPS(kem_ciphertext, decap_key)
+  MixKey(kem_shared_key)
+</code></pre><h3 id="signingpublickey">SigningPublicKey</h3>
+<h4 id="issues">Issues</h4>
+<ul>
+<li>Chúng ta có nên thay đổi hàm hash handshake không? Xem <a href="https://kerkour.com/fast-secure-hash-function-sha256-sha512-sha3-blake3">comparison</a>
+.
+SHA256 không dễ bị tấn công bởi PQ, nhưng nếu chúng ta muốn nâng cấp
+hàm hash, bây giờ là lúc thích hợp, trong khi chúng ta đang thay đổi những thứ khác.
+Đề xuất SSH IETF hiện tại <a href="https://datatracker.ietf.org/doc/draft-ietf-sshm-mlkem-hybrid-kex/">IETF draft</a>
+ là sử dụng MLKEM768
+với SHA256, và MLKEM1024 với SHA384. Đề xuất đó bao gồm
+một cuộc thảo luận về các cân nhắc bảo mật.</li>
+<li>Chúng ta có nên ngừng gửi dữ liệu ratchet 0-RTT (ngoài LS) không?</li>
+<li>Chúng ta có nên chuyển ratchet từ IK sang XK nếu chúng ta không gửi dữ liệu 0-RTT không?</li>
+</ul>
+<h4 id="overview">Overview</h4>
+<p>Phần này áp dụng cho cả hai giao thức IK và XK.</p>
+<p>Handshake hybrid được định nghĩa trong <a href="https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf">Noise HFS spec</a>
+. Tin nhắn đầu tiên, từ Alice đến Bob, chứa e1, khóa đóng gói, trước payload của tin nhắn. Điều này được xử lý như một khóa tĩnh bổ sung; gọi EncryptAndHash() trên nó (với tư cách Alice) hoặc DecryptAndHash() (với tư cách Bob). Sau đó xử lý payload tin nhắn như thường lệ.</p>
+<p>Thông điệp thứ hai, từ Bob đến Alice, chứa ekem1, bản mã hóa, trước tải trọng thông điệp. Điều này được xử lý như một khóa tĩnh bổ sung; gọi EncryptAndHash() trên nó (với vai trò Bob) hoặc DecryptAndHash() (với vai trò Alice). Sau đó, tính toán kem_shared_key và gọi MixKey(kem_shared_key). Tiếp theo xử lý tải trọng thông điệp như thường lệ.</p>
+<h4 id="defined-ml-kem-operations">Defined ML-KEM Operations</h4>
+<p>Chúng tôi định nghĩa các hàm sau tương ứng với các khối xây dựng mật mã được sử dụng như được định nghĩa trong <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">FIPS 203</a>
+.</p>
+<p>(encap_key, decap_key) = PQ_KEYGEN()</p>
+<pre><code>Alice creates the encapsulation and decapsulation keys
+The encapsulation key is sent in message 1.
+encap_key and decap_key sizes vary based on ML-KEM variant.
+</code></pre>
+<p>(ciphertext, kem_shared_key) = ENCAPS(encap_key)</p>
+<pre><code>Bob calculates the ciphertext and shared key,
+using the ciphertext received in message 1.
+The ciphertext is sent in message 2.
+ciphertext size varies based on ML-KEM variant.
+The kem_shared_key is always 32 bytes.
+</code></pre>
+<p>kem_shared_key = DECAPS(ciphertext, decap_key)</p>
+<pre><code>Alice calculates the shared key,
+using the ciphertext received in message 2.
+The kem_shared_key is always 32 bytes.
+</code></pre>
+<p>Lưu ý rằng cả encap_key và ciphertext đều được mã hóa bên trong các khối ChaCha/Poly trong thông điệp bắt tay Noise 1 và 2. Chúng sẽ được giải mã như một phần của quá trình bắt tay.</p>
+<p>kem_shared_key được trộn vào chaining key bằng MixHash(). Xem chi tiết bên dưới.</p>
+<h4 id="alice-kdf-for-message-1">Alice KDF for Message 1</h4>
+<p>Đối với XK: Sau pattern thông điệp &rsquo;es&rsquo; và trước payload, thêm:</p>
+<p>HOẶC</p>
+<p>Đối với IK: Sau pattern tin nhắn &rsquo;es&rsquo; và trước pattern tin nhắn &rsquo;s&rsquo;, thêm:</p>
+<pre tabindex="0"><code>This is the &#34;e1&#34; message pattern:
+  (encap_key, decap_key) = PQ_KEYGEN()
+
+  // EncryptAndHash(encap_key)
+  // AEAD parameters
+  k = keydata[32:63]
+  n = 0
+  ad = h
+  ciphertext = ENCRYPT(k, n, encap_key, ad)
+  n++
+
+  // MixHash(ciphertext)
+  h = SHA256(h || ciphertext)
+
+
+  End of &#34;e1&#34; message pattern.
+
+  NOTE: For the next section (payload for XK or static key for IK),
+  the keydata and chain key remain the same,
+  and n now equals 1 (instead of 0 for non-hybrid).
+</code></pre><h4 id="bob-kdf-for-message-1">Bob KDF for Message 1</h4>
+<p>Đối với XK: Sau mẫu message &rsquo;es&rsquo; và trước payload, thêm:</p>
+<p>HOẶC</p>
+<p>Đối với IK: Sau message pattern &rsquo;es&rsquo; và trước message pattern &rsquo;s&rsquo;, thêm:</p>
+<pre tabindex="0"><code>This is the &#34;e1&#34; message pattern:
+
+  // DecryptAndHash(encap_key_section)
+  // AEAD parameters
+  k = keydata[32:63]
+  n = 0
+  ad = h
+  encap_key = DECRYPT(k, n, encap_key_section, ad)
+  n++
+
+  // MixHash(encap_key_section)
+  h = SHA256(h || encap_key_section)
+
+  End of &#34;e1&#34; message pattern.
+
+  NOTE: For the next section (payload for XK or static key for IK),
+  the keydata and chain key remain the same,
+  and n now equals 1 (instead of 0 for non-hybrid).
+</code></pre><h4 id="bob-kdf-for-message-2">Bob KDF for Message 2</h4>
+<p>Đối với XK: Sau mẫu message &rsquo;ee&rsquo; và trước payload, thêm:</p>
+<p>HOẶC</p>
+<p>Đối với IK: Sau message pattern &rsquo;ee&rsquo; và trước message pattern &lsquo;se&rsquo;, thêm:</p>
+<pre tabindex="0"><code>This is the &#34;ekem1&#34; message pattern:
+
+  (kem_ciphertext, kem_shared_key) = ENCAPS(encap_key)
+
+  // EncryptAndHash(kem_ciphertext)
+  // AEAD parameters
+  k = keydata[32:63]
+  n = 0
+  ad = h
+  ciphertext = ENCRYPT(k, n, kem_ciphertext, ad)
+
+  // MixHash(ciphertext)
+  h = SHA256(h || ciphertext)
+
+  // MixKey(kem_shared_key)
+  keydata = HKDF(chainKey, kem_shared_key, &#34;&#34;, 64)
+  chainKey = keydata[0:31]
+
+  End of &#34;ekem1&#34; message pattern.
+</code></pre><h4 id="alice-kdf-for-message-2">Alice KDF for Message 2</h4>
+<p>Sau message pattern &rsquo;ee&rsquo; (và trước message pattern &lsquo;ss&rsquo; cho IK), thêm:</p>
+<pre tabindex="0"><code>This is the &#34;ekem1&#34; message pattern:
+
+  // DecryptAndHash(kem_ciphertext_section)
+  // AEAD parameters
+  k = keydata[32:63]
+  n = 0
+  ad = h
+  kem_ciphertext = DECRYPT(k, n, kem_ciphertext_section, ad)
+
+  // MixHash(kem_ciphertext_section)
+  h = SHA256(h || kem_ciphertext_section)
+
+  // MixKey(kem_shared_key)
+  kem_shared_key = DECAPS(kem_ciphertext, decap_key)
+  keydata = HKDF(chainKey, kem_shared_key, &#34;&#34;, 64)
+  chainKey = keydata[0:31]
+
+  End of &#34;ekem1&#34; message pattern.
+</code></pre><h4 id="kdf-for-message-3-xk-only">KDF for Message 3 (XK only)</h4>
+<p>không thay đổi</p>
+<h4 id="kdf-for-split">KDF for split()</h4>
+<p>không thay đổi</p>
+<h3 id="signingprivatekey">SigningPrivateKey</h3>
+<p>Cập nhật đặc tả ECIES-Ratchet <a href="../../../vi/docs/specs/ecies/">/docs/specs/ecies/</a>
+ như sau:</p>
+<h4 id="noise-identifiers">Noise identifiers</h4>
+<ul>
+<li>&ldquo;Noise_IKhfselg2_25519+MLKEM512_ChaChaPoly_SHA256&rdquo;</li>
+<li>&ldquo;Noise_IKhfselg2_25519+MLKEM768_ChaChaPoly_SHA256&rdquo;</li>
+<li>&ldquo;Noise_IKhfselg2_25519+MLKEM1024_ChaChaPoly_SHA256&rdquo;</li>
+</ul>
+<h4 id="1b-new-session-format-with-binding">1b) New session format (with binding)</h4>
+<p>Thay đổi: Ratchet hiện tại chứa static key trong phần ChaCha đầu tiên, và payload trong phần thứ hai. Với ML-KEM, giờ có ba phần. Phần đầu tiên chứa PQ public key được mã hóa. Phần thứ hai chứa static key. Phần thứ ba chứa payload.</p>
+<p>Định dạng mã hóa:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |   New Session Ephemeral Public Key    |
+  +             32 bytes                  +
+  |     Encoded with Elligator2           |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +           ML-KEM encap_key            +
+  |       ChaCha20 encrypted data         |
+  +      (see table below for length)     +
+  |                                       |
+  ~                                       ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +    (MAC) for encap_key Section        +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +           X25519 Static Key           +
+  |       ChaCha20 encrypted data         |
+  +             32 bytes                  +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +    (MAC) for Static Key Section       +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for Payload Section     +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Định dạng đã giải mã:</p>
+<pre tabindex="0"><code>Payload Part 1:
+
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +       ML-KEM encap_key                +
+  |                                       |
+  +      (see table below for length)     +
+  |                                       |
+  ~                                       ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  Payload Part 2:
+
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +       X25519 Static Key               +
+  |                                       |
+  +      (32 bytes)                       +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  Payload Part 3:
+
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |                                       |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Kích thước:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>X len</th>
+          <th>Msg 1 len</th>
+          <th>Msg 1 Enc len</th>
+          <th>Msg 1 Dec len</th>
+          <th>PQ key len</th>
+          <th>pl len</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519</td>
+          <td>4</td>
+          <td>32</td>
+          <td>96+pl</td>
+          <td>64+pl</td>
+          <td>pl</td>
+          <td>&ndash;</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+          <td>32</td>
+          <td>912+pl</td>
+          <td>880+pl</td>
+          <td>800+pl</td>
+          <td>800</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+          <td>32</td>
+          <td>1296+pl</td>
+          <td>1360+pl</td>
+          <td>1184+pl</td>
+          <td>1184</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+          <td>32</td>
+          <td>1680+pl</td>
+          <td>1648+pl</td>
+          <td>1568+pl</td>
+          <td>1568</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>Lưu ý rằng payload phải chứa một khối DateTime, vì vậy kích thước payload tối thiểu là 7. Kích thước thông điệp 1 tối thiểu có thể được tính toán tương ứng.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="1g-new-session-reply-format">1g) New Session Reply format</h4>
+<p>Thay đổi: Ratchet hiện tại có payload trống cho phần ChaCha đầu tiên, và payload trong phần thứ hai. Với ML-KEM, giờ đây có ba phần. Phần đầu tiên chứa ciphertext PQ đã mã hóa. Phần thứ hai có payload trống. Phần thứ ba chứa payload.</p>
+<p>Định dạng mã hóa:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |       Session Tag   8 bytes           |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +        Ephemeral Public Key           +
+  |                                       |
+  +            32 bytes                   +
+  |     Encoded with Elligator2           |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  | ChaCha20 encrypted ML-KEM ciphertext  |
+  +      (see table below for length)     +
+  ~                                       ~
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +  (MAC) for ciphertext Section         +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +  (MAC) for key Section (no data)      +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |       ChaCha20 encrypted data         |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |  Poly1305 Message Authentication Code |
+  +         (MAC) for Payload Section     +
+  |             16 bytes                  |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Định dạng đã giải mã:</p>
+<pre tabindex="0"><code>Payload Part 1:
+
+
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +       ML-KEM ciphertext               +
+  |                                       |
+  +      (see table below for length)     +
+  |                                       |
+  ~                                       ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  Payload Part 2:
+
+  empty
+
+  Payload Part 3:
+
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +            Payload Section            +
+  |                                       |
+  ~                                       ~
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Kích thước:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>Y len</th>
+          <th>Msg 2 len</th>
+          <th>Msg 2 Enc len</th>
+          <th>Msg 2 Dec len</th>
+          <th>PQ CT len</th>
+          <th>opt len</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519</td>
+          <td>4</td>
+          <td>32</td>
+          <td>72+pl</td>
+          <td>32+pl</td>
+          <td>pl</td>
+          <td>&ndash;</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+          <td>32</td>
+          <td>856+pl</td>
+          <td>816+pl</td>
+          <td>768+pl</td>
+          <td>768</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+          <td>32</td>
+          <td>1176+pl</td>
+          <td>1136+pl</td>
+          <td>1088+pl</td>
+          <td>1088</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+          <td>32</td>
+          <td>1656+pl</td>
+          <td>1616+pl</td>
+          <td>1568+pl</td>
+          <td>1568</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>Lưu ý rằng mặc dù message 2 thường sẽ có payload khác không, đặc tả ratchet <a href="../../../vi/docs/specs/ecies/">/docs/specs/ecies/</a>
+ không yêu cầu điều này, do đó kích thước payload tối thiểu là 0. Kích thước message 2 tối thiểu có thể được tính toán tương ứng.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="chữ-ký-1">Chữ ký</h3>
+<p>Cập nhật đặc tả kỹ thuật NTCP2 <a href="../../../vi/docs/specs/ntcp2/">/docs/specs/ntcp2/</a>
+ như sau:</p>
+<h4 id="noise-identifiers-1">Noise identifiers</h4>
+<ul>
+<li>&ldquo;Noise_XKhfsaesobfse+hs2+hs3_25519+MLKEM512_ChaChaPoly_SHA256&rdquo;</li>
+<li>&ldquo;Noise_XKhfsaesobfse+hs2+hs3_25519+MLKEM768_ChaChaPoly_SHA256&rdquo;</li>
+<li>&ldquo;Noise_XKhfsaesobfse+hs2+hs3_25519+MLKEM1024_ChaChaPoly_SHA256&rdquo;</li>
+</ul>
+<h4 id="1-sessionrequest">1) SessionRequest</h4>
+<p>Thay đổi: NTCP2 hiện tại chỉ chứa các tùy chọn trong phần ChaCha. Với ML-KEM, phần ChaCha cũng sẽ chứa khóa công khai PQ đã được mã hóa.</p>
+<p>Nội dung thô:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |                                       |
+  +        obfuscated with RH_B           +
+  |       AES-CBC-256 encrypted X         |
+  +             (32 bytes)                +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |   ChaChaPoly frame (MLKEM)            |
+  +      (see table below for length)     +
+  |   k defined in KDF for message 1      |
+  +   n = 0                               +
+  |   see KDF for associated data         |
+  ~   n = 0                               ~
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |   ChaChaPoly frame (options)          |
+  +         32 bytes                      +
+  |   k defined in KDF for message 1      |
+  +   n = 0                               +
+  |   see KDF for associated data         |
+  +----+----+----+----+----+----+----+----+
+  |     unencrypted authenticated         |
+  ~         padding (optional)            ~
+  |     length defined in options block   |
+  +----+----+----+----+----+----+----+----+
+
+  Same as before except add a second ChaChaPoly frame
+</code></pre><p>Dữ liệu không mã hóa (thẻ xác thực Poly1305 không hiển thị):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |                   X                   |
+  +              (32 bytes)               +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |           ML-KEM encap_key            |
+  +      (see table below for length)     +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |               options                 |
+  +              (16 bytes)               +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |     unencrypted authenticated         |
+  +         padding (optional)            +
+  |     length defined in options block   |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Kích thước:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>X len</th>
+          <th>Msg 1 len</th>
+          <th>Msg 1 Enc len</th>
+          <th>Msg 1 Dec len</th>
+          <th>PQ key len</th>
+          <th>opt len</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519</td>
+          <td>4</td>
+          <td>32</td>
+          <td>64+pad</td>
+          <td>32</td>
+          <td>16</td>
+          <td>&ndash;</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+          <td>32</td>
+          <td>880+pad</td>
+          <td>848</td>
+          <td>816</td>
+          <td>800</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+          <td>32</td>
+          <td>1264+pad</td>
+          <td>1232</td>
+          <td>1200</td>
+          <td>1184</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+          <td>32</td>
+          <td>1648+pad</td>
+          <td>1616</td>
+          <td>1584</td>
+          <td>1568</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>Lưu ý: Mã loại chỉ dành cho sử dụng nội bộ. Các router sẽ vẫn là loại 4, và hỗ trợ sẽ được chỉ ra trong các địa chỉ router.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="2-sessioncreated">2) SessionCreated</h4>
+<p>Thay đổi: NTCP2 hiện tại chỉ chứa các tùy chọn trong phần ChaCha. Với ML-KEM, phần ChaCha cũng sẽ chứa khóa công khai PQ được mã hóa.</p>
+<p>Nội dung thô:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |                                       |
+  +        obfuscated with RH_B           +
+  |       AES-CBC-256 encrypted Y         |
+  +              (32 bytes)               +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |   ChaChaPoly frame (MLKEM)            |
+  +   Encrypted and authenticated data    +
+  -      (see table below for length)     -
+  +   k defined in KDF for message 2      +
+  |   n = 0; see KDF for associated data  |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |   ChaChaPoly frame (options)          |
+  +   Encrypted and authenticated data    +
+  -           32 bytes                    -
+  +   k defined in KDF for message 2      +
+  |   n = 0; see KDF for associated data  |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |     unencrypted authenticated         |
+  +         padding (optional)            +
+  |     length defined in options block   |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+
+  Same as before except add a second ChaChaPoly frame
+</code></pre><p>Dữ liệu không mã hóa (Poly1305 auth tag không hiển thị):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |                  Y                    |
+  +              (32 bytes)               +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |           ML-KEM Ciphertext           |
+  +      (see table below for length)     +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |               options                 |
+  +              (16 bytes)               +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |     unencrypted authenticated         |
+  +         padding (optional)            +
+  |     length defined in options block   |
+  ~               .   .   .               ~
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Kích thước:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>Y len</th>
+          <th>Msg 2 len</th>
+          <th>Msg 2 Enc len</th>
+          <th>Msg 2 Dec len</th>
+          <th>PQ CT len</th>
+          <th>opt len</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519</td>
+          <td>4</td>
+          <td>32</td>
+          <td>64+pad</td>
+          <td>32</td>
+          <td>16</td>
+          <td>&ndash;</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+          <td>32</td>
+          <td>848+pad</td>
+          <td>816</td>
+          <td>784</td>
+          <td>768</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+          <td>32</td>
+          <td>1136+pad</td>
+          <td>1104</td>
+          <td>1104</td>
+          <td>1088</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+          <td>32</td>
+          <td>1616+pad</td>
+          <td>1584</td>
+          <td>1584</td>
+          <td>1568</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>Lưu ý: Mã loại chỉ dành cho sử dụng nội bộ. Các router sẽ vẫn là loại 4, và việc hỗ trợ sẽ được chỉ ra trong các địa chỉ router.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="3-sessionconfirmed">3) SessionConfirmed</h4>
+<p>Không thay đổi</p>
+<h4 id="key-derivation-function-kdf-for-data-phase">Key Derivation Function (KDF) (for data phase)</h4>
+<p>Không thay đổi</p>
+<h3 id="chứng-chỉ-khóa">Chứng chỉ Khóa</h3>
+<p>Cập nhật đặc tả SSU2 <a href="../../../vi/docs/specs/ssu2/">/docs/specs/ssu2/</a>
+ như sau:</p>
+<h4 id="noise-identifiers-2">Noise identifiers</h4>
+<ul>
+<li>&ldquo;Noise_XKhfschaobfse+hs1+hs2+hs3_25519+MLKEM512_ChaChaPoly_SHA256&rdquo;</li>
+<li>&ldquo;Noise_XKhfschaobfse+hs1+hs2+hs3_25519+MLKEM768_ChaChaPoly_SHA256&rdquo;</li>
+<li>&ldquo;Noise_XKhfschaobfse+hs1+hs2+hs3_25519+MLKEM1024_ChaChaPoly_SHA256&rdquo;</li>
+</ul>
+<h4 id="long-header">Long Header</h4>
+<p>Header dài có kích thước 32 byte. Nó được sử dụng trước khi một phiên được tạo, cho Token Request, SessionRequest, SessionCreated, và Retry. Nó cũng được sử dụng cho các thông điệp Peer Test và Hole Punch ngoài phiên.</p>
+<p>TODO: Chúng ta có thể sử dụng trường version nội bộ và dùng 3 cho MLKEM512 và 4 cho MLKEM768. Liệu chúng ta chỉ làm điều đó cho các loại 0 và 1 hay cho tất cả 6 loại?</p>
+<p>Trước khi mã hóa header:</p>
+<pre tabindex="0"><code>
++----+----+----+----+----+----+----+----+
+  |      Destination Connection ID        |
+  +----+----+----+----+----+----+----+----+
+  |   Packet Number   |type| ver| id |flag|
+  +----+----+----+----+----+----+----+----+
+  |        Source Connection ID           |
+  +----+----+----+----+----+----+----+----+
+  |                 Token                 |
+  +----+----+----+----+----+----+----+----+
+
+  Destination Connection ID :: 8 bytes, unsigned big endian integer
+
+  Packet Number :: 4 bytes, unsigned big endian integer
+
+  type :: The message type = 0, 1, 7, 9, 10, or 11
+
+  ver :: The protocol version, equal to 2
+         TODO We could internally use the version field and use 3 for MLKEM512 and 4 for MLKEM768.
+
+  id :: 1 byte, the network ID (currently 2, except for test networks)
+
+  flag :: 1 byte, unused, set to 0 for future compatibility
+
+  Source Connection ID :: 8 bytes, unsigned big endian integer
+
+  Token :: 8 bytes, unsigned big endian integer
+</code></pre><h4 id="short-header">Short Header</h4>
+<p>không thay đổi</p>
+<h4 id="sessionrequest-type-0">SessionRequest (Type 0)</h4>
+<p>Thay đổi: SSU2 hiện tại chỉ chứa dữ liệu block trong phần ChaCha. Với ML-KEM, phần ChaCha cũng sẽ chứa khóa công khai PQ được mã hóa.</p>
+<p>Nội dung thô:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |  Long Header bytes 0-15, ChaCha20     |
+  +  encrypted with Bob intro key         +
+  |    See Header Encryption KDF          |
+  +----+----+----+----+----+----+----+----+
+  |  Long Header bytes 16-31, ChaCha20    |
+  +  encrypted with Bob intro key n=0     +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +       X, ChaCha20 encrypted           +
+  |       with Bob intro key n=0          |
+  +              (32 bytes)               +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |   ChaCha20 encrypted data (MLKEM)     |
+  +          (length varies)              +
+  |  k defined in KDF for Session Request |
+  +  n = 0                                +
+  |  see KDF for associated data          |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |   ChaCha20 encrypted data (payload)   |
+  +          (length varies)              +
+  |  k defined in KDF for Session Request |
+  +  n = 0                                +
+  |  see KDF for associated data          |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +        Poly1305 MAC (16 bytes)        +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Dữ liệu chưa mã hóa (thẻ xác thực Poly1305 không hiển thị):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |      Destination Connection ID        |
+  +----+----+----+----+----+----+----+----+
+  |   Packet Number   |type| ver| id |flag|
+  +----+----+----+----+----+----+----+----+
+  |        Source Connection ID           |
+  +----+----+----+----+----+----+----+----+
+  |                 Token                 |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |                   X                   |
+  +              (32 bytes)               +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |           ML-KEM encap_key            |
+  +      (see table below for length)     +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |     Noise payload (block data)        |
+  +          (length varies)              +
+  |     see below for allowed blocks      |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Kích thước, không bao gồm IP overhead:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>X len</th>
+          <th>Msg 1 len</th>
+          <th>Msg 1 Enc len</th>
+          <th>Msg 1 Dec len</th>
+          <th>PQ key len</th>
+          <th>pl len</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519</td>
+          <td>4</td>
+          <td>32</td>
+          <td>80+pl</td>
+          <td>16+pl</td>
+          <td>pl</td>
+          <td>&ndash;</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+          <td>32</td>
+          <td>896+pl</td>
+          <td>832+pl</td>
+          <td>800+pl</td>
+          <td>800</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+          <td>32</td>
+          <td>1280+pl</td>
+          <td>1216+pl</td>
+          <td>1184+pl</td>
+          <td>1184</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+          <td>n/a</td>
+          <td>too big</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Lưu ý: Mã loại chỉ dành cho sử dụng nội bộ. Các router sẽ vẫn là loại 4, và hỗ trợ sẽ được chỉ ra trong các địa chỉ router.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>MTU tối thiểu cho MLKEM768_X25519: Khoảng 1316 cho IPv4 và 1336 cho IPv6.</p>
+<h4 id="sessioncreated-type-1">SessionCreated (Type 1)</h4>
+<p>Thay đổi: SSU2 hiện tại chỉ chứa dữ liệu khối trong phần ChaCha. Với ML-KEM, phần ChaCha cũng sẽ chứa khóa công khai PQ được mã hóa.</p>
+<p>Nội dung thô:</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |  Long Header bytes 0-15, ChaCha20     |
+  +  encrypted with Bob intro key and     +
+  | derived key, see Header Encryption KDF|
+  +----+----+----+----+----+----+----+----+
+  |  Long Header bytes 16-31, ChaCha20    |
+  +  encrypted with derived key n=0       +
+  |  See Header Encryption KDF            |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +       Y, ChaCha20 encrypted           +
+  |       with derived key n=0            |
+  +              (32 bytes)               +
+  |       See Header Encryption KDF       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |   ChaCha20 data (MLKEM)               |
+  +   Encrypted and authenticated data    +
+  |  length varies                        |
+  +  k defined in KDF for Session Created +
+  |  n = 0; see KDF for associated data   |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |   ChaCha20 data (payload)             |
+  +   Encrypted and authenticated data    +
+  |  length varies                        |
+  +  k defined in KDF for Session Created +
+  |  n = 0; see KDF for associated data   |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +        Poly1305 MAC (16 bytes)        +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Dữ liệu không mã hóa (Poly1305 auth tag không được hiển thị):</p>
+<pre tabindex="0"><code>+----+----+----+----+----+----+----+----+
+  |      Destination Connection ID        |
+  +----+----+----+----+----+----+----+----+
+  |   Packet Number   |type| ver| id |flag|
+  +----+----+----+----+----+----+----+----+
+  |        Source Connection ID           |
+  +----+----+----+----+----+----+----+----+
+  |                 Token                 |
+  +----+----+----+----+----+----+----+----+
+  |                                       |
+  +                                       +
+  |                  Y                    |
+  +              (32 bytes)               +
+  |                                       |
+  +                                       +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |           ML-KEM Ciphertext           |
+  +      (see table below for length)     +
+  |                                       |
+  +----+----+----+----+----+----+----+----+
+  |     Noise payload (block data)        |
+  +          (length varies)              +
+  |      see below for allowed blocks     |
+  +----+----+----+----+----+----+----+----+
+</code></pre><p>Kích thước, không bao gồm IP overhead:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Type Code</th>
+          <th>Y len</th>
+          <th>Msg 2 len</th>
+          <th>Msg 2 Enc len</th>
+          <th>Msg 2 Dec len</th>
+          <th>PQ CT len</th>
+          <th>pl len</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519</td>
+          <td>4</td>
+          <td>32</td>
+          <td>80+pl</td>
+          <td>16+pl</td>
+          <td>pl</td>
+          <td>&ndash;</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>5</td>
+          <td>32</td>
+          <td>864+pl</td>
+          <td>800+pl</td>
+          <td>768+pl</td>
+          <td>768</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>6</td>
+          <td>32</td>
+          <td>1184+pl</td>
+          <td>1118+pl</td>
+          <td>1088+pl</td>
+          <td>1088</td>
+          <td>pl</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>7</td>
+          <td>n/a</td>
+          <td>too big</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Lưu ý: Mã loại chỉ dành cho sử dụng nội bộ. Các router sẽ vẫn là loại 4, và hỗ trợ sẽ được chỉ ra trong các địa chỉ router.</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>MTU tối thiểu cho MLKEM768_X25519: Khoảng 1316 cho IPv4 và 1336 cho IPv6.</p>
+<h4 id="sessionconfirmed-type-2">SessionConfirmed (Type 2)</h4>
+<p>không thay đổi</p>
+<h4 id="kdf-for-data-phase">KDF for data phase</h4>
+<p>không thay đổi</p>
+<h4 id="vấn-đề">Vấn đề</h4>
+<p>Các Relay block, Peer Test block và thông điệp Peer Test đều chứa chữ ký. Thật không may, chữ ký PQ lớn hơn MTU. Hiện tại không có cơ chế nào để phân mảnh các Relay block hoặc Peer Test block hoặc thông điệp qua nhiều gói UDP. Giao thức phải được mở rộng để hỗ trợ phân mảnh. Điều này sẽ được thực hiện trong một đề xuất riêng biệt sẽ được xác định sau. Cho đến khi hoàn thành, Relay và Peer Test sẽ không được hỗ trợ.</p>
+<h4 id="tổng-quan-1">Tổng quan</h4>
+<p>Chúng ta có thể sử dụng nội bộ trường version và dùng 3 cho MLKEM512 và 4 cho MLKEM768.</p>
+<p>Đối với thông điệp 1 và 2, MLKEM768 sẽ làm tăng kích thước gói tin vượt quá MTU tối thiểu 1280. Có lẽ chỉ đơn giản là không hỗ trợ nó cho kết nối đó nếu MTU quá thấp.</p>
+<p>Đối với message 1 và 2, MLKEM1024 sẽ làm tăng kích thước gói tin vượt quá MTU tối đa 1500. Điều này sẽ yêu cầu phân mảnh message 1 và 2, và đó sẽ là một biến chứng lớn. Có thể sẽ không thực hiện.</p>
+<p>Relay và Peer Test: Xem phía trên</p>
+<h3 id="kích-thước-destination">Kích thước Destination</h3>
+<p>TODO: Có cách nào hiệu quả hơn để định nghĩa signing/verification nhằm tránh sao chép signature không?</p>
+<h3 id="kích-thước-routerident">Kích thước RouterIdent</h3>
+<p>CẦN LÀM</p>
+<p><a href="https://datatracker.ietf.org/doc/draft-ietf-lamps-dilithium-certificates/">IETF draft</a>
+ mục 8.1 không cho phép HashML-DSA trong chứng chỉ X.509 và không gán OID cho HashML-DSA, do tính phức tạp trong triển khai và bảo mật giảm.</p>
+<p>Đối với chữ ký PQ-only của các file SU3, sử dụng các OID được định nghĩa trong <a href="https://datatracker.ietf.org/doc/draft-ietf-lamps-dilithium-certificates/">IETF draft</a>
+ của các biến thể non-prehash cho các certificate. Chúng tôi không định nghĩa chữ ký hybrid của các file SU3, vì chúng tôi có thể phải hash các file hai lần (mặc dù HashML-DSA và X2559 sử dụng cùng hàm hash SHA512). Ngoài ra, việc nối hai key và chữ ký trong một certificate X.509 sẽ hoàn toàn không tuân chuẩn.</p>
+<p>Lưu ý rằng chúng tôi không cho phép ký Ed25519 đối với các file SU3, và mặc dù chúng tôi đã định nghĩa việc ký Ed25519ph, chúng tôi chưa bao giờ thống nhất về một OID cho nó, hoặc sử dụng nó.</p>
+<p>Các sig type thông thường không được phép cho file SU3; sử dụng các biến thể ph (prehash).</p>
+<h3 id="các-mẫu-handshake">Các Mẫu Handshake</h3>
+<p>Kích thước Destination tối đa mới sẽ là 2599 (3468 trong base 64).</p>
+<p>Cập nhật các tài liệu khác đưa ra hướng dẫn về kích thước Destination, bao gồm:</p>
+<ul>
+<li>SAMv3</li>
+<li>Bittorrent</li>
+<li>Hướng dẫn cho nhà phát triển</li>
+<li>Đặt tên / sổ địa chỉ / jump server</li>
+<li>Tài liệu khác</li>
+</ul>
+<h2 id="overhead-analysis">Overhead Analysis</h2>
+<h3 id="noise-handshake-kdf">Noise Handshake KDF</h3>
+<p>Tăng kích thước (bytes):</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Pubkey (Msg 1)</th>
+          <th>Cipertext (Msg 2)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>+816</td>
+          <td>+784</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>+1200</td>
+          <td>+1104</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>+1584</td>
+          <td>+1584</td>
+      </tr>
+      <tr>
+          <td>Tốc độ:</td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>Tốc độ theo báo cáo từ <a href="https://blog.cloudflare.com/pq-2024/">Cloudflare</a>
+:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Relative speed</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519 DH/keygen</td>
+          <td>baseline</td>
+      </tr>
+      <tr>
+          <td>MLKEM512</td>
+          <td>2.25x faster</td>
+      </tr>
+      <tr>
+          <td>MLKEM768</td>
+          <td>1.5x faster</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024</td>
+          <td>1x (same)</td>
+      </tr>
+      <tr>
+          <td>XK</td>
+          <td>4x DH (keygen + 3 DH)</td>
+      </tr>
+      <tr>
+          <td>MLKEM512_X25519</td>
+          <td>4x DH + 2x PQ (keygen + enc/dec) = 4.9x DH = 22% slower</td>
+      </tr>
+      <tr>
+          <td>MLKEM768_X25519</td>
+          <td>4x DH + 2x PQ (keygen + enc/dec) = 5.3x DH = 32% slower</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024_X25519</td>
+          <td>4x DH + 2x PQ (keygen + enc/dec) = 6x DH = 50% slower</td>
+      </tr>
+      <tr>
+          <td>Kết quả thử nghiệm sơ bộ trong Java:</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Relative DH/encaps</th>
+          <th>DH/decaps</th>
+          <th>keygen</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>X25519</td>
+          <td>baseline</td>
+          <td>baseline</td>
+          <td>baseline</td>
+      </tr>
+      <tr>
+          <td>MLKEM512</td>
+          <td>29x faster</td>
+          <td>22x faster</td>
+          <td>17x faster</td>
+      </tr>
+      <tr>
+          <td>MLKEM768</td>
+          <td>17x faster</td>
+          <td>14x faster</td>
+          <td>9x faster</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024</td>
+          <td>12x faster</td>
+          <td>10x faster</td>
+          <td>6x faster</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="signatures-1">Signatures</h3>
+<p>Kích thước:</p>
+<p>Các kích thước điển hình của key, sig, RIdent, Dest hoặc mức tăng kích thước (Ed25519 được bao gồm để tham khảo) giả định loại mã hóa X25519 cho các RI. Kích thước được thêm vào cho một Router Info, LeaseSet, datagram có thể trả lời, và mỗi gói streaming (SYN và SYN ACK) được liệt kê. Các Destination và Leasesets hiện tại chứa padding lặp lại và có thể nén được trong quá trình truyền tải. Các loại mới không chứa padding và sẽ không thể nén được, dẫn đến mức tăng kích thước cao hơn nhiều khi truyền tải. Xem phần thiết kế ở trên.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Pubkey</th>
+          <th>Sig</th>
+          <th>Key+Sig</th>
+          <th>RIdent</th>
+          <th>Dest</th>
+          <th>RInfo</th>
+          <th>LS/Streaming/Datagram (each msg)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>EdDSA_SHA512_Ed25519</td>
+          <td>32</td>
+          <td>64</td>
+          <td>96</td>
+          <td>391</td>
+          <td>391</td>
+          <td>baseline</td>
+          <td>baseline</td>
+      </tr>
+      <tr>
+          <td>MLDSA44</td>
+          <td>1312</td>
+          <td>2420</td>
+          <td>3732</td>
+          <td>1351</td>
+          <td>1319</td>
+          <td>+3316</td>
+          <td>+3284</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>1952</td>
+          <td>3309</td>
+          <td>5261</td>
+          <td>1991</td>
+          <td>1959</td>
+          <td>+5668</td>
+          <td>+5636</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>2592</td>
+          <td>4627</td>
+          <td>7219</td>
+          <td>2631</td>
+          <td>2599</td>
+          <td>+7072</td>
+          <td>+7040</td>
+      </tr>
+      <tr>
+          <td>MLDSA44_EdDSA_SHA512_Ed25519</td>
+          <td>1344</td>
+          <td>2484</td>
+          <td>3828</td>
+          <td>1383</td>
+          <td>1351</td>
+          <td>+3412</td>
+          <td>+3380</td>
+      </tr>
+      <tr>
+          <td>MLDSA65_EdDSA_SHA512_Ed25519</td>
+          <td>1984</td>
+          <td>3373</td>
+          <td>5357</td>
+          <td>2023</td>
+          <td>1991</td>
+          <td>+5668</td>
+          <td>+5636</td>
+      </tr>
+      <tr>
+          <td>MLDSA87_EdDSA_SHA512_Ed25519</td>
+          <td>2624</td>
+          <td>4691</td>
+          <td>7315</td>
+          <td>2663</td>
+          <td>2631</td>
+          <td>+7488</td>
+          <td>+7456</td>
+      </tr>
+      <tr>
+          <td>Tốc độ:</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>Tốc độ như được báo cáo bởi <a href="https://blog.cloudflare.com/pq-2024/">Cloudflare</a>
+:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Relative speed sign</th>
+          <th>verify</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>EdDSA_SHA512_Ed25519</td>
+          <td>baseline</td>
+          <td>baseline</td>
+      </tr>
+      <tr>
+          <td>MLDSA44</td>
+          <td>5x slower</td>
+          <td>2x faster</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>???</td>
+          <td>???</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>???</td>
+          <td>???</td>
+      </tr>
+      <tr>
+          <td>Kết quả kiểm tra sơ bộ trong Java:</td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Relative speed sign</th>
+          <th>verify</th>
+          <th>keygen</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>EdDSA_SHA512_Ed25519</td>
+          <td>baseline</td>
+          <td>baseline</td>
+          <td>baseline</td>
+      </tr>
+      <tr>
+          <td>MLDSA44</td>
+          <td>4.6x slower</td>
+          <td>1.7x faster</td>
+          <td>2.6x faster</td>
+      </tr>
+      <tr>
+          <td>MLDSA65</td>
+          <td>8.1x slower</td>
+          <td>same</td>
+          <td>1.5x faster</td>
+      </tr>
+      <tr>
+          <td>MLDSA87</td>
+          <td>11.1x slower</td>
+          <td>1.5x slower</td>
+          <td>same</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="security-analysis">Security Analysis</h2>
+<p>Các danh mục bảo mật NIST được tóm tắt trong <a href="https://www.nccoe.nist.gov/sites/default/files/2023-08/pqc-light-at-the-end-of-the-tunnel-presentation.pdf">NIST presentation</a>
+ slide 10. Tiêu chí sơ bộ: Danh mục bảo mật NIST tối thiểu của chúng ta nên là 2 cho các giao thức lai và 3 cho PQ-only.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Category</th>
+          <th>As Secure As</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>AES128</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>SHA256</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>AES192</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>SHA384</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>AES256</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="handshakes">Handshakes</h3>
+<p>Đây là tất cả các giao thức lai. Có lẽ cần ưu tiên MLKEM768; MLKEM512 không đủ bảo mật.</p>
+<p>Các danh mục bảo mật NIST <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">FIPS 203</a>
+:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Algorithm</th>
+          <th>Security Category</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLKEM512</td>
+          <td>1</td>
+      </tr>
+      <tr>
+          <td>MLKEM768</td>
+          <td>3</td>
+      </tr>
+      <tr>
+          <td>MLKEM1024</td>
+          <td>5</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="signatures-2">Signatures</h3>
+<p>Đề xuất này định nghĩa cả hai loại chữ ký hybrid và chỉ PQ. MLDSA44 hybrid được ưa chuộng hơn so với MLDSA65 chỉ PQ. Kích thước keys và sig cho MLDSA65 và MLDSA87 có lẽ quá lớn đối với chúng ta, ít nhất là lúc đầu.</p>
+<p>Các danh mục bảo mật NIST <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Algorithm</th>
+          <th>Security Category</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MLDSA44</td>
+          <td>2</td>
+      </tr>
+      <tr>
+          <td>MLKEM67</td>
+          <td>3</td>
+      </tr>
+      <tr>
+          <td>MLKEM87</td>
+          <td>5</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="type-preferences">Type Preferences</h2>
+<p>Mặc dù chúng tôi sẽ định nghĩa và triển khai 3 loại mã hóa và 9 loại chữ ký, chúng tôi dự định đo lường hiệu suất trong quá trình phát triển và phân tích thêm các tác động của việc tăng kích thước cấu trúc. Chúng tôi cũng sẽ tiếp tục nghiên cứu và theo dõi các phát triển trong các dự án và giao thức khác.</p>
+<p>Sau hơn một năm phát triển, chúng tôi sẽ cố gắng lựa chọn một loại ưa thích hoặc mặc định cho mỗi trường hợp sử dụng. Việc lựa chọn sẽ yêu cầu cân nhắc giữa băng thông, CPU và mức độ bảo mật ước tính. Không phải tất cả các loại đều phù hợp hoặc được phép cho mọi trường hợp sử dụng.</p>
+<p>Các tùy chọn sơ bộ như sau, có thể thay đổi:</p>
+<p>Mã hóa: MLKEM768_X25519</p>
+<p>Chữ ký: MLDSA44_EdDSA_SHA512_Ed25519</p>
+<p>Các hạn chế sơ bộ như sau, có thể thay đổi:</p>
+<p>Mã hóa: MLKEM1024_X25519 không được phép cho SSU2</p>
+<p>Chữ ký: MLDSA87 và biến thể hybrid có thể quá lớn; MLDSA65 và biến thể hybrid có thể quá lớn</p>
+<h2 id="implementation-notes">Implementation Notes</h2>
+<h3 id="library-support">Library Support</h3>
+<p>Các thư viện Bouncycastle, BoringSSL và WolfSSL hiện đã hỗ trợ MLKEM và MLDSA. Hỗ trợ OpenSSL sẽ có trong phiên bản 3.5 của họ vào ngày 8 tháng 4 năm 2025 <a href="https://openssl-library.org/post/2025-02-04-release-announcement-3.5/">OpenSSL</a>
+.</p>
+<p>Thư viện Noise của southernstorm.com được Java I2P điều chỉnh có chứa hỗ trợ sơ bộ cho hybrid handshakes, nhưng chúng tôi đã loại bỏ nó vì không sử dụng; chúng tôi sẽ phải thêm lại và cập nhật để khớp với <a href="https://github.com/noiseprotocol/noise_hfs_spec/blob/master/output/noise_hfs.pdf">Noise HFS spec</a>
+.</p>
+<h3 id="signing-variants">Signing Variants</h3>
+<p>Chúng tôi sẽ sử dụng biến thể ký &ldquo;hedged&rdquo; hoặc ngẫu nhiên hóa, không phải biến thể &ldquo;determinstic&rdquo;, như được định nghĩa trong <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+ mục 3.4. Điều này đảm bảo rằng mỗi chữ ký đều khác nhau, ngay cả khi ký trên cùng một dữ liệu, và cung cấp bảo vệ bổ sung chống lại các cuộc tấn công kênh phụ. Mặc dù <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+ chỉ định rằng biến thể &ldquo;hedged&rdquo; là mặc định, điều này có thể đúng hoặc không đúng trong các thư viện khác nhau. Những người thực hiện phải đảm bảo rằng biến thể &ldquo;hedged&rdquo; được sử dụng để ký.</p>
+<p>Chúng tôi sử dụng quy trình ký bình thường (gọi là Pure ML-DSA Signature Generation) mà mã hóa thông điệp nội bộ thành 0x00 || len(ctx) || ctx || message, trong đó ctx là một giá trị tùy chọn có kích thước 0x00..0xFF. Chúng tôi không sử dụng bất kỳ ngữ cảnh tùy chọn nào. len(ctx) == 0. Quy trình này được định nghĩa trong <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf">FIPS 204</a>
+ Thuật toán 2 bước 10 và Thuật toán 3 bước 5. Lưu ý rằng một số test vector đã được xuất bản có thể yêu cầu thiết lập một chế độ trong đó thông điệp không được mã hóa.</p>
+<h3 id="reliability">Reliability</h3>
+<p>Việc tăng kích thước sẽ dẫn đến phân mảnh tunnel nhiều hơn đáng kể cho việc lưu trữ NetDB, bắt tay streaming, và các thông điệp khác. Kiểm tra các thay đổi về hiệu suất và độ tin cậy.</p>
+<h3 id="structure-sizes">Structure Sizes</h3>
+<p>Tìm và kiểm tra bất kỳ mã nào giới hạn kích thước byte của router info và leaseSet.</p>
+<h3 id="netdb">NetDB</h3>
+<p>Xem xét và có thể giảm số lượng LS/RI tối đa được lưu trữ trong RAM hoặc trên đĩa, để hạn chế sự gia tăng dung lượng lưu trữ. Tăng yêu cầu băng thông tối thiểu cho floodfill?</p>
+<h3 id="ratchet">Ratchet</h3>
+<h4 id="các-thao-tác-ml-kem-được-định-nghĩa">Các Thao Tác ML-KEM Được Định Nghĩa</h4>
+<p>Việc tự động phân loại/phát hiện nhiều giao thức trên cùng một tunnel có thể thực hiện được dựa trên việc kiểm tra độ dài của message 1 (New Session Message). Lấy MLKEM512_X25519 làm ví dụ, độ dài message 1 lớn hơn 816 byte so với giao thức ratchet hiện tại, và kích thước tối thiểu của message 1 (chỉ bao gồm DateTime payload) là 919 byte. Hầu hết kích thước message 1 với ratchet hiện tại có payload nhỏ hơn 816 byte, vì vậy chúng có thể được phân loại là non-hybrid ratchet. Các message lớn có thể là POST và chúng hiếm khi xảy ra.</p>
+<p>Vậy nên chiến lược được khuyến nghị là:</p>
+<ul>
+<li>Nếu thông điệp 1 có kích thước nhỏ hơn 919 byte, đó là giao thức ratchet hiện tại.</li>
+<li>Nếu thông điệp 1 có kích thước lớn hơn hoặc bằng 919 byte, có thể đó là MLKEM512_X25519.
+Hãy thử MLKEM512_X25519 trước, và nếu thất bại, hãy thử giao thức ratchet hiện tại.</li>
+</ul>
+<p>Điều này sẽ cho phép chúng ta hỗ trợ hiệu quả cả ratchet tiêu chuẩn và hybrid ratchet trên cùng một đích đến, giống như trước đây chúng ta đã hỗ trợ ElGamal và ratchet trên cùng một đích đến. Do đó, chúng ta có thể di chuyển sang giao thức hybrid MLKEM nhanh hơn nhiều so với trường hợp không thể hỗ trợ dual-protocols cho cùng một đích đến, bởi vì chúng ta có thể thêm hỗ trợ MLKEM vào các đích đến hiện có.</p>
+<p>Các kết hợp được hỗ trợ bắt buộc là:</p>
+<ul>
+<li>X25519 + MLKEM512</li>
+<li>X25519 + MLKEM768</li>
+<li>X25519 + MLKEM1024</li>
+</ul>
+<p>Các kết hợp sau đây có thể phức tạp và KHÔNG bắt buộc phải được hỗ trợ, nhưng có thể có, tùy thuộc vào implementation:</p>
+<ul>
+<li>Nhiều hơn một MLKEM</li>
+<li>ElG + một hoặc nhiều MLKEM</li>
+<li>X25519 + một hoặc nhiều MLKEM</li>
+<li>ElG + X25519 + một hoặc nhiều MLKEM</li>
+</ul>
+<p>Chúng tôi có thể không cố gắng hỗ trợ nhiều thuật toán MLKEM (ví dụ, MLKEM512_X25519 và MLKEM_768_X25519) trên cùng một destination. Chỉ chọn một thuật toán; tuy nhiên, điều đó phụ thuộc vào việc chúng tôi lựa chọn một biến thể MLKEM ưa thích, để các HTTP client tunnel có thể sử dụng. Phụ thuộc vào implementation.</p>
+<p>Chúng tôi CÓ THỂ cố gắng hỗ trợ ba thuật toán (ví dụ X25519, MLKEM512_X25519, và MLKEM769_X25519) trên cùng một điểm đến. Việc phân loại và chiến lược thử lại có thể quá phức tạp. Cấu hình và giao diện cấu hình có thể quá phức tạp. Phụ thuộc vào việc triển khai.</p>
+<p>Chúng tôi có lẽ sẽ KHÔNG cố gắng hỗ trợ thuật toán ElGamal và hybrid trên cùng một destination. ElGamal đã lỗi thời, và ElGamal + hybrid chỉ (không có X25519) không có nhiều ý nghĩa. Ngoài ra, các New Session Messages của ElGamal và Hybrid đều có kích thước lớn, vì vậy các chiến lược phân loại thường phải thử cả hai cách giải mã, điều này sẽ không hiệu quả. Phụ thuộc vào implementation.</p>
+<p>Các client có thể sử dụng cùng một hoặc các X25519 static key khác nhau cho giao thức X25519 và giao thức hybrid trên cùng một tunnel, tùy thuộc vào cách triển khai.</p>
+<h4 id="kdf-của-alice-cho-thông-điệp-1">KDF của Alice cho Thông điệp 1</h4>
+<p>Đặc tả ECIES cho phép Garlic Messages trong payload của New Session Message, điều này cho phép giao hàng 0-RTT của gói streaming ban đầu, thường là HTTP GET, cùng với leaseset của client. Tuy nhiên, payload của New Session Message không có forward secrecy. Vì đề xuất này đang nhấn mạnh việc tăng cường forward secrecy cho ratchet, các triển khai có thể hoặc nên trì hoãn việc bao gồm streaming payload, hoặc toàn bộ streaming message, cho đến Existing Session Message đầu tiên. Điều này sẽ làm mất khả năng giao hàng 0-RTT. Các chiến lược cũng có thể phụ thuộc vào loại traffic hoặc loại tunnel, hoặc phụ thuộc vào GET so với POST, chẳng hạn. Tùy thuộc vào triển khai.</p>
+<h4 id="bob-kdf-cho-message-1">Bob KDF cho Message 1</h4>
+<p>MLKEM, MLDSA, hoặc cả hai trên cùng một destination, sẽ làm tăng đáng kể kích thước của New Session Message, như đã mô tả ở trên. Điều này có thể làm giảm đáng kể độ tin cậy của việc gửi New Session Message qua các tunnel, nơi chúng phải được phân mảnh thành nhiều tunnel message 1024 byte. Thành công trong việc gửi tỷ lệ thuận với số mũ của số lượng fragment. Các implementation có thể sử dụng nhiều chiến lược khác nhau để giới hạn kích thước của message, với cái giá phải trả là việc gửi 0-RTT. Phụ thuộc vào implementation.</p>
+<h3 id="ratchet-1">Ratchet</h3>
+<p>Chúng ta có thể thiết lập MSB của khóa tạm thời (key[31] &amp; 0x80) trong yêu cầu phiên để chỉ ra rằng đây là kết nối hybrid. Điều này sẽ cho phép chúng ta chạy cả NTCP tiêu chuẩn và NTCP hybrid trên cùng một cổng. Chỉ một biến thể hybrid được hỗ trợ và được quảng cáo trong địa chỉ router. Ví dụ, v=2,3 hoặc v=2,4 hoặc v=2,5.</p>
+<p>Nếu chúng ta không làm như vậy, chúng ta cần địa chỉ/cổng transport khác nhau, và một tên giao thức mới như &ldquo;NTCP1PQ1&rdquo;.</p>
+<p>Lưu ý: Các mã loại chỉ dành cho sử dụng nội bộ. Các router sẽ vẫn là loại 4, và việc hỗ trợ sẽ được chỉ ra trong các địa chỉ router.</p>
+<p>CẦN LÀM</p>
+<h3 id="ssu2">SSU2</h3>
+<p>CÓ THỂ Cần địa chỉ/cổng transport khác, nhưng hy vọng là không, chúng ta có một header với các flags cho message 1. Chúng ta có thể sử dụng nội bộ trường version và dùng 3 cho MLKEM512 và 4 cho MLKEM768. Có thể chỉ cần v=2,3,4 trong địa chỉ là đủ. Nhưng chúng ta cần các identifier cho cả hai thuật toán mới: 3a, 3b?</p>
+<p>Kiểm tra và xác minh rằng SSU2 có thể xử lý RI được phân mảnh qua nhiều gói tin (6-8?). i2pd hiện tại chỉ hỗ trợ tối đa 2 mảnh?</p>
+<p>Lưu ý: Mã loại chỉ dành cho sử dụng nội bộ. Các router sẽ vẫn là loại 4, và hỗ trợ sẽ được chỉ ra trong địa chỉ router.</p>
+<p>CẦN LÀM</p>
+<h2 id="router-compatibility">Router Compatibility</h2>
+<h3 id="transport-names">Transport Names</h3>
+<p>Chúng ta có thể sẽ không cần các tên transport mới, nếu chúng ta có thể chạy cả phiên bản tiêu chuẩn và hybrid trên cùng một cổng, với các cờ phiên bản.</p>
+<p>Nếu chúng ta cần các tên transport mới, chúng sẽ là:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Transport</th>
+          <th>Type</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>NTCP2PQ1</td>
+          <td>MLKEM512_X25519</td>
+      </tr>
+      <tr>
+          <td>NTCP2PQ2</td>
+          <td>MLKEM768_X25519</td>
+      </tr>
+      <tr>
+          <td>NTCP2PQ3</td>
+          <td>MLKEM1024_X25519</td>
+      </tr>
+      <tr>
+          <td>SSU2PQ1</td>
+          <td>MLKEM512_X25519</td>
+      </tr>
+      <tr>
+          <td>SSU2PQ2</td>
+          <td>MLKEM768_X25519</td>
+      </tr>
+      <tr>
+          <td>Lưu ý rằng SSU2 không thể hỗ trợ MLKEM1024, nó quá lớn.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="router-enc-types">Router Enc. Types</h3>
+<p>Chúng tôi có một số phương án để xem xét:</p>
+<h4 id="bob-kdf-cho-message-2">Bob KDF cho Message 2</h4>
+<p>Không được khuyến nghị. Chỉ sử dụng các transport mới được liệt kê ở trên phù hợp với loại router. Các router cũ không thể kết nối, xây dựng tunnel hoặc gửi tin nhắn netDb tới. Sẽ cần nhiều chu kỳ phát hành để debug và đảm bảo hỗ trợ trước khi bật mặc định. Có thể kéo dài việc triển khai thêm một năm hoặc hơn so với các phương án thay thế bên dưới.</p>
+<h4 id="alice-kdf-cho-message-2">Alice KDF cho Message 2</h4>
+<p>Được khuyến nghị. Vì PQ không ảnh hưởng đến khóa tĩnh X25519 hay các giao thức bắt tay N, chúng ta có thể để các router ở loại 4 và chỉ quảng cáo các transport mới. Các router cũ vẫn có thể kết nối, xây dựng tunnel qua, hoặc gửi tin nhắn netDb đến.</p>
+<h4 id="kdf-cho-message-3-chỉ-xk">KDF cho Message 3 (chỉ XK)</h4>
+<p>Các router Loại 4 có thể quảng bá cả địa chỉ NTCP2 và NTCP2PQ*. Những địa chỉ này có thể sử dụng cùng một khóa tĩnh và các tham số khác, hoặc không. Chúng có thể sẽ cần phải ở trên các cổng khác nhau; sẽ rất khó khăn để hỗ trợ cả giao thức NTCP2 và NTCP2PQ* trên cùng một cổng, vì không có header hoặc framing nào cho phép Bob phân loại và đóng khung thông điệp Session Request đến.</p>
+<p>Các cổng và địa chỉ riêng biệt sẽ khó khăn đối với Java nhưng đơn giản đối với i2pd.</p>
+<h4 id="kdf-cho-split">KDF cho split()</h4>
+<p>Các router Type 4 có thể quảng bá cả địa chỉ SSU2 và SSU2PQ*. Với các header flag được bổ sung, Bob có thể xác định loại transport đến trong thông điệp đầu tiên. Do đó, chúng ta có thể hỗ trợ cả SSU2 và SSUPQ* trên cùng một port.</p>
+<p>Những địa chỉ này có thể được công bố dưới dạng các địa chỉ riêng biệt (như i2pd đã làm trong các lần chuyển đổi trước đó) hoặc trong cùng một địa chỉ với tham số chỉ định hỗ trợ PQ (như Java i2p đã làm trong các lần chuyển đổi trước đó).</p>
+<p>Nếu cùng một địa chỉ, hoặc trên cùng một cổng trong các địa chỉ khác nhau, chúng sẽ sử dụng cùng một static key và các tham số khác. Nếu ở các địa chỉ khác nhau với các cổng khác nhau, chúng có thể sử dụng cùng một static key và các tham số khác, hoặc không.</p>
+<p>Các cổng và địa chỉ riêng biệt sẽ khó khăn đối với Java nhưng đơn giản đối với i2pd.</p>
+<h4 id="recommendations">Recommendations</h4>
+<p>VIỆC CẦN LÀM</p>
+<h3 id="ntcp2">NTCP2</h3>
+<h4 id="định-danh-noise">Định danh Noise</h4>
+<p>Các router cũ sẽ xác minh RI và do đó không thể kết nối, xây dựng tunnel thông qua, hoặc gửi tin nhắn netDb tới. Sẽ mất vài chu kỳ phát hành để debug và đảm bảo hỗ trợ trước khi kích hoạt theo mặc định. Sẽ có cùng các vấn đề như việc triển khai enc. type 5/6/7; có thể kéo dài việc triển khai thêm một năm hoặc hơn so với phương án triển khai type 4 enc. type được liệt kê ở trên.</p>
+<p>Không có lựa chọn thay thế.</p>
+<h3 id="ls-enc-types">LS Enc. Types</h3>
+<h4 id="1b-định-dạng-phiên-mới-với-binding">1b) Định dạng phiên mới (với binding)</h4>
+<p>Những khóa này có thể có mặt trong LS với các khóa X25519 loại 4 cũ hơn. Các router cũ sẽ bỏ qua những khóa không xác định.</p>
+<p>Các destination có thể hỗ trợ nhiều loại key, nhưng chỉ bằng cách thực hiện giải mã thử nghiệm message 1 với từng key. Chi phí phát sinh có thể được giảm thiểu bằng cách duy trì số lượng giải mã thành công cho mỗi key, và thử key được sử dụng nhiều nhất trước tiên. Java I2P sử dụng chiến lược này cho ElGamal+X25519 trên cùng một destination.</p>
+<h3 id="dest-sig-types">Dest. Sig. Types</h3>
+<h4 id="1g-định-dạng-new-session-reply">1g) Định dạng New Session Reply</h4>
+<p>Các router xác minh chữ ký leaseSet và do đó không thể kết nối hoặc nhận leaseSet cho các destination loại 12-17. Sẽ mất vài chu kỳ phát hành để debug và đảm bảo hỗ trợ trước khi bật theo mặc định.</p>
+<p>Không có lựa chọn thay thế.</p>
+<h2 id="đặc-tả-kỹ-thuật">Đặc tả kỹ thuật</h2>
+<p>Dữ liệu có giá trị nhất là lưu lượng end-to-end, được mã hóa bằng ratchet. Với tư cách là người quan sát bên ngoài giữa các hop của tunnel, dữ liệu đó được mã hóa thêm hai lần nữa, với tunnel encryption và transport encryption. Với tư cách là người quan sát bên ngoài giữa OBEP và IBGW, dữ liệu chỉ được mã hóa thêm một lần nữa, với transport encryption. Với tư cách là thành viên tham gia OBEP hoặc IBGW, ratchet là mã hóa duy nhất. Tuy nhiên, vì các tunnel là đơn hướng, việc bắt cả hai thông điệp trong quá trình bắt tay ratchet sẽ đòi hỏi các router thông đồng, trừ khi các tunnel được xây dựng với OBEP và IBGW trên cùng một router.</p>
+<p>Mô hình đe dọa PQ đáng lo ngại nhất hiện tại là việc lưu trữ lưu lượng ngày hôm nay để giải mã nhiều năm sau này (forward secrecy). Một phương pháp kết hợp sẽ bảo vệ điều đó.</p>
+<p>Mô hình mối đe dọa PQ về việc phá vỡ các khóa xác thực trong một khoảng thời gian hợp lý (ví dụ vài tháng) và sau đó mạo danh xác thực hoặc giải mã gần như thời gian thực, còn xa hơn nhiều? Và đó là khi chúng ta muốn di chuyển sang các khóa tĩnh PQC.</p>
+<p>Vậy nên, mô hình đe dọa PQ sớm nhất là OBEP/IBGW lưu trữ lưu lượng để giải mã sau này. Chúng ta nên triển khai hybrid ratchet trước.</p>
+<p>Ratchet có mức ưu tiên cao nhất. Các transport đứng thứ hai. Signature có mức ưu tiên thấp nhất.</p>
+<p>Việc triển khai chữ ký cũng sẽ muộn hơn việc triển khai mã hóa một năm hoặc hơn, vì không thể có khả năng tương thích ngược. Ngoài ra, việc áp dụng MLDSA trong ngành sẽ được tiêu chuẩn hóa bởi CA/Browser Forum và các Certificate Authority. Các CA cần hỗ trợ hardware security module (HSM) trước tiên, điều này hiện tại chưa có sẵn <a href="https://cabforum.org/2024/10/10/2024-10-10-minutes-of-the-code-signing-certificate-working-group/">CA/Browser Forum</a>
+. Chúng tôi kỳ vọng CA/Browser Forum sẽ thúc đẩy các quyết định về lựa chọn tham số cụ thể, bao gồm việc có hỗ trợ hay yêu cầu composite signatures hay không <a href="https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/">IETF draft</a>
+.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Milestone</th>
+          <th>Target</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Ratchet beta</td>
+          <td>Late 2025</td>
+      </tr>
+      <tr>
+          <td>Select best enc type</td>
+          <td>Early 2026</td>
+      </tr>
+      <tr>
+          <td>NTCP2 beta</td>
+          <td>Early 2026</td>
+      </tr>
+      <tr>
+          <td>SSU2 beta</td>
+          <td>Mid 2026</td>
+      </tr>
+      <tr>
+          <td>Ratchet production</td>
+          <td>Mid 2026</td>
+      </tr>
+      <tr>
+          <td>Ratchet default</td>
+          <td>Late 2026</td>
+      </tr>
+      <tr>
+          <td>Signature beta</td>
+          <td>Late 2026</td>
+      </tr>
+      <tr>
+          <td>NTCP2 production</td>
+          <td>Late 2026</td>
+      </tr>
+      <tr>
+          <td>SSU2 production</td>
+          <td>Early 2027</td>
+      </tr>
+      <tr>
+          <td>Select best sig type</td>
+          <td>Early 2027</td>
+      </tr>
+      <tr>
+          <td>NTCP2 default</td>
+          <td>Early 2027</td>
+      </tr>
+      <tr>
+          <td>SSU2 default</td>
+          <td>Mid 2027</td>
+      </tr>
+      <tr>
+          <td>Signature production</td>
+          <td>Mid 2027</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="migration">Migration</h2>
+<p>Nếu chúng ta không thể hỗ trợ cả giao thức ratchet cũ và mới trên cùng các tunnel, việc di chuyển sẽ khó khăn hơn nhiều.</p>
+<p>Chúng ta sẽ có thể thử cái này-rồi-cái kia, như chúng ta đã làm với X25519, để được chứng minh.</p>
+<h2 id="issues-1">Issues</h2>
+<ul>
+<li>Lựa chọn Noise Hash - tiếp tục với SHA256 hay nâng cấp?
+SHA256 nên tốt trong 20-30 năm nữa, không bị đe dọa bởi PQ,
+Xem <a href="https://csrc.nist.gov/csrc/media/Presentations/2022/update-on-post-quantum-encryption-and-cryptographi/Day%202%20-%20230pm%20Chen%20PQC%20ISPAB.pdf">NIST presentation</a>
+ và <a href="https://www.nccoe.nist.gov/sites/default/files/2023-08/pqc-light-at-the-end-of-the-tunnel-presentation.pdf">NIST presentation</a>
+.
+Nếu SHA256 bị phá thì chúng ta có những vấn đề tồi tệ hơn (netdb).</li>
+<li>NTCP2 cổng riêng biệt, địa chỉ router riêng biệt</li>
+<li>SSU2 relay / peer test</li>
+<li>Trường phiên bản SSU2</li>
+<li>Phiên bản địa chỉ router SSU2</li>
+</ul>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    <a href="../../../vi/proposals/" class="page-nav-link">
+                        ← Back to Proposals
+                    </a>
+                    
+                    
+                    
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                            
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <a href="../../../proposals/169-pq-crypto.txt" class="page-nav-link" download>
+                        Download Source (.txt)
+                    </a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.proposals-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.proposal-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.proposal-title-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.proposal-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-text);
+}
+
+.proposal-number {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+ 
+.proposal-meta-box {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.proposal-status {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+ 
+.status-open {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-open {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-accepted {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-accepted {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-finished {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-finished {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-closed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-closed {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.dark .status-rejected {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.status-draft,
+.status-needs-revision,
+.status-dead,
+.status-needs-research {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-draft,
+.dark .status-needs-revision,
+.dark .status-dead,
+.dark .status-needs-research {
+    background: #78350f;
+    color: #fde047;
+}
+
+.status-meta,
+.status-informational,
+.status-reserve {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+.dark .status-meta,
+.dark .status-informational,
+.dark .status-reserve {
+    background: #581c87;
+    color: #e879f9;
+}
+
+ 
+.proposal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.info-value {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+ 
+.proposal-relationships {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-md);
+}
+
+.relationship {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.relationship:last-child {
+    margin-bottom: 0;
+}
+
+.relationship-label {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    min-width: 120px;
+}
+
+.relationship-value {
+    color: var(--color-text);
+}
+
+ 
+.proposal-layout {
+    display: block;
+}
+
+.proposal-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.proposal-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.proposal-main {
+    min-width: 0;
+}
+
+ 
+.proposal-content {
+    line-height: 1.8;
+    color: var(--color-text);
+    max-width: 900px;
+}
+
+.proposal-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content ul,
+.proposal-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.proposal-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.proposal-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.proposal-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.proposal-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.proposal-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin-left: 0;
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+.proposal-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.proposal-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+.proposal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content table th {
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.proposal-content table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.proposal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+ 
+.page-nav {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.page-nav-link {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+ 
+@media (max-width: 1024px) {
+    .proposal-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .proposal-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .proposal-title {
+        font-size: 1.75rem;
+    }
+
+    .proposal-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Cập nhật tin tức I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Nhập email của bạn" required>
+                            <button type="submit">Đăng ký</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Liên kết nhanh</h3>
+                <ul>
+                    <li><a href="../../../vi/financial-support/">Quyên góp</a></li>
+                    <li><a href="../../../vi/docs/overview/intro/">Giới thiệu I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Cộng đồng</h3>
+                <ul>
+                    <li><a href="../../../vi/get-involved/">Tham Gia</a></li>
+                    <li><a href="../../../vi/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Diễn đàn chính thức</a></li>
+                    <li><a href="../../../vi/contact/">Liên hệ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Tài nguyên</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Thống kê I2P</a></li>
+                    <li><a href="../../../vi/papers/">Nghiên cứu</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Dự án Internet Vô hình. Được cấp phép theo Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../vi/privacy/">Quyền riêng tư</a>
+                <a href="../../../vi/terms/">Điều khoản</a>
+                <a href="../../../vi/about/media/">Báo chí</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Đóng">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Thăm dò ý kiến cộng đồng</h2>
+            <p class="modal-subtitle">Chúng tôi rất muốn nghe ý kiến từ bạn</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Phiếu bầu của bạn giúp định hình tương lai của I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

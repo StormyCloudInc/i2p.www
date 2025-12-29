@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="ar" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>إنشاء Eepsite (موقع ويب مُستضاف داخل شبكة I2P) | I2P - مشروع الإنترنت غير المرئي</title>
+
+    <meta name="description" content="تعرّف على كيفية إنشاء واستضافة موقعك الإلكتروني على شبكة I2P باستخدام خادم الويب Jetty المدمج">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="إنشاء Eepsite (موقع ويب مُستضاف داخل شبكة I2P) | I2P - مشروع الإنترنت غير المرئي">
+    <meta property="og:description" content="تعرّف على كيفية إنشاء واستضافة موقعك الإلكتروني على شبكة I2P باستخدام خادم الويب Jetty المدمج">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/ar/docs/guides/%D8%A5%D9%86%D8%B4%D8%A7%D8%A1-eepsite-%D9%85%D9%88%D9%82%D8%B9-%D9%88%D9%8A%D8%A8-%D9%85%D9%8F%D8%B3%D8%AA%D8%B6%D8%A7%D9%81-%D8%AF%D8%A7%D8%AE%D9%84-%D8%B4%D8%A8%D9%83%D8%A9-i2p/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">موقع I2P التجريبي متاح الآن - أرسل المشاكل إلى stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="إغلاق الشريط" title="إغلاق الشريط">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../ar/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../ar/about/" class="">حول</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ar/about/">نظرة عامة</a></li>
+                            <li><a href="../../../../ar/papers/">أبحاث</a></li>
+                            <li><a href="../../../../ar/about/media/">الصحافة</a></li>
+                            <li><a href="../../../../ar/contact/">اتصل بنا</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../ar/docs/" class="active">المستندات</a></li>
+                    <li><a href="../../../../ar/downloads/" class="">التنزيلات</a></li>
+                    <li><a href="../../../../ar/blog/" class="">مدونة</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../ar/get-involved/" class="">شارك معنا</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ar/get-involved/">نظرة عامة</a></li>
+                            <li><a href="../../../../ar/feedback/">اقتراحات الميزات</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">ar</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/guides/creating-an-i2p-eepsite/"
+                                class="lang-option">الإنجليزية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/guides/creaci%C3%B3n-de-un-i2p-eepsite/"
+                                class="lang-option">الإسبانية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/guides/i2p-eepsitei2p-%EC%A0%84%EC%9A%A9-%EC%9D%B5%EB%AA%85-%EC%9B%B9%EC%82%AC%EC%9D%B4%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0/"
+                                class="lang-option">الكورية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/guides/%E5%88%9B%E5%BB%BA-i2p-eepsitei2p-%E5%86%85%E9%83%A8%E7%BD%91%E7%AB%99/"
+                                class="lang-option">الصينية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/guides/%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-eepsite-%D0%B2-i2p/"
+                                class="lang-option">الروسية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/guides/vytvo%C5%99en%C3%AD-i2p-eepsite/"
+                                class="lang-option">التشيكية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/guides/eine-i2p-eepsite-website-im-i2p-netzwerk-erstellen/"
+                                class="lang-option">الألمانية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/guides/cr%C3%A9ation-dun-eepsite-i2p/"
+                                class="lang-option">الفرنسية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/guides/i2p-eepsite-olu%C5%9Fturma/"
+                                class="lang-option">التركية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/guides/t%E1%BA%A1o-m%E1%BB%99t-eepsite-tr%C3%AAn-i2p/"
+                                class="lang-option">الفيتنامية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/guides/i2p-eepsite-%E0%A4%AC%E0%A4%A8%E0%A4%BE%E0%A4%A8%E0%A4%BE/"
+                                class="lang-option">الهندية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/guides/%D8%A5%D9%86%D8%B4%D8%A7%D8%A1-eepsite-%D9%85%D9%88%D9%82%D8%B9-%D9%88%D9%8A%D8%A8-%D9%85%D9%8F%D8%B3%D8%AA%D8%B6%D8%A7%D9%81-%D8%AF%D8%A7%D8%AE%D9%84-%D8%B4%D8%A8%D9%83%D8%A9-i2p/"
+                                class="lang-option active">العربية</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/guides/criando-um-eepsite-no-i2p/"
+                                class="lang-option">البرتغالية</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../ar/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../ar/downloads/" class="btn btn-primary">احصل على I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ما-هو-eepsite">ما هو Eepsite؟</a></li>
+    <li><a href="#الخطوة-1-الوصول-إلى-مدير-الخدمات-المخفية">الخطوة 1: الوصول إلى مدير الخدمات المخفية</a></li>
+    <li><a href="#الخطوة-2-تكوين-إعدادات-خادم-eepsite-الخاص-بك">الخطوة 2: تكوين إعدادات خادم Eepsite الخاص بك</a>
+      <ul>
+        <li><a href="#شرح-خيارات-الإعداد">شرح خيارات الإعداد</a></li>
+        <li><a href="#ملاحظة-مهمة">ملاحظة مهمة</a></li>
+      </ul>
+    </li>
+    <li><a href="#الخطوة-3-خيارات-الشبكات-المتقدمة-اختياري">الخطوة 3: خيارات الشبكات المتقدمة (اختياري)</a>
+      <ul>
+        <li><a href="#خيارات-طول-tunnel">خيارات طول Tunnel</a></li>
+        <li><a href="#خيارات-عدد-tunnel">خيارات عدد Tunnel</a></li>
+        <li><a href="#حدود-post">حدود POST</a></li>
+        <li><a href="#متى-ينبغي-ضبط-الإعدادات-المتقدمة">متى ينبغي ضبط الإعدادات المتقدمة</a></li>
+      </ul>
+    </li>
+    <li><a href="#الخطوة-4-إضافة-محتوى-إلى-eepsite-موقع-ويب-على-شبكة-i2p-الخاص-بك">الخطوة 4: إضافة محتوى إلى Eepsite (موقع ويب على شبكة I2P) الخاص بك</a>
+      <ul>
+        <li><a href="#العثور-على-جذر-مستنداتك">العثور على جذر مستنداتك</a></li>
+        <li><a href="#إضافة-ملفات-موقع-الويب-الخاص-بك">إضافة ملفات موقع الويب الخاص بك</a></li>
+        <li><a href="#البدء-السريع-مثال-html-بسيط">البدء السريع: مثال HTML بسيط</a></li>
+        <li><a href="#الأذونات-linuxunixmacos">الأذونات (Linux/Unix/macOS)</a></li>
+        <li><a href="#نصائح">نصائح</a></li>
+      </ul>
+    </li>
+    <li><a href="#الخطوة-5-بدء-تشغيل-eepsite-الخاص-بك">الخطوة 5: بدء تشغيل Eepsite الخاص بك</a>
+      <ul>
+        <li><a href="#ابدأ-الـ-tunnel-النفق">ابدأ الـ Tunnel (النفق)</a></li>
+        <li><a href="#انتظر-اكتمال-إنشاء-tunnel">انتظر اكتمال إنشاء Tunnel</a></li>
+        <li><a href="#الوصول-إلى-eepsite-الخاص-بك-موقع-ويب-داخل-شبكة-i2p">الوصول إلى Eepsite الخاص بك (موقع ويب داخل شبكة I2P)</a></li>
+      </ul>
+    </li>
+    <li><a href="#-هام-جدا-أنشئ-نسخة-احتياطية-لمفتاحك-الخاص">⚠️ هام جدًا: أنشئ نسخة احتياطية لمفتاحك الخاص</a>
+      <ul>
+        <li><a href="#لماذا-ينبغي-نسخ-مفتاحك-احتياطيا">لماذا ينبغي نسخ مفتاحك احتياطيًا؟</a></li>
+        <li><a href="#أين-المفتاح-الخاص">أين المفتاح الخاص؟</a></li>
+        <li><a href="#كيفية-عمل-نسخة-احتياطية">كيفية عمل نسخة احتياطية</a></li>
+        <li><a href="#الاستعادة-من-نسخة-احتياطية">الاستعادة من نسخة احتياطية</a></li>
+      </ul>
+    </li>
+    <li><a href="#إذا-لم-تكن-تسجل-نطاقا">إذا لم تكن تسجّل نطاقًا</a></li>
+    <li><a href="#تسجيل-نطاق-i2p-الخاص-بك">تسجيل نطاق I2P الخاص بك</a>
+      <ul>
+        <li><a href="#المتطلبات-الأساسية">المتطلبات الأساسية</a></li>
+        <li><a href="#الخطوة-1-توليد-سلسلة-المصادقة">الخطوة 1: توليد سلسلة المصادقة</a></li>
+        <li><a href="#الخطوة-2-سجل-في-statsi2p">الخطوة 2: سجّل في stats.i2p</a></li>
+        <li><a href="#الخطوة-3-التسجيل-لدى-regi2p">الخطوة 3: التسجيل لدى reg.i2p</a></li>
+        <li><a href="#الخطوة-4-انتظر-الانتشار">الخطوة 4: انتظر الانتشار</a></li>
+        <li><a href="#تحقق-من-نطاقك">تحقق من نطاقك</a></li>
+        <li><a href="#ملاحظات-مهمة">ملاحظات مهمة</a></li>
+      </ul>
+    </li>
+    <li><a href="#تهانينا">تهانينا!</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../ar/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../ar/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../ar/docs/guides/">Guides</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">إنشاء Eepsite (موقع ويب مُستضاف داخل شبكة I2P)</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">تم إنشاء هذه الترجمة باستخدام التعلم الآلي وقد لا تكون دقيقة بنسبة 100%.</span>
+    
+    
+    <a href="../../../../en/docs/guides/creating-an-i2p-eepsite/" class="disclaimer-link">عرض النسخة الإنجليزية</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">إنشاء Eepsite (موقع ويب مُستضاف داخل شبكة I2P)</h1>
+                    
+                        <p class="article-description">تعرّف على كيفية إنشاء واستضافة موقعك الإلكتروني على شبكة I2P باستخدام خادم الويب Jetty المدمج</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-11
+                            </span>
+                        
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="ما-هو-eepsite">ما هو Eepsite؟</h2>
+<p>إن <strong>eepsite</strong> هو موقع ويب يعمل حصراً على شبكة I2P. وعلى عكس مواقع الويب التقليدية المتاحة عبر clearnet (الإنترنت العام)، فإن eepsites لا يمكن الوصول إليها إلا عبر I2P، مما يوفر إخفاء الهوية والخصوصية لكل من مشغّل الموقع والزوار. تستخدم Eepsites نطاق المستوى الأعلى الزائف <code>.i2p</code> ويتم الوصول إليها عبر عناوين خاصة من نوع <code>.b32.i2p</code> أو عبر أسماء مقروءة للبشر مسجلة في دفتر عناوين I2P.</p>
+<p>تأتي جميع عمليات نشر Java I2P مع <a href="https://jetty.org/index.html">Jetty</a>
+، وهو خادم ويب خفيف مبني على Java، مثبّت ومهيّأ مسبقًا. هذا يجعل من السهل البدء في استضافة eepsite (موقع ويب على شبكة I2P) الخاص بك في غضون دقائق - دون الحاجة إلى تثبيت أي برامج إضافية.</p>
+<p>سيرشدك هذا الدليل خلال عملية إنشاء وتهيئة أول eepsite (موقع ويب يعمل داخل شبكة I2P فقط) لك باستخدام الأدوات المدمجة في I2P.</p>
+<hr>
+<h2 id="الخطوة-1-الوصول-إلى-مدير-الخدمات-المخفية">الخطوة 1: الوصول إلى مدير الخدمات المخفية</h2>
+<p>مدير الخدمات المخفية (ويُسمّى أيضاً I2P Tunnel Manager) هو المكان الذي تقوم فيه بتكوين جميع tunnels لخوادم I2P وعملاء I2P، بما في ذلك خوادم HTTP (eepsites).</p>
+<ol>
+<li>افتح <a href="http://127.0.0.1:7657">I2P Router Console</a>
+</li>
+<li>انتقل إلى <a href="http://127.0.0.1:7657/i2ptunnelmgr">Hidden Services Manager</a>
+</li>
+</ol>
+<p>ينبغي أن ترى واجهة مدير الخدمات المخفية تعرض: - <strong>رسائل الحالة</strong> - حالة الـ tunnel والعميل الحالية - <strong>التحكم العام في الـ Tunnel</strong> - أزرار لإدارة جميع الـ tunnels دفعة واحدة - <strong>خدمات I2P المخفية</strong> - قائمة بـ tunnels للخوادم المُكوَّنة</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/eepsite/hidden-services-manager.png" 
+    alt="مدير الخدمات المخفية"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>افتراضيًا، سترى إدخالًا موجودًا لـ <strong>خادم ويب I2P</strong> مُعدًّا ولكنه غير مُشغَّل. هذا هو خادم Jetty المُهيّأ مسبقًا والجاهز للاستخدام.</p>
+<hr>
+<h2 id="الخطوة-2-تكوين-إعدادات-خادم-eepsite-الخاص-بك">الخطوة 2: تكوين إعدادات خادم Eepsite الخاص بك</h2>
+<p>انقر على الإدخال <strong>I2P webserver</strong> في قائمة Hidden Services (الخدمات المخفية) لفتح صفحة تهيئة الخادم. هنا ستخصص إعدادات eepsite الخاص بك.</p>
+<p><figure>
+  <img 
+    src="../../../../images/guides/eepsite/webserver-settings.png" 
+    alt="إعدادات خادم Eepsite"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="شرح-خيارات-الإعداد">شرح خيارات الإعداد</h3>
+<p><strong>الاسم</strong> - هذا معرّف داخلي لـ tunnel (مسار اتصال مشفّر داخل شبكة I2P) الخاص بك - مفيد إذا كنت تشغّل عدة eepsites (مواقع ويب داخل شبكة I2P) للتمييز بينها - الافتراضي: &ldquo;I2P webserver&rdquo;</p>
+<p><strong>الوصف</strong> - وصف موجز لـ eepsite الخاص بك كمرجع شخصي - مرئي لك فقط في مدير الخدمات المخفية - مثال: &ldquo;eepsite الخاص بي&rdquo; أو &ldquo;مدونة شخصية&rdquo;</p>
+<p><strong>التشغيل التلقائي لـ Tunnel</strong> - <strong>مهم</strong>: حدّد هذا المربع لبدء eepsite الخاص بك تلقائيًا عند بدء تشغيل I2P router - يضمن بقاء موقعك متاحًا دون تدخل يدوي بعد عمليات إعادة تشغيل router - موصى به: <strong>مفعّل</strong></p>
+<p><strong>الوجهة (المضيف والمنفذ)</strong> - <strong>المضيف</strong>: العنوان المحلي الذي يعمل عليه خادم الويب لديك (الافتراضي: <code>127.0.0.1</code>) - <strong>المنفذ</strong>: المنفذ الذي يستمع عليه خادم الويب لديك (الافتراضي: <code>7658</code> لـ Jetty) - إذا كنت تستخدم خادم Jetty المثبت مسبقًا، <strong>اترك هذه القيم على قيمها الافتراضية</strong> - غيّرها فقط إذا كنت تشغّل خادم ويب مخصصًا على منفذ مختلف</p>
+<p><strong>اسم مضيف الموقع</strong> - هذا هو اسم نطاق <code>.i2p</code> القابل للقراءة البشرية الخاص بـ eepsite لديك - الافتراضي: <code>mysite.i2p</code> (عنصر نائب) - يمكنك تسجيل نطاقًا مخصصًا مثل <code>stormycloud.i2p</code> أو <code>myblog.i2p</code> - اتركه فارغًا إذا كنت تريد فقط استخدام عنوان <code>.b32.i2p</code> المُنشأ تلقائيًا (لـ outproxies (وكلاء الخروج)) - راجع <a href="#registering-your-i2p-domain">تسجيل نطاق I2P الخاص بك</a>
+ أدناه لمعرفة كيفية المطالبة باسم مضيف مخصص</p>
+<p><strong>الوجهة المحلية</strong> - هذا هو المعرّف التشفيري الفريد لـ eepsite (موقع ويب على I2P) الخاص بك (عنوان الوجهة) - يُولَّد تلقائيًا عند إنشاء tunnel (نفق اتصال) لأول مرة - اعتبره &ldquo;عنوان IP&rdquo; الدائم لموقعك على I2P - سلسلة الأحرف والأرقام الطويلة هي عنوان <code>.b32.i2p</code> الخاص بموقعك بصيغة مُرمَّزة</p>
+<p><strong>ملف المفتاح الخاص</strong> - الموقع الذي تُخزَّن فيه مفاتيح eepsite الخاصة بك (موقع ويب مخفي على I2P) - الإعداد الافتراضي: <code>eepsite/eepPriv.dat</code> - <strong>حافظ على أمان هذا الملف</strong> - يمكن لأي شخص لديه وصول إلى هذا الملف انتحال هوية eepsite الخاص بك - لا تُشارك هذا الملف مطلقًا ولا تحذفه</p>
+<h3 id="ملاحظة-مهمة">ملاحظة مهمة</h3>
+<p>يذكّرك صندوق التحذير الأصفر بأنه، لتمكين ميزات إنشاء رمز الاستجابة السريعة (QR) أو مصادقة التسجيل، يجب عليك تكوين اسم مضيف للموقع بلاحقة <code>.i2p</code> (مثلًا، <code>mynewsite.i2p</code>).</p>
+<hr>
+<h2 id="الخطوة-3-خيارات-الشبكات-المتقدمة-اختياري">الخطوة 3: خيارات الشبكات المتقدمة (اختياري)</h2>
+<p>إذا قمت بالتمرير إلى أسفل صفحة الإعدادات، فستجد خيارات شبكات متقدمة. <strong>هذه الإعدادات اختيارية</strong> - الإعدادات الافتراضية تعمل جيدًا لمعظم المستخدمين. ومع ذلك، يمكنك تعديلها بناءً على متطلباتك الأمنية واحتياجات الأداء.</p>
+<h3 id="خيارات-طول-tunnel">خيارات طول Tunnel</h3>
+<p><figure>
+  <img 
+    src="../../../../images/guides/eepsite/tunnel-options.png" 
+    alt="خيارات طول وعدد Tunnel"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p><strong>طول Tunnel</strong> - <strong>الافتراضي</strong>: tunnel بثلاث قفزات (إخفاء هوية مرتفع) - يحدد عدد قفزات router التي يمرّ بها الطلب قبل وصوله إلى eepsite الخاص بك - <strong>المزيد من القفزات = إخفاء هوية أعلى، ولكن أداء أبطأ</strong> - <strong>قفزات أقل = أداء أسرع، ولكن إخفاء هوية أقل</strong> - تتراوح الخيارات بين 0-3 قفزات مع إعدادات التفاوت - <strong>التوصية</strong>: اتركها عند 3 قفزات ما لم تكن لديك متطلبات أداء محددة</p>
+<p><strong>تباين Tunnel</strong> - <strong>الإعداد الافتراضي</strong>: تباين 0 قفزة (بلا عشوائية، أداء متسق) - يضيف عشوائية إلى طول Tunnel لمزيد من الأمان - مثال: &ldquo;تباين 0-1 قفزة&rdquo; يعني أن طول tunnels سيكون عشوائياً 3 أو 4 قفزات - يزيد عدم القدرة على التنبؤ، لكنه قد يسبب أوقات تحميل غير متسقة</p>
+<h3 id="خيارات-عدد-tunnel">خيارات عدد Tunnel</h3>
+<p><strong>العدد (Inbound/Outbound Tunnels)</strong> - <strong>الإعداد الافتراضي</strong>: 2 inbound, 2 outbound tunnels (نطاق ترددي وموثوقية قياسيان) - يتحكم في عدد tunnels (قنوات مسار داخل I2P) المتوازية المخصصة لـeepsite الخاص بك - <strong>المزيد من tunnels = توافرية أفضل وتعامل أفضل مع الحمل، ولكن استخدام موارد أعلى</strong> - <strong>عدد أقل من tunnels = استخدام موارد أقل، ولكن تقليل في التكرار</strong> - موصى به لمعظم المستخدمين: 2/2 (افتراضي) - قد تستفيد المواقع ذات الزيارات العالية من 3/3 أو أكثر</p>
+<p><strong>عدد النسخ الاحتياطية</strong> - <strong>الإعداد الافتراضي</strong>: 0 tunnels احتياطية (بدون ازدواجية، وبدون استخدام إضافي للموارد) - tunnels احتياطية تنشط إذا فشلت الـtunnels الأساسية - يعزز الموثوقية لكنه يستهلك مزيداً من النطاق الترددي ووحدة المعالجة المركزية - معظم eepsites الشخصية لا تحتاج إلى tunnels احتياطية</p>
+<h3 id="حدود-post">حدود POST</h3>
+<p><figure>
+  <img 
+    src="../../../../images/guides/eepsite/post-limits.png" 
+    alt="إعدادات حدود POST"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>إذا كان eepsite الخاص بك يتضمن نماذج (نماذج تواصل، أقسام تعليقات، رفع ملفات، إلخ)، يمكنك ضبط حدود طلبات POST لمنع إساءة الاستخدام:</p>
+<p><strong>حدود لكل عميل</strong> - <strong>لكل فترة زمنية</strong>: الحد الأقصى للطلبات من عميل واحد (القيمة الافتراضية: 6 لكل 5 دقائق) - <strong>مدة الحظر</strong>: مدة حظر العملاء المسيئين (القيمة الافتراضية: 20 دقيقة)</p>
+<p><strong>الحدود الإجمالية</strong> - <strong>الإجمالي</strong>: الحد الأقصى لعدد طلبات POST من جميع العملاء مجتمعين (الافتراضي: 20 لكل 5 دقائق) - <strong>مدة الحظر</strong>: المدة التي سيتم خلالها رفض جميع طلبات POST إذا تم تجاوز الحد (الافتراضي: 10 دقائق)</p>
+<p><strong>فترة حدّ POST</strong> - نافذة زمنية لقياس معدلات الطلبات (الافتراضي: 5 دقائق)</p>
+<p>تساعد هذه القيود في الحماية من الرسائل غير المرغوب فيها، وهجمات الحرمان من الخدمة، وإساءة استخدام عمليات إرسال النماذج بشكل آلي.</p>
+<h3 id="متى-ينبغي-ضبط-الإعدادات-المتقدمة">متى ينبغي ضبط الإعدادات المتقدمة</h3>
+<ul>
+<li><strong>موقع مجتمعي عالي الزيارات</strong>: زد عدد الـ tunnel (3-4 واردة/صادرة)</li>
+<li><strong>تطبيق شديد الحساسية للأداء</strong>: خفّض طول الـ tunnel إلى قفزتين (مقايضة في الخصوصية)</li>
+<li><strong>مطلوب أقصى قدر من إخفاء الهوية</strong>: حافظ على 3 قفزات، وأضف تباينًا بمقدار 0-1</li>
+<li><strong>النماذج ذات الاستخدام المرتفع المشروع</strong>: زد حدود POST (طلب HTTP POST) وفقًا لذلك</li>
+<li><strong>مدونة/معرض أعمال شخصي</strong>: استخدم جميع الإعدادات الافتراضية</li>
+</ul>
+<hr>
+<h2 id="الخطوة-4-إضافة-محتوى-إلى-eepsite-موقع-ويب-على-شبكة-i2p-الخاص-بك">الخطوة 4: إضافة محتوى إلى Eepsite (موقع ويب على شبكة I2P) الخاص بك</h2>
+<p>الآن بعد أن تم تكوين eepsite الخاص بك، تحتاج إلى إضافة ملفات موقعك (HTML وCSS والصور، إلخ) إلى الدليل الجذر لمستندات خادم الويب. يختلف الموقع تبعًا لنظام التشغيل لديك، ونوع التثبيت، وتنفيذ I2P.</p>
+<h3 id="العثور-على-جذر-مستنداتك">العثور على جذر مستنداتك</h3>
+<p><strong>جذر المستندات</strong> (وغالبًا ما يُسمّى <code>docroot</code>) هو المجلد الذي تضع فيه جميع ملفات موقعك الإلكتروني. يجب أن يوضع ملفك <code>index.html</code> مباشرة داخل هذا المجلد.</p>
+<h4 id="java-i2p-التوزيع-القياسي">Java I2P (التوزيع القياسي)</h4>
+<p><strong>لينكس</strong> - <strong>التثبيت القياسي</strong>: <code>~/.i2p/eepsite/docroot/</code> - <strong>تثبيت الحزمة (يعمل كخدمة)</strong>: <code>/var/lib/i2p/i2p-config/eepsite/docroot/</code></p>
+<p><strong>ويندوز</strong> - <strong>التثبيت القياسي</strong>: <code>%LOCALAPPDATA%\I2P\eepsite\docroot\</code>   - المسار النموذجي: <code>C:\Users\YourUsername\AppData\Local\I2P\eepsite\docroot\</code> - <strong>تثبيت خدمة ويندوز</strong>: <code>%PROGRAMDATA%\I2P\eepsite\docroot\</code>   - المسار النموذجي: <code>C:\ProgramData\I2P\eepsite\docroot\</code></p>
+<p><strong>macOS</strong> - <strong>التثبيت الافتراضي</strong>: <code>/Users/YourUsername/Library/Application Support/i2p/eepsite/docroot/</code></p>
+<h4 id="i2p-توزيعة-i2p-المحسنة">I2P+ (توزيعة I2P المحسّنة)</h4>
+<p>يستخدم I2P+ بنية الدلائل نفسها مثل Java I2P. اتبع المسارات المذكورة أعلاه وفقًا لنظام التشغيل لديك.</p>
+<h4 id="i2pd-تنفيذ-بلغة-c">i2pd (تنفيذ بلغة C++)</h4>
+<p><strong>Linux/Unix</strong> - <strong>الافتراضي</strong>: <code>/var/lib/i2pd/eepsite/</code> أو <code>~/.i2pd/eepsite/</code> - تحقق من ملف التهيئة <code>i2pd.conf</code> لمعرفة إعداد <code>root</code> الفعلي ضمن tunnel خادم HTTP لديك</p>
+<p><strong>ويندوز</strong> - تحقق من <code>i2pd.conf</code> في دليل تثبيت i2pd لديك</p>
+<p><strong>macOS</strong> - عادةً: <code>~/Library/Application Support/i2pd/eepsite/</code></p>
+<h3 id="إضافة-ملفات-موقع-الويب-الخاص-بك">إضافة ملفات موقع الويب الخاص بك</h3>
+<ol>
+<li><strong>انتقل إلى جذر المستندات</strong> باستخدام مدير الملفات أو الطرفية</li>
+<li><strong>أنشئ أو انسخ ملفات موقعك</strong> إلى مجلد <code>docroot</code>
+<ul>
+<li>على الأقل، أنشئ ملفًا باسم <code>index.html</code> (هذه صفحتك الرئيسية)</li>
+<li>أضف CSS وJavaScript والصور وموارد أخرى حسب الحاجة</li>
+</ul>
+</li>
+<li><strong>نظّم المجلدات الفرعية</strong> كما تفعل لأي موقع:
+<pre tabindex="0"><code>docroot/
+├── index.html
+├── about.html
+├── css/
+│   └── style.css
+├── images/
+│   └── logo.png
+└── js/
+    └── script.js
+</code></pre></li>
+</ol>
+<h3 id="البدء-السريع-مثال-html-بسيط">البدء السريع: مثال HTML بسيط</h3>
+<p>إذا كنت قد بدأت للتو، فأنشئ ملفًا أساسيًا باسم <code>index.html</code> في مجلد <code>docroot</code> لديك:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;viewport&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width=device-width, initial-scale=1.0&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">title</span>&gt;My I2P Eepsite&lt;/<span style="color:#f92672">title</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">h1</span>&gt;Welcome to My Eepsite!&lt;/<span style="color:#f92672">h1</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">p</span>&gt;This is my first website on the I2P network.&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">p</span>&gt;Privacy-focused and decentralized!&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;
+</span></span></code></pre></div><h3 id="الأذونات-linuxunixmacos">الأذونات (Linux/Unix/macOS)</h3>
+<p>إذا كنت تُشغّل I2P كخدمة أو كمستخدم آخر، فتأكد من أن عملية I2P لديها صلاحية الوصول للقراءة إلى ملفاتك:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Set appropriate ownership (if running as i2p user)</span>
+</span></span><span style="display:flex;"><span>sudo chown -R i2p:i2p /var/lib/i2p/i2p-config/eepsite/docroot/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Or set readable permissions for all users</span>
+</span></span><span style="display:flex;"><span>chmod -R <span style="color:#ae81ff">755</span> ~/.i2p/eepsite/docroot/
+</span></span></code></pre></div><h3 id="نصائح">نصائح</h3>
+<ul>
+<li><strong>المحتوى الافتراضي</strong>: عند تثبيت I2P لأول مرة، يوجد بالفعل محتوى نموذجي في مجلد <code>docroot</code>، ويمكنك استبداله بحرية</li>
+<li><strong>المواقع الثابتة تعمل بشكل أفضل</strong>: رغم أن Jetty يدعم Servlets (مكوّنات خادم جافا) وJSP (صفحات JavaServer)، فإن مواقع HTML/CSS/JavaScript البسيطة هي الأسهل صيانةً</li>
+<li><strong>خوادم ويب خارجية</strong>: يمكن للمستخدمين المتقدّمين تشغيل خوادم ويب مخصّصة (Apache وNginx وNode.js وغيرها) على منافذ مختلفة وتوجيه الـ I2P tunnel إليها</li>
+</ul>
+<hr>
+<h2 id="الخطوة-5-بدء-تشغيل-eepsite-الخاص-بك">الخطوة 5: بدء تشغيل Eepsite الخاص بك</h2>
+<p>الآن بعد أن تم تهيئة eepsite الخاص بك وأصبح يحتوي على محتوى، حان الوقت لتشغيله وجعله متاحًا على شبكة I2P.</p>
+<h3 id="ابدأ-الـ-tunnel-النفق">ابدأ الـ Tunnel (النفق)</h3>
+<ol>
+<li><strong>عُد إلى <a href="http://127.0.0.1:7657/i2ptunnelmgr">مدير الخدمات المخفية</a>
+</strong></li>
+<li>اعثر على إدخال <strong>خادم الويب I2P</strong> الخاص بك في القائمة</li>
+<li>انقر زر <strong>Start</strong> في عمود Control</li>
+</ol>
+<p><figure>
+  <img 
+    src="../../../../images/guides/eepsite/eepsite-running.png" 
+    alt="تشغيل Eepsite"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<h3 id="انتظر-اكتمال-إنشاء-tunnel">انتظر اكتمال إنشاء Tunnel</h3>
+<p>بعد النقر على Start، سيبدأ بناء eepsite tunnel الخاص بك. تستغرق هذه العملية عادةً <strong>30-60 ثانية</strong>. راقب مؤشر الحالة:</p>
+<ul>
+<li><strong>الضوء الأحمر</strong> = Tunnel قيد البدء/البناء</li>
+<li><strong>الضوء الأصفر</strong> = Tunnel مُنشأة جزئياً</li>
+<li><strong>الضوء الأخضر</strong> = Tunnel تعمل بالكامل وجاهزة</li>
+</ul>
+<p>بمجرد أن ترى <strong>الضوء الأخضر</strong>، يصبح eepsite (موقع ويب مخفي داخل I2P) الخاص بك متاحًا على شبكة I2P!</p>
+<h3 id="الوصول-إلى-eepsite-الخاص-بك-موقع-ويب-داخل-شبكة-i2p">الوصول إلى Eepsite الخاص بك (موقع ويب داخل شبكة I2P)</h3>
+<p>انقر على زر <strong>Preview</strong> بجوار eepsite الخاص بك قيد التشغيل. سيؤدي ذلك إلى فتح علامة تبويب جديدة في المتصفح تحتوي على عنوان eepsite الخاص بك.</p>
+<p>يحتوي eepsite الخاص بك على نوعين من العناوين:</p>
+<ol>
+<li>
+<p><strong>عنوان Base32 (.b32.i2p)</strong>: عنوان تشفيري طويل (مُرَمَّز بترميز Base32) يبدو كالتالي:</p>
+<pre tabindex="0"><code>http://fcyianvr325tdgiiueyg4rsq4r5iuibzovl26msox5ryoselykpq.b32.i2p
+</code></pre><ul>
+<li>هذا هو العنوان الدائم لـ eepsite الخاص بك والمُشتقّ تشفيرياً</li>
+<li>لا يمكن تغييره وهو مرتبط بمفتاحك الخاص</li>
+<li>يعمل دائماً، حتى من دون تسجيل نطاق</li>
+</ul>
+</li>
+<li>
+<p><strong>نطاق مقروء بشريًا (.i2p)</strong>: إذا قمت بتعيين اسم مضيف للموقع (مثال: <code>testwebsite.i2p</code>)</p>
+<ul>
+<li>يعمل فقط بعد تسجيل النطاق (انظر القسم التالي)</li>
+<li>أسهل في التذكر والمشاركة</li>
+<li>يُشير إلى عنوان .b32.i2p الخاص بك</li>
+</ul>
+</li>
+</ol>
+<p>يتيح لك زر <strong>نسخ اسم المضيف</strong> نسخ عنوانك الكامل <code>.b32.i2p</code> بسرعة لمشاركته.</p>
+<hr>
+<h2 id="-هام-جدا-أنشئ-نسخة-احتياطية-لمفتاحك-الخاص">⚠️ هام جدًا: أنشئ نسخة احتياطية لمفتاحك الخاص</h2>
+<p>قبل المضي قدماً، <strong>يجب إنشاء نسخة احتياطية</strong> لملف المفتاح الخاص لـ eepsite لديك. هذا أمر بالغ الأهمية لعدة أسباب:</p>
+<h3 id="لماذا-ينبغي-نسخ-مفتاحك-احتياطيا">لماذا ينبغي نسخ مفتاحك احتياطيًا؟</h3>
+<p><strong>مفتاحك الخاص (<code>eepPriv.dat</code>) هو هوية eepsite الخاصة بك (موقع خدمة مخفية على شبكة I2P).</strong> إنه يحدد عنوان <code>.b32.i2p</code> الخاص بك ويثبت ملكيتك لـ eepsite الخاص بك.</p>
+<ul>
+<li><strong>المفتاح = عنوان .b32</strong>: يُولِّد مفتاحك الخاص رياضيًا عنوان .b32.i2p الفريد الخاص بك</li>
+<li><strong>لا يمكن استعادته</strong>: إذا فقدت مفتاحك، فستفقد عنوان eepsite الخاص بك بشكل دائم</li>
+<li><strong>لا يمكن تغييره</strong>: إذا سجّلت نطاقًا يشير إلى عنوان .b32، <strong>فلا توجد أي طريقة لتحديثه</strong> - التسجيل دائم</li>
+<li><strong>مطلوب لعملية النقل</strong>: الانتقال إلى جهاز جديد أو إعادة تثبيت I2P يتطلب هذا المفتاح للاحتفاظ بنفس العنوان</li>
+<li><strong>دعم Multihoming (الاستضافة من مواقع تشغيل/خوادم متعددة)</strong>: يتطلب تشغيل eepsite الخاص بك من مواقع/خوادم متعددة استخدام المفتاح نفسه على كل خادم</li>
+</ul>
+<h3 id="أين-المفتاح-الخاص">أين المفتاح الخاص؟</h3>
+<p>بشكل افتراضي، يتم تخزين مفتاحك الخاص في: - <strong>Linux</strong>: <code>~/.i2p/eepsite/eepPriv.dat</code> (أو <code>/var/lib/i2p/i2p-config/eepsite/eepPriv.dat</code> للتثبيت كخدمة) - <strong>Windows</strong>: <code>%LOCALAPPDATA%\I2P\eepsite\eepPriv.dat</code> أو <code>%PROGRAMDATA%\I2P\eepsite\eepPriv.dat</code> - <strong>macOS</strong>: <code>/Users/YourUsername/Library/Application Support/i2p/eepsite/eepPriv.dat</code></p>
+<p>يمكنك أيضًا التحقق من هذا المسار أو تغييره في إعدادات tunnel لديك ضمن &ldquo;Private Key File&rdquo;.</p>
+<h3 id="كيفية-عمل-نسخة-احتياطية">كيفية عمل نسخة احتياطية</h3>
+<ol>
+<li><strong>أوقف الـ tunnel (نفق اتصال داخل شبكة I2P) الخاص بك</strong> (اختياري، لكنه أكثر أماناً)</li>
+<li><strong>انسخ <code>eepPriv.dat</code></strong> إلى مكان آمن:
+<ul>
+<li>محرك أقراص USB خارجي</li>
+<li>محرك نسخ احتياطي مُشفّر</li>
+<li>أرشيف محمي بكلمة مرور</li>
+<li>تخزين سحابي آمن (مُشفّر)</li>
+</ul>
+</li>
+<li><strong>احتفظ بعدة نسخ احتياطية</strong> في أماكن مادية مختلفة</li>
+<li><strong>لا تشارك هذا الملف مطلقاً</strong> - أي شخص يمتلكه يمكنه انتحال هوية الـ eepsite (موقع داخل شبكة I2P) الخاص بك</li>
+</ol>
+<h3 id="الاستعادة-من-نسخة-احتياطية">الاستعادة من نسخة احتياطية</h3>
+<p>لاستعادة eepsite الخاص بك على نظام جديد أو بعد إعادة التثبيت:</p>
+<ol>
+<li>ثبّت I2P وقم بإنشاء وتهيئة إعدادات الـ tunnel الخاصة بك</li>
+<li><strong>أوقف الـ tunnel</strong> قبل نسخ المفتاح</li>
+<li>انسخ ملف <code>eepPriv.dat</code> الاحتياطي إلى الموقع الصحيح</li>
+<li>ابدأ الـ tunnel - سيستخدم عنوان .b32 الأصلي الخاص بك</li>
+</ol>
+<hr>
+<h2 id="إذا-لم-تكن-تسجل-نطاقا">إذا لم تكن تسجّل نطاقًا</h2>
+<p><strong>تهانينا!</strong> إذا لم تكن تخطط لتسجيل اسم نطاق مخصص <code>.i2p</code>، فإن eepsite (موقع ويب على شبكة I2P) الخاص بك أصبح الآن مكتملًا وقيد التشغيل.</p>
+<p>يمكنك: - مشاركة عنوان <code>.b32.i2p</code> الخاص بك مع الآخرين - الوصول إلى موقعك عبر شبكة I2P باستخدام أي متصفح يدعم I2P - تحديث ملفات موقعك في مجلد <code>docroot</code> في أي وقت - مراقبة حالة الـ tunnel لديك في Hidden Services Manager (مدير الخدمات المخفية)</p>
+<p><strong>إذا كنت تريد اسم نطاق مقروءاً للبشر</strong> (مثل <code>mysite.i2p</code> بدلاً من عنوان .b32 طويل)، فانتقل إلى القسم التالي.</p>
+<hr>
+<h2 id="تسجيل-نطاق-i2p-الخاص-بك">تسجيل نطاق I2P الخاص بك</h2>
+<p>إن نطاق <code>.i2p</code> المقروء للبشر (مثل <code>testwebsite.i2p</code>) أسهل بكثير في التذكر والمشاركة من عنوان <code>.b32.i2p</code> طويل. تسجيل النطاق مجاني ويربط الاسم الذي تختاره بالعنوان التشفيري لـ eepsite الخاص بك.</p>
+<h3 id="المتطلبات-الأساسية">المتطلبات الأساسية</h3>
+<ul>
+<li>يجب أن يكون eepsite الخاص بك قيد التشغيل مع مؤشّر أخضر</li>
+<li>يجب أن تكون قد عيّنت <strong>اسم مضيف الموقع</strong> في إعدادات tunnel لديك (الخطوة 2)</li>
+<li>مثال: <code>testwebsite.i2p</code> أو <code>myblog.i2p</code></li>
+</ul>
+<h3 id="الخطوة-1-توليد-سلسلة-المصادقة">الخطوة 1: توليد سلسلة المصادقة</h3>
+<ol>
+<li><strong>عُد إلى تهيئة tunnel الخاصة بك</strong> في مدير الخدمات المخفية</li>
+<li>انقر على إدخال <strong>خادم الويب I2P</strong> الخاص بك لفتح الإعدادات</li>
+<li>مرّر لأسفل للعثور على زر <strong>مصادقة التسجيل</strong></li>
+</ol>
+<p><figure>
+  <img 
+    src="../../../../images/guides/eepsite/registration-authentication.png" 
+    alt="مصادقة التسجيل"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<ol start="4">
+<li>انقر <strong>Registration Authentication</strong></li>
+<li><strong>انسخ سلسلة المصادقة كاملة</strong> المعروضة لـ &ldquo;Authentication for adding host [yourdomainhere]&rdquo;</li>
+</ol>
+<p>ستبدو سلسلة المصادقة كما يلي:</p>
+<pre tabindex="0"><code>testwebsite.i2p=I8WiuSx1TcYAutCrhLveZ6gghdqsIJ1v9noSGPb7ItYjxaK5LHVNxgC60KuEu95nqCCF2qwgnW~2ehIY9vsi1iPForksdU3GALrQq4S73meoIIXarCCdb~Z6Ehj2-yLWI8WiuSx1TcYAutCrhLveZ6gghdqsIJ1v9noSGPb7ItYjxaK5LHVNxgC60KuEu95nqCCF2qwgnW~2ehIY9vsi1iPForksdU3GALrQq4S73meoIIXarCCdb~Z6Ehj2-yLWI8WiuSx1TcYAutCrhLveZ6gghdqsIJ1v9noSGPb7ItYjxaK5LHVNxgC60KuEu95nqCCF2qwgnW~2ehIY9vsi1iPForksdU3GALrQq4S73meoIIXarCCdb~Z6Ehj2-yLWI8WiuSx1TcYAutCrhLveZ6gghdqsIJ1v9noSGPb7ItYjxaK5LHVNxgC60KuEu95nqCCF2qwgnW~2ehIY9vsi1uNxFZ0HN7tQbbVj1pmbahepQZNxEW0ufwnMYAoFo8opBQAEAAcAAA==#!date=1762104890#sig=9DjEfrcNRxsoSxiE0Mp0-7rH~ktYWtgwU8c4J0eSo0VHbGxDxdiO9D1Cvwcx8hkherMO07UWOC9BWf-1wRyUAw==
+</code></pre><p>تتضمن هذه السلسلة:</p>
+<ul>
+<li>اسم النطاق الخاص بك (<code>testwebsite.i2p</code>)</li>
+<li>عنوان الوجهة الخاص بك (المعرّف التشفيري الطويل)</li>
+<li>طابع زمني</li>
+<li>توقيع تشفيري يثبت أنك تملك المفتاح الخاص</li>
+</ul>
+<p><strong>احتفظ بسلسلة المصادقة هذه</strong> - ستحتاجها لكلتا خدمتي التسجيل.</p>
+<h3 id="الخطوة-2-سجل-في-statsi2p">الخطوة 2: سجّل في stats.i2p</h3>
+<ol>
+<li><strong>انتقل إلى</strong> <a href="http://stats.i2p/i2p/addkey.html">stats.i2p Add Key</a>
+ (ضمن I2P)</li>
+</ol>
+<p><figure>
+  <img 
+    src="../../../../images/guides/eepsite/stats-i2p-add.png" 
+    alt="تسجيل نطاق stats.i2p"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<ol start="2">
+<li><strong>الصق سلسلة المصادقة</strong> في الحقل &ldquo;Authentication String&rdquo;</li>
+<li><strong>أضِف اسمك</strong> (اختياري) - القيمة الافتراضية: &ldquo;Anonymous&rdquo;</li>
+<li><strong>أضِف وصفًا</strong> (موصى به) - صف بإيجاز ما يدور حوله eepsite (موقع داخل شبكة I2P) الخاص بك
+<ul>
+<li>مثال: &ldquo;I2P Eepsite جديد&rdquo;، &ldquo;مدونة شخصية&rdquo;، &ldquo;خدمة مشاركة الملفات&rdquo;</li>
+</ul>
+</li>
+<li><strong>حدِّد &ldquo;HTTP Service?&rdquo;</strong> إذا كان هذا موقع ويب (اتركه محددًا لمعظم eepsites)
+<ul>
+<li>ألغِ التحديد لـ IRC وNNTP وproxies وXMPP وgit، إلخ.</li>
+</ul>
+</li>
+<li>انقر <strong>Submit</strong></li>
+</ol>
+<p>إذا نجحت العملية، فسترى رسالة تأكيد تفيد بأنه تمت إضافة نطاقك إلى دفتر عناوين stats.i2p.</p>
+<h3 id="الخطوة-3-التسجيل-لدى-regi2p">الخطوة 3: التسجيل لدى reg.i2p</h3>
+<p>لضمان أقصى قدر من التوفّر، ينبغي عليك أيضًا التسجيل لدى خدمة reg.i2p:</p>
+<ol>
+<li><strong>انتقل إلى</strong> <a href="http://reg.i2p/add">reg.i2p Add Domain</a>
+ (ضمن I2P)</li>
+</ol>
+<p><figure>
+  <img 
+    src="../../../../images/guides/eepsite/reg-i2p-add.png" 
+    alt="تسجيل نطاق reg.i2p"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<ol start="2">
+<li><strong>الصق سلسلة المصادقة نفسها</strong> في الحقل &ldquo;Auth string&rdquo;</li>
+<li><strong>أضف وصفًا</strong> (اختياري لكنه مُوصى به)
+<ul>
+<li>يساعد هذا مستخدمي I2P الآخرين على فهم ما يقدمه موقعك</li>
+</ul>
+</li>
+<li>انقر <strong>Submit</strong></li>
+</ol>
+<p>ينبغي أن تتلقى تأكيدًا بأن نطاقك قد تم تسجيله.</p>
+<h3 id="الخطوة-4-انتظر-الانتشار">الخطوة 4: انتظر الانتشار</h3>
+<p>بعد الإرسال إلى الخدمتين كلتيهما، سينتشر تسجيل نطاقك عبر نظام دفتر العناوين في شبكة I2P.</p>
+<p><strong>الجدول الزمني للانتشار</strong>: - <strong>التسجيل الأولي</strong>: فوري عبر خدمات التسجيل - <strong>الانتشار على مستوى الشبكة</strong>: من عدة ساعات إلى 24 ساعة أو أكثر - <strong>التوافر الكامل</strong>: قد يستغرق ما يصل إلى 48 ساعة لتحديث جميع routers</p>
+<p><strong>هذا طبيعي!</strong> يقوم نظام دفتر العناوين الخاص بـ I2P بالتحديث بشكل دوري، وليس على الفور. موقعك eepsite يعمل - يحتاج المستخدمون الآخرون فقط إلى استلام دفتر العناوين المحدّث.</p>
+<h3 id="تحقق-من-نطاقك">تحقق من نطاقك</h3>
+<p>بعد بضع ساعات، يمكنك اختبار نطاقك:</p>
+<ol>
+<li><strong>افتح علامة تبويب جديدة</strong> في متصفح I2P لديك</li>
+<li>جرّب الوصول إلى نطاقك مباشرةً: <code>http://yourdomainname.i2p</code></li>
+<li>إذا تم التحميل، فهذا يعني أن نطاقك مسجَّل وقيد الانتشار!</li>
+</ol>
+<p>إذا لم يعمل بعد: - انتظر مدة أطول (يتم تحديث دفاتر العناوين وفق جدولها الخاص) - قد يحتاج دفتر عناوين router لديك بعض الوقت للمزامنة - جرّب إعادة تشغيل I2P router لإجبار دفتر العناوين على التحديث</p>
+<h3 id="ملاحظات-مهمة">ملاحظات مهمة</h3>
+<ul>
+<li><strong>التسجيل دائم</strong>: بمجرد تسجيل النطاق وانتشاره، سيشير نطاقك إلى عنوان <code>.b32.i2p</code> الخاص بك بشكل دائم</li>
+<li><strong>لا يمكن تغيير الوجهة</strong>: لا يمكنك تحديث العنوان <code>.b32.i2p</code> الذي يشير إليه نطاقك - ولهذا فإن الاحتفاظ بنسخة احتياطية من <code>eepPriv.dat</code> أمر بالغ الأهمية</li>
+<li><strong>ملكية النطاق</strong>: لا يستطيع تسجيل النطاق أو تحديثه إلا حامل المفتاح الخاص</li>
+<li><strong>خدمة مجانية</strong>: تسجيل النطاق على I2P مجاني، يديره المجتمع، ولامركزي</li>
+<li><strong>جهات تسجيل متعددة</strong>: التسجيل لدى كل من stats.i2p و reg.i2p يزيد الموثوقية وسرعة الانتشار</li>
+</ul>
+<hr>
+<h2 id="تهانينا">تهانينا!</h2>
+<p>أصبح I2P eepsite الخاص بك يعمل الآن بكامل طاقته مع نطاق مُسجَّل!</p>
+<p><strong>الخطوات التالية</strong>: - أضف مزيدًا من المحتوى إلى مجلد <code>docroot</code> الخاص بك - شارك نطاقك مع مجتمع I2P - احفظ النسخة الاحتياطية لـ<code>eepPriv.dat</code> بأمان - راقب حالة tunnel الخاصة بك بانتظام - فكّر في الانضمام إلى منتديات I2P أو IRC للترويج لموقعك</p>
+<p>مرحبًا بك في شبكة I2P! 🎉</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../ar/docs/guides/%D8%A5%D9%86%D8%B4%D8%A7%D8%A1-%D9%86%D9%81%D9%82-ssh-%D9%84%D9%84%D9%88%D8%B5%D9%88%D9%84-%D8%A5%D9%84%D9%89-i2p-%D8%B9%D9%86-%D8%A8%D9%8F%D8%B9%D8%AF/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">إنشاء نفق SSH للوصول إلى I2P عن بُعد</span>
+                        </a>
+                    
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/ar/docs/guides/creating-an-eepsite.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">ابقَ على اطلاع بأخبار I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="أدخل بريدك الإلكتروني" required>
+                            <button type="submit">اشترك</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="../../../../ar/financial-support/">تبرع</a></li>
+                    <li><a href="../../../../ar/docs/overview/intro/">مقدمة I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>المجتمع</h3>
+                <ul>
+                    <li><a href="../../../../ar/get-involved/">شارك معنا</a></li>
+                    <li><a href="../../../../ar/blog/">مدونة</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">المنتديات الرسمية</a></li>
+                    <li><a href="../../../../ar/contact/">اتصل بنا</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>الموارد</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">إحصائيات I2P</a></li>
+                    <li><a href="../../../../ar/papers/">بحث</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">ستورمي كلاود</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 مشروع الإنترنت الخفي. مرخص تحت Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../ar/privacy/">الخصوصية</a>
+                <a href="../../../../ar/terms/">الشروط</a>
+                <a href="../../../../ar/about/media/">الصحافة</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="إغلاق">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>استطلاع المجتمع</h2>
+            <p class="modal-subtitle">نود أن نسمع منك</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                يساعد تصويتك في تشكيل مستقبل I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

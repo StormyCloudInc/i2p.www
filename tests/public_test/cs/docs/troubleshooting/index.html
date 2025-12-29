@@ -1,0 +1,2068 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Příručka pro odstraňování problémů I2P routeru | I2P - Projekt neviditelného internetu</title>
+
+    <meta name="description" content="Komplexní průvodce odstraňováním běžných problémů I2P routeru, včetně potíží s konektivitou, výkonem a konfigurací">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Příručka pro odstraňování problémů I2P routeru | I2P - Projekt neviditelného internetu">
+    <meta property="og:description" content="Komplexní průvodce odstraňováním běžných problémů I2P routeru, včetně potíží s konektivitou, výkonem a konfigurací">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/cs/docs/troubleshooting/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P Beta stránky jsou nyní spuštěny. Problémy s e-mailem hlaste na stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Zavřít banner" title="Zavřít banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../cs/" class="logo-link">
+                    <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../cs/about/" class="">O aplikaci</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../cs/about/">Přehled</a></li>
+                            <li><a href="../../../cs/papers/">Výzkumné práce</a></li>
+                            <li><a href="../../../cs/about/media/">Pro média</a></li>
+                            <li><a href="../../../cs/contact/">Kontaktujte nás</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../cs/docs/" class="active">Dokumentace</a></li>
+                    <li><a href="../../../cs/downloads/" class="">Ke stažení</a></li>
+                    <li><a href="../../../cs/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../cs/get-involved/" class="">Zapojte se</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../cs/get-involved/">Přehled</a></li>
+                            <li><a href="../../../cs/feedback/">Návrhy funkcí</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">cs</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../en/docs/troubleshooting/"
+                                class="lang-option">Angličtina</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../es/docs/troubleshooting/"
+                                class="lang-option">Španělština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ko/docs/troubleshooting/"
+                                class="lang-option">Korejština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../zh/docs/troubleshooting/"
+                                class="lang-option">Čínština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ru/docs/troubleshooting/"
+                                class="lang-option">Ruština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../cs/docs/troubleshooting/"
+                                class="lang-option active">Čeština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../de/docs/troubleshooting/"
+                                class="lang-option">Němčina</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../fr/docs/troubleshooting/"
+                                class="lang-option">Francouzština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../tr/docs/troubleshooting/"
+                                class="lang-option">Turečtina</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../vi/docs/troubleshooting/"
+                                class="lang-option">Vietnamština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../hi/docs/troubleshooting/"
+                                class="lang-option">Hindština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ar/docs/troubleshooting/"
+                                class="lang-option">Arabština</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../pt/docs/troubleshooting/"
+                                class="lang-option">Portugalština</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../cs/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../cs/downloads/" class="btn btn-primary">Získat I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#router-se-nespustí-nebo-se-okamžitě-zhroutí">Router se nespustí nebo se okamžitě zhroutí</a></li>
+    <li><a href="#řešení-stavu-network-firewalled">Řešení stavu &ldquo;Network: Firewalled&rdquo;</a></li>
+    <li><a href="#router-uvízl-ve-stavu-spouštění-nebo-testování">Router uvízl ve stavu &ldquo;Spouštění&rdquo; nebo &ldquo;Testování&rdquo;</a></li>
+    <li><a href="#nízké-rychlosti-vypršení-časových-limitů-a-selhání-při-vytváření-tunnelů">Nízké rychlosti, vypršení časových limitů a selhání při vytváření tunnelů</a></li>
+    <li><a href="#vysoké-využití-procesoru-a-paměti">Vysoké využití procesoru a paměti</a></li>
+    <li><a href="#problémy-s-torrenty-v-i2psnarku">Problémy s torrenty v I2PSnarku</a></li>
+    <li><a href="#git-přes-i2p-konfigurace-a-odstraňování-problémů">Git přes I2P konfigurace a odstraňování problémů</a></li>
+    <li><a href="#přístup-k-eepsites-a-překlad-domén-i2p">Přístup k eepsites a překlad domén .i2p</a></li>
+    <li><a href="#selhání-instalace-a-problémy-s-balíčky">Selhání instalace a problémy s balíčky</a></li>
+    <li><a href="#poškození-konfiguračního-souboru-a-jeho-obnova">Poškození konfiguračního souboru a jeho obnova</a></li>
+    <li><a href="#vysvětlení-běžných-chybových-hlášení">Vysvětlení běžných chybových hlášení</a></li>
+    <li><a href="#výzvy-specifické-pro-platformu">Výzvy specifické pro platformu</a>
+      <ul>
+        <li><a href="#problémy-s-oprávněními-a-službami-v-linuxu">Problémy s oprávněními a službami v Linuxu</a></li>
+        <li><a href="#rušení-brány-firewall-systému-windows-a-antiviru">Rušení brány firewall systému Windows a antiviru</a></li>
+        <li><a href="#gatekeeper-v-macos-blokuje-instalaci">Gatekeeper v macOS blokuje instalaci</a></li>
+        <li><a href="#problémy-s-aplikací-i2p-pro-android">Problémy s aplikací I2P pro Android</a></li>
+      </ul>
+    </li>
+    <li><a href="#problémy-s-reseedem-a-bootstrapem">Problémy s reseedem a bootstrapem</a></li>
+    <li><a href="#kdy-vyhledat-další-pomoc">Kdy vyhledat další pomoc</a></li>
+    <li><a href="#závěr">Závěr</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../cs/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../cs/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../cs/docs/">Dokumentace</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Příručka pro odstraňování problémů I2P routeru</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Tento překlad byl vytvořen pomocí strojového učení a nemusí být 100% přesný.</span>
+    
+    
+    <a href="../../../en/docs/troubleshooting/" class="disclaimer-link">Zobrazit anglickou verzi</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Příručka pro odstraňování problémů I2P routeru</h1>
+                    
+                        <p class="article-description">Komplexní průvodce odstraňováním běžných problémů I2P routeru, včetně potíží s konektivitou, výkonem a konfigurací</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <p>I2P routery nejčastěji selhávají kvůli <strong>problémům s přesměrováním portů</strong>, <strong>nedostatečnému vyhrazení šířky pásma</strong> a <strong>nedostatečnému času pro bootstrap</strong>. Tyto tři faktory představují více než 70 % nahlášených problémů. Router po startu potřebuje alespoň <strong>10-15 minut</strong> k plné integraci do sítě, <strong>minimální šířku pásma 128 KB/sec</strong> (doporučeno 256 KB/sec) a správné <strong>přesměrování portů UDP/TCP</strong> k dosažení stavu neblokovaného firewallem. Noví uživatelé často očekávají okamžité připojení a předčasně restartují, což resetuje průběh integrace a vytváří frustrující smyčku. Tato příručka poskytuje podrobná řešení všech hlavních problémů I2P, které ovlivňují verze 2.10.0 a novější.</p>
+<p>Architektura anonymity I2P ze své podstaty vyměňuje rychlost za soukromí prostřednictvím víceskokových šifrovaných tunnelů. Pochopení tohoto základního návrhu pomáhá uživatelům nastavit si realistická očekávání a efektivně řešit potíže, místo aby běžné chování mylně považovali za problémy.</p>
+<h2 id="router-se-nespustí-nebo-se-okamžitě-zhroutí">Router se nespustí nebo se okamžitě zhroutí</h2>
+<p>Nejčastější potíže při spuštění pramení z <strong>konfliktů portů</strong>, <strong>nekompatibility verzí Javy</strong> nebo <strong>poškozených konfiguračních souborů</strong>. Než budete pátrat po hlubších příčinách, ověřte, zda už neběží jiná instance I2P.</p>
+<p><strong>Zkontrolujte, zda neběží žádné kolidující procesy:</strong></p>
+<p>Linux: <code>ps aux | grep i2p</code> nebo <code>netstat -tulpn | grep 7657</code></p>
+<p>Windows: Správce úloh → Podrobnosti → najděte java.exe s i2p v příkazovém řádku</p>
+<p>macOS: Monitor aktivity → vyhledejte &ldquo;i2p&rdquo;</p>
+<p>Pokud existuje zombie proces, ukončete ho: <code>pkill -9 -f i2p</code> (Linux/Mac) nebo <code>taskkill /F /IM javaw.exe</code> (Windows)</p>
+<p><strong>Zkontrolujte kompatibilitu verze Javy:</strong></p>
+<p>I2P 2.10.0+ vyžaduje <strong>minimálně Java 8</strong>, doporučena je Java 11 nebo novější. Ověřte, že vaše instalace zobrazuje &ldquo;mixed mode&rdquo; (nikoli &ldquo;interpreted mode&rdquo;):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>java -version
+</span></span></code></pre></div><p>Mělo by se zobrazit: OpenJDK nebo Oracle Java, verze 8+, &ldquo;mixed mode&rdquo;</p>
+<p><strong>Vyhněte se:</strong> GNU GCJ, zastaralým implementacím Javy, pouze interpretovaným režimům</p>
+<p><strong>Běžné konflikty portů</strong> nastávají, když se více služeb přetahuje o výchozí porty I2P. Konzole routeru (7657), I2CP (7654), SAM (7656) a HTTP proxy (4444) musí být volné. Zkontrolujte konflikty: <code>netstat -ano | findstr &quot;7657 4444 7654&quot;</code> (Windows) nebo <code>lsof -i :7657,4444,7654</code> (Linux/Mac).</p>
+<p><strong>Poškození konfiguračního souboru</strong> se projevuje jako okamžité pády s chybami parsování v logech. Router.config vyžaduje kódování UTF-8 bez BOM, používá <code>=</code> jako oddělovač (nikoli <code>:</code>) a zakazuje určité speciální znaky. Zálohujte a poté zkontrolujte: <code>~/.i2p/router.config</code> (Linux), <code>%LOCALAPPDATA%\I2P\router.config</code> (Windows), <code>~/Library/Application Support/i2p/router.config</code> (macOS).</p>
+<p>Pro resetování konfigurace při zachování identity: Zastavte I2P, zálohujte router.keys a adresář keyData, smažte router.config a restartujte. Router znovu vygeneruje výchozí konfiguraci.</p>
+<p><strong>Příliš nízké přidělení haldy Javy</strong> způsobuje pády s chybou OutOfMemoryError (chyba nedostatku paměti). Upravte wrapper.config a zvyšte <code>wrapper.java.maxmemory</code> z výchozích 128 nebo 256 na <strong>minimálně 512</strong> (1024 pro routery s vysokou šířkou pásma). To vyžaduje úplné vypnutí, vyčkání 11 minut a poté restart - kliknutí na &ldquo;Restart&rdquo; v konzoli změnu neaplikuje.</p>
+<h2 id="řešení-stavu-network-firewalled">Řešení stavu &ldquo;Network: Firewalled&rdquo;</h2>
+<p>Stav blokovaný firewallem znamená, že router nemůže přijímat přímá příchozí spojení, což nutí spoléhat se na introducers (uzly zprostředkovávající navázání příchozího spojení). I když router v tomto stavu funguje, <strong>výkon se výrazně zhoršuje</strong> a přínos pro síť zůstává minimální. Dosažení stavu bez blokování firewallem vyžaduje správné přesměrování portů.</p>
+<p><strong>Router náhodně vybere port</strong> v rozmezí 9000-31000 pro komunikaci. Svůj port najdete na http://127.0.0.1:7657/confignet - hledejte &ldquo;UDP Port&rdquo; a &ldquo;TCP Port&rdquo; (obvykle stejné číslo). Pro optimální výkon musíte přesměrovat porty pro <strong>jak UDP, tak TCP</strong>, i když samotné UDP umožňuje základní funkčnost.</p>
+<p><strong>Povolit automatické přesměrování portů přes UPnP</strong> (nejjednodušší metoda):</p>
+<ol>
+<li>Přejděte na http://127.0.0.1:7657/confignet</li>
+<li>Zaškrtněte &ldquo;Enable UPnP&rdquo;</li>
+<li>Uložte změny a restartujte router</li>
+<li>Počkejte 5-10 minut a ověřte, že se stav změní z &ldquo;Network: Firewalled&rdquo; na &ldquo;Network: OK&rdquo;</li>
+</ol>
+<p>UPnP vyžaduje podporu ze strany routeru (která je ve výchozím nastavení povolena u většiny spotřebitelských routerů vyrobených po roce 2010) a správnou konfiguraci sítě.</p>
+<p><strong>Ruční přesměrování portů</strong> (vyžaduje se, pokud selže UPnP):</p>
+<ol>
+<li>Poznamenejte si svůj port I2P z http://127.0.0.1:7657/confignet (např. 22648)</li>
+<li>Zjistěte svou místní IP adresu: <code>ipconfig</code> (Windows), <code>ip addr</code> (Linux), Předvolby systému → Síť (macOS)</li>
+<li>Otevřete administrační rozhraní routeru (obvykle 192.168.1.1 nebo 192.168.0.1)</li>
+<li>Přejděte do Port Forwarding (může být v části Advanced, NAT nebo Virtual Servers)</li>
+<li>Vytvořte dvě pravidla:
+<ul>
+<li>External Port: [váš port I2P] → Internal IP: [váš počítač] → Internal Port: [stejný] → Protocol: <strong>UDP</strong></li>
+<li>External Port: [váš port I2P] → Internal IP: [váš počítač] → Internal Port: [stejný] → Protocol: <strong>TCP</strong></li>
+</ul>
+</li>
+<li>Uložte konfiguraci a případně restartujte router</li>
+</ol>
+<p><strong>Ověřte přesměrování portů</strong> pomocí online testovacích nástrojů po konfiguraci. Pokud zjišťování selže, zkontrolujte nastavení firewallu – jak systémový firewall, tak případný firewall antiviru musí povolit port I2P.</p>
+<p><strong>Alternativa Hidden mode</strong> pro restriktivní sítě, kde není možné přesměrování portů: Povolte na http://127.0.0.1:7657/confignet → zaškrtněte &ldquo;Hidden mode&rdquo;. Router zůstane za firewallem, ale optimalizuje se pro tento stav tím, že bude výhradně používat SSU introducers (zprostředkovatele SSU). Výkon bude pomalejší, ale funkční.</p>
+<h2 id="router-uvízl-ve-stavu-spouštění-nebo-testování">Router uvízl ve stavu &ldquo;Spouštění&rdquo; nebo &ldquo;Testování&rdquo;</h2>
+<p>Tyto přechodné stavy během počátečního bootstrapu se obvykle vyřeší do <strong>10-15 minut u nových instalací</strong> nebo <strong>3-5 minut u zavedených routers</strong>. Předčasný zásah často problémy zhoršuje.</p>
+<p><strong>&ldquo;Network: Testing&rdquo;</strong> označuje, že router ověřuje dosažitelnost prostřednictvím různých typů připojení (přímé, introducers (zprostředkovatelé), více verzí protokolu). To je <strong>normální během prvních 5–10 minut</strong> po spuštění. Router testuje více scénářů, aby určil optimální konfiguraci.</p>
+<p><strong>&ldquo;Rejecting tunnels: starting up&rdquo;</strong> se zobrazuje během bootstrapu, když router nemá dostatek informací o peerech. Router nebude přeposílat provoz, dokud nebude dostatečně integrován. Tato zpráva by měla zmizet po 10-20 minutách, jakmile bude v netDb 50+ routers.</p>
+<p><strong>Odchylka hodin znemožňuje testování dosažitelnosti.</strong> I2P vyžaduje, aby systémový čas byl v odchylce <strong>±60 sekund</strong> vůči síťovému času. Rozdíl přesahující 90 sekund způsobí automatické odmítnutí spojení. Synchronizujte systémové hodiny:</p>
+<p>Linux: <code>sudo timedatectl set-ntp true &amp;&amp; sudo systemctl restart systemd-timesyncd</code></p>
+<p>Windows: Ovládací panely → Datum a čas → Internetový čas → Aktualizovat nyní → Povolit automatickou synchronizaci</p>
+<p>macOS: Předvolby systému → Datum a čas → Povolte &ldquo;Nastavit datum a čas automaticky&rdquo;</p>
+<p>Po opravě odchylky systémového času úplně restartujte I2P pro správnou integraci.</p>
+<p><strong>Nedostatečné přidělení šířky pásma</strong> brání úspěšnému testování. Router potřebuje dostatečnou kapacitu pro sestavení testovacích tunnels. Nastavte na http://127.0.0.1:7657/config:</p>
+<ul>
+<li><strong>Minimální použitelné:</strong> Příchozí 96 KB/sec, Odchozí 64 KB/sec</li>
+<li><strong>Doporučený standard:</strong> Příchozí 256 KB/sec, Odchozí 128 KB/sec</li>
+<li><strong>Optimální výkon:</strong> Příchozí 512+ KB/sec, Odchozí 256+ KB/sec</li>
+<li><strong>Procento sdílení:</strong> 80% (umožňuje, aby router přispíval šířkou pásma do sítě)</li>
+</ul>
+<p>Nižší šířka pásma může sice fungovat, ale prodlužuje dobu integrace z minut na hodiny.</p>
+<p><strong>Poškozená netDb</strong> v důsledku nesprávného vypnutí nebo chyb disku způsobuje neustálé testovací smyčky. Router nemůže dokončit testování bez platných dat o uzlech:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Stop I2P completely</span>
+</span></span><span style="display:flex;"><span>i2prouter stop    <span style="color:#75715e"># or systemctl stop i2p</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Delete corrupted database (safe - will reseed automatically)</span>
+</span></span><span style="display:flex;"><span>rm -rf ~/.i2p/netDb/*
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Restart and allow 10-15 minutes for reseed</span>
+</span></span><span style="display:flex;"><span>i2prouter start
+</span></span></code></pre></div><p>Windows: Odstraňte obsah <code>%APPDATA%\I2P\netDb\</code> nebo <code>%LOCALAPPDATA%\I2P\netDb\</code></p>
+<p><strong>Firewall blokující reseed (počáteční získávání peerů)</strong> znemožňuje získání počátečních peerů. Během bootstrapu I2P načítá informace o routeru z HTTPS reseed serverů. Firewally v korporátních sítích nebo u ISP mohou tato spojení blokovat. Nastavte reseed proxy na adrese http://127.0.0.1:7657/configreseed, pokud se nacházíte v restriktivní síti.</p>
+<h2 id="nízké-rychlosti-vypršení-časových-limitů-a-selhání-při-vytváření-tunnelů">Nízké rychlosti, vypršení časových limitů a selhání při vytváření tunnelů</h2>
+<p>Architektura I2P přirozeně vede k <strong>3-10x pomalejším rychlostem než clearnet (běžný otevřený internet)</strong> kvůli vícehopovému šifrování, režii paketů a nepředvídatelnosti tras. Při sestavení tunnelu se prochází více routerů, z nichž každý přidává latenci. Pochopení toho pomáhá předejít záměně normálního chování za problémy.</p>
+<p><strong>Typická očekávání ohledně výkonu:</strong></p>
+<ul>
+<li>Prohlížení .i2p webů: zpočátku se stránky načítají 10-30 sekund, rychlejší, jakmile jsou tunnel vytvořeny</li>
+<li>Torrentování přes I2PSnark: 10-100 KB/s na torrent podle počtu seederů a podmínek sítě</li>
+<li>Stahování velkých souborů: vyžaduje trpělivost - soubory v řádu megabajtů mohou trvat minuty, v řádu gigabajtů hodiny</li>
+<li>První připojení je nejpomalejší: budování tunnel trvá 30-90 sekund; následující připojení používají existující tunnels</li>
+</ul>
+<p><strong>Míra úspěšnosti sestavování tunnelů</strong> naznačuje zdraví sítě. Zkontrolujte na http://127.0.0.1:7657/tunnels:</p>
+<ul>
+<li><strong>Nad 60%:</strong> Normální, zdravý provoz</li>
+<li><strong>40-60%:</strong> Hraniční, zvažte navýšení šířky pásma nebo snížení zátěže</li>
+<li><strong>Pod 40%:</strong> Problematické - naznačuje nedostatečnou šířku pásma, síťové problémy nebo špatný výběr peerů</li>
+</ul>
+<p><strong>Zvyšte přidělení šířky pásma</strong> jako první krok optimalizace. Většina problémů s pomalým výkonem pramení z nedostatku šířky pásma. Na adrese http://127.0.0.1:7657/config limity navyšujte postupně a sledujte grafy na http://127.0.0.1:7657/graphs.</p>
+<p><strong>Pro DSL/Kabel (1-10 Mbps připojení):</strong> - Příchozí: 400 KB/sec - Odchozí: 200 KB/sec - Sdílení: 80% - Paměť: 384 MB (upravte wrapper.config)</p>
+<p><strong>Pro vysokorychlostní (10-100+ Mbps připojení):</strong> - Příchozí: 1500 KB/sec   - Odchozí: 1000 KB/sec - Sdílení: 80-100% - Paměť: 512-1024 MB - Zvažte: Zvyšte počet participating tunnels (účastnické tunely) na 2000-5000 na adrese http://127.0.0.1:7657/configadvanced</p>
+<p><strong>Optimalizujte konfiguraci tunnel</strong> pro lepší výkon. Otevřete konkrétní nastavení tunnel na http://127.0.0.1:7657/i2ptunnel a upravte každý tunnel:</p>
+<ul>
+<li><strong>Počet Tunnel:</strong> Zvyšte z 2 na 3-4 (více dostupných cest)</li>
+<li><strong>Počet záloh:</strong> Nastavte na 1-2 (rychlé přepnutí při selhání tunnel)</li>
+<li><strong>Délka Tunnel:</strong> Výchozí 3 skoky poskytují dobrou rovnováhu; snížení na 2 zlepší rychlost, ale sníží anonymitu</li>
+</ul>
+<p><strong>Nativní kryptografická knihovna (jbigi)</strong> poskytuje 5-10x lepší výkon než šifrování implementované čistě v Javě. Ověřte, že je načtená, na http://127.0.0.1:7657/logs - hledejte &ldquo;jbigi loaded successfully&rdquo; nebo &ldquo;Using native CPUID implementation&rdquo;. Pokud chybí:</p>
+<p>Linux: Obvykle automaticky detekováno a načteno z ~/.i2p/jbigi-*.so Windows: Zkontrolujte jbigi.dll v instalačním adresáři I2P Pokud chybí: Nainstalujte nástroje pro sestavení a zkompilujte ze zdrojového kódu, nebo stáhněte předkompilované binární soubory z oficiálních repozitářů</p>
+<p><strong>Nechte router běžet nepřetržitě.</strong> Každý restart resetuje integraci do sítě a vyžaduje 30-60 minut na znovuvybudování sítě tunnel a vztahů s peery. Stabilní routery s vysokou dobou provozu jsou při stavbě tunnel vybírány přednostně, což vytváří pozitivní zpětnou vazbu pro výkon.</p>
+<h2 id="vysoké-využití-procesoru-a-paměti">Vysoké využití procesoru a paměti</h2>
+<p>Nadměrné využití prostředků obvykle naznačuje <strong>nedostatečné přidělení paměti</strong>, <strong>chybějící nativní kryptografické knihovny</strong> nebo <strong>nadměrné zapojení do účasti v síti</strong>. Dobře nakonfigurovaný router by měl během aktivního používání využívat 10-30% CPU a udržovat stabilní využití paměti pod 80% přiděleného heapu.</p>
+<p><strong>Problémy s pamětí se projevují následovně:</strong> - Paměťové grafy s „plochým vrcholem“ (držené na maximu) - Častá garbage collection (odklízení paměti) (pilovitý průběh se strmými poklesy) - OutOfMemoryError v logech - Router při zátěži přestává reagovat - Automatické vypnutí kvůli vyčerpání prostředků</p>
+<p><strong>Zvyšte alokaci haldy Javy</strong> v wrapper.config (vyžaduje úplné vypnutí):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Linux: ~/.i2p/wrapper.config</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Windows: %APPDATA%\I2P\wrapper.config  </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Find and modify:</span>
+</span></span><span style="display:flex;"><span>wrapper.java.maxmemory<span style="color:#f92672">=</span><span style="color:#ae81ff">512</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Recommendations by usage:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Light browsing only: 256</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Standard use (browsing + light torrenting): 512</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Heavy use (multiple applications, active torrenting): 768-1024</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Floodfill or very high bandwidth: 1024-2048</span>
+</span></span></code></pre></div><p><strong>Kritické:</strong> Po úpravě wrapper.config musíte <strong>zcela vypnout</strong> (ne restartovat), počkejte 11 minut na korektní ukončení a poté spusťte načisto. Tlačítko &ldquo;Restart&rdquo; v Router console nenačte znovu nastavení wrapperu.</p>
+<p><strong>Optimalizace CPU vyžaduje nativní kryptografickou knihovnu.</strong> Operace s BigInteger v čisté Javě spotřebují 10–20× více CPU než nativní implementace. Ověřte stav jbigi na http://127.0.0.1:7657/logs během spouštění. Bez jbigi CPU vyskočí na 50–100 % během budování tunnel a šifrovacích operací.</p>
+<p><strong>Snižte zátěž participujících tunnel</strong> pokud je router přetížen:</p>
+<ol>
+<li>Přejděte na http://127.0.0.1:7657/configadvanced</li>
+<li>Nastavte <code>router.maxParticipatingTunnels=1000</code> (výchozí 8000)</li>
+<li>Snižte procento sdílení na http://127.0.0.1:7657/config z 80% na 50%</li>
+<li>Vypněte režim floodfill, pokud je povolen: <code>router.floodfillParticipant=false</code></li>
+</ol>
+<p><strong>Omezte šířku pásma I2PSnark a počet současně běžících torrentů.</strong> Torrentování spotřebovává značné prostředky. Na adrese http://127.0.0.1:7657/i2psnark:</p>
+<ul>
+<li>Omezte počet aktivních torrentů na maximálně 3–5</li>
+<li>Nastavte &ldquo;Up BW Limit&rdquo; a &ldquo;Down BW Limit&rdquo; na rozumné hodnoty (každý 50–100 KB/sec)</li>
+<li>Zastavte torrenty, když je zrovna nepotřebujete</li>
+<li>Vyhněte se seedování desítek torrentů najednou</li>
+</ul>
+<p><strong>Sledujte využití prostředků</strong> pomocí vestavěných grafů na http://127.0.0.1:7657/graphs. Paměť by měla vykazovat rezervu, ne plochý strop. Špičky CPU během vytváření tunnel jsou normální; dlouhodobě vysoké využití CPU naznačuje problémy s konfigurací.</p>
+<p><strong>Pro systémy s výrazně omezenými prostředky</strong> (Raspberry Pi, starší hardware) zvažte <strong>i2pd</strong> (implementace v C++) jako alternativu. i2pd vyžaduje ~130 MB RAM oproti 350+ MB u Java I2P a při podobné zátěži používá ~7% CPU oproti 70%. Mějte na paměti, že i2pd nemá vestavěné aplikace a vyžaduje externí nástroje.</p>
+<h2 id="problémy-s-torrenty-v-i2psnarku">Problémy s torrenty v I2PSnarku</h2>
+<p>Integrace I2PSnark s architekturou I2P router vyžaduje pochopení, že <strong>torrentování závisí zcela na zdraví router tunnel</strong>. Torrenty se nespustí, dokud router nedosáhne dostatečné integrace s 10+ aktivními peery a funkčními tunnels.</p>
+<p><strong>Torrenty zaseknuté na 0 % obvykle naznačují:</strong></p>
+<ol>
+<li><strong>Router není plně integrován:</strong> Po spuštění I2P počkejte 10-15 minut, než se objeví aktivita torrentů</li>
+<li><strong>DHT je vypnuté:</strong> Povolte na http://127.0.0.1:7657/i2psnark → Configuration → zaškrtněte &ldquo;Enable DHT&rdquo; (ve výchozím nastavení povoleno od verze 0.9.2)</li>
+<li><strong>Neplatné nebo nefunkční trackery:</strong> Torrenty v I2P vyžadují trackery specifické pro I2P - trackery z clearnet (veřejný internet) nebudou fungovat</li>
+<li><strong>Nedostatečná konfigurace tunnel:</strong> Zvyšte počet tunnel v I2PSnark Configuration → sekci Tunnels</li>
+</ol>
+<p><strong>Nakonfigurujte I2PSnark tunnels pro lepší výkon:</strong></p>
+<ul>
+<li>Příchozí tunnels: 3-5 (výchozí 2 pro Java I2P, 5 pro i2pd)</li>
+<li>Odchozí tunnels: 3-5</li>
+<li>Délka tunnels: 3 skoky (snižte na 2 pro vyšší rychlost, nižší anonymita)</li>
+<li>Počet tunnels: 3 (zajišťuje stabilní výkon)</li>
+</ul>
+<p><strong>Nezbytné I2P torrentové trackery</strong> k zahrnutí: - tracker2.postman.i2p (primární, nejspolehlivější) - w7tpbzncbcocrqtwwm3nezhnnsw4ozadvi2hmvzdhrqzfxfum7wa.b32.i2p/a</p>
+<p>Odstraňte všechny clearnet trackery (non-.i2p; veřejný internet) - nepřinášejí žádný užitek a vedou k pokusům o připojení, které končí vypršením časového limitu.</p>
+<p><strong>Chyby &ldquo;Torrent not registered&rdquo;</strong> nastávají, když selže komunikace s trackerem. Klikněte pravým tlačítkem na torrent → &ldquo;Start&rdquo; vynutí opětovné ohlášení u trackeru. Pokud to přetrvává, ověřte dostupnost trackeru návštěvou <a href="http://tracker2.postman.i">http://tracker2.postman.i</a>
+2p v prohlížeči nakonfigurovaném pro I2P. Mrtvé trackery nahraďte funkčními alternativami.</p>
+<p><strong>Žádní vrstevníci (peers) se nepřipojují</strong> přestože tracker funguje, naznačuje, že: - Router za firewallem (zlepší se s přesměrováním portů, ale není vyžadováno) - Nedostatečná šířka pásma (zvyšte na 256+ KB/sec)   - Roj je příliš malý (některé torrenty mají 1-2 seedeři; je třeba trpělivost) - DHT je vypnuté (povolte pro vyhledávání vrstevníků bez trackeru)</p>
+<p><strong>Povolte DHT a PEX (Peer Exchange – výměna peerů)</strong> v nastavení I2PSnark. DHT umožňuje nalézat peery bez závislosti na trackeru. PEX zjišťuje peery prostřednictvím již připojených peerů, což urychluje objevování roje.</p>
+<p><strong>Poškození stažených souborů</strong> se díky vestavěné kontrole integrity v I2PSnarku vyskytuje jen zřídka. Pokud je zjištěno:</p>
+<ol>
+<li>Klikněte pravým tlačítkem na torrent → &ldquo;Zkontrolovat&rdquo; vynutí opětovné přepočítání hashů všech částí</li>
+<li>Smažte poškozená data torrentu (ponechá soubor .torrent)</li>
+<li>Klikněte pravým tlačítkem → &ldquo;Spustit&rdquo; pro opětovné stažení s ověřováním částí</li>
+<li>Zkontrolujte disk na chyby, pokud poškození přetrvává: <code>chkdsk</code> (Windows), <code>fsck</code> (Linux)</li>
+</ol>
+<p><strong>Nefunkční sledovaná složka</strong> vyžaduje správné nastavení:</p>
+<ol>
+<li>Konfigurace I2PSnark → &ldquo;Sledovaný adresář&rdquo;: Nastavte absolutní cestu (např. <code>/home/user/torrents/watch</code>)</li>
+<li>Ujistěte se, že proces I2P má oprávnění ke čtení: <code>chmod 755 /path/to/watch</code></li>
+<li>Umístěte soubory .torrent do sledovaného adresáře - I2PSnark je automaticky přidá</li>
+<li>Nastavte &ldquo;Automatické spuštění&rdquo;: Zaškrtněte, mají-li se torrenty spouštět ihned po přidání</li>
+</ol>
+<p><strong>Optimalizace výkonu pro torrentování:</strong></p>
+<ul>
+<li>Omezte současně aktivní torrenty: maximálně 3-5 pro standardní připojení</li>
+<li>Upřednostněte důležité stahování: Dočasně zastavte torrenty s nízkou prioritou</li>
+<li>Zvyšte přidělení šířky pásma pro router: Více šířky pásma = lepší výkon torrentů</li>
+<li>Buďte trpěliví: torrentování v I2P je ze své podstaty pomalejší než BitTorrent na clearnetu (veřejném internetu)</li>
+<li>Seedujte po dokončení stahování: Síť prosperuje díky reciprocitě</li>
+</ul>
+<h2 id="git-přes-i2p-konfigurace-a-odstraňování-problémů">Git přes I2P konfigurace a odstraňování problémů</h2>
+<p>Operace Gitu přes I2P vyžadují buď <strong>konfiguraci SOCKS proxy</strong>, nebo <strong>dedicated I2P tunnels</strong> pro přístup přes SSH/HTTP. Návrh Gitu předpokládá spojení s nízkou latencí, což činí architekturu I2P s vysokou latencí náročnou.</p>
+<p><strong>Nakonfigurujte Git tak, aby používal I2P SOCKS proxy:</strong></p>
+<p>Upravte ~/.ssh/config (vytvořte, pokud neexistuje):</p>
+<pre tabindex="0"><code>Host *.i2p
+    ProxyCommand nc -X 5 -x 127.0.0.1:4447 %h %p
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    Compression yes
+</code></pre><p>Tím se směrují všechna připojení SSH na hosty .i2p přes SOCKS proxy I2P (port 4447). Nastavení ServerAlive udržují spojení i při latenci I2P.</p>
+<p>Pro operace gitu přes HTTP/HTTPS nakonfigurujte git globálně:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git config --global http.proxy socks5h://127.0.0.1:4447
+</span></span><span style="display:flex;"><span>git config --global https.proxy socks5h://127.0.0.1:4447
+</span></span></code></pre></div><p>Poznámka: <code>socks5h</code> provádí rozlišení DNS přes proxy - zásadní pro domény .i2p.</p>
+<p><strong>Vytvořte vyhrazený I2P tunnel pro Git SSH (spolehlivější než SOCKS):</strong></p>
+<ol>
+<li>Přejděte na http://127.0.0.1:7657/i2ptunnel</li>
+<li>&ldquo;Nový klientský tunnel&rdquo; → &ldquo;Standard&rdquo;</li>
+<li>Nakonfigurujte:
+<ul>
+<li>Název: Git-SSH</li>
+<li>Typ: Klient</li>
+<li>Port: 2222 (lokální port pro přístup ke Gitu)</li>
+<li>Cíl: [your-git-server].i2p:22</li>
+<li>Automatické spuštění: Zapnuto</li>
+<li>Počet tunnelů: 3-4 (vyšší pro spolehlivost)</li>
+</ul>
+</li>
+<li>Uložte a spusťte tunnel</li>
+<li>Nastavte SSH tak, aby používalo tunnel: <code>ssh -p 2222 git@127.0.0.1</code></li>
+</ol>
+<p><strong>Chyby autentizace SSH</strong> přes I2P obvykle pramení z:</p>
+<ul>
+<li>Klíč není přidán do ssh-agentu: <code>ssh-add ~/.ssh/id_rsa</code></li>
+<li>Nesprávná oprávnění souboru s klíčem: <code>chmod 600 ~/.ssh/id_rsa</code></li>
+<li>Tunnel neběží: Ověřte na http://127.0.0.1:7657/i2ptunnel, že je stav zelený</li>
+<li>Git server vyžaduje konkrétní typ klíče: Vygenerujte klíč ed25519, pokud RSA selže</li>
+</ul>
+<p><strong>Vypršení časového limitu u operací Git</strong> souvisí s charakteristikami latence I2P:</p>
+<ul>
+<li>Zvyšte časový limit Gitu: <code>git config --global http.postBuffer 524288000</code> (vyrovnávací paměť 500 MB)</li>
+<li>Zvyšte limit nízké rychlosti: <code>git config --global http.lowSpeedLimit 1000</code> a <code>git config --global http.lowSpeedTime 600</code> (čeká 10 minut)</li>
+<li>Pro počáteční klonování použijte shallow clone (mělký klon): <code>git clone --depth 1 [url]</code> (stáhne pouze poslední commit, rychlejší)</li>
+<li>Klonujte v obdobích nižší aktivity: Přetížení sítě ovlivňuje výkon I2P</li>
+</ul>
+<p><strong>Pomalé operace git clone/fetch</strong> vyplývají z architektury I2P. Repozitář o velikosti 100MB může přes I2P trvat 30-60 minut, zatímco na clearnetu (veřejném internetu) jen sekundy. Strategie:</p>
+<ul>
+<li>Použijte mělké klony: <code>--depth 1</code> výrazně snižuje počáteční objem přenesených dat</li>
+<li>Načítejte postupně: Místo úplného klonování načítejte konkrétní větve: <code>git fetch origin branch:branch</code></li>
+<li>Zvažte rsync přes I2P: U velmi velkých repozitářů může rsync dosahovat lepšího výkonu</li>
+<li>Zvyšte počet tunnel (tunelů): Vyšší počet poskytne lepší propustnost při dlouhotrvajících velkých přenosech</li>
+</ul>
+<p><strong>Chyby &ldquo;Connection refused&rdquo;</strong> naznačují nesprávné nastavení tunnelu:</p>
+<ol>
+<li>Ověřte, že I2P router běží: Zkontrolujte http://127.0.0.1:7657</li>
+<li>Potvrďte, že tunnel je aktivní a zelený na http://127.0.0.1:7657/i2ptunnel</li>
+<li>Otestujte tunnel: <code>nc -zv 127.0.0.1 2222</code> (mělo by se připojit, pokud tunnel funguje)</li>
+<li>Zkontrolujte, zda je cíl dostupný: Otevřete v prohlížeči HTTP rozhraní cíle, pokud je k dispozici</li>
+<li>Zkontrolujte logy tunnelu na http://127.0.0.1:7657/logs kvůli konkrétním chybám</li>
+</ol>
+<p><strong>Osvědčené postupy pro Git přes I2P:</strong></p>
+<ul>
+<li>Udržujte I2P router v nepřetržitém provozu pro stabilní přístup k Git repozitářům</li>
+<li>Používejte klíče SSH místo ověřování heslem (méně interaktivních výzev)</li>
+<li>Nakonfigurujte trvalé tunnels namísto dočasných připojení SOCKS</li>
+<li>Zvažte hostování vlastního I2P git serveru pro lepší kontrolu</li>
+<li>Zdokumentujte své .i2p git koncové body pro spolupracovníky</li>
+</ul>
+<h2 id="přístup-k-eepsites-a-překlad-domén-i2p">Přístup k eepsites a překlad domén .i2p</h2>
+<p>Nejčastějším důvodem, proč uživatelé nemohou přistupovat ke stránkám .i2p, je <strong>nesprávná konfigurace proxy v prohlížeči</strong>. Stránky I2P existují pouze v rámci sítě I2P a vyžadují směrování přes HTTP proxy I2P.</p>
+<p><strong>Přesně nakonfigurujte nastavení proxy v prohlížeči:</strong></p>
+<p><strong>Firefox (doporučeno pro I2P):</strong></p>
+<ol>
+<li>Menu → Nastavení → Síťová nastavení → tlačítko Nastavení</li>
+<li>Vyberte &ldquo;Ruční nastavení proxy&rdquo;</li>
+<li>HTTP proxy: <strong>127.0.0.1</strong> Port: <strong>4444</strong></li>
+<li>SSL proxy: <strong>127.0.0.1</strong> Port: <strong>4444</strong></li>
+<li>SOCKS proxy: <strong>127.0.0.1</strong> Port: <strong>4447</strong> (volitelné, pro aplikace SOCKS)</li>
+<li>Zaškrtněte &ldquo;Proxy DNS při použití SOCKS v5&rdquo;</li>
+<li>OK pro uložení</li>
+</ol>
+<p><strong>Zásadní nastavení about:config ve Firefoxu:</strong></p>
+<p>Přejděte na <code>about:config</code> a upravte:</p>
+<ul>
+<li><code>media.peerconnection.ice.proxy_only</code> = <strong>true</strong> (zabraňuje únikům IP přes WebRTC)</li>
+<li><code>keyword.enabled</code> = <strong>false</strong> (zabraňuje přesměrování adres .i2p na vyhledávače)</li>
+<li><code>network.proxy.socks_remote_dns</code> = <strong>true</strong> (DNS přes proxy)</li>
+</ul>
+<p><strong>Omezení pro Chrome/Chromium:</strong></p>
+<p>Chrome používá systémová nastavení proxy, nikoli nastavení specifická pro aplikaci. Ve Windows: Nastavení → vyhledejte &ldquo;proxy&rdquo; → &ldquo;Otevřít nastavení proxy vašeho počítače&rdquo; → Nastavte HTTP: 127.0.0.1:4444 a HTTPS: 127.0.0.1:4445.</p>
+<p>Lepší postup: Použijte rozšíření FoxyProxy nebo Proxy SwitchyOmega pro selektivní směrování domén .i2p.</p>
+<p><strong>&ldquo;Website Not Found In Address Book&rdquo; chyby</strong> znamenají, že routeru chybí kryptografická adresa domény .i2p. I2P používá místní adresáře místo centralizovaného DNS. Řešení:</p>
+<p><strong>Metoda 1: Použijte jump služby</strong> (nejjednodušší pro nové stránky):</p>
+<p>Přejděte na <a href="http://stats.i">http://stats.i</a>
+2p a vyhledejte daný web. Klikněte na odkaz addresshelper: <code>http://example.i2p/?i2paddresshelper=base64destination</code>. Váš prohlížeč zobrazí „Save to addressbook?“ – potvrďte pro přidání.</p>
+<p><strong>Metoda 2: Aktualizujte odběry adresáře:</strong></p>
+<ol>
+<li>Přejděte na http://127.0.0.1:7657/dns (SusiDNS)</li>
+<li>Klikněte na záložku &ldquo;Subscriptions&rdquo;</li>
+<li>Ověřte aktivní odběry (výchozí: <a href="http://i2p-projekt.i">http://i2p-projekt.i</a>
+2p/hosts.txt)</li>
+<li>Přidejte doporučené odběry:
+<ul>
+<li><a href="http://stats.i">http://stats.i</a>
+2p/cgi-bin/newhosts.txt</li>
+<li><a href="http://notbob.i">http://notbob.i</a>
+2p/hosts.txt</li>
+<li><a href="http://reg.i">http://reg.i</a>
+2p/export/hosts.txt</li>
+</ul>
+</li>
+<li>Klikněte na &ldquo;Update Now&rdquo; pro vynucení okamžité aktualizace odběrů</li>
+<li>Počkejte 5-10 minut na zpracování</li>
+</ol>
+<p><strong>Metoda 3: Použijte adresy base32</strong> (vždy funguje, pokud je stránka online):</p>
+<p>Každý .i2p web má adresu Base32: 52 náhodných znaků následovaných .b32.i2p (např. <code>ukeu3k5oycgaauneqgtnvselmt4yemvoilkln7jpvamvfx7dnkdq.b32.i2p</code>). Adresy Base32 obcházejí adresář - router provádí přímé kryptografické vyhledání.</p>
+<p><strong>Běžné chyby v konfiguraci prohlížeče:</strong></p>
+<ul>
+<li>Pokus o HTTPS na webech pouze s HTTP: Většina .i2p webů používá pouze HTTP - pokus o <code>https://example.i2p</code> selže</li>
+<li>Zapomenutí prefixu <code>http://</code>: Prohlížeč může místo připojení vyhledávat - vždy použijte <code>http://example.i2p</code></li>
+<li>WebRTC zapnuté: Může prozradit skutečnou IP adresu - zakažte ho v nastavení Firefoxu nebo pomocí rozšíření</li>
+<li>DNS není přes proxy: Clearnet (veřejný internet) DNS neumí přeložit .i2p - je nutné posílat DNS dotazy přes proxy</li>
+<li>Špatný port proxy: 4444 pro HTTP (ne 4445, který je HTTPS outproxy do clearnetu)</li>
+</ul>
+<p><strong>Router není plně integrován</strong> znemožňuje přístup na jakékoli weby. Ověřte, že je integrace dostatečná:</p>
+<ol>
+<li>Zkontrolujte, že http://127.0.0.1:7657 zobrazuje &ldquo;Network: OK&rdquo; nebo &ldquo;Network: Firewalled&rdquo; (ne &ldquo;Network: Testing&rdquo;)</li>
+<li>Active peers zobrazuje minimálně 10 (optimálně 50+)</li>
+<li>Žádná zpráva &ldquo;Rejecting tunnels: starting up&rdquo;</li>
+<li>Počkejte plných 10-15 minut po spuštění routeru, než budete očekávat přístup k .i2p</li>
+</ol>
+<p><strong>Konfigurace IRC a e-mailového klienta</strong> se řídí podobnými vzory nastavení proxy:</p>
+<p><strong>IRC:</strong> Klienti se připojují k <strong>127.0.0.1:6668</strong> (IRC proxy tunnel v I2P). Vypněte v IRC klientu nastavení proxy - připojení na localhost:6668 už je vedeno přes I2P.</p>
+<p><strong>E-mail (Postman):</strong>  - SMTP: <strong>127.0.0.1:7659</strong> - POP3: <strong>127.0.0.1:7660</strong>   - Bez SSL/TLS (šifrování zajišťuje I2P tunnel) - Přihlašovací údaje z registrace účtu na postman.i2p</p>
+<p>Všechny tyto tunnels musí na http://127.0.0.1:7657/i2ptunnel zobrazovat stav &ldquo;running&rdquo; (zelený).</p>
+<h2 id="selhání-instalace-a-problémy-s-balíčky">Selhání instalace a problémy s balíčky</h2>
+<p>Instalace z balíčků (Debian, Ubuntu, Arch) občas selhávají kvůli <strong>změnám v repozitářích</strong>, <strong>vypršení platnosti klíče GPG</strong> nebo <strong>konfliktům závislostí</strong>. Oficiální repozitáře se v novějších verzích změnily z deb.i2p2.de/deb.i2p2.no (ukončená podpora) na <strong>deb.i2p.net</strong>.</p>
+<p><strong>Aktualizujte repozitář Debian/Ubuntu na aktuální stav:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Remove old repository entries</span>
+</span></span><span style="display:flex;"><span>sudo rm /etc/apt/sources.list.d/i2p.list
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Add current repository</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;deb [signed-by=/usr/share/keyrings/i2p-archive-keyring.gpg] https://deb.i2p.net/ </span><span style="color:#66d9ef">$(</span>lsb_release -sc<span style="color:#66d9ef">)</span><span style="color:#e6db74"> main&#34;</span> | sudo tee /etc/apt/sources.list.d/i2p.list
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Download and install current signing key</span>
+</span></span><span style="display:flex;"><span>curl -o i2p-archive-keyring.gpg https://geti2p.net/_static/i2p-archive-keyring.gpg
+</span></span><span style="display:flex;"><span>sudo cp i2p-archive-keyring.gpg /usr/share/keyrings/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Update and install</span>
+</span></span><span style="display:flex;"><span>sudo apt update
+</span></span><span style="display:flex;"><span>sudo apt install i2p i2p-keyring
+</span></span></code></pre></div><p><strong>Selhání ověřování podpisů GPG</strong> nastávají, když klíče repozitáře vyprší nebo se změní:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Error: &#34;The following signatures were invalid&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Solution: Install current keyring package</span>
+</span></span><span style="display:flex;"><span>sudo apt install i2p-keyring
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Manual key import if package unavailable</span>
+</span></span><span style="display:flex;"><span>wget https://geti2p.net/_static/i2p-debian-repo.key.asc
+</span></span><span style="display:flex;"><span>sudo apt-key add i2p-debian-repo.key.asc
+</span></span></code></pre></div><p><strong>Služba se po instalaci balíčku nespustí</strong> – nejčastěji je to způsobeno problémy s profilem AppArmor na Debianu/Ubuntu:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Check service status</span>
+</span></span><span style="display:flex;"><span>sudo systemctl status i2p.service
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Common error: &#34;Failed at step APPARMOR spawning&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Solution: Reconfigure without AppArmor</span>
+</span></span><span style="display:flex;"><span>sudo dpkg-reconfigure -plow i2p
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Select &#34;No&#34; for AppArmor when prompted</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Alternative: Set profile to complain mode</span>
+</span></span><span style="display:flex;"><span>sudo aa-complain /usr/sbin/wrapper
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check logs for specific errors  </span>
+</span></span><span style="display:flex;"><span>sudo journalctl -xe -u i2p.service
+</span></span></code></pre></div><p><strong>Problémy s oprávněními</strong> u I2P nainstalovaného z balíčku:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Fix ownership (package install uses &#39;i2psvc&#39; user)</span>
+</span></span><span style="display:flex;"><span>sudo chown -R i2psvc:i2psvc /var/lib/i2p /var/log/i2p /run/i2p
+</span></span><span style="display:flex;"><span>sudo chmod <span style="color:#ae81ff">750</span> /var/log/i2p /var/lib/i2p
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Set file descriptor limits (add to /etc/security/limits.conf)</span>
+</span></span><span style="display:flex;"><span>i2psvc soft nofile <span style="color:#ae81ff">4096</span>  
+</span></span><span style="display:flex;"><span>i2psvc hard nofile <span style="color:#ae81ff">8192</span>
+</span></span></code></pre></div><p><strong>Problémy s kompatibilitou Javy:</strong></p>
+<p>I2P 2.10.0 vyžaduje <strong>minimálně Javu 8</strong>. Starší systémy mohou mít Javu 7 nebo starší:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Check Java version</span>
+</span></span><span style="display:flex;"><span>java -version
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install appropriate Java (Debian/Ubuntu)</span>
+</span></span><span style="display:flex;"><span>sudo apt install openjdk-11-jre-headless
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Set default Java if multiple versions installed</span>
+</span></span><span style="display:flex;"><span>sudo update-alternatives --config java
+</span></span></code></pre></div><p><strong>Chyby konfigurace Wrapperu (nástroj pro spouštění služeb)</strong> zabraňují spuštění služby:</p>
+<p>Umístění Wrapper.config se liší podle metody instalace: - Uživatelská instalace: <code>~/.i2p/wrapper.config</code> - Instalace z balíčku: <code>/etc/i2p/wrapper.config</code> nebo <code>/var/lib/i2p/wrapper.config</code></p>
+<p>Časté problémy s wrapper.config:</p>
+<ul>
+<li>Nesprávné cesty: <code>wrapper.java.command</code> musí ukazovat na platnou instalaci Javy</li>
+<li>Nedostatečná paměť: <code>wrapper.java.maxmemory</code> je nastaveno příliš nízko (zvyšte na 512+)</li>
+<li>Nesprávné umístění pidfile (soubor PID): <code>wrapper.pidfile</code> musí ukazovat na zapisovatelné umístění</li>
+<li>Chybí binární soubor wrapperu: Na některých platformách chybí předkompilovaný wrapper (použijte záložní variantu runplain.sh)</li>
+</ul>
+<p><strong>Selhání aktualizací a poškozené aktualizace:</strong></p>
+<p>Aktualizace konzole routeru mohou občas uprostřed stahování selhat kvůli výpadkům sítě. Postup ruční aktualizace:</p>
+<ol>
+<li>Stáhněte si i2pupdate_X.X.X.zip z <a href="https://geti2p.net/en/download">https://geti2p.net/en/download</a>
+</li>
+<li>Ověřte, že kontrolní součet SHA256 odpovídá zveřejněné hodnotě hash</li>
+<li>Zkopírujte do instalačního adresáře I2P jako <code>i2pupdate.zip</code></li>
+<li>Restartujte router - automaticky detekuje a rozbalí aktualizaci</li>
+<li>Počkejte 5-10 minut na instalaci aktualizace</li>
+<li>Ověřte novou verzi na http://127.0.0.1:7657</li>
+</ol>
+<p><strong>Migrace z velmi starých verzí</strong> (před 0.9.47) na aktuální verze může selhat kvůli nekompatibilním podpisovým klíčům nebo odebraným funkcím. Jsou nutné postupné aktualizace:</p>
+<ul>
+<li>Verze starší než 0.9.9: Nelze ověřit aktuální podpisy - je nutná ruční aktualizace</li>
+<li>Verze na Javě 6/7: Před aktualizací I2P na 2.x je nutné nejprve aktualizovat Javu</li>
+<li>Velké skoky mezi hlavními verzemi: Nejprve aktualizujte na mezilehlou verzi (doporučený mezikrok 0.9.47)</li>
+</ul>
+<p><strong>Kdy použít instalátor vs. balíček:</strong></p>
+<ul>
+<li><strong>Balíčky (apt/yum):</strong> Nejlepší pro servery, automatické bezpečnostní aktualizace, systémová integrace, správa systemd</li>
+<li><strong>Instalátor (.jar):</strong> Nejlepší pro instalaci na úrovni uživatele, Windows, macOS, vlastní instalace, dostupnost nejnovější verze</li>
+</ul>
+<h2 id="poškození-konfiguračního-souboru-a-jeho-obnova">Poškození konfiguračního souboru a jeho obnova</h2>
+<p>Trvalé uložení konfigurace I2P se opírá o několik zásadních souborů. Poškození obvykle vzniká v důsledku <strong>nesprávného vypnutí</strong>, <strong>chyb disku</strong> nebo <strong>chyb při ručních úpravách</strong>. Pochopení účelu jednotlivých souborů umožňuje cílenou opravu namísto úplné přeinstalace.</p>
+<p><strong>Kritické soubory a jejich účely:</strong></p>
+<ul>
+<li><strong>router.keys</strong> (516+ bajtů): Kryptografická identita routeru - ztráta tohoto souboru vytvoří novou identitu</li>
+<li><strong>router.info</strong> (automaticky generováno): Publikované informace o routeru - bezpečné smazat, znovu se vygeneruje</li>
+<li><strong>router.config</strong> (text): Hlavní konfigurace - šířka pásma, síťová nastavení, předvolby</li>
+<li><strong>i2ptunnel.config</strong> (text): Definice tunnelů - client/server tunnely, klíče, destinace</li>
+<li><strong>netDb/</strong> (adresář): Databáze peerů - informace o routerech účastníků sítě</li>
+<li><strong>peerProfiles/</strong> (adresář): Statistiky výkonu peerů - ovlivňují výběr tunnelů</li>
+<li><strong>keyData/</strong> (adresář): Klíče destinací pro eepsites a služby - ztráta změní adresy</li>
+<li><strong>addressbook/</strong> (adresář): Místní mapování názvů hostitelů .i2p</li>
+</ul>
+<p><strong>Kompletní postup zálohování</strong> před provedením změn:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Stop I2P first</span>
+</span></span><span style="display:flex;"><span>i2prouter stop  <span style="color:#75715e"># or: systemctl stop i2p</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Backup directory</span>
+</span></span><span style="display:flex;"><span>BACKUP_DIR<span style="color:#f92672">=</span>~/i2p-backup-<span style="color:#66d9ef">$(</span>date +%Y%m%d-%H%M<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>mkdir -p $BACKUP_DIR
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Copy critical files</span>
+</span></span><span style="display:flex;"><span>cp -r ~/.i2p/router.keys $BACKUP_DIR/
+</span></span><span style="display:flex;"><span>cp -r ~/.i2p/*.config $BACKUP_DIR/
+</span></span><span style="display:flex;"><span>cp -r ~/.i2p/keyData $BACKUP_DIR/
+</span></span><span style="display:flex;"><span>cp -r ~/.i2p/addressbook $BACKUP_DIR/
+</span></span><span style="display:flex;"><span>cp -r ~/.i2p/eepsite $BACKUP_DIR/  <span style="color:#75715e"># if hosting sites</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Optional but recommended</span>
+</span></span><span style="display:flex;"><span>tar -czf $BACKUP_DIR.tar.gz $BACKUP_DIR
+</span></span></code></pre></div><p><strong>Příznaky poškození Router.config:</strong></p>
+<ul>
+<li>Router se nespustí; v logech jsou chyby parsování</li>
+<li>Nastavení se po restartu neuchovají</li>
+<li>Objevují se neočekávané výchozí hodnoty</li>
+<li>Zkomolené znaky při zobrazení souboru</li>
+</ul>
+<p><strong>Oprava poškozeného router.config:</strong></p>
+<ol>
+<li>Zálohujte stávající: <code>cp router.config router.config.broken</code></li>
+<li>Zkontrolujte kódování souboru: Musí být UTF-8 bez BOM</li>
+<li>Ověřte syntaxi: Klíče používají oddělovač <code>=</code> (ne <code>:</code>), žádné koncové mezery u klíčů, <code>#</code> pouze pro komentáře</li>
+<li>Časté chyby: Znaky mimo ASCII v hodnotách, problémy s konci řádků (CRLF vs LF)</li>
+<li>Pokud nelze opravit: Smažte router.config - router vygeneruje výchozí router.config a zachová identitu</li>
+</ol>
+<p><strong>Zásadní nastavení v router.config, která je třeba zachovat:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">i2np.bandwidth.inboundKBytesPerSecond</span><span style="color:#f92672">=</span><span style="color:#e6db74">512</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i2np.bandwidth.outboundKBytesPerSecond</span><span style="color:#f92672">=</span><span style="color:#e6db74">256</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.updatePolicy</span><span style="color:#f92672">=</span><span style="color:#e6db74">notify</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">routerconsole.lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">en</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router.hiddenMode</span><span style="color:#f92672">=</span><span style="color:#e6db74">false</span>
+</span></span></code></pre></div><p><strong>Ztracený nebo neplatný router.keys</strong> vytvoří novou identitu routeru. To je přijatelné, ledaže:</p>
+<ul>
+<li>Provozování floodfill (ztrácí status floodfill)</li>
+<li>Hostování eepsites s publikovanou adresou (ztrácí kontinuitu)</li>
+<li>Vybudovaná reputace v síti</li>
+</ul>
+<p>Obnova bez zálohy není možná – vygenerujte novou: smažte router.keys, restartujte I2P; vytvoří se nová identita.</p>
+<p><strong>Zásadní rozdíl:</strong> router.keys (identita) vs keyData/* (služby). Ztráta souboru router.keys změní identitu routeru. Ztráta souboru keyData/mysite-keys.dat změní .i2p adresu vašeho eepsite - katastrofální, pokud je adresa zveřejněna.</p>
+<p><strong>Zálohujte klíče pro eepsite/službu samostatně:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Identify your service keys</span>
+</span></span><span style="display:flex;"><span>ls -la ~/.i2p/keyData/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Backup with descriptive names  </span>
+</span></span><span style="display:flex;"><span>cp ~/.i2p/keyData/myservice-keys.dat ~/backups/myservice-keys-<span style="color:#66d9ef">$(</span>date +%Y%m%d<span style="color:#66d9ef">)</span>.dat
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Store securely (encrypted if sensitive)</span>
+</span></span><span style="display:flex;"><span>gpg -c ~/backups/myservice-keys-*.dat
+</span></span></code></pre></div><p><strong>Poškození NetDb (síťová databáze) a peerProfiles (profily peerů):</strong></p>
+<p>Příznaky: Žádné aktivní protějšky, nelze sestavit tunnels, &ldquo;Zjištěno poškození databáze&rdquo; v logech</p>
+<p>Bezpečná oprava (vše se automaticky reseeduje (znovu získá počáteční seznam uzlů)/znovu sestaví):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>i2prouter stop
+</span></span><span style="display:flex;"><span>rm -rf ~/.i2p/netDb/*
+</span></span><span style="display:flex;"><span>rm -rf ~/.i2p/peerProfiles/*
+</span></span><span style="display:flex;"><span>i2prouter start
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Wait 10-15 minutes for reseed and integration</span>
+</span></span></code></pre></div><p>Tyto adresáře obsahují pouze informace o síti uložené v mezipaměti - jejich smazání vynutí nový bootstrap (počáteční inicializační proces), ale nezpůsobí ztrátu žádných kritických dat.</p>
+<p><strong>Strategie prevence:</strong></p>
+<ol>
+<li><strong>Vždy provádějte korektní ukončení:</strong> Použijte <code>i2prouter stop</code> nebo tlačítko „Shutdown“ v router konzoli - nikdy proces neukončujte násilně</li>
+<li><strong>Automatické zálohy:</strong> Cron úloha s týdenní zálohou ~/.i2p na samostatný disk</li>
+<li><strong>Monitorování stavu disku:</strong> Průběžně kontrolujte stav SMART - selhávající disky poškozují data</li>
+<li><strong>Dostatečné místo na disku:</strong> Udržujte alespoň 1+ GB volného místa - plné disky způsobují poškození dat</li>
+<li><strong>UPS doporučena:</strong> Výpadky napájení během zápisu poškozují soubory</li>
+<li><strong>Verzování kritických konfigurací:</strong> Git repozitář pro router.config, i2ptunnel.config umožňuje návrat k předchozím verzím</li>
+</ol>
+<p><strong>Na oprávněních souborů záleží:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Correct permissions (user install)</span>
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">600</span> ~/.i2p/router.keys
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">600</span> ~/.i2p/*.config  
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">700</span> ~/.i2p/keyData
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">755</span> ~/.i2p
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Never run as root - creates permission problems</span>
+</span></span></code></pre></div><h2 id="vysvětlení-běžných-chybových-hlášení">Vysvětlení běžných chybových hlášení</h2>
+<p>Logování v I2P poskytuje konkrétní chybová hlášení, která přesně identifikují problémy. Porozumění těmto hlášením urychluje odstraňování problémů.</p>
+<p><strong>&ldquo;No tunnels available&rdquo;</strong> se zobrazí, když router nesestavil dostatek tunnels pro provoz. To je <strong>normální během prvních 5-10 minut</strong> po spuštění. Pokud přetrvává déle než 15 minut:</p>
+<ol>
+<li>Ověřte, že Active Peers &gt; 10 na http://127.0.0.1:7657</li>
+<li>Zkontrolujte, že přidělení šířky pásma je dostatečné (128+ KB/sec minimum)</li>
+<li>Prozkoumejte míru úspěšnosti tunnelů na http://127.0.0.1:7657/tunnels (měla by být &gt;40%)</li>
+<li>Zkontrolujte protokoly kvůli důvodům odmítnutí při sestavování tunnelů</li>
+</ol>
+<p><strong>&ldquo;Clock skew detected&rdquo;</strong> nebo <strong>&ldquo;NTCP2 disconnect code 7&rdquo;</strong> znamená, že systémový čas se liší od síťového konsenzu o více než 90 sekund. I2P vyžaduje přesnost ±60 sekund. Připojení k routerům s odchýleným časem jsou automaticky odmítána.</p>
+<p>Opravit okamžitě:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Linux  </span>
+</span></span><span style="display:flex;"><span>sudo timedatectl set-ntp true
+</span></span><span style="display:flex;"><span>sudo systemctl restart systemd-timesyncd
+</span></span><span style="display:flex;"><span>date  <span style="color:#75715e"># Verify correct time</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Windows</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Control Panel → Date and Time → Internet Time → Update now</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verify after sync</span>
+</span></span><span style="display:flex;"><span>http://127.0.0.1:7657/logs  <span style="color:#75715e"># Should no longer show clock skew warnings</span>
+</span></span></code></pre></div><p><strong>&ldquo;Build timeout&rdquo;</strong> nebo <strong>&ldquo;Tunnel build timeout exceeded&rdquo;</strong> znamená, že budování tunnelu skrze řetězec peerů nebylo dokončeno v rámci časového okna pro timeout (obvykle 60 sekund). Příčiny:</p>
+<ul>
+<li><strong>Pomalé uzly:</strong> Router vybral nereagující účastníky pro tunnel</li>
+<li><strong>Přetížení sítě:</strong> Síť I2P je silně vytížená</li>
+<li><strong>Nedostatečná šířka pásma:</strong> Vaše limity šířky pásma brání včasnému sestavení tunnel</li>
+<li><strong>Přetížený router:</strong> Příliš mnoho zapojených tunnel spotřebovává prostředky</li>
+</ul>
+<p>Řešení: Zvyšte šířku pásma, snižte počet participujících tunnels (<code>router.maxParticipatingTunnels</code> na http://127.0.0.1:7657/configadvanced), povolte přesměrování portů pro lepší výběr peerů.</p>
+<p><strong>&ldquo;Router is shutting down&rdquo;</strong> nebo <strong>&ldquo;Graceful shutdown in progress&rdquo;</strong> se může zobrazit během běžného ukončení nebo obnovy po pádu. Řízené ukončení (graceful shutdown) může trvat až 10 minut, protože router uzavírá tunnels, informuje protějšky a trvale ukládá stav.</p>
+<p>Pokud zůstane ve stavu vypínání déle než 11 minut, vynutit ukončení:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Linux  </span>
+</span></span><span style="display:flex;"><span>kill -9 <span style="color:#66d9ef">$(</span>pgrep -f i2p<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Windows</span>
+</span></span><span style="display:flex;"><span>taskkill /F /IM javaw.exe
+</span></span></code></pre></div><p><strong>&ldquo;java.lang.OutOfMemoryError: Java heap space&rdquo;</strong> signalizuje vyčerpání paměťové haldy. Okamžitá řešení:</p>
+<ol>
+<li>Upravte wrapper.config: <code>wrapper.java.maxmemory=512</code> (nebo vyšší)</li>
+<li><strong>Je vyžadováno úplné vypnutí</strong> - restart změnu neuplatní</li>
+<li>Počkejte 11 minut na úplné vypnutí</li>
+<li>Spusťte router načisto</li>
+<li>Ověřte přidělení paměti na http://127.0.0.1:7657/graphs - měla by být vidět rezerva</li>
+</ol>
+<p><strong>Související chyby paměti:</strong></p>
+<ul>
+<li><strong>&ldquo;GC overhead limit exceeded&rdquo;:</strong> Tráví se příliš mnoho času v garbage collection (uvolňování paměti) - zvyšte velikost haldy</li>
+<li><strong>&ldquo;Metaspace&rdquo;:</strong> Metaspace (prostor pro metadata tříd v Javě) je vyčerpán - přidejte <code>wrapper.java.additional.X=-XX:MaxMetaspaceSize=256M</code></li>
+</ul>
+<p><strong>Specifické pro Windows:</strong> Kaspersky Antivirus omezuje paměťovou haldu Javy na 512MB bez ohledu na nastavení v wrapper.config - odinstalujte ho nebo přidejte I2P do výjimek.</p>
+<p><strong>&ldquo;Connection timeout&rdquo;</strong> nebo <strong>&ldquo;I2CP Error - port 7654&rdquo;</strong>, když se aplikace pokoušejí připojit k routeru:</p>
+<ol>
+<li>Ověřte, že router běží: http://127.0.0.1:7657 by měl být dostupný</li>
+<li>Zkontrolujte port I2CP: <code>netstat -an | grep 7654</code> by měl zobrazit LISTENING</li>
+<li>Ujistěte se, že firewall na localhostu povoluje: <code>sudo ufw allow from 127.0.0.1</code></li>
+<li>Ověřte, že aplikace používá správný port (I2CP=7654, SAM=7656)</li>
+</ol>
+<p><strong>&ldquo;Certificate validation failed&rdquo;</strong> nebo <strong>&ldquo;RouterInfo corrupt&rdquo;</strong> během reseedu (počátečního bootstrapu sítě):</p>
+<p>Kořenové příčiny: odchylka systémových hodin (nejprve opravte), poškozená netDb, neplatné certifikáty pro reseed (počáteční naplnění netDb z veřejných bootstrap serverů)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># After fixing clock:</span>
+</span></span><span style="display:flex;"><span>i2prouter stop
+</span></span><span style="display:flex;"><span>rm -rf ~/.i2p/netDb/*  <span style="color:#75715e"># Delete corrupted database</span>
+</span></span><span style="display:flex;"><span>i2prouter start  <span style="color:#75715e"># Auto-reseeds with fresh data</span>
+</span></span></code></pre></div><p><strong>&ldquo;Database corruption detected&rdquo;</strong> značí poškození dat na úrovni disku v netDb nebo peerProfiles:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Safe fix - all will rebuild</span>
+</span></span><span style="display:flex;"><span>i2prouter stop  
+</span></span><span style="display:flex;"><span>rm -rf ~/.i2p/netDb/* ~/.i2p/peerProfiles/*
+</span></span><span style="display:flex;"><span>i2prouter start
+</span></span></code></pre></div><p>Zkontrolujte stav disku pomocí nástrojů SMART - opakované poškození dat naznačuje selhávající úložiště.</p>
+<h2 id="výzvy-specifické-pro-platformu">Výzvy specifické pro platformu</h2>
+<p>Různé operační systémy představují při nasazení I2P specifické výzvy související s oprávněními, bezpečnostními zásadami a systémovou integrací.</p>
+<h3 id="problémy-s-oprávněními-a-službami-v-linuxu">Problémy s oprávněními a službami v Linuxu</h3>
+<p>I2P nainstalované z balíčku běží jako systémový uživatel <strong>i2psvc</strong> (Debian/Ubuntu) nebo <strong>i2p</strong> (ostatní distribuce) a vyžaduje specifická oprávnění:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Fix package install permissions  </span>
+</span></span><span style="display:flex;"><span>sudo chown -R i2psvc:i2psvc /var/lib/i2p /var/log/i2p /run/i2p
+</span></span><span style="display:flex;"><span>sudo chmod <span style="color:#ae81ff">750</span> /var/log/i2p /var/lib/i2p
+</span></span><span style="display:flex;"><span>sudo chmod <span style="color:#ae81ff">644</span> /var/lib/i2p/*.config
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># User install permissions (should be your user)</span>
+</span></span><span style="display:flex;"><span>chown -R $USER:$USER ~/.i2p
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">700</span> ~/.i2p
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">600</span> ~/.i2p/router.keys ~/.i2p/*.config
+</span></span></code></pre></div><p><strong>Limity deskriptorů souborů</strong> ovlivňují kapacitu routeru pro spojení. Výchozí limity (1024) jsou nedostatečné pro routery s vysokou propustností:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Check current limits</span>
+</span></span><span style="display:flex;"><span>ulimit -n
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Temporary increase  </span>
+</span></span><span style="display:flex;"><span>ulimit -n <span style="color:#ae81ff">4096</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Permanent fix: Edit /etc/security/limits.conf</span>
+</span></span><span style="display:flex;"><span>i2psvc soft nofile <span style="color:#ae81ff">4096</span>
+</span></span><span style="display:flex;"><span>i2psvc hard nofile <span style="color:#ae81ff">8192</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Systemd override</span>
+</span></span><span style="display:flex;"><span>sudo mkdir -p /etc/systemd/system/i2p.service.d/
+</span></span><span style="display:flex;"><span>sudo nano /etc/systemd/system/i2p.service.d/override.conf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Add:</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Service<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>LimitNOFILE<span style="color:#f92672">=</span><span style="color:#ae81ff">8192</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sudo systemctl daemon-reload
+</span></span><span style="display:flex;"><span>sudo systemctl restart i2p
+</span></span></code></pre></div><p><strong>Konflikty AppArmor</strong> běžné na Debianu/Ubuntu zabraňují spuštění služby:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Error: &#34;Failed at step APPARMOR spawning /usr/sbin/wrapper&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Cause: AppArmor profile missing or misconfigured</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Solution 1: Disable AppArmor for I2P</span>
+</span></span><span style="display:flex;"><span>sudo aa-complain /usr/sbin/wrapper
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Solution 2: Reconfigure package without AppArmor</span>
+</span></span><span style="display:flex;"><span>sudo dpkg-reconfigure -plow i2p  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Select &#34;No&#34; when asked about AppArmor</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Solution 3: LXC/Proxmox containers - disable AppArmor in container config</span>
+</span></span><span style="display:flex;"><span>lxc.apparmor.profile: unconfined
+</span></span></code></pre></div><p><strong>Problémy se SELinuxem</strong> na RHEL/CentOS/Fedora:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Temporary: Set permissive mode</span>
+</span></span><span style="display:flex;"><span>sudo setenforce <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Permanent: Generate custom policy</span>
+</span></span><span style="display:flex;"><span>sudo ausearch -c <span style="color:#e6db74">&#39;java&#39;</span> --raw | audit2allow -M i2p_policy
+</span></span><span style="display:flex;"><span>sudo semodule -i i2p_policy.pp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Or disable SELinux for I2P process (less secure)</span>
+</span></span><span style="display:flex;"><span>sudo semanage permissive -a i2p_t
+</span></span></code></pre></div><p><strong>Řešení problémů se službou SystemD:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Detailed service status</span>
+</span></span><span style="display:flex;"><span>sudo systemctl status i2p.service -l
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Full logs  </span>
+</span></span><span style="display:flex;"><span>sudo journalctl -xe -u i2p.service
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Follow logs live</span>
+</span></span><span style="display:flex;"><span>sudo journalctl -f -u i2p.service
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Restart with logging</span>
+</span></span><span style="display:flex;"><span>sudo systemctl restart i2p.service <span style="color:#f92672">&amp;&amp;</span> sudo journalctl -f -u i2p.service
+</span></span></code></pre></div><h3 id="rušení-brány-firewall-systému-windows-a-antiviru">Rušení brány firewall systému Windows a antiviru</h3>
+<p>Windows Defender a antivirové produkty třetích stran často vyhodnocují I2P jako hrozbu kvůli vzorcům síťového chování. Správné nastavení brání zbytečným blokacím při zachování bezpečnosti.</p>
+<p><strong>Nakonfigurujte bránu firewall systému Windows Defender:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e"># Run PowerShell as Administrator</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Find Java path (adjust for your Java installation)</span>
+</span></span><span style="display:flex;"><span>$javaPath = <span style="color:#e6db74">&#34;C:\Program Files\Eclipse Adoptium\jdk-11.0.16.101-hotspot\bin\javaw.exe&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create inbound rules</span>
+</span></span><span style="display:flex;"><span>New-NetFirewallRule -DisplayName <span style="color:#e6db74">&#34;I2P Java&#34;</span> -Direction Inbound -Program $javaPath -Action Allow
+</span></span><span style="display:flex;"><span>New-NetFirewallRule -DisplayName <span style="color:#e6db74">&#34;I2P UDP&#34;</span> -Direction Inbound -Protocol UDP -LocalPort <span style="color:#ae81ff">22648</span> -Action Allow  
+</span></span><span style="display:flex;"><span>New-NetFirewallRule -DisplayName <span style="color:#e6db74">&#34;I2P TCP&#34;</span> -Direction Inbound -Protocol TCP -LocalPort <span style="color:#ae81ff">22648</span> -Action Allow
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Add exclusions to Windows Defender</span>
+</span></span><span style="display:flex;"><span>Add-MpPreference -ExclusionPath <span style="color:#e6db74">&#34;C:\Program Files\i2p&#34;</span>
+</span></span><span style="display:flex;"><span>Add-MpPreference -ExclusionPath <span style="color:#e6db74">&#34;</span>$env:APPDATA<span style="color:#e6db74">\I2P&#34;</span>
+</span></span><span style="display:flex;"><span>Add-MpPreference -ExclusionPath <span style="color:#e6db74">&#34;</span>$env:LOCALAPPDATA<span style="color:#e6db74">\I2P&#34;</span>
+</span></span><span style="display:flex;"><span>Add-MpPreference -ExclusionProcess <span style="color:#e6db74">&#34;javaw.exe&#34;</span>
+</span></span></code></pre></div><p>Nahraďte port 22648 svým skutečným I2P portem z http://127.0.0.1:7657/confignet.</p>
+<p><strong>Specifický problém s Kaspersky Antivirus:</strong> „Application Control“ od Kaspersky omezuje haldu paměti Javy na 512 MB bez ohledu na nastavení v wrapper.config. To způsobuje OutOfMemoryError na routers s vysokou propustností.</p>
+<p>Řešení: 1. Přidejte I2P do vyloučení v Kaspersky: Nastavení → Další → Hrozby a vyloučení → Spravovat vyloučení 2. Nebo odinstalujte Kaspersky (doporučeno pro provoz I2P)</p>
+<p><strong>Obecná doporučení pro antivirový software třetích stran:</strong></p>
+<ul>
+<li>Přidat instalační adresář I2P do výjimek</li>
+<li>Přidat %APPDATA%\I2P a %LOCALAPPDATA%\I2P do výjimek</li>
+<li>Vyloučit javaw.exe z analýzy chování</li>
+<li>Vypnout funkce &ldquo;Network Attack Protection&rdquo;, které mohou narušovat protokoly I2P</li>
+</ul>
+<h3 id="gatekeeper-v-macos-blokuje-instalaci">Gatekeeper v macOS blokuje instalaci</h3>
+<p>macOS Gatekeeper (bezpečnostní mechanismus macOS) brání spouštění nepodepsaných aplikací. Instalátory I2P nejsou podepsané pomocí Apple Developer ID, což vyvolává bezpečnostní varování.</p>
+<p><strong>Obejít Gatekeeper pro instalační program I2P:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Method 1: Remove quarantine attribute</span>
+</span></span><span style="display:flex;"><span>xattr -d com.apple.quarantine ~/Downloads/i2pinstall_*.jar
+</span></span><span style="display:flex;"><span>java -jar ~/Downloads/i2pinstall_*.jar
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Method 2: Use System Settings (macOS 13+)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Try to open installer → macOS blocks it</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># System Settings → Privacy &amp; Security → scroll down</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Click &#34;Open Anyway&#34; next to I2P warning</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Confirm in dialog</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Method 3: Control-click installer</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Control-click (right-click) i2pinstall_*.jar</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Select &#34;Open&#34; from menu → &#34;Open&#34; again in dialog</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Bypasses Gatekeeper for this specific file</span>
+</span></span></code></pre></div><p><strong>Po instalaci spuštění</strong> může stále vyvolávat varování:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># If I2P won&#39;t start due to Gatekeeper:</span>
+</span></span><span style="display:flex;"><span>xattr -dr com.apple.quarantine ~/i2p/
+</span></span></code></pre></div><p><strong>Nikdy natrvalo nevypínejte Gatekeeper</strong> - bezpečnostní riziko pro ostatní aplikace. Používejte pouze výjimky pro jednotlivé soubory.</p>
+<p><strong>Konfigurace firewallu v macOS:</strong></p>
+<ol>
+<li>Předvolby systému → Zabezpečení a soukromí → Firewall → Možnosti firewallu</li>
+<li>Klikněte na &ldquo;+&rdquo; pro přidání aplikace</li>
+<li>Přejděte k instalaci Javy (např. <code>/Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home/bin/java</code>)</li>
+<li>Přidejte ji a nastavte na &ldquo;Povolit příchozí připojení&rdquo;</li>
+</ol>
+<h3 id="problémy-s-aplikací-i2p-pro-android">Problémy s aplikací I2P pro Android</h3>
+<p>Omezení verzí Androidu a limity prostředků vytvářejí jedinečné výzvy.</p>
+<p><strong>Minimální požadavky:</strong> - Android 5.0+ (úroveň API 21+) je vyžadován pro aktuální verze - 512MB RAM minimálně, 1GB+ doporučeno   - 100MB úložiště pro aplikaci + data routeru - Omezení aplikací na pozadí musí být pro I2P vypnutá</p>
+<p><strong>Aplikace se okamžitě zhroutí:</strong></p>
+<ol>
+<li><strong>Zkontrolujte verzi Androidu:</strong> Nastavení → O telefonu → Verze systému Android (musí být 5.0+)</li>
+<li><strong>Odinstalujte všechny verze I2P:</strong> Instalujte pouze jednu variantu:
+<ul>
+<li>net.i2p.android (Google Play)</li>
+<li>net.i2p.android.router (F-Droid)<br>
+Současná instalace více variant vede ke konfliktům</li>
+</ul>
+</li>
+<li><strong>Vymažte data aplikace:</strong> Nastavení → Aplikace → I2P → Úložiště → Vymazat data</li>
+<li><strong>Znovu nainstalujte z čistého stavu</strong></li>
+</ol>
+<p><strong>Optimalizace baterie ukončuje router:</strong></p>
+<p>Android agresivně ukončuje aplikace na pozadí, aby šetřil baterii. I2P potřebuje výjimku:</p>
+<ol>
+<li>Nastavení → Baterie → Optimalizace baterie (nebo Využití baterie aplikace)</li>
+<li>Najděte I2P → Neoptimalizovat (nebo Povolit aktivitu na pozadí)</li>
+<li>Nastavení → Aplikace → I2P → Baterie → Povolit aktivitu na pozadí + Odstranit omezení</li>
+</ol>
+<p><strong>Problémy s připojením na mobilu:</strong></p>
+<ul>
+<li><strong>Bootstrap (počáteční zavedení) vyžaduje WiFi:</strong> Počáteční reseed stahuje značné množství dat - použijte WiFi, ne mobilní data</li>
+<li><strong>Změny sítě:</strong> I2P nezvládá přepínání sítí bez problémů - po přechodu mezi WiFi a mobilní sítí aplikaci restartujte</li>
+<li><strong>Šířka pásma pro mobil:</strong> Nastavte konzervativně na 64-128 KB/sec, abyste předešli vyčerpání mobilních dat</li>
+</ul>
+<p><strong>Optimalizace výkonu pro mobilní zařízení:</strong></p>
+<ol>
+<li>Aplikace I2P → Menu → Nastavení → Šířka pásma</li>
+<li>Nastavte vhodné limity: 64 KB/s příchozí, 32 KB/s odchozí pro mobilní data</li>
+<li>Snižte počet participating tunnels (tunnels, kterými prochází cizí provoz): Nastavení → Pokročilé → Max participating tunnels: 100-200</li>
+<li>Povolte &ldquo;Stop I2P when screen off&rdquo; pro úsporu baterie</li>
+</ol>
+<p><strong>Torrentování na Androidu:</strong></p>
+<ul>
+<li>Omezte na maximálně 2-3 současně aktivní torrenty</li>
+<li>Snižte agresivitu DHT (distribuovaná hašovací tabulka)</li>
+<li>Pro torrentování používejte pouze WiFi</li>
+<li>Smířte se s nižšími rychlostmi na mobilním hardwaru</li>
+</ul>
+<h2 id="problémy-s-reseedem-a-bootstrapem">Problémy s reseedem a bootstrapem</h2>
+<p>Nové instalace I2P vyžadují <strong>reseeding</strong> (počáteční načtení informací o uzlech) - získání počátečních informací o uzlech z veřejných serverů HTTPS pro připojení k síti. Problémy s reseedingem mohou uvěznit uživatele s nulovým počtem uzlů a bez přístupu k síti.</p>
+<p><strong>&ldquo;No active peers&rdquo; po čerstvé instalaci</strong> obvykle znamená selhání reseed (počáteční získání seznamu uzlů). Příznaky:</p>
+<ul>
+<li>Známí peerové: 0 nebo zůstává pod 5</li>
+<li>&ldquo;Network: Testing&rdquo; přetrvává déle než 15 minut</li>
+<li>Logy ukazují &ldquo;Reseed failed&rdquo; (reseed = bootstrap sítě, počáteční stažení dat netDb z reseed serverů) nebo chyby připojení k reseed serverům</li>
+</ul>
+<p><strong>Proč reseed selhává:</strong></p>
+<ol>
+<li><strong>Firewall blokuje HTTPS:</strong> Korporátní/ISP firewally blokují spojení k reseed serverům (servery pro počáteční načtení seznamu uzlů; port 443)</li>
+<li><strong>Chyby certifikátů SSL:</strong> Systému chybí aktuální kořenové certifikáty</li>
+<li><strong>Požadavek na proxy:</strong> Síť vyžaduje proxy HTTP/SOCKS pro externí připojení</li>
+<li><strong>Časová odchylka:</strong> Ověření certifikátů SSL selže, pokud je systémový čas nesprávný</li>
+<li><strong>Geografická cenzura:</strong> Některé země/ISP blokují známé reseed servery</li>
+</ol>
+<p><strong>Vynutit ruční reseed (opětovné stažení počátečních uzlů):</strong></p>
+<ol>
+<li>Otevřete http://127.0.0.1:7657/configreseed</li>
+<li>Klikněte na &ldquo;Save changes and reseed now&rdquo;</li>
+<li>Sledujte http://127.0.0.1:7657/logs a hledejte &ldquo;Reseed got XX router infos&rdquo;</li>
+<li>Počkejte 5-10 minut na zpracování</li>
+<li>Zkontrolujte http://127.0.0.1:7657 - počet známých peerů by se měl zvýšit na 50+</li>
+</ol>
+<p><strong>Nakonfigurujte reseed proxy</strong> pro restriktivní sítě:</p>
+<p>http://127.0.0.1:7657/configreseed → Konfigurace proxy:</p>
+<ul>
+<li>HTTP proxy: [proxy-server]:[port]</li>
+<li>Nebo SOCKS5: [socks-server]:[port]</li>
+<li>Povolit &ldquo;Use proxy for reseed only&rdquo;</li>
+<li>Přihlašovací údaje, pokud je to vyžadováno</li>
+<li>Uložit a vynutit reseed (získání počátečních uzlů)</li>
+</ul>
+<p><strong>Alternativa: Tor proxy pro reseed (získání počátečních dat o síti):</strong></p>
+<p>Pokud běží Tor Browser nebo démon Toru:</p>
+<ul>
+<li>Typ proxy: SOCKS5</li>
+<li>Hostitel: 127.0.0.1</li>
+<li>Port: 9050 (výchozí port SOCKS pro Tor)</li>
+<li>Povolit a provést reseed (obnovení počátečních uzlů sítě)</li>
+</ul>
+<p><strong>Ruční reseed (obnovení počátečních uzlů) prostřednictvím souboru su3</strong> (krajní možnost):</p>
+<p>Když selže veškerý automatický reseed (počáteční načtení netDb), získejte reseed soubor mimo běžné kanály:</p>
+<ol>
+<li>Stáhněte i2pseeds.su3 z důvěryhodného zdroje při neomezeném připojení k internetu (<a href="https://reseed.i2p.rocks/i2pseeds.su3">https://reseed.i2p.rocks/i2pseeds.su3</a>
+, <a href="https://reseed-fr.i2pd.xyz/i2pseeds.su3">https://reseed-fr.i2pd.xyz/i2pseeds.su3</a>
+)</li>
+<li>Zcela ukončete I2P</li>
+<li>Zkopírujte i2pseeds.su3 do adresáře ~/.i2p/</li>
+<li>Spusťte I2P - soubor se automaticky rozbalí a zpracuje</li>
+<li>Smažte i2pseeds.su3 po zpracování</li>
+<li>Ověřte, že počet peerů na http://127.0.0.1:7657 roste</li>
+</ol>
+<p><strong>Chyby certifikátu SSL během reseed (počátečního zavedení do sítě):</strong></p>
+<pre tabindex="0"><code>Error: &#34;Reseed: Certificate verification failed&#34;  
+Cause: System root certificates outdated or missing
+</code></pre><p>Řešení:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Linux - update certificates</span>
+</span></span><span style="display:flex;"><span>sudo apt install ca-certificates
+</span></span><span style="display:flex;"><span>sudo update-ca-certificates
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Windows - install KB updates for root certificate trust</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Or install .NET Framework (includes certificate updates)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># macOS - update system</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Software Update includes certificate trust updates</span>
+</span></span></code></pre></div><p><strong>Zaseknuto na 0 známých peerů po více než 30 minutách:</strong></p>
+<p>Označuje úplné selhání reseedu (počáteční stažení informací o uzlech). Postup odstraňování problémů:</p>
+<ol>
+<li><strong>Ověřte, že systémový čas je přesný</strong> (nejčastější problém - opravte jako PRVNÍ)</li>
+<li><strong>Otestujte připojení přes HTTPS:</strong> Zkuste v prohlížeči otevřít <a href="https://reseed.i2p.rocks">https://reseed.i2p.rocks</a>
+ - pokud selže, jde o problém se sítí</li>
+<li><strong>Zkontrolujte logy I2P</strong> na http://127.0.0.1:7657/logs kvůli konkrétním chybám reseed (stažení počátečních dat sítě)</li>
+<li><strong>Vyzkoušejte jinou reseed URL:</strong> http://127.0.0.1:7657/configreseed → přidejte vlastní reseed URL: <a href="https://reseed-fr.i2pd.xyz/">https://reseed-fr.i2pd.xyz/</a>
+</li>
+<li><strong>Použijte ruční metodu se souborem su3</strong> pokud selhaly všechny automatizované pokusy</li>
+</ol>
+<p><strong>Reseed servery jsou občas nedostupné:</strong> I2P obsahuje několik natvrdo definovaných reseed serverů. Pokud jeden selže, router automaticky zkusí ostatní. Úplné selhání všech reseed serverů je velmi vzácné, ale možné.</p>
+<p><strong>Aktuálně aktivní reseed servery</strong> (stav k říjnu 2025):</p>
+<ul>
+<li><a href="https://reseed.i2p.rocks/">https://reseed.i2p.rocks/</a>
+</li>
+<li><a href="https://reseed-fr.i2pd.xyz/">https://reseed-fr.i2pd.xyz/</a>
+</li>
+<li><a href="https://i2p.novg.net/">https://i2p.novg.net/</a>
+</li>
+<li><a href="https://i2p-projekt.de/">https://i2p-projekt.de/</a>
+</li>
+</ul>
+<p>Přidejte je jako vlastní adresy URL, pokud máte problémy s výchozími.</p>
+<p><strong>Pro uživatele v přísně cenzurovaných regionech:</strong></p>
+<p>Zvažte použití mostů Snowflake/Meek přes Tor pro počáteční reseed (počáteční stažení seedů), poté přepněte na přímé I2P po integraci. Nebo získejte i2pseeds.su3 prostřednictvím steganografie, e-mailem nebo přes USB z místa mimo cenzurní zónu.</p>
+<h2 id="kdy-vyhledat-další-pomoc">Kdy vyhledat další pomoc</h2>
+<p>Tento průvodce pokrývá drtivou většinu problémů souvisejících s I2P, ale některé vyžadují pozornost vývojářů nebo odborné znalosti komunity.</p>
+<p><strong>Obraťte se na komunitu I2P o pomoc, když:</strong></p>
+<ul>
+<li>Router opakovaně padá i po provedení všech kroků pro řešení problémů</li>
+<li>Úniky paměti způsobující trvalý růst nad rámec alokované haldy</li>
+<li>Míra úspěšnosti Tunnel zůstává pod 20 % navzdory odpovídajícímu nastavení</li>
+<li>Nové chyby v logech, které tato příručka nezahrnuje</li>
+<li>Zjištěné bezpečnostní zranitelnosti</li>
+<li>Požadavky na nové funkce nebo návrhy na vylepšení</li>
+</ul>
+<p><strong>Než požádáte o pomoc, shromážděte diagnostické informace:</strong></p>
+<ol>
+<li>Verze I2P: http://127.0.0.1:7657 (např. &ldquo;2.10.0&rdquo;)</li>
+<li>Verze Javy: výstup <code>java -version</code></li>
+<li>Operační systém a verze</li>
+<li>Stav routeru: Stav sítě, Počet aktivních peerů, Participující tunnels</li>
+<li>Konfigurace šířky pásma: příchozí/odchozí limity</li>
+<li>Stav přesměrování portů: za firewallem nebo OK</li>
+<li>Relevantní výpisy z logu: posledních 50 řádků zobrazujících chyby z http://127.0.0.1:7657/logs</li>
+</ol>
+<p><strong>Oficiální kanály podpory:</strong></p>
+<ul>
+<li><strong>Fórum:</strong> <a href="https://i2pforum.net">https://i2pforum.net</a>
+ (clearnet) nebo <a href="http://i2pforum.i">http://i2pforum.i</a>
+2p (v rámci I2P)</li>
+<li><strong>IRC:</strong> #i2p na Irc2P (irc.postman.i2p přes I2P) nebo irc.freenode.net (clearnet)</li>
+<li><strong>Reddit:</strong> <a href="https://reddit.com/r/i2p">https://reddit.com/r/i2p</a>
+ pro komunitní diskusi</li>
+<li><strong>Sledovač chyb:</strong> <a href="https://i2pgit.org/i2p-hackers/i2p.i2p/-/issues">https://i2pgit.org/i2p-hackers/i2p.i2p/-/issues</a>
+ pro potvrzené chyby</li>
+<li><strong>E-mailová konference:</strong> <a href="mailto:i2p-dev@lists.i2p-projekt.de">i2p-dev@lists.i2p-projekt.de</a>
+ pro dotazy k vývoji</li>
+</ul>
+<p><strong>Realistická očekávání jsou důležitá.</strong> I2P je z podstaty svého návrhu pomalejší než clearnet (běžný internet mimo I2P) - víceskokové šifrované &rsquo;tunnel&rsquo; propojení vytváří inherentní latenci. Funkční I2P router s načítáním stránek trvajícím 30 sekund a rychlostí torrentu 50 KB/sec <strong>funguje správně</strong>, není rozbitý. Uživatelé očekávající rychlosti clearnetu budou zklamaní bez ohledu na optimalizaci konfigurace.</p>
+<h2 id="závěr">Závěr</h2>
+<p>Většina problémů v I2P pramení ze tří kategorií: nedostatek trpělivosti během bootstrapu (počáteční inicializace; vyžaduje 10–15 minut), nedostatečné přidělení prostředků (minimálně 512 MB RAM, 256 KB/sec šířky pásma) nebo chybně nastavené přesměrování portů. Pochopení distribuované architektury I2P a na anonymitu zaměřeného designu pomáhá uživatelům rozlišit očekávané chování od skutečných problémů.</p>
+<p>Stav „Firewalled“ routeru, ačkoli není ideální, nebrání používání I2P - pouze omezuje přínos do sítě a mírně zhoršuje výkon. Noví uživatelé by měli upřednostnit <strong>stabilitu před optimalizací</strong>: nechte router běžet nepřetržitě několik dní, než začnete upravovat pokročilá nastavení, protože integrace se s dobou provozu přirozeně zlepšuje.</p>
+<p>Při odstraňování problémů vždy nejprve ověřte základní věci: správný systémový čas, dostatečnou šířku pásma, router běžící nepřetržitě a alespoň 10 aktivních uzlů. Většinu problémů vyřešíte tím, že se zaměříte na tyto základy, nikoli úpravami málo srozumitelných konfiguračních parametrů. I2P odměňuje trpělivost a nepřetržitý provoz lepším výkonem, protože si router v průběhu dnů a týdnů provozu buduje reputaci a optimalizuje výběr uzlů.</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                    
+                        <a href="../../../cs/docs/writing-guidelines/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">Pokyny pro psaní dokumentace I2P</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/cs/docs/troubleshooting.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Zůstaňte informováni o novinkách I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Zadejte svůj email" required>
+                            <button type="submit">Odebírat</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Rychlé odkazy</h3>
+                <ul>
+                    <li><a href="../../../cs/financial-support/">Darovat</a></li>
+                    <li><a href="../../../cs/docs/overview/intro/">Úvod do I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Komunita</h3>
+                <ul>
+                    <li><a href="../../../cs/get-involved/">Zapojte se</a></li>
+                    <li><a href="../../../cs/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Oficiální fóra</a></li>
+                    <li><a href="../../../cs/contact/">Kontaktujte nás</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Zdroje</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P Metriky</a></li>
+                    <li><a href="../../../cs/papers/">Výzkum</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Projekt Neviditelný Internet. Licencováno pod Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../cs/privacy/">Ochrana soukromí</a>
+                <a href="../../../cs/terms/">Podmínky</a>
+                <a href="../../../cs/about/media/">Tisk</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Zavřít">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Komunitní anketa</h2>
+            <p class="modal-subtitle">Rádi bychom o vás slyšeli</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Váš hlas pomáhá utvářet budoucnost I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

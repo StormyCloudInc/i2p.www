@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Development on I2P - 보이지 않는 인터넷 프로젝트</title>
+    <link>/ko/categories/development/</link>
+    <description>Recent content in Development on I2P - 보이지 않는 인터넷 프로젝트</description>
+    <generator>Hugo</generator>
+    <language>ko-KR</language>
+    <lastBuildDate>Fri, 29 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/ko/categories/development/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>많은 가면, 하나의 정신: NetDB 보안</title>
+      <link>/ko/blog/2024/03/29/%EB%A7%8E%EC%9D%80-%EA%B0%80%EB%A9%B4-%ED%95%98%EB%82%98%EC%9D%98-%EC%A0%95%EC%8B%A0-netdb-%EB%B3%B4%EC%95%88/</link>
+      <pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>/ko/blog/2024/03/29/%EB%A7%8E%EC%9D%80-%EA%B0%80%EB%A9%B4-%ED%95%98%EB%82%98%EC%9D%98-%EC%A0%95%EC%8B%A0-netdb-%EB%B3%B4%EC%95%88/</guid>
+      <description>&lt;p&gt;저자 주: 이 글에서 언급된 공격은 현재의 I2P 버전에서는 불가능합니다.&lt;/p&gt;&#xA;&lt;p&gt;자기 조직화된 피어 투 피어 네트워크로서 I2P는 네트워크에 무엇이 존재하는지와 그것에 어떻게 도달할 수 있는지에 관한 정보를 공유할 방법을 네트워크에 참여하는 router가 갖추고 있다는 점에 의존한다. I2P router는 NetDB를 사용하여 이러한 정보 공유를 수행하는데, NetDB는 Kademlia를 기반으로 하되 I2P에 맞게 수정된 DHT이다. NetDB는 두 가지 주요 유형의 엔트리를 공유해야 한다. 피어가 다른 router와 직접 통신할 때 사용하는 &amp;ldquo;RouterInfos&amp;rdquo;(router 정보)와, 다른 피어가 익명 tunnel을 통해 I2P 클라이언트와 통신할 때 사용하는 &amp;ldquo;LeaseSets&amp;rdquo;(클라이언트와의 익명 tunnel 통신을 위한 정보)이다. router는 자주 서로 NetDB 엔트리를 주고받는데, 정보를 router나 클라이언트에게 보내거나, router나 클라이언트로부터 정보를 요청하는 방식이다. 이는 네트워크의 필요와 클라이언트의 역량에 따라 엔트리가 직접 또는 간접으로, 익명 또는 비익명으로 도착할 수 있음을 의미한다. 그러나 익명화 네트워크인 만큼 익명으로 전송된 정보를 비익명으로 되돌려 요청하는 것이 불가능하게 유지되는 것도 중요하다. 또한 비익명으로 전송된 정보를 익명으로 되돌려 요청하는 것이 불가능해야 한다는 점도 중요하다. 그 둘 중 어느 상황이라도 가능해지면, 공격자가 클라이언트와 router가 NetDB에 대한 공통된 관점을 공유하는지 판별할 수 있게 하는 링킹 공격을 수행할 수 있다. 두 대상이 NetDB에 대한 공통된 관점을 공유한다는 것을 신뢰성 있게 확인할 수 있다면, 그들이 동일한 router에 있을 가능성이 매우 높아지며 대상의 익명성은 크게 약화된다. 익명화 네트워크가 매우 드물고 라우팅 테이블이 DHT의 동작을 통해 공유되는 곳은 I2P가 유일하기 때문에, 이러한 유형의 공격은 사실상 I2P에만 고유하며 이를 해결하는 일은 I2P의 성공에 중요하다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>SSU2 트랜스포트</title>
+      <link>/ko/blog/2022/10/11/ssu2-%ED%8A%B8%EB%9E%9C%EC%8A%A4%ED%8F%AC%ED%8A%B8/</link>
+      <pubDate>Tue, 11 Oct 2022 00:00:00 +0000</pubDate>
+      <guid>/ko/blog/2022/10/11/ssu2-%ED%8A%B8%EB%9E%9C%EC%8A%A4%ED%8F%AC%ED%8A%B8/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;I2P는 2005년부터 검열 저항성이 있는 UDP 전송 프로토콜 &amp;ldquo;SSU&amp;quot;를 사용해 왔습니다. 지난 17년 동안 SSU가 차단되었다는 보고는 거의, 혹은 전혀 없었습니다. 그러나 보안, 차단 저항성, 성능에 대한 오늘날의 기준으로 보면, 우리는 더 개선할 수 있습니다. 훨씬 더요.&lt;/p&gt;&#xA;&lt;p&gt;이러한 이유로, &lt;a href=&#34;https://i2pd.xyz/&#34;&gt;i2pd project&lt;/a&gt;&#xA;와 함께 우리는 최고 수준의 보안 및 차단 저항성(blocking resistance) 표준에 맞춰 설계된 현대적인 UDP 프로토콜인 &amp;ldquo;SSU2&amp;quot;를 개발하고 구현했습니다. 이 프로토콜은 SSU를 대체할 것입니다.&lt;/p&gt;&#xA;&lt;p&gt;우리는 업계 표준 암호화를 UDP 프로토콜인 WireGuard와 QUIC의 최고의 기능, 그리고 우리의 TCP 프로토콜 &amp;ldquo;NTCP2&amp;quot;의 검열 저항 기능과 결합했습니다. SSU2는 지금까지 설계된 전송 프로토콜 가운데 가장 안전한 것들 중 하나일 수 있습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Git 번들로 I2P 소스 코드 가져오기</title>
+      <link>/ko/blog/2020/03/18/git-%EB%B2%88%EB%93%A4%EB%A1%9C-i2p-%EC%86%8C%EC%8A%A4-%EC%BD%94%EB%93%9C-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0/</link>
+      <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/ko/blog/2020/03/18/git-%EB%B2%88%EB%93%A4%EB%A1%9C-i2p-%EC%86%8C%EC%8A%A4-%EC%BD%94%EB%93%9C-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0/</guid>
+      <description>&lt;p&gt;I2P를 통해 대규모 소프트웨어 저장소를 복제하는 일은 어렵고, git을 사용하면 때로는 이를 더 어렵게 만들기도 합니다. 다행히, 경우에 따라 git이 이를 더 쉽게 만들어 주기도 합니다. Git에는 &lt;code&gt;git bundle&lt;/code&gt; 명령이 있으며, 이를 사용하면 Git 저장소를 하나의 파일로 변환할 수 있고, 그렇게 만든 파일을 로컬 디스크의 위치에서 git이 clone(복제), fetch(가져오기), import(임포트)할 수 있습니다. 이 기능을 BitTorrent 다운로드와 결합하면, &lt;code&gt;git clone&lt;/code&gt;과 관련된 남은 문제들을 해결할 수 있습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;시작하기-전에&#34;&gt;시작하기 전에&lt;/h2&gt;&#xA;&lt;p&gt;git 번들을 생성하려는 경우, mtn 저장소가 아니라 &lt;strong&gt;git&lt;/strong&gt; 저장소의 전체 사본을 이미 &lt;strong&gt;반드시&lt;/strong&gt; 보유하고 있어야 합니다. github 또는 git.idk.i2p에서 가져올 수 있지만, 얕은 클론(&amp;ndash;depth=1로 수행한 클론)은 &lt;em&gt;작동하지 않습니다&lt;/em&gt;. 겉보기에는 번들을 만든 것처럼 보이도록 조용히 실패하지만, 그것으로 클론을 시도하면 실패합니다. 미리 생성된 git 번들을 가져오기만 하는 경우라면, 이 섹션은 적용되지 않습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I2P 상에서의 Gitlab 설정</title>
+      <link>/ko/blog/2020/03/16/i2p-%EC%83%81%EC%97%90%EC%84%9C%EC%9D%98-gitlab-%EC%84%A4%EC%A0%95/</link>
+      <pubDate>Mon, 16 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/ko/blog/2020/03/16/i2p-%EC%83%81%EC%97%90%EC%84%9C%EC%9D%98-gitlab-%EC%84%A4%EC%A0%95/</guid>
+      <description>&lt;p&gt;다음은 Docker로 서비스 자체를 관리하면서 Gitlab과 I2P를 구성할 때 사용하는 설정 절차입니다. 이 방식으로는 Gitlab을 I2P에서 매우 쉽게 호스팅할 수 있으며, 한 사람이 큰 어려움 없이 관리할 수 있습니다. 이 지침은 어떤 Debian 기반 시스템에서도 동작하고, Docker와 I2P router가 사용 가능한 모든 시스템으로도 손쉽게 이식할 수 있습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;의존성과-docker&#34;&gt;의존성과 Docker&lt;/h2&gt;&#xA;&lt;p&gt;Gitlab은 컨테이너에서 실행되므로 메인 시스템에는 컨테이너에 필요한 의존성만 설치하면 됩니다. 편리하게도, 다음을 사용하여 필요한 모든 것을 설치할 수 있습니다:&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo apt install docker.io&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;docker-컨테이너-가져오기&#34;&gt;Docker 컨테이너 가져오기&lt;/h2&gt;&#xA;&lt;p&gt;docker를 설치한 후에는 gitlab에 필요한 docker 컨테이너를 가져올 수 있습니다. &lt;em&gt;아직 실행하지 마십시오.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>사용자를 위한 I2P를 통한 Git</title>
+      <link>/ko/blog/2020/03/06/%EC%82%AC%EC%9A%A9%EC%9E%90%EB%A5%BC-%EC%9C%84%ED%95%9C-i2p%EB%A5%BC-%ED%86%B5%ED%95%9C-git/</link>
+      <pubDate>Fri, 06 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/ko/blog/2020/03/06/%EC%82%AC%EC%9A%A9%EC%9E%90%EB%A5%BC-%EC%9C%84%ED%95%9C-i2p%EB%A5%BC-%ED%86%B5%ED%95%9C-git/</guid>
+      <description>&lt;p&gt;I2P Tunnel을 통해 git 접근을 설정하는 튜토리얼입니다. 이 tunnel은 I2P에서 단일 git 서비스에 접근하기 위한 접속 지점 역할을 합니다. 이는 I2P를 monotone에서 Git으로 전환하려는 전반적인 노력의 일부입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;무엇보다-먼저-서비스가-공개적으로-제공하는-기능을-숙지하라&#34;&gt;무엇보다 먼저: 서비스가 공개적으로 제공하는 기능을 숙지하라&lt;/h2&gt;&#xA;&lt;p&gt;git 서비스가 어떻게 구성되어 있는지에 따라 모든 서비스를 동일한 주소에서 제공할 수도 있고 그렇지 않을 수도 있습니다. git.idk.i2p의 경우 공개 HTTP URL과 사용자의 Git SSH 클라이언트에 설정할 SSH URL이 있습니다. 둘 중 어느 것을 사용해도 push 또는 pull을 할 수 있지만, SSH를 권장합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I2P-Bote의 부트스트랩을 도와 자원봉사하는 방법</title>
+      <link>/ko/blog/2019/05/20/i2p-bote%EC%9D%98-%EB%B6%80%ED%8A%B8%EC%8A%A4%ED%8A%B8%EB%9E%A9%EC%9D%84-%EB%8F%84%EC%99%80-%EC%9E%90%EC%9B%90%EB%B4%89%EC%82%AC%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95/</link>
+      <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
+      <guid>/ko/blog/2019/05/20/i2p-bote%EC%9D%98-%EB%B6%80%ED%8A%B8%EC%8A%A4%ED%8A%B8%EB%9E%A9%EC%9D%84-%EB%8F%84%EC%99%80-%EC%9E%90%EC%9B%90%EB%B4%89%EC%82%AC%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95/</guid>
+      <description>&lt;p&gt;사람들이 서로 개인적으로 메시지를 주고받도록 돕는 쉬운 방법은, 새로 합류한 I2P-Bote 사용자들이 자신의 I2P-Bote 피어를 부트스트랩(초기 설정)하는 데 쓸 수 있는 I2P-Bote 피어를 운영하는 것입니다. 안타깝게도 지금까지는 I2P-Bote 부트스트랩 피어를 설정하는 과정이 필요 이상으로 난해했습니다. 사실은 매우 간단합니다!&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;I2P-bote란 무엇입니까?&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;I2P-bote는 i2p 위에 구축된 비공개 메시징 시스템으로, 전송되는 메시지에 대한 정보를 파악하기 더욱 어렵게 만드는 추가 기능들을 갖추고 있습니다. 이러한 특성 덕분에 높은 지연 시간(latency)을 감수하면서도 발신자가 오프라인이 되었을 때 메시지를 대신 전송하는 중앙집중식 릴레이에 의존하지 않고 비공개 메시지를 안전하게 전송할 수 있습니다. 이는 다른 거의 모든 대중적인 비공개 메시징 시스템과 대조적이며, 그러한 시스템들은 양쪽 모두가 온라인 상태여야 하거나 오프라인이 된 발신자를 대신해 메시지를 전달하는 부분적으로 신뢰되는 서비스에 의존합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I2P 실험실</title>
+      <link>/ko/blog/2019/02/14/i2p-%EC%8B%A4%ED%97%98%EC%8B%A4/</link>
+      <pubDate>Thu, 14 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>/ko/blog/2019/02/14/i2p-%EC%8B%A4%ED%97%98%EC%8B%A4/</guid>
+      <description>&lt;p&gt;여러분, 안녕하세요,&lt;/p&gt;&#xA;&lt;p&gt;I2P 세계에는 우리가 기대하는 프로젝트가 많지만, 그중 모두가 당장 본격적인 공개에 적합한 것은 아닙니다. 그래서 그러한 프로젝트들을 시험해 보고자 하는 누구나 이용할 수 있도록 제공하는 공간을 만들기로 했으며, 이 공간은 언젠가 공식 I2P 제품이 될지도 모르는 프로젝트들을 위한 검증의 장이 될 것입니다. 그 공간이 바로 &lt;a href=&#34;https://geti2p.net/en/download/lab&#34;&gt;I2P Laboratory&lt;/a&gt;&#xA;입니다.&lt;/p&gt;&#xA;&lt;p&gt;랩에서는 사용해 보실 수 있도록 바로 이용 가능한 다운로드를 제공할 예정입니다. 다만, 이는 &amp;ldquo;release&amp;rdquo; 품질이 아니며, 일부는 &amp;ldquo;beta&amp;rdquo; 품질에도 미치지 못할 수 있음을 유의해 주세요. 이에 대해 공식 지원은 제공하지 않습니다. 랩 프로젝트는 언제든지 중단될 수 있습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Python과 I2P를 활용한 프라이버시를 고려한 애플리케이션 개발</title>
+      <link>/ko/blog/2018/10/23/python%EA%B3%BC-i2p%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%ED%94%84%EB%9D%BC%EC%9D%B4%EB%B2%84%EC%8B%9C%EB%A5%BC-%EA%B3%A0%EB%A0%A4%ED%95%9C-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EA%B0%9C%EB%B0%9C/</link>
+      <pubDate>Tue, 23 Oct 2018 00:00:00 +0000</pubDate>
+      <guid>/ko/blog/2018/10/23/python%EA%B3%BC-i2p%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%ED%94%84%EB%9D%BC%EC%9D%B4%EB%B2%84%EC%8B%9C%EB%A5%BC-%EA%B3%A0%EB%A0%A4%ED%95%9C-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EA%B0%9C%EB%B0%9C/</guid>
+      <description>&lt;p&gt;&lt;figure&gt;&#xA;  &lt;img &#xA;    src=&#34;https://geti2p.net/images/blog/i2plib.jpeg&#34; &#xA;    alt=&#34;i2plib&#34;loading=&#34;lazy&#34;&#xA;    decoding=&#34;async&#34;&gt;&lt;/figure&gt;&#xA;&#xA;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://geti2p.net/&#34;&gt;Invisible Internet Project&lt;/a&gt;&#xA; (I2P)는 프라이버시를 중시하는 애플리케이션을 개발하기 위한 프레임워크를 제공합니다. 이는 일반 인터넷 위에서 작동하는 가상 네트워크로, 호스트는 자신의 &amp;ldquo;실제&amp;rdquo; IP 주소를 공개하지 않고 데이터를 교환할 수 있습니다. I2P 네트워크 내부의 연결은 &lt;em&gt;I2P destinations&lt;/em&gt;(I2P에서 사용하는 가상 목적지 주소)라고 불리는 가상 주소들 사이에서 설정됩니다. 필요에 따라 destination을 원하는 만큼 보유할 수 있으며, 심지어 각 연결마다 새로운 destination을 사용할 수도 있습니다. 이러한 destination은 상대방에게 실제 IP 주소에 관한 어떠한 정보도 공개하지 않습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>NTCP2 구현 세부 사항</title>
+      <link>/ko/blog/2018/08/20/ntcp2-%EA%B5%AC%ED%98%84-%EC%84%B8%EB%B6%80-%EC%82%AC%ED%95%AD/</link>
+      <pubDate>Mon, 20 Aug 2018 00:00:00 +0000</pubDate>
+      <guid>/ko/blog/2018/08/20/ntcp2-%EA%B5%AC%ED%98%84-%EC%84%B8%EB%B6%80-%EC%82%AC%ED%95%AD/</guid>
+      <description>&lt;p&gt;I2P의 전송 프로토콜은 원래 약 15년 전에 개발되었습니다. 그 당시에는 전송되는 데이터를 숨기는 것이 주된 목표였지, 해당 프로토콜을 사용하고 있다는 사실 자체를 숨기는 것은 아니었습니다. 아무도 DPI(딥 패킷 검사)와 프로토콜 검열에 대한 방어를 진지하게 고려하지 않았습니다. 시간이 흐르면서, 기존 전송 프로토콜이 여전히 강력한 보안을 제공하고 있음에도 불구하고, 새로운 전송 프로토콜에 대한 요구가 생겼습니다. NTCP2는 현재의 검열 위협에 대응하도록 설계되었습니다. 주로, 패킷 길이에 대한 DPI 분석에 대응합니다. 또한 이 새로운 프로토콜은 최신 암호 기술 발전을 활용합니다. NTCP2는 &lt;a href=&#34;https://noiseprotocol.org/noise.html&#34;&gt;Noise Protocol Framework&lt;/a&gt;&#xA;를 기반으로 하며, 해시 함수로는 SHA256을, 타원 곡선 Diffie-Hellman(DH) 키 교환으로는 x25519를 사용합니다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

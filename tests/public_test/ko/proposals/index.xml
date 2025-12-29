@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>I2P 제안서 on I2P - 보이지 않는 인터넷 프로젝트</title>
+    <link>/ko/proposals/</link>
+    <description>Recent content in I2P 제안서 on I2P - 보이지 않는 인터넷 프로젝트</description>
+    <generator>Hugo</generator>
+    <language>ko-KR</language>
+    <atom:link href="/ko/proposals/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>&#39;Encrypted&#39; Streaming Flag</title>
+      <link>/ko/proposals/114-encrypted-streaming-flag/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/114-encrypted-streaming-flag/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 스트리밍에 사용되고 있는 종단간 암호화 유형을 지정하는 플래그를 추가하는 것에 관한 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;높은 부하를 받는 앱들은 ElGamal/AES+SessionTags 태그의 부족을 겪을 수 있습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;p&gt;스트리밍 프로토콜 내 어딘가에 새 플래그를 추가합니다. 이 플래그가 포함된 패킷이 오면, 페이로드는 개인 키와 피어의 공개 키로부터 얻은 키로 AES 암호화되어 있다는 것을 의미합니다. 이는 마늘 (ElGamal/AES) 암호화를 제거하고 태그 부족 문제를 해결할 수 있게 합니다.&lt;/p&gt;&#xA;&lt;p&gt;패킷당 또는 스트림당으로 SYN을 통해 설정할 수 있습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>BEP9 정보 복구</title>
+      <link>/ko/proposals/107-bep9-information-recovery/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/107-bep9-information-recovery/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안은 I2P의 BEP9 구현에서 전체 정보 복구를 추가하는 것에 대한 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;BEP9는 전체 토렌트 파일을 보내지 않기 때문에 여러 중요한 딕셔너리 항목을 잃게 되고, 토렌트 파일의 총 SHA1을 변경합니다. 이는 maggot 링크에 나쁘고 중요한 정보가 손실되기 때문에 나쁩니다. 트래커 목록, 댓글 및 기타 추가 데이터가 사라집니다. 이 정보를 복구하는 방법이 중요하며, 토렌트 파일에 가능한 한 적게 추가되어야 합니다. 또한 순환 종속적이지 않아야 합니다. 복구 정보는 현재 클라이언트에 전혀 영향을 주어서는 안 됩니다. 트래커가 없는 토렌트(트래커 URL이 문자 그대로 &amp;rsquo;trackerless&amp;rsquo;)는 추가 필드를 포함하지 않는데, 이는 원래 maggot 프로토콜의 검색 및 다운로드 방식을 사용하기 때문입니다. 이 프로토콜은 처음부터 정보를 잃지 않습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ChaCha 터널 레이어 암호화</title>
+      <link>/ko/proposals/153-chacha20-layer-encryption/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/153-chacha20-layer-encryption/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 제안서 152: ECIES 터널의 변경 사항을 기반으로 하며 이를 필요로 합니다.&lt;/p&gt;&#xA;&lt;p&gt;ECIES-X25519 터널에 대한 BuildRequestRecord 형식을 지원하는 홉을 통해 구축된 터널만 이 사양을 구현할 수 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;이 사양은 터널 레이어 암호화 유형을 나타내고, 레이어 AEAD 키 전송을 위한 터널 빌드 옵션 형식을 필요로 합니다.&lt;/p&gt;&#xA;&lt;h3 id=&#34;목표&#34;&gt;목표&lt;/h3&gt;&#xA;&lt;p&gt;이 제안서의 목표는 다음과 같습니다:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;확립된 터널 IV 및 레이어 암호화를 위해 AES256/ECB+CBC를 ChaCha20으로 대체&lt;/li&gt;&#xA;&lt;li&gt;홉 간 AEAD 보호를 위해 ChaCha20-Poly1305 사용&lt;/li&gt;&#xA;&lt;li&gt;비터널 참가자에 의해 기존 터널 레이어 암호화로부터 탐지되지 않음&lt;/li&gt;&#xA;&lt;li&gt;전체 터널 메시지 길이에 대한 변경 없음&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;확립된-터널-메시지-처리&#34;&gt;확립된 터널 메시지 처리&lt;/h3&gt;&#xA;&lt;p&gt;이 섹션은 다음의 변경 사항을 설명합니다:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Datagram2 프로토콜</title>
+      <link>/ko/proposals/163-datagram2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/163-datagram2/</guid>
+      <description>&lt;h2 id=&#34;상태&#34;&gt;상태&lt;/h2&gt;&#xA;&lt;p&gt;2025-04-15 리뷰에서 승인됨.&#xA;사양에 변경 사항이 통합되었습니다.&#xA;API 0.9.66에서 Java I2P로 구현되었습니다.&#xA;상태에 대한 구현 문서를 확인하십시오.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;../../ko/proposals/123-new-netdb-entries/&#34;&gt;Prop123&lt;/a&gt;&#xA;에서 별도의 제안으로 분리되었습니다.&lt;/p&gt;&#xA;&lt;p&gt;오프라인 서명은 응답 가능한 데이터그램 처리에서 확인할 수 없습니다.&#xA;오프라인 서명된 것을 나타내는 플래그가 필요하지만 플래그를 넣을 곳이 없습니다.&lt;/p&gt;&#xA;&lt;p&gt;완전히 새로운 I2CP 프로토콜 번호와 형식이 필요하며,&#xA;이것은 &lt;a href=&#34;../../ko/docs/api/datagrams/&#34;&gt;DATAGRAMS&lt;/a&gt;&#xA; 사양에 추가될 것입니다.&#xA;이를 &amp;ldquo;Datagram2&amp;quot;라고 부릅시다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;목표&#34;&gt;목표&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;오프라인 서명 지원 추가&lt;/li&gt;&#xA;&lt;li&gt;재생 저항 추가&lt;/li&gt;&#xA;&lt;li&gt;서명 없는 플러버 추가&lt;/li&gt;&#xA;&lt;li&gt;확장성을 위한 플래그 및 옵션 필드 추가&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;비목표&#34;&gt;비목표&lt;/h2&gt;&#xA;&lt;p&gt;혼잡 제어 등을 위한 전체 엔드 투 엔드 프로토콜 지원.&#xA;이는 Datagram2 위에 빌드되거나 대체해야 할 것입니다. 이는 저수준 프로토콜입니다.&#xA;Datagram2 위에만 고성능 프로토콜을 설계하는 것은 의미가 없습니다. 이는 보낸 사람 필드와 서명 오버헤드 때문입니다.&#xA;이러한 프로토콜은 Datagram2로 초기 핸드셰이크를 수행한 다음 RAW 데이터그램으로 전환해야 합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ECDSA 키 블라인딩</title>
+      <link>/ko/proposals/151-ecdsa-blinding/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/151-ecdsa-blinding/</guid>
+      <description>&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;일부 사람들은 EdDSA나 RedDSA를 좋아하지 않습니다. 우리는 몇 가지 대안을 제시하고 그들이 ECDSA 서명을 블라인드할 수 있도록 해야 합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 ECDSA 서명 유형 1, 2, 3에 대한 키 블라인딩을 설명합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;제안&#34;&gt;제안&lt;/h2&gt;&#xA;&lt;p&gt;RedDSA와 동일한 방식으로 작동하지만 모든 것이 Big Endian입니다.&#xA;오직 동일한 서명 유형들만 허용됩니다. 예: 1-&amp;gt;1, 2-&amp;gt;2, 3-&amp;gt;3.&lt;/p&gt;&#xA;&lt;h3 id=&#34;정의&#34;&gt;정의&lt;/h3&gt;&#xA;&lt;p&gt;B&#xA;커브의 베이스 포인트&lt;/p&gt;&#xA;&lt;p&gt;L&#xA;타원 곡선의 그룹 순서. 커브의 속성.&lt;/p&gt;&#xA;&lt;p&gt;DERIVE_PUBLIC(a)&#xA;타원 곡선상의 B에 곱셈하여 비공개 키를 공개로 변환&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ECIES Tunnels</title>
+      <link>/ko/proposals/152-ecies-tunnels/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/152-ecies-tunnels/</guid>
+      <description>&lt;h2 id=&#34;참고&#34;&gt;참고&lt;/h2&gt;&#xA;&lt;p&gt;네트워크 배포 및 테스트가 진행 중입니다. 소폭의 수정이 있을 수 있습니다. 공식 명세는 &lt;a href=&#34;../../ko/docs/specs/implementation/&#34;&gt;SPEC&lt;/a&gt;&#xA;을 참조하세요.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 문서는 &lt;a href=&#34;../../ko/docs/specs/ecies/&#34;&gt;ECIES-X25519&lt;/a&gt;&#xA;에서 도입된 암호 프리미티브(기본 암호 구성 요소)를 사용하여 Tunnel Build 메시지 암호화를 변경하는 방안을 제안한다. 이는 routers를 ElGamal에서 ECIES-X25519 키로 전환하기 위한 전체 제안서 &lt;a href=&#34;../../ko/proposals/156-ecies-routers&#34;&gt;Proposal 156&lt;/a&gt;&#xA;의 일부다.&lt;/p&gt;&#xA;&lt;p&gt;네트워크를 ElGamal + AES256에서 ECIES + ChaCha20으로 전환하기 위해서는 ElGamal 및 ECIES routers가 혼재된 tunnels이 필요하다. 혼합된 tunnel 홉을 처리하기 위한 사양이 제공된다. ElGamal 홉의 형식, 처리, 암호화에는 어떤 변경도 가하지 않는다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ECIES 라우터</title>
+      <link>/ko/proposals/156-ecies-routers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/156-ecies-routers/</guid>
+      <description>&lt;h2 id=&#34;주의-사항&#34;&gt;주의 사항&lt;/h2&gt;&#xA;&lt;p&gt;네트워크 배포 및 테스트 진행 중.&#xA;수정될 수 있음.&#xA;상태:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;ECIES 라우터는 0.9.48에 구현됨, &lt;a href=&#34;../../ko/docs/specs/common-structures/&#34;&gt;Common&lt;/a&gt;&#xA; 참조.&lt;/li&gt;&#xA;&lt;li&gt;터널 빌딩은 0.9.48에 구현됨, &lt;a href=&#34;../../ko/docs/specs/implementation/#tunnel-creation-ecies&#34;&gt;Tunnel-Creation-ECIES&lt;/a&gt;&#xA; 참조.&lt;/li&gt;&#xA;&lt;li&gt;ECIES 라우터에 암호화된 메시지는 0.9.49에 구현됨, &lt;a href=&#34;../../ko/docs/specs/ecies/&#34;&gt;ECIES-ROUTERS&lt;/a&gt;&#xA; 참조.&lt;/li&gt;&#xA;&lt;li&gt;새로운 터널 빌드 메시지는 0.9.51에 구현됨.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;h3 id=&#34;요약&#34;&gt;요약&lt;/h3&gt;&#xA;&lt;p&gt;현재 라우터 아이덴티티는 ElGamal 암호화 키를 포함하고 있음.&#xA;I2P의 초창기부터 이것이 표준이었음.&#xA;ElGamal은 느리기 때문에 사용되는 모든 곳에서 교체가 필요함.&lt;/p&gt;&#xA;&lt;p&gt;LS2 &lt;a href=&#34;../../ko/proposals/123-new-netdb-entries/&#34;&gt;Prop123&lt;/a&gt;&#xA;와 ECIES-X25519-AEAD-Ratchet &lt;a href=&#34;../../ko/proposals/144-ecies-x25519-aead-ratchet/&#34;&gt;Prop144&lt;/a&gt;&#xA;의 제안은&#xA;목적지를 위해 ElGamal을 ECIES로 교체한다고 정의함&#xA;(현재 &lt;a href=&#34;../../ko/docs/specs/ecies/&#34;&gt;ECIES&lt;/a&gt;&#xA;에 지정됨).&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ECIES 목적지를 위한 스트리밍 MTU</title>
+      <link>/ko/proposals/155-streaming-mtu-ecies/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/155-streaming-mtu-ecies/</guid>
+      <description>&lt;h2 id=&#34;노트&#34;&gt;노트&lt;/h2&gt;&#xA;&lt;p&gt;네트워크 배포 및 테스트 진행 중.&#xA;약간의 수정이 있을 수 있음.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;h3 id=&#34;요약&#34;&gt;요약&lt;/h3&gt;&#xA;&lt;p&gt;ECIES는 기존 세션(ES) 메시지 오버헤드를 약 90바이트 줄입니다.&#xA;따라서 우리는 ECIES 연결을 위해 MTU를 약 90바이트 증가시킬 수 있습니다.&#xA;See the &lt;a href=&#34;../../ko/docs/specs/ecies/#overhead&#34;&gt;ECIES specification&lt;/a&gt;&#xA;, &lt;a href=&#34;../../ko/docs/specs/streaming/#flags-and-option-data-fields&#34;&gt;Streaming specification&lt;/a&gt;&#xA;, and &lt;a href=&#34;../../ko/docs/api/streaming/&#34;&gt;Streaming API documentation&lt;/a&gt;&#xA;를 참조하세요.&lt;/p&gt;&#xA;&lt;p&gt;MTU를 증가시키지 않는다면, 많은 경우에 오버헤드 절감이 실제로 &amp;lsquo;절감되지&amp;rsquo; 않으며,&#xA;메시지들이 어차피 두 개의 전체 터널 메시지로 패딩될 것입니다.&lt;/p&gt;&#xA;&lt;p&gt;이 제안은 사양 변경을 요구하지 않습니다.&#xA;추천 값과 구현 세부 사항의 토론 및 합의 구축을 위해 제안으로 게시되었습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ECIES 목적지에서 데이터베이스 조회</title>
+      <link>/ko/proposals/154-ecies-lookups/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/154-ecies-lookups/</guid>
+      <description>&lt;h2 id=&#34;주의&#34;&gt;주의&lt;/h2&gt;&#xA;&lt;p&gt;ECIES에서 ElG로의 구현은 0.9.46에 완료되었으며 제안 단계는 종료되었습니다.&#xA;공식 사양은 &lt;a href=&#34;../../ko/docs/specs/i2np/&#34;&gt;I2NP&lt;/a&gt;&#xA;를 참조하십시오.&#xA;배경 정보를 위해 이 제안을 참조할 수 있습니다.&#xA;포함된 키를 이용한 ECIES에서 ECIES로의 구현은 0.9.48 이후로 완료되었습니다.&#xA;ECIES에서 ECIES (파생 키) 섹션은 앞으로의 제안에서 다시 열리거나 통합될 수 있습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;h3 id=&#34;정의&#34;&gt;정의&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;AEAD: ChaCha20/Poly1305&lt;/li&gt;&#xA;&lt;li&gt;DLM: I2NP 데이터베이스 조회 메시지&lt;/li&gt;&#xA;&lt;li&gt;DSM: I2NP 데이터베이스 저장 메시지&lt;/li&gt;&#xA;&lt;li&gt;DSRM: I2NP 데이터베이스 검색 응답 메시지&lt;/li&gt;&#xA;&lt;li&gt;ECIES: ECIES-X25519-AEAD-Ratchet (제안 144)&lt;/li&gt;&#xA;&lt;li&gt;ElG: ElGamal&lt;/li&gt;&#xA;&lt;li&gt;ENCRYPT(k, n, payload, ad): &lt;a href=&#34;../../ko/docs/specs/ecies/&#34;&gt;ECIES&lt;/a&gt;&#xA;에서 정의된 바와 같이&lt;/li&gt;&#xA;&lt;li&gt;LS: Leaseset&lt;/li&gt;&#xA;&lt;li&gt;조회: I2NP DLM&lt;/li&gt;&#xA;&lt;li&gt;응답: I2NP DSM 또는 DSRM&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;요약&#34;&gt;요약&lt;/h3&gt;&#xA;&lt;p&gt;플러드필로 DLM을 보낼 때, DLM은 일반적으로 응답이 태그를 지정하고, AES로 암호화되며 대상 터널로 전송되도록 지정합니다.&#xA;AES 암호화 응답에 대한 지원은 0.9.7에 추가되었습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ECIES-P256</title>
+      <link>/ko/proposals/145-ecies/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/145-ecies/</guid>
+      <description>&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;ECIES-P256은 ElGamal보다 훨씬 빠릅니다. 이미 몇몇 i2pd 이프사이트에는 ECIES-P256 암호화 타입이 존재하며, Java는 이와 상호 통신이 가능해야 합니다. i2pd는 2.16.0 릴리스(0.9.32 Java)부터 이를 지원합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 식별의 인증서 부분에 나타나거나 LeaseSet2에서 별도의 암호화 키 유형으로 나타날 수 있는 새로운 암호화 유형 ECIES-P256을 소개합니다. RouterInfo, LeaseSet1 및 LeaseSet2에 사용할 수 있습니다.&lt;/p&gt;&#xA;&lt;h3 id=&#34;elgamal-키-위치&#34;&gt;ElGamal 키 위치&lt;/h3&gt;&#xA;&lt;p&gt;복습으로,&#xA;ElGamal 256바이트 공개 키는 다음 데이터 구조에서 찾을 수 있습니다.&#xA;공통 구조 사양을 참조하십시오.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ECIES-X25519-AEAD-Ratchet</title>
+      <link>/ko/proposals/144-ecies-x25519-aead-ratchet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/144-ecies-x25519-aead-ratchet/</guid>
+      <description>&lt;h2 id=&#34;참고&#34;&gt;참고&lt;/h2&gt;&#xA;&lt;p&gt;네트워크 배포 및 테스트가 진행 중입니다. 사소한 수정이 있을 수 있습니다. 공식 사양은 &lt;a href=&#34;../../ko/docs/specs/ecies/&#34;&gt;SPEC&lt;/a&gt;&#xA;을 참조하십시오.&lt;/p&gt;&#xA;&lt;p&gt;다음 기능들은 0.9.46 버전 기준으로 구현되지 않았습니다:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;MessageNumbers, Options, 및 Termination 블록&lt;/li&gt;&#xA;&lt;li&gt;프로토콜 계층 응답&lt;/li&gt;&#xA;&lt;li&gt;Zero static key&lt;/li&gt;&#xA;&lt;li&gt;멀티캐스트&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이것은 I2P 시작 이래 첫 번째 새로운 end-to-end 암호화 유형에 대한 제안으로, ElGamal/AES+SessionTags &lt;a href=&#34;../../ko/docs/legacy/elgamal-aes/&#34;&gt;Elg-AES&lt;/a&gt;&#xA;를 대체하기 위한 것입니다.&lt;/p&gt;&#xA;&lt;p&gt;다음과 같은 이전 작업에 의존합니다:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;공통 구조 명세 &lt;a href=&#34;../../ko/docs/specs/common-structures/&#34;&gt;Common Structures&lt;/a&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;LS2를 포함한 &lt;a href=&#34;../../ko/docs/specs/i2np/&#34;&gt;I2NP&lt;/a&gt;&#xA; 명세&lt;/li&gt;&#xA;&lt;li&gt;ElGamal/AES+Session Tags &lt;a href=&#34;../../ko/docs/legacy/elgamal-aes/&#34;&gt;Elg-AES&lt;/a&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;http://zzz.i2p/topics/1768&#34;&gt;http://zzz.i2p/topics/1768&lt;/a&gt;&#xA; 새로운 비대칭 암호화 개요&lt;/li&gt;&#xA;&lt;li&gt;저수준 암호화 개요 &lt;a href=&#34;../../ko/docs/specs/cryptography/&#34;&gt;CRYPTO-ELG&lt;/a&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;ECIES &lt;a href=&#34;http://zzz.i2p/topics/2418&#34;&gt;http://zzz.i2p/topics/2418&lt;/a&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;../../ko/docs/specs/ntcp2/&#34;&gt;NTCP2&lt;/a&gt;&#xA; &lt;a href=&#34;../../ko/proposals/111-ntcp-2/&#34;&gt;제안서 111&lt;/a&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;123 새로운 netDB 항목&lt;/li&gt;&#xA;&lt;li&gt;142 새로운 암호화 템플릿&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://noiseprotocol.org/noise.html&#34;&gt;Noise&lt;/a&gt;&#xA; 프로토콜&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://signal.org/docs/&#34;&gt;Signal&lt;/a&gt;&#xA; double ratchet 알고리즘&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;목표는 종단 간, destination-to-destination 통신을 위한 새로운 암호화를 지원하는 것입니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ElGamal/AES&#43;세션 태그를 위한 리셋 메시지</title>
+      <link>/ko/proposals/124-session-tags-reset-message/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/124-session-tags-reset-message/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안은 두 목적지 간의 세션 태그를 리셋하는 데 사용될 수 있는 I2NP 메시지에 관한 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;어떤 목적지가 다른 목적지에 대한 여러 확인된 태그를 가지고 있다고 상상해보세요. 하지만 그 목적지가 재시작되었거나 다른 방식으로 이러한 태그를 잃어버렸습니다. 첫 번째 목적지는 태그와 함께 메시지를 계속 보내고, 두 번째 목적지는 이를 해독할 수 없습니다. 두 번째 목적지는 첫 번째 목적지에 세션을 리셋하고 (처음부터 다시 시작) 업데이트된 LeaseSet을 보내는 것과 같은 방법으로 추가적인 갈릭 글로브를 통해 말할 수 있는 방법이 필요합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Garlic Farm 프로토콜</title>
+      <link>/ko/proposals/150-garlic-farm-protocol/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/150-garlic-farm-protocol/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 문서는 JRaft 및 TCP 위의 &amp;ldquo;exts&amp;rdquo; 코드, &amp;ldquo;dmprinter&amp;rdquo; 샘플 애플리케이션 &lt;a href=&#34;https://github.com/datatechnology/jraft&#34;&gt;JRAFT&lt;/a&gt;&#xA;를 기반으로 하는 Garlic Farm 와이어 프로토콜의 명세서입니다. JRaft는 Raft 프로토콜의 구현체입니다 &lt;a href=&#34;https://ramcloud.stanford.edu/wiki/download/attachments/11370504/raft.pdf&#34;&gt;RAFT&lt;/a&gt;&#xA;.&lt;/p&gt;&#xA;&lt;p&gt;문서화된 와이어 프로토콜을 가진 구현체를 찾을 수 없었습니다. 그러나 JRaft 구현체는 코드 검토를 통해 그 프로토콜을 문서화할 수 있을 정도로 충분히 단순합니다. 이 제안서는 그 노력의 결과입니다.&lt;/p&gt;&#xA;&lt;p&gt;이 프로토콜은 Meta LeaseSet에서 항목을 게시하는 라우터의 조정을 위한 백엔드가 될 것입니다. 제안서 123을 참조하세요.&lt;/p&gt;&#xA;&lt;h2 id=&#34;목표&#34;&gt;목표&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;작은 코드 크기&lt;/li&gt;&#xA;&lt;li&gt;기존 구현을 기반으로 함&lt;/li&gt;&#xA;&lt;li&gt;직렬화된 자바 객체나 자바 특별 기능 또는 인코딩을 사용하지 않음&lt;/li&gt;&#xA;&lt;li&gt;부트스트래핑은 범위 외임. 적어도 다른 서버 하나가 하드코딩되거나 이 프로토콜 외부에서 설정된 것으로 가정&lt;/li&gt;&#xA;&lt;li&gt;외부 및 I2P 내 사용 사례 모두 지원&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;p&gt;Raft 프로토콜은 구체적인 프로토콜이 아닙니다. 상태 머신만 정의합니다. 따라서 JRaft의 구체적인 프로토콜을 문서화하고 그것을 기반으로 우리의 프로토콜을 설계합니다. JRaft 프로토콜에는 인증 핸드셰이크의 추가 외에 변경 사항이 없습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>GarliCat의 이름 번역</title>
+      <link>/ko/proposals/105-garlicat-name-translation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/105-garlicat-name-translation/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안은 I2P에 DNS 역방향 조회를 지원하는 것에 관한 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;현재-번역-메커니즘&#34;&gt;현재 번역 메커니즘&lt;/h2&gt;&#xA;&lt;p&gt;GarliCat (GC)은 다른 GC 노드와의 연결을 설정하기 위한 이름 번역을 수행합니다. 이 이름 번역은 주소의 이진 표현을 Base32 인코딩 형태로 재코딩하는 것에 불과합니다. 따라서 번역은 양방향으로 작동합니다.&lt;/p&gt;&#xA;&lt;p&gt;이 주소들은 80비트 길이로 선택되었습니다. 이는 Tor가 그 숨은 서비스의 주소를 위한 80비트 길이 값을 사용하기 때문입니다. 그래서 OnionCat(Tor용 GC)은 추가 개입 없이 Tor와 작동합니다.&lt;/p&gt;&#xA;&lt;p&gt;불행히도(이 주소 체계와 관련), I2P는 그 서비스의 주소 지정에 대해 256비트 길이 값을 사용합니다. 이미 언급했듯이, GC는 이진 및 Base32 인코딩 형태 간을 변환합니다. GC가 계층 3 VPN이기 때문에, 이진 표현에서는 주소가 총 128비트 길이의 IPv6 주소로 정의됩니다. 당연히, 256비트 길이의 I2P 주소는 맞지 않습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>GOST 서명 타입</title>
+      <link>/ko/proposals/134-gost/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/134-gost/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;GOST R 34.10 타원 곡선 서명은 러시아에서 공무원 및 기업이 사용합니다. 이를 지원하면 기존의 앱(주로 CryptoPro 기반)의 통합을 쉽게 할 수 있습니다. 해시 함수는 32 또는 64바이트의 GOST R 34.11입니다. 기본적으로 EcDSA와 같은 방식으로 작동하며, 서명과 공개 키의 크기는 64 또는 128바이트입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;타원 곡선 암호화는 완전히 신뢰받은 적이 없었으며, 백도어 가능성에 대한 많은 추측이 있습니다. 따라서 모든 사람이 신뢰할 수 있는 궁극적인 서명 타입은 없습니다. 하나의 서명 타입을 추가하면 사람들이 더 신뢰할 수 있는 것을 선택할 수 있는 보다 많은 옵션을 제공할 것입니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I2P Mime Types</title>
+      <link>/ko/proposals/139-i2p-mime-types/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/139-i2p-mime-types/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;일반적인 I2P 파일 형식에 대한 MIME 유형을 정의합니다.&#xA;Debian 패키지에 정의를 포함합니다.&#xA;.su3 유형 및 가능하면 다른 유형에 대한 핸들러를 제공합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;브라우저로 다운로드할 때 리시딩 및 플러그인 설치를 용이하게 하기 위해,&#xA;.su3 파일에 대한 MIME 유형과 핸들러가 필요합니다.&lt;/p&gt;&#xA;&lt;p&gt;프리데스크톱 표준(freedesktop.org standard)을 따라 MIME 정의 파일을 작성하는 방법을 배우고 나면,&#xA;다른 일반적인 I2P 파일 형식에 대한 정의를 추가할 수 있습니다.&#xA;주소록 블록파일 데이터베이스(hostsdb.blockfile)와 같이 일반적으로 다운로드되지 않는 파일에는&#xA;덜 유용하겠지만, 이러한 정의를 사용하면 Ubuntu의 &amp;ldquo;nautilus&amp;quot;와 같은 그래픽 디렉토리 뷰어를 사용할 때&#xA;파일을 더 잘 식별하고 아이콘화 할 수 있습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I2P proposal #165: SSU2 수정</title>
+      <link>/ko/proposals/165-ssu2-fix/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/165-ssu2-fix/</guid>
+      <description>&lt;p&gt;weko, orignal, the Anonymous 그리고 zzz에 의해 제안됨.&lt;/p&gt;&#xA;&lt;h3 id=&#34;개요&#34;&gt;개요&lt;/h3&gt;&#xA;&lt;p&gt;이 문서는 SSU2의 취약점을 악용한 I2P에 대한 공격에 대응하여 SSU2에 대한 변경 사항을 제안합니다. 주요 목표는 보안을 강화하고 분산 서비스 거부(DDoS) 공격과 익명성 해제 시도를 방지하는 것입니다.&lt;/p&gt;&#xA;&lt;h3 id=&#34;위협-모델&#34;&gt;위협 모델&lt;/h3&gt;&#xA;&lt;p&gt;공격자가 새로운 가짜 RI를 만듭니다(라우터가 존재하지 않음): 이는 일반 RI이지만, 실제 Bob의 라우터에서 주소, 포트, s 및 i 키를 가져와 네트워크에 범람시킵니다. 우리가 이 (실제라고 생각하는) 라우터와 연결을 시도할 때, 우리는 Alice로서 이 주소에 연결할 수 있지만, 실제 Bob의 RI로 수행했는지 확신할 수 없습니다. 이는 가능하며 분산 서비스 거부 공격(대량의 RI를 만들어 네트워크에 범람시키기)에도 사용되었습니다. 또한, 많은 RI를 가진 IP를 차단하면 공격자의 라우터를 프레이밍하지 않고 좋은 라우터를 프레이밍하여 비익명 공격을 쉽게 할 수 있습니다(이 RI를 하나의 라우터처럼 터널 빌딩을 효과적으로 분배하는 대신).&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I2P 제안 #166: Identity/Host 인식 터널 유형</title>
+      <link>/ko/proposals/166-identity-aware-proxies/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/166-identity-aware-proxies/</guid>
+      <description>&lt;h3 id=&#34;호스트-인식-http-프록시-터널-유형-제안&#34;&gt;호스트 인식 HTTP 프록시 터널 유형 제안&lt;/h3&gt;&#xA;&lt;p&gt;이는 기존 I2P를 통한 HTTP 사용에서 “공유된 신원 문제”를 해결하기 위해 새로운 HTTP 프록시 터널 유형을 도입하기 위한 제안입니다. 이 터널 유형은 잠재적인 적대적인 숨겨진 서비스 운영자가 타겟팅된 사용자 에이전트(브라우저) 및 I2P 클라이언트 애플리케이션 자체에 의해 수행되는 추적의 유용성을 방지하거나 제한하기 위해 보완적인 동작을 가지게 됩니다.&lt;/p&gt;&#xA;&lt;h4 id=&#34;공유된-신원-문제란-무엇일까요&#34;&gt;“공유된 신원” 문제란 무엇일까요?&lt;/h4&gt;&#xA;&lt;p&gt;“공유된 신원” 문제는 암호화된 주소의 오버레이 네트워크 상에서 사용자 에이전트가 다른 사용자 에이전트와 암호화된 신원을 공유할 때 발생합니다. 예를 들어 Firefox와 GNU Wget이 동일한 HTTP 프록시를 사용하도록 구성된 경우에 발생합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I2P 제안 프로세스</title>
+      <link>/ko/proposals/001-process/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/001-process/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 문서는 I2P 사양을 변경하는 방법, I2P 제안이 작동하는 방식, 그리고 I2P 제안과 사양 사이의 관계를 설명합니다.&lt;/p&gt;&#xA;&lt;p&gt;이 문서는 Tor 제안 프로세스를 바탕으로 만들어졌으며, 아래의 많은 내용은 Nick Mathewson이 원래 작성했습니다.&lt;/p&gt;&#xA;&lt;p&gt;이 문서는 정보 제공을 위한 문서입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;이전에 I2P 사양을 업데이트하기 위한 우리의 과정은 상대적으로 비공식적이었습니다: 개발 포럼에 제안을 올리고 변경 사항을 논의한 다음, 합의에 도달하고 (반드시 그 순서가 아닌) 사양을 초안 변경안으로 패치하고, 마지막으로 변경 사항을 구현했습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I2PControl API 2</title>
+      <link>/ko/proposals/118-i2pcontrol-api-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/118-i2pcontrol-api-2/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 I2PControl의 API2를 설명합니다.&lt;/p&gt;&#xA;&lt;p&gt;이 제안서는 기존 버전과의 호환성을 깨뜨리기 때문에 거부되었으며 구현되지 않을 것입니다. 자세한 내용은 토론 스레드 링크를 참조하십시오.&lt;/p&gt;&#xA;&lt;h3 id=&#34;개발자-주목&#34;&gt;개발자 주목!&lt;/h3&gt;&#xA;&lt;p&gt;모든 RPC 매개변수는 이제 소문자로 작성됩니다. 이는 기존 API1 구현과의 호환성을 깨뜨리게 됩니다. 이렇게 하는 이유는 사용자에게 API2 이상에서 가장 단순하고 일관된 API를 제공하기 위해서입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;api-2-명세&#34;&gt;API 2 명세&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;,&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;method&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;method_name&amp;#34;&lt;/span&gt;,&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;params&amp;#34;&lt;/span&gt;: {&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;token&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;auth_token&amp;#34;&lt;/span&gt;,&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;method_param&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;method_parameter_value&amp;#34;&lt;/span&gt;,&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    },&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;jsonrpc&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.0&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  {&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;,&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;result&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;result_value&amp;#34;&lt;/span&gt;,&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;jsonrpc&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2.0&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;매개변수&#34;&gt;매개변수&lt;/h3&gt;&#xA;&lt;p&gt;&lt;strong&gt;&lt;code&gt;&amp;quot;id&amp;quot;&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>IPv6 MTU 증가</title>
+      <link>/ko/proposals/127-increase-ipv6-mtu/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/127-increase-ipv6-mtu/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 최대 SSU IPv6 MTU를 1472에서 1488로 증가시키기 위한 것입니다.&#xA;버전 0.9.28에 구현되었습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;IPv4 MTU는 16의 배수여야 하고, 12를 더해야 합니다. IPv6 MTU는 16의 배수여야 합니다.&lt;/p&gt;&#xA;&lt;p&gt;수년 전 IPv6 지원이 처음 추가되었을 때, 우리는 IPv6 MTU의 최대 값을 1472로 설정했습니다. 이는 IPv4 MTU의 1484보다 낮은 수치였습니다. 이는 단순함을 유지하고 IPv6 MTU가 기존 IPv4 MTU보다 낮도록 보장하기 위함이었습니다. 이제 IPv6 지원이 안정적이라 IPv4 MTU보다 높은 IPv6 MTU를 설정할 수 있어야 합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>IPv6 전송 개선</title>
+      <link>/ko/proposals/158-ipv6-transport-enhancements/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/158-ipv6-transport-enhancements/</guid>
+      <description>&lt;h2 id=&#34;주의&#34;&gt;주의&lt;/h2&gt;&#xA;&lt;p&gt;네트워크 배포 및 테스트 진행 중.&lt;br&gt;&#xA;경미한 수정 가능함.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 IPv6를 위한 SSU 및 NTCP2 전송의 개선을 구현하는 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;전 세계적으로 IPv6가 성장하고 IPv6 전용 설정(특히 모바일에서)이 더 보편화됨에 따라,&lt;br&gt;&#xA;IPv6 지원을 개선하고 모든 라우터가 IPv4를 지원할 것이라는 가정을 제거해야 합니다.&lt;/p&gt;&#xA;&lt;h3 id=&#34;연결성-확인&#34;&gt;연결성 확인&lt;/h3&gt;&#xA;&lt;p&gt;터널을 위해 피어를 선택하거나, 메시지를 라우팅하기 위해 OBEP/IBGW 경로를 선택할 때,&lt;br&gt;&#xA;라우터 A가 라우터 B에 연결할 수 있는지를 계산하는 데 도움이 됩니다.&lt;br&gt;&#xA;일반적으로 이는 B의 광고된 인바운드 주소 중 하나와 일치하는 전송 및 주소 유형(IPv4/v6)에 대해 A가 아웃바운드 기능을 갖추고 있는지를 결정하는 것을 의미합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>IPv6 피어 테스트</title>
+      <link>/ko/proposals/126-ipv6-peer-testing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/126-ipv6-peer-testing/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안은 IPv6에 대한 SSU 피어 테스트를 구현하는 것입니다.&#xA;0.9.27에 구현되었습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;우리의 IPv6 주소가 방화벽에 의해 차단되는지 신뢰할 수 있는 방법으로 판단하고 추적할 수 없습니다.&lt;/p&gt;&#xA;&lt;p&gt;몇 년 전 IPv6 지원을 추가했을 때, IPv6는 절대 방화벽에 의해 차단되지 않을 것이라고 가정했습니다.&lt;/p&gt;&#xA;&lt;p&gt;더 최근에, 0.9.20 (2015년 5월)에서는 내부적으로 v4/v6 접근 가능 상태를 분리했습니다 (티켓 #1458).&#xA;자세한 정보와 링크는 해당 티켓을 참조하세요.&lt;/p&gt;&#xA;&lt;p&gt;v4와 v6 모두 방화벽에 차단된 경우, /confignet의 TCP 구성 섹션에서 방화벽을 강제로 설정할 수 있습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>LeaseSet 키 지속성</title>
+      <link>/ko/proposals/113-leaseset-key-persistence/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/113-leaseset-key-persistence/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안은 현재 일시적인 LeaseSet에 추가 데이터를 지속시키는 것에 관한 것입니다.&#xA;0.9.18에 구현되었습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;0.9.17에서는 i2ptunnel.config에 저장된 netDb 슬라이싱 키에 대한 지속성이 추가되었습니다. 이는 재시작 후 동일한 슬라이스를 유지하여 몇 가지 공격을 방지하는 데 도움이 되며, 라우터 재시작과의 가능한 상관관계도 방지합니다.&lt;/p&gt;&#xA;&lt;p&gt;라우터 재시작과 더 쉽게 상관관계를 가질 수 있는 다른 두 가지는 leaseset 암호화 및 서명 키입니다. 현재 이들은 지속화되지 않습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;제안된-변경-사항&#34;&gt;제안된 변경 사항&lt;/h2&gt;&#xA;&lt;p&gt;개인 키는 i2ptunnel.config에 i2cp.leaseSetPrivateKey 및 i2cp.leaseSetSigningPrivateKey로 저장됩니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>LS2의 서비스 기록</title>
+      <link>/ko/proposals/167-service-records/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/167-service-records/</guid>
+      <description>&lt;h2 id=&#34;상태&#34;&gt;상태&lt;/h2&gt;&#xA;&lt;p&gt;2025-04-01에 2차 검토에서 승인됨; 사양은 업데이트되었으나 아직 구현되지 않음.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;I2P는 중앙 DNS 시스템이 없습니다.&#xA;그러나 주소록과 b32 호스트명 시스템을 통해 라우터는 전체 목적지를 조회하고 리스셋을 가져올 수 있으며, 이를 통해 클라이언트가 해당 목적지에 연결할 수 있는 게이트웨이 및 키 목록을 포함합니다.&lt;/p&gt;&#xA;&lt;p&gt;따라서 리스셋은 DNS 기록과 유사합니다. 그러나 현재로서는 해당 호스트가 DNS SRV 기록 &lt;a href=&#34;https://en.wikipedia.org/wiki/SRV_record&#34;&gt;SRV&lt;/a&gt;&#xA; &lt;a href=&#34;https://datatracker.ietf.org/doc/html/rfc2782&#34;&gt;RFC2782&lt;/a&gt;&#xA;과 유사하게 서비스를 지원하는지 여부를 확인할 수 있는 시설이 없습니다.&lt;/p&gt;&#xA;&lt;p&gt;첫 번째 애플리케이션은 피어 투 피어 이메일이 될 수 있습니다.&#xA;다른 가능한 애플리케이션으로는 DNS, GNS, 키 서버, 인증 기관, 시간 서버, 비트토렌트, 암호화폐 및 기타 피어 투 피어 애플리케이션이 있습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>NTCP 2</title>
+      <link>/ko/proposals/111-ntcp-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/111-ntcp-2/</guid>
+      <description>&lt;h2 id=&#34;참고&#34;&gt;참고&lt;/h2&gt;&#xA;&lt;p&gt;제안 단계가 종료되었습니다. 공식 사양은 &lt;a href=&#34;../../ko/docs/specs/ntcp2/&#34;&gt;SPEC&lt;/a&gt;&#xA;를 참조하세요. 이 제안서는 여전히 배경 정보로 참조될 수 있습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 다양한 형태의 자동화된 식별 및 공격에 대한 &lt;a href=&#34;../../ko/docs/ntcp/&#34;&gt;NTCP&lt;/a&gt;&#xA;의 저항성을 개선하기 위한 인증된 키 합의 프로토콜을 설명합니다.&lt;/p&gt;&#xA;&lt;p&gt;제안서는 다음과 같이 구성되어 있습니다: 보안 목표가 먼저 제시되고, 기본 프로토콜에 대한 논의가 이어집니다. 다음으로 모든 프로토콜 메시지의 완전한 명세가 제공됩니다. 마지막으로 router 주소와 버전 식별에 대해 논의됩니다. 일반적인 패딩 스키마에 대한 포괄적 공격을 논의하는 부록과 인증 암호화 알고리즘의 여러 후보들을 포함하는 부록도 함께 포함되어 있습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>NTCP 난독화</title>
+      <link>/ko/proposals/106-ntcp-obfuscation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/106-ntcp-obfuscation/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안은 NTCP 전송을 개편하여 자동화된 식별에 대한 저항성을 향상시키는 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;NTCP 데이터는 첫 번째 메시지 이후로 암호화되며 (첫 번째 메시지는 무작위 데이터로 나타남), &amp;ldquo;페이로드 분석&amp;quot;을 통한 프로토콜 식별을 방지합니다. 그러나 &amp;ldquo;흐름 분석&amp;quot;을 통한 프로토콜 식별에 여전히 취약합니다. 이는 첫 4개의 메시지(즉, 핸드셰이크)가 고정된 길이(288, 304, 448 및 48 바이트)이기 때문입니다.&lt;/p&gt;&#xA;&lt;p&gt;각 메시지에 무작위 데이터를 무작위로 추가하면 식별이 훨씬 어려워집니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;ntcp의-수정사항&#34;&gt;NTCP의 수정사항&lt;/h2&gt;&#xA;&lt;p&gt;이 수정은 꽤 무겁지만 DPI 장비에 의해 감지되는 것을 방지합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>OBEPs를 IBGWs와 매칭</title>
+      <link>/ko/proposals/138-match-obep-with-ibgw/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/138-match-obep-with-ibgw/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 메시지를 전송할 때 대상 Destination의 LeaseSet에 있는 IBGWs 중 하나와 OBEP가 일치하도록 터널을 선택하거나 구축하는 아웃바운드 터널에 대한 I2CP 옵션을 추가합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;대부분의 I2P 라우터는 혼잡 관리를 위해 패킷 제거 형태를 사용합니다. 참조 구현은 메시지 크기와 이동 거리를 모두 고려하는 WRED 전략을 사용합니다 (&lt;a href=&#34;../../ko/docs/specs/implementation/#tunnelthrottling&#34;&gt;tunnel throttling 문서&lt;/a&gt;&#xA; 참조). 이 전략으로 인해 패킷 손실의 주요 원인은 OBEP입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;p&gt;메시지를 전송할 때, 발신자는 수신자의 IBGWs 중 하나와 동일한 라우터인 OBEP가 있는 터널을 선택하거나 구축합니다. 이를 통해 메시지는 두 터널 사이를 직접 이동하며, 중간에 전송될 필요가 없습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>OBEP의 1-of-N 또는 N-of-N 터널로의 전달</title>
+      <link>/ko/proposals/125-obep-to-one-of-many-tunnels/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/125-obep-to-one-of-many-tunnels/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 네트워크 성능을 개선하기 위한 두 가지 개선점을 다룹니다:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;하나의 옵션 대신 대안을 제공하여 OBEP에 IBGW 선택을 위임합니다.&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;OBEP에서 멀티캐스트 패킷 라우팅을 가능하게 합니다.&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;직접 연결의 경우, OBEP가 IBGWs와 연결하는 방식에 유연성을 줌으로써 연결 혼잡을 줄이는 것이 아이디어입니다. 여러 터널을 명시할 수 있는 능력은 또한 메시지를 명시된 모든 터널로 전달하여 OBEP에서 멀티캐스트를 구현할 수 있게 합니다.&lt;/p&gt;&#xA;&lt;p&gt;이 제안서의 위임 부분에 대한 대안은 &lt;a href=&#34;http://localhost:63465/docs/specs/common-structures/#leaseset&#34;&gt;LeaseSet&lt;/a&gt;&#xA; 해시를 통해 메시지를 보내는 것이며, 이는 기존에 타겟 &lt;a href=&#34;http://localhost:63465/docs/specs/common-structures/#common-structure-specification&#34;&gt;RouterIdentity&lt;/a&gt;&#xA; 해시를 지정할 수 있는 능력과 유사합니다. 이것은 더 작은 메시지와 잠재적으로 더 새로운 LeaseSet을 생성하지만:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>PT Transport</title>
+      <link>/ko/proposals/109-pt-transport/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/109-pt-transport/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 플러그형 전송을 통해 다른 라우터에 연결하는 I2P 전송을 만드는 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;플러그형 전송(PT)은 Tor 브릿지에 모듈 방식으로 난독화 전송을 추가하는 방법으로 Tor에 의해 개발되었습니다.&lt;/p&gt;&#xA;&lt;p&gt;I2P는 이미 대체 전송을 추가하는 장벽을 낮춰주는 모듈 방식의 전송 시스템을 가지고 있습니다. PT 지원을 추가하면 대체 프로토콜을 실험할 수 있는 쉬운 방법을 I2P에 제공하고, 차단 저항을 준비할 수 있습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;p&gt;다음과 같은 몇 가지 잠재적인 구현 계층이 있습니다:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;SOCKS와 ExtORPort를 구현하고, 인바운드 및 아웃바운드 프로세스를 구성하고 포크하며, 통신 시스템에 등록하는 일반적인 PT. 이 계층은 NTCP에 대해 아무것도 알지 못하며, 이를 사용할 수도 있거나 사용하지 않을 수도 있습니다. 테스트에 유용합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Red25519 서명 방식</title>
+      <link>/ko/proposals/146-red25519/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/146-red25519/</guid>
+      <description>&lt;h2 id=&#34;참고사항&#34;&gt;참고사항&lt;/h2&gt;&#xA;&lt;p&gt;네트워크 배포 및 테스트 진행 중.&#xA;사소한 수정이 있을 수 있음.&#xA;공식 사양은 &lt;a href=&#34;../../ko/docs/specs/red25519-signature-scheme/&#34;&gt;specification&lt;/a&gt;&#xA;를 참조하세요.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 블라인드가 가능한 목적지를 만들기에 적합한 재랜덤화 가능한 서명 방식을 설명합니다. 또한 기존 Ed25519 목적지를 블라인드할 수 있으며, 그 효과가 약간 감소합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;../../ko/proposals/123-new-netdb-entries/&#34;&gt;Proposal 123&lt;/a&gt;&#xA;는 최소 권한 원칙을 구현한 암호화된 LeaseSet2 포맷을 정의합니다. 즉, 각 네트워크 참여자에게는 그들의 역할에 필요한 정보만 제공됩니다. 특히, 플로드필에 게시되는 암호화된 LeaseSet2는 그 목적지를 공개하지 않으며, 목적지에 대한 사전 지식이 있는 사람만 임대 정보를 볼 수 있습니다. 그러나 플로드필은 여전히 게시 시 암호화된 LeaseSet2를 인증할 수 있어야 하며, 클라이언트는 목적지 자체가 인증을 적용했는지 추가로 확인해야 합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>RedDSA-BLAKE2b-Ed25519</title>
+      <link>/ko/proposals/148-eddsa-blake2b-ed25519/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/148-eddsa-blake2b-ed25519/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안은 개인화 문자열과 솔트를 사용하는 BLAKE2b-512를 이용한 새로운 서명 타입을 추가하여 SHA-512를 대체합니다. 이를 통해 세 가지 유형의 가능한 공격을 제거할 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;NTCP2 (제안 111)와 LS2 (제안 123)의 논의 및 설계 과정에서, 우리는 가능한 다양한 공격들과 이를 방지하는 방법에 대해 간략히 고려했습니다. 이러한 공격 중 세 가지는 길이 확장 공격(Length Extension Attacks), 교차 프로토콜 공격(Cross-Protocol Attacks), 그리고 중복 메시지 식별(Duplicate Message Identification)입니다.&lt;/p&gt;&#xA;&lt;p&gt;NTCP2와 LS2 모두에 대해, 우리는 이러한 공격들이 당면한 제안들과 직접적으로 관련이 없으며, 어떤 해결책도 새로운 기본 요소를 최소화한다는 목표와 상충된다고 판단했습니다. 또한, 우리는 이러한 프로토콜에서 해시 함수의 속도가 우리 결정에 중요한 요소가 아니라고 판단했습니다. 따라서 우리는 대부분 해결책을 별도의 제안으로 미루었습니다. LS2 사양에 일부 개인화 기능을 추가하기는 했지만, 새로운 해시 함수는 요구하지 않았습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>RI 및 목적지 패딩</title>
+      <link>/ko/proposals/161-ri-dest-padding/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/161-ri-dest-padding/</guid>
+      <description>&lt;h2 id=&#34;상태&#34;&gt;상태&lt;/h2&gt;&#xA;&lt;p&gt;0.9.57에서 구현되었습니다.&#xA;이 제안을 &amp;ldquo;미래 계획&amp;rdquo; 섹션에서 아이디어를 논의하고 강화하기 위해 열린 상태로 남겨둡니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;h3 id=&#34;요약&#34;&gt;요약&lt;/h3&gt;&#xA;&lt;p&gt;목적지의 ElGamal 공개 키는 0.6 릴리스(2005) 이후로 사용되지 않았습니다.&#xA;우리의 명세서에 이 키가 사용되지 않는다고 명시되어 있지만, 구현에서 ElGamal 키 쌍을 생성하지 않고 단순히 임의의 데이터로 필드를 채워도 된다고는 명시되어 있지 않습니다.&lt;/p&gt;&#xA;&lt;p&gt;우리는 이 필드가 무시된다는 것을 명시하고 구현이 필드를 임의의 데이터로 채울 수 있다고 명세서를 변경할 것을 제안합니다.&#xA;이 변경은 하위 호환됩니다. ElGamal 공개 키를 검증하는 구현은 알려진 바 없습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Routerinfo의 포트 범위</title>
+      <link>/ko/proposals/132-ports-range-in-routerinfo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/132-ports-range-in-routerinfo/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;혹은 단일 포트 대신 목록을 나열합니다.&lt;/p&gt;&#xA;&lt;p&gt;클라이언트는 이들 중 어느 포트에나 연결할 수 있으며 무작위로 선택해야 합니다.&#xA;이렇게 하면 트래픽 패턴이 덜 인식될 수 있으며, DPI 우회 및 일부 안티디도스 필터를 우회하는 데 도움이 됩니다.&lt;/p&gt;&#xA;&lt;p&gt;또한, 미래에 매우 높은 부하가 걸린 노드의 로드 밸런싱에도 사용될 수 있습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;TBD&lt;/p&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;p&gt;TBD&lt;/p&gt;&#xA;&lt;h2 id=&#34;명세&#34;&gt;명세&lt;/h2&gt;&#xA;&lt;p&gt;TBD&lt;/p&gt;&#xA;&lt;h2 id=&#34;마이그레이션&#34;&gt;마이그레이션&lt;/h2&gt;&#xA;&lt;p&gt;TBD&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>SSU2</title>
+      <link>/ko/proposals/159-ssu2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/159-ssu2/</guid>
+      <description>&lt;h2 id=&#34;상태&#34;&gt;상태&lt;/h2&gt;&#xA;&lt;p&gt;배포 계획:&lt;/p&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;Feature&lt;/th&gt;&#xA;          &lt;th&gt;Testing (not default)&lt;/th&gt;&#xA;          &lt;th&gt;Enabled by default&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Local test code&lt;/td&gt;&#xA;          &lt;td&gt;2022-02&lt;/td&gt;&#xA;          &lt;td&gt;&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Joint test code&lt;/td&gt;&#xA;          &lt;td&gt;2022-03&lt;/td&gt;&#xA;          &lt;td&gt;&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Joint test in-net&lt;/td&gt;&#xA;          &lt;td&gt;0.9.54  2022-05&lt;/td&gt;&#xA;          &lt;td&gt;&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Freeze basic protocol&lt;/td&gt;&#xA;          &lt;td&gt;0.9.54  2022-05&lt;/td&gt;&#xA;          &lt;td&gt;&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Basic Session&lt;/td&gt;&#xA;          &lt;td&gt;0.9.55  2022-08&lt;/td&gt;&#xA;          &lt;td&gt;0.9.56  2022-11&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Address Validation (Retry)&lt;/td&gt;&#xA;          &lt;td&gt;0.9.55  2022-08&lt;/td&gt;&#xA;          &lt;td&gt;0.9.56  2022-11&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Fragmented RI in handshake&lt;/td&gt;&#xA;          &lt;td&gt;0.9.55  2022-08&lt;/td&gt;&#xA;          &lt;td&gt;0.9.56  2022-11&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;New Token&lt;/td&gt;&#xA;          &lt;td&gt;0.9.55  2022-08&lt;/td&gt;&#xA;          &lt;td&gt;0.9.57  2022-11&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Freeze extended protocol&lt;/td&gt;&#xA;          &lt;td&gt;0.9.55  2022-08&lt;/td&gt;&#xA;          &lt;td&gt;&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Relay&lt;/td&gt;&#xA;          &lt;td&gt;0.9.55  2022-08&lt;/td&gt;&#xA;          &lt;td&gt;0.9.56  2022-11&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Peer Test&lt;/td&gt;&#xA;          &lt;td&gt;0.9.55  2022-08&lt;/td&gt;&#xA;          &lt;td&gt;0.9.56  2022-11&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Enable for random 2%&lt;/td&gt;&#xA;          &lt;td&gt;0.9.55  2022-08&lt;/td&gt;&#xA;          &lt;td&gt;&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Path Validation&lt;/td&gt;&#xA;          &lt;td&gt;0.9.55+ dev&lt;/td&gt;&#xA;          &lt;td&gt;0.9.56  2022-11&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Connection Migration&lt;/td&gt;&#xA;          &lt;td&gt;0.9.55+ dev&lt;/td&gt;&#xA;          &lt;td&gt;0.9.56  2022-11&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Immediate ACK flag&lt;/td&gt;&#xA;          &lt;td&gt;0.9.55+ dev&lt;/td&gt;&#xA;          &lt;td&gt;0.9.56  2022-11&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Key Rotation&lt;/td&gt;&#xA;          &lt;td&gt;0.9.57  2023-02&lt;/td&gt;&#xA;          &lt;td&gt;0.9.58  2023-05&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Disable SSU 1 (i2pd)&lt;/td&gt;&#xA;          &lt;td&gt;0.9.56  2022-11&lt;/td&gt;&#xA;          &lt;td&gt;&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Disable SSU 1 (Java I2P)&lt;/td&gt;&#xA;          &lt;td&gt;0.9.58  2023-05&lt;/td&gt;&#xA;          &lt;td&gt;0.9.61  2023-12&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;기본 세션에는 핸드셰이크와 데이터 단계가 포함됩니다. 확장 프로토콜에는 릴레이와 피어 테스트가 포함됩니다.&lt;/td&gt;&#xA;          &lt;td&gt;&lt;/td&gt;&#xA;          &lt;td&gt;&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 다양한 형태의 자동화된 식별 및 공격에 대한 &lt;a href=&#34;../../ko/docs/specs/ssu2/&#34;&gt;SSU&lt;/a&gt;&#xA;의 저항성을 향상시키기 위한 인증된 키 합의 프로토콜을 설명합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>SU3 형식의 차단 목록</title>
+      <link>/ko/proposals/130-blocklist-su3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/130-blocklist-su3/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안은 별도의 su3 파일로 차단 목록 업데이트를 배포하는 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;이 방법 없이 차단 목록은 릴리스에서만 업데이트됩니다.&#xA;이 형식은 다양한 라우터 구현에서 사용할 수 있습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;p&gt;su3 파일로 포장하는 형식을 정의합니다.&#xA;IP 또는 라우터 해시로 차단할 수 있도록 합니다.&#xA;라우터는 URL을 구독하거나 다른 방법으로 얻은 파일을 가져올 수 있습니다.&#xA;su3 파일에는 가져올 때 확인이 필요한 서명이 포함되어 있습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;명세&#34;&gt;명세&lt;/h2&gt;&#xA;&lt;p&gt;라우터 업데이트 명세 페이지에 추가할 것.&lt;/p&gt;&#xA;&lt;p&gt;새 콘텐츠 유형 BLOCKLIST (5) 정의.&#xA;새 파일 유형 TXT_GZ (4) (.txt.gz 형식) 정의.&#xA;항목은 각 행에 하나씩, 리터럴 IPv4 또는 IPv6 주소이거나 44자 base64로 인코딩된 라우터 해시입니다.&#xA;네트 마스크를 사용한 차단 지원은 선택 사항입니다 (예: x.y.0.0/16).&#xA;항목을 차단 해제하려면 앞에 &amp;lsquo;!&amp;lsquo;을 붙입니다.&#xA;주석은 &amp;lsquo;#&amp;lsquo;으로 시작합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>TLS 전송</title>
+      <link>/ko/proposals/104-tls-transport/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/104-tls-transport/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 TLS 기반 전송을 구현하는 것에 관한 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;우리가 도청에 강한 전송 방법을 갖추어야 한다는 제안이 자주 제기됩니다. 이렇게 하면 ISP와 국가 수준의 공격자에 의한 지문 인식 및 차단에 저항할 수 있습니다. 이는 Tor가 하는 것과 비슷하며, (즉, Firefox HTTPS 세션처럼 보이려고 함) 그렇습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;p&gt;TBD&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>UDP 트래커</title>
+      <link>/ko/proposals/160-udp-trackers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/160-udp-trackers/</guid>
+      <description>&lt;h2 id=&#34;상태&#34;&gt;상태&lt;/h2&gt;&#xA;&lt;p&gt;2025-06-24 검토에서 승인됨. 사양은 &lt;a href=&#34;../../ko/docs/specs/udp-bittorrent-announces/&#34;&gt;UDP specification&lt;/a&gt;&#xA;에서 확인할 수 있습니다. zzzot 0.20.0-beta2에서 구현됨. API 0.9.67부터 i2psnark에서 구현됨. 다른 구현체의 상태는 해당 문서를 확인하세요.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안은 I2P에서 UDP tracker 구현에 관한 것입니다.&lt;/p&gt;&#xA;&lt;h3 id=&#34;change-history&#34;&gt;Change History&lt;/h3&gt;&#xA;&lt;p&gt;I2P에서 UDP tracker에 대한 예비 제안이 2014년 5월 우리의 &lt;a href=&#34;../../ko/docs/applications/bittorrent/&#34;&gt;bittorrent 사양 페이지&lt;/a&gt;&#xA;에 게시되었습니다. 이는 우리의 공식적인 제안 프로세스보다 앞서 있었고, 구현되지 않았습니다. 이 제안은 2022년 초에 작성되었으며 2014년 버전을 단순화합니다.&lt;/p&gt;&#xA;&lt;p&gt;이 제안서는 응답 가능한 datagram에 의존하므로, 2023년 초에 &lt;a href=&#34;../../ko/proposals/163-datagram2/&#34;&gt;Datagram2 제안서&lt;/a&gt;&#xA; 작업을 시작하면서 보류되었습니다. 해당 제안서는 2025년 4월에 승인되었습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>뉴스 피드에서의 블록리스트</title>
+      <link>/ko/proposals/129-blocklist-newsxml/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/129-blocklist-newsxml/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안은 블록리스트 업데이트를 서명된 su3 포맷으로 배포되는 뉴스 파일에 포함하여 배포하는 것입니다.&#xA;0.9.28에 구현되었습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;이 기능이 없으면 블록리스트는 릴리스에서만 업데이트됩니다.&#xA;기존 뉴스 구독을 사용합니다.&#xA;이 포맷은 다양한 라우터 구현에 사용될 수 있지만 현재는 Java 라우터만 뉴스 구독을 사용하고 있습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;p&gt;news.xml 파일에 새 섹션을 추가합니다.&#xA;IP나 라우터 해시로 차단을 허용합니다.&#xA;섹션은 고유의 타임스탬프를 가집니다.&#xA;기존에 차단된 항목의 차단 해제를 허용합니다.&lt;/p&gt;&#xA;&lt;p&gt;명시된 섹션의 서명을 포함합니다.&#xA;서명은 타임스탬프를 포함합니다.&#xA;서명은 가져올 때 확인해야 합니다.&#xA;서명자는 지정될 것이며 su3 서명자와 다를 수 있습니다.&#xA;라우터는 블록리스트에 다른 신뢰 목록을 사용할 수 있습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>더 큰 I2NP 메시지</title>
+      <link>/ko/proposals/103-bigger-i2np-messages/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/103-bigger-i2np-messages/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 I2NP 메시지의 크기 제한을 늘리는 것에 관한 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;iMule의 12KB 데이터그램 사용은 많은 문제를 드러냈습니다. 현재 실제 제한은 10KB에 가까운 수준입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;p&gt;할 일:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;NTCP 제한 증가 - 그렇게 쉽지 않은가?&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;더 많은 세션 태그 수량 조정. 최대 창 크기에 영향을 줄 수 있나요? 참고할 통계가 있나요? 필요하다고 생각하는 만큼의 수를 기반으로 변수를 만들어야 할까요? 더 많은 양을 요청할 수 있도록 할까요? 양을 요청할 수 있도록 할까요?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>데이터 클로브 여러 개를 마늘로 배치하기</title>
+      <link>/ko/proposals/115-batch-multiple-data-cloves-in-garlic/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/115-batch-multiple-data-cloves-in-garlic/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안은 하나의 종단 간 마늘 메시지 안에 여러 데이터 마늘 클로브를 보내는 것에 관한 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;명확하지 않음.&lt;/p&gt;&#xA;&lt;h2 id=&#34;필요한-변경-사항&#34;&gt;필요한 변경 사항&lt;/h2&gt;&#xA;&lt;p&gt;변경 사항은 OCMOSJ와 관련된 헬퍼 클래스, 그리고 ClientMessagePool에 있어야 합니다. 현재는 큐가 없기 때문에, 새로운 큐와 일부 지연이 필요할 것입니다. 배칭은 드롭을 최소화하기 위해 최대 마늘 크기를 준수해야 합니다. 아마 3KB? 얼마나 자주 사용될지를 측정하기 위해 먼저 도구를 사용해야 할 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;생각&#34;&gt;생각&lt;/h2&gt;&#xA;&lt;p&gt;스트리밍은 이미 배칭을 하고 최적의 MTU를 선택하기 때문에, 이것이 어떤 유용한 효과를 가질지는 불명확합니다. 배칭은 메시지 크기를 늘리고 드롭 확률을 기하급수적으로 증가시킬 것입니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>라우터 주소에서 호스트 이름 사용 중단</title>
+      <link>/ko/proposals/141-deprecate-hostnames-in-addresses/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/141-deprecate-hostnames-in-addresses/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;0.9.32 릴리스부터 개별 라우터 주소 내의 호스트 이름을 더 이상 사용하지 않도록 netdb 사양을 업데이트합니다. 모든 I2P 구현에서 호스트 이름이 구성된 발행 라우터는 발행하기 전에 호스트 이름을 IP로 대체해야 하며, 다른 라우터는 호스트 이름이 포함된 주소를 무시해야 합니다. 라우터는 발행된 호스트 이름의 DNS 조회를 수행하지 않아야 합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;호스트 이름은 I2P 초기부터 라우터 주소에 허용되었습니다. 그러나 공용 호스트 이름(몇몇 사용자만 가지고 있는 것)과 수동 설정(몇몇 사용자만 수행하는 것)을 모두 필요로 하기 때문에, 거의 모든 라우터가 호스트 이름을 발행하지 않습니다. 최근 샘플에서 0.7%의 라우터가 호스트 이름을 발행하고 있었습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>리스셋 2</title>
+      <link>/ko/proposals/110-leaseset-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/110-leaseset-2/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 새로운 암호화 유형을 지원하는 새로운 LeaseSet 형식에 관한 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;I2P 터널을 통한 종단 간 암호화는 별도의 암호화와 서명 키를 사용합니다. 서명 키는 이미 최신 서명 유형을 지원하기 위해 KeyCertificates로 확장된 터널 목적지에 있습니다. 그러나 암호화 키는 LeaseSet의 일부이며, 인증서를 포함하지 않습니다. 따라서 새로운 LeaseSet 형식을 구현하고, 이를 netDb에 저장하는 지원을 추가하는 것이 필요합니다.&lt;/p&gt;&#xA;&lt;p&gt;한 가지 희망적인 점은 LS2가 구현되면 모든 기존 목적지가 더 현대적인 암호화 유형을 활용할 수 있다는 것입니다. LS2를 가져와 읽을 수 있는 라우터는 함께 도입되는 모든 암호화 유형을 지원하는 것이 보장됩니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>멀티캐스트</title>
+      <link>/ko/proposals/101-multicast/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/101-multicast/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;기본 아이디어: 아웃바운드 터널을 통해 한 번의 복사본을 보내고, 아웃바운드 엔드포인트가 모든 인바운드 게이트웨이에 분배합니다. 단말 간 암호화는 제외됩니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;새로운 멀티캐스트 터널 메시지 타입 (전달 타입 = 0x03)&lt;/li&gt;&#xA;&lt;li&gt;아웃바운드 엔드포인트 멀티캐스트 분배&lt;/li&gt;&#xA;&lt;li&gt;새로운 I2NP 멀티캐스트 메시지 타입?&lt;/li&gt;&#xA;&lt;li&gt;새로운 I2CP 멀티캐스트 SendMessageMessage 메세지 타입&lt;/li&gt;&#xA;&lt;li&gt;OutNetMessageOneShotJob에서 라우터 간 암호화 하지 않기 (garlic?)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;앱:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;RTSP 프록시?&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;스트리머:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;MTU 조정? 아니면 그냥 앱에서 처리?&lt;/li&gt;&#xA;&lt;li&gt;요청 시 수신 및 전송&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>멀티호밍을 위한 메타-리스셋</title>
+      <link>/ko/proposals/120-meta-leaseset-for-multihoming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/120-meta-leaseset-for-multihoming/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 I2P에서 대규모 사이트로 확장할 수 있는 적절한 멀티호밍 지원을 구현하는 것에 관한 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;멀티호밍은 임시방편이며 예를 들어 facebook.i2p와 같은 경우에는 규모에 맞지 않을 것입니다. 예를 들어 16개의 터널을 가진 100개의 멀티홈이 있다면, 10분마다 1600개의 LS가 게시되고, 거의 3개의 게시물이 초당 발생하게 됩니다. 플러드필은 과부하가 걸리고 조절이 이루어질 것입니다. 조회 트래픽에 대해 말하기 전의 이야기입니다.&lt;/p&gt;&#xA;&lt;p&gt;우리는 LS가 100개의 실제 LS 해시를 나열하는 메타-LS가 필요합니다. 이는 10분보다 훨씬 오래 지속될 것입니다. 따라서 LS에 대한 조회는 두 단계로 이루어지지만, 첫 번째 단계는 몇 시간 동안 캐시될 수 있습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>보이지 않는 멀티호밍</title>
+      <link>/ko/proposals/140-invisible-multihoming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/140-invisible-multihoming/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 I2P 클라이언트, 서비스 또는 외부 밸런서 프로세스가 단일 &lt;a href=&#34;http://localhost:63465/docs/specs/common-structures/#destination&#34;&gt;Destination&lt;/a&gt;&#xA;을 투명하게 호스팅하는 여러 router들을 관리할 수 있도록 하는 프로토콜 설계를 개요합니다.&lt;/p&gt;&#xA;&lt;p&gt;이 제안은 현재 구체적인 구현을 명시하지 않습니다. &lt;a href=&#34;../../ko/docs/specs/i2cp/&#34;&gt;I2CP&lt;/a&gt;&#xA;의 확장으로 구현되거나 새로운 프로토콜로 구현될 수 있습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;멀티호밍은 동일한 Destination을 호스팅하기 위해 여러 router를 사용하는 것입니다. I2P에서 멀티호밍을 하는 현재 방식은 각 router에서 동일한 Destination을 독립적으로 실행하는 것이며, 특정 시점에 클라이언트가 사용하게 되는 router는 마지막으로 LeaseSet을 게시한 것입니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>새로운 netDB 항목</title>
+      <link>/ko/proposals/123-new-netdb-entries/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/123-new-netdb-entries/</guid>
+      <description>&lt;h2 id=&#34;상태&#34;&gt;상태&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서의 일부가 완료되어 0.9.38과 0.9.39에서 구현되었습니다. Common Structures, I2CP, I2NP 및 기타 사양서들이 현재 지원되는 변경사항을 반영하도록 업데이트되었습니다.&lt;/p&gt;&#xA;&lt;p&gt;완성된 부분들도 여전히 사소한 수정이 있을 수 있습니다. 이 제안서의 다른 부분들은 아직 개발 중이며 상당한 수정이 있을 수 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;Service Lookup (타입 9와 11)은 우선순위가 낮고 일정이 정해지지 않았으며, 별도의 제안서로 분리될 수 있습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;다음 4개 제안서의 업데이트 및 통합 내용입니다:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;110 LS2&lt;/li&gt;&#xA;&lt;li&gt;120 대규모 멀티호밍을 위한 Meta LS2&lt;/li&gt;&#xA;&lt;li&gt;121 암호화된 LS2&lt;/li&gt;&#xA;&lt;li&gt;122 인증되지 않은 서비스 조회 (애니캐스팅)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;이러한 제안들은 대부분 독립적이지만, 일관성을 위해 여러 제안에서 공통 형식을 정의하고 사용합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>새로운 암호화 제안 템플릿</title>
+      <link>/ko/proposals/142-new-crypto-template/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/142-new-crypto-template/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 문서는 ElGamal 비대칭 암호화의 대체 또는 추가를 제안할 때 고려해야 할 중요한 문제를 설명합니다.&lt;/p&gt;&#xA;&lt;p&gt;이 문서는 정보 제공용입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;ElGamal은 오래되었고 느리며, 더 나은 대안이 있습니다.&#xA;그러나 어떤 새로운 알고리즘을 추가하거나 변경하기 전에 해결해야 할 여러 문제가 있습니다.&#xA;이 문서는 이러한 미해결 문제들을 강조합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;배경-연구&#34;&gt;배경 연구&lt;/h2&gt;&#xA;&lt;p&gt;새로운 암호화를 제안하는 사람은 먼저 다음 문서들을 숙지해야 합니다:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;../../ko/proposals/111-ntcp-2/&#34;&gt;제안 111 NTCP2&lt;/a&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;../../ko/proposals/123-new-netdb-entries/&#34;&gt;제안 123 LS2&lt;/a&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;../../ko/proposals/136-experimental-sigtypes/&#34;&gt;제안 136 실험적 서명 유형&lt;/a&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;../../ko/proposals/137-optional-sigtypes/&#34;&gt;제안 137 선택적 서명 유형&lt;/a&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;위의 각 제안에 대한 논의 스레드가 링크된 곳&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;http://zzz.i2p/topics/2494&#34;&gt;2018 제안 우선순위&lt;/a&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;http://zzz.i2p/topics/2418&#34;&gt;ECIES 제안&lt;/a&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;http://zzz.i2p/topics/1768&#34;&gt;새로운 비대칭 암호화 개요&lt;/a&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;../../ko/docs/specs/common-structures/&#34;&gt;저수준 암호화 개요&lt;/a&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;비대칭-암호화-사용&#34;&gt;비대칭 암호화 사용&lt;/h2&gt;&#xA;&lt;p&gt;재검토로서, 우리는 ElGamal을 다음과 같이 사용합니다:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>서비스 디렉토리</title>
+      <link>/ko/proposals/102-service-directory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/102-service-directory/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 앱이 디렉토리에서 서비스를 등록하고 조회할 수 있는 프로토콜에 관한 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;onioncat을 지원하는 가장 직관적인 방법은 서비스 디렉토리를 이용하는 것입니다.&lt;/p&gt;&#xA;&lt;p&gt;이것은 Sponge가 한동안 IRC에서 제안했던 것과 유사합니다. 그는 이를 문서로 작성하진 않았지만, netDb에 넣으려는 생각이었습니다. 저는 그것을 선호하진 않지만, 디렉토리에 접근하는 가장 좋은 방법에 대한 논의(netDb 조회, DNS-over-i2p, HTTP, hosts.txt 등)는 다음으로 미루겠습니다.&lt;/p&gt;&#xA;&lt;p&gt;HTTP와 제가 추가 키 형식에 사용하는 perl 스크립트 컬렉션을 사용하여 이 작업을 상당히 빠르게 구현할 수 있을 것 같습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>서비스 조회</title>
+      <link>/ko/proposals/122-service-lookup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/122-service-lookup/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 문서는 네트워크 데이터베이스의 모든 것이 가능한 폭발적인 제안입니다. 흔히&#xA;애니캐스트(Anycast)라고 알려져 있습니다. 이는 LS2의 네 번째 제안된 서브타입이 될 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;만약 당신이 자신의 목적지를 아웃프록시, 또는 GNS 노드, Tor 게이트웨이, Bittorrent DHT, imule, i2phex, Seedless 부트스트랩 등으로 광고하고자 한다면, 이 정보를 별도의 부트스트래핑이나 정보 계층 대신에 netDB에 저장할 수 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;거대한 멀티호밍과 달리 관리자가 없기 때문에 서명된 권위 있는 리스트를 가질 수 없습니다. 대신에, 그냥 기록을 플러드필에 게시할 수 있습니다. 플러드필은 이러한 데이터를 집계하여 쿼리에 대한 응답으로 보낼 것입니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>선택적 서명 유형에 대한 플러드필 지원</title>
+      <link>/ko/proposals/137-optional-sigtypes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/137-optional-sigtypes/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;플러드필이 선택적 서명 유형을 지원한다는 광고 방법을 추가합니다. 이 방법은 모든 구현이 이를 지원하지 않더라도 장기적으로 새로운 서명 유형을 지원할 수 있는 방법을 제공합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;GOST 제안서 134는 이전에 사용되지 않았던 실험적 서명 유형 범위에서 몇 가지 문제를 드러내었습니다.&lt;/p&gt;&#xA;&lt;p&gt;첫째, 실험적 범위의 서명 유형은 예약될 수 없으므로 여러 서명 유형에서 동시에 사용될 수 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;둘째, 플러드필에 실험적 서명 유형을 가진 라우터 정보나 리스셋을 저장할 수 없는 경우, 새로운 서명 유형을 완전히 테스트하거나 시험적으로 사용하는 것이 어렵습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>소개자 만료</title>
+      <link>/ko/proposals/133-introducer-expiration/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/133-introducer-expiration/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 소개의 성공률을 높이기 위한 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;소개자는 일정 시간이 지나면 만료되지만, 그 정보는 RouterInfo에 공개되지 않습니다. 현재 라우터는 소개자가 더 이상 유효하지 않은 시점을 추정하기 위해 발견법(휴리스틱)을 사용해야 합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;디자인&#34;&gt;디자인&lt;/h2&gt;&#xA;&lt;p&gt;소개자를 포함한 SSU RouterAddress에서 퍼블리셔는 선택적으로 각 소개자의 만료 시간을 포함할 수 있습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;사양&#34;&gt;사양&lt;/h2&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;iexp{X}={nnnnnnnnnn}&#xA;&#xA;X :: 소개자 번호 (0-2)&#xA;&#xA;nnnnnnnnnn :: 에포크 이후 초 단위 시간.&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;notes&#34;&gt;Notes&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;각 만료는 RouterInfo의 발행 날짜보다 커야 하며, RouterInfo 발행 날짜로부터 6시간 이내여야 합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>스트리밍 업데이트</title>
+      <link>/ko/proposals/164-streaming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/164-streaming/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;Java I2P 및 i2pd 라우터는 API 0.9.58 (2023년 3월 출시) 이전 버전에서 스트리밍 SYN 패킷 재연 공격에 취약합니다. 이는 프로토콜 설계 문제이며, 구현 버그는 아닙니다.&lt;/p&gt;&#xA;&lt;p&gt;SYN 패킷은 서명되지만, Alice가 Bob에게 보내는 초기 SYN 패킷의 서명은 Bob의 정체성과 묶여 있지 않기 때문에 Bob은 해당 패킷을 저장하여 일부 피해자인 Charlie에게 재전송할 수 있습니다. Charlie는 그 패킷이 Alice로부터 온 것으로 착각하고 그녀에게 응답할 것입니다. 대부분의 경우 이는 해롭지 않지만, SYN 패킷은 Charlie가 즉시 처리할 수 있는 초기 데이터(예: GET 또는 POST)를 포함할 수 있습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>스트리밍을 위한 멀티패스 TCP</title>
+      <link>/ko/proposals/108-multipath-tcp-for-streaming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/108-multipath-tcp-for-streaming/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 스트리밍에 멀티패스 TCP와 유사하게 하나의 연결에 여러 터널을 사용하는 방법을 확장하는 것에 관한 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;클라이언트 터널은 스트리밍 라이브러리에서 비교적 표준적인 TCP 방식으로 사용됩니다.&lt;/p&gt;&#xA;&lt;p&gt;클라이언트 터널이 다음과 같은 개별 특성을 기준으로 사용될 수 있는 멀티패스 TCP와 유사한 솔루션을 허용하는 것이 바람직할 것입니다:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;지연 시간&lt;/li&gt;&#xA;&lt;li&gt;용량&lt;/li&gt;&#xA;&lt;li&gt;가용성&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;p&gt;TBD&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>실험적 서명 유형을 위한 Floodfill 지원</title>
+      <link>/ko/proposals/136-experimental-sigtypes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/136-experimental-sigtypes/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;실험적 범위(65280-65534)의 서명 유형에 대해, floodfill은 서명을 확인하지 않고 netdb 저장소를 수락해야 합니다.&lt;/p&gt;&#xA;&lt;p&gt;이것은 새로운 서명 유형의 테스트를 지원할 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;GOST 제안 134는 이전에 사용되지 않았던 실험적 서명 유형 범위와 관련된 두 가지 문제를 드러냈습니다.&lt;/p&gt;&#xA;&lt;p&gt;첫째, 실험적 범위의 서명 유형은 예약할 수 없으므로 여러 서명 유형에 동시에 사용될 수 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;둘째, 실험적 서명 유형의 라우터 정보 또는 임대 셋이 floodfill에 저장될 수 없다면, 새로운 서명 유형을 완전히 테스트하거나 시험적으로 사용하는 것이 어렵습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>암호화된 LeaseSet</title>
+      <link>/ko/proposals/121-encrypted-leaseset/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/121-encrypted-leaseset/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 LeaseSet을 암호화하는 메커니즘을 재설계하는 것에 관한 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;현재 암호화된 LS는 끔찍하고 안전하지 않습니다. 저는 그것을 설계하고 구현했기 때문에 그렇게 말할 수 있습니다.&lt;/p&gt;&#xA;&lt;p&gt;이유:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;AES CBC로 암호화됨&lt;/li&gt;&#xA;&lt;li&gt;모든 사람에게 단일 AES 키&lt;/li&gt;&#xA;&lt;li&gt;Lease 만료가 여전히 노출됨&lt;/li&gt;&#xA;&lt;li&gt;암호화 공개 키가 여전히 노출됨&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;h3 id=&#34;목표&#34;&gt;목표&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;전체를 불투명하게 만들기&lt;/li&gt;&#xA;&lt;li&gt;각 수신자에 대한 키&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;전략&#34;&gt;전략&lt;/h3&gt;&#xA;&lt;p&gt;GPG/OpenPGP가 하는 것처럼 하십시오. 각 수신자를 위해 대칭 키를 비대칭으로 암호화합니다. 데이터는 그 비대칭 키로 복호화됩니다. 예를 들어 [RFC-4880-S5.1]을 참조하십시오._ 작고 빠른 알고리즘을 찾을 수 있다면 가능합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>암호화된 LS2를 위한 B32</title>
+      <link>/ko/proposals/149-b32-encrypted-ls2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/149-b32-encrypted-ls2/</guid>
+      <description>&lt;h2 id=&#34;노트&#34;&gt;노트&lt;/h2&gt;&#xA;&lt;p&gt;네트워크 배포 및 테스트 진행 중입니다.&#xA;사소한 수정이 있을 수 있습니다.&#xA;공식 사양은 &lt;a href=&#34;../../ko/docs/specs/b32-for-encrypted-leasesets/&#34;&gt;SPEC&lt;/a&gt;&#xA;를 참조하세요.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;표준 Base 32 (&amp;ldquo;b32&amp;rdquo;) 주소에는 목적지의 해시가 포함됩니다.&#xA;이는 암호화된 ls2(제안 123)에는 작동하지 않습니다.&lt;/p&gt;&#xA;&lt;p&gt;암호화된 LS2(제안 123)에는 전통적인 base 32 주소를 사용할 수 없습니다.&#xA;목적지의 해시만 포함되어 있으며, 비밀 처리되지 않은 공개 키를 제공하지 않습니다.&#xA;클라이언트는 리스셋을 가져오고 해독하기 위해&#xA;목적지의 공개 키, 서명 유형,&#xA;비밀 처리된 서명 유형, 선택적 비밀 또는 개인 키를 알고 있어야 합니다.&#xA;따라서 base 32 주소만으로는 충분하지 않습니다.&#xA;클라이언트는 전체 목적지(공개 키가 포함됨)나&#xA;공개 키 만을 필요로 합니다.&#xA;클라이언트에게 주소록에 전체 목적지가 있고, 주소록이 해시에 의한&#xA;역순 검색을 지원하면, 공개 키를 검색할 수 있습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>양방향 터널</title>
+      <link>/ko/proposals/119-bidirectional-tunnels/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/119-bidirectional-tunnels/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 I2P에서 양방향 터널을 구현하는 것에 관한 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;i2pd는 현재로서는 다른 i2pd 라우터를 통해 구축되는 양방향 터널을 도입할 예정입니다. 네트워크에 대해서는 일반적인 인바운드 및 아웃바운드 터널로 나타날 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;h3 id=&#34;목표&#34;&gt;목표&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;터널 빌드 메시지 수를 줄여 네트워크 및 CPU 사용량 감소&lt;/li&gt;&#xA;&lt;li&gt;참가자가 떠난 즉시 알 수 있는 능력&lt;/li&gt;&#xA;&lt;li&gt;더 정확한 프로파일링 및 통계&lt;/li&gt;&#xA;&lt;li&gt;다른 다크넷을 중간 피어로 사용&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h3 id=&#34;터널-수정&#34;&gt;터널 수정&lt;/h3&gt;&#xA;&lt;p&gt;TunnelBuild&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;터널은 인바운드 터널과 동일한 방식으로 구축됩니다. 회신 메시지는 필요하지 않습니다. &amp;#34;entrance&amp;#34;라는 특별한 유형의 참가자는 플래그로 표시되며, 동시에 IBGW 및 OBEP로 작동합니다. 메시지는 VaribaleTunnelBuild와 동일한 형식을 가지지만 ClearText는 다른 필드를 포함합니다::&#xA;&#xA;    in_tunnel_id&#xA;    out_tunnel_id&#xA;    in_next_tunnel_id&#xA;    out_next_tunnel_id&#xA;    in_next_ident&#xA;    out_next_ident&#xA;    layer_key, iv_key&#xA;&#xA;이 필드는 또한 다음 피어가 속하는 다크넷 및 I2P가 아닌 경우의 추가 정보를 언급합니다.&#xA;&#xA;TunnelTermination&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;피어가 떠나고자 할 때, layer key로 암호화된 TunnelTermination 메시지를 생성하여 &amp;ldquo;in&amp;rdquo; 방향으로 보냅니다. 참가자가 그러한 메시지를 받으면 본인의 layer key로 다시 암호화하여 다음 피어에게 보냅니다. 메시지가 터널 소유자에게 도달하면, 논문을 해독하여 암호화되지 않은 메시지를 얻을 때까지 피어별로 메시지를 해독하기 시작합니다. 어느 피어가 떠났는지 알아내고 터널을 종료합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>인증된 주소 헬퍼</title>
+      <link>/ko/proposals/135-authenticated-address-helpers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/135-authenticated-address-helpers/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 주소 헬퍼 URL에 인증 메커니즘을 추가합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;주소 헬퍼 URL은 본질적으로 안전하지 않습니다. 누구든지 주소 헬퍼&#xA;매개변수를 링크에 넣을 수 있으며, 심지어 이미지를 위한 링크에도 넣을 수 있고,&#xA;&amp;ldquo;i2paddresshelper&amp;rdquo; URL 매개변수에 어떤 목적지를 넣을 수도 있습니다.&#xA;사용자의 HTTP 프록시 구현에 따라, 이 호스트명/목적지 매핑은 주소록에&#xA;현재 없더라도, 사용자가 수락할 수 있도록 중간 경유 방식을 사용하여&#xA;수락될 수도 있습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;p&gt;신뢰할 수 있는 점프 서버와 주소록 등록 서비스는 인증 매개변수를 추가하는&#xA;새로운 주소 헬퍼 링크를 제공합니다. 두 가지 새로운 매개변수는 base 64&#xA;서명과 서명자 문자열입니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>작은 터널 빌드 메시지</title>
+      <link>/ko/proposals/157-new-tbm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/157-new-tbm/</guid>
+      <description>&lt;h2 id=&#34;참고&#34;&gt;참고&lt;/h2&gt;&#xA;&lt;p&gt;API 버전 0.9.51부터 구현되었습니다.&#xA;네트워크 배포 및 테스트 진행 중.&#xA;사소한 수정될 수 있습니다.&#xA;최종 사양은 &lt;a href=&#34;../../ko/docs/specs/i2np/&#34;&gt;I2NP&lt;/a&gt;&#xA; 및 &lt;a href=&#34;../../ko/docs/specs/implementation/#tunnel-creation-ecies&#34;&gt;Tunnel-Creation-ECIES&lt;/a&gt;&#xA;를 참조하십시오.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;h3 id=&#34;요약&#34;&gt;요약&lt;/h3&gt;&#xA;&lt;p&gt;현재 암호화된 터널 빌드 요청 및 응답 레코드의 크기는 528입니다.&#xA;일반적인 가변 터널 빌드 및 가변 터널 빌드 응답 메시지의 총 크기는 2113바이트입니다. 이 메시지는 역방향 경로를 위해 세 개의 1KB 터널 메시지로 나뉩니다.&lt;/p&gt;&#xA;&lt;p&gt;ECIES-X25519 라우터용 528바이트 레코드 형식 변경은 &lt;a href=&#34;../../ko/proposals/152-ecies-tunnels/&#34;&gt;Prop152&lt;/a&gt;&#xA; 및 &lt;a href=&#34;../../ko/docs/specs/implementation/#tunnel-creation-ecies&#34;&gt;Tunnel-Creation-ECIES&lt;/a&gt;&#xA;에 지정되어 있습니다. 터널에 있는 ElGamal 및 ECIES-X25519 라우터가 혼합된 경우 레코드 크기는 528바이트로 유지되어야 합니다. 그러나 터널의 모든 라우터가 ECIES-X25519인 경우 ElGamal보다 ECIES-X25519 암호화의 오버헤드가 훨씬 적기 때문에 새롭고 작은 빌드 레코드가 가능합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>전송 네트워크 ID 확인</title>
+      <link>/ko/proposals/147-transport-network-id-check/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/147-transport-network-id-check/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;NTCP2 (제안 111)는 세션 요청 단계에서 다른 네트워크 ID로부터의 연결을 거부하지 않습니다.&#xA;연결은 현재 밥(Bob)이 앨리스(Alice)의 RI를 확인할 때 세션 확인 단계에서 거부되어야 합니다.&lt;/p&gt;&#xA;&lt;p&gt;마찬가지로, SSU도 세션 요청 단계에서 다른 네트워크 ID로부터의 연결을 거부하지 않습니다.&#xA;연결은 현재 밥이 앨리스의 RI를 확인할 때 세션 확인 단계 이후에 거부되어야 합니다.&lt;/p&gt;&#xA;&lt;p&gt;이 제안서는 두 전송 모두에서 네트워크 ID를 기존 버전과 호환되는 방식으로 세션 요청 단계에 통합하도록 변경합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;잘못된 네트워크로부터의 연결은 최대한 빨리 거부되어야 하며,&#xA;해당 피어는 블랙리스트에 등록되어야 합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>제한된 경로</title>
+      <link>/ko/proposals/100-restricted-routes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/100-restricted-routes/</guid>
+      <description>&lt;h2 id=&#34;소개&#34;&gt;소개&lt;/h2&gt;&#xA;&lt;h2 id=&#34;생각&#34;&gt;생각&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&amp;ldquo;IND&amp;rdquo; (간접)라는 새로운 전송 방식을 추가하여 RouterAddress 구조에 leaseSet 해시를 게시: &amp;ldquo;IND: [key=aababababababababb]&amp;rdquo;. 이 전송 방식은 대상 라우터가 게시할 때 가장 낮은 우선 순위로 입찰한다. 이 전송 방식을 통해 피어에게 보내려면 평소처럼 ff 피어에서 리세트를 가져와서 직접 리스에 보낸다.&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;IND를 광고하는 피어는 다른 피어로의 터널 세트를 구축하고 유지해야 한다. 이는 탐색용 터널도 아니고 클라이언트 터널도 아니며 두 번째 라우터 터널 세트이다.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;1홉이면 충분한가?&lt;/li&gt;&#xA;&lt;li&gt;이러한 터널을 위해 피어를 어떻게 선택할 것인가?&lt;/li&gt;&#xA;&lt;li&gt;이들은 &amp;ldquo;비제한&amp;quot;이어야 하지만, 그것을 어떻게 알 수 있을까? 도달 가능성&#xA;매핑? 그래프 이론, 알고리즘, 데이터 구조가 여기서 도움이 될 수 있다. 이에 대해 읽어봐야 한다. 터널 TODO를 참조하십시오.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;IND 터널이 있는 경우 메시지를 이 터널을 통해 보내기 위해 IND 전송 방식이 입찰(저우선순위)을 해야 한다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>주소록 구독 피드 명령어</title>
+      <link>/ko/proposals/112-addressbook-subscription-feed-commands/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/112-addressbook-subscription-feed-commands/</guid>
+      <description>&lt;h2 id=&#34;노트&#34;&gt;노트&lt;/h2&gt;&#xA;&lt;p&gt;네트워크 배포 완료.&#xA;공식 명세는 &lt;a href=&#34;../../ko/docs/specs/subscription/&#34;&gt;SPEC&lt;/a&gt;&#xA;를 참조하십시오.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 주소 구독 피드에 명령어를 확장하여, 네임 서버가 호스트명 소유자로부터 엔트리 업데이트를 방송할 수 있게 하는 것입니다.&#xA;버전 0.9.26에 구현되었습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;현재 hosts.txt 구독 서버는 hosts.txt 형식으로 데이터를 전송할 뿐입니다, 이는 다음과 같습니다:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;example.i2p=b64destination&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;여기에는 몇 가지 문제가 있습니다:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;호스트명 소유자는 그들의 호스트명과 관련된 대상(Destination)을 업데이트할 수 없습니다&#xA;(예를 들어, 서명 키를 더 강력한 유형으로 업그레이드할 수 있도록).&lt;/li&gt;&#xA;&lt;li&gt;호스트명 소유자는 임의로 호스트명을 포기할 수 없습니다; 그들은 해당 대상의 비공개 키를&#xA;새로운 소유자에게 직접 제공해야 합니다.&lt;/li&gt;&#xA;&lt;li&gt;서브도메인이 해당 기본 호스트명에 의해 제어되고 있음을 인증할 수 있는 방법이 없습니다;&#xA;이는 현재 일부 네임 서버에 의해 개별적으로만 시행됩니다.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 hosts.txt 형식에 여러 명령 행을 추가합니다. 이러한 명령을 통해 네임 서버는 여러 추가 기능을 제공하도록 서비스를 확장할 수 있습니다. 이 제안서를 구현한 클라이언트는 일반 구독 과정을 통해 이러한 기능을 청취할 수 있게 됩니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>주소록 항목에 대한 휴면 수수료</title>
+      <link>/ko/proposals/131-dormant-fee-addressbook/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/131-dormant-fee-addressbook/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;어떤 주소가 오랜 시간 동안 오프라인 상태라면 주소록에서 제거되고, 이름이 새로운 등록을 위해 사용 가능해져야 합니다. 이것은 현재 inr이 작동하는 방식입니다.&lt;/p&gt;&#xA;&lt;p&gt;하지만 소유자가 더 이상 이 리소스를 운영하는 데 관심이 없지만 사기를 방지하기 위해 주소를 유지하고 싶다면 어떻게 될까요? 우리는 연간 수수료를 도입해야 합니다. 수수료가 지불되면 주소는 유지됩니다. 온라인 상태로 돌아오면 더 이상의 수수료는 필요 없습니다. stats.i2p의 경우, 돈은 I2P의 예산으로 들어가야 합니다.&lt;/p&gt;&#xA;&lt;p&gt;이것은 서비스를 운영하는 사람들에게 영향을 미치지 않을 것입니다. 이는 I2P가 버려진 항목들로 가득한 방대한 주소록을 정리할 수 있게 해줄 것입니다. 도메인 불법 점유자들에게 효과적인 메커니즘이 될 것입니다. 그들은 온라인 상태를 유지하거나 수수료를 지불해야 할 것입니다. 심지어 주차 페이지를 사용하더라도 I2P 라우터를 운영해야 하며, 이는 암묵적으로 네트워크에 도움이 됩니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>준 DNS</title>
+      <link>/ko/proposals/128-quasi-dns/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/128-quasi-dns/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 하위 도메인에 대해 데이터그램을 통한 DNS 사용을 제안합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;추후 결정&lt;/p&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;p&gt;추후 결정&lt;/p&gt;&#xA;&lt;h2 id=&#34;명세&#34;&gt;명세&lt;/h2&gt;&#xA;&lt;p&gt;추후 결정&lt;/p&gt;&#xA;&lt;h2 id=&#34;마이그레이션&#34;&gt;마이그레이션&lt;/h2&gt;&#xA;&lt;p&gt;추후 결정&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>키스페이스에서 근처 라우터 선호</title>
+      <link>/ko/proposals/116-prefer-near-in-keyspace/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/116-prefer-near-in-keyspace/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이는 피어를 조직하여 키스페이스 내에서 자신에게 가까운 다른 피어와 연결하는 것을 선호하도록 하는 제안입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;이 아이디어는 라우터가 이미 다른 라우터에 연결되어 있을 확률을 높여 터널 빌드 성공률을 향상시키는 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;h3 id=&#34;필요한-변경사항&#34;&gt;필요한 변경사항&lt;/h3&gt;&#xA;&lt;p&gt;이 변경은 다음을 요구합니다:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;모든 라우터는 키스페이스에서 자신 가까이에 있는 연결을 선호합니다.&lt;/li&gt;&#xA;&lt;li&gt;모든 라우터는 다른 모든 라우터가 키스페이스에서 자신 가까이에 있는 연결을 선호한다는 것을 인식합니다.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h3 id=&#34;터널-빌드를-위한-장점&#34;&gt;터널 빌드를 위한 장점&lt;/h3&gt;&#xA;&lt;p&gt;다음과 같이 터널을 빌드하면::&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;A -long-&amp;gt; B -short-&amp;gt; C -short-&amp;gt; D&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;(키스페이스에서 긴/랜덤 홉 대 짧은 홉) 터널 빌드가 어디에서 실패했는지 추측하고 해당 지점에서 다른 피어를 시도할 수 있습니다. 또한, 키스페이스 내에서 밀집된 부분을 감지하고 라우터들이 이를 사용하지 않게 할 수 있는데, 이는 누군가가 공모할 수 있기 때문입니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>터널 대역폭 매개변수</title>
+      <link>/ko/proposals/168-tunnel-bandwidth/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/168-tunnel-bandwidth/</guid>
+      <description>&lt;h2 id=&#34;참고&#34;&gt;참고&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 승인되었으며 API 0.9.65부터 &lt;a href=&#34;../../ko/docs/specs/implementation/#tunnel-creation-ecies&#34;&gt;Tunnel Creation ECIES specification&lt;/a&gt;&#xA;에 포함되어 있습니다.&#xA;아직 구현된 것은 없으며, 구현 날짜/API 버전은 미정입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;지난 몇 년간 새로운 프로토콜, 암호화 유형 및 혼잡 제어 개선으로 네트워크의 성능이 향상됨에 따라 비디오 스트리밍과 같은 빠른 애플리케이션이 가능해지고 있습니다.&#xA;이러한 애플리케이션은 클라이언트 터널의 각 홉에서 높은 대역폭을 필요로 합니다.&lt;/p&gt;&#xA;&lt;p&gt;그러나 참여 라우터는 터널 빌드 메시지를 받을 때 터널이 사용할 대역폭에 대한 정보를 가지고 있지 않습니다.&#xA;참여 터널에 의해 사용되는 현재 총 대역폭과 참여 터널에 대한 총 대역폭 제한을 기반으로 터널을 수락하거나 거부할 수 있습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>터널 빌드 메시지 옵션</title>
+      <link>/ko/proposals/143-build-message-options/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/143-build-message-options/</guid>
+      <description>&lt;h2 id=&#34;노트&#34;&gt;노트&lt;/h2&gt;&#xA;&lt;p&gt;이 제안은 지정된 대로 구현되지 않았습니다.&#xA;하지만, ECIES 긴 및 짧은 빌드 메시지(제안서 152 및 157)는 확장 가능한 옵션 필드로 설계되었습니다.&#xA;공식 사양은 &lt;a href=&#34;../../ko/docs/specs/implementation/#tunnel-creation-ecies&#34;&gt;Tunnel Creation ECIES 사양&lt;/a&gt;&#xA;을 참조하세요.&lt;/p&gt;&#xA;&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;I2NP 터널 빌드 레코드에 옵션을 위한 유연하고 확장 가능한 메커니즘을 추가하며,&#xA;이 레코드는 터널 빌드 및 터널 빌드 응답 메시지에 포함되어 있습니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;터널 빌드 메시지에서 옵션이나 구성을 설정하기 위한 몇 가지 잠정적이고 문서화되지 않은 제안이 있으며,&#xA;터널의 생성자가 각 터널 홉에 몇몇 매개변수를 전달할 수 있도록 합니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>통계 수집 옵트인</title>
+      <link>/ko/proposals/117-opt-in-statistics-collection/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/117-opt-in-statistics-collection/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;이 제안서는 네트워크 통계에 대한 옵트인 자동 보고 시스템에 관한 것입니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;현재 여러 네트워크 매개변수들이 교육적인 추측을 통해 결정되었습니다. 이러한 매개변수들 중 일부는 네트워크의 속도, 신뢰성 등 성능을 개선하기 위해 조정될 수 있다고 의심됩니다. 그러나 적절한 연구 없이 이러한 매개변수를 변경하는 것은 매우 위험합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;설계&#34;&gt;설계&lt;/h2&gt;&#xA;&lt;p&gt;라우터는 네트워크 전체 속성을 분석하는 데 사용할 수 있는 방대한 통계 수집을 지원합니다. 우리가 필요로 하는 것은 그러한 통계를 중앙 집중식으로 수집하는 자동 보고 시스템입니다. 본질적으로 이는 거의 익명성을 손상시키기 때문에 옵트인 방식이어야 합니다. (개인정보 친화적인 통계는 이미 stats.i2p에 보고되고 있습니다.) 대략적인 수치로 볼 때, 30,000 규모의 네트워크에서 300개의 보고 라우터 샘플은 충분히 대표성이 있다고 볼 수 있습니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>포스트 양자 암호화 프로토콜</title>
+      <link>/ko/proposals/169-pq-crypto/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/169-pq-crypto/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;적합한 포스트 퀀텀(PQ) 암호화에 대한 연구와 경쟁이 10년간 진행되어 왔지만, 선택지들이 명확해진 것은 최근의 일입니다.&lt;/p&gt;&#xA;&lt;p&gt;2022년에 PQ 암호화의 함의를 살펴보기 시작했습니다 &lt;a href=&#34;http://zzz.i2p/topics/3294&#34;&gt;zzz.i2p&lt;/a&gt;&#xA;.&lt;/p&gt;&#xA;&lt;p&gt;TLS 표준은 지난 2년간 하이브리드 암호화 지원을 추가했으며, Chrome과 Firefox의 지원으로 인해 현재 인터넷상의 암호화된 트래픽의 상당 부분에 사용되고 있습니다 &lt;a href=&#34;https://blog.cloudflare.com/pq-2024/&#34;&gt;Cloudflare&lt;/a&gt;&#xA;.&lt;/p&gt;&#xA;&lt;p&gt;NIST는 최근 양자 후 암호학(post-quantum cryptography)을 위한 권장 알고리즘을 확정하여 발표했습니다 &lt;a href=&#34;https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards&#34;&gt;NIST&lt;/a&gt;&#xA;. 여러 일반적인 암호학 라이브러리들이 현재 NIST 표준을 지원하거나 가까운 미래에 지원을 출시할 예정입니다.&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://blog.cloudflare.com/pq-2024/&#34;&gt;Cloudflare&lt;/a&gt;&#xA;와 &lt;a href=&#34;https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards&#34;&gt;NIST&lt;/a&gt;&#xA; 모두 즉시 마이그레이션을 시작할 것을 권장합니다. 2022년 NSA PQ FAQ &lt;a href=&#34;https://media.defense.gov/2022/Sep/07/2003071836/-1/-1/0/CSI_CNSA_2.0_FAQ_.PDF&#34;&gt;NSA&lt;/a&gt;&#xA;도 참조하십시오. I2P는 보안과 암호화 분야의 리더가 되어야 합니다. 지금이 권장 알고리즘을 구현할 때입니다. 유연한 암호화 타입과 서명 타입 시스템을 사용하여 하이브리드 암호화와 PQ 및 하이브리드 서명을 위한 타입을 추가할 것입니다.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>혼잡 제한</title>
+      <link>/ko/proposals/162-congestion-caps/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/ko/proposals/162-congestion-caps/</guid>
+      <description>&lt;h2 id=&#34;개요&#34;&gt;개요&lt;/h2&gt;&#xA;&lt;p&gt;발행된 라우터 정보(RI)에 혼잡 지표를 추가합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;동기&#34;&gt;동기&lt;/h2&gt;&#xA;&lt;p&gt;대역폭 &amp;ldquo;캡&amp;rdquo;(성능)은 공유 대역폭 한계와 접근 가능성을 나타내지만 혼잡 상태는 나타내지 않습니다.&#xA;혼잡 지표는 라우터가 혼잡한 라우터를 통해 빌드하려는 시도를 피하는 데 도움을 주어,&#xA;더 많은 혼잡을 유발하고 터널 빌드 성공률을 감소시키는 것을 방지합니다.&lt;/p&gt;&#xA;&lt;h2 id=&#34;디자인&#34;&gt;디자인&lt;/h2&gt;&#xA;&lt;p&gt;혼잡 또는 용량 문제의 다양한 수준을 나타내는 새로운 캡을 정의합니다.&#xA;이들은 주소 캡이 아닌 상위 레벨 RI 캡에 들어갑니다.&lt;/p&gt;&#xA;&lt;h3 id=&#34;혼잡-정의&#34;&gt;혼잡 정의&lt;/h3&gt;&#xA;&lt;p&gt;일반적으로 혼잡은 피어가 터널 빌드 요청을 수신하고 수락할 가능성이 낮음을 의미합니다.&#xA;혼잡 수준을 정의하거나 분류하는 것은 구현에 따라 다릅니다.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

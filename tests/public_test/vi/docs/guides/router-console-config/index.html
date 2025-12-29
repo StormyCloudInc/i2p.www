@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Hướng dẫn Cấu hình Router Console | I2P - Dự án Internet vô hình</title>
+
+    <meta name="description" content="Hướng dẫn toàn diện để hiểu và cấu hình I2P Router Console">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Hướng dẫn Cấu hình Router Console | I2P - Dự án Internet vô hình">
+    <meta property="og:description" content="Hướng dẫn toàn diện để hiểu và cấu hình I2P Router Console">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/vi/docs/guides/router-console-config/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Trang I2P Beta Đã Hoạt Động Gửi báo cáo lỗi tới stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Đóng banner" title="Đóng banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../vi/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../vi/about/" class="">Giới thiệu</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../vi/about/">Tổng quan</a></li>
+                            <li><a href="../../../../vi/papers/">Bài Nghiên Cứu</a></li>
+                            <li><a href="../../../../vi/about/media/">Báo chí</a></li>
+                            <li><a href="../../../../vi/contact/">Liên hệ</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../vi/docs/" class="active">Tài liệu</a></li>
+                    <li><a href="../../../../vi/downloads/" class="">Tải xuống</a></li>
+                    <li><a href="../../../../vi/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../vi/get-involved/" class="">Tham gia</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../vi/get-involved/">Tổng quan</a></li>
+                            <li><a href="../../../../vi/feedback/">Đề xuất Tính năng</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">vi</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/guides/router-console-config/"
+                                class="lang-option">Tiếng Anh</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/guides/router-console-config/"
+                                class="lang-option">Tiếng Tây Ban Nha</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/guides/router-console-config/"
+                                class="lang-option">Tiếng Hàn</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/guides/router-console-config/"
+                                class="lang-option">Tiếng Trung</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/guides/router-console-config/"
+                                class="lang-option">Tiếng Nga</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/guides/router-console-config/"
+                                class="lang-option">Tiếng Séc</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/guides/router-console-config/"
+                                class="lang-option">Tiếng Đức</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/guides/router-console-config/"
+                                class="lang-option">Tiếng Pháp</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/guides/router-console-config/"
+                                class="lang-option">Tiếng Thổ Nhĩ Kỳ</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/guides/router-console-config/"
+                                class="lang-option active">Tiếng Việt</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/guides/router-console-config/"
+                                class="lang-option">Tiếng Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/guides/router-console-config/"
+                                class="lang-option">Tiếng Ả Rập</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/guides/router-console-config/"
+                                class="lang-option">Tiếng Bồ Đào Nha</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../vi/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../vi/downloads/" class="btn btn-primary">Tải I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#truy-cập-router-console">Truy cập Router Console</a></li>
+    <li><a href="#sổ-địa-chỉ">Sổ Địa Chỉ</a></li>
+    <li><a href="#cấu-hình">Cấu hình</a>
+      <ul>
+        <li><a href="#advanced">Advanced</a></li>
+        <li><a href="#bandwidth">Bandwidth</a></li>
+        <li><a href="#client-configuration">Client Configuration</a></li>
+        <li><a href="#nâng-cao">Nâng cao</a></li>
+        <li><a href="#băng-thông">Băng thông</a></li>
+        <li><a href="#cấu-hình-client">Cấu hình Client</a></li>
+        <li><a href="#cấu-hình-i2cp">Cấu hình I2CP</a></li>
+        <li><a href="#cấu-hình-mạng">Cấu hình Mạng</a></li>
+        <li><a href="#cấu-hình-peer">Cấu hình Peer</a></li>
+        <li><a href="#cấu-hình-reseed">Cấu hình Reseed</a></li>
+        <li><a href="#cấu-hình-router-family">Cấu hình Router Family</a></li>
+      </ul>
+    </li>
+    <li><a href="#help">Help</a></li>
+    <li><a href="#performance-graphs">Performance Graphs</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../vi/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../vi/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../vi/docs/guides/">Guides</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">Hướng dẫn Cấu hình Router Console</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Bản dịch này được tạo bằng máy học và có thể không chính xác 100%.</span>
+    
+    
+    <a href="../../../../en/docs/guides/router-console-config/" class="disclaimer-link">Xem phiên bản tiếng Anh</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">Hướng dẫn Cấu hình Router Console</h1>
+                    
+                        <p class="article-description">Hướng dẫn toàn diện để hiểu và cấu hình I2P Router Console</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-11
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <p>Hướng dẫn này cung cấp tổng quan về Bảng điều khiển I2P Router và các trang cấu hình của nó. Mỗi phần giải thích chức năng của trang và mục đích sử dụng, giúp bạn hiểu cách giám sát và cấu hình I2P router của mình.</p>
+<h2 id="truy-cập-router-console">Truy cập Router Console</h2>
+<p>I2P Router Console là trung tâm điều khiển chính để quản lý và giám sát router I2P của bạn. Theo mặc định, bạn có thể truy cập tại <a href="http://127.0.0.1:7657/home">I2P Router Console</a>
+ sau khi router I2P của bạn đã chạy.</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-home.png" 
+    alt="Router Console Home"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Trang chủ hiển thị một số phần quan trọng:</p>
+<ul>
+<li><strong>Ứng dụng</strong> - Truy cập nhanh các ứng dụng I2P tích hợp như Email, Torrents, Trình quản lý Hidden Services và Web Server</li>
+<li><strong>Trang cộng đồng I2P</strong> - Liên kết đến các nguồn tài nguyên cộng đồng quan trọng bao gồm diễn đàn, tài liệu và trang web dự án</li>
+<li><strong>Cấu hình và Trợ giúp</strong> - Công cụ để cấu hình băng thông, quản lý plugin và truy cập tài nguyên trợ giúp</li>
+<li><strong>Thông tin mạng và nhà phát triển</strong> - Truy cập biểu đồ, nhật ký, tài liệu kỹ thuật và thống kê mạng</li>
+</ul>
+<h2 id="sổ-địa-chỉ">Sổ Địa Chỉ</h2>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/dns">Address Book</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-address-book.png" 
+    alt="Router Console Address Book"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Sổ địa chỉ I2P hoạt động tương tự như DNS trên clearnet, cho phép bạn quản lý các tên dễ đọc cho các đích đến I2P (eepsites). Đây là nơi bạn có thể xem và thêm địa chỉ I2P vào sổ địa chỉ cá nhân của mình.</p>
+<p>Hệ thống sổ địa chỉ hoạt động thông qua nhiều tầng:</p>
+<ul>
+<li>
+<p><strong>Local Records</strong> - Sổ địa chỉ cá nhân của bạn chỉ được lưu trữ trên router của bạn</p>
+<ul>
+<li><strong>Local Addressbook</strong> - Các host bạn thêm thủ công hoặc lưu lại cho mục đích sử dụng riêng</li>
+<li><strong>Private Addressbook</strong> - Các địa chỉ bạn không muốn chia sẻ với người khác; không bao giờ được phân phối công khai</li>
+</ul>
+</li>
+<li>
+<p><strong>Subscriptions</strong> - Các nguồn sổ địa chỉ từ xa (như <code>http://i2p-projekt.i2p/hosts.txt</code>) tự động cập nhật sổ địa chỉ của router với các trang I2P đã biết</p>
+</li>
+<li>
+<p><strong>Router Addressbook</strong> - Kết quả tổng hợp từ các bản ghi cục bộ và đăng ký của bạn, có thể tìm kiếm bởi tất cả các ứng dụng I2P trên router của bạn</p>
+</li>
+<li>
+<p><strong>Published Addressbook</strong> - Tùy chọn chia sẻ công khai sổ địa chỉ của bạn để người khác sử dụng như một nguồn đăng ký (hữu ích nếu bạn đang vận hành một I2P site)</p>
+</li>
+</ul>
+<p>Sổ địa chỉ thường xuyên kiểm tra các đăng ký của bạn và hợp nhất nội dung vào sổ địa chỉ router của bạn, giữ cho tệp hosts.txt của bạn được cập nhật với mạng I2P.</p>
+<h2 id="cấu-hình">Cấu hình</h2>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configadvanced">Cấu hình Nâng cao</a>
+</p>
+<p>Phần Cấu hình cung cấp quyền truy cập vào tất cả các thiết lập router thông qua nhiều tab chuyên biệt.</p>
+<h3 id="advanced">Advanced</h3>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-advanced.png" 
+    alt="Router Console Advanced Configuration"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Trang cấu hình Nâng cao cung cấp quyền truy cập vào các cài đặt router ở cấp độ thấp mà thường không cần thiết cho hoạt động bình thường. <strong>Hầu hết người dùng không nên thay đổi các cài đặt này trừ khi họ hiểu rõ tùy chọn cấu hình cụ thể và tác động của nó đến hành vi của router.</strong></p>
+<p>Các tính năng chính:</p>
+<ul>
+<li>
+<p><strong>Cấu hình Floodfill</strong> - Điều khiển việc router của bạn có tham gia với vai trò là floodfill peer hay không, giúp mạng lưới bằng cách lưu trữ và phân phối thông tin network database. Điều này có thể sử dụng nhiều tài nguyên hệ thống hơn nhưng giúp tăng cường mạng lưới I2P.</p>
+</li>
+<li>
+<p><strong>Cấu hình I2P nâng cao</strong> - Truy cập trực tiếp vào tệp <code>router.config</code>, hiển thị tất cả các tham số cấu hình nâng cao bao gồm:</p>
+<ul>
+<li>Giới hạn băng thông và cài đặt burst</li>
+<li>Cài đặt transport (NTCP2, SSU2, cổng UDP và khóa)</li>
+<li>Thông tin nhận dạng và phiên bản router</li>
+<li>Tùy chọn console và cài đặt cập nhật</li>
+</ul>
+</li>
+</ul>
+<p>Hầu hết các tùy chọn cấu hình nâng cao không được hiển thị trong giao diện người dùng vì chúng hiếm khi cần thiết. Để bật chỉnh sửa các cài đặt này, bạn phải thêm <code>routerconsole.advanced=true</code> vào tệp <code>router.config</code> của mình theo cách thủ công.</p>
+<p><strong>Cảnh báo:</strong> Việc chỉnh sửa sai các cài đặt nâng cao có thể ảnh hưởng tiêu cực đến hiệu suất hoặc kết nối của router. Chỉ thay đổi các cài đặt này nếu bạn biết mình đang làm gì.</p>
+<h3 id="bandwidth">Bandwidth</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/config">Cấu hình Băng thông</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-bandwidth.png" 
+    alt="Cấu hình Băng thông Router Console"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Trang cấu hình Băng thông cho phép bạn kiểm soát lượng băng thông mà router của bạn đóng góp cho mạng I2P. I2P hoạt động tốt nhất khi bạn cấu hình tốc độ phù hợp với tốc độ kết nối internet của bạn.</p>
+<p><strong>Các Cài Đặt Quan Trọng:</strong></p>
+<ul>
+<li><strong>KBps In</strong> - Băng thông tối đa mà router của bạn sẽ chấp nhận khi nhận dữ liệu vào (tốc độ tải xuống)</li>
+<li><strong>KBps Out</strong> - Băng thông tối đa mà router của bạn sẽ sử dụng khi gửi dữ liệu ra (tốc độ tải lên)</li>
+<li><strong>Share</strong> - Phần trăm băng thông gửi đi được dành riêng cho lưu lượng tham gia (giúp định tuyến lưu lượng cho người dùng khác)</li>
+</ul>
+<p><strong>Lưu ý Quan trọng:</strong></p>
+<ul>
+<li>Tất cả các giá trị được tính theo <strong>byte trên giây</strong> (KBps), không phải bit trên giây</li>
+<li>Càng cung cấp nhiều băng thông, bạn càng giúp ích cho mạng lưới và cải thiện tính ẩn danh của chính mình</li>
+<li>Lượng băng thông chia sẻ đường lên của bạn (KBps Out) quyết định mức độ đóng góp tổng thể của bạn cho mạng lưới</li>
+<li>Nếu bạn không chắc chắn về tốc độ mạng của mình, hãy sử dụng <strong>Bandwidth Test</strong> để đo kiểm tra</li>
+<li>Băng thông chia sẻ cao hơn giúp cải thiện tính ẩn danh của bạn và củng cố mạng lưới I2P</li>
+</ul>
+<p>Trang cấu hình hiển thị lưu lượng dữ liệu truyền tải ước tính hàng tháng dựa trên cài đặt của bạn, giúp bạn lên kế hoạch phân bổ băng thông phù hợp với giới hạn gói internet của mình.</p>
+<h3 id="client-configuration">Client Configuration</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configclients">Cấu hình Client</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-clients.png" 
+    alt="Cấu hình Client của Router Console"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Trang Cấu hình Client cho phép bạn kiểm soát các ứng dụng và dịch vụ I2P nào sẽ chạy khi khởi động. Đây là nơi bạn có thể bật hoặc tắt các client I2P tích hợp sẵn mà không cần gỡ cài đặt chúng.</p>
+<p><strong>Cảnh báo quan trọng:</strong> Hãy cẩn thận khi thay đổi các cài đặt ở đây. Router console và application tunnel là bắt buộc cho hầu hết các mục đích sử dụng I2P. Chỉ người dùng nâng cao mới nên chỉnh sửa các cài đặt này.</p>
+<p><strong>Các Client Khả Dụng:</strong></p>
+<ul>
+<li><strong>Application tunnels</strong> - Hệ thống I2PTunnel quản lý các tunnel client và server (HTTP proxy, IRC, v.v.)</li>
+<li><strong>I2P Router Console</strong> - Giao diện quản trị dựa trên web mà bạn đang sử dụng</li>
+<li><strong>I2P webserver (eepsite)</strong> - Webserver Jetty tích hợp sẵn để lưu trữ website I2P của riêng bạn</li>
+<li><strong>Open Router Console in web browser at startup</strong> - Tự động mở trình duyệt đến trang chủ console khi khởi động</li>
+<li><strong>SAM application bridge</strong> - Cầu nối API để các ứng dụng bên thứ ba kết nối với I2P</li>
+</ul>
+<p>Mỗi client hiển thị: - <strong>Chạy khi Khởi động?</strong> - Hộp kiểm để bật/tắt tự động khởi chạy - <strong>Điều khiển</strong> - Các nút Bắt đầu/Dừng để kiểm soát ngay lập tức - <strong>Class và arguments</strong> - Thông tin kỹ thuật về cách client được khởi chạy</p>
+<p>Các thay đổi đối với cài đặt &ldquo;Run at Startup?&rdquo; yêu cầu khởi động lại router để có hiệu lực. Tất cả các thay đổi được lưu vào <code>/var/lib/i2p/i2p-config/clients.config.d/</code>.</p>
+<h3 id="nâng-cao">Nâng cao</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configi2cp">Cấu hình I2CP</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-i2cp.png" 
+    alt="Router Console I2CP Configuration"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Trang cấu hình I2CP (I2P Client Protocol) cho phép bạn cấu hình cách các ứng dụng bên ngoài kết nối với I2P router của bạn. I2CP là giao thức mà các ứng dụng sử dụng để giao tiếp với router nhằm tạo tunnel và gửi/nhận dữ liệu qua I2P.</p>
+<p><strong>Quan trọng:</strong> Các cài đặt mặc định sẽ hoạt động tốt cho hầu hết mọi người. Mọi thay đổi được thực hiện ở đây cũng phải được cấu hình trong ứng dụng client bên ngoài. Nhiều client không hỗ trợ SSL hoặc xác thực. <strong>Tất cả các thay đổi đều yêu cầu khởi động lại để có hiệu lực.</strong></p>
+<p><strong>Các Tùy Chọn Cấu Hình:</strong></p>
+<ul>
+<li>
+<p><strong>Cấu hình Giao diện I2CP Bên ngoài</strong></p>
+<ul>
+<li><strong>Bật không có SSL</strong> - Truy cập I2CP tiêu chuẩn (mặc định và tương thích nhất)</li>
+<li><strong>Bật với yêu cầu SSL</strong> - Chỉ cho phép kết nối I2CP được mã hóa</li>
+<li><strong>Tắt</strong> - Chặn các client bên ngoài kết nối qua I2CP</li>
+</ul>
+</li>
+<li>
+<p><strong>I2CP Interface</strong> - Giao diện mạng để lắng nghe (mặc định: 127.0.0.1 chỉ cho localhost)</p>
+</li>
+<li>
+<p><strong>I2CP Port</strong> - Số cổng cho các kết nối I2CP (mặc định: 7654)</p>
+</li>
+<li>
+<p><strong>Ủy quyền</strong></p>
+<ul>
+<li><strong>Yêu cầu tên người dùng và mật khẩu</strong> - Bật xác thực cho các kết nối I2CP</li>
+<li><strong>Tên người dùng</strong> - Đặt tên người dùng bắt buộc cho truy cập I2CP</li>
+<li><strong>Mật khẩu</strong> - Đặt mật khẩu bắt buộc cho truy cập I2CP</li>
+</ul>
+</li>
+</ul>
+<p><strong>Lưu ý Bảo mật:</strong> Nếu bạn chỉ chạy các ứng dụng trên cùng một máy với I2P router của mình, hãy giữ giao diện ở <code>127.0.0.1</code> để ngăn chặn truy cập từ xa. Chỉ thay đổi các cài đặt này nếu bạn cần cho phép các ứng dụng I2P từ thiết bị khác kết nối với router của bạn.</p>
+<h3 id="băng-thông">Băng thông</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/confignet">Cấu Hình Mạng</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-network.png" 
+    alt="Router Console Network Configuration"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Trang Cấu hình Mạng cho phép bạn cấu hình cách I2P router của bạn kết nối với internet, bao gồm phát hiện địa chỉ IP, tùy chọn IPv4/IPv6, và cài đặt cổng cho cả UDP và TCP transport.</p>
+<p><strong>Địa chỉ IP có thể truy cập từ bên ngoài:</strong></p>
+<ul>
+<li><strong>Sử dụng tất cả phương thức tự động phát hiện</strong> - Tự động phát hiện IP công khai của bạn bằng nhiều phương thức (khuyến nghị)</li>
+<li><strong>Vô hiệu hóa phát hiện địa chỉ IP qua UPnP</strong> - Ngăn việc sử dụng UPnP để khám phá IP của bạn</li>
+<li><strong>Bỏ qua địa chỉ IP giao diện cục bộ</strong> - Không sử dụng IP mạng nội bộ của bạn</li>
+<li><strong>Chỉ sử dụng phát hiện địa chỉ IP qua SSU</strong> - Chỉ sử dụng giao thức truyền tải SSU2 để phát hiện IP</li>
+<li><strong>Chế độ ẩn - không công bố IP</strong> - Ngăn tham gia vào luồng dữ liệu mạng (giảm tính ẩn danh)</li>
+<li><strong>Chỉ định hostname hoặc IP</strong> - Thiết lập thủ công IP công khai hoặc hostname của bạn</li>
+</ul>
+<p><strong>Cấu hình IPv4:</strong></p>
+<ul>
+<li><strong>Vô hiệu hóa kết nối đến (Firewalled)</strong> - Chọn tùy chọn này nếu bạn đang ở sau tường lửa, mạng gia đình, ISP, DS-Lite, hoặc carrier-grade NAT chặn các kết nối đến</li>
+</ul>
+<p><strong>Cấu hình IPv6:</strong></p>
+<ul>
+<li><strong>Ưu tiên IPv4 hơn IPv6</strong> - Ưu tiên các kết nối IPv4</li>
+<li><strong>Ưu tiên IPv6 hơn IPv4</strong> - Ưu tiên các kết nối IPv6 (mặc định cho mạng dual-stack)</li>
+<li><strong>Bật IPv6</strong> - Cho phép các kết nối IPv6</li>
+<li><strong>Tắt IPv6</strong> - Vô hiệu hóa toàn bộ kết nối IPv6</li>
+<li><strong>Chỉ sử dụng IPv6 (tắt IPv4)</strong> - Chế độ chỉ IPv6 thử nghiệm</li>
+<li><strong>Tắt kết nối đến (Firewalled)</strong> - Kiểm tra xem IPv6 của bạn có bị tường lửa chặn không</li>
+</ul>
+<p><strong>Hành Động Khi IP Thay Đổi:</strong></p>
+<ul>
+<li><strong>Laptop mode</strong> - Tính năng thử nghiệm thay đổi danh tính router và cổng UDP khi địa chỉ IP của bạn thay đổi để tăng cường tính ẩn danh</li>
+</ul>
+<p><strong>Cấu hình UDP:</strong></p>
+<ul>
+<li><strong>Chỉ định cổng</strong> - Đặt một cổng UDP cụ thể cho giao thức truyền tải SSU2 (phải được mở trong tường lửa của bạn)</li>
+<li><strong>Tắt hoàn toàn</strong> - Chỉ chọn nếu đứng sau tường lửa chặn tất cả UDP đi ra ngoài</li>
+</ul>
+<p><strong>Cấu hình TCP:</strong></p>
+<ul>
+<li><strong>Chỉ định cổng</strong> - Đặt một cổng TCP cụ thể cho giao vận NTCP2 (phải được mở trong tường lửa của bạn)</li>
+<li><strong>Sử dụng cùng cổng đã cấu hình cho UDP</strong> - Đơn giản hóa cấu hình bằng cách sử dụng một cổng cho cả hai giao vận</li>
+<li><strong>Sử dụng địa chỉ IP tự động phát hiện</strong> - Tự động phát hiện địa chỉ IP công khai của bạn (hiển thị &ldquo;currently unknown&rdquo; nếu chưa được phát hiện hoặc bị chặn bởi tường lửa)</li>
+<li><strong>Luôn sử dụng địa chỉ IP tự động phát hiện (Không có tường lửa)</strong> - Tốt nhất cho các router có kết nối internet trực tiếp</li>
+<li><strong>Vô hiệu hóa kết nối đến (Có tường lửa)</strong> - Chọn nếu các kết nối TCP bị chặn bởi tường lửa của bạn</li>
+<li><strong>Vô hiệu hóa hoàn toàn</strong> - Chỉ chọn nếu đằng sau tường lửa hạn chế hoặc chặn TCP đi ra</li>
+<li><strong>Chỉ định hostname hoặc IP</strong> - Cấu hình thủ công địa chỉ có thể truy cập từ bên ngoài của bạn</li>
+</ul>
+<p><strong>Quan trọng:</strong> Các thay đổi đối với cấu hình mạng có thể yêu cầu khởi động lại router để có hiệu lực đầy đủ. Cấu hình chuyển tiếp cổng (port forwarding) đúng cách sẽ cải thiện đáng kể hiệu suất router của bạn và giúp ích cho mạng I2P.</p>
+<h3 id="cấu-hình-client">Cấu hình Client</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configpeer">Cấu hình Peer</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-peer.png" 
+    alt="Router Console Peer Configuration"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Trang Cấu hình Peer cung cấp các điều khiển thủ công để quản lý từng peer riêng lẻ trên mạng I2P. Đây là tính năng nâng cao thường chỉ được sử dụng để khắc phục sự cố các peer có vấn đề.</p>
+<p><strong>Điều Khiển Peer Thủ Công:</strong></p>
+<ul>
+<li><strong>Router Hash</strong> - Nhập router hash dạng base64 gồm 44 ký tự của peer mà bạn muốn quản lý</li>
+</ul>
+<p><strong>Chặn / Bỏ chặn một Peer thủ công:</strong></p>
+<p>Cấm một peer ngăn chặn họ tham gia vào bất kỳ tunnel nào bạn tạo ra. Hành động này: - Ngăn peer được sử dụng trong các tunnel của client hoặc exploratory tunnel của bạn - Có hiệu lực ngay lập tức mà không cần khởi động lại - Duy trì cho đến khi bạn thủ công bỏ cấm peer hoặc khởi động lại router của bạn - <strong>Cấm peer cho đến khi khởi động lại</strong> - Tạm thời chặn peer - <strong>Bỏ cấm peer</strong> - Gỡ bỏ lệnh cấm trên một peer đã bị chặn trước đó</p>
+<p><strong>Điều Chỉnh Bonus Của Profile:</strong></p>
+<p>Điểm thưởng hồ sơ ảnh hưởng đến cách các peer được chọn để tham gia tunnel. Điểm thưởng có thể là dương hoặc âm: - <strong>Fast peers</strong> - Được sử dụng cho client tunnel yêu cầu tốc độ cao - <strong>High Capacity peers</strong> - Được sử dụng cho một số exploratory tunnel yêu cầu định tuyến ổn định - Điểm thưởng hiện tại được hiển thị trên trang profiles</p>
+<p><strong>Cấu hình:</strong> - <strong>Tốc độ</strong> - Điều chỉnh điểm thưởng tốc độ cho peer này (0 = trung lập) - <strong>Dung lượng</strong> - Điều chỉnh điểm thưởng dung lượng cho peer này (0 = trung lập) - <strong>Điều chỉnh điểm thưởng peer</strong> - Áp dụng các thiết lập điểm thưởng</p>
+<p><strong>Trường hợp sử dụng:</strong> - Cấm một peer liên tục gây ra vấn đề kết nối - Tạm thời loại trừ một peer mà bạn nghi ngờ là độc hại - Điều chỉnh điểm thưởng để giảm ưu tiên các peer hoạt động kém - Gỡ lỗi các vấn đề xây dựng tunnel bằng cách loại trừ các peer cụ thể</p>
+<p><strong>Lưu ý:</strong> Hầu hết người dùng sẽ không bao giờ cần sử dụng tính năng này. Router I2P tự động quản lý việc chọn lựa và phân tích peer dựa trên các chỉ số hiệu suất.</p>
+<h3 id="cấu-hình-i2cp">Cấu hình I2CP</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configreseed">Cấu hình Reseed</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-reseed.png" 
+    alt="Cấu hình Reseed của Router Console"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Trang Cấu hình Reseed cho phép bạn thực hiện reseed thủ công cho router của mình nếu quá trình reseed tự động thất bại. Reseed là quá trình khởi động được sử dụng để tìm các router khác khi bạn lần đầu cài đặt I2P, hoặc khi router của bạn còn quá ít thông tin tham chiếu router.</p>
+<p><strong>Khi Nào Nên Sử Dụng Reseed Thủ Công:</strong></p>
+<ol>
+<li>
+<p>Nếu reseed thất bại, bạn nên kiểm tra kết nối mạng trước</p>
+</li>
+<li>
+<p>Nếu tường lửa chặn kết nối của bạn đến các máy chủ reseed, bạn có thể sử dụng proxy:</p>
+<ul>
+<li>Proxy có thể là proxy công khai từ xa, hoặc có thể đang chạy trên máy tính của bạn (localhost)</li>
+<li>Để sử dụng proxy, hãy cấu hình loại, host và port trong phần Reseeding Configuration</li>
+<li>Nếu bạn đang chạy Tor Browser, hãy reseed thông qua nó bằng cách cấu hình SOCKS 5, localhost, port 9150</li>
+<li>Nếu bạn đang chạy Tor dòng lệnh, hãy reseed thông qua nó bằng cách cấu hình SOCKS 5, localhost, port 9050</li>
+<li>Nếu bạn có một số peer nhưng cần thêm, bạn có thể thử tùy chọn I2P Outproxy. Để trống host và port. Tùy chọn này sẽ không hoạt động cho reseed ban đầu khi bạn chưa có peer nào</li>
+<li>Sau đó, nhấp &ldquo;Save changes and reseed now&rdquo;</li>
+<li>Cài đặt mặc định sẽ phù hợp với hầu hết mọi người. Chỉ thay đổi những cài đặt này nếu HTTPS bị chặn bởi tường lửa nghiêm ngặt và reseed đã thất bại</li>
+</ul>
+</li>
+<li>
+<p>Nếu bạn biết và tin tưởng ai đó đang chạy I2P, hãy yêu cầu họ gửi cho bạn một tệp reseed được tạo bằng trang này trên bảng điều khiển router của họ. Sau đó, sử dụng trang này để reseed với tệp bạn đã nhận. Đầu tiên, chọn tệp bên dưới. Tiếp theo, nhấp vào &ldquo;Reseed from file&rdquo;</p>
+</li>
+<li>
+<p>Nếu bạn biết và tin tưởng ai đó công bố các tệp reseed, hãy hỏi họ để lấy URL. Sau đó, sử dụng trang này để reseed với URL bạn nhận được. Đầu tiên, nhập URL vào bên dưới. Tiếp theo, nhấp vào &ldquo;Reseed from URL&rdquo;</p>
+</li>
+<li>
+<p>Xem <a href="../../../../vi/docs/overview/faq/">câu hỏi thường gặp (FAQ)</a>
+ để biết hướng dẫn reseed thủ công</p>
+</li>
+</ol>
+<p><strong>Tùy chọn Reseed Thủ công:</strong></p>
+<ul>
+<li>
+<p><strong>Reseed từ URL</strong> - Nhập URL zip hoặc su3 từ nguồn đáng tin cậy và nhấp vào &ldquo;Reseed from URL&rdquo;</p>
+<ul>
+<li>Định dạng su3 được ưu tiên vì nó sẽ được xác minh là đã được ký bởi nguồn đáng tin cậy</li>
+<li>Định dạng zip không được ký; chỉ sử dụng tệp zip từ nguồn mà bạn tin tưởng</li>
+</ul>
+</li>
+<li>
+<p><strong>Reseed từ File</strong> - Duyệt và chọn một file zip hoặc su3 cục bộ, sau đó nhấp vào &ldquo;Reseed from file&rdquo;</p>
+<ul>
+<li>Bạn có thể tìm các file reseed tại <a href="https://checki2p.com/reseed">checki2p.com/reseed</a>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Tạo File Reseed</strong> - Tạo một file zip reseed mới mà bạn có thể chia sẻ cho người khác để reseed thủ công</p>
+<ul>
+<li>File này sẽ không bao giờ chứa danh tính hoặc IP của router của bạn</li>
+</ul>
+</li>
+</ul>
+<p><strong>Cấu hình Reseeding:</strong></p>
+<p>Cài đặt mặc định sẽ hoạt động cho hầu hết người dùng. Chỉ thay đổi những cài đặt này nếu HTTPS bị chặn bởi tường lửa hạn chế và reseed đã thất bại.</p>
+<ul>
+<li><strong>URL Reseed</strong> - Danh sách các URL HTTPS đến máy chủ reseed (danh sách mặc định được tích hợp sẵn và cập nhật thường xuyên)</li>
+<li><strong>Cấu hình Proxy</strong> - Cấu hình HTTP/HTTPS/SOCKS proxy nếu bạn cần truy cập máy chủ reseed thông qua proxy</li>
+<li><strong>Đặt lại danh sách URL</strong> - Khôi phục danh sách máy chủ reseed mặc định</li>
+</ul>
+<p><strong>Quan trọng:</strong> Việc reseed thủ công chỉ cần thiết trong những trường hợp hiếm hoi khi reseed tự động thất bại liên tục. Hầu hết người dùng sẽ không bao giờ cần sử dụng trang này.</p>
+<h3 id="cấu-hình-mạng">Cấu hình Mạng</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configfamily">Cấu hình Router Family</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-family.png" 
+    alt="Cấu hình Router Family trên Router Console"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Trang Cấu hình Router Family cho phép bạn quản lý các họ router. Các router trong cùng một họ chia sẻ một family key, xác định chúng được vận hành bởi cùng một người hoặc tổ chức. Điều này ngăn chặn nhiều router do bạn kiểm soát được chọn cho cùng một tunnel, việc này sẽ làm giảm tính ẩn danh.</p>
+<p><strong>Router Family là gì?</strong></p>
+<p>Khi bạn vận hành nhiều router I2P, bạn nên cấu hình chúng thuộc cùng một family. Điều này đảm bảo: - Các router của bạn sẽ không được sử dụng cùng nhau trong cùng một đường tunnel - Những người dùng khác duy trì tính ẩn danh phù hợp khi tunnel của họ sử dụng các router của bạn - Mạng lưới có thể phân phối việc tham gia tunnel một cách hợp lý</p>
+<p><strong>Family Hiện tại:</strong></p>
+<p>Trang này hiển thị tên family của router hiện tại của bạn. Nếu bạn không thuộc family nào, trường này sẽ để trống.</p>
+<p><strong>Xuất Khóa Họ (Family Key):</strong></p>
+<ul>
+<li><strong>Xuất khóa bí mật của family để nhập vào các router khác mà bạn kiểm soát</strong></li>
+<li>Nhấp &ldquo;Export Family Key&rdquo; để tải xuống tệp khóa family của bạn</li>
+<li>Nhập khóa này vào các router khác của bạn để thêm chúng vào cùng một family</li>
+</ul>
+<p><strong>Rời Khỏi Router Family:</strong></p>
+<ul>
+<li><strong>Không còn là thành viên của family</strong></li>
+<li>Nhấp &ldquo;Leave Family&rdquo; để loại bỏ router này khỏi family hiện tại</li>
+<li>Hành động này không thể hoàn tác nếu không nhập lại khóa family</li>
+</ul>
+<p><strong>Những Điểm Quan Trọng Cần Lưu Ý:</strong></p>
+<ul>
+<li><strong>Yêu Cầu Đăng Ký Công Khai:</strong> Để family của bạn được công nhận trên toàn mạng lưới, khóa family của bạn phải được thêm vào codebase I2P bởi nhóm phát triển. Điều này đảm bảo tất cả các router trên mạng lưới đều biết về family của bạn.</li>
+<li><strong>Liên hệ với nhóm I2P</strong> để đăng ký khóa family nếu bạn vận hành nhiều router công khai</li>
+<li>Hầu hết người dùng chỉ chạy một router sẽ không bao giờ cần sử dụng tính năng này</li>
+<li>Cấu hình family chủ yếu được sử dụng bởi các nhà vận hành nhiều router công khai hoặc nhà cung cấp hạ tầng</li>
+</ul>
+<p><strong>Các Trường Hợp Sử Dụng:</strong></p>
+<ul>
+<li>Vận hành nhiều router I2P để đảm bảo dự phòng</li>
+<li>Chạy cơ sở hạ tầng như reseed server hoặc outproxy trên nhiều máy</li>
+<li>Quản lý mạng lưới các router I2P cho một tổ chức</li>
+</ul>
+<h3 id="cấu-hình-peer">Cấu hình Peer</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configtunnels">Cấu hình Tunnel</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-tunnels.png" 
+    alt="Cấu hình Tunnel trên Router Console"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Trang Cấu hình Tunnel cho phép bạn điều chỉnh cài đặt tunnel mặc định cho cả exploratory tunnel (dùng cho giao tiếp router) và client tunnel (dùng bởi các ứng dụng). <strong>Cài đặt mặc định phù hợp với hầu hết mọi người và chỉ nên thay đổi nếu bạn hiểu rõ những đánh đổi.</strong></p>
+<p><strong>Cảnh Báo Quan Trọng:</strong></p>
+<p>⚠️ <strong>Đánh đổi giữa Tính ẩn danh và Hiệu suất:</strong> Có một sự đánh đổi cơ bản giữa tính ẩn danh và hiệu suất. Các tunnel dài hơn 3 hops (ví dụ 2 hops + 0-2 hops, 3 hops + 0-1 hops, 3 hops + 0-2 hops), hoặc số lượng + số lượng dự phòng cao, có thể làm giảm nghiêm trọng hiệu suất hoặc độ tin cậy. Việc sử dụng CPU cao và/hoặc băng thông đầu ra cao có thể xảy ra. Thay đổi các cài đặt này một cách cẩn thận và điều chỉnh chúng nếu bạn gặp vấn đề.</p>
+<p>⚠️ <strong>Tính bền vững:</strong> Các thay đổi cài đặt exploratory tunnel được lưu trong file router.config. Các thay đổi client tunnel chỉ là tạm thời và không được lưu lại. Để thực hiện thay đổi client tunnel vĩnh viễn, xem <a href="../../../../vi/docs/api/i2ptunnel">trang I2PTunnel</a>
+.</p>
+<p><strong>Exploratory Tunnels:</strong></p>
+<p>Các tunnel khám phá (exploratory tunnels) được router của bạn sử dụng để giao tiếp với network database và tham gia vào mạng I2P.</p>
+<p>Các tùy chọn cấu hình cho cả Inbound và Outbound: - <strong>Length</strong> - Số lượng hop trong tunnel (mặc định: 2-3 hop) - <strong>Randomization</strong> - Độ biến thiên ngẫu nhiên trong độ dài tunnel (mặc định: 0-1 hop) - <strong>Quantity</strong> - Số lượng tunnel đang hoạt động (mặc định: 2 tunnel) - <strong>Backup quantity</strong> - Số lượng tunnel dự phòng sẵn sàng kích hoạt (mặc định: 0 tunnel)</p>
+<p><strong>Client Tunnels cho I2P Webserver:</strong></p>
+<p>Các cài đặt này kiểm soát các tunnel cho máy chủ web I2P tích hợp sẵn (eepsite).</p>
+<p>⚠️ <strong>CẢNH BÁO VỀ TÍNH ẨN DANH</strong> - Cài đặt bao gồm các tunnel 1-hop. ⚠️ <strong>CẢNH BÁO VỀ HIỆU SUẤT</strong> - Cài đặt bao gồm số lượng tunnel cao.</p>
+<p>Các tùy chọn cấu hình cho cả Inbound và Outbound: - <strong>Length</strong> - Độ dài tunnel (mặc định: 1 hop cho webserver) - <strong>Randomization</strong> - Phương sai ngẫu nhiên trong độ dài tunnel - <strong>Quantity</strong> - Số lượng tunnel đang hoạt động - <strong>Backup quantity</strong> - Số lượng tunnel dự phòng</p>
+<p><strong>Tunnel Client cho Các Client Dùng Chung:</strong></p>
+<p>Các cài đặt này áp dụng cho các ứng dụng client dùng chung (HTTP proxy, IRC, v.v.).</p>
+<p>Các tùy chọn cấu hình cho cả Inbound và Outbound: - <strong>Length</strong> - Độ dài tunnel (mặc định: 3 hops) - <strong>Randomization</strong> - Phương sai ngẫu nhiên trong độ dài tunnel - <strong>Quantity</strong> - Số lượng tunnel hoạt động - <strong>Backup quantity</strong> - Số lượng tunnel dự phòng</p>
+<p><strong>Hiểu về các Tham số Tunnel:</strong></p>
+<ul>
+<li><strong>Độ dài:</strong> Đường hầm dài hơn cung cấp tính ẩn danh cao hơn nhưng làm giảm hiệu suất và độ tin cậy</li>
+<li><strong>Ngẫu nhiên hóa:</strong> Tăng tính không thể đoán trước cho đường đi của đường hầm, cải thiện bảo mật</li>
+<li><strong>Số lượng:</strong> Nhiều đường hầm hơn cải thiện độ tin cậy và phân phối tải nhưng tăng mức sử dụng tài nguyên</li>
+<li><strong>Số lượng dự phòng:</strong> Các đường hầm được xây dựng sẵn để thay thế đường hầm bị lỗi, cải thiện khả năng phục hồi</li>
+</ul>
+<p><strong>Các Phương Pháp Hay Nhất:</strong></p>
+<ul>
+<li>Giữ nguyên cài đặt mặc định trừ khi bạn có nhu cầu cụ thể</li>
+<li>Chỉ tăng độ dài tunnel nếu tính ẩn danh là quan trọng và bạn có thể chấp nhận hiệu suất chậm hơn</li>
+<li>Tăng số lượng/backup chỉ khi gặp phải tình trạng tunnel thường xuyên bị lỗi</li>
+<li>Giám sát hiệu suất router sau khi thực hiện thay đổi</li>
+<li>Nhấp vào &ldquo;Save changes&rdquo; để áp dụng các thay đổi</li>
+</ul>
+<h3 id="cấu-hình-reseed">Cấu hình Reseed</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configui">Cấu hình giao diện người dùng</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-ui.png" 
+    alt="Cấu hình giao diện Router Console"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Trang Cấu hình Giao diện cho phép bạn tùy chỉnh giao diện và khả năng truy cập của bảng điều khiển router, bao gồm lựa chọn giao diện, tùy chọn ngôn ngữ và bảo vệ bằng mật khẩu.</p>
+<p><strong>Giao diện Router Console:</strong></p>
+<p>Chọn giữa giao diện tối và sáng cho bảng điều khiển router: - <strong>Dark</strong> - Giao diện chế độ tối (dễ nhìn hơn trong môi trường thiếu ánh sáng) - <strong>Light</strong> - Giao diện chế độ sáng (giao diện truyền thống)</p>
+<p>Các tùy chọn giao diện bổ sung: - <strong>Áp dụng giao diện thống nhất cho tất cả các ứng dụng</strong> - Áp dụng giao diện đã chọn cho tất cả các ứng dụng I2P, không chỉ router console - <strong>Bắt buộc sử dụng giao diện di động</strong> - Sử dụng giao diện tối ưu hóa cho di động ngay cả trên trình duyệt máy tính để bàn - <strong>Nhúng ứng dụng Email và Torrent vào console</strong> - Tích hợp Susimail và I2PSnark trực tiếp vào giao diện console thay vì mở chúng trong các tab riêng biệt</p>
+<p><strong>Ngôn ngữ Router Console:</strong></p>
+<p>Chọn ngôn ngữ ưa thích của bạn cho giao diện router console từ menu thả xuống. I2P hỗ trợ nhiều ngôn ngữ bao gồm tiếng Anh, tiếng Đức, tiếng Pháp, tiếng Tây Ban Nha, tiếng Nga, tiếng Trung, tiếng Nhật và nhiều ngôn ngữ khác.</p>
+<p><strong>Chào mừng đóng góp bản dịch:</strong> Nếu bạn nhận thấy bản dịch chưa hoàn chỉnh hoặc không chính xác, bạn có thể giúp cải thiện I2P bằng cách đóng góp vào dự án dịch thuật. Liên hệ với các nhà phát triển tại #i2p-dev trên IRC hoặc kiểm tra báo cáo tình trạng bản dịch (được liên kết trên trang).</p>
+<p><strong>Mật khẩu Router Console:</strong></p>
+<p>Thêm xác thực tên người dùng và mật khẩu để bảo vệ quyền truy cập vào router console của bạn:</p>
+<ul>
+<li><strong>Username</strong> - Nhập tên người dùng để truy cập bảng điều khiển</li>
+<li><strong>Password</strong> - Nhập mật khẩu để truy cập bảng điều khiển</li>
+<li><strong>Add user</strong> - Tạo người dùng mới với thông tin xác thực đã chỉ định</li>
+<li><strong>Delete selected</strong> - Xóa các tài khoản người dùng hiện có</li>
+</ul>
+<p><strong>Tại Sao Cần Thêm Mật Khẩu?</strong></p>
+<ul>
+<li>Ngăn chặn truy cập trái phép vào router console từ máy cục bộ</li>
+<li>Thiết yếu nếu nhiều người sử dụng máy tính của bạn</li>
+<li>Khuyến nghị nếu router console của bạn có thể truy cập được trên mạng cục bộ</li>
+<li>Bảo vệ cấu hình I2P và cài đặt quyền riêng tư của bạn khỏi bị can thiệp</li>
+</ul>
+<p><strong>Lưu ý Bảo mật:</strong> Bảo vệ bằng mật khẩu chỉ ảnh hưởng đến quyền truy cập vào giao diện web bảng điều khiển router tại <a href="http://127.0.0.1:7657">I2P Router Console</a>
+. Nó không mã hóa lưu lượng I2P hoặc ngăn chặn các ứng dụng sử dụng I2P. Nếu bạn là người dùng duy nhất trên máy tính của mình và bảng điều khiển router chỉ lắng nghe trên localhost (mặc định), mật khẩu có thể không cần thiết.</p>
+<h3 id="cấu-hình-router-family">Cấu hình Router Family</h3>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/configwebapps">Cấu hình WebApp</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-config-webapps.png" 
+    alt="Cấu hình WebApp của Router Console"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Trang Cấu hình WebApp cho phép bạn quản lý các ứng dụng web Java chạy trong router I2P của bạn. Các ứng dụng này được khởi động bởi webConsole client và chạy trong cùng JVM với router, cung cấp các chức năng tích hợp có thể truy cập thông qua router console.</p>
+<p><strong>WebApps là gì?</strong></p>
+<p>WebApps là các ứng dụng dựa trên Java có thể là: - <strong>Ứng dụng hoàn chỉnh</strong> (ví dụ: I2PSnark cho torrents) - <strong>Giao diện cho các client khác</strong> phải được kích hoạt riêng (ví dụ: Susidns, I2PTunnel) - <strong>Ứng dụng web không có giao diện web</strong> (ví dụ: address book)</p>
+<p><strong>Ghi Chú Quan Trọng:</strong></p>
+<ul>
+<li>Một webapp có thể bị vô hiệu hóa hoàn toàn, hoặc chỉ bị vô hiệu hóa khỏi việc chạy khi khởi động</li>
+<li>Xóa file war khỏi thư mục webapps sẽ vô hiệu hóa webapp hoàn toàn</li>
+<li>Tuy nhiên, file .war và thư mục webapp sẽ xuất hiện lại khi bạn cập nhật router lên phiên bản mới hơn</li>
+<li><strong>Để vô hiệu hóa webapp vĩnh viễn:</strong> Vô hiệu hóa nó tại đây, đây là phương pháp được khuyến nghị</li>
+</ul>
+<p><strong>Các WebApp Có Sẵn:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>WebApp</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>i2psnark</strong></td>
+          <td>Torrents - Built-in BitTorrent client for I2P</td>
+      </tr>
+      <tr>
+          <td><strong>i2ptunnel</strong></td>
+          <td>Hidden Services Manager - Configure client and server tunnels</td>
+      </tr>
+      <tr>
+          <td><strong>imagegen</strong></td>
+          <td>Identification Image Generator - Creates unique identicons</td>
+      </tr>
+      <tr>
+          <td><strong>jsonrpc</strong></td>
+          <td>jsonrpc.war - JSON-RPC API interface (disabled by default)</td>
+      </tr>
+      <tr>
+          <td><strong>routerconsole</strong></td>
+          <td>I2P Router Console - The main administrative interface</td>
+      </tr>
+      <tr>
+          <td><strong>susidns</strong></td>
+          <td>Address Book - Manage I2P addresses and subscriptions</td>
+      </tr>
+      <tr>
+          <td><strong>susimail</strong></td>
+          <td>Email - Web-based email client for I2P</td>
+      </tr>
+      <tr>
+          <td><strong>Các điều khiển:</strong></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>Cho mỗi webapp: - <strong>Chạy khi Khởi động?</strong> - Hộp kiểm để bật/tắt tự động khởi động - <strong>Điều khiển</strong> - Các nút Bắt đầu/Dừng để điều khiển ngay lập tức   - <strong>Dừng</strong> - Dừng webapp đang chạy   - <strong>Bắt đầu</strong> - Khởi động một webapp đã dừng</p>
+<p><strong>Các Nút Cấu Hình:</strong></p>
+<ul>
+<li><strong>Hủy</strong> - Hủy bỏ các thay đổi và quay lại trang trước</li>
+<li><strong>Lưu Cấu hình WebApp</strong> - Lưu các thay đổi của bạn và áp dụng chúng</li>
+</ul>
+<p><strong>Các Trường Hợp Sử Dụng:</strong></p>
+<ul>
+<li>Dừng I2PSnark nếu bạn không sử dụng torrents để tiết kiệm tài nguyên</li>
+<li>Vô hiệu hóa jsonrpc nếu bạn không cần truy cập API</li>
+<li>Dừng Susimail nếu bạn sử dụng ứng dụng email bên ngoài</li>
+<li>Tạm thời dừng các webapp để giải phóng bộ nhớ hoặc khắc phục sự cố</li>
+</ul>
+<p><strong>Mẹo Hiệu Năng:</strong> Tắt các webapp không sử dụng có thể giảm mức sử dụng bộ nhớ và cải thiện hiệu năng router, đặc biệt trên các hệ thống có tài nguyên hạn chế.</p>
+<h2 id="help">Help</h2>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/help">Trợ giúp</a>
+</p>
+<p>Trang Trợ giúp cung cấp tài liệu và tài nguyên toàn diện để giúp bạn hiểu và sử dụng I2P một cách hiệu quả. Nó đóng vai trò là trung tâm cho việc khắc phục sự cố, học tập và nhận hỗ trợ.</p>
+<p><strong>Những Gì Bạn Sẽ Tìm Thấy:</strong></p>
+<ul>
+<li><strong>Hướng dẫn Khởi động Nhanh</strong> - Thông tin cần thiết cho người dùng mới bắt đầu với I2P</li>
+<li><strong>Câu hỏi Thường gặp (FAQ)</strong> - Câu trả lời cho các câu hỏi phổ biến về cài đặt, cấu hình và sử dụng I2P</li>
+<li><strong>Khắc phục Sự cố</strong> - Giải pháp cho các vấn đề thường gặp và sự cố kết nối</li>
+<li><strong>Tài liệu Kỹ thuật</strong> - Thông tin chi tiết về các giao thức, kiến trúc và đặc tả kỹ thuật của I2P</li>
+<li><strong>Hướng dẫn Ứng dụng</strong> - Hướng dẫn sử dụng các ứng dụng I2P như torrents, email và hidden services</li>
+<li><strong>Thông tin Mạng</strong> - Hiểu cách I2P hoạt động và điều gì làm cho nó an toàn</li>
+<li><strong>Tài nguyên Hỗ trợ</strong> - Liên kết đến diễn đàn, kênh IRC và hỗ trợ cộng đồng</li>
+</ul>
+<p><strong>Nhận trợ giúp:</strong></p>
+<p>Nếu bạn đang gặp vấn đề với I2P: 1. Kiểm tra FAQ để tìm các câu hỏi và câu trả lời thường gặp 2. Xem lại phần khắc phục sự cố cho vấn đề cụ thể của bạn 3. Truy cập diễn đàn I2P tại <a href="http://i2pforum.i2p">i2pforum.i2p</a>
+ hoặc <a href="https://i2pforum.net">i2pforum.net</a>
+ 4. Tham gia kênh IRC #i2p để nhận hỗ trợ từ cộng đồng theo thời gian thực 5. Tìm kiếm trong tài liệu để có thông tin kỹ thuật chi tiết</p>
+<p><strong>Mẹo:</strong> Trang trợ giúp luôn có thể truy cập từ thanh bên của bảng điều khiển router, giúp bạn dễ dàng tìm thấy hỗ trợ bất cứ khi nào cần.</p>
+<h2 id="performance-graphs">Performance Graphs</h2>
+<p><strong>URL:</strong> <a href="http://127.0.0.1:7657/graphs">Biểu đồ Hiệu năng</a>
+</p>
+<p><figure>
+  <img 
+    src="../../../../images/router-console-graphs.png" 
+    alt="Biểu đồ hiệu suất Router Console"loading="lazy"
+    decoding="async"></figure>
+
+</p>
+<p>Trang Đồ thị Hiệu suất cung cấp giám sát trực quan theo thời gian thực về hiệu suất và hoạt động mạng của I2P router. Những đồ thị này giúp bạn hiểu về mức sử dụng băng thông, kết nối peer, mức tiêu thụ bộ nhớ và tình trạng tổng thể của router.</p>
+<p><strong>Các Đồ thị Khả dụng:</strong></p>
+<ul>
+<li>
+<p><strong>Sử dụng Băng thông</strong></p>
+<ul>
+<li><strong>Tốc độ gửi cấp thấp (bytes/giây)</strong> - Tốc độ lưu lượng đi</li>
+<li><strong>Tốc độ nhận cấp thấp (bytes/giây)</strong> - Tốc độ lưu lượng đến</li>
+<li>Hiển thị mức sử dụng băng thông hiện tại, trung bình và tối đa</li>
+<li>Giúp theo dõi xem bạn có đang đạt đến giới hạn băng thông đã cấu hình hay không</li>
+</ul>
+</li>
+<li>
+<p><strong>Active Peers (Peer đang hoạt động)</strong></p>
+<ul>
+<li><strong>router.activePeers averaged for 60 sec</strong> - Số lượng peer bạn đang giao tiếp tích cực</li>
+<li>Hiển thị tình trạng kết nối mạng của bạn</li>
+<li>Nhiều peer đang hoạt động thường có nghĩa là xây dựng tunnel tốt hơn và tham gia mạng hiệu quả hơn</li>
+</ul>
+</li>
+<li>
+<p><strong>Mức sử dụng bộ nhớ Router</strong></p>
+<ul>
+<li><strong>router.memoryUsed được lấy trung bình trong 60 giây</strong> - Mức tiêu thụ bộ nhớ JVM</li>
+<li>Hiển thị mức sử dụng bộ nhớ hiện tại, trung bình và tối đa tính bằng MB</li>
+<li>Hữu ích để xác định rò rỉ bộ nhớ hoặc xác định liệu bạn có cần tăng kích thước heap của Java hay không</li>
+</ul>
+</li>
+</ul>
+<p><strong>Cấu hình Hiển thị Đồ thị:</strong></p>
+<p>Tùy chỉnh cách hiển thị và làm mới đồ thị:</p>
+<ul>
+<li><strong>Kích thước đồ thị</strong> - Đặt chiều rộng (mặc định: 400 pixel) và chiều cao (mặc định: 100 pixel)</li>
+<li><strong>Khoảng thời gian hiển thị</strong> - Phạm vi thời gian để hiển thị (mặc định: 60 phút)</li>
+<li><strong>Độ trễ làm mới</strong> - Tần suất cập nhật đồ thị (mặc định: 5 phút)</li>
+<li><strong>Kiểu biểu đồ</strong> - Chọn giữa hiển thị dạng Trung bình hoặc Sự kiện</li>
+<li><strong>Ẩn chú thích</strong> - Loại bỏ chú thích khỏi đồ thị để tiết kiệm không gian</li>
+<li><strong>UTC</strong> - Sử dụng giờ UTC thay vì giờ địa phương trên đồ thị</li>
+<li><strong>Lưu trữ dữ liệu</strong> - Lưu trữ dữ liệu đồ thị trên ổ đĩa để phân tích lịch sử</li>
+</ul>
+<p><strong>Tùy chọn Nâng cao:</strong></p>
+<p>Nhấp vào <strong>[Select Stats]</strong> để chọn số liệu thống kê muốn vẽ đồ thị: - Các chỉ số tunnel (tỷ lệ tạo thành công, số lượng tunnel, v.v.) - Thống kê cơ sở dữ liệu mạng - Thống kê truyền tải (NTCP2, SSU2) - Hiệu suất tunnel client - Và nhiều chỉ số chi tiết khác</p>
+<p><strong>Các Trường Hợp Sử Dụng:</strong></p>
+<ul>
+<li>Theo dõi băng thông để đảm bảo bạn không vượt quá giới hạn đã cấu hình</li>
+<li>Xác minh kết nối peer khi khắc phục sự cố mạng</li>
+<li>Theo dõi mức sử dụng bộ nhớ để tối ưu hóa cài đặt Java heap</li>
+<li>Nhận diện các mẫu hiệu suất theo thời gian</li>
+<li>Chẩn đoán vấn đề xây dựng tunnel bằng cách tương quan các biểu đồ</li>
+</ul>
+<p><strong>Mẹo:</strong> Nhấp vào &ldquo;Save settings and redraw graphs&rdquo; sau khi thực hiện thay đổi để áp dụng cấu hình của bạn. Các biểu đồ sẽ tự động làm mới dựa trên cài đặt độ trễ làm mới của bạn.</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../vi/docs/guides/ides/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">Sử dụng IDE với I2P</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../vi/docs/guides/gitlab/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">Chạy GitLab trên I2P</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/vi/docs/guides/router-console-config.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Cập nhật tin tức I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Nhập email của bạn" required>
+                            <button type="submit">Đăng ký</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Liên kết nhanh</h3>
+                <ul>
+                    <li><a href="../../../../vi/financial-support/">Quyên góp</a></li>
+                    <li><a href="../../../../vi/docs/overview/intro/">Giới thiệu I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Cộng đồng</h3>
+                <ul>
+                    <li><a href="../../../../vi/get-involved/">Tham Gia</a></li>
+                    <li><a href="../../../../vi/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Diễn đàn chính thức</a></li>
+                    <li><a href="../../../../vi/contact/">Liên hệ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Tài nguyên</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Thống kê I2P</a></li>
+                    <li><a href="../../../../vi/papers/">Nghiên cứu</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Dự án Internet Vô hình. Được cấp phép theo Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../../vi/privacy/">Quyền riêng tư</a>
+                <a href="../../../../vi/terms/">Điều khoản</a>
+                <a href="../../../../vi/about/media/">Báo chí</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Đóng">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Thăm dò ý kiến cộng đồng</h2>
+            <p class="modal-subtitle">Chúng tôi rất muốn nghe ý kiến từ bạn</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Phiếu bầu của bạn giúp định hình tương lai của I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

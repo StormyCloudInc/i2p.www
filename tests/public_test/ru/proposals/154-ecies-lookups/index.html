@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Поиск в базе данных с параметрами ECIES | I2P - Проект невидимого интернета</title>
+
+    <meta name="description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Поиск в базе данных с параметрами ECIES | I2P - Проект невидимого интернета">
+    <meta property="og:description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/ru/proposals/154-ecies-lookups/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Бета-сайт I2P теперь доступен Сообщайте о проблемах с E-Mail на stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Закрыть баннер" title="Закрыть баннер">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../ru/" class="logo-link">
+                    <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../ru/about/" class="">О проекте</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../ru/about/">Обзор</a></li>
+                            <li><a href="../../../ru/papers/">Научные статьи</a></li>
+                            <li><a href="../../../ru/about/media/">Пресса</a></li>
+                            <li><a href="../../../ru/contact/">Связаться с нами</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../ru/docs/" class="">Документы</a></li>
+                    <li><a href="../../../ru/downloads/" class="">Загрузки</a></li>
+                    <li><a href="../../../ru/blog/" class="">Блог</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../ru/get-involved/" class="">Присоединиться</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../ru/get-involved/">Обзор</a></li>
+                            <li><a href="../../../ru/feedback/">Предложения по функциям</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">ru</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../en/proposals/154-ecies-lookups/"
+                                class="lang-option">Английский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../es/proposals/154-ecies-lookups/"
+                                class="lang-option">Испанский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ko/proposals/154-ecies-lookups/"
+                                class="lang-option">Корейский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../zh/proposals/154-ecies-lookups/"
+                                class="lang-option">Китайский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ru/proposals/154-ecies-lookups/"
+                                class="lang-option active">Русский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../cs/proposals/154-ecies-lookups/"
+                                class="lang-option">Чешский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../de/proposals/154-ecies-lookups/"
+                                class="lang-option">Немецкий</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../fr/proposals/154-ecies-lookups/"
+                                class="lang-option">Французский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../tr/proposals/154-ecies-lookups/"
+                                class="lang-option">Турецкий</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../vi/proposals/154-ecies-lookups/"
+                                class="lang-option">Вьетнамский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../hi/proposals/154-ecies-lookups/"
+                                class="lang-option">Хинди</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ar/proposals/154-ecies-lookups/"
+                                class="lang-option">Арабский</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../pt/proposals/154-ecies-lookups/"
+                                class="lang-option">Португальский</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../ru/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../ru/downloads/" class="btn btn-primary">Загрузить I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+<div class="proposals-page">
+    <div class="container">
+        
+        <nav class="breadcrumbs">
+            <a href="../../../ru/">Home</a>
+            <span class="separator">/</span>
+            <a href="../../../ru/proposals/">Proposals</a>
+            <span class="separator">/</span>
+            <span class="current">Поиск в базе данных с параметрами ECIES</span>
+        </nav>
+
+        
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Этот перевод был создан с помощью машинного обучения и может быть не на 100% точным.</span>
+    
+    
+    <a href="../../../en/proposals/154-ecies-lookups/" class="disclaimer-link">Просмотреть английскую версию</a>
+    
+</div>
+
+
+
+        
+        <header class="proposal-header">
+            <div class="proposal-title-section">
+                <h1 class="proposal-title">Поиск в базе данных с параметрами ECIES</h1>
+                <div class="proposal-number">Proposal 154</div>
+            </div>
+
+            
+            <div class="proposal-meta-box">
+                <div class="proposal-status status-closed">
+                    Closed
+                </div>
+
+                
+                <div class="proposal-info-grid">
+                    
+                    <div class="info-item">
+                        <span class="info-label">Author</span>
+                        <span class="info-value">zzz</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Created</span>
+                        <span class="info-value">2020-03-23</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Last Updated</span>
+                        <span class="info-value">2021-01-08</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Target Version</span>
+                        <span class="info-value">0.9.46</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Implemented In</span>
+                        <span class="info-value">0.9.46</span>
+                    </div>
+                    
+                </div>
+
+                
+                
+            </div>
+        </header>
+
+        
+        <div class="proposal-layout proposal-layout--with-toc">
+            
+            
+            <aside class="proposal-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#примечание">Примечание</a></li>
+    <li><a href="#обзор">Обзор</a>
+      <ul>
+        <li><a href="#определения">Определения</a></li>
+        <li><a href="#резюме">Резюме</a></li>
+        <li><a href="#цели">Цели</a></li>
+        <li><a href="#не-цели">Не цели</a></li>
+      </ul>
+    </li>
+    <li><a href="#альтернативы">Альтернативы</a></li>
+    <li><a href="#дизайн">Дизайн</a></li>
+    <li><a href="#спецификация">Спецификация</a>
+      <ul>
+        <li><a href="#elg-к-elg">ElG к ElG</a></li>
+        <li><a href="#ecies-к-elg">ECIES к ElG</a></li>
+        <li><a href="#ecies-к-ecies-0949">ECIES к ECIES (0.9.49)</a></li>
+        <li><a href="#ecies-к-ecies-будущее">ECIES к ECIES (будущее)</a></li>
+        <li><a href="#формат-ответа">Формат ответа</a></li>
+      </ul>
+    </li>
+    <li><a href="#обоснование">Обоснование</a></li>
+    <li><a href="#заметки">Заметки</a></li>
+    <li><a href="#проблемы">Проблемы</a></li>
+    <li><a href="#миграция">Миграция</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="proposal-main">
+                <article class="proposal-content">
+                    <h2 id="примечание">Примечание</h2>
+<p>ECIES к ElG реализовано в 0.9.46, и этап предложения закрыт.
+См. <a href="../../../ru/docs/specs/i2np/">I2NP</a>
+ для официальной спецификации.
+На это предложение можно ссылаться для получения фоновой информации.
+ECIES к ECIES с включенными ключами реализовано с версии 0.9.48.
+Раздел ECIES-к-ECIES (производные ключи) может быть вновь открыт или включен
+в будущие предложения.</p>
+<h2 id="обзор">Обзор</h2>
+<h3 id="определения">Определения</h3>
+<ul>
+<li>AEAD: ChaCha20/Poly1305</li>
+<li>DLM: Сообщение поиска в базе данных I2NP</li>
+<li>DSM: Сообщение хранения в базе данных I2NP</li>
+<li>DSRM: Сообщение ответа поиска в базе данных I2NP</li>
+<li>ECIES: ECIES-X25519-AEAD-Ratchet (предложение 144)</li>
+<li>ElG: ElGamal</li>
+<li>ENCRYPT(k, n, payload, ad): как определено в <a href="../../../ru/docs/specs/ecies/">ECIES</a>
+</li>
+<li>LS: Leaseset</li>
+<li>lookup: I2NP DLM</li>
+<li>reply: I2NP DSM или DSRM</li>
+</ul>
+<h3 id="резюме">Резюме</h3>
+<p>При отправке DLM для LS на floodfill, DLM обычно указывает,
+что ответ должен быть с тегом, зашифрован AES и отправлен по туннелю к месту назначения.
+Поддержка ответов зашифрованных AES была добавлена в 0.9.7.</p>
+<p>Ответы зашифрованные AES были определены в 0.9.7, чтобы минимизировать большие криптографические
+накладные расходы ElG, и потому что они повторно использовали возможности тегов/AES
+в ElGamal/AES+SessionTags.
+Однако, ответы, зашифрованные AES, могут быть изменены на IBEP, так как они не имеют аутентификации,
+и ответы не имеют свойства прямой секретности.</p>
+<p>С пунктами назначения <a href="../../../ru/docs/specs/ecies/">ECIES</a>
+, цель предложения 144 состоит в том, чтобы
+пункты назначения больше не поддерживали 32-байтные теги и расшифровку AES.
+Специфика намеренно не была включена в это предложение.</p>
+<p>Это предложение документирует новую опцию в DLM для запроса ответов зашифрованных ECIES.</p>
+<h3 id="цели">Цели</h3>
+<ul>
+<li>Новые флаги для DLM, когда запрашивается зашифрованный ответ по туннелю к пункту назначения ECIES</li>
+<li>Для ответа, добавить прямую секретность и аутентификацию отправителя, устойчивых к
+компрометации ключа запросчика (пункта назначения).</li>
+<li>Сохранение анонимности запросчика</li>
+<li>Минимизация криптографической нагрузки</li>
+</ul>
+<h3 id="не-цели">Не цели</h3>
+<ul>
+<li>Без изменения шифрования или свойств безопасности поиска (DLM).
+Поиск имеет прямую секретность только для компрометации ключа запросчика.
+Шифрование осуществляется статическим ключом floodfill.</li>
+<li>Нет проблем с прямой секретностью или аутентификацией отправителя, устойчивых к
+компрометации ключа ответчика (floodfill).
+Floodfill является публичной базой данных и будет отвечать на запросы
+от кого угодно.</li>
+<li>Нет проектирования маршрутизаторов ECIES в этом предложении.
+Куда идет публичный ключ X25519 маршрутизатора TBD.</li>
+</ul>
+<h2 id="альтернативы">Альтернативы</h2>
+<p>В отсутствие определенного способа шифрования ответов на пункты назначения ECIES, есть
+несколько альтернатив:</p>
+<ol>
+<li>
+<p>Не запрашивать зашифрованные ответы. Ответы будут незашифрованными.
+Текущая реализация Java I2P использует этот подход.</p>
+</li>
+<li>
+<p>Добавить поддержку 32-байтных тегов и ответов зашифрованных AES на пункты назначения только ECIES,
+и запрашивать ответы зашифрованные AES как обычно. Текущая реализация i2pd использует этот подход.</p>
+</li>
+<li>
+<p>Запрашивать ответы зашифрованные AES как обычно, но направлять их обратно через
+исследовательские туннели на маршрутизатор.
+Текущая реализация Java I2P использует этот подход в некоторых случаях.</p>
+</li>
+<li>
+<p>Для двойных пунктов назначения ElG и ECIES,
+запрашивать ответы зашифрованные AES как обычно. Текущая реализация Java I2P использует этот подход.
+i2pd еще не реализовала двойные криптографические пункты назначения.</p>
+</li>
+</ol>
+<h2 id="дизайн">Дизайн</h2>
+<ul>
+<li>
+<p>Новый формат DLM добавит бит в поле флагов для указания ответов зашифрованных ECIES.
+Ответы зашифрованные ECIES будут использовать формат Existing Session сообщения <a href="../../../ru/docs/specs/ecies/">ECIES</a>
+,
+с препозиционированным тегом и ChaCha/Poly полезной нагрузкой и MAC.</p>
+</li>
+<li>
+<p>Определить два варианта. Один для маршрутизаторов ElG, где операция DH невозможна,
+и один для будущих маршрутизаторов ECIES, где операция DH возможна и может обеспечить
+дополнительную безопасность. Для дальнейшего изучения.</p>
+</li>
+</ul>
+<p>DH невозможен для ответов от маршрутизаторов ElG, потому что они не публикуют
+публичный ключ X25519.</p>
+<h2 id="спецификация">Спецификация</h2>
+<p>В спецификации <a href="../../../ru/docs/specs/i2np/">I2NP</a>
+ DLM (DatabaseLookup) внести следующие изменения.</p>
+<p>Добавить бит флага 4 &ldquo;ECIESFlag&rdquo; для новых опций шифрования.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>flags ::
+</span></span><span style="display:flex;"><span>       bit 4: ECIESFlag
+</span></span><span style="display:flex;"><span>               before release 0.9.46 ignored
+</span></span><span style="display:flex;"><span>               as of release 0.9.46:
+</span></span><span style="display:flex;"><span>               0  =&gt; send unencrypted or ElGamal reply
+</span></span><span style="display:flex;"><span>               1  =&gt; send ChaCha/Poly encrypted reply using enclosed key
+</span></span><span style="display:flex;"><span>                     (whether tag is enclosed depends on bit 1)
+</span></span></code></pre></div><p>Бит флага 4 используется в комбинации с битом 1 для определения режима шифрования ответа.
+Бит флага 4 должен быть установлен только при отправке маршрутизаторам с версией 0.9.46 или выше.</p>
+<p>В таблице ниже &ldquo;DH н/д&rdquo; означает, что ответ не зашифрован.
+&ldquo;DH нет&rdquo; означает, что ключи ответа включены в запрос.
+&ldquo;DH да&rdquo; означает, что ключи ответа генерируются из операции DH.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Флаги битов 4,1</th>
+          <th>Откуда н.</th>
+          <th>Куда м.</th>
+          <th>Ответ</th>
+          <th>DH?</th>
+          <th>Примечания</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>0 0</td>
+          <td>Любой</td>
+          <td>Любой</td>
+          <td>нет</td>
+          <td>н/д</td>
+          <td>текущий</td>
+      </tr>
+      <tr>
+          <td>0 1</td>
+          <td>ElG</td>
+          <td>ElG</td>
+          <td>AES</td>
+          <td>нет</td>
+          <td>текущий</td>
+      </tr>
+      <tr>
+          <td>0 1</td>
+          <td>ECIES</td>
+          <td>ElG</td>
+          <td>AES</td>
+          <td>нет</td>
+          <td>i2pd обх.</td>
+      </tr>
+      <tr>
+          <td>1 0</td>
+          <td>ECIES</td>
+          <td>ElG</td>
+          <td>AEAD</td>
+          <td>нет</td>
+          <td>это предл.</td>
+      </tr>
+      <tr>
+          <td>1 0</td>
+          <td>ECIES</td>
+          <td>ECIES</td>
+          <td>AEAD</td>
+          <td>нет</td>
+          <td>0.9.49</td>
+      </tr>
+      <tr>
+          <td>1 1</td>
+          <td>ECIES</td>
+          <td>ECIES</td>
+          <td>AEAD</td>
+          <td>да</td>
+          <td>будущее</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="elg-к-elg">ElG к ElG</h3>
+<p>Пункт назначения ElG отправляет поиск на маршрутизатор ElG.</p>
+<p>Незначительные изменения в спецификации для проверки нового бита 4.
+Нет изменений в существующем бинарном формате.</p>
+<p>Генерация ключа запросчика (уточнение):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>reply_key :: CSRNG(32) 32 байт случайных данных
+</span></span><span style="display:flex;"><span>  reply_tags :: Каждый - CSRNG(32) 32 байт случайных данных
+</span></span></code></pre></div><p>Формат сообщения (добавить проверку на ECIESFlag):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>reply_key ::
+</span></span><span style="display:flex;"><span>       32 байт `SessionKey` big-endian
+</span></span><span style="display:flex;"><span>       включен только если encryptionFlag == 1 И ECIESFlag == 0, начиная с релиза 0.9.7
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tags ::
+</span></span><span style="display:flex;"><span>       1 байт `Integer`
+</span></span><span style="display:flex;"><span>       допустимый диапазон: 1-32 (обычно 1)
+</span></span><span style="display:flex;"><span>       количество тегов ответа, которые следуют
+</span></span><span style="display:flex;"><span>       включен только если encryptionFlag == 1 И ECIESFlag == 0, начиная с релиза 0.9.7
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  reply_tags ::
+</span></span><span style="display:flex;"><span>       один или более 32-байтных `SessionTag` (обычно один)
+</span></span><span style="display:flex;"><span>       включен только если encryptionFlag == 1 И ECIESFlag == 0, начиная с релиза 0.9.7
+</span></span></code></pre></div><h3 id="ecies-к-elg">ECIES к ElG</h3>
+<p>Пункт назначения ECIES отправляет поиск на маршрутизатор ElG.
+Поддерживается с версии 0.9.46.</p>
+<p>Поля reply_key и reply_tags переопределены для ответа зашифрованного ECIES.</p>
+<p>Генерация ключа запросчика:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>reply_key :: CSRNG(32) 32 байт случайных данных
+</span></span><span style="display:flex;"><span>  reply_tags :: Каждый - CSRNG(8) 8 байт случайных данных
+</span></span></code></pre></div><p>Формат сообщения: Переопределить поля reply_key и reply_tags следующим образом:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>reply_key ::
+</span></span><span style="display:flex;"><span>       32 байт ECIES `SessionKey` big-endian
+</span></span><span style="display:flex;"><span>       включен только если encryptionFlag == 0 И ECIESFlag == 1, начиная с релиза 0.9.46
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tags ::
+</span></span><span style="display:flex;"><span>       1 байт `Integer`
+</span></span><span style="display:flex;"><span>       обязательное значение: 1
+</span></span><span style="display:flex;"><span>       количество тегов ответа, которые следуют
+</span></span><span style="display:flex;"><span>       включен только если encryptionFlag == 0 И ECIESFlag == 1, начиная с релиза 0.9.46
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  reply_tags ::
+</span></span><span style="display:flex;"><span>       8 байт ECIES `SessionTag`
+</span></span><span style="display:flex;"><span>       включен только если encryptionFlag == 0 И ECIESFlag == 1, начиная с релиза 0.9.46
+</span></span></code></pre></div><p>Ответ - это сообщение ECIES Existing Session, как определено в <a href="../../../ru/docs/specs/ecies/">ECIES</a>
+.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>tag :: 8 байт reply_tag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  k :: 32 байт session key
+</span></span><span style="display:flex;"><span>     это reply_key.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  n :: 0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ad :: 8 байт reply_tag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  payload :: Открытые данные, DSM или DSRM.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ciphertext = ENCRYPT(k, n, payload, ad)
+</span></span></code></pre></div><h3 id="ecies-к-ecies-0949">ECIES к ECIES (0.9.49)</h3>
+<p>Пункт назначения или маршрутизатор ECIES отправляет поиск на маршрутизатор ECIES, с пакетными ключами ответа.
+Поддерживается с версии 0.9.49.</p>
+<p>Маршрутизаторы ECIES были введены в версии 0.9.48, см. <a href="../../../ru/proposals/156-ecies-routers/">Prop156</a>
+.
+Начиная с 0.9.49, пункты назначения и маршрутизаторы ECIES могут использовать такой же формат, как в
+разделе &ldquo;ECIES к ElG&rdquo; выше, с включенными ключами ответа в запросе.
+Поиск будет использовать &ldquo;одноразовый формат&rdquo; в <a href="../../../ru/docs/specs/ecies/">ECIES</a>
+
+так как запросчик анонимен.</p>
+<p>Для нового метода с производными ключами, см. следующий раздел.</p>
+<h3 id="ecies-к-ecies-будущее">ECIES к ECIES (будущее)</h3>
+<p>Пункт назначения или маршрутизатор ECIES отправляет поиск на маршрутизатор ECIES, и ключи ответа генерируются из DH.
+Не полностью определено или поддерживается, реализация TBD.</p>
+<p>Поиск будет использовать &ldquo;одноразовый формат&rdquo; в <a href="../../../ru/docs/specs/ecies/">ECIES</a>
+
+так как запросчик анонимен.</p>
+<p>Переопределить поле reply_key следующим образом. Связанных тегов нет.
+Теги будут сгенерированы в KDF ниже.</p>
+<p>Этот раздел не завершен и требует дальнейшего изучения.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>reply_key ::
+</span></span><span style="display:flex;"><span>       32 байт X25519 эфемерный `PublicKey` запросчика, little-endian
+</span></span><span style="display:flex;"><span>       включен только если encryptionFlag == 1 И ECIESFlag == 1, начиная с релиза 0.9.TBD
+</span></span></code></pre></div><p>Ответ - это сообщение ECIES Existing Session, как определено в <a href="../../../ru/docs/specs/ecies/">ECIES</a>
+.
+См. <a href="../../../ru/docs/specs/ecies/">ECIES</a>
+ для всех определений.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>// Эфемерные ключи X25519 Алисы
+</span></span><span style="display:flex;"><span>  // aesk = Эфемерный приватный ключ Алисы
+</span></span><span style="display:flex;"><span>  aesk = GENERATE_PRIVATE()
+</span></span><span style="display:flex;"><span>  // aepk = Эфемерный публичный ключ Алисы
+</span></span><span style="display:flex;"><span>  aepk = DERIVE_PUBLIC(aesk)
+</span></span><span style="display:flex;"><span>  // Статические ключи X25519 Боба
+</span></span><span style="display:flex;"><span>  // bsk = Приватный статический ключ Боба
+</span></span><span style="display:flex;"><span>  bsk = GENERATE_PRIVATE()
+</span></span><span style="display:flex;"><span>  // bpk = Публичный статический ключ Боба
+</span></span><span style="display:flex;"><span>  // bpk является частью RouterIdentity, или опубликован в RouterInfo (TBD)
+</span></span><span style="display:flex;"><span>  bpk = DERIVE_PUBLIC(bsk)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // (DH()
+</span></span><span style="display:flex;"><span>  //[chainKey, k] = MixKey(sharedSecret)
+</span></span><span style="display:flex;"><span>  // chainKey из ???
+</span></span><span style="display:flex;"><span>  sharedSecret = DH(aesk, bpk) = DH(bsk, aepk)
+</span></span><span style="display:flex;"><span>  keydata = HKDF(chainKey, sharedSecret, &#34;ECIES-DSM-Reply1&#34;, 32)
+</span></span><span style="display:flex;"><span>  chainKey = keydata[0:31]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  1) rootKey = chainKey из секции полезной нагрузки
+</span></span><span style="display:flex;"><span>  2) k из KDF новой сессии или split()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // KDF_RK(rk, dh_out)
+</span></span><span style="display:flex;"><span>  keydata = HKDF(rootKey, k, &#34;KDFDHRatchetStep&#34;, 64)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Output 1: не используется
+</span></span><span style="display:flex;"><span>  unused = keydata[0:31]
+</span></span><span style="display:flex;"><span>  // Output 2: Цепной ключ для инициализации новых
+</span></span><span style="display:flex;"><span>  // сеансовых тегов и симметричных ключевых храповиков
+</span></span><span style="display:flex;"><span>  // для передачи от Алисы к Бобу
+</span></span><span style="display:flex;"><span>  ck = keydata[32:63]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // сеансовый тег и цепные ключи симметричного ключа
+</span></span><span style="display:flex;"><span>  keydata = HKDF(ck, ZEROLEN, &#34;TagAndKeyGenKeys&#34;, 64)
+</span></span><span style="display:flex;"><span>  sessTag_ck = keydata[0:31]
+</span></span><span style="display:flex;"><span>  symmKey_ck = keydata[32:63]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tag :: 8 байт тег, сгенерированный от RATCHET_TAG() в [ECIES](/docs/specs/ecies/)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  k :: 32 байт ключ, сгенерированный от RATCHET_KEY() в [ECIES](/docs/specs/ecies/)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  n :: Индекс тега. Обычно 0.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ad :: 8 байт тег
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  payload :: Открытые данные, DSM или DSRM.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ciphertext = ENCRYPT(k, n, payload, ad)
+</span></span></code></pre></div><h3 id="формат-ответа">Формат ответа</h3>
+<p>Это существующее сеансовое сообщение,
+такое же как в <a href="../../../ru/docs/specs/ecies/">ECIES</a>
+, скопировано ниже для справки.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>+----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>  |       Session Tag                     |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>  |                                       |
+</span></span><span style="display:flex;"><span>  +            Payload Section            +
+</span></span><span style="display:flex;"><span>  |       Зашифрованные данные ChaCha20   |
+</span></span><span style="display:flex;"><span>  ~                                       ~
+</span></span><span style="display:flex;"><span>  |                                       |
+</span></span><span style="display:flex;"><span>  +                                       +
+</span></span><span style="display:flex;"><span>  |                                       |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>  |  Poly1305 Код проверки подлинности    |
+</span></span><span style="display:flex;"><span>  +              (MAC)                    +
+</span></span><span style="display:flex;"><span>  |             16 байтов                 |
+</span></span><span style="display:flex;"><span>  +----+----+----+----+----+----+----+----+
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Session Tag :: 8 байтов, открытым текстом
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Зашифрованные данные Payload Section :: оставшиеся данные минус 16 байтов
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  MAC :: Код проверки подлинности Poly1305, 16 байтов
+</span></span></code></pre></div><h2 id="обоснование">Обоснование</h2>
+<p>Параметры шифрования ответа в поисковом запросе, впервые введенные в 0.9.7,
+немного нарушают уровень. Это сделано из соображений эффективности.
+Но также потому, что запрос анонимный.</p>
+<p>Мы могли бы сделать формат запроса более универсальным, как с полем типа шифрования,
+но это, вероятно, больше хлопот, чем стоит.</p>
+<p>Вышеупомянутое предложение является самым простым и минимизирует изменения в формате запроса.</p>
+<h2 id="заметки">Заметки</h2>
+<p>Поиски в базе данных и записи в базу данных на маршрутизаторы ElG должны быть зашифрованы ElGamal/AESSessionTag
+как обычно.</p>
+<h2 id="проблемы">Проблемы</h2>
+<p>Требуется дальнейший анализ безопасности двух вариантов ответов ECIES.</p>
+<h2 id="миграция">Миграция</h2>
+<p>Вопросы обратной совместимости отсутствуют. Маршрутизаторы, указывающие версию 0.9.46 или выше
+в своих RouterInfo, должны поддерживать эту функцию.
+Маршрутизаторы не должны отправлять DatabaseLookup с новыми флагами на маршрутизаторы с версией ниже 0.9.46.
+Если сообщение DatabaseLookup с установленным битом 4 и неустановленным битом 1 ошибочно отправлено
+маршрутизатору без поддержки, он, вероятно, проигнорирует предоставленный ключ и тег,
+и отправит ответ незашифрованным.</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    <a href="../../../ru/proposals/" class="page-nav-link">
+                        ← Back to Proposals
+                    </a>
+                    
+                    
+                    
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                            
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <a href="../../../proposals/154-ecies-lookups.txt" class="page-nav-link" download>
+                        Download Source (.txt)
+                    </a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.proposals-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.proposal-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.proposal-title-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.proposal-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-text);
+}
+
+.proposal-number {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+ 
+.proposal-meta-box {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.proposal-status {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+ 
+.status-open {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-open {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-accepted {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-accepted {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-finished {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-finished {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-closed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-closed {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.dark .status-rejected {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.status-draft,
+.status-needs-revision,
+.status-dead,
+.status-needs-research {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-draft,
+.dark .status-needs-revision,
+.dark .status-dead,
+.dark .status-needs-research {
+    background: #78350f;
+    color: #fde047;
+}
+
+.status-meta,
+.status-informational,
+.status-reserve {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+.dark .status-meta,
+.dark .status-informational,
+.dark .status-reserve {
+    background: #581c87;
+    color: #e879f9;
+}
+
+ 
+.proposal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.info-value {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+ 
+.proposal-relationships {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-md);
+}
+
+.relationship {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.relationship:last-child {
+    margin-bottom: 0;
+}
+
+.relationship-label {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    min-width: 120px;
+}
+
+.relationship-value {
+    color: var(--color-text);
+}
+
+ 
+.proposal-layout {
+    display: block;
+}
+
+.proposal-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.proposal-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.proposal-main {
+    min-width: 0;
+}
+
+ 
+.proposal-content {
+    line-height: 1.8;
+    color: var(--color-text);
+    max-width: 900px;
+}
+
+.proposal-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content ul,
+.proposal-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.proposal-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.proposal-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.proposal-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.proposal-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.proposal-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin-left: 0;
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+.proposal-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.proposal-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+.proposal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content table th {
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.proposal-content table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.proposal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+ 
+.page-nav {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.page-nav-link {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+ 
+@media (max-width: 1024px) {
+    .proposal-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .proposal-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .proposal-title {
+        font-size: 1.75rem;
+    }
+
+    .proposal-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Следите за новостями I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Введите ваш email" required>
+                            <button type="submit">Подписаться</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Быстрые ссылки</h3>
+                <ul>
+                    <li><a href="../../../ru/financial-support/">Пожертвовать</a></li>
+                    <li><a href="../../../ru/docs/overview/intro/">Введение в I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Сообщество</h3>
+                <ul>
+                    <li><a href="../../../ru/get-involved/">Присоединяйтесь</a></li>
+                    <li><a href="../../../ru/blog/">Блог</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Официальные форумы</a></li>
+                    <li><a href="../../../ru/contact/">Контакты</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Ресурсы</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P Метрики</a></li>
+                    <li><a href="../../../ru/papers/">Исследование</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Проект Невидимый Интернет. Лицензировано под Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../ru/privacy/">Конфиденциальность</a>
+                <a href="../../../ru/terms/">Условия</a>
+                <a href="../../../ru/about/media/">Пресса</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Закрыть">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Опрос сообщества</h2>
+            <p class="modal-subtitle">Мы хотели бы услышать ваше мнение</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Ваш голос помогает формировать будущее I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

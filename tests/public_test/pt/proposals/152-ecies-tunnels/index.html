@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="pt" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Túneis ECIES | I2P - O Projeto de Internet Invisível</title>
+
+    <meta name="description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="Túneis ECIES | I2P - O Projeto de Internet Invisível">
+    <meta property="og:description" content="The Invisible Internet Project - A privacy-focused, anonymous network layer">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/pt/proposals/152-ecies-tunnels/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">Site Beta I2P Agora no Ar Reporte problemas por e-mail para stormycloud@mail.i2p</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="Fechar banner" title="Fechar banner">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../pt/" class="logo-link">
+                    <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../pt/about/" class="">Sobre</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../pt/about/">Visão Geral</a></li>
+                            <li><a href="../../../pt/papers/">Artigos de Pesquisa</a></li>
+                            <li><a href="../../../pt/about/media/">Imprensa</a></li>
+                            <li><a href="../../../pt/contact/">Contate-nos</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../pt/docs/" class="">Docs</a></li>
+                    <li><a href="../../../pt/downloads/" class="">Downloads</a></li>
+                    <li><a href="../../../pt/blog/" class="">Blog</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../pt/get-involved/" class="">Participe</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../pt/get-involved/">Visão Geral</a></li>
+                            <li><a href="../../../pt/feedback/">Sugestões de Recursos</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">pt</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../en/proposals/152-ecies-tunnels/"
+                                class="lang-option">Inglês</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../es/proposals/152-ecies-tunnels/"
+                                class="lang-option">Espanhol</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ko/proposals/152-ecies-tunnels/"
+                                class="lang-option">Coreano</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../zh/proposals/152-ecies-tunnels/"
+                                class="lang-option">Chinês</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ru/proposals/152-ecies-tunnels/"
+                                class="lang-option">Russo</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../cs/proposals/152-ecies-tunnels/"
+                                class="lang-option">Tcheco</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../de/proposals/152-ecies-tunnels/"
+                                class="lang-option">Alemão</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../fr/proposals/152-ecies-tunnels/"
+                                class="lang-option">Francês</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../tr/proposals/152-ecies-tunnels/"
+                                class="lang-option">Turco</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../vi/proposals/152-ecies-tunnels/"
+                                class="lang-option">Vietnamita</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../hi/proposals/152-ecies-tunnels/"
+                                class="lang-option">Hindi</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../ar/proposals/152-ecies-tunnels/"
+                                class="lang-option">Árabe</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../pt/proposals/152-ecies-tunnels/"
+                                class="lang-option active">Português</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../pt/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../pt/downloads/" class="btn btn-primary">Obter I2P</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+<div class="proposals-page">
+    <div class="container">
+        
+        <nav class="breadcrumbs">
+            <a href="../../../pt/">Home</a>
+            <span class="separator">/</span>
+            <a href="../../../pt/proposals/">Proposals</a>
+            <span class="separator">/</span>
+            <span class="current">Túneis ECIES</span>
+        </nav>
+
+        
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">Esta tradução foi gerada usando aprendizado de máquina e pode não ser 100% precisa.</span>
+    
+    
+    <a href="../../../en/proposals/152-ecies-tunnels/" class="disclaimer-link">Ver versão em inglês</a>
+    
+</div>
+
+
+
+        
+        <header class="proposal-header">
+            <div class="proposal-title-section">
+                <h1 class="proposal-title">Túneis ECIES</h1>
+                <div class="proposal-number">Proposal 152</div>
+            </div>
+
+            
+            <div class="proposal-meta-box">
+                <div class="proposal-status status-fechado">
+                    Fechado
+                </div>
+
+                
+                <div class="proposal-info-grid">
+                    
+                    <div class="info-item">
+                        <span class="info-label">Author</span>
+                        <span class="info-value">chisana, zzz, orignal</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Created</span>
+                        <span class="info-value">2019-07-04</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Last Updated</span>
+                        <span class="info-value">2025-03-05</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Target Version</span>
+                        <span class="info-value">0.9.48</span>
+                    </div>
+                    
+
+                    
+                    <div class="info-item">
+                        <span class="info-label">Implemented In</span>
+                        <span class="info-value">0.9.48</span>
+                    </div>
+                    
+                </div>
+
+                
+                
+            </div>
+        </header>
+
+        
+        <div class="proposal-layout proposal-layout--with-toc">
+            
+            
+            <aside class="proposal-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#nota">Nota</a></li>
+    <li><a href="#visão-geral">Visão Geral</a>
+      <ul>
+        <li><a href="#cryptographic-primitives">Cryptographic Primitives</a></li>
+        <li><a href="#goals">Goals</a></li>
+        <li><a href="#primitivas-criptográficas">Primitivas Criptográficas</a></li>
+      </ul>
+    </li>
+    <li><a href="#threat-model">Threat Model</a>
+      <ul>
+        <li><a href="#objetivos">Objetivos</a></li>
+        <li><a href="#não-objetivos">Não-Objetivos</a></li>
+      </ul>
+    </li>
+    <li><a href="#design">Design</a>
+      <ul>
+        <li><a href="#noise-protocol-framework">Noise Protocol Framework</a></li>
+        <li><a href="#objetivos-de-design">Objetivos de Design</a></li>
+        <li><a href="#ataques-de-marcação">Ataques de Marcação</a></li>
+        <li><a href="#reply-encryption">Reply encryption</a></li>
+        <li><a href="#framework-de-protocolo-noise">Framework de Protocolo Noise</a></li>
+      </ul>
+    </li>
+    <li><a href="#specification">Specification</a>
+      <ul>
+        <li><a href="#build-request-records">Build Request Records</a></li>
+        <li><a href="#padrões-de-handshake">Padrões de Handshake</a></li>
+        <li><a href="#criptografia-de-solicitação">Criptografia de solicitação</a></li>
+        <li><a href="#criptografia-de-resposta">Criptografia de resposta</a></li>
+        <li><a href="#justificação">Justificação</a></li>
+        <li><a href="#reply-record-encryption-ecies">Reply Record Encryption (ECIES)</a></li>
+        <li><a href="#registros-de-solicitação-de-build">Registros de Solicitação de Build</a></li>
+        <li><a href="#security-analysis">Security Analysis</a></li>
+      </ul>
+    </li>
+    <li><a href="#modelo-de-ameaças">Modelo de Ameaças</a></li>
+    <li><a href="#implementation-notes">Implementation Notes</a></li>
+    <li><a href="#issues">Issues</a></li>
+    <li><a href="#projeto">Projeto</a></li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="proposal-main">
+                <article class="proposal-content">
+                    <h2 id="nota">Nota</h2>
+<p>Implantação e testes da rede em andamento. Sujeito a revisões menores. Consulte <a href="../../../pt/docs/specs/implementation/">SPEC</a>
+ para a especificação oficial.</p>
+<h2 id="visão-geral">Visão Geral</h2>
+<p>Este documento propõe mudanças na criptografia de mensagens Tunnel Build usando primitivas criptográficas introduzidas pelo <a href="../../../pt/docs/specs/ecies/">ECIES-X25519</a>
+. É uma parte da proposta geral <a href="../../../pt/proposals/156-ecies-routers">Proposta 156</a>
+ para converter routers de chaves ElGamal para ECIES-X25519.</p>
+<p>Para fins de transição da rede de ElGamal + AES256 para ECIES + ChaCha20, tunnels com roteadores ElGamal e ECIES mistos são necessários. Especificações para o tratamento de saltos de tunnel mistos são fornecidas. Nenhuma alteração será feita no formato, processamento ou criptografia dos saltos ElGamal.</p>
+<p>Os criadores de túneis ElGamal precisarão criar pares de chaves X25519 efêmeros por salto e seguir esta especificação para criar túneis contendo saltos ECIES.</p>
+<p>Esta proposta especifica as mudanças necessárias para Tunnel Building ECIES-X25519. Para uma visão geral de todas as mudanças necessárias para routers ECIES, veja a proposta 156 <a href="../../../pt/proposals/156-ecies-routers">Proposal 156</a>
+.</p>
+<p>Esta proposta mantém o mesmo tamanho para os registros de construção de tunnel, conforme necessário para compatibilidade. Registros de construção e mensagens menores serão implementados posteriormente - consulte a <a href="../../../pt/proposals/157-new-tbm">Proposta 157</a>
+.</p>
+<h3 id="cryptographic-primitives">Cryptographic Primitives</h3>
+<p>Nenhuma primitiva criptográfica nova é introduzida. As primitivas necessárias para implementar esta proposta são:</p>
+<ul>
+<li>AES-256-CBC como em <a href="../../../pt/docs/specs/cryptography/">Cryptography</a>
+</li>
+<li>Funções STREAM ChaCha20/Poly1305:
+ENCRYPT(k, n, plaintext, ad) e DECRYPT(k, n, ciphertext, ad) - como em <a href="../../../pt/docs/specs/ntcp2/">NTCP2</a>
+ <a href="../../../pt/docs/specs/ecies/">ECIES-X25519</a>
+ e <a href="https://tools.ietf.org/html/rfc7539">RFC-7539</a>
+</li>
+<li>Funções X25519 DH - como em <a href="../../../pt/docs/specs/ntcp2/">NTCP2</a>
+ e <a href="../../../pt/docs/specs/ecies/">ECIES-X25519</a>
+</li>
+<li>HKDF(salt, ikm, info, n) - como em <a href="../../../pt/docs/specs/ntcp2/">NTCP2</a>
+ e <a href="../../../pt/docs/specs/ecies/">ECIES-X25519</a>
+</li>
+</ul>
+<p>Outras funções Noise definidas em outro lugar:</p>
+<ul>
+<li>MixHash(d) - como em <a href="../../../pt/docs/specs/ntcp2/">NTCP2</a>
+ e <a href="../../../pt/docs/specs/ecies/">ECIES-X25519</a>
+</li>
+<li>MixKey(d) - como em <a href="../../../pt/docs/specs/ntcp2/">NTCP2</a>
+ e <a href="../../../pt/docs/specs/ecies/">ECIES-X25519</a>
+</li>
+</ul>
+<h3 id="goals">Goals</h3>
+<ul>
+<li>Aumentar a velocidade das operações criptográficas</li>
+<li>Substituir ElGamal + AES256/CBC por primitivas ECIES para BuildRequestRecords e BuildReplyRecords de túnel.</li>
+<li>Nenhuma alteração no tamanho dos BuildRequestRecords e BuildReplyRecords criptografados (528 bytes) para compatibilidade</li>
+<li>Nenhuma nova mensagem I2NP</li>
+<li>Manter o tamanho do registro de construção criptografado para compatibilidade</li>
+<li>Adicionar forward secrecy para Tunnel Build Messages.</li>
+<li>Adicionar criptografia autenticada</li>
+<li>Detectar hops reordenando BuildRequestRecords</li>
+<li>Aumentar a resolução do timestamp para que o tamanho do filtro Bloom possa ser reduzido</li>
+<li>Adicionar campo para expiração de túnel para que diferentes tempos de vida de túnel sejam possíveis (apenas túneis totalmente ECIES)</li>
+<li>Adicionar campo de opções extensível para recursos futuros</li>
+<li>Reutilizar primitivas criptográficas existentes</li>
+<li>Melhorar a segurança das mensagens de construção de túnel onde possível, mantendo a compatibilidade</li>
+<li>Suportar túneis com peers ElGamal/ECIES mistos</li>
+<li>Melhorar as defesas contra ataques de &ldquo;tagging&rdquo; em mensagens de construção</li>
+<li>Hops não precisam conhecer o tipo de criptografia do próximo hop antes de processar a mensagem de construção,
+pois podem não ter o RI do próximo hop naquele momento</li>
+<li>Maximizar a compatibilidade com a rede atual</li>
+<li>Nenhuma alteração na criptografia AES de solicitação/resposta de construção de túnel para routers ElGamal</li>
+<li>Nenhuma alteração na criptografia de &ldquo;camada&rdquo; AES de túnel, para isso veja a <a href="../../../pt/proposals/153-chacha20-layer-encryption">Proposta 153</a>
+</li>
+<li>Continuar suportando tanto TBM/TBRM de 8 registros quanto VTBM/VTBRM de tamanho variável</li>
+<li>Não exigir atualização de &ldquo;dia da bandeira&rdquo; para toda a rede</li>
+</ul>
+<h3 id="primitivas-criptográficas">Primitivas Criptográficas</h3>
+<ul>
+<li>Reformulação completa das mensagens de construção de tunnel exigindo um &ldquo;flag day&rdquo;.</li>
+<li>Redução das mensagens de construção de tunnel (requer hops totalmente ECIES e uma nova proposta)</li>
+<li>Uso de opções de construção de tunnel conforme definido na <a href="../../../pt/proposals/143-build-message-options">Proposta 143</a>
+, necessário apenas para mensagens pequenas</li>
+<li>Tunnels bidirecionais - para isso veja a <a href="../../../pt/proposals/119-bidirectional-tunnels">Proposta 119</a>
+</li>
+<li>Mensagens de construção de tunnel menores - para isso veja a <a href="../../../pt/proposals/157-new-tbm">Proposta 157</a>
+</li>
+</ul>
+<h2 id="threat-model">Threat Model</h2>
+<h3 id="objetivos">Objetivos</h3>
+<ul>
+<li>
+<p>Nenhum hop é capaz de determinar o originador do tunnel.</p>
+</li>
+<li>
+<p>Os hops intermediários não devem conseguir determinar a direção do tunnel
+ou sua posição no tunnel.</p>
+</li>
+<li>
+<p>Nenhum hop pode ler qualquer conteúdo de outros registros de solicitação ou resposta, exceto
+pelo hash do router truncado e chave efêmera para o próximo hop</p>
+</li>
+<li>
+<p>Nenhum membro do reply tunnel para build de saída pode ler qualquer registro de resposta.</p>
+</li>
+<li>
+<p>Nenhum membro do túnel de saída para construção de entrada pode ler qualquer registro de solicitação,
+exceto que o OBEP pode ver o hash do router truncado e a chave efêmera para o IBGW</p>
+</li>
+</ul>
+<h3 id="não-objetivos">Não-Objetivos</h3>
+<p>Um objetivo principal do design de construção de túnel é tornar mais difícil para routers coludentes X e Y saberem que estão em um único túnel. Se o router X está no salto m e o router Y está no salto m+1, eles obviamente saberão. Mas se o router X está no salto m e o router Y está no salto m+n para n&gt;1, isso deve ser muito mais difícil.</p>
+<p>Ataques de marcação são onde o router X do salto intermediário altera a mensagem de construção do tunnel de tal forma que o router Y pode detectar a alteração quando a mensagem de construção chega lá. O objetivo é que qualquer mensagem alterada seja descartada por um router entre X e Y antes de chegar ao router Y. Para modificações que não são descartadas antes do router Y, o criador do tunnel deve detectar a corrupção na resposta e descartar o tunnel.</p>
+<p>Possíveis ataques:</p>
+<ul>
+<li>Alterar um registro de build</li>
+<li>Substituir um registro de build</li>
+<li>Adicionar ou remover um registro de build</li>
+<li>Reordenar os registros de build</li>
+</ul>
+<p>TODO: O design atual previne todos esses ataques?</p>
+<h2 id="design">Design</h2>
+<h3 id="noise-protocol-framework">Noise Protocol Framework</h3>
+<p>Esta proposta fornece os requisitos baseados no Noise Protocol Framework <a href="https://noiseprotocol.org/noise.html">NOISE</a>
+ (Revisão 34, 2018-07-11). Na terminologia do Noise, Alice é o iniciador, e Bob é o respondedor.</p>
+<p>Esta proposta é baseada no protocolo Noise Noise_N_25519_ChaChaPoly_SHA256. Este protocolo Noise utiliza as seguintes primitivas:</p>
+<ul>
+<li>
+<p>One-Way Handshake Pattern: N
+Alice não transmite sua chave estática para Bob (N)</p>
+</li>
+<li>
+<p>Função DH: X25519
+X25519 DH com um comprimento de chave de 32 bytes conforme especificado na <a href="https://tools.ietf.org/html/rfc7748">RFC-7748</a>
+.</p>
+</li>
+<li>
+<p>Cipher Function: ChaChaPoly
+AEAD_CHACHA20_POLY1305 conforme especificado na <a href="https://tools.ietf.org/html/rfc7539">RFC-7539</a>
+ seção 2.8.
+Nonce de 12 bytes, com os primeiros 4 bytes definidos como zero.
+Idêntico ao usado no <a href="../../../pt/docs/specs/ntcp2/">NTCP2</a>
+.</p>
+</li>
+<li>
+<p>Função Hash: SHA256
+Hash padrão de 32 bytes, já amplamente utilizado no I2P.</p>
+</li>
+</ul>
+<h4 id="additions-to-the-framework">Additions to the Framework</h4>
+<p>Nenhum.</p>
+<h3 id="objetivos-de-design">Objetivos de Design</h3>
+<p>Os handshakes utilizam padrões de handshake <a href="https://noiseprotocol.org/noise.html">Noise</a>
+.</p>
+<p>O seguinte mapeamento de letras é usado:</p>
+<ul>
+<li>e = chave efêmera de uso único</li>
+<li>s = chave estática</li>
+<li>p = carga útil da mensagem</li>
+</ul>
+<p>A requisição de construção é idêntica ao padrão Noise N. Isso também é idêntico à primeira mensagem (Session Request) no padrão XK usado em <a href="../../../pt/docs/specs/ntcp2/">NTCP2</a>
+.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>&lt;- s
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>  e es p -&gt;
+</span></span></code></pre></div><h3 id="ataques-de-marcação">Ataques de Marcação</h3>
+<p>Os registros de solicitação de construção são criados pelo criador do tunnel e criptografados assimetricamente para o hop individual. Esta criptografia assimétrica dos registros de solicitação é atualmente ElGamal conforme definido em <a href="../../../pt/docs/specs/cryptography/">Cryptography</a>
+ e contém um checksum SHA-256. Este design não é forward-secret.</p>
+<p>O novo design utilizará o padrão Noise unidirecional &ldquo;N&rdquo; com ECIES-X25519 ephemeral-static DH, com um HKDF, e ChaCha20/Poly1305 AEAD para forward secrecy, integridade e autenticação. Alice é o solicitante de construção do tunnel. Cada salto no tunnel é um Bob.</p>
+<p>(Propriedades de Segurança do Payload)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>N:                      Authentication   Confidentiality
+</span></span><span style="display:flex;"><span>    -&gt; e, es                  0                2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Authentication: None (0).
+</span></span><span style="display:flex;"><span>    This payload may have been sent by any party, including an active attacker.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Confidentiality: 2.
+</span></span><span style="display:flex;"><span>    Encryption to a known recipient, forward secrecy for sender compromise
+</span></span><span style="display:flex;"><span>    only, vulnerable to replay.  This payload is encrypted based only on DHs
+</span></span><span style="display:flex;"><span>    involving the recipient&#39;s static key pair.  If the recipient&#39;s static
+</span></span><span style="display:flex;"><span>    private key is compromised, even at a later date, this payload can be
+</span></span><span style="display:flex;"><span>    decrypted.  This message can also be replayed, since there&#39;s no ephemeral
+</span></span><span style="display:flex;"><span>    contribution from the recipient.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    &#34;e&#34;: Alice generates a new ephemeral key pair and stores it in the e
+</span></span><span style="display:flex;"><span>         variable, writes the ephemeral public key as cleartext into the
+</span></span><span style="display:flex;"><span>         message buffer, and hashes the public key along with the old h to
+</span></span><span style="display:flex;"><span>         derive a new h.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    &#34;es&#34;: A DH is performed between the Alice&#39;s ephemeral key pair and the
+</span></span><span style="display:flex;"><span>          Bob&#39;s static key pair.  The result is hashed along with the old ck to
+</span></span><span style="display:flex;"><span>          derive a new ck and k, and n is set to zero.
+</span></span></code></pre></div><h3 id="reply-encryption">Reply encryption</h3>
+<p>Os registros de resposta de construção são criados pelo criador dos hops e criptografados simetricamente para o criador. Esta criptografia simétrica dos registros de resposta é atualmente AES com uma soma de verificação SHA-256 prefixada e contém uma soma de verificação SHA-256. Este design não é forward-secret.</p>
+<p>O novo design usará ChaCha20/Poly1305 AEAD para integridade e autenticação.</p>
+<h3 id="framework-de-protocolo-noise">Framework de Protocolo Noise</h3>
+<p>A chave pública efêmera na solicitação não precisa ser ofuscada com AES ou Elligator2. O salto anterior é o único que pode vê-la, e esse salto sabe que o próximo salto é ECIES.</p>
+<p>Os registros de resposta não precisam de criptografia assimétrica completa com outro DH.</p>
+<h2 id="specification">Specification</h2>
+<h3 id="build-request-records">Build Request Records</h3>
+<p>Os BuildRequestRecords criptografados têm 528 bytes tanto para ElGamal quanto para ECIES, por compatibilidade.</p>
+<h4 id="request-record-unencrypted-elgamal">Request Record Unencrypted (ElGamal)</h4>
+<p>Para referência, esta é a especificação atual do BuildRequestRecord do tunnel para routers ElGamal, retirada de <a href="../../../pt/docs/specs/i2np/">I2NP</a>
+. Os dados não criptografados são precedidos por um byte diferente de zero e o hash SHA-256 dos dados antes da criptografia, conforme definido em <a href="../../../pt/docs/specs/cryptography/">Cryptography</a>
+.</p>
+<p>Todos os campos estão em big-endian.</p>
+<p>Tamanho não criptografado: 222 bytes</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>bytes     0-3: tunnel ID to receive messages as, nonzero
+</span></span><span style="display:flex;"><span>  bytes    4-35: local router identity hash
+</span></span><span style="display:flex;"><span>  bytes   36-39: next tunnel ID, nonzero
+</span></span><span style="display:flex;"><span>  bytes   40-71: next router identity hash
+</span></span><span style="display:flex;"><span>  bytes  72-103: AES-256 tunnel layer key
+</span></span><span style="display:flex;"><span>  bytes 104-135: AES-256 tunnel IV key
+</span></span><span style="display:flex;"><span>  bytes 136-167: AES-256 reply key
+</span></span><span style="display:flex;"><span>  bytes 168-183: AES-256 reply IV
+</span></span><span style="display:flex;"><span>  byte      184: flags
+</span></span><span style="display:flex;"><span>  bytes 185-188: request time (in hours since the epoch, rounded down)
+</span></span><span style="display:flex;"><span>  bytes 189-192: next message ID
+</span></span><span style="display:flex;"><span>  bytes 193-221: uninterpreted / random padding
+</span></span></code></pre></div><h4 id="request-record-encrypted-elgamal">Request Record Encrypted (ElGamal)</h4>
+<p>Para referência, esta é a especificação atual do BuildRequestRecord de túnel para roteadores ElGamal, retirada de <a href="../../../pt/docs/specs/i2np/">I2NP</a>
+.</p>
+<p>Tamanho criptografado: 528 bytes</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>bytes    0-15: Hop&#39;s truncated identity hash
+</span></span><span style="display:flex;"><span>  bytes  16-528: ElGamal encrypted BuildRequestRecord
+</span></span></code></pre></div><h4 id="request-record-unencrypted-ecies">Request Record Unencrypted (ECIES)</h4>
+<p>Esta é a especificação proposta do BuildRequestRecord de tunnel para routers ECIES-X25519. Resumo das alterações:</p>
+<ul>
+<li>Remover hash do router de 32 bytes não utilizado</li>
+<li>Alterar tempo de solicitação de horas para minutos</li>
+<li>Adicionar campo de expiração para tempo variável de túnel futuro</li>
+<li>Adicionar mais espaço para flags</li>
+<li>Adicionar Mapeamento para opções de construção adicionais</li>
+<li>Chave de resposta AES-256 e IV não são utilizados para o registro de resposta do próprio hop</li>
+<li>Registro não criptografado é mais longo porque há menos sobrecarga de criptografia</li>
+</ul>
+<p>O registro de solicitação não contém nenhuma chave de resposta ChaCha. Essas chaves são derivadas de uma KDF. Veja abaixo.</p>
+<p>Todos os campos são big-endian.</p>
+<p>Tamanho não criptografado: 464 bytes</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>bytes     0-3: tunnel ID to receive messages as, nonzero
+</span></span><span style="display:flex;"><span>  bytes     4-7: next tunnel ID, nonzero
+</span></span><span style="display:flex;"><span>  bytes    8-39: next router identity hash
+</span></span><span style="display:flex;"><span>  bytes   40-71: AES-256 tunnel layer key
+</span></span><span style="display:flex;"><span>  bytes  72-103: AES-256 tunnel IV key
+</span></span><span style="display:flex;"><span>  bytes 104-135: AES-256 reply key
+</span></span><span style="display:flex;"><span>  bytes 136-151: AES-256 reply IV
+</span></span><span style="display:flex;"><span>  byte      152: flags
+</span></span><span style="display:flex;"><span>  bytes 153-155: more flags, unused, set to 0 for compatibility
+</span></span><span style="display:flex;"><span>  bytes 156-159: request time (in minutes since the epoch, rounded down)
+</span></span><span style="display:flex;"><span>  bytes 160-163: request expiration (in seconds since creation)
+</span></span><span style="display:flex;"><span>  bytes 164-167: next message ID
+</span></span><span style="display:flex;"><span>  bytes   168-x: tunnel build options (Mapping)
+</span></span><span style="display:flex;"><span>  bytes     x-x: other data as implied by flags or options
+</span></span><span style="display:flex;"><span>  bytes   x-463: random padding
+</span></span></code></pre></div><p>O campo flags é o mesmo definido em <a href="../../../pt/docs/specs/implementation/">Tunnel Creation</a>
+ e contém o seguinte::</p>
+<p>Ordem dos bits: 76543210 (bit 7 é MSB)  bit 7: se definido, permite mensagens de qualquer um  bit 6: se definido, permite mensagens para qualquer um, e envia a resposta para o</p>
+<pre><code>    specified next hop in a Tunnel Build Reply Message
+</code></pre>
+<p>bits 5-0: Indefinido, deve ser definido como 0 para compatibilidade com opções futuras</p>
+<p>O bit 7 indica que o hop será um gateway de entrada (IBGW). O bit 6 indica que o hop será um endpoint de saída (OBEP). Se nenhum bit estiver definido, o hop será um participante intermediário. Ambos não podem estar definidos ao mesmo tempo.</p>
+<p>A expiração da solicitação é para duração variável de túnel futura. Por enquanto, o único valor suportado é 600 (10 minutos).</p>
+<p>As opções de construção do tunnel são uma estrutura Mapping conforme definido em <a href="../../../pt/docs/specs/common-structures/">Common Structures</a>
+. Isto é para uso futuro. Nenhuma opção está atualmente definida. Se a estrutura Mapping estiver vazia, isto são dois bytes 0x00 0x00. O tamanho máximo do Mapping (incluindo o campo de comprimento) é de 296 bytes, e o valor máximo do campo de comprimento do Mapping é 294.</p>
+<h4 id="request-record-encrypted-ecies">Request Record Encrypted (ECIES)</h4>
+<p>Todos os campos são big-endian exceto para a chave pública efêmera que é little-endian.</p>
+<p>Tamanho criptografado: 528 bytes</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>bytes    0-15: Hop&#39;s truncated identity hash
+</span></span><span style="display:flex;"><span>  bytes   16-47: Sender&#39;s ephemeral X25519 public key
+</span></span><span style="display:flex;"><span>  bytes  48-511: ChaCha20 encrypted BuildRequestRecord
+</span></span><span style="display:flex;"><span>  bytes 512-527: Poly1305 MAC
+</span></span></code></pre></div><h3 id="padrões-de-handshake">Padrões de Handshake</h3>
+<p>Os BuildReplyRecords criptografados têm 528 bytes tanto para ElGamal quanto para ECIES, para compatibilidade.</p>
+<h4 id="reply-record-unencrypted-elgamal">Reply Record Unencrypted (ElGamal)</h4>
+<p>As respostas ElGamal são criptografadas com AES.</p>
+<p>Todos os campos são big-endian.</p>
+<p>Tamanho não criptografado: 528 bytes</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>bytes   0-31: SHA-256 Hash of bytes 32-527
+</span></span><span style="display:flex;"><span>  bytes 32-526: random data
+</span></span><span style="display:flex;"><span>  byte     527: reply
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  total length: 528
+</span></span></code></pre></div><h4 id="reply-record-unencrypted-ecies">Reply Record Unencrypted (ECIES)</h4>
+<p>Esta é a especificação proposta do BuildReplyRecord de tunnel para routers ECIES-X25519. Resumo das mudanças:</p>
+<ul>
+<li>Adicionar Mapeamento para opções de resposta de construção</li>
+<li>Registro não criptografado é mais longo porque há menos sobrecarga de criptografia</li>
+</ul>
+<p>As respostas ECIES são criptografadas com ChaCha20/Poly1305.</p>
+<p>Todos os campos estão em big-endian.</p>
+<p>Tamanho não criptografado: 512 bytes</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>bytes    0-x: Tunnel Build Reply Options (Mapping)
+</span></span><span style="display:flex;"><span>  bytes    x-x: other data as implied by options
+</span></span><span style="display:flex;"><span>  bytes  x-510: Random padding
+</span></span><span style="display:flex;"><span>  byte     511: Reply byte
+</span></span></code></pre></div><p>As opções de resposta de construção de tunnel são uma estrutura Mapping conforme definida em <a href="../../../pt/docs/specs/common-structures/">Common Structures</a>
+. Isto é para uso futuro. Nenhuma opção está atualmente definida. Se a estrutura Mapping estiver vazia, são dois bytes 0x00 0x00. O tamanho máximo do Mapping (incluindo o campo de comprimento) é de 511 bytes, e o valor máximo do campo de comprimento do Mapping é 509.</p>
+<p>O byte de resposta é um dos seguintes valores conforme definido em <a href="../../../pt/docs/specs/implementation/">Tunnel Creation</a>
+ para evitar fingerprinting:</p>
+<ul>
+<li>0x00 (aceitar)</li>
+<li>30 (TUNNEL_REJECT_BANDWIDTH)</li>
+</ul>
+<h4 id="reply-record-encrypted-ecies">Reply Record Encrypted (ECIES)</h4>
+<p>Tamanho criptografado: 528 bytes</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>bytes   0-511: ChaCha20 encrypted BuildReplyRecord
+</span></span><span style="display:flex;"><span>  bytes 512-527: Poly1305 MAC
+</span></span></code></pre></div><p>Após a transição completa para registros ECIES, as regras de preenchimento por intervalos são as mesmas dos registros de solicitação.</p>
+<h3 id="criptografia-de-solicitação">Criptografia de solicitação</h3>
+<p>Túneis mistos são permitidos, e necessários, para a transição do ElGamal para ECIES. Durante o período de transição, um número crescente de routers será configurado com chaves ECIES.</p>
+<p>O pré-processamento de criptografia simétrica será executado da mesma forma:</p>
+<ul>
+<li>
+<p>&ldquo;encryption&rdquo;:</p>
+</li>
+<li>
+<p>cifra executada em modo de descriptografia</p>
+</li>
+<li>
+<p>registros de solicitação descriptografados preventivamente no pré-processamento (ocultando registros de solicitação criptografados)</p>
+</li>
+<li>
+<p>&ldquo;decryption&rdquo;:</p>
+</li>
+<li>
+<p>cipher executado em modo de encriptação</p>
+</li>
+<li>
+<p>registros de solicitação encriptados (revelando o próximo registro de solicitação em texto plano) por saltos de participantes</p>
+</li>
+<li>
+<p>ChaCha20 não possui &ldquo;modos&rdquo;, então é simplesmente executado três vezes:</p>
+</li>
+<li>
+<p>uma vez no pré-processamento</p>
+</li>
+<li>
+<p>uma vez pelo hop</p>
+</li>
+<li>
+<p>uma vez no processamento final da resposta</p>
+</li>
+</ul>
+<p>Quando túneis mistos são utilizados, os criadores de túnel precisarão basear a criptografia simétrica do BuildRequestRecord no tipo de criptografia do hop atual e anterior.</p>
+<p>Cada hop usará seu próprio tipo de criptografia para criptografar BuildReplyRecords, e os outros registros no VariableTunnelBuildMessage (VTBM).</p>
+<p>No caminho de resposta, o endpoint (remetente) precisará desfazer a <a href="https://en.wikipedia.org/wiki/Multiple_encryption">Multiple Encryption</a>
+, usando a chave de resposta de cada hop.</p>
+<p>Como exemplo esclarecedor, vamos ver um tunnel de saída com ECIES cercado por ElGamal:</p>
+<ul>
+<li>Remetente (OBGW) -&gt; ElGamal (H1) -&gt; ECIES (H2) -&gt; ElGamal (H3)</li>
+</ul>
+<p>Todos os BuildRequestRecords estão no seu estado criptografado (usando ElGamal ou ECIES).</p>
+<p>A cifra AES256/CBC, quando utilizada, ainda é usada para cada registro, sem encadeamento através de múltiplos registros.</p>
+<p>Da mesma forma, o ChaCha20 será usado para criptografar cada registro, não transmitindo em streaming através de todo o VTBM.</p>
+<p>Os registros de solicitação são pré-processados pelo Remetente (OBGW):</p>
+<ul>
+<li>
+<p>O registro do H3 é &ldquo;criptografado&rdquo; usando:</p>
+</li>
+<li>
+<p>Chave de resposta do H2 (ChaCha20)</p>
+</li>
+<li>
+<p>Chave de resposta do H1 (AES256/CBC)</p>
+</li>
+<li>
+<p>O registro do H2 é &ldquo;criptografado&rdquo; usando:</p>
+</li>
+<li>
+<p>Chave de resposta do H1 (AES256/CBC)</p>
+</li>
+<li>
+<p>O registro H1 sai sem criptografia simétrica</p>
+</li>
+</ul>
+<p>Apenas H2 verifica a flag de criptografia da resposta, e vê que é seguida por AES256/CBC.</p>
+<p>Após serem processados por cada salto, os registros ficam em um estado &ldquo;descriptografado&rdquo;:</p>
+<ul>
+<li>
+<p>O registro do H3 é &ldquo;decriptado&rdquo; usando:</p>
+</li>
+<li>
+<p>Chave de resposta do H3 (AES256/CBC)</p>
+</li>
+<li>
+<p>O registro do H2 é &ldquo;descriptografado&rdquo; usando:</p>
+</li>
+<li>
+<p>Chave de resposta do H3 (AES256/CBC)</p>
+</li>
+<li>
+<p>Chave de resposta do H2 (ChaCha20-Poly1305)</p>
+</li>
+<li>
+<p>O registro H1 é &ldquo;descriptografado&rdquo; usando:</p>
+</li>
+<li>
+<p>Chave de resposta do H3 (AES256/CBC)</p>
+</li>
+<li>
+<p>Chave de resposta do H2 (ChaCha20)</p>
+</li>
+<li>
+<p>Chave de resposta do H1 (AES256/CBC)</p>
+</li>
+</ul>
+<p>O criador do tunnel, também conhecido como Inbound Endpoint (IBEP), pós-processa a resposta:</p>
+<ul>
+<li>
+<p>O registro do H3 é &ldquo;criptografado&rdquo; usando:</p>
+</li>
+<li>
+<p>Chave de resposta do H3 (AES256/CBC)</p>
+</li>
+<li>
+<p>O registro do H2 é &ldquo;criptografado&rdquo; usando:</p>
+</li>
+<li>
+<p>Chave de resposta do H3 (AES256/CBC)</p>
+</li>
+<li>
+<p>Chave de resposta do H2 (ChaCha20-Poly1305)</p>
+</li>
+<li>
+<p>O registro do H1 é &ldquo;criptografado&rdquo; usando:</p>
+</li>
+<li>
+<p>Chave de resposta do H3 (AES256/CBC)</p>
+</li>
+<li>
+<p>Chave de resposta do H2 (ChaCha20)</p>
+</li>
+<li>
+<p>Chave de resposta do H1 (AES256/CBC)</p>
+</li>
+</ul>
+<h3 id="criptografia-de-resposta">Criptografia de resposta</h3>
+<p>Essas chaves são explicitamente incluídas nos ElGamal BuildRequestRecords. Para ECIES BuildRequestRecords, as chaves de túnel e chaves de resposta AES são incluídas, mas as chaves de resposta ChaCha são derivadas da troca DH. Veja a <a href="../../../pt/proposals/156-ecies-routers">Proposta 156</a>
+ para detalhes das chaves ECIES estáticas do router.</p>
+<p>Abaixo está uma descrição de como derivar as chaves previamente transmitidas nos registros de solicitação.</p>
+<h4 id="kdf-for-initial-ck-and-h">KDF for Initial ck and h</h4>
+<p>Este é o <a href="https://noiseprotocol.org/noise.html">NOISE</a>
+ padrão para o padrão &ldquo;N&rdquo; com um nome de protocolo padrão.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>This is the &#34;e&#34; message pattern:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Define protocol_name.
+</span></span><span style="display:flex;"><span>  Set protocol_name = &#34;Noise_N_25519_ChaChaPoly_SHA256&#34;
+</span></span><span style="display:flex;"><span>  (31 bytes, US-ASCII encoded, no NULL termination).
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Define Hash h = 32 bytes
+</span></span><span style="display:flex;"><span>  // Pad to 32 bytes. Do NOT hash it, because it is not more than 32 bytes.
+</span></span><span style="display:flex;"><span>  h = protocol_name || 0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Define ck = 32 byte chaining key. Copy the h data to ck.
+</span></span><span style="display:flex;"><span>  Set chainKey = h
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // MixHash(null prologue)
+</span></span><span style="display:flex;"><span>  h = SHA256(h);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // up until here, can all be precalculated by all routers.
+</span></span></code></pre></div><h4 id="kdf-for-request-record">KDF for Request Record</h4>
+<p>Os criadores de tunnel ElGamal geram um par de chaves X25519 efêmero para cada hop ECIES no tunnel, e usam o esquema acima para criptografar seu BuildRequestRecord. Os criadores de tunnel ElGamal usarão o esquema anterior a esta especificação para criptografar para hops ElGamal.</p>
+<p>Os criadores de túneis ECIES precisarão criptografar para cada chave pública do hop ElGamal usando o esquema definido em <a href="../../../pt/docs/specs/implementation/">Tunnel Creation</a>
+. Os criadores de túneis ECIES usarão o esquema acima para criptografar para hops ECIES.</p>
+<p>Isso significa que os saltos do tunnel só verão registros criptografados do mesmo tipo de criptografia.</p>
+<p>Para criadores de túneis ElGamal e ECIES, eles irão gerar pares de chaves X25519 efêmeras únicas por salto para criptografar para saltos ECIES.</p>
+<p><strong>IMPORTANTE</strong>: As chaves efêmeras devem ser únicas por hop ECIES e por registro de construção. Falhar em usar chaves únicas abre um vetor de ataque para hops coludentes confirmarem que estão no mesmo túnel.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>// Each hop&#39;s X25519 static keypair (hesk, hepk) from the Router Identity
+</span></span><span style="display:flex;"><span>  hesk = GENERATE_PRIVATE()
+</span></span><span style="display:flex;"><span>  hepk = DERIVE_PUBLIC(hesk)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // MixHash(hepk)
+</span></span><span style="display:flex;"><span>  // || below means append
+</span></span><span style="display:flex;"><span>  h = SHA256(h || hepk);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // up until here, can all be precalculated by each router
+</span></span><span style="display:flex;"><span>  // for all incoming build requests
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Sender generates an X25519 ephemeral keypair per ECIES hop in the VTBM (sesk, sepk)
+</span></span><span style="display:flex;"><span>  sesk = GENERATE_PRIVATE()
+</span></span><span style="display:flex;"><span>  sepk = DERIVE_PUBLIC(sesk)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // MixHash(sepk)
+</span></span><span style="display:flex;"><span>  h = SHA256(h || sepk);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  End of &#34;e&#34; message pattern.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  This is the &#34;es&#34; message pattern:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // Noise es
+</span></span><span style="display:flex;"><span>  // Sender performs an X25519 DH with Hop&#39;s static public key.
+</span></span><span style="display:flex;"><span>  // Each Hop, finds the record w/ their truncated identity hash,
+</span></span><span style="display:flex;"><span>  // and extracts the Sender&#39;s ephemeral key preceding the encrypted record.
+</span></span><span style="display:flex;"><span>  sharedSecret = DH(sesk, hepk) = DH(hesk, sepk)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // MixKey(DH())
+</span></span><span style="display:flex;"><span>  //[chainKey, k] = MixKey(sharedSecret)
+</span></span><span style="display:flex;"><span>  // ChaChaPoly parameters to encrypt/decrypt
+</span></span><span style="display:flex;"><span>  keydata = HKDF(chainKey, sharedSecret, &#34;&#34;, 64)
+</span></span><span style="display:flex;"><span>  // Save for Reply Record KDF
+</span></span><span style="display:flex;"><span>  chainKey = keydata[0:31]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // AEAD parameters
+</span></span><span style="display:flex;"><span>  k = keydata[32:63]
+</span></span><span style="display:flex;"><span>  n = 0
+</span></span><span style="display:flex;"><span>  plaintext = 464 byte build request record
+</span></span><span style="display:flex;"><span>  ad = h
+</span></span><span style="display:flex;"><span>  ciphertext = ENCRYPT(k, n, plaintext, ad)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  End of &#34;es&#34; message pattern.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // MixHash(ciphertext)
+</span></span><span style="display:flex;"><span>  // Save for Reply Record KDF
+</span></span><span style="display:flex;"><span>  h = SHA256(h || ciphertext)
+</span></span></code></pre></div><p><code>replyKey</code>, <code>layerKey</code> e <code>layerIV</code> ainda devem ser incluídos dentro dos registros ElGamal, e podem ser gerados aleatoriamente.</p>
+<h3 id="justificação">Justificação</h3>
+<p>Conforme definido em <a href="../../../pt/docs/specs/implementation/">Tunnel Creation</a>
+. Não há alterações na criptografia para hops ElGamal.</p>
+<h3 id="reply-record-encryption-ecies">Reply Record Encryption (ECIES)</h3>
+<p>O registro de resposta é criptografado com ChaCha20/Poly1305.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>// AEAD parameters
+</span></span><span style="display:flex;"><span>  k = chainkey from build request
+</span></span><span style="display:flex;"><span>  n = 0
+</span></span><span style="display:flex;"><span>  plaintext = 512 byte build reply record
+</span></span><span style="display:flex;"><span>  ad = h from build request
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ciphertext = ENCRYPT(k, n, plaintext, ad)
+</span></span></code></pre></div><h3 id="registros-de-solicitação-de-build">Registros de Solicitação de Build</h3>
+<p>Como definido em <a href="../../../pt/docs/specs/implementation/">Tunnel Creation</a>
+. Não há mudanças na criptografia para hops ElGamal.</p>
+<h3 id="security-analysis">Security Analysis</h3>
+<p>ElGamal não oferece sigilo futuro para Mensagens de Construção de Tunnel.</p>
+<p>AES256/CBC está em uma situação ligeiramente melhor, sendo vulnerável apenas a um enfraquecimento teórico de um ataque de <code>biclique</code> com texto simples conhecido.</p>
+<p>O único ataque prático conhecido contra AES256/CBC é um ataque de oráculo de preenchimento, quando o IV é conhecido pelo atacante.</p>
+<p>Um atacante precisaria quebrar a criptografia ElGamal do próximo salto para obter as informações da chave AES256/CBC (chave de resposta e IV).</p>
+<p>ElGamal é significativamente mais intensivo em CPU do que ECIES, levando a um potencial esgotamento de recursos.</p>
+<p>ECIES, usado com novas chaves efêmeras por-BuildRequestRecord ou VariableTunnelBuildMessage, fornece forward-secrecy.</p>
+<p>ChaCha20Poly1305 fornece criptografia AEAD, permitindo que o destinatário verifique a integridade da mensagem antes de tentar a descriptografia.</p>
+<h2 id="modelo-de-ameaças">Modelo de Ameaças</h2>
+<p>Este design maximiza a reutilização de primitivas criptográficas, protocolos e código existentes. Este design minimiza o risco.</p>
+<h2 id="implementation-notes">Implementation Notes</h2>
+<ul>
+<li>Routers mais antigos não verificam o tipo de encriptação do hop e enviarão registros
+encriptados com ElGamal. Alguns routers recentes têm bugs e enviarão vários tipos de registros
+malformados. Os implementadores devem detectar e rejeitar esses registros antes da operação
+DH, se possível, para reduzir o uso da CPU.</li>
+</ul>
+<h2 id="issues">Issues</h2>
+<h2 id="projeto">Projeto</h2>
+<p>Veja a <a href="../../../pt/proposals/156-ecies-routers">Proposta 156</a>
+.</p>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    <a href="../../../pt/proposals/" class="page-nav-link">
+                        ← Back to Proposals
+                    </a>
+                    
+                    
+                    
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                            
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                    <a href="../../../proposals/152-ecies-tunnels.txt" class="page-nav-link" download>
+                        Download Source (.txt)
+                    </a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.proposals-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.proposal-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.proposal-title-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.proposal-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-text);
+}
+
+.proposal-number {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+ 
+.proposal-meta-box {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.proposal-status {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+ 
+.status-open {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-open {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-accepted {
+    background: #dbeafe;
+    color: #0369a1;
+}
+
+.dark .status-accepted {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+.status-finished {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-finished {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-closed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dark .status-closed {
+    background: #164e63;
+    color: #86efac;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.dark .status-rejected {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.status-draft,
+.status-needs-revision,
+.status-dead,
+.status-needs-research {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-draft,
+.dark .status-needs-revision,
+.dark .status-dead,
+.dark .status-needs-research {
+    background: #78350f;
+    color: #fde047;
+}
+
+.status-meta,
+.status-informational,
+.status-reserve {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+.dark .status-meta,
+.dark .status-informational,
+.dark .status-reserve {
+    background: #581c87;
+    color: #e879f9;
+}
+
+ 
+.proposal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.info-value {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+ 
+.proposal-relationships {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-md);
+}
+
+.relationship {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.relationship:last-child {
+    margin-bottom: 0;
+}
+
+.relationship-label {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    min-width: 120px;
+}
+
+.relationship-value {
+    color: var(--color-text);
+}
+
+ 
+.proposal-layout {
+    display: block;
+}
+
+.proposal-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.proposal-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.proposal-main {
+    min-width: 0;
+}
+
+ 
+.proposal-content {
+    line-height: 1.8;
+    color: var(--color-text);
+    max-width: 900px;
+}
+
+.proposal-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.proposal-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content ul,
+.proposal-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.proposal-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.proposal-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.proposal-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.proposal-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.proposal-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin-left: 0;
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+.proposal-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.proposal-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+.proposal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-md);
+}
+
+.proposal-content table th {
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.proposal-content table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.proposal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+ 
+.page-nav {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.page-nav-link {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+ 
+@media (max-width: 1024px) {
+    .proposal-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .proposal-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .proposal-title {
+        font-size: 1.75rem;
+    }
+
+    .proposal-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">Fique atualizado com as notícias do I2P:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Digite seu e-mail" required>
+                            <button type="submit">Inscrever-se</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Links Rápidos</h3>
+                <ul>
+                    <li><a href="../../../pt/financial-support/">Doar</a></li>
+                    <li><a href="../../../pt/docs/overview/intro/">Introdução ao I2P</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Comunidade</h3>
+                <ul>
+                    <li><a href="../../../pt/get-involved/">Participe</a></li>
+                    <li><a href="../../../pt/blog/">Blog</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">Fóruns Oficiais</a></li>
+                    <li><a href="../../../pt/contact/">Contato</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Recursos</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">Métricas I2P</a></li>
+                    <li><a href="../../../pt/papers/">Pesquisa</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">StormyCloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 O Projeto de Internet Invisível. Licenciado sob Creative Commons.</p>
+            <div class="footer-links">
+                <a href="../../../pt/privacy/">Privacidade</a>
+                <a href="../../../pt/terms/">Termos</a>
+                <a href="../../../pt/about/media/">Imprensa</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>Enquete da comunidade</h2>
+            <p class="modal-subtitle">Gostaríamos de ouvir sua opinião</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                Seu voto ajuda a moldar o futuro do I2P.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>

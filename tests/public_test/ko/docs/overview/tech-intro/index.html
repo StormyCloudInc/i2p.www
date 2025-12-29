@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>I2P: 익명 통신을 위한 확장 가능한 프레임워크 | I2P - 보이지 않는 인터넷 프로젝트</title>
+
+    <meta name="description" content="I2P 아키텍처 및 운영에 대한 기술적 소개">
+    <meta name="keywords" content="i2p, privacy, anonymity, dark net, encryption, security">
+
+    
+    <meta property="og:title" content="I2P: 익명 통신을 위한 확장 가능한 프레임워크 | I2P - 보이지 않는 인터넷 프로젝트">
+    <meta property="og:description" content="I2P 아키텍처 및 운영에 대한 기술적 소개">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/ko/docs/overview/tech-intro/">
+
+    
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="icon" type="image/png" href="../../../../images/i2plogo.png" sizes="32x32">
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="../../../../css/main.min.be6880f32f5ff44e57579da7b11513b973319944ebe38748e3ac7f3268662d18.css" integrity="sha256-vmiA8y9f9E5XV52nsRUTuXMxmUTr44dI46x/MmhmLRg=">
+    
+
+
+    
+</head>
+
+<body>
+    
+    <input type="checkbox" id="theme-toggle-checkbox" class="theme-checkbox" aria-hidden="true">
+
+    
+<div class="site-banner" id="site-banner" data-banner-id="banner-3" role="alert" aria-live="polite">
+    <div class="container">
+        <div class="banner-content">
+            <span class="banner-message">I2P 베타 사이트 현재 운영 중 문의사항은 stormycloud@mail.i2p로 이메일 주세요</span>
+            
+        </div>
+        
+        <form method="GET" action="../../../../api/banner/dismiss" style="display: inline;">
+            <input type="hidden" name="id" value="banner-3">
+            <button type="submit" class="banner-close" aria-label="배너 닫기" title="배너 닫기">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        
+    </div>
+</div>
+
+
+    <header class="site-header">
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="../../../../ko/" class="logo-link">
+                    <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="logo logo-light">
+                    <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="logo logo-dark">
+                </a>
+            </div>
+
+            
+            <input type="checkbox" id="mobile-menu-checkbox" class="mobile-menu-checkbox"
+                aria-label="Toggle navigation menu">
+            <label for="mobile-menu-checkbox" class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </label>
+
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li class="nav-dropdown">
+                        <a href="../../../../ko/about/" class="">소개</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ko/about/">개요</a></li>
+                            <li><a href="../../../../ko/papers/">연구 논문</a></li>
+                            <li><a href="../../../../ko/about/media/">보도자료</a></li>
+                            <li><a href="../../../../ko/contact/">문의하기</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../ko/docs/" class="active">문서</a></li>
+                    <li><a href="../../../../ko/downloads/" class="">다운로드</a></li>
+                    <li><a href="../../../../ko/blog/" class="">블로그</a></li>
+                    <li class="nav-dropdown">
+                        <a href="../../../../ko/get-involved/" class="">참여하기</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../../../../ko/get-involved/">개요</a></li>
+                            <li><a href="../../../../ko/feedback/">기능 제안</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="nav-actions">
+                    
+                    <div class="language-selector">
+                        <button class="language-toggle" aria-label="Select language" title="Language">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+                                    stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span class="current-lang">ko</span>
+                        </button>
+                        <div class="language-dropdown">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../en/docs/overview/tech-intro/"
+                                class="lang-option">영어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../es/docs/overview/tech-intro/"
+                                class="lang-option">스페인어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ko/docs/overview/tech-intro/"
+                                class="lang-option active">한국어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../zh/docs/overview/tech-intro/"
+                                class="lang-option">중국어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ru/docs/overview/tech-intro/"
+                                class="lang-option">러시아어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../cs/docs/overview/tech-intro/"
+                                class="lang-option">체코어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../de/docs/overview/tech-intro/"
+                                class="lang-option">독일어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../fr/docs/overview/tech-intro/"
+                                class="lang-option">프랑스어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../tr/docs/overview/tech-intro/"
+                                class="lang-option">터키어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../vi/docs/overview/tech-intro/"
+                                class="lang-option">베트남어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../hi/docs/overview/tech-intro/"
+                                class="lang-option">힌디어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../ar/docs/overview/tech-intro/"
+                                class="lang-option">아랍어</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <a href="../../../../pt/docs/overview/tech-intro/"
+                                class="lang-option">포르투갈어</a>
+                            
+                            
+                        </div>
+                    </div>
+
+                    
+                    <label for="theme-toggle-checkbox" class="theme-toggle" aria-label="Toggle dark mode"
+                        title="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M10 2V4M10 16V18M18 10H16M4 10H2M15.657 4.343L14.243 5.757M5.757 14.243L4.343 15.657M15.657 15.657L14.243 14.243M5.757 5.757L4.343 4.343"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </label>
+
+                    
+                    <a href="../../../../ko/financial-support/" class="btn btn-primary" id="donate-btn">Donate</a>
+
+                    
+                    <a href="../../../../ko/downloads/" class="btn btn-primary">I2P 다운로드</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <main id="main-content">
+        
+
+
+
+
+<div class="docs-page">
+    <div class="container">
+        
+        <div class="docs-layout docs-layout--with-toc">
+            
+            
+            <aside class="docs-toc-sidebar">
+                <nav class="toc-nav">
+                    <div class="toc-header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        On This Page
+                    </div>
+                    <div class="toc-content">
+                        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#소개">소개</a></li>
+    <li><a href="#운영">운영</a>
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#tunnels">Tunnels</a></li>
+        <li><a href="#개요">개요</a></li>
+        <li><a href="#터널">터널</a></li>
+        <li><a href="#네트워크-데이터베이스-netdb">네트워크 데이터베이스 (netDb)</a></li>
+      </ul>
+    </li>
+    <li><a href="#future-of-the-protocol">Future of the Protocol</a>
+      <ul>
+        <li><a href="#restricted-route-operation">Restricted Route Operation</a></li>
+      </ul>
+    </li>
+    <li><a href="#similar-systems">Similar Systems</a>
+      <ul>
+        <li><a href="#전송-프로토콜">전송 프로토콜</a></li>
+        <li><a href="#암호화">암호화</a></li>
+        <li><a href="#other-networks">Other Networks</a></li>
+      </ul>
+    </li>
+    <li><a href="#appendix-a-application-layer">Appendix A: Application Layer</a>
+      <ul>
+        <li><a href="#streaming">Streaming Library</a></li>
+        <li><a href="#naming-library-and-address-book">Naming Library and Address Book</a></li>
+        <li><a href="#제한된-라우트-운영">제한된 라우트 운영</a></li>
+        <li><a href="#i2psnark">I2PSnark</a></li>
+        <li><a href="#tor">Tor</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                    </div>
+                </nav>
+            </aside>
+            
+
+            
+            <div class="docs-main">
+                
+                <nav class="breadcrumbs">
+                    <a href="../../../../ko/">Home</a>
+                    <span class="separator">/</span>
+                    <a href="../../../../ko/docs/">Docs</a>
+                    
+                        
+                            <span class="separator">/</span>
+                            <a href="../../../../ko/docs/overview/">Overview</a>
+                        
+                    
+                    <span class="separator">/</span>
+                    <span class="current">I2P: 익명 통신을 위한 확장 가능한 프레임워크</span>
+                </nav>
+
+                
+<div class="translation-disclaimer" role="note">
+    <span class="disclaimer-message">이 번역은 기계 학습을 사용하여 생성되었으며 100% 정확하지 않을 수 있습니다.</span>
+    
+    
+    <a href="../../../../en/docs/overview/tech-intro/" class="disclaimer-link">영어 버전 보기</a>
+    
+</div>
+
+
+
+                
+                <header class="article-header">
+                    <h1 class="article-title">I2P: 익명 통신을 위한 확장 가능한 프레임워크</h1>
+                    
+                        <p class="article-description">I2P 아키텍처 및 운영에 대한 기술적 소개</p>
+                    
+                    <div class="article-meta">
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Updated: 2025-10
+                            </span>
+                        
+                        
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accurate for: 2.10.0
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <article class="article-content">
+                    <h2 id="소개">소개</h2>
+<p>I2P는 확장 가능하고 자가 조직화되며 복원력 있는 패킷 교환 익명 네트워크 계층으로, 그 위에서 익명성 또는 보안을 중요시하는 다양한 애플리케이션들이 작동할 수 있습니다. 이러한 각 애플리케이션은 자유 경로 mixnet(믹스넷)의 적절한 구현에 대해 걱정할 필요 없이 자체적인 익명성, 지연시간, 처리량 간의 균형을 조정할 수 있으며, 이를 통해 I2P 상에서 이미 실행 중인 더 큰 익명성 집합의 사용자들과 자신들의 활동을 자연스럽게 섞을 수 있습니다.</p>
+<p>이미 사용 가능한 애플리케이션들은 일반적인 인터넷 활동의 전체 범위를 제공합니다 — <strong>익명</strong> 웹 브라우징, 웹 호스팅, 채팅, 파일 공유, 이메일, 블로깅, 콘텐츠 신디케이션은 물론 현재 개발 중인 여러 다른 애플리케이션들도 포함됩니다.</p>
+<ul>
+<li><strong>웹 브라우징:</strong> 프록시를 지원하는 기존 브라우저 사용</li>
+<li><strong>채팅:</strong> IRC 및 기타 프로토콜</li>
+<li><strong>파일 공유:</strong> <a href="#i2psnark">I2PSnark</a>
+ 및 기타 애플리케이션</li>
+<li><strong>이메일:</strong> <a href="#i2pmail">Susimail</a>
+ 및 기타 애플리케이션</li>
+<li><strong>블로그:</strong> 로컬 웹 서버 또는 사용 가능한 플러그인 사용</li>
+</ul>
+<p><a href="../../../../ko/docs/overview/comparison#freenet">Freenet</a>
+이나 <a href="https://www.gnunet.org/">GNUnet</a>
+과 같은 콘텐츠 배포 네트워크 내에서 호스팅되는 웹사이트와 달리, I2P에서 호스팅되는 서비스는 완전히 상호작용이 가능합니다 — 전통적인 웹 스타일의 검색 엔진, 게시판, 댓글을 달 수 있는 블로그, 데이터베이스 기반 사이트, 그리고 Freenet과 같은 정적 시스템을 로컬에 설치하지 않고도 쿼리할 수 있는 브리지가 있습니다.</p>
+<p>이러한 모든 익명성 지원 애플리케이션에서 I2P는 <strong>메시지 지향 미들웨어</strong>로 작동합니다 — 애플리케이션은 암호화 식별자(destination)로 전송할 데이터를 지정하고, I2P는 이를 안전하고 익명으로 도착하도록 보장합니다. I2P는 또한 I2P의 익명 최선 노력 메시지를 신뢰할 수 있는 순서대로 전송되는 스트림으로 변환할 수 있도록 간단한 <a href="#streaming">스트리밍 라이브러리</a>
+를 포함하고 있으며, 네트워크의 높은 대역폭-지연 곱에 맞춰 조정된 TCP 기반 혼잡 제어를 제공합니다.</p>
+<p>기존 애플리케이션을 연결하기 위해 간단한 SOCKS 프록시가 개발되었지만, 대부분의 애플리케이션은 익명 환경에서 민감한 정보를 유출하기 때문에 그 가치가 제한적입니다. 가장 안전한 접근 방식은 애플리케이션을 <strong>감사하고 조정하여</strong> I2P의 API를 직접 사용하도록 하는 것입니다.</p>
+<p>I2P는 학술, 상업 또는 정부 연구 프로젝트가 아니라, 실용적인 익명성 제공을 목표로 하는 엔지니어링 활동입니다. 2003년 초부터 전 세계에 분산된 기여자 그룹에 의해 지속적으로 개발되어 왔습니다. 모든 I2P 작업은 <a href="https://geti2p.net/">공식 웹사이트</a>
+에서 <strong>오픈 소스</strong>로 제공되며, 주로 퍼블릭 도메인으로 공개되고 일부 구성 요소는 허용적인 BSD 스타일 라이선스를 따릅니다. <a href="#i2ptunnel">I2PTunnel</a>
+, <a href="#i2pmail">Susimail</a>
+, <a href="#i2psnark">I2PSnark</a>
+와 같은 여러 GPL 라이선스 클라이언트 애플리케이션을 사용할 수 있습니다. 자금은 전적으로 사용자 기부로만 충당됩니다.</p>
+<hr>
+<h2 id="운영">운영</h2>
+<h3 id="overview">Overview</h3>
+<p>I2P는 router(네트워크에 참여하는 노드)와 destination(애플리케이션을 위한 익명 엔드포인트) 간에 명확한 구분을 둡니다. I2P 자체를 실행하는 것은 비밀이 아니며, 숨겨지는 것은 사용자가 <strong>무엇을</strong> 하고 있는지와 그들의 destination이 어떤 router를 사용하는지입니다. 최종 사용자는 일반적으로 여러 destination을 실행합니다(예: 웹 브라우징용 하나, 호스팅용 하나, IRC용 하나).</p>
+<p>I2P의 핵심 개념은 <strong>tunnel</strong>입니다. 이는 일련의 라우터들을 통과하는 단방향 암호화 경로입니다. 각 router는 한 계층만 복호화하며 다음 홉(hop)만 알게 됩니다. Tunnel은 10분마다 만료되며 재구축되어야 합니다.</p>
+<p><figure>
+  <img 
+    src="../../../../images/tunnels.png" 
+    alt="인바운드 및 아웃바운드 tunnel 개략도"loading="lazy"
+    decoding="async"></figure>
+
+   <em>그림 1: 두 가지 유형의 tunnel이 존재합니다 — 인바운드와 아웃바운드.</em></p>
+<ul>
+<li><strong>Outbound 터널</strong>은 생성자로부터 메시지를 보냅니다.</li>
+<li><strong>Inbound 터널</strong>은 메시지를 생성자에게 다시 가져옵니다.</li>
+</ul>
+<p>이 두 가지를 결합하면 양방향 통신이 가능합니다. 예를 들어, &ldquo;Alice&quot;는 아웃바운드 터널을 사용하여 &ldquo;Bob&quot;의 인바운드 터널로 전송합니다. Alice는 Bob의 인바운드 게이트웨이로의 라우팅 지침과 함께 메시지를 암호화합니다.</p>
+<p>또 다른 핵심 개념은 <strong>network database</strong> 또는 <strong>netDb</strong>로, 라우터와 목적지에 대한 메타데이터를 분산 저장합니다:</p>
+<ul>
+<li><strong>RouterInfo:</strong> router 연락처 및 키 자료를 포함합니다.</li>
+<li><strong>LeaseSet:</strong> destination에 연락하는 데 필요한 정보(tunnel 게이트웨이, 만료 시간, 암호화 키)를 포함합니다.</li>
+</ul>
+<p>라우터는 자신의 RouterInfo를 netDb에 직접 게시합니다. LeaseSet은 익명성을 위해 아웃바운드 터널을 통해 전송됩니다.</p>
+<p>터널을 구축하기 위해 Alice는 netDb에서 RouterInfo 항목을 조회하여 피어를 선택하고, 터널이 완성될 때까지 암호화된 터널 구축 메시지를 홉별로 전송합니다.</p>
+<p><figure>
+  <img 
+    src="../../../../images/netdb_get_routerinfo_2.png" 
+    alt="Router 정보는 터널 구축에 사용됩니다"loading="lazy"
+    decoding="async"></figure>
+
+   <em>그림 2: Router 정보는 터널 구축에 사용됩니다.</em></p>
+<p>Bob에게 데이터를 전송하기 위해, Alice는 Bob의 LeaseSet을 조회하고 자신의 아웃바운드 터널 중 하나를 사용하여 Bob의 인바운드 터널 게이트웨이로 데이터를 라우팅합니다.</p>
+<p><figure>
+  <img 
+    src="../../../../images/netdb_get_leaseset.png" 
+    alt="LeaseSets는 인바운드 및 아웃바운드 터널을 연결합니다"loading="lazy"
+    decoding="async"></figure>
+
+   <em>그림 3: LeaseSets는 아웃바운드 및 인바운드 터널을 연결합니다.</em></p>
+<p>I2P는 메시지 기반이기 때문에, 송신 종단점이나 수신 게이트웨이로부터도 메시지를 보호하기 위해 <strong>종단 간 garlic encryption</strong>을 추가합니다. garlic 메시지는 여러 개의 암호화된 &ldquo;clove&rdquo;(메시지)를 감싸서 메타데이터를 숨기고 익명성을 향상시킵니다.</p>
+<p>애플리케이션은 메시지 인터페이스를 직접 사용하거나 신뢰할 수 있는 연결을 위해 <a href="#streaming">스트리밍 라이브러리</a>
+에 의존할 수 있습니다.</p>
+<hr>
+<h3 id="tunnels">Tunnels</h3>
+<p>인바운드 및 아웃바운드 tunnel 모두 계층화된 암호화를 사용하지만 구성 방식이 다릅니다:</p>
+<ul>
+<li><strong>인바운드 터널</strong>에서는 생성자(엔드포인트)가 모든 레이어를 복호화합니다.</li>
+<li><strong>아웃바운드 터널</strong>에서는 생성자(게이트웨이)가 엔드포인트에서의 명확성을 보장하기 위해 레이어를 사전에 복호화합니다.</li>
+</ul>
+<p>I2P는 직접적인 프로빙 없이 지연 시간과 신뢰성과 같은 간접적인 지표를 통해 피어를 프로파일링합니다. 이러한 프로파일을 기반으로 피어는 동적으로 네 가지 계층으로 그룹화됩니다:</p>
+<ol>
+<li>빠르고 높은 용량</li>
+<li>높은 용량</li>
+<li>실패하지 않음</li>
+<li>실패 중</li>
+</ol>
+<p>터널 피어 선택은 일반적으로 높은 용량의 피어를 선호하며, 익명성과 성능의 균형을 맞추기 위해 무작위로 선택되고, predecessor 공격과 netDb 수집을 완화하기 위해 추가적인 XOR 기반 순서 지정 전략을 사용합니다.</p>
+<p>더 자세한 내용은 <a href="../../../../ko/docs/specs/implementation">Tunnel 사양</a>
+을 참조하세요.</p>
+<hr>
+<h3 id="개요">개요</h3>
+<p><strong>floodfill</strong> 분산 해시 테이블(DHT)에 참여하는 router들은 LeaseSet 조회를 저장하고 응답합니다. DHT는 <a href="https://en.wikipedia.org/wiki/Kademlia">Kademlia</a>
+의 변형을 사용합니다. Floodfill router는 충분한 용량과 안정성이 있으면 자동으로 선택되거나 수동으로 구성할 수 있습니다.</p>
+<ul>
+<li><strong>RouterInfo:</strong> router의 기능과 전송 방식을 설명합니다.</li>
+<li><strong>LeaseSet:</strong> 목적지의 터널과 암호화 키를 설명합니다.</li>
+</ul>
+<p>netDb의 모든 데이터는 발행자에 의해 서명되고 타임스탬프가 기록되어 재전송 공격이나 오래된 항목 공격을 방지합니다. 시간 동기화는 SNTP와 전송 계층 스큐 감지를 통해 유지됩니다.</p>
+<h4 id="additional-concepts">Additional concepts</h4>
+<ul>
+<li>
+<p><strong>미공개 및 암호화된 LeaseSet:</strong><br>
+목적지는 LeaseSet을 공개하지 않고 신뢰할 수 있는 피어하고만 공유함으로써 비공개 상태를 유지할 수 있습니다. 접근하려면 적절한 복호화 키가 필요합니다.</p>
+</li>
+<li>
+<p><strong>부트스트래핑 (리시딩):</strong><br>
+네트워크에 참여하기 위해 새 router는 신뢰할 수 있는 HTTPS 리시드 서버로부터 서명된 RouterInfo 파일을 가져옵니다.</p>
+</li>
+<li>
+<p><strong>조회 확장성:</strong><br>
+I2P는 DHT 확장성과 보안을 개선하기 위해 재귀적이 아닌 <strong>반복적</strong> 조회를 사용합니다.</p>
+</li>
+</ul>
+<hr>
+<h3 id="터널">터널</h3>
+<p>현대 I2P 통신은 두 가지 완전히 암호화된 전송 방식을 사용합니다:</p>
+<ul>
+<li><strong><a href="../../../../ko/docs/specs/ntcp2">NTCP2</a>
+:</strong> 암호화된 TCP 기반 프로토콜</li>
+<li><strong><a href="../../../../ko/docs/specs/ssu2">SSU2</a>
+:</strong> 암호화된 UDP 기반 프로토콜</li>
+</ul>
+<p>두 프로토콜 모두 현대적인 <a href="https://noiseprotocol.org/">Noise Protocol Framework</a>
+를 기반으로 구축되어 강력한 인증과 트래픽 핑거프린팅(traffic fingerprinting, 트래픽 패턴 분석을 통한 식별 기법)에 대한 저항력을 제공합니다. 이들은 레거시 NTCP 및 SSU 프로토콜을 대체했으며(2023년부터 완전히 폐기됨),</p>
+<p><strong>NTCP2</strong>는 TCP를 통한 암호화되고 효율적인 스트리밍을 제공합니다.</p>
+<p><strong>SSU2</strong>는 UDP 기반의 신뢰성, NAT 통과, 그리고 선택적 홀 펀칭을 제공합니다. SSU2는 개념적으로 WireGuard 또는 QUIC와 유사하며, 신뢰성과 익명성의 균형을 맞춥니다.</p>
+<p>라우터는 IPv4와 IPv6을 모두 지원할 수 있으며, netDb에 전송 주소와 비용을 게시합니다. 연결의 전송 방식은 조건과 기존 링크에 최적화된 <strong>입찰 시스템</strong>에 의해 동적으로 선택됩니다.</p>
+<hr>
+<h3 id="네트워크-데이터베이스-netdb">네트워크 데이터베이스 (netDb)</h3>
+<p>I2P는 모든 구성 요소에 대해 계층화된 암호화를 사용합니다: 전송, tunnel, garlic 메시지 및 netDb.</p>
+<p>현재 프리미티브는 다음을 포함합니다:</p>
+<ul>
+<li>키 교환을 위한 X25519</li>
+<li>서명을 위한 EdDSA (Ed25519)</li>
+<li>인증된 암호화를 위한 ChaCha20-Poly1305</li>
+<li>해싱을 위한 SHA-256</li>
+<li>tunnel 계층 암호화를 위한 AES256</li>
+</ul>
+<p>레거시 알고리즘(ElGamal, DSA-SHA1, ECDSA)은 하위 호환성을 위해 유지됩니다.</p>
+<p>I2P는 현재 &ldquo;지금 수집하고 나중에 복호화&rdquo; 공격에 대응하기 위해 <strong>X25519</strong>와 <strong>ML-KEM</strong>을 결합한 하이브리드 양자내성(PQ) 암호화 방식을 도입하고 있습니다.</p>
+<h4 id="garlic-messages">Garlic Messages</h4>
+<p>Garlic 메시지는 독립적인 전달 지침을 가진 여러 암호화된 &ldquo;clove&quot;들을 그룹화하여 onion routing을 확장합니다. 이를 통해 메시지 수준의 라우팅 유연성과 균일한 트래픽 패딩이 가능합니다.</p>
+<h4 id="session-tags">Session Tags</h4>
+<p>엔드투엔드 암호화를 위해 두 가지 암호화 시스템이 지원됩니다:</p>
+<ul>
+<li>
+<p><strong>ElGamal/AES+SessionTags (레거시):</strong><br>
+사전 전달된 세션 태그를 32바이트 nonce로 사용합니다. 비효율성으로 인해 현재는 더 이상 사용되지 않습니다.</p>
+</li>
+<li>
+<p><strong>ECIES-X25519-AEAD-Ratchet (현재):</strong><br>
+ChaCha20-Poly1305와 동기화된 HKDF 기반 PRNG를 사용하여 임시 세션 키와 8바이트 태그를 동적으로 생성하며, 전방향 비밀성(forward secrecy)을 유지하면서 CPU, 메모리 및 대역폭 오버헤드를 줄입니다.</p>
+</li>
+</ul>
+<hr>
+<h2 id="future-of-the-protocol">Future of the Protocol</h2>
+<p>주요 연구 분야는 국가 수준의 공격자에 대한 보안 유지와 양자 이후 암호화(post-quantum) 보호 도입에 집중하고 있습니다. 두 가지 초기 설계 개념인 <strong>제한된 경로</strong>와 <strong>가변 지연 시간</strong>은 현대적인 발전으로 대체되었습니다.</p>
+<h3 id="restricted-route-operation">Restricted Route Operation</h3>
+<p>원래 제한된 라우팅 개념은 IP 주소를 숨기는 것을 목표로 했습니다. 이러한 필요성은 다음에 의해 크게 완화되었습니다:</p>
+<ul>
+<li>자동 포트 포워딩을 위한 UPnP</li>
+<li>SSU2에서의 강력한 NAT 통과</li>
+<li>IPv6 지원</li>
+<li>협력적인 introducer 및 NAT hole-punching</li>
+<li>선택적 오버레이(예: Yggdrasil) 연결성</li>
+</ul>
+<p>따라서 현대의 I2P는 복잡한 제한된 라우팅 없이도 동일한 목표를 더 실용적으로 달성합니다.</p>
+<hr>
+<h2 id="similar-systems">Similar Systems</h2>
+<p>I2P는 메시지 지향 미들웨어, DHT, 그리고 믹스넷의 개념을 통합합니다. 이 플랫폼의 혁신성은 이러한 요소들을 사용 가능하고 자율적으로 조직되는 익명성 플랫폼으로 결합한 데 있습니다.</p>
+<h3 id="전송-프로토콜">전송 프로토콜</h3>
+<p><em><a href="https://www.torproject.org/">웹사이트</a>
+</em></p>
+<p><strong>Tor</strong>와 <strong>I2P</strong>는 목표를 공유하지만 아키텍처적으로 다릅니다:</p>
+<ul>
+<li><strong>Tor:</strong> 회선 교환 방식; 신뢰할 수 있는 디렉토리 권한에 의존. (~10k 릴레이)</li>
+<li><strong>I2P:</strong> 패킷 교환 방식; 완전히 분산된 DHT 기반 네트워크. (~50k routers)</li>
+</ul>
+<p>I2P의 단방향 터널은 더 적은 메타데이터를 노출하고 유연한 라우팅 경로를 허용하는 반면, Tor는 익명 **인터넷 접속(outproxying)**에 초점을 맞춥니다. I2P는 대신 익명 <strong>네트워크 내 호스팅</strong>을 지원합니다.</p>
+<h3 id="암호화">암호화</h3>
+<p><em><a href="https://freenetproject.org/">웹사이트</a>
+</em></p>
+<p><strong>Freenet</strong>은 익명의 영구적인 파일 게시 및 검색에 중점을 둡니다. 반면 <strong>I2P</strong>는 대화형 사용(웹, 채팅, 토렌트)을 위한 <strong>실시간 통신 계층</strong>을 제공합니다. 두 시스템은 서로를 보완합니다 — Freenet은 검열 저항 저장소를 제공하고, I2P는 전송 익명성을 제공합니다.</p>
+<h3 id="other-networks">Other Networks</h3>
+<ul>
+<li><strong>Lokinet:</strong> 인센티브 기반 서비스 노드를 사용하는 IP 기반 오버레이.</li>
+<li><strong>Nym:</strong> 더 높은 지연시간에서 커버 트래픽을 통해 메타데이터 보호를 강조하는 차세대 믹스넷.</li>
+</ul>
+<hr>
+<h2 id="appendix-a-application-layer">Appendix A: Application Layer</h2>
+<p>I2P 자체는 메시지 전송만 처리합니다. 애플리케이션 계층 기능은 API와 라이브러리를 통해 외부적으로 구현됩니다.</p>
+<h3 id="streaming">Streaming Library</h3>
+<p><strong>streaming library</strong>는 I2P의 TCP 유사 기능으로 작동하며, 고지연 익명 전송에 최적화된 슬라이딩 윈도우 프로토콜과 혼잡 제어를 제공합니다.</p>
+<p>일반적인 HTTP 요청/응답 패턴은 메시지 번들링 최적화로 인해 단일 왕복으로 완료될 수 있습니다.</p>
+<h3 id="naming-library-and-address-book">Naming Library and Address Book</h3>
+<p><em>개발자: mihi, Ragnarok</em>   <a href="../../../../ko/docs/overview/naming">이름 지정 및 주소록</a>
+ 페이지를 참조하세요.</p>
+<p>I2P의 이름 시스템은 <strong>로컬 및 분산형</strong>이며, DNS 방식의 전역 이름을 사용하지 않습니다. 각 router는 사람이 읽을 수 있는 이름과 destination의 로컬 매핑을 유지합니다. 선택적으로 신뢰 네트워크 기반 주소록을 공유하거나 신뢰할 수 있는 피어로부터 가져올 수 있습니다.</p>
+<p>이 접근 방식은 중앙화된 권한을 피하고 글로벌 또는 투표 방식의 네이밍 시스템에 내재된 시빌(Sybil) 취약점을 우회합니다.</p>
+<h3 id="제한된-라우트-운영">제한된 라우트 운영</h3>
+<p><em>개발자: mihi</em></p>
+<p><strong>I2PTunnel</strong>은 익명 TCP 프록시를 가능하게 하는 주요 클라이언트 계층 인터페이스입니다. 다음을 지원합니다:</p>
+<ul>
+<li><strong>Client 터널</strong> (I2P 목적지로의 아웃바운드)</li>
+<li><strong>HTTP 클라이언트 (eepproxy)</strong> &ldquo;.i2p&rdquo; 도메인용</li>
+<li><strong>Server 터널</strong> (I2P에서 로컬 서비스로의 인바운드)</li>
+<li><strong>HTTP 서버 터널</strong> (웹 서비스를 안전하게 프록시)</li>
+</ul>
+<p>일반 인터넷으로의 Outproxy는 선택 사항이며, 자원봉사자가 운영하는 &ldquo;서버&rdquo; 터널을 통해 구현됩니다.</p>
+<h3 id="i2psnark">I2PSnark</h3>
+<p><em>개발자: jrandom 외 — <a href="http://www.klomp.org/snark/">Snark</a>
+에서 포팅됨</em></p>
+<p>I2P에 번들로 포함된 <strong>I2PSnark</strong>는 DHT 및 UDP를 지원하는 익명 멀티-토렌트 BitTorrent 클라이언트로, 웹 인터페이스를 통해 접근할 수 있습니다.</p>
+<h3 id="tor">Tor</h3>
+<p><em>개발자: postman, susi23, mastiejaner</em></p>
+<p><strong>I2Pmail</strong>은 I2PTunnel 연결을 통해 익명 이메일을 제공합니다. <strong>Susimail</strong>은 기존 이메일 클라이언트에서 흔히 발생하는 정보 유출을 방지하도록 특별히 제작된 웹 기반 클라이언트입니다. <a href="https://mail.i2p/">mail.i2p</a>
+ 서비스는 바이러스 필터링, <a href="https://en.wikipedia.org/wiki/Hashcash">hashcash</a>
+ 할당량, 그리고 추가 보호를 위한 outproxy 분리 기능을 제공합니다.</p>
+<hr>
+
+                </article>
+
+                
+                <nav class="page-nav">
+                    
+                        <a href="../../../../ko/docs/overview/comparison/" class="page-nav-link prev">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">I2P와 다른 프라이버시 네트워크 비교</span>
+                        </a>
+                    
+                    
+                        <a href="../../../../ko/docs/overview/threat-model/" class="page-nav-link next">
+                            <span class="nav-label">Next →</span>
+                            <span class="nav-title">I2P 위협 모델</span>
+                        </a>
+                    
+                </nav>
+
+                
+                <div class="docs-feedback">
+                    <p>Was this page helpful?</p>
+                    <div class="feedback-buttons" id="feedback-buttons">
+                        <button class="feedback-btn" id="feedback-yes">👍 Yes</button>
+                        <button class="feedback-btn" id="feedback-no">👎 No</button>
+                    </div>
+
+                    
+                    <div class="feedback-form-container" id="feedback-form-container" style="display: none;">
+                        <p class="feedback-form-title">We're sorry to hear that. How can we improve this page?</p>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-email">Email (optional - if you'd like a response)</label>
+                                <input type="email" id="feedback-email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Feedback *</label>
+                                <textarea id="feedback-message" name="message" rows="4" required placeholder="Tell us what we can improve..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-feedback" id="feedback-submit-btn">
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    
+                    <div class="feedback-message" id="feedback-success" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/>
+                        </svg>
+                        <span id="feedback-success-text">Thanks for your feedback!</span>
+                    </div>
+                    <div class="feedback-message feedback-error" id="feedback-error" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="feedback-error-text">Something went wrong. Please try again.</span>
+                    </div>
+
+                    <p class="feedback-note">
+                        Found an issue? <a href="https://gitlab.com/stormycloud-group/i-2-p-www-v-2/-/blob/main/hugo-site/content/ko/docs/overview/tech-intro.md?ref_type=heads" target="_blank">Edit this page on GitLab</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.docs-page {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-primary);
+}
+
+.separator {
+    color: var(--color-border);
+}
+
+.current {
+    color: var(--color-text);
+}
+
+ 
+.translation-disclaimer {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.dark .translation-disclaimer {
+    background: #78350f;
+    border-color: #d97706;
+}
+
+.disclaimer-message {
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.dark .disclaimer-message {
+    color: #fde047;
+}
+
+.disclaimer-link {
+    color: #92400e;
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.dark .disclaimer-link {
+    color: #fde047;
+}
+
+ 
+.article-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.article-title {
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md) 0;
+    color: var(--color-text);
+}
+
+.article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.article-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.meta-item svg {
+    color: var(--color-primary);
+}
+
+ 
+.docs-layout {
+    display: block;
+}
+
+.docs-layout--with-toc {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+ 
+.docs-toc-sidebar {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc-nav {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.toc-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.toc-content {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.toc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.toc-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-nav ul ul {
+    padding-left: var(--spacing-md);
+    margin-top: 0.25rem;
+}
+
+.toc-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+}
+
+ 
+.docs-main {
+    min-width: 0;
+    max-width: 900px;
+}
+
+ 
+.article-content {
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.article-content h2 {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.75rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h3 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.375rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content h4 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.125rem;
+    scroll-margin-top: 100px;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.article-content code {
+    background: var(--color-bg-secondary);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+    display: block;
+}
+
+.article-content a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.article-content a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+ 
+.page-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.page-nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.page-nav-link.next {
+    text-align: right;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ 
+.docs-feedback {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.feedback-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.feedback-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.feedback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.feedback-note a:hover {
+    text-decoration: underline;
+}
+
+ 
+.feedback-form-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+.feedback-form-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    transition: border-color var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-submit-feedback {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-submit-feedback:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+ 
+.feedback-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.feedback-message.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-message svg {
+    flex-shrink: 0;
+}
+
+ 
+@media (max-width: 1024px) {
+    .docs-layout--with-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .docs-toc-sidebar {
+        position: static;
+        max-height: none;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .toc-content {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 1.75rem;
+    }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocLinks = document.querySelectorAll('.toc-nav a');
+    const headings = [];
+
+    tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const heading = document.getElementById(href.slice(1));
+            if (heading) {
+                headings.push({ element: heading, link: link });
+            }
+        }
+    });
+
+    function updateActiveLink() {
+        const scrollPos = window.scrollY + 120;
+        let activeIndex = 0;
+
+        for (let i = 0; i < headings.length; i++) {
+            if (headings[i].element.offsetTop <= scrollPos) {
+                activeIndex = i;
+            }
+        }
+
+        tocLinks.forEach(link => link.classList.remove('active'));
+        if (headings[activeIndex]) {
+            headings[activeIndex].link.classList.add('active');
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+});
+</script>
+<style>
+.toc-nav a.active {
+    color: var(--color-primary);
+    background: var(--color-bg-tertiary);
+    font-weight: 600;
+}
+</style>
+
+
+
+<script>
+(function() {
+    'use strict';
+    
+    
+    let baseUrl = window.feedbackBaseUrl;
+    if (!baseUrl) {
+        const hostname = window.location.hostname;
+        
+        if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+            baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+        } else if (hostname.endsWith('.onion')) {
+            baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+        } else {
+            baseUrl = 'https://feedback.i2p.net';
+        }
+    }
+    
+    const script = document.createElement('script');
+    script.src = baseUrl + '/widgets/docs-feedback.js';
+    script.async = true;
+    script.onerror = function() {
+        console.error('[Docs Feedback] Failed to load docs-feedback.js from:', baseUrl);
+    };
+    document.body.appendChild(script);
+})();
+</script>
+
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <img src="../../../../images/i2plogo_lightmode.svg" alt="I2P Logo" class="footer-logo logo-light" loading="lazy" decoding="async">
+                <img src="../../../../images/i2plogo_darkmode.svg" alt="I2P Logo" class="footer-logo logo-dark" loading="lazy" decoding="async">
+                <p class="footer-tagline">Privacy. Security. Freedom.</p>
+                <p class="footer-description">The Invisible Internet Project - A privacy-focused, anonymous network layer</p>
+
+                <div class="footer-social-newsletter">
+                    <div class="social-links">
+                        <a href="https://mastodon.social/@i2p" target="_blank" rel="noopener" aria-label="Mastodon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.546-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/GetI2P" target="_blank" rel="noopener" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://old.reddit.com/r/i2p" target="_blank" rel="noopener" aria-label="Reddit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                            </svg>
+                        </a>
+                        <a href="https://signal.group/#CjQKIOSUTtxlhbumAKcRsthPFkxkTUrkWcX39bbN6njLEgAIEhCTNsR0KDuiehAXZnkt42v5" target="_blank" rel="noopener" aria-label="Signal" class="signal-link">
+                            <img src="../../../../images/Signal-Logo-Black.svg" alt="Signal" class="signal-logo signal-logo-light" loading="lazy" decoding="async">
+                            <img src="../../../../images/Signal-Logo-White.svg" alt="Signal" class="signal-logo signal-logo-dark" loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    
+                    <div class="footer-newsletter-inline">
+                        <p class="newsletter-description">I2P 뉴스 받기:</p>
+                        <form action="https://feedback.i2p.net/api/mailing-list/subscribe" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="이메일을 입력하세요" required>
+                            <button type="submit">구독하기</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>빠른 링크</h3>
+                <ul>
+                    <li><a href="../../../../ko/financial-support/">기부하기</a></li>
+                    <li><a href="../../../../ko/docs/overview/intro/">I2P 소개</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>커뮤니티</h3>
+                <ul>
+                    <li><a href="../../../../ko/get-involved/">참여하기</a></li>
+                    <li><a href="../../../../ko/blog/">블로그</a></li>
+                    <li><a href="http://i2pforum.net/" target="_blank" rel="noopener">공식 포럼</a></li>
+                    <li><a href="../../../../ko/contact/">연락처</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>리소스</h3>
+                <ul>
+                    <li><a href="https://i2p-metrics.np-tokumei.net/" target="_blank" rel="noopener">I2P 메트릭</a></li>
+                    <li><a href="../../../../ko/papers/">연구</a></li>
+                    <li><a href="https://i2pgit.org/" target="_blank" rel="noopener">GitLab</a></li>
+                    <li><a href="https://www.stormycloud.org/" target="_blank" rel="noopener">스톰이클라우드</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 Invisible Internet Project. Creative Commons 라이선스 적용.</p>
+            <div class="footer-links">
+                <a href="../../../../ko/privacy/">개인정보 처리방침</a>
+                <a href="../../../../ko/terms/">이용 약관</a>
+                <a href="../../../../ko/about/media/">언론</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+<div class="modal-overlay" id="poll">
+    <div class="modal-content poll-modal-content">
+        <a href="#" class="modal-close" aria-label="닫기">
+            <span aria-hidden="true">&times;</span>
+        </a>
+
+        <div class="modal-header">
+            <h2>커뮤니티 설문 조사</h2>
+            <p class="modal-subtitle">귀하의 의견을 듣고 싶습니다</p>
+        </div>
+
+        <div class="modal-body">
+            
+            <iframe 
+                id="poll-iframe"
+                data-poll-id="2"
+                data-api-url="https://feedback.i2p.net"
+                frameborder="0"
+                scrolling="no"
+                style="width: 100%; border: none; min-height: 400px;">
+            </iframe>
+        </div>
+
+        <div class="modal-footer">
+            <p class="modal-disclaimer">
+                귀하의 투표는 I2P의 미래를 형성하는 데 도움이 됩니다.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function() {
+    const iframe = document.getElementById('poll-iframe');
+    if (!iframe) return;
+    
+    const hostname = window.location.hostname;
+    let apiUrl = 'https://feedback.i2p.net';
+    const pollId = iframe.getAttribute('data-poll-id') || '1';
+
+    
+    if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+        apiUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+    }
+    
+    else if (hostname.endsWith('.onion')) {
+        apiUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+    }
+
+    
+    const pollUrl = apiUrl + '/widgets/poll.html?poll_id=' + encodeURIComponent(pollId) + '&api_url=' + encodeURIComponent(apiUrl);
+    iframe.src = pollUrl;
+})();
+</script>
+
+
+
+    
+    
+
+
+
+    
+    <script>
+        (function () {
+            'use strict';
+            var hostname = window.location.hostname;
+            var baseUrl;
+
+            
+            if (hostname.endsWith('.b32.i2p') || hostname.endsWith('.i2p')) {
+                baseUrl = 'http://5kwyynf3eetgqa2nors6ctwo7doi7yu73k7uvypy5eqmm326zkiq.b32.i2p';
+            } else if (hostname.endsWith('.onion')) {
+                baseUrl = 'http://gfonxmohvarpmocsvllscsuszdu5rikipm6innvcwq4vpng7zzqmmfyd.onion';
+            } else {
+                baseUrl = 'https://feedback.i2p.net';
+            }
+
+            window.feedbackBaseUrl = baseUrl;
+
+            
+            document.querySelectorAll('[data-api-url]').forEach(function (widget) {
+                widget.setAttribute('data-api-url', baseUrl);
+            });
+
+            
+            document.write('<link rel="stylesheet" href="' + baseUrl + '/widgets/styles.css">');
+            
+        })();
+    </script>
+
+    
+
+    
+    
+    
+
+    
+
+</body>
+
+</html>
