@@ -7,7 +7,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 PAPERS_FILE="$PROJECT_ROOT/content/en/papers.html"
 RESEARCH_DIR="$PROJECT_ROOT/static/docs/research"
 

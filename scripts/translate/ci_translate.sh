@@ -5,7 +5,7 @@ set -euo pipefail
 # Automatically translates changed content/en/ files using OpenAI API (realtime)
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 PYTHON_SCRIPT="$SCRIPT_DIR/translate_openai_realtime.py"
 
 cd "$REPO_ROOT"
