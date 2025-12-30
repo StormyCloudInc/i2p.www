@@ -33,7 +33,8 @@ show_menu() {
     echo -e "  ${CYAN}2)${NC} Add Research Paper"
     echo -e "  ${CYAN}3)${NC} Add Media/Press Entry"
     echo -e "  ${CYAN}4)${NC} Add Blog Post"
-    echo -e "  ${CYAN}5)${NC} Exit"
+    echo -e "  ${CYAN}5)${NC} Add Proposal"
+    echo -e "  ${CYAN}6)${NC} Exit"
     echo ""
 }
 
@@ -99,12 +100,25 @@ main() {
                 ;;
             5)
                 echo ""
+                echo -e "${BLUE}Launching Proposal Tool...${NC}"
+                echo ""
+                if [ -x "$SCRIPT_DIR/add_proposal.sh" ]; then
+                    "$SCRIPT_DIR/add_proposal.sh"
+                else
+                    echo -e "${RED}Error: add_proposal.sh not found or not executable${NC}"
+                    echo "Expected location: $SCRIPT_DIR/add_proposal.sh"
+                fi
+                echo ""
+                read -p "Press Enter to continue..."
+                ;;
+            6)
+                echo ""
                 echo -e "${GREEN}Goodbye!${NC}"
                 exit 0
                 ;;
             *)
                 echo ""
-                echo -e "${RED}Invalid option. Please select 1-5.${NC}"
+                echo -e "${RED}Invalid option. Please select 1-6.${NC}"
                 sleep 1
                 ;;
         esac
