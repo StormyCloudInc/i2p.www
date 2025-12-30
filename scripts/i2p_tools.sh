@@ -32,7 +32,8 @@ show_menu() {
     echo -e "  ${CYAN}1)${NC} Update Site Banner"
     echo -e "  ${CYAN}2)${NC} Add Research Paper"
     echo -e "  ${CYAN}3)${NC} Add Media/Press Entry"
-    echo -e "  ${CYAN}4)${NC} Exit"
+    echo -e "  ${CYAN}4)${NC} Add Blog Post"
+    echo -e "  ${CYAN}5)${NC} Exit"
     echo ""
 }
 
@@ -85,12 +86,25 @@ main() {
                 ;;
             4)
                 echo ""
+                echo -e "${BLUE}Launching Blog Post Tool...${NC}"
+                echo ""
+                if [ -x "$SCRIPT_DIR/add_blog.sh" ]; then
+                    "$SCRIPT_DIR/add_blog.sh"
+                else
+                    echo -e "${RED}Error: add_blog.sh not found or not executable${NC}"
+                    echo "Expected location: $SCRIPT_DIR/add_blog.sh"
+                fi
+                echo ""
+                read -p "Press Enter to continue..."
+                ;;
+            5)
+                echo ""
                 echo -e "${GREEN}Goodbye!${NC}"
                 exit 0
                 ;;
             *)
                 echo ""
-                echo -e "${RED}Invalid option. Please select 1-4.${NC}"
+                echo -e "${RED}Invalid option. Please select 1-5.${NC}"
                 sleep 1
                 ;;
         esac
