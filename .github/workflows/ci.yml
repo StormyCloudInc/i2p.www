@@ -141,7 +141,7 @@ jobs:
   # =================================================================================================
   
   deploy-cloudflare:
-    needs: [build]
+    needs: [build, full-tests]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     environment:
@@ -168,7 +168,7 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
   deploy-ssh-primary:
-    needs: [build]
+    needs: [build, full-tests]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
