@@ -29,33 +29,6 @@ jobs:
         run: pytest tests/test_quick.py -v --tb=short
 
   # =================================================================================================
-  # TRANSLATION JOB (Commented out as requested)
-  # =================================================================================================
-  translate:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Needed for git diff to detect changed files
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Install dependencies
-        run: pip install anthropic
-      - name: Run Translation Script
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          CI_COMMIT_BEFORE_SHA: ${{ github.event.before }}
-          CI_COMMIT_SHA: ${{ github.sha }}
-          CI_COMMIT_REF_NAME: ${{ github.ref_name }}
-        run: bash scripts/translate/ci_translate.sh
-
-  # =================================================================================================
   # BUILD JOB
   # =================================================================================================
   build:
@@ -143,9 +116,37 @@ jobs:
           HUGO_BUILD_DIR: public
 
   # =================================================================================================
+  # TRANSLATION JOB - Runs after tests pass, commits translated files
+  # =================================================================================================
+  translate:
+    needs: full-tests
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Needed for git diff to detect changed files
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install anthropic
+      - name: Run Translation Script
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CI_COMMIT_BEFORE_SHA: ${{ github.event.before }}
+          CI_COMMIT_SHA: ${{ github.sha }}
+          CI_COMMIT_REF_NAME: ${{ github.ref_name }}
+        run: bash scripts/translate/ci_translate.sh
+
+  # =================================================================================================
   # DEPLOYMENT JOBS
   # =================================================================================================
-  
+
   deploy-cloudflare:
     needs: [build, full-tests]
     runs-on: ubuntu-latest

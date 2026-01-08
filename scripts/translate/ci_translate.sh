@@ -166,8 +166,12 @@ for TARGET_LANG in $TARGET_LANGUAGES; do
     fi
 done
 
-# Commit and push translated files
-if [ ${#FAILED_LANGUAGES[@]} -eq 0 ]; then
+# Commit and push translated files (even if some languages failed)
+# We commit partial translations because:
+# 1. Transient API errors (500s) shouldn't block all translations
+# 2. 11/12 languages succeeding is better than 0/12
+# 3. Failed languages can be retried on the next commit
+if [ ${#SUCCESSFULLY_TRANSLATED_FILES[@]} -gt 0 ]; then
     log_info "Committing translated files..."
 
     # Configure git (works for both GitHub Actions and GitLab CI)
@@ -196,8 +200,14 @@ if [ ${#FAILED_LANGUAGES[@]} -eq 0 ]; then
     if git diff --staged --quiet; then
         log_info "No changes to commit"
     else
+        # Build commit message
+        COMMIT_MSG="Auto-translate: Update translations for changed content/en/ files"
+        if [ ${#FAILED_LANGUAGES[@]} -gt 0 ]; then
+            COMMIT_MSG="$COMMIT_MSG (failed: ${FAILED_LANGUAGES[*]})"
+        fi
+
         # Commit translations
-        git commit -m "Auto-translate: Update translations for changed content/en/ files" || {
+        git commit -m "$COMMIT_MSG" || {
             log_error "Failed to commit translated files"
             exit 1
         }
@@ -235,10 +245,18 @@ if [ ${#FAILED_LANGUAGES[@]} -eq 0 ]; then
 
         log_info "Successfully committed and pushed translated files"
     fi
-elif [ ${#FAILED_LANGUAGES[@]} -gt 0 ]; then
-    log_error "Some translations failed for languages: ${FAILED_LANGUAGES[*]}"
-    log_error "Not committing partial translations"
-    exit 1
+
+    # Report failed languages as warning, not error
+    if [ ${#FAILED_LANGUAGES[@]} -gt 0 ]; then
+        log_warn "Some translations failed for languages: ${FAILED_LANGUAGES[*]}"
+        log_warn "These will be retried on the next commit that touches these files"
+    fi
+else
+    # No translations succeeded at all
+    if [ ${#FAILED_LANGUAGES[@]} -gt 0 ]; then
+        log_error "All translations failed for languages: ${FAILED_LANGUAGES[*]}"
+        exit 1
+    fi
 fi
 
 log_info "Translation process completed"

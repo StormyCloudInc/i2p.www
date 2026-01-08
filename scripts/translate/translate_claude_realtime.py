@@ -1093,10 +1093,19 @@ def translate_file(
         assign_segment_ids(fm_entries, tokens)
 
         # Calculate file path for cache key
+        # IMPORTANT: Must match the key format used in build_cache_from_existing()
+        # which uses paths relative to content/ dir (e.g., "en/blog/post.md")
+        # not relative to repo root (e.g., "content/en/blog/post.md")
         try:
-            rel_path = source_path.relative_to(output_root)
+            # First try to get path relative to content/ directory
+            content_dir = output_root / "content"
+            rel_path = source_path.relative_to(content_dir)
         except ValueError:
-            rel_path = source_path
+            # Fallback: try relative to output_root
+            try:
+                rel_path = source_path.relative_to(output_root)
+            except ValueError:
+                rel_path = source_path
         file_path_str = str(rel_path).replace("\\", "/")
 
         # Build list of translatable segments
