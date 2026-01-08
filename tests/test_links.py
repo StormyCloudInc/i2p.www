@@ -4,6 +4,15 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 from urllib.parse import unquote, urlparse
 
+# Server-side routes handled by nginx/backend, not static files
+# These are intentionally not part of the Hugo build output
+SERVER_SIDE_ROUTE_PREFIXES = (
+    "api/",           # API endpoints (banner dismiss, feedback, etc.)
+    "set-theme/",     # Theme switcher handled by server
+    "set-lang/",      # Language switcher handled by server
+    "feedback/",      # Feedback form endpoints (Cloudflare Worker)
+)
+
 
 @pytest.fixture(scope="module")
 def built_site(build_hugo_site):
@@ -50,6 +59,17 @@ def test_internal_links_in_html(built_site):
 
             # Skip empty paths (just fragments like "#section")
             if not path:
+                continue
+
+            # Normalize path for checking server-side routes
+            # Remove leading ../ segments to get the actual route
+            normalized_path = path
+            while normalized_path.startswith("../"):
+                normalized_path = normalized_path[3:]
+            normalized_path = normalized_path.lstrip("/")
+
+            # Skip server-side routes (handled by nginx/backend, not static files)
+            if any(normalized_path.startswith(prefix) for prefix in SERVER_SIDE_ROUTE_PREFIXES):
                 continue
 
             checked_count += 1

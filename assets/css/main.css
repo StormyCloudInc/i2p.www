@@ -979,11 +979,11 @@ main {
         width: 100%;
     }
 
-    /* Mobile dropdown styles */
+    /* Mobile dropdown styles - only visible when menu is open */
     .dropdown-menu {
         position: static;
         opacity: 1;
-        visibility: visible;
+        visibility: inherit;  /* Inherit from parent nav-menu */
         transform: none;
         box-shadow: none;
         border: none;
@@ -993,15 +993,19 @@ main {
     }
 
     .nav-dropdown:hover .dropdown-menu,
-    .dropdown-menu {
+    .mobile-menu-checkbox:checked ~ .nav-menu .dropdown-menu {
         opacity: 1;
         visibility: visible;
         transform: none;
     }
 
     .nav-actions {
+        order: -1;  /* Move to top of flex container for mobile accessibility */
         width: 100%;
         justify-content: space-between;
+        margin-bottom: var(--spacing-md);
+        padding-bottom: var(--spacing-md);
+        border-bottom: 1px solid var(--color-border);
     }
 
     .btn-primary,
@@ -1010,14 +1014,35 @@ main {
         min-width: 0;
     }
 
-    /* Language dropdown - open upward on mobile */
+    /* Mobile nav-actions order: Theme, Language, Donate, Get I2P */
+    .theme-toggle-container {
+        order: 0;
+    }
+
+    .language-selector {
+        position: relative;
+        order: 1;
+    }
+
+    .btn-donate {
+        order: 2;
+    }
+
+    /* Get I2P button (second .btn-primary in nav-actions) */
+    .nav-actions .btn-primary:not(.btn-donate) {
+        order: 3;
+    }
+
     .language-dropdown {
-        top: auto;
-        bottom: calc(100% + 0.5rem);
-        right: 0;
-        left: auto;
-        max-height: 200px;
+        position: absolute;
+        top: 100%;
+        bottom: auto;
+        left: 0;   /* Open rightward since language is on left side */
+        right: auto;
+        max-height: 50vh;
         overflow-y: auto;
+        z-index: 10001;
+        min-width: 150px;
     }
 
     .footer-grid {
