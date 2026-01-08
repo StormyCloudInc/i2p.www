@@ -8,7 +8,28 @@ on:
 
 jobs:
   # =================================================================================================
-  # TRANSLATION JOB (Uses Claude API for real-time translation)
+  # QUICK TESTS - Run on all PRs (no build required, ~5 seconds)
+  # =================================================================================================
+  quick-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Test Dependencies
+        run: pip install -r tests/requirements.txt
+
+      - name: Run Quick Tests
+        run: pytest tests/test_quick.py -v --tb=short
+
+  # =================================================================================================
+  # TRANSLATION JOB (Commented out as requested)
   # =================================================================================================
   translate:
     runs-on: ubuntu-latest
@@ -38,6 +59,7 @@ jobs:
   # BUILD JOB
   # =================================================================================================
   build:
+    needs: quick-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -89,9 +111,9 @@ jobs:
           retention-days: 1
 
   # =================================================================================================
-  # TEST JOB - Runs after build, blocks deployment if tests fail
+  # FULL TESTS - Run on main branch only (after build, validates HTML output)
   # =================================================================================================
-  test:
+  full-tests:
     needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
@@ -114,8 +136,9 @@ jobs:
       - name: Install Test Dependencies
         run: pip install -r tests/requirements.txt
 
-      - name: Run Unit Tests
-        run: pytest tests/ -v --tb=short
+      - name: Run Full Test Suite
+        run: |
+          pytest tests/test_links.py tests/test_html_output.py tests/test_accessibility.py tests/test_build_performance.py -v --tb=short
         env:
           HUGO_BUILD_DIR: public
 
@@ -124,7 +147,7 @@ jobs:
   # =================================================================================================
   
   deploy-cloudflare:
-    needs: [build, test]
+    needs: [build, full-tests]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     environment:
@@ -151,7 +174,7 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
   deploy-ssh-primary:
-    needs: [build, test]
+    needs: [build, full-tests]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:

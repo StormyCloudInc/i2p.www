@@ -99,7 +99,22 @@ def hugo_build_dir(project_root: Path) -> Generator[Path, None, None]:
 def build_hugo_site(
     project_root: Path, hugo_bin_path: Path, hugo_build_dir: Path
 ) -> Generator[Path, None, None]:
-    """Build Hugo site to a temporary directory."""
+    """Build Hugo site to a temporary directory.
+
+    If HUGO_BUILD_DIR environment variable is set, use that pre-built directory
+    instead of building (useful for CI where build is a separate step).
+    """
+    # Check for pre-built directory (CI mode)
+    pre_built_dir = os.environ.get("HUGO_BUILD_DIR")
+    if pre_built_dir:
+        pre_built_path = Path(pre_built_dir)
+        if pre_built_path.exists() and pre_built_path.is_dir():
+            yield pre_built_path
+            return
+        else:
+            pytest.fail(f"HUGO_BUILD_DIR set but directory not found: {pre_built_dir}")
+
+    # Build site locally
     original_dir = os.getcwd()
     try:
         os.chdir(project_root)
