@@ -32,7 +32,7 @@ I2P serves a global community, and the website now better reflects that reality.
 
 Under the previous system, many pages were untranslated or only partially translated, which created a poor experience for international users. The new structure makes it significantly easier to maintain translations and expand coverage. Machine-translated pages are clearly labeled and include a disclaimer with a link to the English original.
 
-We are grateful to our Transifex volunteers, and Transifex will still be used to translate the I2P router console. We welcome new translators who want to help improve or refine existing website translations.
+We are grateful to our Transifex volunteers and welcome new translators who want to help improve or refine existing translations.
 
 ## New Features
 
